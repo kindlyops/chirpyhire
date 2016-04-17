@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417183711) do
+ActiveRecord::Schema.define(version: 20160417213155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,15 +38,13 @@ ActiveRecord::Schema.define(version: 20160417183711) do
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
 
   create_table "leads", force: :cascade do |t|
-    t.integer  "user_id",                         null: false
-    t.integer  "organization_id",                 null: false
-    t.boolean  "sms_opt_in",      default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "user_id",         null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "leads", ["organization_id"], name: "index_leads_on_organization_id", using: :btree
-  add_index "leads", ["sms_opt_in"], name: "index_leads_on_sms_opt_in", using: :btree
   add_index "leads", ["user_id"], name: "index_leads_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
@@ -113,6 +111,15 @@ ActiveRecord::Schema.define(version: 20160417183711) do
   add_index "referrers", ["organization_id"], name: "index_referrers_on_organization_id", using: :btree
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer  "lead_id",    null: false
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "subscriptions", ["lead_id"], name: "index_subscriptions_on_lead_id", where: "(deleted_at IS NULL)", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",   default: ""
     t.string   "last_name",    default: ""
@@ -130,4 +137,5 @@ ActiveRecord::Schema.define(version: 20160417183711) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"
+  add_foreign_key "subscriptions", "leads"
 end

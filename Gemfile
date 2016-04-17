@@ -53,3 +53,4 @@ end
 gem 'devise', '~> 3.4.0'
 gem 'phony_rails', '~> 0.13.0'
 gem 'slim-rails', '~> 3.0.0'
+gem 'paranoia', '~> 2.1.0'
