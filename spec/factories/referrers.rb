@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :team_member do
+  factory :referrer do
     user
     organization
   end

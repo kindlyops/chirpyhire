@@ -92,26 +92,26 @@ ActiveRecord::Schema.define(version: 20160417183711) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
-    t.integer  "lead_id",        null: false
-    t.integer  "team_member_id", null: false
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "message_id",     null: false
+    t.integer  "lead_id",     null: false
+    t.integer  "referrer_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "message_id",  null: false
   end
 
   add_index "referrals", ["lead_id"], name: "index_referrals_on_lead_id", using: :btree
   add_index "referrals", ["message_id"], name: "index_referrals_on_message_id", using: :btree
-  add_index "referrals", ["team_member_id"], name: "index_referrals_on_team_member_id", using: :btree
+  add_index "referrals", ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
 
-  create_table "team_members", force: :cascade do |t|
+  create_table "referrers", force: :cascade do |t|
     t.integer  "user_id",         null: false
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "team_members", ["organization_id"], name: "index_team_members_on_organization_id", using: :btree
-  add_index "team_members", ["user_id"], name: "index_team_members_on_user_id", using: :btree
+  add_index "referrers", ["organization_id"], name: "index_referrers_on_organization_id", using: :btree
+  add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",   default: ""
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 20160417183711) do
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "leads"
   add_foreign_key "referrals", "messages"
-  add_foreign_key "referrals", "team_members"
-  add_foreign_key "team_members", "organizations"
-  add_foreign_key "team_members", "users"
+  add_foreign_key "referrals", "referrers"
+  add_foreign_key "referrers", "organizations"
+  add_foreign_key "referrers", "users"
 end
