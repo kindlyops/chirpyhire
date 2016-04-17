@@ -1,9 +1,8 @@
-class CreateLeads < ActiveRecord::Migration
+class CreateTeamMembers < ActiveRecord::Migration
   def change
-    create_table :leads do |t|
+    create_table :team_members do |t|
       t.belongs_to :user, null: false, index: true, foreign_key: true
       t.belongs_to :organization, null: false, index: true, foreign_key: true
-      t.boolean :sms_opt_in, null: false, default: false, index: true
       t.timestamps null: false
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417181948) do
+ActiveRecord::Schema.define(version: 20160417182542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20160417181948) do
     t.integer  "user_id",                         null: false
     t.integer  "organization_id",                 null: false
     t.boolean  "sms_opt_in",      default: false, null: false
-    t.integer  "relationship",    default: 0,     null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
   end
@@ -68,6 +67,26 @@ ActiveRecord::Schema.define(version: 20160417181948) do
 
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", using: :btree
 
+  create_table "referrals", force: :cascade do |t|
+    t.integer  "lead_id",        null: false
+    t.integer  "team_member_id", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "referrals", ["lead_id"], name: "index_referrals_on_lead_id", using: :btree
+  add_index "referrals", ["team_member_id"], name: "index_referrals_on_team_member_id", using: :btree
+
+  create_table "team_members", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "team_members", ["organization_id"], name: "index_team_members_on_organization_id", using: :btree
+  add_index "team_members", ["user_id"], name: "index_team_members_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name",   default: ""
     t.string   "last_name",    default: ""
@@ -80,4 +99,8 @@ ActiveRecord::Schema.define(version: 20160417181948) do
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "phones", "organizations"
+  add_foreign_key "referrals", "leads"
+  add_foreign_key "referrals", "team_members"
+  add_foreign_key "team_members", "organizations"
+  add_foreign_key "team_members", "users"
 end
