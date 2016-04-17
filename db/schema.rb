@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417175000) do
+ActiveRecord::Schema.define(version: 20160417180523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,5 +45,25 @@ ActiveRecord::Schema.define(version: 20160417175000) do
     t.datetime "updated_at",         null: false
   end
 
+  create_table "team_members", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "team_members", ["organization_id"], name: "index_team_members_on_organization_id", using: :btree
+  add_index "team_members", ["user_id"], name: "index_team_members_on_user_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name",   default: ""
+    t.string   "last_name",    default: ""
+    t.string   "phone_number",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
   add_foreign_key "accounts", "organizations"
+  add_foreign_key "team_members", "organizations"
+  add_foreign_key "team_members", "users"
 end

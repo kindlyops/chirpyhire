@@ -51,3 +51,4 @@ group :development do
 end
 
 gem 'devise', '~> 3.4.0'
+gem 'phony_rails', '~> 0.13.0'

@@ -99,6 +99,10 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    phony (2.15.21)
+    phony_rails (0.13.1)
+      activesupport (>= 3.0)
+      phony (~> 2.12)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -205,6 +209,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   pg (~> 0.15)
+  phony_rails (~> 0.13.0)
   pry-byebug
   pry-rails
   rails (= 4.2.6)
