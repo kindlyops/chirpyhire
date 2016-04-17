@@ -5,4 +5,5 @@ class Account < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: [:admin, :owner]
+  belongs_to :organization
 end
