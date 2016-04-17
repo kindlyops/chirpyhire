@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160417182542) do
+ActiveRecord::Schema.define(version: 20160417183711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,29 @@ ActiveRecord::Schema.define(version: 20160417182542) do
   add_index "leads", ["sms_opt_in"], name: "index_leads_on_sms_opt_in", using: :btree
   add_index "leads", ["user_id"], name: "index_leads_on_user_id", using: :btree
 
+  create_table "messages", force: :cascade do |t|
+    t.string   "sid",                   null: false
+    t.date     "date_created"
+    t.date     "date_updated"
+    t.date     "date_sent"
+    t.string   "account_sid",           null: false
+    t.string   "messaging_service_sid"
+    t.string   "from",                  null: false
+    t.string   "to",                    null: false
+    t.text     "body",                  null: false
+    t.integer  "num_media"
+    t.integer  "num_segments"
+    t.string   "status",                null: false
+    t.string   "direction",             null: false
+    t.integer  "price"
+    t.string   "price_unit"
+    t.string   "api_version"
+    t.text     "uri"
+    t.json     "subresource_uris"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name",               null: false
     t.string   "twilio_account_sid"
@@ -72,9 +95,11 @@ ActiveRecord::Schema.define(version: 20160417182542) do
     t.integer  "team_member_id", null: false
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "message_id",     null: false
   end
 
   add_index "referrals", ["lead_id"], name: "index_referrals_on_lead_id", using: :btree
+  add_index "referrals", ["message_id"], name: "index_referrals_on_message_id", using: :btree
   add_index "referrals", ["team_member_id"], name: "index_referrals_on_team_member_id", using: :btree
 
   create_table "team_members", force: :cascade do |t|
@@ -100,6 +125,7 @@ ActiveRecord::Schema.define(version: 20160417182542) do
   add_foreign_key "leads", "users"
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "leads"
+  add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "team_members"
   add_foreign_key "team_members", "organizations"
   add_foreign_key "team_members", "users"
