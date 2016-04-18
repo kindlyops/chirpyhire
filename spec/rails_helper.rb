@@ -13,6 +13,7 @@ require 'webmock/rspec'
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock
+  c.configure_rspec_metadata!
 end
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -42,7 +43,6 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-  config.extend VCR::RSpec::Macros
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
   # `post` in specs under `spec/controllers`.

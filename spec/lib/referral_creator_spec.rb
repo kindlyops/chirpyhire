@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReferralCreator do
-  use_vcr_cassette
+RSpec.describe ReferralCreator, vcr: { cassette_name: "ReferralCreator" } do
 
   let!(:sender) { create(:user) }
   let(:organization) { create(:organization_with_phone) }
