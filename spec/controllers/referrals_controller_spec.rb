@@ -103,6 +103,12 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with an unrecognized sender" do
+      it "creates a user" do
+        expect {
+          post :create, params
+        }.to change{User.count}.by(1)
+      end
+
       it "does not create a referral" do
         expect {
           post :create, params
@@ -113,14 +119,6 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
         expect {
           post :create, params
         }.not_to change{Lead.count}
-      end
-
-      context "without a user with the lead's phone number" do
-        it "does not create a user" do
-          expect {
-            post :create, params
-          }.not_to change{User.count}
-        end
       end
     end
   end

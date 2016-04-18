@@ -4,6 +4,7 @@ class Organization < ActiveRecord::Base
   has_many :referrals, through: :leads
   has_many :referrers
   has_many :messages
+  has_many :subscriptions
   has_one :phone
 
   delegate :number, to: :phone, prefix: true

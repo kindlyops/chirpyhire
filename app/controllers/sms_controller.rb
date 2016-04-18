@@ -15,8 +15,12 @@ class SmsController < ApplicationController
     organization.messages.create(sid: params["MessageSid"], media_url: params["MediaUrl0"])
   end
 
+  def vcard
+    message.vcard
+  end
+
   def sender
-    User.find_by(phone_number: params["From"])
+    UserFinder.new(attributes: { phone_number: params["From"] }).call
   end
 
   def organization

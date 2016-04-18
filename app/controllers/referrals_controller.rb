@@ -1,5 +1,4 @@
 class ReferralsController < SmsController
-  before_action :require_sender
 
   def create
     render_sms referral.sms_response
@@ -8,23 +7,22 @@ class ReferralsController < SmsController
   private
 
   def referral
-    return NullReferral.new unless referrer.present? && lead.present?
-    referrer.referrals.create(lead: lead, message: message)
+    if message.present? && referrer.present? && lead.present?
+      referrer.referrals.create(lead: lead, message: message)
+    else
+      NullReferral.new
+    end
+  end
+
+  def vcard_user
+    @vcard_user ||= UserFinder.new(attributes: vcard.attributes).call
   end
 
   def lead
-    @lead ||= LeadFinder.new(organization: organization, attributes: vcard.attributes).call
+    @lead ||= organization.leads.find_or_create_by(user: vcard_user)
   end
 
   def referrer
     @referrer ||= ReferrerFinder.new(organization: organization, sender: sender).call
-  end
-
-  def require_sender
-    error_message unless sender.present?
-  end
-
-  def vcard
-    message.vcard
   end
 end

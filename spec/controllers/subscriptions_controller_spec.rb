@@ -20,7 +20,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
         context "with an active subscription" do
           before(:each) do
-            lead.subscribe
+            user.subscribe_to(organization)
           end
 
           it "let's the user know they are already subscribed" do
@@ -44,10 +44,10 @@ RSpec.describe SubscriptionsController, type: :controller do
       end
 
       context "without an existing lead" do
-        it "creates a lead" do
+        it "creates a lead for the user" do
           expect {
             post :create, params
-          }.to change{organization.leads.count}.by(1)
+          }.to change{organization.leads.where(user: user).count}.by(1)
         end
 
         it "creates a subscription" do
@@ -65,7 +65,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{User.where(phone_number: phone_number).count}.by(1)
       end
 
-      it "creates a lead" do
+      it "creates a lead for the user" do
         expect {
           post :create, params
         }.to change{organization.leads.count}.by(1)
@@ -91,37 +91,26 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with an existing user" do
       let!(:user) { create(:user, phone_number: phone_number) }
 
-      context "with an existing lead" do
-        let!(:lead) { create(:lead, user: user, organization: organization) }
-
-        context "with an existing subscription" do
-          before(:each) do
-            lead.subscribe
-          end
-
-          it "soft deletes the subscription" do
-            subscription = lead.subscription
-
-            expect{
-              delete :destroy, params
-            }.to change{subscription.reload.deleted?}.from(false).to(true)
-          end
-
-          it "thanks the user and lets them know they are unsubscribed" do
-            delete :destroy, params
-            expect(response.body).to include("You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}.")
-          end
+      context "with an existing subscription" do
+        before(:each) do
+          user.subscribe_to(organization)
         end
 
-        context "without an existing subscription" do
-          it "let's the user know they are not subscribed" do
+        it "soft deletes the subscription" do
+          subscription = user.subscription_to(organization)
+
+          expect{
             delete :destroy, params
-            expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
-          end
+          }.to change{subscription.reload.deleted?}.from(false).to(true)
+        end
+
+        it "thanks the user and lets them know they are unsubscribed" do
+          delete :destroy, params
+          expect(response.body).to include("You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}.")
         end
       end
 
-      context "without an existing lead" do
+      context "without an existing subscription" do
         it "let's the user know they are not subscribed" do
           delete :destroy, params
           expect(response.body).to include("You were not subscribed. To subscribe reply with START.")

@@ -101,13 +101,15 @@ ActiveRecord::Schema.define(version: 20160418155824) do
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer  "lead_id",    null: false
+    t.integer  "user_id",         null: false
+    t.integer  "organization_id", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "subscriptions", ["lead_id"], name: "index_subscriptions_on_lead_id", where: "(deleted_at IS NULL)", using: :btree
+  add_index "subscriptions", ["organization_id"], name: "index_subscriptions_on_organization_id", where: "(deleted_at IS NULL)", using: :btree
+  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", where: "(deleted_at IS NULL)", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name",   default: ""
@@ -128,5 +130,6 @@ ActiveRecord::Schema.define(version: 20160418155824) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"
-  add_foreign_key "subscriptions", "leads"
+  add_foreign_key "subscriptions", "organizations"
+  add_foreign_key "subscriptions", "users"
 end
