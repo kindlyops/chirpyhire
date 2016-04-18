@@ -10,6 +10,8 @@ class SmsController < ApplicationController
   private
 
   def sms
+    organization.messages.create(sid: params["MessageSid"])
+
     Sms::Response.new do |r|
       r.Message "Sorry I didn't understand that. Have a great day!"
     end
