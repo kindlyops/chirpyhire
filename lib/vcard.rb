@@ -33,6 +33,6 @@ class Vcard
   end
 
   def name
-    Namae.parse(vcard.fn.first.value).first
+    Namae.parse(card.fn.first.value).first
   end
 end

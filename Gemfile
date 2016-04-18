@@ -50,7 +50,11 @@ group :development do
   gem 'spring'
 end
 
+gem 'vcardigan', '~> 0.0.0'
 gem 'devise', '~> 3.4.0'
 gem 'phony_rails', '~> 0.13.0'
 gem 'slim-rails', '~> 3.0.0'
 gem 'paranoia', '~> 2.1.0'
+gem 'httparty', '~> 0.13.0'
+gem 'namae', '~> 0.10.0'
+gem 'twilio-ruby', '~> 4.11.0'

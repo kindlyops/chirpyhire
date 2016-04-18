@@ -1,7 +1,6 @@
 class Sms::Response
-
-  def initialize
-    yield response if block_given?
+  def initialize(&block)
+    @response = Twilio::TwiML::Response.new(&block)
   end
 
   def text
@@ -10,8 +9,5 @@ class Sms::Response
 
   private
 
-  def response
-    Twilio::TwiML::Response.new
-  end
-
+  attr_reader :response
 end

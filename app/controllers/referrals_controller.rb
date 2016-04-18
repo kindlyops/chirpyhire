@@ -1,12 +1,12 @@
 class ReferralsController < SmsController
 
   def create
-    render_sms response
+    render_sms sms
   end
 
   private
 
-  def response
+  def sms
     return super unless referral.valid?
     referral.sms_response
   end

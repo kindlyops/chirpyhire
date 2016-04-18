@@ -7,7 +7,7 @@ class Sms::Message
   end
 
   def vcard
-    Vcard.new(url: url, sid: sid)
+    Vcard.new(url: url)
   end
 
   private
