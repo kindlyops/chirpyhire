@@ -8,7 +8,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         "To" => organization.phone_number,
         "From" => phone_number,
-        "body" => "CARE"
+        "Body" => "CARE"
       }
     end
 
@@ -84,7 +84,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         "To" => organization.phone_number,
         "From" => phone_number,
-        "body" => "STOP"
+        "Body" => "STOP"
       }
     end
 

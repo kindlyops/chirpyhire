@@ -8,6 +8,6 @@ class OptOutConstraint
   private
 
   def body(request)
-    request.request_parameters["body"]
+    request.request_parameters["Body"]
   end
 end

@@ -11,49 +11,49 @@ RSpec.describe OptOutConstraint do
 
   describe "#matches?" do
     context "STOP as body" do
-      let(:parameters) { { "body" => "STOP" } }
+      let(:parameters) { { "Body" => "STOP" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "STOPALL as body" do
-      let(:parameters) { { "body" => "STOPALL" } }
+      let(:parameters) { { "Body" => "STOPALL" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "QUIT as body" do
-      let(:parameters) { { "body" => "QUIT" } }
+      let(:parameters) { { "Body" => "QUIT" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "END as body" do
-      let(:parameters) { { "body" => "END" } }
+      let(:parameters) { { "Body" => "END" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "UNSUBSCRIBE as body" do
-      let(:parameters) { { "body" => "UNSUBSCRIBE" } }
+      let(:parameters) { { "Body" => "UNSUBSCRIBE" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "CANCEL as body" do
-      let(:parameters) { { "body" => "CANCEL" } }
+      let(:parameters) { { "Body" => "CANCEL" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
     context "stop as body" do
-      let(:parameters) { { "body" => "stop" } }
+      let(:parameters) { { "Body" => "stop" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
@@ -61,7 +61,7 @@ RSpec.describe OptOutConstraint do
 
     context "STOP in body" do
       context "with whitespace" do
-        let(:parameters) { { "body" => "    STOP " } }
+        let(:parameters) { { "Body" => "    STOP " } }
 
         it "is true" do
           expect(constraint.matches?(request)).to eq(true)
@@ -69,7 +69,7 @@ RSpec.describe OptOutConstraint do
       end
 
       context "with additional text" do
-        let(:parameters) { { "body" => "STOP to do the limbo?" } }
+        let(:parameters) { { "Body" => "STOP to do the limbo?" } }
 
         it "is false" do
           expect(constraint.matches?(request)).to eq(false)
@@ -78,7 +78,7 @@ RSpec.describe OptOutConstraint do
     end
 
     context "STOP not in body" do
-      let(:parameters) { { "body" => "Another body" } }
+      let(:parameters) { { "Body" => "Another body" } }
 
       it "is false" do
         expect(constraint.matches?(request)).to eq(false)
