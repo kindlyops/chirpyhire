@@ -1,11 +1,11 @@
 class Vcard
 
   def initialize(url:)
-    @card = fetch_card(url)
+    @url = url
   end
 
   def phone_number
-    Phony.normalize(card.tel.first.value)
+    PhonyRails.normalize_number(card.tel.first.value, country_code: 'US')
   end
 
   def first_name
@@ -26,10 +26,14 @@ class Vcard
 
   private
 
-  attr_reader :card
+  attr_reader :card, :url
 
-  def fetch_card(url)
-    VCardigan.parse(HTTParty.get(url))
+  def card
+    @card ||= VCardigan.parse(response)
+  end
+
+  def response
+    HTTParty.get(url)
   end
 
   def name
