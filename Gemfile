@@ -40,6 +40,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'faker', '~> 1.6.0'
   gem 'dotenv-rails', '~> 2.1.0'
+  gem 'vcr', '~> 3.0.0'
 end
 
 group :development do
