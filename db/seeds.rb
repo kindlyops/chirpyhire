@@ -21,4 +21,4 @@ user = User.find_or_create_by(
 
 Phone.create(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
 
-Referrer.find_or_create_by(user: user, org: org)
+Referrer.find_or_create_by(user: user, organization: org)
