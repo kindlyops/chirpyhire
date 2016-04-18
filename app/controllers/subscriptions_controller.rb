@@ -1,12 +1,19 @@
 class SubscriptionsController < SmsController
   def create
-    render_sms subscription.sms_response
+    if lead.subscribed?
+      render_sms already_subscribed
+    else
+      subscription = lead.subscribe
+      render_sms subscription.sms_response
+    end
   end
 
   private
 
-  def subscription
-    lead.subscribe
+  def already_subscribed
+    Sms::Response.new do |r|
+      r.Message "You are already subscribed. Thanks for your interest in #{organization.name}."
+    end
   end
 
   def lead

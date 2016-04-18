@@ -11,4 +11,8 @@ class Lead < ActiveRecord::Base
   def subscribe
     create_subscription
   end
+
+  def subscribed?
+    subscription.present?
+  end
 end
