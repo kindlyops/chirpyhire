@@ -8,16 +8,23 @@ class ReferralsController < SmsController
   private
 
   def referral
-    @referral ||= referral_creator.call
+    return NullReferral.new unless referrer.present? && lead.present?
+    referrer.referrals.create(lead: lead, message: message)
   end
 
-  def referral_creator
-    ReferralCreator.new(message: message,
-                        organization: organization,
-                        sender: sender)
+  def lead
+    @lead ||= LeadFinder.new(organization: organization, attributes: vcard.attributes).call
+  end
+
+  def referrer
+    @referrer ||= ReferrerFinder.new(organization: organization, sender: sender).call
   end
 
   def require_sender
     error_message unless sender.present?
+  end
+
+  def vcard
+    message.vcard
   end
 end

@@ -11,4 +11,12 @@ class Organization < ActiveRecord::Base
   def sms_client
     @sms_client ||= Sms::Client.new(self)
   end
+
+  def owner
+    accounts.find_by(role: Account.roles[:owner])
+  end
+
+  def owner_first_name
+    owner.first_name
+  end
 end

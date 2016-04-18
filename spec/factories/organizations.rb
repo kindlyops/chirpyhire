@@ -8,5 +8,12 @@ FactoryGirl.define do
         create(:phone, organization: organization)
       end
     end
+
+    factory :organization_with_phone_and_owner do
+      after(:create) do |organization|
+        create(:phone, organization: organization)
+        create(:account, role: :owner, organization: organization, user: create(:user))
+      end
+    end
   end
 end

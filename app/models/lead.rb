@@ -2,7 +2,13 @@ class Lead < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
   has_many :referrals
-  has_many :subscriptions
+  has_one :subscription
 
-  delegate :first_name, to: :user
+  delegate :first_name, :phone_number, to: :user
+  delegate :name, to: :organization, prefix: true
+  delegate :owner_first_name, to: :organization
+
+  def subscribe
+    create_subscription
+  end
 end

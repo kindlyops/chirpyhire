@@ -7,4 +7,6 @@ class Account < ActiveRecord::Base
   enum role: [:admin, :owner]
   belongs_to :organization
   belongs_to :user
+
+  delegate :first_name, to: :user
 end
