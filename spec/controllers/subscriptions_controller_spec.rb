@@ -8,7 +8,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         "To" => organization.phone_number,
         "From" => phone_number,
-        "Body" => "CARE"
+        "Body" => "START"
       }
     end
 
@@ -109,14 +109,14 @@ RSpec.describe SubscriptionsController, type: :controller do
 
           it "thanks the user and lets them know they are unsubscribed" do
             delete :destroy, params
-            expect(response.body).to include("You are unsubscribed. To subscribe reply with CARE. Thanks for your interest in #{organization.name}.")
+            expect(response.body).to include("You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}.")
           end
         end
 
         context "without an existing subscription" do
           it "let's the user know they are not subscribed" do
             delete :destroy, params
-            expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
+            expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
           end
         end
       end
@@ -124,7 +124,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       context "without an existing lead" do
         it "let's the user know they are not subscribed" do
           delete :destroy, params
-          expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
+          expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
         end
       end
     end
@@ -132,7 +132,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "without an existing user" do
       it "let's the user know they are not subscribed" do
         delete :destroy, params
-        expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
+        expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
       end
     end
   end

@@ -10,23 +10,30 @@ RSpec.describe OptInConstraint do
   end
 
   describe "#matches?" do
-    context "CARE as body" do
-      let(:parameters) { { "Body" => "CARE" } }
+    context "START as body" do
+      let(:parameters) { { "Body" => "START" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
-    context "care as body" do
-      let(:parameters) { { "Body" => "care" } }
+    context "YES as body" do
+      let(:parameters) { { "Body" => "YES" } }
       it "is true" do
         expect(constraint.matches?(request)).to eq(true)
       end
     end
 
-    context "CARE in body" do
+    context "start as body" do
+      let(:parameters) { { "Body" => "start" } }
+      it "is true" do
+        expect(constraint.matches?(request)).to eq(true)
+      end
+    end
+
+    context "START in body" do
       context "with whitespace" do
-        let(:parameters) { { "Body" => "    CARE " } }
+        let(:parameters) { { "Body" => "    START " } }
 
         it "is true" do
           expect(constraint.matches?(request)).to eq(true)
@@ -34,7 +41,7 @@ RSpec.describe OptInConstraint do
       end
 
       context "with additional text" do
-        let(:parameters) { { "Body" => "CARE to do the limbo?" } }
+        let(:parameters) { { "Body" => "START to do the limbo?" } }
 
         it "is false" do
           expect(constraint.matches?(request)).to eq(false)
@@ -42,7 +49,7 @@ RSpec.describe OptInConstraint do
       end
     end
 
-    context "CARE not in body" do
+    context "START not in body" do
       let(:parameters) { { "Body" => "Another body" } }
 
       it "is false" do

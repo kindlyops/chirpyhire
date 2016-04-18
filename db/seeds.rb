@@ -19,6 +19,12 @@ user = User.find_or_create_by(
  phone_number: "+14047908943"
 )
 
+Account.find_or_create_by(
+  user: user,
+  organization: org,
+  role: Account.roles[:owner]
+)
+
 Phone.create(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
 
 Referrer.find_or_create_by(user: user, organization: org)

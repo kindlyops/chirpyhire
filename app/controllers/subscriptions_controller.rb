@@ -27,7 +27,7 @@ class SubscriptionsController < SmsController
 
   def not_subscribed
     Sms::Response.new do |r|
-      r.Message "You were not subscribed. To subscribe reply with CARE."
+      r.Message "You were not subscribed. To subscribe reply with START."
     end
   end
 

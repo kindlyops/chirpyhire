@@ -1,6 +1,8 @@
 class OptInConstraint
+  OPT_IN_RESPONSES = %w(START YES)
+
   def matches?(request)
-    body(request).strip.upcase == "CARE"
+    OPT_IN_RESPONSES.include?(body(request).strip.upcase)
   end
 
   private

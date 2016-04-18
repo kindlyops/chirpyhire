@@ -16,7 +16,7 @@ text messages just reply STOP. Thanks again for your interest!"
       end
     else
       Sms::Response.new do |r|
-        r.Message "You are unsubscribed. To subscribe reply with CARE. Thanks for your interest in #{organization_name}."
+        r.Message "You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization_name}."
       end
     end
   end
