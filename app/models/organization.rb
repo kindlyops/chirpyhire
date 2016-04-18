@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
   has_many :accounts
   has_many :leads
+  has_many :referrals, through: :leads
   has_many :referrers
   has_many :messages
   has_one :phone

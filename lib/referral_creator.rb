@@ -6,7 +6,9 @@ class ReferralCreator
   end
 
   def call
-    lead.referrals.create(referrer: referrer, message_sid: message.sid)
+    return NullReferral.new unless referrer.present?
+
+    lead.referrals.create(referrer: referrer, message: message)
   end
 
   attr_reader :message, :organization, :sender

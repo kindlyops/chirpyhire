@@ -3,18 +3,16 @@ class SmsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  def text
-    render_sms sms
+  def error_message
+    message
+
+    render_sms Sms::Response.error
   end
 
   private
 
-  def sms
-    organization.messages.create(sid: params["MessageSid"])
-
-    Sms::Response.new do |r|
-      r.Message "Sorry I didn't understand that. Have a great day!"
-    end
+  def message
+    organization.messages.create(sid: params["MessageSid"], media_url: params["MediaUrl0"])
   end
 
   def sender
