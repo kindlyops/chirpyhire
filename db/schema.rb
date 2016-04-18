@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 20160418201338) do
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",               null: false
-    t.string   "domain",             null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
     t.datetime "created_at",         null: false

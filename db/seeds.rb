@@ -8,7 +8,6 @@
 
 org = Organization.find_or_create_by(
   name: "Happy Home Care",
-  domain: "lodestonetechnologies.co",
   twilio_account_sid: ENV.fetch("TWILIO_ACCOUNT_SID"),
   twilio_auth_token: ENV.fetch("TWILIO_AUTH_TOKEN")
 )
@@ -25,6 +24,6 @@ Account.find_or_create_by(
   role: Account.roles[:owner]
 )
 
-Phone.create(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
+Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
 
 Referrer.find_or_create_by(user: user, organization: org)

@@ -12,7 +12,7 @@ class SmsController < ApplicationController
   private
 
   def message
-    organization.messages.create(sid: params["MessageSid"], media_url: params["MediaUrl0"])
+    organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
   end
 
   def vcard
