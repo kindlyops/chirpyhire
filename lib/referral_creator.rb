@@ -1,15 +1,15 @@
 class ReferralCreator
-  def initialize(vcard:, organization:, sender:)
-    @vcard = vcard
+  def initialize(message:, organization:, sender:)
+    @message = message
     @organization = organization
     @sender = sender
   end
 
   def call
-    lead.referrals.create(referrer: referrer)
+    lead.referrals.create(referrer: referrer, message_sid: message.sid)
   end
 
-  attr_reader :vcard, :organization, :sender
+  attr_reader :message, :organization, :sender
 
   private
 
@@ -27,6 +27,10 @@ class ReferralCreator
 
   def referrers
     organization.referrers
+  end
+
+  def vcard
+    @vcard ||= message.vcard
   end
 
   def lead_user

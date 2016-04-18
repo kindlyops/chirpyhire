@@ -5,8 +5,8 @@ class Referral < ActiveRecord::Base
 
   delegate :organization, to: :lead
 
-  def response
-    Twilio::TwiML::Response.new do |r|
+  def sms_response
+    Sms::Response.new do |r|
       r.Message "Awesome! Please copy and text to #{lead.first_name}:"
       r.Message "Hey #{lead.first_name}. My home care agency, \
        #{organization.name}, regularly hires caregivers. They \

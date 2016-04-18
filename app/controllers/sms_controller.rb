@@ -1,16 +1,16 @@
-class TwilioController < ApplicationController
+class SmsController < ApplicationController
   after_filter :set_header
 
   skip_before_action :verify_authenticity_token
 
   def text
-    render_twiml response
+    render_sms response
   end
 
   private
 
   def response
-    Twilio::TwiML::Response.new do |r|
+    Sms::Response.new do |r|
       r.Message "Sorry I didn't understand that. Have a great day!"
     end
   end
@@ -27,7 +27,7 @@ class TwilioController < ApplicationController
     response.headers["Content-Type"] = "text/xml"
   end
 
-  def render_twiml(response)
+  def render_sms(response)
     render text: response.text
   end
 end

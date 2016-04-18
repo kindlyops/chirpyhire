@@ -1,14 +1,14 @@
-class ReferralsController < TwilioController
+class ReferralsController < SmsController
 
   def create
-    render_twiml response
+    render_sms response
   end
 
   private
 
   def response
     return super unless referral.valid?
-    referral.response
+    referral.sms_response
   end
 
   def referral
@@ -16,12 +16,12 @@ class ReferralsController < TwilioController
   end
 
   def referrer_creator
-    ReferralCreator.new(vcard: vcard,
+    ReferralCreator.new(message: message,
                         organization: organization,
                         sender: sender)
   end
 
-  def vcard
-    Vcard.new(url: params["MediaUrl0"])
+  def message
+    Sms::Message.new(sid: params["MessageSid"], url: params["MediaUrl0"])
   end
 end
