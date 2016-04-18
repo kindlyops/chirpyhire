@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
+  let(:organization) { create(:organization_with_phone_and_owner) }
+  let(:phone_number) { "+15555555555" }
   describe "#create" do
-    let(:organization) { create(:organization_with_phone_and_owner) }
-    let(:phone_number) { "+15555555555" }
     let(:params) do
       {
         "To" => organization.phone_number,
@@ -80,16 +80,59 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe "#destroy" do
-    context "without an existing subscription" do
-      it "let's the user know they are not subscribed" do
+    let(:params) do
+      {
+        "To" => organization.phone_number,
+        "From" => phone_number,
+        "body" => "STOP"
+      }
+    end
+
+    context "with an existing user" do
+      let!(:user) { create(:user, phone_number: phone_number) }
+
+      context "with an existing lead" do
+        let!(:lead) { create(:lead, user: user, organization: organization) }
+
+        context "with an existing subscription" do
+          before(:each) do
+            lead.subscribe
+          end
+
+          it "soft deletes the subscription" do
+            subscription = lead.subscription
+
+            expect{
+              delete :destroy, params
+            }.to change{subscription.reload.deleted?}.from(false).to(true)
+          end
+
+          it "thanks the user and lets them know they are unsubscribed" do
+            delete :destroy, params
+            expect(response.body).to include("You are unsubscribed. To subscribe reply with CARE. Thanks for your interest in #{organization.name}.")
+          end
+        end
+
+        context "without an existing subscription" do
+          it "let's the user know they are not subscribed" do
+            delete :destroy, params
+            expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
+          end
+        end
+      end
+
+      context "without an existing lead" do
+        it "let's the user know they are not subscribed" do
+          delete :destroy, params
+          expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
+        end
       end
     end
 
-    context "with an existing subscription" do
-      it "soft deletes the subscription" do
-      end
-
-      it "thanks the user and lets them know they are unsubscribed" do
+    context "without an existing user" do
+      it "let's the user know they are not subscribed" do
+        delete :destroy, params
+        expect(response.body).to include("You were not subscribed. To subscribe reply with CARE.")
       end
     end
   end

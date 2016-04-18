@@ -12,7 +12,15 @@ class Lead < ActiveRecord::Base
     create_subscription
   end
 
+  def unsubscribe
+    subscription.destroy
+  end
+
   def subscribed?
     subscription.present?
+  end
+
+  def unsubscribed?
+    !subscribed?
   end
 end
