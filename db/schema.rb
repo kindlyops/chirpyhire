@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419012844) do
+ActiveRecord::Schema.define(version: 20160419022944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,7 +135,21 @@ ActiveRecord::Schema.define(version: 20160419012844) do
   end
 
   add_index "search_leads", ["lead_id"], name: "index_search_leads_on_lead_id", using: :btree
+  add_index "search_leads", ["search_id", "lead_id"], name: "index_search_leads_on_search_id_and_lead_id", unique: true, using: :btree
   add_index "search_leads", ["search_id"], name: "index_search_leads_on_search_id", using: :btree
+
+  create_table "search_question_messages", force: :cascade do |t|
+    t.integer  "message_id",         null: false
+    t.integer  "search_lead_id",     null: false
+    t.integer  "search_question_id", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "search_question_messages", ["message_id"], name: "index_search_question_messages_on_message_id", using: :btree
+  add_index "search_question_messages", ["search_lead_id", "search_question_id"], name: "index_by_search_lead_and_search_question", unique: true, using: :btree
+  add_index "search_question_messages", ["search_lead_id"], name: "index_search_question_messages_on_search_lead_id", using: :btree
+  add_index "search_question_messages", ["search_question_id"], name: "index_search_question_messages_on_search_question_id", using: :btree
 
   create_table "search_questions", force: :cascade do |t|
     t.integer  "search_id",        null: false
@@ -147,6 +161,7 @@ ActiveRecord::Schema.define(version: 20160419012844) do
 
   add_index "search_questions", ["next_question_id"], name: "index_search_questions_on_next_question_id", using: :btree
   add_index "search_questions", ["question_id"], name: "index_search_questions_on_question_id", using: :btree
+  add_index "search_questions", ["search_id", "question_id"], name: "index_search_questions_on_search_id_and_question_id", unique: true, using: :btree
   add_index "search_questions", ["search_id"], name: "index_search_questions_on_search_id", using: :btree
 
   create_table "searches", force: :cascade do |t|
@@ -197,6 +212,9 @@ ActiveRecord::Schema.define(version: 20160419012844) do
   add_foreign_key "referrers", "users"
   add_foreign_key "search_leads", "leads"
   add_foreign_key "search_leads", "searches"
+  add_foreign_key "search_question_messages", "messages"
+  add_foreign_key "search_question_messages", "search_leads"
+  add_foreign_key "search_question_messages", "search_questions"
   add_foreign_key "search_questions", "questions"
   add_foreign_key "search_questions", "searches"
   add_foreign_key "searches", "organizations"
