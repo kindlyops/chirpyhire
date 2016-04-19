@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418201338) do
+ActiveRecord::Schema.define(version: 20160419015040) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,19 @@ ActiveRecord::Schema.define(version: 20160418201338) do
   add_index "accounts", ["organization_id"], name: "index_accounts_on_organization_id", using: :btree
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
+
+  create_table "answers", force: :cascade do |t|
+    t.integer  "question_id", null: false
+    t.integer  "lead_id",     null: false
+    t.integer  "message_id",  null: false
+    t.string   "body",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "answers", ["lead_id"], name: "index_answers_on_lead_id", using: :btree
+  add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
+  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "leads", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -82,6 +95,15 @@ ActiveRecord::Schema.define(version: 20160418201338) do
 
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
+  create_table "questions", force: :cascade do |t|
+    t.string   "label",                  null: false
+    t.string   "body",                   null: false
+    t.string   "summary",                null: false
+    t.integer  "category",   default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "referrals", force: :cascade do |t|
     t.integer  "lead_id",     null: false
     t.integer  "referrer_id", null: false
@@ -104,6 +126,50 @@ ActiveRecord::Schema.define(version: 20160418201338) do
   add_index "referrers", ["organization_id", "user_id"], name: "index_referrers_on_organization_id_and_user_id", unique: true, using: :btree
   add_index "referrers", ["organization_id"], name: "index_referrers_on_organization_id", using: :btree
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
+
+  create_table "search_leads", force: :cascade do |t|
+    t.integer  "search_id",  null: false
+    t.integer  "lead_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "search_leads", ["lead_id"], name: "index_search_leads_on_lead_id", using: :btree
+  add_index "search_leads", ["search_id"], name: "index_search_leads_on_search_id", using: :btree
+
+  create_table "search_question_messages", force: :cascade do |t|
+    t.integer  "message_id",         null: false
+    t.integer  "lead_id",            null: false
+    t.integer  "search_question_id", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "search_question_messages", ["lead_id"], name: "index_search_question_messages_on_lead_id", using: :btree
+  add_index "search_question_messages", ["message_id"], name: "index_search_question_messages_on_message_id", using: :btree
+  add_index "search_question_messages", ["search_question_id"], name: "index_search_question_messages_on_search_question_id", using: :btree
+
+  create_table "search_questions", force: :cascade do |t|
+    t.integer  "search_id",        null: false
+    t.integer  "question_id",      null: false
+    t.integer  "next_question_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "search_questions", ["next_question_id"], name: "index_search_questions_on_next_question_id", using: :btree
+  add_index "search_questions", ["question_id"], name: "index_search_questions_on_question_id", using: :btree
+  add_index "search_questions", ["search_id"], name: "index_search_questions_on_search_id", using: :btree
+
+  create_table "searches", force: :cascade do |t|
+    t.integer  "organization_id",             null: false
+    t.string   "label",                       null: false
+    t.integer  "status",          default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "searches", ["organization_id"], name: "index_searches_on_organization_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -129,6 +195,9 @@ ActiveRecord::Schema.define(version: 20160418201338) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "users"
+  add_foreign_key "answers", "leads"
+  add_foreign_key "answers", "messages"
+  add_foreign_key "answers", "questions"
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"
@@ -138,6 +207,14 @@ ActiveRecord::Schema.define(version: 20160418201338) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"
+  add_foreign_key "search_leads", "leads"
+  add_foreign_key "search_leads", "searches"
+  add_foreign_key "search_question_messages", "leads"
+  add_foreign_key "search_question_messages", "messages"
+  add_foreign_key "search_question_messages", "search_questions"
+  add_foreign_key "search_questions", "questions"
+  add_foreign_key "search_questions", "searches"
+  add_foreign_key "searches", "organizations"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "users"
 end
