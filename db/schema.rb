@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419015040) do
+ActiveRecord::Schema.define(version: 20160419012844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20160419015040) do
   end
 
   add_index "answers", ["lead_id"], name: "index_answers_on_lead_id", using: :btree
-  add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
+  add_index "answers", ["message_id"], name: "index_answers_on_message_id", unique: true, using: :btree
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "leads", force: :cascade do |t|
@@ -137,18 +137,6 @@ ActiveRecord::Schema.define(version: 20160419015040) do
   add_index "search_leads", ["lead_id"], name: "index_search_leads_on_lead_id", using: :btree
   add_index "search_leads", ["search_id"], name: "index_search_leads_on_search_id", using: :btree
 
-  create_table "search_question_messages", force: :cascade do |t|
-    t.integer  "message_id",         null: false
-    t.integer  "lead_id",            null: false
-    t.integer  "search_question_id", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "search_question_messages", ["lead_id"], name: "index_search_question_messages_on_lead_id", using: :btree
-  add_index "search_question_messages", ["message_id"], name: "index_search_question_messages_on_message_id", using: :btree
-  add_index "search_question_messages", ["search_question_id"], name: "index_search_question_messages_on_search_question_id", using: :btree
-
   create_table "search_questions", force: :cascade do |t|
     t.integer  "search_id",        null: false
     t.integer  "question_id",      null: false
@@ -209,9 +197,6 @@ ActiveRecord::Schema.define(version: 20160419015040) do
   add_foreign_key "referrers", "users"
   add_foreign_key "search_leads", "leads"
   add_foreign_key "search_leads", "searches"
-  add_foreign_key "search_question_messages", "leads"
-  add_foreign_key "search_question_messages", "messages"
-  add_foreign_key "search_question_messages", "search_questions"
   add_foreign_key "search_questions", "questions"
   add_foreign_key "search_questions", "searches"
   add_foreign_key "searches", "organizations"
