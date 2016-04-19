@@ -5,5 +5,10 @@ class Lead < ActiveRecord::Base
   has_many :inquiries
   has_many :answers
 
-  delegate :first_name, to: :user
+  delegate :first_name, :phone_number, to: :user
+
+  def ask(question)
+    message = organization.ask(self, question)
+    inquiries.create(question: question, message: message)
+  end
 end
