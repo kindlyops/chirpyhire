@@ -1,4 +1,4 @@
-class SearchQuestionMessage < ActiveRecord::Base
+class Inquiry < ActiveRecord::Base
   belongs_to :message
   belongs_to :search_question
   belongs_to :search_lead

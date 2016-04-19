@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :search_question_message do
+  factory :inquiry do
     message
     search_lead
     search_question
