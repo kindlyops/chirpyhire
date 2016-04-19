@@ -11,4 +11,8 @@ class Lead < ActiveRecord::Base
     message = organization.ask(self, question)
     inquiries.create(question: question, message: message)
   end
+
+  def recently_answered?(question)
+    answers.recent.where(question: question).exists?
+  end
 end
