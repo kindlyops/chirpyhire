@@ -1,7 +1,11 @@
 FactoryGirl.define do
   factory :inquiry do
     message
-    search_lead
-    search_question
+    lead
+    question
+
+    trait :stale do
+      created_at { 60.days.ago }
+    end
   end
 end

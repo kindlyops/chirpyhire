@@ -54,17 +54,17 @@ ActiveRecord::Schema.define(version: 20160419022944) do
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
-    t.integer  "message_id",         null: false
-    t.integer  "search_lead_id",     null: false
-    t.integer  "search_question_id", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "message_id",  null: false
+    t.integer  "lead_id",     null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
+  add_index "inquiries", ["lead_id", "question_id"], name: "index_by_search_lead_and_search_question", unique: true, using: :btree
+  add_index "inquiries", ["lead_id"], name: "index_inquiries_on_lead_id", using: :btree
   add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
-  add_index "inquiries", ["search_lead_id", "search_question_id"], name: "index_by_search_lead_and_search_question", unique: true, using: :btree
-  add_index "inquiries", ["search_lead_id"], name: "index_inquiries_on_search_lead_id", using: :btree
-  add_index "inquiries", ["search_question_id"], name: "index_inquiries_on_search_question_id", using: :btree
+  add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
 
   create_table "leads", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -201,9 +201,9 @@ ActiveRecord::Schema.define(version: 20160419022944) do
   add_foreign_key "answers", "leads"
   add_foreign_key "answers", "messages"
   add_foreign_key "answers", "questions"
+  add_foreign_key "inquiries", "leads"
   add_foreign_key "inquiries", "messages"
-  add_foreign_key "inquiries", "search_leads"
-  add_foreign_key "inquiries", "search_questions"
+  add_foreign_key "inquiries", "questions"
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"

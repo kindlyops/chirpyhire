@@ -1,5 +1,5 @@
 class Inquiry < ActiveRecord::Base
   belongs_to :message
-  belongs_to :search_question
-  belongs_to :search_lead
+  belongs_to :question
+  belongs_to :lead
 end
