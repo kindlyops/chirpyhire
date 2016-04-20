@@ -3,6 +3,6 @@ FactoryGirl.define do
     organization
     label { Faker::Company.buzzword }
     body { Faker::Company.buzzword }
-    summary { Faker::Company.buzzword }
+    statement { Faker::Company.buzzword }
   end
 end

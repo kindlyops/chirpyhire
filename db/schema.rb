@@ -109,13 +109,14 @@ ActiveRecord::Schema.define(version: 20160420024207) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "label",                       null: false
-    t.string   "body",                        null: false
-    t.string   "summary",                     null: false
-    t.integer  "category",        default: 0, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "organization_id",             null: false
+    t.string   "label",                          null: false
+    t.string   "body",                           null: false
+    t.string   "statement",                      null: false
+    t.integer  "category",        default: 0,    null: false
+    t.boolean  "custom",          default: true, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "organization_id",                null: false
   end
 
   add_index "questions", ["organization_id"], name: "index_questions_on_organization_id", using: :btree
