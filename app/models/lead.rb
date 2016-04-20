@@ -4,15 +4,30 @@ class Lead < ActiveRecord::Base
   has_many :referrals
   has_many :inquiries
   has_many :answers
+  has_many :search_leads
+  has_many :searches, through: :search_leads
+  has_many :search_questions, through: :searches
+  has_many :questions, through: :search_questions
 
   delegate :first_name, :phone_number, to: :user
 
-  def ask(question)
-    message = organization.ask(self, question)
-    inquiries.create(question: question, message: message)
+  def recently_answered?(question)
+    recent_answers.where(question: question).exists?
   end
 
-  def recently_answered?(question)
-    answers.recent.where(question: question).exists?
+  def next_questions_for(question)
+    Question.where(id: search_questions.where(question: question).pluck('DISTINCT next_question_id'))
+  end
+
+  def has_unanswered_recent_inquiry?
+    recent_inquiries.unanswered_recently_by(lead: self).exists?
+  end
+
+  def recent_inquiries
+    inquiries.recent
+  end
+
+  def recent_answers
+    answers.recent
   end
 end

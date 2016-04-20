@@ -2,8 +2,11 @@ class Search < ActiveRecord::Base
   belongs_to :organization
   has_many :search_questions
   has_many :search_leads
+  has_many :leads, through: :search_leads
+  has_many :questions, through: :search_questions
 
-  def self.next_question_for(lead)
-    join(:search_leads).where(search_leads: { lead: lead })
+
+  def <<(lead)
+    search_leads.create(lead: lead)
   end
 end
