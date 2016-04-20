@@ -27,6 +27,10 @@ class Lead < ActiveRecord::Base
     recent_inquiries.unanswered_recently_by(lead: self).exists?
   end
 
+  def most_recent_inquiry
+    inquiries.order(created_at: :desc).first
+  end
+
   def recent_inquiries
     inquiries.recent
   end
