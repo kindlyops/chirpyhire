@@ -45,12 +45,13 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
           end
 
           5.times do
-            create(:search_question, search: searches.sample)
+            question = create(:question, organization: organization)
+            create(:search_question, search: searches.sample, question: question)
           end
         end
 
         context "with a 'next question' to the question" do
-          let(:next_question) { Question.all.sample }
+          let(:next_question) { organization.questions.sample }
 
           before(:each) do
             create(:search_question, search: searches.sample, question: question, next_question: next_question)

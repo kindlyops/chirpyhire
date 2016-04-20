@@ -3,4 +3,5 @@ class Question < ActiveRecord::Base
 
   has_many :inquiries
   has_many :answers
+  belongs_to :organization
 end

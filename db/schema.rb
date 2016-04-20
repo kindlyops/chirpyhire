@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419022944) do
+ActiveRecord::Schema.define(version: 20160420024207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,13 +109,16 @@ ActiveRecord::Schema.define(version: 20160419022944) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "label",                  null: false
-    t.string   "body",                   null: false
-    t.string   "summary",                null: false
-    t.integer  "category",   default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "label",                       null: false
+    t.string   "body",                        null: false
+    t.string   "summary",                     null: false
+    t.integer  "category",        default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "organization_id",             null: false
   end
+
+  add_index "questions", ["organization_id"], name: "index_questions_on_organization_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "lead_id",     null: false
@@ -208,6 +211,7 @@ ActiveRecord::Schema.define(version: 20160419022944) do
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"
   add_foreign_key "phones", "organizations"
+  add_foreign_key "questions", "organizations"
   add_foreign_key "referrals", "leads"
   add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"
