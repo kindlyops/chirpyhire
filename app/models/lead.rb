@@ -20,7 +20,7 @@ class Lead < ActiveRecord::Base
   end
 
   def questions_unasked_recently
-    questions.where.not(id: recent_answers.pluck('DISTINCT question_id'))
+    questions.where.not(id: recent_inquiries.pluck('DISTINCT question_id'))
   end
 
   def has_unanswered_recent_inquiry?
