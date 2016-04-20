@@ -16,7 +16,11 @@ class Lead < ActiveRecord::Base
   end
 
   def next_questions_for(question)
-    Question.where(id: search_questions.where(question: question).pluck('DISTINCT next_question_id'))
+    questions.where(id: search_questions.where(question: question).pluck('DISTINCT next_question_id'))
+  end
+
+  def questions_unasked_recently
+    questions.where.not(id: recent_answers.pluck('DISTINCT question_id'))
   end
 
   def has_unanswered_recent_inquiry?

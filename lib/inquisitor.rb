@@ -17,6 +17,11 @@ class Inquisitor
 
   private
 
+  def ask_question
+    message = organization.ask(lead, question)
+    inquiries.create(question: question, message: message)
+  end
+
   attr_reader :lead, :question
 
   def attempt_next_inquiry
@@ -35,20 +40,19 @@ class Inquisitor
   end
 
   def oldest_unasked_question
-    lead.questions.unasked_recently_of(lead: lead).order(:created_at).first
+    questions_unasked_recently.order(:created_at).first
+  end
+
+  def questions_unasked_recently
+    @questions_unasked_recently ||= lead.questions_unasked_recently
   end
 
   def unasked_next_question
-    @unasked_next_question ||= next_questions.unasked_recently_of(lead: lead).sample
+    @unasked_next_question ||= questions_unasked_recently.merge(next_questions).sample
   end
 
   def next_questions
     lead.next_questions_for(question)
-  end
-
-  def ask_question
-    message = organization.ask(lead, question)
-    inquiries.create(question: question, message: message)
   end
 
   def organization

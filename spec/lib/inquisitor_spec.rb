@@ -62,7 +62,7 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
         context "without a 'next question' to the question" do
           context "with unasked questions in other searches" do
             let(:oldest_unasked_question) do
-              lead.questions.unasked_recently_of(lead: lead).order(:created_at).first
+              lead.questions_unasked_recently.order(:created_at).first
             end
 
             it "inquires the oldest unasked question" do
