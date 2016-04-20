@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :search do
-    organization
+    account
     label { Faker::Company.buzzword }
   end
 end

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
-  let(:organization) { create(:organization_with_successful_phone) }
+  let(:organization) { create(:organization, :with_successful_phone, :with_account) }
+  let(:account) { organization.accounts.first }
   let(:question) { create(:question) }
   let(:lead) { create(:lead, organization: organization) }
 
@@ -38,7 +39,7 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
       end
 
       context "with other searches" do
-        let(:searches) { create_list(:search, 2, organization: organization) }
+        let(:searches) { create_list(:search, 2, account: account) }
         before(:each) do
           searches.each do |search|
             search.leads << lead

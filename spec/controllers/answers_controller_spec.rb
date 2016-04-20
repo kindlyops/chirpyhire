@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:organization) { create(:organization_with_phone) }
+  let(:organization) { create(:organization, :with_phone) }
   let(:sender_phone_number) { "+15555555555" }
   let(:params) do
     {

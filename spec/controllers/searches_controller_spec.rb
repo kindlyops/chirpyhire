@@ -9,7 +9,7 @@ RSpec.describe SearchesController, type: :controller do
   end
 
   context "logged in" do
-    let(:account) { create(:account, :with_organization, :with_user) }
+    let(:account) { create(:account, :with_organization) }
     let(:organization) { account.organization }
 
     before(:each) do

@@ -13,7 +13,7 @@ class Search < ActiveRecord::Base
     self.label = "#{account.name} search at #{DateTime.current}"
   end
 
-  def inquire
+  def make_inquiries
     leads.each { |lead| InquisitorJob.perform_later(lead, first_question) }
   end
 

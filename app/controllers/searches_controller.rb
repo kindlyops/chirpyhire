@@ -7,7 +7,7 @@ class SearchesController < ApplicationController
       search.leads << leads
       search.save!
 
-      search.inquire
+      search.make_inquiries
     end
   end
 
@@ -24,8 +24,8 @@ class SearchesController < ApplicationController
   end
 
   def get_array_value(index)
-    return question_ids[index] unless index < 0
-    nil
+    return if index < 0
+    question_ids[index]
   end
 
   def question_ids
