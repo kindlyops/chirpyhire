@@ -1,6 +1,9 @@
 class SearchesController < ApplicationController
   before_action :authenticate_account!
 
+  before_action :ensure_leads, only: :create
+  before_action :ensure_questions, only: :create
+
   def create
     current_account.searches.build do |search|
       search.search_questions << search_questions
@@ -9,6 +12,10 @@ class SearchesController < ApplicationController
 
       search.make_inquiries
     end
+  end
+
+  def new
+    @search = current_account.searches.build
   end
 
   private
@@ -30,5 +37,17 @@ class SearchesController < ApplicationController
 
   def question_ids
     @question_ids ||= params[:search][:question_ids]
+  end
+
+  def ensure_leads
+    if leads.blank?
+      redirect_to :back, alert: "There are no leads!"
+    end
+  end
+
+  def ensure_questions
+    if question_ids.blank?
+      redirect_to :back, alert: "No questions selected!"
+    end
   end
 end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :searches, only: :create
+  resources :searches, only: [:new, :create]
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
