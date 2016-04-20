@@ -25,7 +25,8 @@ RSpec.describe SearchesController, type: :controller do
     end
 
     context "with valid search params" do
-      let(:questions) { create_list(:question, 3, organization: organization) }
+      let!(:questions) { create_list(:question, 3, organization: organization) }
+      let!(:leads) { create_list(:lead, 2, organization: organization) }
 
       let(:params) do
         { search: {
@@ -51,7 +52,16 @@ RSpec.describe SearchesController, type: :controller do
         }.to change{SearchQuestion.count}.by(params[:search][:question_ids].length)
       end
 
-      it "creates an InquisitorJob for each lead in the search" do
+      it "creates search leads" do
+        expect {
+          post :create, params
+        }.to change{SearchLead.count}.by(organization.leads.count)
+      end
+
+      it "creates an InquisitorJob for each lead in the organization" do
+        expect {
+          post :create, params
+        }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.leads.count)
       end
     end
   end

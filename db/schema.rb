@@ -155,14 +155,16 @@ ActiveRecord::Schema.define(version: 20160420024207) do
   add_index "search_leads", ["search_id"], name: "index_search_leads_on_search_id", using: :btree
 
   create_table "search_questions", force: :cascade do |t|
-    t.integer  "search_id",        null: false
-    t.integer  "question_id",      null: false
+    t.integer  "search_id",            null: false
+    t.integer  "question_id",          null: false
     t.integer  "next_question_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.integer  "previous_question_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "search_questions", ["next_question_id"], name: "index_search_questions_on_next_question_id", using: :btree
+  add_index "search_questions", ["previous_question_id"], name: "index_search_questions_on_previous_question_id", using: :btree
   add_index "search_questions", ["question_id"], name: "index_search_questions_on_question_id", using: :btree
   add_index "search_questions", ["search_id", "question_id"], name: "index_search_questions_on_search_id_and_question_id", unique: true, using: :btree
   add_index "search_questions", ["search_id"], name: "index_search_questions_on_search_id", using: :btree

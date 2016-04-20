@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def organization
     @organization ||= current_account.organization
   end
+
+  def leads
+    @leads ||= organization.leads
+  end
 end
