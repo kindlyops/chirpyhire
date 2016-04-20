@@ -7,7 +7,7 @@ class Inquisitor
 
   def call
     if lead.has_unanswered_recent_inquiry?
-    #   # ask again in the near future
+      InquisitorJob.set(wait: 1.hour).perform_later(lead, question)
     elsif lead.recently_answered?(question)
       attempt_next_inquiry
     else

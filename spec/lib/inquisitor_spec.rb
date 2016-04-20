@@ -21,7 +21,11 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
         }.not_to change{question.inquiries.count}
       end
 
-      it "sets up inquiring the question in the near future"
+      it "sets up inquiring the question in the near future" do
+        expect {
+          subject.call
+        }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(1)
+      end
     end
 
     context "with a recent answer to the question" do
