@@ -41,7 +41,7 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
         let(:searches) { create_list(:search, 2, organization: organization) }
         before(:each) do
           searches.each do |search|
-            search << lead
+            search.leads << lead
           end
 
           5.times do

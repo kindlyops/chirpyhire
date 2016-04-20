@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
   def unsubscribe_from(organization)
     subscriptions.find_by(organization: organization).destroy
   end
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 end

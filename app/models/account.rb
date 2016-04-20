@@ -7,6 +7,7 @@ class Account < ActiveRecord::Base
   enum role: [:admin, :owner]
   belongs_to :organization
   belongs_to :user
+  has_many :searches
 
-  delegate :first_name, to: :user
+  delegate :first_name, :name, to: :user
 end

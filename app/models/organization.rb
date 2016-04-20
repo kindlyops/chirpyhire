@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :messages
   has_many :subscriptions
   has_many :questions
+  has_many :searches, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true

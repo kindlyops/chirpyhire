@@ -168,14 +168,13 @@ ActiveRecord::Schema.define(version: 20160420024207) do
   add_index "search_questions", ["search_id"], name: "index_search_questions_on_search_id", using: :btree
 
   create_table "searches", force: :cascade do |t|
-    t.integer  "organization_id",             null: false
-    t.string   "label",                       null: false
-    t.integer  "status",          default: 0, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "account_id", null: false
+    t.string   "label",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "searches", ["organization_id"], name: "index_searches_on_organization_id", using: :btree
+  add_index "searches", ["account_id"], name: "index_searches_on_account_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -221,7 +220,7 @@ ActiveRecord::Schema.define(version: 20160420024207) do
   add_foreign_key "search_leads", "searches"
   add_foreign_key "search_questions", "questions"
   add_foreign_key "search_questions", "searches"
-  add_foreign_key "searches", "organizations"
+  add_foreign_key "searches", "accounts"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "users"
 end
