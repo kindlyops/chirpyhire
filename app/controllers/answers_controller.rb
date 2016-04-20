@@ -1,10 +1,10 @@
 class AnswersController < SmsController
 
   def create
-    if lead.blank?
-      error_message
-    else
+    if lead.present?
       create_answer
+    else
+      error_message
     end
   end
 
