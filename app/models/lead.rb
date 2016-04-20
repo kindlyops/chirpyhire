@@ -11,31 +11,27 @@ class Lead < ActiveRecord::Base
 
   delegate :first_name, :phone_number, to: :user
 
-  def recently_answered?(question)
-    recent_answers.where(question: question).exists?
+  def has_search_in_progress?
+    search_leads.processing.exists?
   end
 
-  def next_questions_for(question)
-    questions.where(id: search_questions.where(question: question).pluck('DISTINCT next_question_id'))
+  def pending_searches?
+    search_leads.pending.exists?
   end
 
-  def questions_unasked_recently
-    questions.where.not(id: recent_inquiries.pluck('DISTINCT question_id'))
+  def oldest_pending_search_lead
+    search_leads.pending.order(:created_at).first
   end
 
-  def has_unanswered_recent_inquiry?
-    recent_inquiries.unanswered_recently_by(lead: self).exists?
+  def recently_answered_negatively?(question)
+    answers.to(question).recent.negative.exists?
+  end
+
+  def recently_answered_positively?(question)
+    answers.to(question).recent.positive.exists?
   end
 
   def most_recent_inquiry
     inquiries.order(created_at: :desc).first
-  end
-
-  def recent_inquiries
-    inquiries.recent
-  end
-
-  def recent_answers
-    answers.recent
   end
 end

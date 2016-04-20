@@ -28,6 +28,10 @@ class AnswersController < SmsController
   end
 
   def answer_attributes
-    { body: params["Body"], message: message, question: inquiry.question }
+    { body: normalized_body, message: message, question: inquiry.question }
+  end
+
+  def normalized_body
+    params["Body"].strip.upcase
   end
 end

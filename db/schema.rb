@@ -145,10 +145,12 @@ ActiveRecord::Schema.define(version: 20160420024207) do
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "search_leads", force: :cascade do |t|
-    t.integer  "search_id",  null: false
-    t.integer  "lead_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "search_id",              null: false
+    t.integer  "lead_id",                null: false
+    t.integer  "status",     default: 0, null: false
+    t.integer  "fit",        default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "search_leads", ["lead_id"], name: "index_search_leads_on_lead_id", using: :btree

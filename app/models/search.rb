@@ -13,11 +13,13 @@ class Search < ActiveRecord::Base
     self.label = "#{account.name} search at #{DateTime.current}"
   end
 
-  def make_inquiries
-    leads.each { |lead| InquisitorJob.perform_later(lead, first_question) }
+  def start
+    search_leads.each do |search_lead|
+      InquisitorJob.perform_later(search_lead, first_search_question)
+    end
   end
 
-  def first_question
+  def first_search_question
     search_questions.find_by(previous_question: nil)
   end
 end

@@ -1,62 +1,89 @@
 class Inquisitor
 
-  def initialize(lead:, question:)
-    @lead = lead
-    @question = question
+  def initialize(search_lead:, search_question:)
+    @search_lead = search_lead
+    @search_question = search_question
   end
 
   def call
-    if lead.has_unanswered_recent_inquiry?
-      InquisitorJob.set(wait: 1.hour).perform_later(lead, question)
-    elsif lead.recently_answered?(question)
-      attempt_next_inquiry
+    if existing_search_in_progress?
+      search_lead.pending!
+    elsif search_finished?
+      finish_search
+    elsif recently_answered_any_question_negatively?
+      search_lead.bad_fit!
+      finish_search
+    elsif recently_answered_positively?
+      ask_next_question
     else
+      search_lead.processing!
       ask_question
     end
   end
 
   private
 
+  attr_reader :search_question, :search_lead
+
   def ask_question
     message = organization.ask(lead, question)
     inquiries.create(question: question, message: message)
   end
 
-  attr_reader :lead, :question
-
-  def attempt_next_inquiry
-    return unless follow_up_question.present?
-    Inquisitor.new(lead: lead, question: follow_up_question).call
+  def existing_search_in_progress?
+    lead.has_search_in_progress?
   end
 
-  def follow_up_question
-    @follow_up_question ||= begin
-      if unasked_next_question.present?
-        unasked_next_question
-      else
-        oldest_unasked_question
-      end
-    end
+  def search_finished?
+    search_question.blank?
   end
 
-  def oldest_unasked_question
-    questions_unasked_recently.order(:created_at).first
+  def pending_searches?
+    lead.pending_searches?
   end
 
-  def questions_unasked_recently
-    @questions_unasked_recently ||= lead.questions_unasked_recently
+  def start_pending_search
+    InquisitorJob.perform_later(
+      next_search_lead,
+      next_search_lead.first_search_question
+    )
   end
 
-  def unasked_next_question
-    @unasked_next_question ||= questions_unasked_recently.merge(next_questions).sample
+  def next_search_lead
+    @next_search_lead ||= lead.oldest_pending_search_lead
   end
 
-  def next_questions
-    lead.next_questions_for(question)
+  def ask_next_question
+    InquisitorJob.perform_later(search_lead, search_question.next_question)
+  end
+
+  def recently_answered_any_question_negatively?
+    lead.recently_answered_negatively?(questions)
+  end
+
+  def recently_answered_positively?
+    lead.recently_answered_positively?(question)
+  end
+
+  def finish_search
+    search_lead.finished!
+    start_pending_search if pending_searches?
   end
 
   def organization
-    lead.organization
+    search_lead.organization
+  end
+
+  def lead
+    @lead ||= search_lead.lead
+  end
+
+  def question
+    @question ||= search_question.question
+  end
+
+  def questions
+    search_lead.search.questions
   end
 
   def inquiries

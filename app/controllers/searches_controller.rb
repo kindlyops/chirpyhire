@@ -10,7 +10,7 @@ class SearchesController < ApplicationController
       search.leads << leads
       search.save!
 
-      search.make_inquiries
+      search.start
     end
   end
 
