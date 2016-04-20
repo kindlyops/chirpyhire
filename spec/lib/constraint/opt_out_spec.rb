@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe OptOutConstraint do
+RSpec.describe Constraint::OptOut do
 
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { OptOutConstraint.new }
+  let(:constraint) { Constraint::OptOut.new }
 
   before(:each) do
     allow(request).to receive(:request_parameters).and_return(parameters)

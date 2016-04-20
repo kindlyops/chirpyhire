@@ -5,7 +5,7 @@ FactoryGirl.define do
     question
 
     trait :stale do
-      created_at { 60.days.ago }
+      created_at { 3.days.ago }
     end
   end
 end

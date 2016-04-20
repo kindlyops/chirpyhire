@@ -1,4 +1,4 @@
-class OptOutConstraint
+class Constraint::OptOut
   OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT)
 
   def matches?(request)

@@ -1,0 +1,2 @@
+class Constraint::Answer
+end

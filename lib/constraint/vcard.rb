@@ -1,4 +1,4 @@
-class VcardConstraint
+class Constraint::Vcard
   MEDIA_TYPES = %w(text/vcard text/directory text/x-vcard text/directory;profile=vCard)
 
   def matches?(request)

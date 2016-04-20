@@ -1,4 +1,4 @@
-class OptInConstraint
+class Constraint::OptIn
   OPT_IN_RESPONSES = %w(START YES)
 
   def matches?(request)
