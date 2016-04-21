@@ -14,8 +14,8 @@ class SubscriptionsController < SmsController
     if sender.unsubscribed_from?(organization)
       render_sms not_subscribed
     else
-      subscription = sender.unsubscribe_from(organization)
-      render_sms subscription.sms_response
+      sender.unsubscribe_from(organization)
+      render_sms unsubscribed_notice
     end
   end
 
@@ -23,6 +23,12 @@ class SubscriptionsController < SmsController
 
   def ensure_lead_exists
     organization.leads.find_or_create_by(user: sender)
+  end
+
+  def unsubscribed_notice
+    Sms::Response.new do |r|
+      r.Message "You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}."
+    end
   end
 
   def already_subscribed

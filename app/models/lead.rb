@@ -11,6 +11,16 @@ class Lead < ActiveRecord::Base
 
   delegate :first_name, :phone_number, to: :user
 
+  scope :subscribed, -> { joins(user: :subscriptions) }
+
+  def subscribe
+    user.subscribe_to(organization)
+  end
+
+  def unsubscribe
+    user.unsubscribe_from(organization)
+  end
+
   def has_other_search_in_progress?(search)
     search_leads.where.not(search: search).processing.exists?
   end

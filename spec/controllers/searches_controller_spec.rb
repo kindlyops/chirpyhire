@@ -37,7 +37,7 @@ RSpec.describe SearchesController, type: :controller do
         end
 
         context "with leads" do
-          let!(:leads) { create_list(:lead, 2, organization: organization) }
+          let!(:leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
 
           it "is OK" do
             post :create, params
@@ -95,7 +95,9 @@ RSpec.describe SearchesController, type: :controller do
           end
         end
 
-        context "without any leads" do
+        context "without any subscribed leads" do
+          let!(:leads) { create_list(:lead, 2, organization: organization) }
+
           before(:each) do
             request.env["HTTP_REFERER"] = "origin"
           end
@@ -111,9 +113,9 @@ RSpec.describe SearchesController, type: :controller do
             }.not_to change{organization.searches.count}
           end
 
-          it "sets a flash alert saying there are no leads" do
+          it "sets a flash alert saying there are no subscribed leads" do
             post :create, params
-            expect(flash[:alert]).to include("There are no leads!")
+            expect(flash[:alert]).to include("There are no subscribed leads!")
           end
         end
       end

@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     @organization ||= current_account.organization
   end
 
-  def leads
-    @leads ||= organization.leads
+  def subscribed_leads
+    @subscribed_leads ||= organization.subscribed_leads
   end
 end

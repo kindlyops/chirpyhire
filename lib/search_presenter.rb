@@ -2,7 +2,7 @@ class SearchPresenter
   delegate :account, :errors, to: :search
   attr_reader :search, :questions
 
-  def initialize(search: search, questions: questions)
+  def initialize(search, questions)
     @search = search
     @questions = questions
   end

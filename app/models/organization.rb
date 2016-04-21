@@ -1,6 +1,7 @@
 class Organization < ActiveRecord::Base
   has_many :accounts
   has_many :leads
+  has_many :subscribed_leads, -> { subscribed }, class_name: "Lead"
   has_many :referrals, through: :leads
   has_many :referrers
   has_many :messages
