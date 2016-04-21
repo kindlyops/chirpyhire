@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   authenticate :account, lambda { |a| a.super_admin? } do
     mount Sidekiq::Web => '/sidekiq'
   end
+
+  root 'searches#new'
 end

@@ -19,7 +19,8 @@ RSpec.describe SearchesController, type: :controller do
     describe "#new" do
       it "assigns a new search as @search" do
         get :new
-        expect(assigns(:search)).to be_a_new(Search)
+        expect(assigns(:search)).to be_a(SearchPresenter)
+        expect(assigns(:search).search).to be_a_new(Search)
         expect(assigns(:search).account).to eq(account)
       end
     end

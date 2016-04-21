@@ -5,6 +5,8 @@ class Search < ActiveRecord::Base
   has_many :leads, through: :search_leads
   has_many :questions, through: :search_questions
 
+  accepts_nested_attributes_for :leads, :search_questions
+
   before_create :ensure_label
 
   def ensure_label
@@ -21,5 +23,9 @@ class Search < ActiveRecord::Base
 
   def first_search_question
     search_questions.find_by(previous_question: nil)
+  end
+
+  def search_question_after(search_question)
+    search_questions.find_by(question: search_question.next_question)
   end
 end

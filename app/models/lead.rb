@@ -11,8 +11,8 @@ class Lead < ActiveRecord::Base
 
   delegate :first_name, :phone_number, to: :user
 
-  def has_search_in_progress?
-    search_leads.processing.exists?
+  def has_other_search_in_progress?(search)
+    search_leads.where.not(search: search).processing.exists?
   end
 
   def pending_searches?
@@ -33,5 +33,9 @@ class Lead < ActiveRecord::Base
 
   def most_recent_inquiry
     inquiries.order(created_at: :desc).first
+  end
+
+  def processing_search_lead
+    search_leads.processing.first
   end
 end

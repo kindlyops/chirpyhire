@@ -5,20 +5,18 @@ class SearchesController < ApplicationController
   before_action :ensure_questions, only: :create
 
   def create
-    current_account.searches.build do |search|
-      search.search_questions << search_questions
-      search.leads << leads
-      search.save!
-
-      search.start
-    end
+    search.start
   end
 
   def new
-    @search = current_account.searches.build
+    @search = SearchPresenter.new(search: current_account.searches.build, questions: questions)
   end
 
   private
+
+  def search
+    @search ||= current_account.searches.create(search_questions: search_questions, leads: leads)
+  end
 
   def search_questions
     question_ids.map.with_index do |id, index|
@@ -33,6 +31,10 @@ class SearchesController < ApplicationController
   def get_array_value(index)
     return if index < 0
     question_ids[index]
+  end
+
+  def questions
+    organization.questions
   end
 
   def question_ids

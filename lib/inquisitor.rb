@@ -31,7 +31,11 @@ class Inquisitor
   end
 
   def existing_search_in_progress?
-    lead.has_search_in_progress?
+    lead.has_other_search_in_progress?(search)
+  end
+
+  def search
+    search_lead.search
   end
 
   def search_finished?
