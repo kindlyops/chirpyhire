@@ -17,8 +17,16 @@ class Lead < ActiveRecord::Base
     user.subscribe_to(organization)
   end
 
+  def subscribed?
+    user.subscribed_to?(organization)
+  end
+
   def unsubscribe
     user.unsubscribe_from(organization)
+  end
+
+  def unsubscribed?
+    user.unsubscribed_from?(organization)
   end
 
   def has_other_search_in_progress?(search)

@@ -8,8 +8,15 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         "To" => organization.phone_number,
         "From" => phone_number,
-        "Body" => "START"
+        "Body" => "START",
+        "MessageSid" => "123"
       }
+    end
+
+    it "creates a message" do
+      expect {
+        post :create, params
+      }.to change{organization.messages.count}.by(1)
     end
 
     context "with an existing user" do
@@ -84,8 +91,15 @@ RSpec.describe SubscriptionsController, type: :controller do
       {
         "To" => organization.phone_number,
         "From" => phone_number,
-        "Body" => "STOP"
+        "Body" => "STOP",
+        "MessageSid" => "123"
       }
+    end
+
+    it "creates a message" do
+      expect {
+        post :destroy, params
+      }.to change{organization.messages.count}.by(1)
     end
 
     context "with an existing user" do
