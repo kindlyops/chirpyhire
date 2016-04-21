@@ -5,15 +5,10 @@ class Search < ActiveRecord::Base
   has_many :leads, through: :search_leads
   has_many :questions, through: :search_questions
 
+  delegate :organization, to: :account
+
   accepts_nested_attributes_for :leads, :search_questions
-
   before_create :ensure_label
-
-  def ensure_label
-    return if self.label.present?
-
-    self.label = "#{account.name} search at #{DateTime.current}"
-  end
 
   def start
     search_leads.each do |search_lead|
@@ -27,5 +22,13 @@ class Search < ActiveRecord::Base
 
   def search_question_after(search_question)
     search_questions.find_by(question: search_question.next_question)
+  end
+
+  private
+
+  def ensure_label
+    return if self.label.present?
+
+    self.label = "#{account.name} search at #{DateTime.current}"
   end
 end
