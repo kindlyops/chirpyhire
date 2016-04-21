@@ -10,6 +10,10 @@ class Search < ActiveRecord::Base
   accepts_nested_attributes_for :leads, :search_questions
   before_create :ensure_label
 
+  def searcher_name
+    account.name
+  end
+
   def start
     search_leads.each do |search_lead|
       InquisitorJob.perform_later(search_lead, first_search_question)

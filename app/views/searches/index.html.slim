@@ -1,0 +1,21 @@
+h1 Searches
+
+table
+  thead
+    tr
+      th Label
+      th colspan="3"
+      th Searcher
+      th colspan="3"
+      th Created At
+      th colspan="3"
+  tbody
+    - @searches.each do |search|
+      tr
+        td search.label
+        td search.searcher_name
+        td search.created_at
+        td = link_to 'Show', search
+br
+
+= link_to 'Find a Caregiver', new_search_path

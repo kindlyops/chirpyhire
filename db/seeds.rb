@@ -18,7 +18,10 @@ user = User.find_or_create_by(
  phone_number: "+14047908943"
 )
 
-FactoryGirl.create(:account, role: Account.roles[:owner], user: user, organization: org, email: "harrywhelchel@gmail.com", super_admin: true)
+email = "harrywhelchel@gmail.com"
+unless Account.where(email: email).exists?
+  FactoryGirl.create(:account, role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
+end
 
 Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
 
@@ -351,4 +354,6 @@ questions = [
 
 org.questions.create(questions) unless org.questions.exists?
 
-Lead.find_or_create_by(organization: org, user: user)
+lead = Lead.find_or_create_by(organization: org, user: user)
+
+lead.subscribe unless lead.subscribed?

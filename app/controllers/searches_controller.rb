@@ -4,6 +4,10 @@ class SearchesController < ApplicationController
   before_action :ensure_subscribed_leads, only: :create
   before_action :ensure_questions, only: :create
 
+  def index
+    @searches = organization.searches
+  end
+
   def create
     search.start
   end
@@ -40,7 +44,11 @@ class SearchesController < ApplicationController
   end
 
   def question_ids
-    @question_ids ||= params[:search][:question_ids]
+    @question_ids ||= search_attributes[:question_ids]
+  end
+
+  def search_attributes
+    @search_attributes ||= params[:search] || {}
   end
 
   def ensure_subscribed_leads
