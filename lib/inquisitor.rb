@@ -8,10 +8,7 @@ class Inquisitor
   def call
     if existing_search_in_progress?
       search_lead.pending!
-    elsif search_finished?
-      finish_search
-    elsif recently_answered_any_question_negatively?
-      search_lead.bad_fit!
+    elsif search_finished? || recently_answered_any_question_negatively?
       finish_search
     elsif recently_answered_positively?
       ask_next_question
@@ -70,6 +67,7 @@ class Inquisitor
   end
 
   def finish_search
+    search_lead.determine_fit
     search_lead.finished!
     start_pending_search if pending_searches?
   end

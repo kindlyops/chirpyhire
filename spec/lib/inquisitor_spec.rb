@@ -78,6 +78,31 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
         expect(search_lead.finished?).to eq(true)
       end
 
+      context "with all positive answers in the search" do
+        before(:each) do
+          second_question = create(:question, organization: organization)
+          search.questions << second_question
+          create(:answer, lead: lead, question: question, body: "Y")
+          create(:answer, lead: lead, question: second_question, body: "Y")
+        end
+
+        it "marks the search lead as a good fit" do
+          subject.call
+          expect(search_lead.good_fit?).to eq(true)
+        end
+      end
+
+      context "with a negative answer" do
+        before(:each) do
+          create(:answer, lead: lead, question: question, body: "N")
+        end
+
+        it "marks the search lead as a bad fit" do
+          subject.call
+          expect(search_lead.bad_fit?).to eq(true)
+        end
+      end
+
       context "with other pending searches for the lead" do
         let(:pending_search) { create(:search, :with_search_question, account: account) }
         let(:next_search_lead) { pending_search.search_leads.find_by(lead: lead) }

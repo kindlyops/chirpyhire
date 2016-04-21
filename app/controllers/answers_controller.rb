@@ -1,10 +1,10 @@
 class AnswersController < SmsController
 
   def create
-    if lead.present?
+    if lead.present? && inquiry.present?
       create_answer
-
-      handle_search
+      continue_search
+      head :ok
     else
       error_message
     end
@@ -12,25 +12,12 @@ class AnswersController < SmsController
 
   private
 
-  def handle_search
-    if next_search_question.blank? && normalized_body == "Y"
-      search_lead.good_fit!
-    else
-      continue_search
-    end
-  end
-
   def continue_search
     InquisitorJob.perform_later(search_lead, next_search_question)
   end
 
   def create_answer
-    if inquiry.present?
-      lead.answers.create(answer_attributes)
-      head :ok
-    else
-      error_message
-    end
+    lead.answers.create(answer_attributes)
   end
 
   def lead

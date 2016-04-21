@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:organization) { create(:organization, :with_phone) }
+  let(:organization) { create(:organization, :with_phone, :with_account) }
+  let(:account) { organization.accounts.first }
   let(:sender_phone_number) { "+15555555555" }
   let(:params) do
     {
@@ -13,7 +14,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "#create" do
-    context "without an existing lead" do
+    context "without an ongoing search for the lead" do
       it "returns an error" do
         post :create, params
         expect(response.body).to include("Sorry I didn't understand that.")
@@ -32,9 +33,18 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "with an existing lead" do
+    context "with an ongoing search for the lead" do
+      let(:search) { create(:search, account: account) }
+      let(:questions) { create_list(:question, 2, organization: organization)}
       let(:user) { create(:user, phone_number: sender_phone_number) }
       let(:lead) { create(:lead, organization: organization, user: user) }
+
+      before(:each) do
+        search.leads << lead
+        search.search_questions << create(:search_question, question: questions.first, next_question: questions.last)
+        search.search_questions << create(:search_question, question: questions.last)
+        lead.search_leads.each(&:processing!)
+      end
 
       context "without an inquiry" do
         it "returns an error" do
@@ -56,7 +66,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context "with an inquiry" do
-        let(:inquiry) { create(:inquiry, lead: lead) }
+        let!(:inquiry) { create(:inquiry, lead: lead, question: questions.first) }
 
         it "creates an answer" do
           expect {
@@ -75,6 +85,11 @@ RSpec.describe AnswersController, type: :controller do
           expect {
             post :create, params
           }.to change{organization.messages.count}.by(1)
+        end
+
+        it "continues the search" do
+          expect(InquisitorJob).to receive(:perform_later)
+          post :create, params
         end
       end
     end

@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
   belongs_to :lead
   belongs_to :message
 
-  scope :recent, -> { where('created_at > ?', 30.days.ago) }
+  scope :recent, -> { where('created_at > ?', 7.days.ago) }
 
   def self.positive
     where(body: "Y")
