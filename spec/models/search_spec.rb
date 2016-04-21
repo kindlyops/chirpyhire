@@ -7,6 +7,33 @@ RSpec.describe Search, type: :model do
   let(:search) { create(:search, account: account) }
   let(:leads) { create_list(:lead, 2, organization: organization) }
 
+  describe "#searcher_name" do
+    it "is the account's name" do
+      expect(search.searcher_name).to eq(account.name)
+    end
+  end
+
+  describe "#good_fits" do
+    context "with good fits" do
+      before(:each) do
+        search.leads << leads
+      end
+
+      it "is the leads of good fit search leads" do
+        first_search_lead = search.search_leads.first
+        first_search_lead.good_fit!
+
+        expect(search.good_fits).to eq([first_search_lead.lead])
+      end
+    end
+
+    context "without good fits" do
+      it "is empty" do
+        expect(search.good_fits).to be_empty
+      end
+    end
+  end
+
   describe "#start" do
     context "with search leads" do
       before(:each) do
