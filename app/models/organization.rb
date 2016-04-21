@@ -11,10 +11,6 @@ class Organization < ActiveRecord::Base
 
   delegate :number, to: :phone, prefix: true
 
-  def sms_client
-    @sms_client ||= Sms::Client.new(self)
-  end
-
   def ask(lead, question)
     send_message(to: lead.phone_number, body: question.body, from: phone_number)
   end
@@ -32,5 +28,9 @@ class Organization < ActiveRecord::Base
   def send_message(message)
     message = sms_client.send_message(message.merge(from: phone_number))
     messages.create(sid: message.sid)
+  end
+
+  def sms_client
+    @sms_client ||= Sms::Client.new(self)
   end
 end
