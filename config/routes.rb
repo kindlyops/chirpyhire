@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
 
   resources :searches, only: [:new, :create]
@@ -10,7 +12,7 @@ Rails.application.routes.draw do
 
   devise_for :accounts
 
-  devise_scope :account do
-    root :to => 'devise/sessions#new'
+  authenticate :account, lambda { |a| a.super_admin? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 end

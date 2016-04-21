@@ -65,3 +65,5 @@ gem 'namae', '~> 0.10.0'
 gem 'twilio-ruby', '~> 4.11.0'
 gem 'naught', '~> 1.1.0'
 gem 'sidekiq', '~> 4.0.0'
+
+gem 'sinatra', :require => nil
