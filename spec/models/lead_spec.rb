@@ -6,6 +6,57 @@ RSpec.describe Lead, type: :model do
   let(:search) { create(:search, account: account) }
 
   let(:lead) { create(:lead, organization: organization) }
+  let(:user) { lead.user }
+
+  describe "#subscribe" do
+    it "creates a subscription" do
+      expect {
+        lead.subscribe
+      }.to change{user.subscriptions.with_deleted.count}.by(1)
+    end
+  end
+
+  describe "#subscribed?" do
+    context "when subscribed to the organization" do
+      it "is true" do
+        lead.subscribe
+        expect(lead.subscribed?).to eq(true)
+      end
+    end
+
+    context "when not subscribed to the organization" do
+      it "is false" do
+        expect(lead.subscribed?).to eq(false)
+      end
+    end
+  end
+
+  describe "#unsubscribe" do
+    context "with a subscription" do
+      let(:subscription) { lead.subscribe }
+
+      it "soft deletes a subscription" do
+        expect {
+          lead.unsubscribe
+        }.to change{subscription.reload.deleted?}.from(false).to(true)
+      end
+    end
+  end
+
+  describe "#unsubscribed?" do
+    context "when subscribed to the organization" do
+      it "is false" do
+        lead.subscribe
+        expect(lead.unsubscribed?).to eq(false)
+      end
+    end
+
+    context "when not subscribed to the organization" do
+      it "is true" do
+        expect(lead.unsubscribed?).to eq(true)
+      end
+    end
+  end
 
   describe "#has_other_search_in_progress?" do
     context "without any searches in progress" do

@@ -27,4 +27,23 @@ RSpec.describe Organization, type: :model do
       expect(organization.owner_first_name).to eq(owner.first_name)
     end
   end
+
+  describe "#subscribed_leads" do
+    context "without leads" do
+      it "is empty" do
+        expect(organization.subscribed_leads).to be_empty
+      end
+    end
+
+    context "with leads" do
+      let!(:subscribed_leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
+      let!(:unsubscribed_lead) { create(:lead, organization: organization) }
+
+      context "with some unsubscribed" do
+        it "is only the subscribed leads" do
+          expect(organization.subscribed_leads).to eq(subscribed_leads)
+        end
+      end
+    end
+  end
 end
