@@ -14,6 +14,8 @@ class SearchLead < ActiveRecord::Base
     possible_fit!
   end
 
+  private
+
   def is_good_fit?
     lead.answers.to(search.questions).recent.positive.count == search.questions.count
   end
