@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   end
 
   def subscribe_to(organization)
+    unsubscribe_from(organization)
     subscriptions.create(organization: organization)
   end
 
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def unsubscribe_from(organization)
-    subscriptions.find_by(organization: organization).destroy
+    subscriptions.where(organization: organization).destroy_all
   end
 
   def name
