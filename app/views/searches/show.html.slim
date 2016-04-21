@@ -1,0 +1,22 @@
+h1 = @search.label
+
+h2 Good Fits
+
+table
+  thead
+    tr
+      th Name
+      th Phone
+      th Referrer
+      th Referrer Phone Number
+  tbody
+  - @search.good_fits.each do |good_fit|
+    tr
+      td = good_fit.name
+      td = good_fit.phone_number.phony_formatted
+      td = good_fit.referrer_name
+      td = good_fit.referrer_phone_number.phony_formatted
+
+br
+
+= link_to 'Back', searches_path

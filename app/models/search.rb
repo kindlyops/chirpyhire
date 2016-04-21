@@ -14,6 +14,10 @@ class Search < ActiveRecord::Base
     account.name
   end
 
+  def good_fits
+    leads.merge(search_leads.good_fit)
+  end
+
   def start
     search_leads.each do |search_lead|
       InquisitorJob.perform_later(search_lead, first_search_question)

@@ -9,9 +9,24 @@ class Lead < ActiveRecord::Base
   has_many :search_questions, through: :searches
   has_many :questions, through: :search_questions
 
-  delegate :first_name, :phone_number, to: :user
+  delegate :first_name, :name, :phone_number, to: :user
 
   scope :subscribed, -> { joins(user: :subscriptions) }
+
+  def referrer
+    @referrer ||= begin
+      return NullReferrer.new unless referrals.present?
+      referrals.first.referrer
+    end
+  end
+
+  def referrer_name
+    referrer.name
+  end
+
+  def referrer_phone_number
+    referrer.phone_number
+  end
 
   def subscribe
     user.subscribe_to(organization)
