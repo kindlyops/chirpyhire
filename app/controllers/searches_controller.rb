@@ -19,13 +19,15 @@ class SearchesController < ApplicationController
   end
 
   def search_questions
-    question_ids.map.with_index do |id, index|
-      SearchQuestion.new(
-        question_id: id,
-        next_question_id: get_array_value(index+1),
-        previous_question_id: get_array_value(index-1)
-      )
-    end
+    question_ids.map.with_index(&method(:build_search_questions))
+  end
+
+  def build_search_questions(id, index)
+    SearchQuestion.new(
+      question_id: id,
+      next_question_id: get_array_value(index+1),
+      previous_question_id: get_array_value(index-1)
+    )
   end
 
   def get_array_value(index)
