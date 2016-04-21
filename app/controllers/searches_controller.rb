@@ -13,7 +13,12 @@ class SearchesController < ApplicationController
   end
 
   def create
-    search.start
+    if search.save
+      search.start
+      redirect_to search, notice: "Search was successfully created."
+    else
+      render :new
+    end
   end
 
   def new
@@ -23,7 +28,7 @@ class SearchesController < ApplicationController
   private
 
   def search
-    @search ||= current_account.searches.create(search_questions: search_questions, leads: subscribed_leads)
+    @search ||= current_account.searches.build(search_questions: search_questions, leads: subscribed_leads)
   end
 
   def searches

@@ -39,11 +39,6 @@ RSpec.describe SearchesController, type: :controller do
         context "with leads" do
           let!(:leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
 
-          it "is OK" do
-            post :create, params
-            expect(response).to be_ok
-          end
-
           it "creates a search" do
             expect {
               post :create, params
@@ -66,6 +61,11 @@ RSpec.describe SearchesController, type: :controller do
             expect {
               post :create, params
             }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.leads.count)
+          end
+
+          it "redirects to the search" do
+            post :create, params
+            expect(response).to redirect_to(organization.searches.last)
           end
 
           context "with invalid search params" do
