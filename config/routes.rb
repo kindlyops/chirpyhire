@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :searches, only: [:new, :create, :index]
+  resources :searches, only: [:new, :create, :index, :show]
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new

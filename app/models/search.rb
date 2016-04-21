@@ -33,6 +33,6 @@ class Search < ActiveRecord::Base
   def ensure_label
     return if self.label.present?
 
-    self.label = "#{account.name} search at #{DateTime.current}"
+    self.label = "#{account.name}'s Search"
   end
 end
