@@ -39,11 +39,22 @@ RSpec.describe AnswersController, type: :controller do
       let(:user) { create(:user, phone_number: sender_phone_number) }
       let(:lead) { create(:lead, organization: organization, user: user) }
 
-      before(:each) do
+      let!(:first_search_question) do
+        search_question = create(:search_question, question: questions.first, next_question: questions.last)
+        search.search_questions << search_question
+        search_question
+      end
+
+      let!(:second_search_question) do
+        search_question = create(:search_question, question: questions.last)
+        search.search_questions << search_question
+        search_question
+      end
+
+      let!(:search_lead) do
         search.leads << lead
-        search.search_questions << create(:search_question, question: questions.first, next_question: questions.last)
-        search.search_questions << create(:search_question, question: questions.last)
         lead.search_leads.each(&:processing!)
+        lead.search_leads.find_by(search: search)
       end
 
       context "without an inquiry" do
@@ -88,7 +99,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it "continues the search" do
-          expect(InquisitorJob).to receive(:perform_later)
+          expect(InquisitorJob).to receive(:perform_later).with(search_lead, second_search_question)
           post :create, params
         end
       end
