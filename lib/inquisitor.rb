@@ -55,7 +55,7 @@ class Inquisitor
   end
 
   def ask_next_question
-    InquisitorJob.perform_later(search_lead, search_question.next_question)
+    InquisitorJob.perform_later(search_lead, search.search_question_after(search_question))
   end
 
   def recently_answered_any_question_negatively?
