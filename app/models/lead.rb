@@ -15,7 +15,7 @@ class Lead < ActiveRecord::Base
     search_leads.where.not(search: search).processing.exists?
   end
 
-  def pending_searches?
+  def has_pending_searches?
     search_leads.pending.exists?
   end
 

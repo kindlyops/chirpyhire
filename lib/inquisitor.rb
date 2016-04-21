@@ -40,7 +40,7 @@ class Inquisitor
   end
 
   def pending_searches?
-    lead.pending_searches?
+    lead.has_pending_searches?
   end
 
   def start_pending_search

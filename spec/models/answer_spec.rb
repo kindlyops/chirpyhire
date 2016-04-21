@@ -12,6 +12,8 @@ RSpec.describe Answer, type: :model do
     end
 
     context "with no answers created in the last 7 days" do
+      let!(:old_answers) { create_list(:answer, 2, created_at: 10.days.ago) }
+
       it "is empty" do
         expect(Answer.recent).to be_empty
       end
