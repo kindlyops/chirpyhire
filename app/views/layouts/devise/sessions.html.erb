@@ -1,0 +1,34 @@
+<%= render "layouts/head" %>
+  <body class="fixed-header">
+    <div class="login-wrapper">
+      <!-- START Login Background Pic Wrapper-->
+      <div class="bg-pic">
+        <!-- START Background Pic-->
+
+        <img src="<%= image_path('demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg') %>" data-src="<%= image_path('demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg') %>" data-src-retina="<%= image_path('demo/new-york-city-buildings-sunrise-morning-hd-wallpaper.jpg') %>" alt="" class="lazy">
+        <!-- END Background Pic-->
+        <!-- START Background Caption-->
+        <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">
+          <h2 class="semi-bold text-white">
+          Pages make it easy to enjoy what matters the most in the life</h2>
+          <p class="small">
+            images Displayed are solely for representation purposes only, All work copyright of respective owner, otherwise © 2013-2014 REVOX.
+          </p>
+        </div>
+        <!-- END Background Caption-->
+      </div>
+      <!-- END Login Background Pic Wrapper-->
+      <!-- START Login Right Container-->
+      <div class="login-container bg-white">
+        <div class="p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40">
+          <img src="<%= image_path('logo.png') %>" alt="logo" data-src="<%= image_path('logo.png') %>" data-src-retina="<%= image_path('logo_2x.png') %>" width="78" height="22">
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+          <%= yield %>
+
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+      <!-- END Login Right Container-->
+    </div>
+    <%= render "layouts/footer" %>
