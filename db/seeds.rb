@@ -141,7 +141,7 @@ questions = [
     custom: false
   },
   {
-    label: "Ok with Smoking",
+    label: "Ok with smoking",
     body: "Is it ok if your client smokes?",
     statement: "who is ok with clients smoking",
     category: Question.categories[:preference],
