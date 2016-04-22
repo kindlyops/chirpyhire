@@ -197,13 +197,6 @@ questions = [
     custom: false
   },
   {
-    label: "Alzheimer's",
-    body: "Do you have experience with Alzheimer's?",
-    statement: "who has experience with Alzheimer's",
-    category: Question.categories[:experience],
-    custom: false
-  },
-  {
     label: "Chest X-Ray",
     body: "Do you have a current chest x-ray?",
     statement: "who has a current chest x-ray",
