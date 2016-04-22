@@ -1,6 +1,6 @@
 class Inquisitor
 
-  def initialize(search_lead:, search_question:)
+  def initialize(search_lead, search_question)
     @search_lead = search_lead
     @search_question = search_question
   end
@@ -20,8 +20,15 @@ class Inquisitor
 
   private
 
+  def organization
+    search_lead.organization
+  end
+
+  def starting_search?
+    search_question.present? && search_question.starting_search?
+  end
+
   attr_reader :search_question, :search_lead
-  delegate :starting_search?, to: :search_question
 
   def ask_question
     message = organization.ask(lead, question, prelude: starting_search?)
@@ -71,10 +78,6 @@ class Inquisitor
     search_lead.determine_fit
     search_lead.finished!
     start_pending_search if pending_searches?
-  end
-
-  def organization
-    search_lead.organization
   end
 
   def lead

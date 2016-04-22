@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
+
   let(:organization) { create(:organization, :with_successful_phone, :with_owner) }
   let(:account) { organization.accounts.first }
   let(:search) { create(:search, account: account) }
@@ -15,7 +16,7 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
   let(:search_lead) { search.search_leads.first }
   let(:search_question) { search.search_questions.first }
 
-  subject { Inquisitor.new(search_lead: search_lead, search_question: search_question) }
+  subject { Inquisitor.new(search_lead, search_question) }
 
   describe "#call" do
     it "ensures the search lead is processing" do
