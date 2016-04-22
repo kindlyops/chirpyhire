@@ -185,12 +185,14 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
 
       context "with a next question" do
         let(:next_question) { create(:question, organization: organization) }
+        let(:next_search_question) { search.search_questions.create(question: next_question) }
+
         before(:each) do
           search_question.update(next_question: next_question)
         end
 
         it "asks the next question" do
-          expect(InquisitorJob).to receive(:perform_later).with(search_lead, next_question)
+          expect(InquisitorJob).to receive(:perform_later).with(search_lead, next_search_question)
           subject.call
         end
       end
