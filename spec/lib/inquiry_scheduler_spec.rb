@@ -9,8 +9,6 @@ RSpec.describe InquiryScheduler do
   let(:search_question) { search.search_questions.first }
   let(:search_lead) { search.search_leads.first }
 
-  subject { InquiryScheduler.new(inquisitor) }
-
   context "in organization time" do
     around(:each) do |example|
       Time.use_zone(organization.time_zone) { example.run }
@@ -21,27 +19,25 @@ RSpec.describe InquiryScheduler do
         let(:second_question) { create(:question, organization: organization) }
         let(:second_search_question) { search.search_questions.create(question: second_question, previous_question: search_question.question) }
 
-        let(:inquisitor) { Inquisitor.new(search_lead: search_lead, search_question: second_search_question) }
+        let(:scheduler) { InquiryScheduler.new(search_lead, second_search_question) }
 
-        it "yields" do
-          expect { |b|
-            subject.call(&b)
-          }.to yield_control
+        it "creates an inquisitor" do
+          expect_any_instance_of(Inquisitor).to receive(:call).once
+          scheduler.call
         end
       end
 
       context "starting the search" do
-        let(:inquisitor) { Inquisitor.new(search_lead: search_lead, search_question: search_question) }
+        let(:scheduler) { InquiryScheduler.new(search_lead, search_question) }
 
         context "between 10 am and 8 pm today" do
           before(:each) do
             travel_to Time.current.at_beginning_of_day.advance(hours: 12)
           end
 
-          it "yields" do
-            expect { |b|
-              subject.call(&b)
-            }.to yield_control
+          it "creates an inquisitor" do
+            expect_any_instance_of(Inquisitor).to receive(:call).once
+            scheduler.call
           end
         end
 
@@ -50,17 +46,16 @@ RSpec.describe InquiryScheduler do
             travel_to Time.current.at_beginning_of_day.advance(hours: 6)
           end
 
-          it "does not yield" do
-            expect { |b|
-              subject.call(&b)
-            }.not_to yield_control
+          it "does not create an inquisitor" do
+            expect(Inquisitor).not_to receive(:new)
+            scheduler.call
           end
 
           it "creates a job to be performed after 10 am today" do
             ten_am = Time.current.at_beginning_of_day.advance(hours: 10)
             expect(InquisitorJob).to receive(:set).with(wait_until: ten_am + 1.minute).and_call_original
 
-            subject.call
+            scheduler.call
           end
         end
 
@@ -69,17 +64,16 @@ RSpec.describe InquiryScheduler do
             travel_to Time.current.at_beginning_of_day.advance(hours: 22)
           end
 
-          it "does not yield" do
-            expect { |b|
-              subject.call(&b)
-            }.not_to yield_control
+          it "does not create an inquisitor" do
+            expect(Inquisitor).not_to receive(:new)
+            scheduler.call
           end
 
           it "creates a job to be performed after 10 am tomorrow" do
             ten_am = Time.current.at_beginning_of_day.advance(hours: 10)
             expect(InquisitorJob).to receive(:set).with(wait_until: ten_am.tomorrow + 1.minute).and_call_original
 
-            subject.call
+            scheduler.call
           end
         end
       end

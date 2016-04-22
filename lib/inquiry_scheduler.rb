@@ -1,22 +1,33 @@
 class InquiryScheduler
 
-  def initialize(inquisitor)
-    @inquisitor = inquisitor
+  def initialize(search_lead, search_question)
+    @search_question = search_question
+    @search_lead = search_lead
   end
 
   def call
     if starting_search?
-      ensure_sane_hours { yield }
+      ensure_sane_hours { inquire }
     else
-      yield
+      inquire
     end
   end
 
   private
 
-  attr_reader :inquisitor
+  attr_reader :search_lead, :search_question
 
-  delegate :organization, :search_lead, :search_question, :starting_search?, to: :inquisitor
+  def inquire
+    Inquisitor.new(search_lead, search_question).call
+  end
+
+  def starting_search?
+    search_question.present? && search_question.starting_search?
+  end
+
+  def organization
+    search_lead.organization
+  end
 
   def ensure_sane_hours
     Time.use_zone(organization.time_zone) do

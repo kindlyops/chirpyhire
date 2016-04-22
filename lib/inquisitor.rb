@@ -1,27 +1,11 @@
 class Inquisitor
 
-  def initialize(search_lead:, search_question:)
+  def initialize(search_lead, search_question)
     @search_lead = search_lead
     @search_question = search_question
   end
 
   def call
-    InquiryScheduler.new(self).call { inquire }
-  end
-
-  def organization
-    search_lead.organization
-  end
-
-  def starting_search?
-    search_question.present? && search_question.starting_search?
-  end
-
-  attr_reader :search_question, :search_lead
-
-  private
-
-  def inquire
     if existing_search_in_progress?
       search_lead.pending!
     elsif search_finished? || recently_answered_any_question_negatively?
@@ -33,6 +17,18 @@ class Inquisitor
       ask_question
     end
   end
+
+  private
+
+  def organization
+    search_lead.organization
+  end
+
+  def starting_search?
+    search_question.present? && search_question.starting_search?
+  end
+
+  attr_reader :search_question, :search_lead
 
   def ask_question
     message = organization.ask(lead, question, prelude: starting_search?)
