@@ -1,0 +1,20 @@
+h1 Searches
+
+table
+  thead
+    tr
+      th Label
+      th Searcher
+      th Created
+
+  tbody
+    - @searches.each do |search|
+      tr
+        td = search.label
+        td = search.searcher_name
+        td = "#{time_ago_in_words(search.created_at)} ago"
+        td = link_to 'Show', search
+
+br
+
+= link_to 'Find a Caregiver', new_search_path

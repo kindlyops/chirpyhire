@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe VcardConstraint do
+RSpec.describe Constraint::Vcard do
 
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { VcardConstraint.new }
+  let(:constraint) { Constraint::Vcard.new }
 
   before(:each) do
     allow(request).to receive(:request_parameters).and_return(parameters)

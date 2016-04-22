@@ -5,6 +5,10 @@ class Sms::Client
     @client = Twilio::REST::Client.new(account_sid, auth_token)
   end
 
+  def send_message(message)
+    client.account.messages.create(message)
+  end
+
   attr_accessor :client
 
   private

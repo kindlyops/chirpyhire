@@ -1,17 +1,34 @@
 class ReferralsController < SmsController
 
+  before_action :ensure_referrer, only: :create
+
   def create
-    render_sms referral.sms_response
+    if referral.save
+      render_sms referral_notice
+    else
+      error_message
+    end
   end
 
   private
 
   def referral
-    if message.present? && referrer.present? && lead.present?
-      referrer.referrals.create(lead: lead, message: message)
-    else
-      NullReferral.new
+    @referral ||= referrer.referrals.build(lead: lead, message: message)
+  end
+
+  def referral_notice
+    Sms::Response.new do |r|
+      r.Message "Awesome! Please copy and text to #{lead.first_name}:"
+      r.Message "Hey #{lead.first_name}. My home care agency, \
+#{organization.name}, regularly hires caregivers. They \
+treat me very well and have great clients. I think you \
+would be a great fit here. Text START to #{organization.phone_number} \
+to learn about opportunities."
     end
+  end
+
+  def ensure_referrer
+    return error_message unless referrer.present?
   end
 
   def vcard_user

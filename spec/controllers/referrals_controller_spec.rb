@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" }, type: :controller do
 
-  let(:organization) { create(:organization_with_phone) }
+  let(:organization) { create(:organization, :with_phone) }
   let(:sender_phone_number) { "+15555555555" }
   let(:media_url) { "/2010-04-01/Accounts/AC207d54ae9c08379e9e356faa6fb96f41/Messages/MMfaeed26d122c527a06e14768198c6a06/Media/MEdfa8631eb3ab5a0bf472d0e3fb5b7a76" }
   let(:url) { "https://api.twilio.com/#{media_url}" }

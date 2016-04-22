@@ -49,18 +49,22 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.1.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 
-gem 'vcardigan', '~> 0.0.0'
-gem 'devise', '~> 3.4.0'
-gem 'phony_rails', '~> 0.13.0'
+gem 'vcardigan', '~> 0.0.9'
+gem 'devise', '~> 4.0.0'
+gem 'phony_rails', '~> 0.14.0'
 gem 'slim-rails', '~> 3.0.0'
 gem 'paranoia', '~> 2.1.0'
 gem 'httparty', '~> 0.13.0'
 gem 'namae', '~> 0.10.0'
 gem 'twilio-ruby', '~> 4.11.0'
 gem 'naught', '~> 1.1.0'
+gem 'sidekiq', '~> 4.0.0'
+gem 'sinatra', '~> 1.4.0', require: nil
+gem 'puma', '~> 3.4.0'
+gem 'puma-heroku', '~> 1.0.0'

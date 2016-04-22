@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe OptInConstraint do
+RSpec.describe Constraint::OptIn do
 
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { OptInConstraint.new }
+  let(:constraint) { Constraint::OptIn.new }
 
   before(:each) do
     allow(request).to receive(:request_parameters).and_return(parameters)

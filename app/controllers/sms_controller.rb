@@ -1,7 +1,7 @@
-class SmsController < ApplicationController
+class SmsController < ActionController::Base
   after_filter :set_header
 
-  skip_before_action :verify_authenticity_token
+  protect_from_forgery with: :null_session
 
   def error_message
     message
@@ -12,19 +12,19 @@ class SmsController < ApplicationController
   private
 
   def message
-    organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
+    @message ||= organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
   end
 
   def vcard
-    message.vcard
+    @vcard ||= message.vcard
   end
 
   def sender
-    UserFinder.new(attributes: { phone_number: params["From"] }).call
+    @sender ||= UserFinder.new(attributes: { phone_number: params["From"] }).call
   end
 
   def organization
-    Organization.joins(:phone).find_by(phones: { number: params["To"] })
+    @organization ||= Organization.joins(:phone).find_by(phones: { number: params["To"] })
   end
 
   def set_header
