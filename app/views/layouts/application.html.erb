@@ -100,11 +100,19 @@
       <!-- END PAGE HEADER WRAPPER -->
       <!-- START PAGE CONTENT WRAPPER -->
       <div class="page-content-wrapper">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
         <!-- START PAGE CONTENT -->
         <div class="content">
-          <%= yield %>
+          <div class="panel panel-transparent">
+            <div class="panel-heading">
+              <div class="panel-body">
+                <div class="row">
+                  <p class="notice"><%= notice %></p>
+                  <p class="alert"><%= alert %></p>
+                  <%= yield %>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- END PAGE CONTENT -->
         <!-- START FOOTER -->
