@@ -21,9 +21,10 @@ class Inquisitor
   private
 
   attr_reader :search_question, :search_lead
+  delegate :starting_search?, to: :search_question
 
   def ask_question
-    message = organization.ask(lead, question)
+    message = organization.ask(lead, question, prelude: starting_search?)
     inquiries.create(question: question, message: message)
   end
 

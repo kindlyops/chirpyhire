@@ -12,8 +12,12 @@ class Organization < ActiveRecord::Base
 
   delegate :number, to: :phone, prefix: true
 
-  def ask(lead, question)
-    send_message(to: lead.phone_number, body: question.body, from: phone_number)
+  def ask(lead, question, prelude: false)
+    send_message(
+      to: lead.phone_number,
+      body: question.body_for(lead, prelude: prelude),
+      from: phone_number
+    )
   end
 
   def owner
