@@ -6,11 +6,9 @@ class InquiryScheduler
   end
 
   def call
-    if starting_search?
-      ensure_sane_hours { inquire }
-    else
-      inquire
-    end
+    return inquire unless starting_search?
+
+    ensure_sane_hours { inquire }
   end
 
   private
