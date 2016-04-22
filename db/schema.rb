@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160421031153) do
+ActiveRecord::Schema.define(version: 20160422005100) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,11 +90,12 @@ ActiveRecord::Schema.define(version: 20160421031153) do
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
 
   create_table "organizations", force: :cascade do |t|
-    t.string   "name",               null: false
+    t.string   "name",                                                      null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
+    t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
   end
 
   add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
