@@ -6,6 +6,19 @@ class Inquisitor
   end
 
   def call
+    inquire
+  end
+
+  def organization
+    search_lead.organization
+  end
+
+  attr_reader :search_question, :search_lead
+  delegate :starting_search?, to: :search_question
+
+  private
+
+  def inquire
     if existing_search_in_progress?
       search_lead.pending!
     elsif search_finished? || recently_answered_any_question_negatively?
@@ -17,11 +30,6 @@ class Inquisitor
       ask_question
     end
   end
-
-  private
-
-  attr_reader :search_question, :search_lead
-  delegate :starting_search?, to: :search_question
 
   def ask_question
     message = organization.ask(lead, question, prelude: starting_search?)
@@ -71,10 +79,6 @@ class Inquisitor
     search_lead.determine_fit
     search_lead.finished!
     start_pending_search if pending_searches?
-  end
-
-  def organization
-    search_lead.organization
   end
 
   def lead
