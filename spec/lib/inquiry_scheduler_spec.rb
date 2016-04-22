@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe InquisitorScheduler do
+RSpec.describe InquiryScheduler do
   include ActiveSupport::Testing::TimeHelpers
 
   let(:organization) { create(:organization, :with_owner) }
@@ -8,6 +8,8 @@ RSpec.describe InquisitorScheduler do
   let(:search) { create(:search, :with_search_question, :with_search_lead, account: account) }
   let(:search_question) { search.search_questions.first }
   let(:search_lead) { search.search_leads.first }
+
+  subject { InquiryScheduler.new(inquisitor) }
 
   context "in organization time" do
     around(:each) do |example|
@@ -23,7 +25,7 @@ RSpec.describe InquisitorScheduler do
 
         it "yields" do
           expect { |b|
-            InquisitorScheduler.new(inquisitor).call(&b)
+            subject.call(&b)
           }.to yield_control
         end
       end
@@ -38,7 +40,7 @@ RSpec.describe InquisitorScheduler do
 
           it "yields" do
             expect { |b|
-              InquisitorScheduler.new(inquisitor).call(&b)
+              subject.call(&b)
             }.to yield_control
           end
         end
@@ -50,7 +52,7 @@ RSpec.describe InquisitorScheduler do
 
           it "does not yield" do
             expect { |b|
-              InquisitorScheduler.new(inquisitor).call(&b)
+              subject.call(&b)
             }.not_to yield_control
           end
 
@@ -58,7 +60,7 @@ RSpec.describe InquisitorScheduler do
             ten_am = Time.current.at_beginning_of_day.advance(hours: 10)
             expect(InquisitorJob).to receive(:set).with(wait_until: ten_am + 1.minute).and_call_original
 
-            InquisitorScheduler.new(inquisitor).call
+            subject.call
           end
         end
 
@@ -69,7 +71,7 @@ RSpec.describe InquisitorScheduler do
 
           it "does not yield" do
             expect { |b|
-              InquisitorScheduler.new(inquisitor).call(&b)
+              subject.call(&b)
             }.not_to yield_control
           end
 
@@ -77,7 +79,7 @@ RSpec.describe InquisitorScheduler do
             ten_am = Time.current.at_beginning_of_day.advance(hours: 10)
             expect(InquisitorJob).to receive(:set).with(wait_until: ten_am.tomorrow + 1.minute).and_call_original
 
-            InquisitorScheduler.new(inquisitor).call
+            subject.call
           end
         end
       end

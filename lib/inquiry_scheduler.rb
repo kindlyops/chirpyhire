@@ -1,4 +1,4 @@
-class InquisitorScheduler
+class InquiryScheduler
 
   def initialize(inquisitor)
     @inquisitor = inquisitor
