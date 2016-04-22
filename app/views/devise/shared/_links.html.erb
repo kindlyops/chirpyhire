@@ -2,7 +2,7 @@
   <div class="m-b-30 p-r-80 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
     <div class="col-sm-14 no-padding m-t-10">
       <%- if controller_name != 'sessions' %>
-        <small><%= link_to "Sign in", new_session_path(resource_name) %></small><br />
+        <small><%= link_to "Login", new_session_path(resource_name) %></small><br />
       <% end -%>
 
       <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
@@ -23,7 +23,7 @@
 
       <%- if devise_mapping.omniauthable? %>
         <%- resource_class.omniauth_providers.each do |provider| %>
-          <small><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %></small><br />
+          <small><%= link_to "Login with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %></small><br />
         <% end -%>
       <% end -%>
     </div>
