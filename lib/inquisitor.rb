@@ -6,15 +6,18 @@ class Inquisitor
   end
 
   def call
-    inquire
+    InquiryScheduler.new(self).call { inquire }
   end
 
   def organization
     search_lead.organization
   end
 
+  def starting_search?
+    search_question.present? && search_question.starting_search?
+  end
+
   attr_reader :search_question, :search_lead
-  delegate :starting_search?, to: :search_question
 
   private
 
