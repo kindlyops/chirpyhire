@@ -14,8 +14,8 @@
           .col-md-3
             - group_of_questions.each do |question|
               .checkbox.check-success
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
                 = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
   .form-group
     .col-sm-10
       = submit_tag "Find a Caregiver", class: "btn btn-lg btn-success"
