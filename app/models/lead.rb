@@ -14,19 +14,30 @@ class Lead < ActiveRecord::Base
 
   scope :subscribed, -> { joins(user: :subscriptions) }
 
-  def referrer
-    @referrer ||= begin
+  def last_referrer
+    @last_referrer ||= begin
       return NullReferrer.new unless referrers.present?
-      referrers.first
+      last_referral.referrer
     end
   end
 
-  def referrer_name
-    referrer.name
+  def last_referral
+    @last_referral ||= begin
+      return NullReferral.new unless referrals.present?
+      referrals.order(:created_at).last
+    end
   end
 
-  def referrer_phone_number
-    referrer.phone_number
+  def last_referred_at
+    last_referral.created_at
+  end
+
+  def last_referrer_name
+    last_referrer.name
+  end
+
+  def last_referrer_phone_number
+    last_referrer.phone_number
   end
 
   def subscribe

@@ -14,7 +14,7 @@
           .col-md-3
             - group_of_questions.each do |question|
               .checkbox.check-success
-                = label_tag("question_#{question.id}", question.label, class: "col-sm-3 control-label")
+                = label_tag("question_#{question.id}", question.title, class: "col-sm-3 control-label")
                 = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
   .form-group
     .col-sm-10
