@@ -8,6 +8,10 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with self.resource
   end
 
+  def create
+    super { |account| account.owner! }
+  end
+
   private
 
   def sign_up_params
