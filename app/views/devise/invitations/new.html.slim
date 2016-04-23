@@ -6,5 +6,5 @@ h3 Send Invitation
       .form-group.form-group-default
         = f.label :email
         = f.text_field :email, class: "form-control required"
-  = submit_tag "Next →", class: "send_invites btn btn-primary btn-cons m-t-10"
-  = link_to "Skip this step", after_sign_in_path_for(current_account), class: "btn btn-cons m-t-10"
+  = submit_tag "Invite", class: "btn btn-primary btn-cons m-t-10"
+  = link_to "Skip to dashboard", after_sign_in_path_for(current_account), class: "btn btn-cons m-t-10"

@@ -87,7 +87,15 @@
               </button>
               <ul class="dropdown-menu profile-dropdown" role="menu">
                 <li>
-                  <a rel="nofollow" data-method="delete" href="/accounts/sign_out">Logout<span class="pull-right"><i class="pg-power"></i></span></a>
+                  <%= link_to new_invitation_path(current_account) do %>
+                    <i class="fa fa-envelope"></i> Invite User</span>
+                  <% end %>
+                </li>
+                <li class="bg-master-lighter">
+                  <a class="clearfix" rel="nofollow" data-method="delete" href="/accounts/sign_out">
+                    <span class="pull-left">Logout</span>
+                    <span class="pull-right"><i class="pg-power"></i></span>
+                  </a>
                 </li>
               </ul>
             </div>
