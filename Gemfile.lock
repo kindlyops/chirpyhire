@@ -60,6 +60,9 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    devise_invitable (1.6.0)
+      actionmailer (>= 3.2.6)
+      devise (>= 3.2.0)
     diff-lcs (1.2.5)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
@@ -248,6 +251,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise (~> 4.0.0)
+  devise_invitable (~> 1.6.0)
   dotenv-rails (~> 2.1.0)
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)

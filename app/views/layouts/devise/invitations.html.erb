@@ -1,0 +1,14 @@
+<%= render "layouts/head" %>
+  <body class="fixed-header">
+    <div class="register-container full-height sm-p-t-30">
+      <div class="container-sm-height full-height">
+        <div class="row row-sm-height">
+          <div class="col-sm-12 col-sm-height col-middle">
+            <img src="<%= image_path('logo.png') %>" alt="logo" data-src="<%= image_path('logo.png') %>" data-src-retina="<%= image_path('logo_2x.png') %>" width="78" height="22">
+            <h3>Send Invitations</h3>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%= render "layouts/footer" %>

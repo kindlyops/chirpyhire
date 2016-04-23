@@ -17,4 +17,8 @@ class RegistrationsController < Devise::RegistrationsController
     ]
     params.require(resource_name).permit(allow)
   end
+
+  def after_sign_up_path_for(resource)
+    new_invitation_path(resource)
+  end
 end
