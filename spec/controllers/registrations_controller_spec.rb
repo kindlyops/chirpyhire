@@ -21,6 +21,13 @@ RSpec.describe RegistrationsController, type: :controller do
       } }
     end
 
+    it "ties the organization and user to the account" do
+      post :create, account_params
+      account = Account.find_by(email: account_params[:account][:email])
+      expect(account.organization.present?).to eq(true)
+      expect(account.user.present?).to eq(true)
+    end
+
     it "creates an account" do
       expect {
         post :create, account_params

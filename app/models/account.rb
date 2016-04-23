@@ -10,8 +10,7 @@ class Account < ActiveRecord::Base
   has_many :searches
 
   delegate :first_name, :last_name, :name, to: :user
-  accepts_nested_attributes_for :user
-  accepts_nested_attributes_for :organization
+  accepts_nested_attributes_for :user, :organization
 
   def send_reset_password_instructions
     super if invitation_token.nil?
