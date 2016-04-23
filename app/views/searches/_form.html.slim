@@ -1,7 +1,7 @@
 = form_for @search.search, html: { class: "form-horizontal new_search", autocomplete: "off" } do |f|
   - if @search.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@search.errors.count, "error")} prohibited this search from being saved:"
+      h5 = "#{pluralize(@search.errors.count, "error")} prohibited this search from being saved:"
       ul
         - @search.errors.full_messages.each do |message|
           li = message
@@ -9,12 +9,12 @@
   - @search.question_categories.each do |category, questions|
     .form-group
       .control-group
-        h4 = category.humanize
+        h5 = category.humanize
         - questions.each_slice(4) do |group_of_questions|
           .col-md-3
             - group_of_questions.each do |question|
               .checkbox.check-success
-                = label_tag("question_#{question.id}", question.title, class: "col-sm-3 control-label")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
                 = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
   .form-group
     .col-sm-10

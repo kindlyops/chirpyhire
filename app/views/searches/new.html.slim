@@ -1,11 +1,9 @@
 = title "Find a Caregiver | CareHire"
 .panel.panel-transparent
   .panel-heading
-    .panel-body
-      .row
-        .col-sm-10
-          h1 Find a Caregiver
+    .panel-title Find a Caregiver
+  .panel-body
+    .row
+      == render 'form'
 
-          == render 'form'
-
-          = link_to 'Back', searches_path
+      = link_to 'Back', searches_path
