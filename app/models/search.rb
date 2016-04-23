@@ -30,7 +30,7 @@ class Search < ActiveRecord::Base
   end
 
   def result
-    return "Caregiver Found" if good_fits.any?
+    return "Found caregiver" if good_fits.any?
 
     "In progress"
   end
