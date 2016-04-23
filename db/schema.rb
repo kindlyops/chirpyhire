@@ -98,8 +98,6 @@ ActiveRecord::Schema.define(version: 20160422005100) do
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
   end
 
-  add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
-
   create_table "phones", force: :cascade do |t|
     t.integer  "organization_id", null: false
     t.string   "title",           null: false
@@ -196,11 +194,11 @@ ActiveRecord::Schema.define(version: 20160422005100) do
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", where: "(deleted_at IS NULL)", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",   default: ""
-    t.string   "last_name",    default: ""
-    t.string   "phone_number",              null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree

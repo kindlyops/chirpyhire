@@ -11,12 +11,5 @@ class Account < ActiveRecord::Base
 
   delegate :first_name, :last_name, :name, to: :user
   accepts_nested_attributes_for :user
-
-  def user
-    if new_record?
-      User.new
-    else
-      super
-    end
-  end
+  accepts_nested_attributes_for :organization
 end

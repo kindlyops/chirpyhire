@@ -7,12 +7,6 @@ RSpec.describe Search, type: :model do
   let(:search) { create(:search, account: account) }
   let(:leads) { create_list(:lead, 2, organization: organization) }
 
-  describe "#searcher_name" do
-    it "is the account's name" do
-      expect(search.searcher_name).to eq(account.name)
-    end
-  end
-
   describe "#good_fits" do
     context "with good fits" do
       before(:each) do
