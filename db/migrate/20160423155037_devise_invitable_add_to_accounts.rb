@@ -13,7 +13,7 @@ class DeviseInvitableAddToAccounts < ActiveRecord::Migration
       t.index      :invited_by_id
     end
 
-    change_column :accounts, :encrypted_password, :string, null: true
+    change_column :accounts, :encrypted_password, :string, null: true, default: nil
   end
 
   def down
