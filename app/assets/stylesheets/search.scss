@@ -1,0 +1,12 @@
+.new_search {
+  .form-group {
+    &:hover {
+      .control-label {
+        opacity: 1;
+      }
+    }
+    .control-label {
+      opacity: 1;
+    }
+  }
+}
