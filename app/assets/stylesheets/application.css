@@ -11,7 +11,6 @@
  * file per style scope.
  *
  * BEGIN VENDOR CSS FOR PAGES
- *= require pages-plugins/pace/pace-theme-flash
  *= require pages-plugins/boostrapv3/css/bootstrap.min
  *= require pages-plugins/font-awesome/css/font-awesome
  *= require pages-plugins/jquery-scrollbar/jquery.scrollbar

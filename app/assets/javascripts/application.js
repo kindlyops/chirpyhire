@@ -12,7 +12,6 @@
 //
 
 // BEGIN VENDOR JS FOR PAGES (plus add in jquery.turbolinks)
-//= require pages-plugins/pace/pace.min
 //= require jquery
 //= require jquery_ujs
 //= require pages-plugins/modernizr.custom
