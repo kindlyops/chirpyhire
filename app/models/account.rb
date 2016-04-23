@@ -9,5 +9,14 @@ class Account < ActiveRecord::Base
   belongs_to :user
   has_many :searches
 
-  delegate :first_name, :name, to: :user
+  delegate :first_name, :last_name, :name, to: :user
+  accepts_nested_attributes_for :user
+
+  def user
+    if new_record?
+      User.new
+    else
+      super
+    end
+  end
 end

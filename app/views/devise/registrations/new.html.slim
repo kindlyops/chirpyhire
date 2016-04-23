@@ -1,0 +1,37 @@
+= title "Sign up | CareHire"
+= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {id: "form-register", class: "p-t-15", role: "form"}) do |f|
+  = devise_error_messages!
+
+  .row
+    .col-sm-6
+      .form-group.form-group-default
+        = f.label :first_name
+        = f.text_field :first_name, class: "form-control", required: true
+    .col-sm-6
+      .form-group.form-group-default
+        = f.label :last_name
+        = f.text_field :last_name, class: "form-control", required: true
+  .row
+    .col-sm-12
+      .form-group.form-group-default
+        = f.label :password
+        = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum", class: "form-control"
+  .row
+    .col-sm-12
+      .form-group.form-group-default
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+  .row.m-t-10
+    .col-md-6
+      p
+        ' I agree to the
+        a.text-info.small href="#" Pages Terms
+        '  and
+        a.text-info.small href="#" Privacy Policy.
+    .col-md-6.text-right
+      a.text-info.small href="#" Help? Contact Support
+
+  = f.submit "Sign up", class: "btn btn-primary btn-cons m-t-10"
+
+
+
