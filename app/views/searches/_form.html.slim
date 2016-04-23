@@ -6,16 +6,52 @@
         - @search.errors.full_messages.each do |message|
           li = message
 
-  - @search.question_categories.each do |category, questions|
-    .form-group
-      .control-group
-        h5 = category.humanize
-        - questions.each_slice(4) do |group_of_questions|
+  .form-group
+    .control-group
+      h5 Schedule
+      - @search.question_categories["schedule"].each_slice(4) do |group_of_questions|
           .col-md-3
             - group_of_questions.each do |question|
               .checkbox.check-success
                 = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
                 = label_tag("question_#{question.id}", question.title, class: "control-label")
+  .form-group
+    .control-group
+      h5 Credentials
+      - @search.question_categories["credentials"].each_slice(3) do |group_of_questions|
+          .col-md-3
+            - group_of_questions.each do |question|
+              .checkbox.check-success
+                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
+  .form-group
+    .control-group
+      h5 Transportation
+      - @search.question_categories["transportation"].each_slice(4) do |group_of_questions|
+          .col-md-3
+            - group_of_questions.each do |question|
+              .checkbox.check-success
+                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
+  .form-group
+    .control-group
+      h5 Experience
+      - @search.question_categories["experience"].each_slice(2) do |group_of_questions|
+          .col-md-3
+            - group_of_questions.each do |question|
+              .checkbox.check-success
+                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
+  .form-group
+    .control-group
+      h5 Preferences
+      - @search.question_categories["preferences"].each_slice(4) do |group_of_questions|
+          .col-md-3
+            - group_of_questions.each do |question|
+              .checkbox.check-success
+                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                = label_tag("question_#{question.id}", question.title, class: "control-label")
+
   .form-group
     .col-sm-10
       = submit_tag "Find a Caregiver", class: "btn btn-lg btn-success"

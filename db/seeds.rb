@@ -32,49 +32,49 @@ questions = [
     title: "Bathing",
     body: "Can you assist someone with bathing?",
     statement: "who can assist with bathing",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Depression",
     body: "Can you comfort someone depressed?",
     statement: "who can assist with depression",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Cooking",
     body: "Can you cook meals?",
     statement: "who can cook meals",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Dressing, Shaving, & Grooming",
     body: "Can you assist with dressing, shaving, and grooming?",
     statement: "who can assist with dressing, shaving, and grooming",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Meal Prep & Eating",
     body: "Can you assist with preparing meals and eating?",
     statement: "who can assist with preparing meals and eating",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Toileting/Continence",
     body: "Can you assist with toileting and continence?",
     statement: "who can assist with toileting and continence",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Wound Care",
     body: "Can you assist with wound care?",
     statement: "who can assist with wound care",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
@@ -102,32 +102,32 @@ questions = [
     title: "Laundry",
     body: "Can you assist with laundry?",
     statement: "who can assist with laundry",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Light Housekeeping",
     body: "Can you assist with light housekeeping?",
     statement: "who can assist with light housekeeping",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Medication Reminders & Prep",
     body: "Can you assist with medication reminders and prep?",
     statement: "who can assist with medication reminders and prep",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Shopping & Errands",
     body: "Can you assist with shopping and errands?",
     statement: "who can assist with shopping and errands",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
-    title: "Transporting Client by Automobile",
+    title: "Can Transport Client by Automobile",
     body: "Can you assist with transporting clients by automobile?",
     statement: "who can assist with transporting clients by automobile",
     category: Question.categories[:transportation],
@@ -144,7 +144,7 @@ questions = [
     title: "Ok with smoking",
     body: "Is it ok if your client smokes?",
     statement: "who is ok with clients smoking",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
@@ -186,14 +186,14 @@ questions = [
     title: "Ok with cats",
     body: "Are you ok with cats?",
     statement: "who is ok with cats",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
     title: "Ok with dogs",
     body: "Are you ok with dogs?",
     statement: "who is ok with dogs",
-    category: Question.categories[:preference],
+    category: Question.categories[:preferences],
     custom: false
   },
   {
