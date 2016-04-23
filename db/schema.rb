@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160422005100) do
+ActiveRecord::Schema.define(version: 20160423155037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
-    t.string   "encrypted_password",     default: "",    null: false
+    t.string   "encrypted_password"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -33,9 +33,20 @@ ActiveRecord::Schema.define(version: 20160422005100) do
     t.integer  "organization_id"
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
+    t.string   "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer  "invitation_limit"
+    t.integer  "invited_by_id"
+    t.string   "invited_by_type"
+    t.integer  "invitations_count",      default: 0
   end
 
   add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+  add_index "accounts", ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
+  add_index "accounts", ["invitations_count"], name: "index_accounts_on_invitations_count", using: :btree
+  add_index "accounts", ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
   add_index "accounts", ["organization_id", "user_id"], name: "index_accounts_on_organization_id_and_user_id", unique: true, using: :btree
   add_index "accounts", ["organization_id"], name: "index_accounts_on_organization_id", using: :btree
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
@@ -98,8 +109,6 @@ ActiveRecord::Schema.define(version: 20160422005100) do
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
   end
 
-  add_index "organizations", ["name"], name: "index_organizations_on_name", unique: true, using: :btree
-
   create_table "phones", force: :cascade do |t|
     t.integer  "organization_id", null: false
     t.string   "title",           null: false
@@ -111,7 +120,7 @@ ActiveRecord::Schema.define(version: 20160422005100) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "label",                          null: false
+    t.string   "title",                          null: false
     t.string   "body",                           null: false
     t.string   "statement",                      null: false
     t.integer  "category",        default: 0,    null: false
@@ -176,7 +185,7 @@ ActiveRecord::Schema.define(version: 20160422005100) do
 
   create_table "searches", force: :cascade do |t|
     t.integer  "account_id", null: false
-    t.string   "label",      null: false
+    t.string   "title",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -196,11 +205,11 @@ ActiveRecord::Schema.define(version: 20160422005100) do
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", where: "(deleted_at IS NULL)", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "first_name",   default: ""
-    t.string   "last_name",    default: ""
-    t.string   "phone_number",              null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree

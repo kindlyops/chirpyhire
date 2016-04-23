@@ -6,13 +6,10 @@ class Search < ActiveRecord::Base
   has_many :questions, through: :search_questions
 
   delegate :organization, to: :account
+  delegate :name, to: :account, prefix: true
 
   accepts_nested_attributes_for :leads, :search_questions
-  before_create :ensure_label
-
-  def searcher_name
-    account.name
-  end
+  before_create :ensure_title
 
   def good_fits
     leads.merge(search_leads.good_fit)
@@ -32,11 +29,17 @@ class Search < ActiveRecord::Base
     search_questions.find_by(question: search_question.next_question)
   end
 
+  def result
+    return "Found caregiver" if good_fits.any?
+
+    "In progress"
+  end
+
   private
 
-  def ensure_label
-    return if self.label.present?
+  def ensure_title
+    return if self.title.present?
 
-    self.label = "#{account.name}'s Search"
+    self.title = "#{account.name}'s Search"
   end
 end

@@ -1,6 +1,4 @@
 class SearchesController < ApplicationController
-  before_action :authenticate_account!
-
   before_action :ensure_subscribed_leads, only: :create
   before_action :ensure_questions, only: :create
 

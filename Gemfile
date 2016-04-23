@@ -57,6 +57,7 @@ end
 
 gem 'vcardigan', '~> 0.0.9'
 gem 'devise', '~> 4.0.0'
+gem 'devise_invitable', '~> 1.6.0'
 gem 'phony_rails', '~> 0.14.0'
 gem 'slim-rails', '~> 3.0.0'
 gem 'paranoia', '~> 2.1.0'

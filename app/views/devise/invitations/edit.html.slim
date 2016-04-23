@@ -1,0 +1,35 @@
+= title "Welcome! | CareHire"
+h3 Accept Invitation
+
+= form_for resource, :as => resource_name, :url => invitation_path(resource_name), class: "p-t-15", :html => { :method => :put, role: "form" } do |f|
+  = devise_error_messages!
+  = f.hidden_field :invitation_token
+  = f.fields_for :user do |user_form|
+    .row
+      .col-sm-6
+        .form-group.form-group-default
+          = user_form.label :first_name
+          = user_form.text_field :first_name, class: "form-control", required: true
+      .col-sm-6
+        .form-group.form-group-default
+          = user_form.label :last_name
+          = user_form.text_field :last_name, class: "form-control", required: true
+  - if f.object.class.require_password_on_accepting
+    .row
+      .col-sm-12
+        .form-group.form-group-default
+          = f.label :password
+          = f.password_field :password
+    .row
+      .col-sm-12
+        .form-group.form-group-default
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation
+  .row.m-t-10
+    .col-md-6
+      p
+        ' I agree to the
+        a.text-info.small href="#" Pages Terms.
+    .col-md-6.text-right
+      a.text-info.small href="#" Help? Contact Support
+  = f.submit "Set your password"

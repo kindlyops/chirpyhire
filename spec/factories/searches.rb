@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :search do
     account
-    label { Faker::Company.buzzword }
+    title { Faker::Company.buzzword }
 
     trait :with_search_question do
       after(:create) do |search|
