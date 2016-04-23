@@ -12,4 +12,8 @@ class Account < ActiveRecord::Base
   delegate :first_name, :last_name, :name, to: :user
   accepts_nested_attributes_for :user
   accepts_nested_attributes_for :organization
+
+  def send_reset_password_instructions
+    super if invitation_token.nil?
+  end
 end
