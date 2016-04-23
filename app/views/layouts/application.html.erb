@@ -100,9 +100,11 @@
       <div class="page-content-wrapper">
         <!-- START PAGE CONTENT -->
         <div class="content">
-          <p class="notice"><%= notice %></p>
-          <p class="alert"><%= alert %></p>
-          <%= yield %>
+          <div class="container-fluid container-fixed-lg">
+            <p class="notice"><%= notice %></p>
+            <p class="alert"><%= alert %></p>
+            <%= yield %>
+            </div>
         </div>
         <!-- END PAGE CONTENT -->
         <!-- START FOOTER -->
