@@ -2,9 +2,25 @@ require 'rails_helper'
 
 RSpec.describe SearchesController, type: :controller do
   context "not logged in" do
-    it "302s" do
-      post :create
-      expect(response.status).to eq(302)
+    describe "#new" do
+      it "302s" do
+        get :new
+        expect(response.status).to eq(302)
+      end
+    end
+
+    describe "#index" do
+      it "302s" do
+        get :index
+        expect(response.status).to eq(302)
+      end
+    end
+
+    describe "#create" do
+      it "302s" do
+        post :create
+        expect(response.status).to eq(302)
+      end
     end
   end
 
@@ -22,6 +38,30 @@ RSpec.describe SearchesController, type: :controller do
         expect(assigns(:search)).to be_a(SearchPresenter)
         expect(assigns(:search).search).to be_a_new(Search)
         expect(assigns(:search).account).to eq(account)
+      end
+    end
+
+    describe "#index" do
+      it "is OK" do
+        get :index
+        expect(response).to be_ok
+      end
+
+      context "with searches" do
+        let!(:searches) { create_list(:search, 3, account: account) }
+
+        it "returns the organization's searches" do
+          get :index
+          expect(assigns(:searches)).to eq(searches)
+        end
+
+        context "with other organizations" do
+          let!(:other_searches) { create_list(:search, 2) }
+          it "does not return the other organization's searches" do
+            get :index
+            expect(assigns(:searches)).not_to include(other_searches)
+          end
+        end
       end
     end
 
