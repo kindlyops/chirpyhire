@@ -1,20 +1,9 @@
 = title "Invitations | CareHire"
-= form_for resource, :as => resource_name, :url => invitation_path(resource_name), class: "p-t-15", :html => {:method => :post, role: "form"} do |f|
+= form_for resource, :as => resource_name, :url => invitation_path(resource_name), class: "invitation_form p-t-15", :html => {:method => :post, role: "form"} do |f|
   .row
     .col-sm-12
       .form-group.form-group-default
         = f.label :email
-        = f.text_field :email, class: "form-control"
-  .row
-    .col-sm-12
-      .form-group.form-group-default
-        = f.label :email
-        = f.text_field :email, class: "form-control"
-  .row
-    .col-sm-12
-      .form-group.form-group-default
-        = f.label :email
-        = f.text_field :email, class: "form-control"
-
-  = f.submit "Next →", class: "btn btn-primary btn-cons m-t-10"
+        = f.text_field :email, class: "form-control required"
+  = submit_tag "Next →", class: "send_invites btn btn-primary btn-cons m-t-10"
   = link_to "Skip this step", after_sign_in_path_for(current_account), class: "btn btn-cons m-t-10"
