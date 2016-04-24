@@ -57,6 +57,7 @@ end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
+  gem 'rollbar', '~> 2.10.0'
 end
 
 gem 'vcardigan', '~> 0.0.9'
@@ -73,4 +74,3 @@ gem 'sidekiq', '~> 4.0.0'
 gem 'sinatra', '~> 1.4.0', require: nil
 gem 'puma', '~> 3.4.0'
 gem 'puma-heroku', '~> 1.0.0'
-gem 'rollbar', '~> 2.10.0'
