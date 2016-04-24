@@ -5,6 +5,7 @@ class CreateQuestionCategories < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+    remove_column :questions, :category
     add_reference :questions, :question_category, null: false, index: true, foreign_key: true
   end
 end
