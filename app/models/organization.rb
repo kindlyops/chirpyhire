@@ -1,4 +1,5 @@
 class Organization < ActiveRecord::Base
+  belongs_to :industry
   has_many :accounts
   has_many :leads
   has_many :subscribed_leads, -> { subscribed }, class_name: "Lead"
@@ -11,6 +12,7 @@ class Organization < ActiveRecord::Base
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
+  delegate :questions, to: :industry
 
   def ask(lead, question, prelude: false)
     send_message(

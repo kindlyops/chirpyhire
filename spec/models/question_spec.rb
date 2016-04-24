@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Question, type: :model do
   let(:organization) { create(:organization, :with_owner) }
-  let(:question) { create(:question, organization: organization) }
+  let(:question) { create(:question, industry: organization.industry) }
   describe "#body_for" do
-    let(:lead) { create(:lead, organization: question.organization) }
+    let(:lead) { create(:lead, organization: organization) }
     context "with prelude flag" do
       it "includes the prelude" do
         expect(question.body_for(lead, prelude: true)).to include("We have a new client \

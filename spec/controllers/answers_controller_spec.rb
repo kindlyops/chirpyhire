@@ -35,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context "with an ongoing search for the lead" do
       let(:search) { create(:search, account: account) }
-      let(:questions) { create_list(:question, 2, organization: organization)}
+      let(:questions) { create_list(:question, 2, industry: organization.industry)}
       let(:user) { create(:user, phone_number: sender_phone_number) }
       let(:lead) { create(:lead, organization: organization, user: user) }
 

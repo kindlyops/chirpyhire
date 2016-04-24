@@ -7,7 +7,7 @@ RSpec.describe Organization, type: :model do
   describe "#ask", vcr: { cassette_name: "Organization_ask" } do
     let!(:organization) { create(:organization, :with_successful_phone) }
     let(:lead) { create(:lead, organization: organization) }
-    let(:question) { create(:question, organization: organization) }
+    let(:question) { create(:question, industry: organization.industry) }
 
     it "creates a message" do
       expect {
