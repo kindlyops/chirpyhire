@@ -16,7 +16,7 @@ RSpec.describe InquiryScheduler do
 
     describe "#call" do
       context "continuing the search" do
-        let(:second_question) { create(:question, organization: organization) }
+        let(:second_question) { create(:question, industry: organization.industry) }
         let(:second_search_question) { search.search_questions.create(question: second_question, previous_question: search_question.question) }
 
         let(:scheduler) { InquiryScheduler.new(search_lead, second_search_question) }

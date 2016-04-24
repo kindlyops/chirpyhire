@@ -11,6 +11,8 @@ class Lead < ActiveRecord::Base
   has_many :questions, through: :search_questions
 
   delegate :first_name, :name, :phone_number, to: :user
+  delegate :name, to: :organization, prefix: true
+  delegate :owner_first_name, to: :organization
 
   scope :subscribed, -> { joins(user: :subscriptions) }
 

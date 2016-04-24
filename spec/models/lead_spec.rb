@@ -213,7 +213,7 @@ RSpec.describe Lead, type: :model do
   end
 
   describe "#recently_answered_negatively?" do
-    let(:question) { create(:question, organization: organization) }
+    let(:question) { create(:question, industry: organization.industry) }
 
     context "without recent answers to the question" do
       it "is false" do
@@ -247,7 +247,7 @@ RSpec.describe Lead, type: :model do
   end
 
   describe "#recently_answered_positively?" do
-    let(:question) { create(:question, organization: organization) }
+    let(:question) { create(:question, industry: organization.industry) }
 
     context "without recent answers to the question" do
       it "is false" do

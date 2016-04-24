@@ -31,8 +31,7 @@ class Inquisitor
   attr_reader :search_question, :search_lead
 
   def ask_question
-    message = organization.ask(lead, question, prelude: starting_search?)
-    inquiries.create(question: question, message: message)
+    organization.ask(inquiries.build(question: question), prelude: starting_search?)
   end
 
   def existing_search_in_progress?

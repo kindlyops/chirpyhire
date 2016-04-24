@@ -19,10 +19,18 @@ class RegistrationsController < Devise::RegistrationsController
       [user_attributes: [:phone_number, :first_name, :last_name]],
       [organization_attributes: [:name]]
     ]
-    params.require(resource_name).permit(allow)
+    sign_up_params = params.require(resource_name).permit(allow)
+    sign_up_params[:organization_attributes][:industry] = home_care
+    sign_up_params
   end
 
   def after_sign_up_path_for(resource)
     new_invitation_path(resource)
+  end
+
+  private
+
+  def home_care
+    Industry.find_or_create_by(name: "Home Care")
   end
 end

@@ -67,7 +67,7 @@ RSpec.describe SearchesController, type: :controller do
 
     describe "#create" do
       context "with valid question ids" do
-        let!(:questions) { create_list(:question, 3, organization: organization) }
+        let!(:questions) { create_list(:question, 3, industry: organization.industry) }
 
         let(:params) do
           { search: {
