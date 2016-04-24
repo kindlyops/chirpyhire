@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Question, type: :model do
   let(:organization) { create(:organization, :with_owner) }
-  let(:question) { create(:question, industry: organization.industry) }
+  let(:question) do
+    question = create(:question)
+    organization.questions << question
+    question
+  end
 
   describe "#readonly?" do
     context "new record?" do

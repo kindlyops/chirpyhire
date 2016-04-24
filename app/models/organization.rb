@@ -1,5 +1,4 @@
 class Organization < ActiveRecord::Base
-  belongs_to :industry
   has_many :accounts
   has_many :leads
   has_many :subscribed_leads, -> { subscribed }, class_name: "Lead"
@@ -7,12 +6,12 @@ class Organization < ActiveRecord::Base
   has_many :referrers
   has_many :messages
   has_many :subscriptions
-  has_many :questions
+  has_many :questions_organizations
+  has_many :questions, through: :questions_organizations
   has_many :searches, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
-  delegate :questions, to: :industry
 
   def ask(inquiry, prelude: false)
     message = send_message(

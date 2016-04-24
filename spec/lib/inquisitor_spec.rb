@@ -6,7 +6,11 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
   let(:account) { organization.accounts.first }
   let(:search) { create(:search, account: account) }
   let(:lead) { create(:lead, organization: organization) }
-  let(:question) { create(:question, industry: organization.industry) }
+  let(:question) do
+    question = create(:question)
+    organization.questions << question
+    question
+  end
 
   before(:each) do
     search.leads << lead
@@ -81,7 +85,8 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
 
       context "with all positive answers in the search" do
         before(:each) do
-          second_question = create(:question, industry: organization.industry)
+          second_question = create(:question)
+          organization.questions << second_question
           search.questions << second_question
           create(:answer, lead: lead, question: question, body: "Y")
           create(:answer, lead: lead, question: second_question, body: "Y")
@@ -148,7 +153,11 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
     end
 
     context "if the lead recently answered another question in the search negatively" do
-      let(:another_question) { create(:question, industry: organization.industry) }
+      let(:another_question) do
+        question = create(:question)
+        organization.questions << question
+        question
+      end
       let!(:answer) { create(:answer, body: "N", question: another_question, lead: lead) }
 
       before(:each) do
@@ -185,7 +194,11 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
       let!(:answer) { create(:answer, body: "Y", question: question, lead: lead) }
 
       context "with a next question" do
-        let(:next_question) { create(:question, industry: organization.industry) }
+        let(:next_question) do
+          question = create(:question)
+          organization.questions << question
+          question
+        end
         let(:next_search_question) { search.search_questions.create(question: next_question) }
 
         before(:each) do

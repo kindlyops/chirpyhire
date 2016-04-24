@@ -65,12 +65,6 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "answers", ["message_id"], name: "index_answers_on_message_id", unique: true, using: :btree
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
-  create_table "industries", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "inquiries", force: :cascade do |t|
     t.integer  "message_id",  null: false
     t.integer  "lead_id",     null: false
@@ -110,13 +104,10 @@ ActiveRecord::Schema.define(version: 20160423155037) do
     t.string   "name",                                                      null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
-    t.integer  "industry_id",                                               null: false
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
   end
-
-  add_index "organizations", ["industry_id"], name: "index_organizations_on_industry_id", using: :btree
 
   create_table "phones", force: :cascade do |t|
     t.integer  "organization_id", null: false
@@ -129,17 +120,24 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title",                      null: false
-    t.string   "body",                       null: false
-    t.string   "statement",                  null: false
-    t.integer  "category",    default: 0,    null: false
-    t.boolean  "custom",      default: true, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "industry_id",                null: false
+    t.string   "title",                     null: false
+    t.string   "body",                      null: false
+    t.string   "statement",                 null: false
+    t.integer  "category",   default: 0,    null: false
+    t.boolean  "custom",     default: true, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
-  add_index "questions", ["industry_id"], name: "index_questions_on_industry_id", using: :btree
+  create_table "questions_organizations", force: :cascade do |t|
+    t.integer  "question_id",     null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "questions_organizations", ["organization_id"], name: "index_questions_organizations_on_organization_id", using: :btree
+  add_index "questions_organizations", ["question_id"], name: "index_questions_organizations_on_question_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "lead_id",     null: false
@@ -234,9 +232,9 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"
-  add_foreign_key "organizations", "industries"
   add_foreign_key "phones", "organizations"
-  add_foreign_key "questions", "industries"
+  add_foreign_key "questions_organizations", "organizations"
+  add_foreign_key "questions_organizations", "questions"
   add_foreign_key "referrals", "leads"
   add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"

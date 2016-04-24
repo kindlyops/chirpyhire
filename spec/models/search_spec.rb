@@ -68,8 +68,16 @@ RSpec.describe Search, type: :model do
     end
 
     context "with search questions" do
-      let!(:first_question) { create(:question, industry: organization.industry) }
-      let!(:second_question) { create(:question, industry: organization.industry) }
+      let!(:first_question) do
+        question = create(:question)
+        organization.questions << question
+        question
+      end
+      let!(:second_question) do
+        question = create(:question)
+        organization.questions << question
+        question
+      end
       let!(:first_search_question) { create(:search_question, search: search, question: first_question, next_question: second_question) }
       let!(:last_search_question) { create(:search_question, search: search, question: second_question) }
 
@@ -80,8 +88,16 @@ RSpec.describe Search, type: :model do
   end
 
   describe "#search_question_after" do
-    let!(:first_question) { create(:question, industry: organization.industry) }
-    let!(:second_question) { create(:question, industry: organization.industry) }
+    let!(:first_question) do
+      question = create(:question)
+      organization.questions << question
+      question
+    end
+    let!(:second_question) do
+      question = create(:question)
+      organization.questions << question
+      question
+    end
     let!(:first_search_question) { create(:search_question, search: search, question: first_question, next_question: second_question) }
     let!(:last_search_question) { create(:search_question, search: search, question: second_question) }
 
