@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423155037) do
+ActiveRecord::Schema.define(version: 20160424145222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "messages", ["organization_id"], name: "index_messages_on_organization_id", using: :btree
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
 
+  create_table "organization_question_categories", force: :cascade do |t|
+    t.integer  "organization_id",      null: false
+    t.integer  "question_category_id", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "organization_question_categories", ["organization_id"], name: "index_organization_question_categories_on_organization_id", using: :btree
+  add_index "organization_question_categories", ["question_category_id"], name: "index_organization_question_categories_on_question_category_id", using: :btree
+
   create_table "organization_questions", force: :cascade do |t|
     t.integer  "question_id",     null: false
     t.integer  "organization_id", null: false
@@ -129,15 +139,24 @@ ActiveRecord::Schema.define(version: 20160423155037) do
 
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
-  create_table "questions", force: :cascade do |t|
-    t.string   "title",                     null: false
-    t.string   "body",                      null: false
-    t.string   "statement",                 null: false
-    t.integer  "category",   default: 0,    null: false
-    t.boolean  "custom",     default: true, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+  create_table "question_categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "title",                               null: false
+    t.string   "body",                                null: false
+    t.string   "statement",                           null: false
+    t.integer  "category",             default: 0,    null: false
+    t.boolean  "custom",               default: true, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.integer  "question_category_id",                null: false
+  end
+
+  add_index "questions", ["question_category_id"], name: "index_questions_on_question_category_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "lead_id",     null: false
@@ -232,9 +251,12 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"
+  add_foreign_key "organization_question_categories", "organizations"
+  add_foreign_key "organization_question_categories", "question_categories"
   add_foreign_key "organization_questions", "organizations"
   add_foreign_key "organization_questions", "questions"
   add_foreign_key "phones", "organizations"
+  add_foreign_key "questions", "question_categories"
   add_foreign_key "referrals", "leads"
   add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"
