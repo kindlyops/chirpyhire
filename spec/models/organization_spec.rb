@@ -5,9 +5,9 @@ RSpec.describe Organization, type: :model do
   let(:owner) { organization.accounts.first }
 
   describe "#ask", vcr: { cassette_name: "Organization_ask" } do
-    let!(:organization) { create(:organization, :with_successful_phone) }
+    let!(:organization) { create(:organization, :with_successful_phone, :with_question) }
     let(:lead) { create(:lead, organization: organization) }
-    let(:question) { create(:question, industry: organization.industry) }
+    let(:question) { organization.questions.first }
     let(:inquiry) { lead.inquiries.build(question: question) }
     it "creates a message" do
       expect {

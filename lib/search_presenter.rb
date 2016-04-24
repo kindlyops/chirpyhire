@@ -8,6 +8,6 @@ class SearchPresenter
   end
 
   def question_categories
-    questions.group_by(&:category)
+    questions.group_by(&:question_category_name)
   end
 end
