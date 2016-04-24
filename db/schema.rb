@@ -100,6 +100,16 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "messages", ["organization_id"], name: "index_messages_on_organization_id", using: :btree
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
 
+  create_table "organization_questions", force: :cascade do |t|
+    t.integer  "question_id",     null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "organization_questions", ["organization_id"], name: "index_organization_questions_on_organization_id", using: :btree
+  add_index "organization_questions", ["question_id"], name: "index_organization_questions_on_question_id", using: :btree
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
     t.string   "twilio_account_sid"
@@ -128,16 +138,6 @@ ActiveRecord::Schema.define(version: 20160423155037) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
-
-  create_table "questions_organizations", force: :cascade do |t|
-    t.integer  "question_id",     null: false
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "questions_organizations", ["organization_id"], name: "index_questions_organizations_on_organization_id", using: :btree
-  add_index "questions_organizations", ["question_id"], name: "index_questions_organizations_on_question_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "lead_id",     null: false
@@ -232,9 +232,9 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "users"
   add_foreign_key "messages", "organizations"
+  add_foreign_key "organization_questions", "organizations"
+  add_foreign_key "organization_questions", "questions"
   add_foreign_key "phones", "organizations"
-  add_foreign_key "questions_organizations", "organizations"
-  add_foreign_key "questions_organizations", "questions"
   add_foreign_key "referrals", "leads"
   add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"

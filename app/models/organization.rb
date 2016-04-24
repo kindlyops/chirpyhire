@@ -6,8 +6,8 @@ class Organization < ActiveRecord::Base
   has_many :referrers
   has_many :messages
   has_many :subscriptions
-  has_many :questions_organizations
-  has_many :questions, through: :questions_organizations
+  has_many :organization_questions
+  has_many :questions, through: :organization_questions
   has_many :searches, through: :accounts
   has_one :phone
 
