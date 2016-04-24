@@ -20,7 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
       [organization_attributes: [:name]]
     ]
     sign_up_params = params.require(resource_name).permit(allow)
-    sign_up_params[:organization_attributes][:industry_id] = home_care.id
+    sign_up_params[:organization_attributes][:industry] = home_care
     sign_up_params
   end
 
