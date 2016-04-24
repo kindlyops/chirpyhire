@@ -8,10 +8,15 @@ class Organization < ActiveRecord::Base
   has_many :subscriptions
   has_many :organization_questions
   has_many :questions, through: :organization_questions
+  has_many :organization_question_categories
+  has_many :question_categories, through: :organization_question_categories
   has_many :searches, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
+
+  before_create :connect_questions
+  before_create :connect_question_categories
 
   def ask(inquiry, prelude: false)
     message = send_message(
@@ -40,5 +45,13 @@ class Organization < ActiveRecord::Base
 
   def sms_client
     @sms_client ||= Sms::Client.new(self)
+  end
+
+  def connect_questions
+    self.questions << Question.all
+  end
+
+  def connect_question_categories
+    self.question_categories << QuestionCategory.all
   end
 end
