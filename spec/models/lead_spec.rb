@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Lead, type: :model do
-  let(:organization) { create(:organization, :with_account) }
+  let(:organization) { create(:organization, :with_account, :with_question) }
   let(:account) { organization.accounts.first }
   let(:search) { create(:search, account: account) }
 
@@ -213,11 +213,7 @@ RSpec.describe Lead, type: :model do
   end
 
   describe "#recently_answered_negatively?" do
-    let(:question) do
-      question = create(:question)
-      organization.questions << question
-      question
-    end
+    let(:question) { organization.questions.first }
 
     context "without recent answers to the question" do
       it "is false" do
@@ -251,11 +247,7 @@ RSpec.describe Lead, type: :model do
   end
 
   describe "#recently_answered_positively?" do
-    let(:question) do
-      question = create(:question)
-      organization.questions << question
-      question
-    end
+    let(:question) { organization.questions.first }
 
     context "without recent answers to the question" do
       it "is false" do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Search, type: :model do
-  let(:organization) { create(:organization, :with_account) }
+  let(:organization) { create(:organization, :with_account, :with_question) }
   let(:account) { organization.accounts.first }
 
   let(:search) { create(:search, account: account) }
@@ -68,11 +68,7 @@ RSpec.describe Search, type: :model do
     end
 
     context "with search questions" do
-      let!(:first_question) do
-        question = create(:question)
-        organization.questions << question
-        question
-      end
+      let!(:first_question) { organization.questions.first }
       let!(:second_question) do
         question = create(:question)
         organization.questions << question
@@ -88,11 +84,7 @@ RSpec.describe Search, type: :model do
   end
 
   describe "#search_question_after" do
-    let!(:first_question) do
-      question = create(:question)
-      organization.questions << question
-      question
-    end
+    let!(:first_question) { organization.questions.first }
     let!(:second_question) do
       question = create(:question)
       organization.questions << question

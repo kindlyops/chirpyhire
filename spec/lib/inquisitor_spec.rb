@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
 
-  let(:organization) { create(:organization, :with_successful_phone, :with_owner) }
+  let(:organization) { create(:organization, :with_successful_phone, :with_owner, :with_question) }
   let(:account) { organization.accounts.first }
   let(:search) { create(:search, account: account) }
   let(:lead) { create(:lead, organization: organization) }
