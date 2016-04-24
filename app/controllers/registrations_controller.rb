@@ -28,6 +28,8 @@ class RegistrationsController < Devise::RegistrationsController
     new_invitation_path(resource)
   end
 
+  private
+
   def home_care
     Industry.find_or_create_by(name: "Home Care")
   end

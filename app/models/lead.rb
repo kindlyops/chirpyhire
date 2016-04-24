@@ -11,18 +11,10 @@ class Lead < ActiveRecord::Base
   has_many :questions, through: :search_questions
 
   delegate :first_name, :name, :phone_number, to: :user
+  delegate :name, to: :organization, prefix: true
+  delegate :owner_first_name, to: :organization
 
   scope :subscribed, -> { joins(user: :subscriptions) }
-
-  def prelude
-    "Hey #{first_name}, this is #{organization.owner_first_name} \
-and #{organization.name}. We have a new client and want to see if you \
-might be a good fit."
-  end
-
-  def preamble
-    "Reply Y or N."
-  end
 
   def last_referrer
     @last_referrer ||= begin

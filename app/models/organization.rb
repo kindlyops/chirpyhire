@@ -14,12 +14,14 @@ class Organization < ActiveRecord::Base
   delegate :number, to: :phone, prefix: true
   delegate :questions, to: :industry
 
-  def ask(lead, question, prelude: false)
-    send_message(
-      to: lead.phone_number,
-      body: question.body_for(lead, prelude: prelude),
+  def ask(inquiry, prelude: false)
+    message = send_message(
+      to: inquiry.lead_phone_number,
+      body: inquiry.body(prelude: prelude),
       from: phone_number
     )
+    inquiry.message = message
+    inquiry.save
   end
 
   def owner
