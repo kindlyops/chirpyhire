@@ -48,6 +48,7 @@ group :test do
   gem 'capybara', '~> 2.7.0'
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'
+  gem 'capybara-email', '~> 2.5.0'
 end
 
 group :development do

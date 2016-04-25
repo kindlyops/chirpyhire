@@ -19,12 +19,12 @@ h3 Accept Invitation
       .col-sm-12
         .form-group.form-group-default
           = f.label :password
-          = f.password_field :password
+          = f.password_field :password, class: "form-control", required: true
     .row
       .col-sm-12
         .form-group.form-group-default
           = f.label :password_confirmation
-          = f.password_field :password_confirmation
+          = f.password_field :password_confirmation, class: "form-control", required: true
   .row.m-t-10
     .col-md-6
       p
@@ -32,4 +32,4 @@ h3 Accept Invitation
         a.text-info.small href="#" Pages Terms.
     .col-md-6.text-right
       a.text-info.small href="#" Help? Contact Support
-  = f.submit "Set your password"
+  = f.submit "Set your password", class: "btn btn-primary btn-cons m-t-10"

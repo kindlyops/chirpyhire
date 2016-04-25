@@ -1,22 +1,30 @@
-h1 = @search.title
-
-h2 Good Fits
-
-table
-  thead
-    tr
-      th Name
-      th Phone
-      th Referrer
-      th Referrer Phone Number
-  tbody
-  - @search.good_fits.each do |good_fit|
-    tr
-      td = good_fit.name
-      td = good_fit.phone_number.phony_formatted
-      td = good_fit.last_referrer_name
-      td = good_fit.last_referrer_phone_number.phony_formatted
-
-br
-
+= title "Search | CareHire"
+.panel.panel-transparent
+    .panel-heading
+      .panel-title = @search.title
+      .pull-right
+        .col-xs-12
+          input#search-table.form-control.pull-right type="text" placeholder="Search"
+      .clearfix
+    .panel-body
+      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+        thead
+          tr role="row"
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Phone: activate to sort column descending" Phone
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Referrer
+            : activate to sort column descending" Referrer
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Referrer Phone Number: activate to sort column descending" Referrer Phone Number
+        tbody
+          - @search.good_fits.each do |good_fit|
+            tr role="row"
+              td.v-align-middle
+                p = good_fit.name
+              td.v-align-middle
+                p = good_fit.phone_number.phony_formatted
+              td.v-align-middle
+                p = good_fit.last_referrer_name
+              td.v-align-middle
+                p = good_fit.last_referrer_phone_number.phony_formatted
 = link_to 'Back', searches_path
+
