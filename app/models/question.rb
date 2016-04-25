@@ -1,11 +1,9 @@
 class Question < ActiveRecord::Base
   has_many :inquiries
   has_many :answers
-  belongs_to :question_category
+  has_many :search_questions
+  belongs_to :question_template
+  belongs_to :organization
 
-  delegate :name, to: :question_category, prefix: true
-
-  def readonly?
-    !new_record? && !custom?
-  end
+  delegate :body, to: :question_template
 end
