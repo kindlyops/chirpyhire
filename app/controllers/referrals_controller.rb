@@ -3,7 +3,7 @@ class ReferralsController < SmsController
   before_action :ensure_referrer, only: :create
 
   def create
-    if referral.save
+    if referral.valid?
       render_sms referral_notice
     else
       error_message
@@ -13,7 +13,7 @@ class ReferralsController < SmsController
   private
 
   def referral
-    @referral ||= referrer.referrals.build(lead: lead, message: message)
+    @referral ||= referrer.refer(lead, message)
   end
 
   def referral_notice
