@@ -79,7 +79,7 @@ RSpec.feature "Account Management", type: :feature do
       visit "/"
 
       click_link "Sign out"
-      expect(page).to have_text("You need to sign in or sign up before continuing.")
+      expect(page).to have_text("Sign in or sign up before continuing.")
     end
   end
 end
