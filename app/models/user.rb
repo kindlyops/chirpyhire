@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :referrers
   has_many :subscriptions
 
+  scope :with_phone_number, -> { where.not(phone_number: nil) }
+
   def subscribed_to?(organization)
     subscriptions.where(organization: organization).exists?
   end
@@ -27,5 +29,9 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def phone_number
+    super || ""
   end
 end

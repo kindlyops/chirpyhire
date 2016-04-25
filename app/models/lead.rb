@@ -15,6 +15,7 @@ class Lead < ActiveRecord::Base
   delegate :owner_first_name, to: :organization
 
   scope :subscribed, -> { joins(user: :subscriptions) }
+  scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
 
   def last_referrer
     @last_referrer ||= begin
