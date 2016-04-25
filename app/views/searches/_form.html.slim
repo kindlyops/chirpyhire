@@ -5,52 +5,16 @@
       ul
         - @search.errors.full_messages.each do |message|
           li = message
-
-  .form-group
-    .control-group
-      h5 Schedule
-      - @search.question_categories["Schedule"].each_slice(4) do |group_of_questions|
-          .col-md-3
-            - group_of_questions.each do |question|
-              .checkbox.check-success
-                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
-  .form-group
-    .control-group
-      h5 Credentials
-      - @search.question_categories["Credentials"].each_slice(3) do |group_of_questions|
-          .col-md-3
-            - group_of_questions.each do |question|
-              .checkbox.check-success
-                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
-  .form-group
-    .control-group
-      h5 Transportation
-      - @search.question_categories["Transportation"].each_slice(4) do |group_of_questions|
-          .col-md-3
-            - group_of_questions.each do |question|
-              .checkbox.check-success
-                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
-  .form-group
-    .control-group
-      h5 Experience
-      - @search.question_categories["Experience"].each_slice(2) do |group_of_questions|
-          .col-md-3
-            - group_of_questions.each do |question|
-              .checkbox.check-success
-                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
-  .form-group
-    .control-group
-      h5 Preferences
-      - @search.question_categories["Preferences"].each_slice(4) do |group_of_questions|
-          .col-md-3
-            - group_of_questions.each do |question|
-              .checkbox.check-success
-                = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
-                = label_tag("question_#{question.id}", question.title, class: "control-label")
+  - @search.question_categories.each do |category|
+    .form-group
+      .control-group
+        h5 = category.humanize
+        - @search.questions_grouped_by_category[category].each_slice(4) do |group_of_questions|
+            .col-md-3
+              - group_of_questions.each do |question|
+                .checkbox.check-success
+                  = check_box_tag("search[question_ids][]", question.id, false, id: "question_#{question.id}")
+                  = label_tag("question_#{question.id}", question.title, class: "control-label")
 
   .form-group
     .col-sm-10

@@ -7,7 +7,11 @@ class SearchPresenter
     @questions = questions
   end
 
+  def questions_grouped_by_category
+    @questions_grouped_by_category ||= questions.group_by(&:category)
+  end
+
   def question_categories
-    questions.group_by(&:question_category_name)
+    questions_grouped_by_category.keys
   end
 end
