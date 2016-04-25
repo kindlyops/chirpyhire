@@ -93,7 +93,7 @@
                 </li>
                 <li class="bg-master-lighter">
                   <a class="clearfix" rel="nofollow" data-method="delete" href="/accounts/sign_out">
-                    <span class="pull-left">Logout</span>
+                    <span class="pull-left">Sign out</span>
                     <span class="pull-right"><i class="pg-power"></i></span>
                   </a>
                 </li>
@@ -111,10 +111,10 @@
         <div class="content">
           <div class="container-fluid container-fixed-lg">
             <% if notice %>
-              <p class="notice"><%= notice %></p>
+              <p class="notice alert-info"><%= notice %></p>
             <% end %>
             <% if alert %>
-              <p class="alert"><%= alert %></p>
+              <p class="alert alert-danger"><%= alert %></p>
             <% end %>
             <%= yield %>
             </div>
