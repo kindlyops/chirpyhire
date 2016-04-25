@@ -57,9 +57,9 @@ end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
-  gem 'rollbar', '~> 2.10.0'
 end
 
+gem 'rollbar', '~> 2.10.0'
 gem 'vcardigan', '~> 0.0.9'
 gem 'devise', '~> 4.0.0'
 gem 'devise_invitable', '~> 1.6.0'
