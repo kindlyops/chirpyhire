@@ -5,5 +5,5 @@ class Question < ActiveRecord::Base
   belongs_to :question_template
   belongs_to :organization
 
-  delegate :body, to: :question_template
+  delegate :body, :title, :category, to: :question_template
 end
