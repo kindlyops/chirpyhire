@@ -16,6 +16,7 @@
  *= require pages-plugins/jquery-scrollbar/jquery.scrollbar
  *= require pages-plugins/bootstrap-select2/select2
  *= require pages-plugins/switchery/css/switchery.min
+ *= require pages-plugins/jquery-datatable/media/css/dataTables.bootstrap.min
  *
  * BEGIN CORE TEMPLATE CSS FOR PAGES
  *= require pages-core/css/pages-icons
