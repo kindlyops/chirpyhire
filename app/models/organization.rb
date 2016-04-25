@@ -1,7 +1,7 @@
 class Organization < ActiveRecord::Base
   has_many :accounts
   has_many :leads
-  has_many :subscribed_leads, -> { subscribed }, class_name: "Lead"
+  has_many :subscribed_leads, -> { subscribed.with_phone_number }, class_name: "Lead"
   has_many :referrals, through: :leads
   has_many :referrers
   has_many :messages
@@ -16,8 +16,6 @@ class Organization < ActiveRecord::Base
   before_create :create_questions
 
   def ask(inquiry, prelude: false)
-    return unless inquiry.lead_phone_number.present?
-
     message = send_message(
       to: inquiry.lead_phone_number,
       body: inquiry.body(prelude: prelude),
