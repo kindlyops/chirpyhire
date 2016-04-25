@@ -9,6 +9,10 @@ FactoryGirl.define do
       end
     end
 
+    trait :without_phone_number do
+      association :user, :without_phone_number
+    end
+
     trait :with_referral do
       after(:create) do |lead|
         referrer = create(:referrer, organization: lead.organization)

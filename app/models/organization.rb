@@ -16,6 +16,8 @@ class Organization < ActiveRecord::Base
   before_create :create_questions
 
   def ask(inquiry, prelude: false)
+    return unless inquiry.lead_phone_number.present?
+
     message = send_message(
       to: inquiry.lead_phone_number,
       body: inquiry.body(prelude: prelude),

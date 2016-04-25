@@ -295,13 +295,30 @@ user = User.find_or_create_by(
 
 email = "harrywhelchel@gmail.com"
 unless Account.where(email: email).exists?
-  Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
+  account = Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
 end
 
 Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
-
 Referrer.find_or_create_by(user: user, organization: org)
-
 lead = Lead.find_or_create_by(organization: org, user: user)
-
 lead.subscribe unless lead.subscribed?
+
+unless Referrer.count > 30
+  referrers = FactoryGirl.create_list(:referrer, 32, organization: org)
+  referrers.each do |referrer|
+    referrer.refer(FactoryGirl.create(:lead, :without_phone_number, organization: org), FactoryGirl.create(:message, organization: org))
+  end
+  26.times { org.leads.sample.subscribe }
+end
+
+account = Account.find_by(email: email)
+searches = FactoryGirl.create_list(:search, 5, account: account)
+
+searches.each do |search|
+  search.leads << org.leads
+end
+
+searches.take(3).each do |search|
+  search.search_leads.sample.good_fit!
+end
+

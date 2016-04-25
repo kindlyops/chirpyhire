@@ -10,7 +10,7 @@ class Lead < ActiveRecord::Base
   has_many :search_questions, through: :searches
   has_many :questions, through: :search_questions
 
-  delegate :first_name, :name, :phone_number, to: :user
+  delegate :first_name, :name, to: :user
   delegate :name, to: :organization, prefix: true
   delegate :owner_first_name, to: :organization
 
@@ -28,6 +28,10 @@ class Lead < ActiveRecord::Base
       return NullReferral.new unless referrals.present?
       referrals.order(:created_at).last
     end
+  end
+
+  def phone_number
+    user.phone_number || ""
   end
 
   def last_referred_at
