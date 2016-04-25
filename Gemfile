@@ -47,6 +47,7 @@ group :test do
   gem 'webmock', '~> 1.24.0'
   gem 'capybara', '~> 2.7.0'
   gem 'database_cleaner', '~> 1.5.0'
+  gem 'launchy', '~> 2.4.3'
 end
 
 group :development do
