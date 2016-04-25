@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Authentication", type: :feature do
+RSpec.feature "Account Management", type: :feature do
   feature "sign up" do
     context "with valid credentials" do
       let(:password) { Faker::Internet.password }

@@ -1,4 +1,12 @@
 class InvitationsController < Devise::InvitationsController
+  before_filter :add_user_params, only: :update
+
+  def edit
+    set_minimum_password_length if respond_to? :set_minimum_password_length
+    resource.invitation_token = params[:invitation_token]
+    resource.build_user
+    render :edit
+  end
 
   private
 
@@ -8,5 +16,9 @@ class InvitationsController < Devise::InvitationsController
 
   def organization
     current_inviter.organization
+  end
+
+  def add_user_params
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [user_attributes: [:first_name, :last_name]])
   end
 end
