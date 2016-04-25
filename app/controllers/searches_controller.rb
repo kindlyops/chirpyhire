@@ -13,7 +13,7 @@ class SearchesController < ApplicationController
   def create
     if search.save
       search.start
-      redirect_to search, notice: "Search was successfully created."
+      redirect_to search, notice: "Finding a caregiver now. Come back and check this page in a little while to see caregivers that would be a good fit."
     else
       render :new
     end

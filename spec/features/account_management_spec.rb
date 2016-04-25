@@ -41,7 +41,7 @@ RSpec.feature "Account Management", type: :feature do
   feature "sign in" do
     context "with an account" do
       let(:organization) { create(:organization, :with_question, :with_account) }
-      let!(:account) { organization.accounts.first }
+      let(:account) { organization.accounts.first }
 
       scenario "it progresses to the dashboard" do
         visit "/accounts/sign_in"
@@ -69,7 +69,7 @@ RSpec.feature "Account Management", type: :feature do
 
   feature "sign out" do
     let(:organization) { create(:organization, :with_question, :with_account)}
-    let!(:account) { organization.accounts.first }
+    let(:account) { organization.accounts.first }
 
     background(:each) do
       login_as(account, scope: :account)
