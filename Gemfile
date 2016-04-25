@@ -45,6 +45,8 @@ end
 group :test do
   gem 'vcr', '~> 3.0.0'
   gem 'webmock', '~> 1.24.0'
+  gem 'capybara', '~> 2.7.0'
+  gem 'database_cleaner', '~> 1.5.0'
 end
 
 group :development do
