@@ -295,7 +295,7 @@ user = User.find_or_create_by(
 
 email = "harrywhelchel@gmail.com"
 unless Account.where(email: email).exists?
-  account = Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
+  Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
 end
 
 Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
