@@ -43,6 +43,18 @@ RSpec.describe Organization, type: :model do
         it "is only the subscribed leads" do
           expect(organization.subscribed_leads).to eq(subscribed_leads)
         end
+
+        context "with some of the subscribed leads not having a phone number" do
+          let(:subscribed_lead_without_phone_number) do
+            lead = subscribed_leads.sample
+            lead.user.update(phone_number: nil)
+            lead
+          end
+
+          it "is only the subscribed leads with a phone number" do
+            expect(organization.subscribed_leads).not_to include(subscribed_lead_without_phone_number)
+          end
+        end
       end
     end
   end
