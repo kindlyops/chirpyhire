@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :referral do
-    lead
+    candidate
     referrer
     message
   end

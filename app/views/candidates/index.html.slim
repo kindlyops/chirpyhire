@@ -1,7 +1,7 @@
-= title "Leads | chirpyhire"
+= title "Candidates | chirpyhire"
 .panel.panel-transparent
     .panel-heading
-      .panel-title Leads
+      .panel-title Candidates
       .pull-right
         .col-xs-12
           input#search-table.form-control.pull-right type="text" placeholder="Search"
@@ -16,15 +16,15 @@
             th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referrer
             th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
         tbody
-          - @leads.each do |lead|
+          - @candidates.each do |candidate|
             tr role="row"
               td.v-align-middle
-                p = lead.name
+                p = candidate.name
               td.v-align-middle
-                p = lead.phone_number.phony_formatted
+                p = candidate.phone_number.phony_formatted
               td.v-align-middle
-                p = lead.last_referrer_name
+                p = candidate.last_referrer_name
               td.v-align-middle
-                - if lead.last_referred_at
-                  p = "#{time_ago_in_words(lead.last_referred_at)} ago"
+                - if candidate.last_referred_at
+                  p = "#{time_ago_in_words(candidate.last_referred_at)} ago"
 

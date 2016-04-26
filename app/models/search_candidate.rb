@@ -1,8 +1,8 @@
-class SearchLead < ActiveRecord::Base
+class SearchCandidate < ActiveRecord::Base
   belongs_to :search
-  belongs_to :lead
+  belongs_to :candidate
 
-  delegate :organization, to: :lead
+  delegate :organization, to: :candidate
   delegate :first_search_question, to: :search
 
   enum status: [:pending, :processing, :finished]
@@ -17,10 +17,10 @@ class SearchLead < ActiveRecord::Base
   private
 
   def is_good_fit?
-    lead.answers.to(search.questions).recent.positive.count == search.questions.count
+    candidate.answers.to(search.questions).recent.positive.count == search.questions.count
   end
 
   def is_bad_fit?
-    lead.answers.to(search.questions).recent.negative.exists?
+    candidate.answers.to(search.questions).recent.negative.exists?
   end
 end

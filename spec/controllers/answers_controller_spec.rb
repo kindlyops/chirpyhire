@@ -14,7 +14,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "#create" do
-    context "without an ongoing search for the lead" do
+    context "without an ongoing search for the candidate" do
       it "returns an error" do
         post :create, params
         expect(response.body).to include("Sorry I didn't understand that.")
@@ -33,14 +33,14 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "with an ongoing search for the lead" do
+    context "with an ongoing search for the candidate" do
       let(:search) { create(:search, account: account) }
       let(:questions) do
         questions = create_list(:question, 2)
         organization.questions << questions
       end
       let(:user) { create(:user, phone_number: sender_phone_number) }
-      let(:lead) { create(:lead, organization: organization, user: user) }
+      let(:candidate) { create(:candidate, organization: organization, user: user) }
 
       let!(:first_search_question) do
         search_question = create(:search_question, question: questions.first, next_question: questions.last)
@@ -54,10 +54,10 @@ RSpec.describe AnswersController, type: :controller do
         search_question
       end
 
-      let!(:search_lead) do
-        search.leads << lead
-        lead.search_leads.each(&:processing!)
-        lead.search_leads.find_by(search: search)
+      let!(:search_candidate) do
+        search.candidates << candidate
+        candidate.search_candidates.each(&:processing!)
+        candidate.search_candidates.find_by(search: search)
       end
 
       context "without an inquiry" do
@@ -80,13 +80,13 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context "with an inquiry" do
-        let!(:inquiry) { create(:inquiry, lead: lead, question: questions.first) }
+        let!(:inquiry) { create(:inquiry, candidate: candidate, question: questions.first) }
 
         it "creates an answer" do
           expect {
             expect {
               post :create, params
-            }.to change{lead.answers.count}.by(1)
+            }.to change{candidate.answers.count}.by(1)
           }.to change{inquiry.question.answers.count}.by(1)
         end
 
@@ -102,7 +102,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it "continues the search" do
-          expect(InquisitorJob).to receive(:perform_later).with(search_lead, second_search_question)
+          expect(InquisitorJob).to receive(:perform_later).with(search_candidate, second_search_question)
           post :create, params
         end
       end

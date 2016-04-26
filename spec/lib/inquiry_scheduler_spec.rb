@@ -5,9 +5,9 @@ RSpec.describe InquiryScheduler do
 
   let(:organization) { create(:organization, :with_owner) }
   let(:account) { organization.accounts.first }
-  let(:search) { create(:search, :with_search_question, :with_search_lead, account: account) }
+  let(:search) { create(:search, :with_search_question, :with_search_candidate, account: account) }
   let(:search_question) { search.search_questions.first }
-  let(:search_lead) { search.search_leads.first }
+  let(:search_candidate) { search.search_candidates.first }
 
   context "in organization time" do
     around(:each) do |example|
@@ -23,7 +23,7 @@ RSpec.describe InquiryScheduler do
         end
         let(:second_search_question) { search.search_questions.create(question: second_question, previous_question: search_question.question) }
 
-        let(:scheduler) { InquiryScheduler.new(search_lead, second_search_question) }
+        let(:scheduler) { InquiryScheduler.new(search_candidate, second_search_question) }
 
         it "creates an inquisitor" do
           expect_any_instance_of(Inquisitor).to receive(:call).once
@@ -32,7 +32,7 @@ RSpec.describe InquiryScheduler do
       end
 
       context "starting the search" do
-        let(:scheduler) { InquiryScheduler.new(search_lead, search_question) }
+        let(:scheduler) { InquiryScheduler.new(search_candidate, search_question) }
 
         context "between 10 am and 8 pm today" do
           before(:each) do

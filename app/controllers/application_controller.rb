@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
     @organization ||= current_account.organization
   end
 
-  def subscribed_leads
-    @subscribed_leads ||= organization.subscribed_leads
+  def subscribed_candidates
+    @subscribed_candidates ||= organization.subscribed_candidates
   end
 
   def current_user

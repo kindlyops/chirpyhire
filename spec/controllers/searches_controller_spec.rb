@@ -80,8 +80,8 @@ RSpec.describe SearchesController, type: :controller do
           }
         end
 
-        context "with leads" do
-          let!(:leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
+        context "with candidates" do
+          let!(:candidates) { create_list(:candidate, 2, :with_subscription, organization: organization) }
 
           it "creates a search" do
             expect {
@@ -95,16 +95,16 @@ RSpec.describe SearchesController, type: :controller do
             }.to change{SearchQuestion.count}.by(params[:search][:question_ids].length)
           end
 
-          it "creates search leads" do
+          it "creates search candidates" do
             expect {
               post :create, params
-            }.to change{SearchLead.count}.by(organization.leads.count)
+            }.to change{SearchCandidate.count}.by(organization.candidates.count)
           end
 
-          it "creates an InquisitorJob for each lead in the organization" do
+          it "creates an InquisitorJob for each candidate in the organization" do
             expect {
               post :create, params
-            }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.leads.count)
+            }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.candidates.count)
           end
 
           it "redirects to the search" do
@@ -139,8 +139,8 @@ RSpec.describe SearchesController, type: :controller do
           end
         end
 
-        context "without any subscribed leads" do
-          let!(:leads) { create_list(:lead, 2, organization: organization) }
+        context "without any subscribed candidates" do
+          let!(:candidates) { create_list(:candidate, 2, organization: organization) }
 
           before(:each) do
             request.env["HTTP_REFERER"] = "origin"
@@ -157,9 +157,9 @@ RSpec.describe SearchesController, type: :controller do
             }.not_to change{organization.searches.count}
           end
 
-          it "sets a flash alert saying there are no subscribed leads" do
+          it "sets a flash alert saying there are no subscribed candidates" do
             post :create, params
-            expect(flash[:alert]).to include("There are no subscribed leads!")
+            expect(flash[:alert]).to include("There are no subscribed candidates!")
           end
         end
       end

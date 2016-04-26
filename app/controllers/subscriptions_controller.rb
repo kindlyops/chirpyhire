@@ -2,27 +2,27 @@ class SubscriptionsController < SmsController
   before_action :message, only: [:create, :destroy]
 
   def create
-    if lead.subscribed?
+    if candidate.subscribed?
       render_sms already_subscribed
     else
-      lead.subscribe
+      candidate.subscribe
       render_sms subscription_notice
     end
   end
 
   def destroy
-    if lead.unsubscribed?
+    if candidate.unsubscribed?
       render_sms not_subscribed
     else
-      lead.unsubscribe
+      candidate.unsubscribe
       render_sms unsubscribed_notice
     end
   end
 
   private
 
-  def lead
-    @lead ||= organization.leads.find_or_create_by(user: sender)
+  def candidate
+    @candidate ||= organization.candidates.find_or_create_by(user: sender)
   end
 
   def subscription_notice

@@ -1,12 +1,12 @@
-class Lead < ActiveRecord::Base
+class Candidate < ActiveRecord::Base
   belongs_to :user
   belongs_to :organization
   has_many :referrals
   has_many :referrers, through: :referrals
   has_many :inquiries
   has_many :answers
-  has_many :search_leads
-  has_many :searches, through: :search_leads
+  has_many :search_candidates
+  has_many :searches, through: :search_candidates
   has_many :search_questions, through: :searches
   has_many :questions, through: :search_questions
 
@@ -60,15 +60,15 @@ class Lead < ActiveRecord::Base
   end
 
   def has_other_search_in_progress?(search)
-    search_leads.where.not(search: search).processing.exists?
+    search_candidates.where.not(search: search).processing.exists?
   end
 
   def has_pending_searches?
-    search_leads.pending.exists?
+    search_candidates.pending.exists?
   end
 
-  def oldest_pending_search_lead
-    search_leads.pending.order(:created_at).first
+  def oldest_pending_search_candidate
+    search_candidates.pending.order(:created_at).first
   end
 
   def recently_answered_negatively?(question)
@@ -83,7 +83,7 @@ class Lead < ActiveRecord::Base
     inquiries.order(created_at: :desc).first
   end
 
-  def processing_search_lead
-    search_leads.processing.first
+  def processing_search_candidate
+    search_candidates.processing.first
   end
 end

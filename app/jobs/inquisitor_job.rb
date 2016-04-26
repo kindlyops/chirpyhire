@@ -1,7 +1,7 @@
 class InquisitorJob < ActiveJob::Base
   queue_as :default
 
-  def perform(search_lead, search_question)
-    InquiryScheduler.new(search_lead, search_question).call
+  def perform(search_candidate, search_question)
+    InquiryScheduler.new(search_candidate, search_question).call
   end
 end

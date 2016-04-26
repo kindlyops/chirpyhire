@@ -1,19 +1,19 @@
 class Inquisitor
 
-  def initialize(search_lead, search_question)
-    @search_lead = search_lead
+  def initialize(search_candidate, search_question)
+    @search_candidate = search_candidate
     @search_question = search_question
   end
 
   def call
     if existing_search_in_progress?
-      search_lead.pending!
+      search_candidate.pending!
     elsif search_finished? || recently_answered_any_question_negatively?
       finish_search
     elsif recently_answered_positively?
       ask_next_question
     else
-      search_lead.processing!
+      search_candidate.processing!
       ask_question
     end
   end
@@ -21,25 +21,25 @@ class Inquisitor
   private
 
   def organization
-    search_lead.organization
+    search_candidate.organization
   end
 
   def starting_search?
     search_question.present? && search_question.starting_search?
   end
 
-  attr_reader :search_question, :search_lead
+  attr_reader :search_question, :search_candidate
 
   def ask_question
     organization.ask(inquiries.build(question: question), prelude: starting_search?)
   end
 
   def existing_search_in_progress?
-    lead.has_other_search_in_progress?(search)
+    candidate.has_other_search_in_progress?(search)
   end
 
   def search
-    search_lead.search
+    search_candidate.search
   end
 
   def search_finished?
@@ -47,40 +47,40 @@ class Inquisitor
   end
 
   def pending_searches?
-    lead.has_pending_searches?
+    candidate.has_pending_searches?
   end
 
   def start_pending_search
     InquisitorJob.perform_later(
-      next_search_lead,
-      next_search_lead.first_search_question
+      next_search_candidate,
+      next_search_candidate.first_search_question
     )
   end
 
-  def next_search_lead
-    @next_search_lead ||= lead.oldest_pending_search_lead
+  def next_search_candidate
+    @next_search_candidate ||= candidate.oldest_pending_search_candidate
   end
 
   def ask_next_question
-    InquisitorJob.perform_later(search_lead, search.search_question_after(search_question))
+    InquisitorJob.perform_later(search_candidate, search.search_question_after(search_question))
   end
 
   def recently_answered_any_question_negatively?
-    lead.recently_answered_negatively?(questions)
+    candidate.recently_answered_negatively?(questions)
   end
 
   def recently_answered_positively?
-    lead.recently_answered_positively?(question)
+    candidate.recently_answered_positively?(question)
   end
 
   def finish_search
-    search_lead.determine_fit
-    search_lead.finished!
+    search_candidate.determine_fit
+    search_candidate.finished!
     start_pending_search if pending_searches?
   end
 
-  def lead
-    @lead ||= search_lead.lead
+  def candidate
+    @candidate ||= search_candidate.candidate
   end
 
   def question
@@ -88,10 +88,10 @@ class Inquisitor
   end
 
   def questions
-    search_lead.search.questions
+    search_candidate.search.questions
   end
 
   def inquiries
-    lead.inquiries
+    candidate.inquiries
   end
 end

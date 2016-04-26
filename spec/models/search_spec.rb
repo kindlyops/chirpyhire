@@ -5,13 +5,13 @@ RSpec.describe Search, type: :model do
   let(:account) { organization.accounts.first }
 
   let(:search) { create(:search, account: account) }
-  let(:leads) { create_list(:lead, 2, organization: organization) }
+  let(:candidates) { create_list(:candidate, 2, organization: organization) }
 
   describe "#result" do
     context "with good fits" do
       before(:each) do
-        search.leads << leads
-        search.search_leads.each(&:good_fit!)
+        search.candidates << candidates
+        search.search_candidates.each(&:good_fit!)
       end
 
       it "is Found caregiver" do
@@ -29,14 +29,14 @@ RSpec.describe Search, type: :model do
   describe "#good_fits" do
     context "with good fits" do
       before(:each) do
-        search.leads << leads
+        search.candidates << candidates
       end
 
-      it "is the leads of good fit search leads" do
-        first_search_lead = search.search_leads.first
-        first_search_lead.good_fit!
+      it "is the candidates of good fit search candidates" do
+        first_search_candidate = search.search_candidates.first
+        first_search_candidate.good_fit!
 
-        expect(search.good_fits).to eq([first_search_lead.lead])
+        expect(search.good_fits).to eq([first_search_candidate.candidate])
       end
     end
 
@@ -48,13 +48,13 @@ RSpec.describe Search, type: :model do
   end
 
   describe "#start" do
-    context "with search leads" do
+    context "with search candidates" do
       before(:each) do
-        search.leads << leads
+        search.candidates << candidates
       end
 
-      it "creates an inquisitor job for each search lead" do
-        expect(InquisitorJob).to receive(:perform_later).exactly(leads.count).times
+      it "creates an inquisitor job for each search candidate" do
+        expect(InquisitorJob).to receive(:perform_later).exactly(candidates.count).times
         search.start
       end
     end

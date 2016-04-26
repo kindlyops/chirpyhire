@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Inquiry, type: :model do
   let(:organization) { create(:organization, :with_owner) }
-  let(:inquiry) { create(:inquiry, lead: create(:lead, organization: organization)) }
+  let(:inquiry) { create(:inquiry, candidate: create(:candidate, organization: organization)) }
 
   describe "#body" do
-    let(:lead) { create(:lead) }
+    let(:candidate) { create(:candidate) }
     context "with prelude flag" do
       it "includes the prelude" do
         expect(inquiry.body(prelude: true)).to include("We have a new client \

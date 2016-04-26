@@ -1,23 +1,23 @@
 class Search < ActiveRecord::Base
   belongs_to :account
   has_many :search_questions
-  has_many :search_leads
-  has_many :leads, through: :search_leads
+  has_many :search_candidates
+  has_many :candidates, through: :search_candidates
   has_many :questions, through: :search_questions
 
   delegate :organization, to: :account
   delegate :name, to: :account, prefix: true
 
-  accepts_nested_attributes_for :leads, :search_questions
+  accepts_nested_attributes_for :candidates, :search_questions
   before_create :ensure_title
 
   def good_fits
-    leads.merge(search_leads.good_fit)
+    candidates.merge(search_candidates.good_fit)
   end
 
   def start
-    search_leads.each do |search_lead|
-      InquisitorJob.perform_later(search_lead, first_search_question)
+    search_candidates.each do |search_candidate|
+      InquisitorJob.perform_later(search_candidate, first_search_question)
     end
   end
 

@@ -1,5 +1,5 @@
 class SearchesController < ApplicationController
-  before_action :ensure_subscribed_leads, only: :create
+  before_action :ensure_subscribed_candidates, only: :create
   before_action :ensure_questions, only: :create
 
   def show
@@ -26,7 +26,7 @@ class SearchesController < ApplicationController
   private
 
   def search
-    @search ||= current_account.searches.build(search_questions: search_questions, leads: subscribed_leads)
+    @search ||= current_account.searches.build(search_questions: search_questions, candidates: subscribed_candidates)
   end
 
   def searches
@@ -62,9 +62,9 @@ class SearchesController < ApplicationController
     @search_attributes ||= params[:search] || {}
   end
 
-  def ensure_subscribed_leads
-    if subscribed_leads.blank?
-      redirect_to :back, alert: "There are no subscribed leads!"
+  def ensure_subscribed_candidates
+    if subscribed_candidates.blank?
+      redirect_to :back, alert: "There are no subscribed candidates!"
     end
   end
 

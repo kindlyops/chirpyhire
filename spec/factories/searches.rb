@@ -9,9 +9,9 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_search_lead do
+    trait :with_search_candidate do
       after(:create) do |search|
-        create(:search_lead, search: search)
+        create(:search_candidate, search: search)
       end
     end
   end

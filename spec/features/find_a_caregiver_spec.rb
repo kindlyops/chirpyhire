@@ -9,8 +9,8 @@ RSpec.feature "Find a Caregiver" do
     login_as(account, scope: :account)
   end
 
-  context "with a subscribed lead" do
-    let!(:lead) { create(:lead, :with_subscription, organization: organization) }
+  context "with a subscribed candidate" do
+    let!(:candidate) { create(:candidate, :with_subscription, organization: organization) }
 
     scenario "notifies the user the search was created" do
       visit new_search_path
@@ -21,13 +21,13 @@ RSpec.feature "Find a Caregiver" do
     end
   end
 
-  context "without leads" do
-    scenario "notifies the user there are no subscribed leads" do
+  context "without candidates" do
+    scenario "notifies the user there are no subscribed candidates" do
       visit new_search_path
 
       check(question_title)
       click_button("Find a Caregiver")
-      expect(page).to have_text("There are no subscribed leads!")
+      expect(page).to have_text("There are no subscribed candidates!")
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.feature "Find a Caregiver" do
     end
 
     context "with a good fit" do
-      let!(:good_fit) { create(:search_lead, search: search, fit: SearchLead.fits[:good_fit]).lead }
+      let!(:good_fit) { create(:search_candidate, search: search, fit: SearchCandidate.fits[:good_fit]).candidate }
 
       scenario "has the good fit's info" do
         visit search_path(search)

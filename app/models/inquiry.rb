@@ -1,9 +1,9 @@
 class Inquiry < ActiveRecord::Base
   belongs_to :message
   belongs_to :question
-  belongs_to :lead
+  belongs_to :candidate
 
-  delegate :phone_number, to: :lead, prefix: true
+  delegate :phone_number, to: :candidate, prefix: true
 
   def body(prelude: false)
     template = ""
@@ -15,8 +15,8 @@ class Inquiry < ActiveRecord::Base
   private
 
   def prelude_message
-    "Hey #{lead.first_name}, this is #{lead.owner_first_name} \
-and #{lead.organization_name}. We have a new client and want to see if you \
+    "Hey #{candidate.first_name}, this is #{candidate.owner_first_name} \
+and #{candidate.organization_name}. We have a new client and want to see if you \
 might be a good fit."
   end
 
