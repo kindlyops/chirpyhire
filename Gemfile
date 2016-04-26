@@ -79,3 +79,5 @@ gem 'sinatra', '~> 1.4.0', require: nil
 gem 'puma', '~> 3.4.0'
 gem 'puma-heroku', '~> 1.0.0'
 gem 'font-awesome-rails', '~> 4.6.0'
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'jquery-datatables-rails', '~>3.4.0'

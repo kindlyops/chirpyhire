@@ -2,7 +2,7 @@
 [16. Tables and Datatables]
 */
 
-/* Generic Tables 
+/* Generic Tables
 ------------------------------------
 */
 .table {
@@ -91,7 +91,7 @@
                    border-top: 0;
                 }
             }
-        }       
+        }
     }
     &.table-condensed {
         table-layout: fixed;
@@ -182,7 +182,7 @@
     margin-bottom: 0 !important;
 }
 
-/* Data-tables 
+/* Data-tables
 ------------------------------------
 */
 
@@ -231,7 +231,7 @@
 .dataTables_wrapper .dataTables_paginate ul > li.next > a,
 .dataTables_wrapper .dataTables_paginate ul > li.prev > a{
     opacity: 1;
-} 
+}
 .dataTables_wrapper .dataTables_paginate ul > li.disabled a{
     opacity: .35;
     &:hover{
@@ -249,7 +249,7 @@
 .dataTables_wrapper .dataTables_info{
      clear: none;
     font-size: 12px;
-    
+
     padding: 0 33px;
     color: $color-master;
 }
@@ -281,21 +281,21 @@
 
 table.dataTable thead {
     .sorting_asc:after{
-        background-image: url("../img/icons/sort_asc.png");
+        background-image: image-url("icons/sort_asc.png");
     }
     .sorting_desc:after{
-        background-image: url("../img/icons/sort_desc.png");
+        background-image: image-url("icons/sort_desc.png");
     }
     .sorting:after{
-        background-image: url("../img/icons/sort_both.png");
+        background-image: image-url("icons/sort_both.png");
     }
     .sorting_asc_disabled:after{
-        background-image: url("../img/icons/sort_asc_disabled.png");
+        background-image: image-url("icons/sort_asc_disabled.png");
     }
     .sorting_desc_disabled:after{
-        background-image: url("../img/icons/sort_desc_disabled.png");
+        background-image: image-url("icons/sort_desc_disabled.png");
     }
-    
+
 }
 
 table.dataTable thead .sorting:after,

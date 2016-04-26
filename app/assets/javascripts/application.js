@@ -15,7 +15,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require pages-plugins/modernizr.custom
-//= require pages-plugins/boostrapv3/js/bootstrap.min
+//= require bootstrap-sprockets
 //= require pages-plugins/jquery/jquery-easy
 //= require pages-plugins/jquery-unveil/jquery.unveil.min
 //= require pages-plugins/jquery-bez/jquery.bez.min
@@ -23,9 +23,8 @@
 //= require pages-plugins/imagesloaded/imagesloaded.pkgd.min
 //= require pages-plugins/jquery-actual/jquery.actual.min
 //= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
-//= require pages-plugins/jquery-datatable/media/js/jquery.dataTables.min
-//= require pages-plugins/jquery-datatable/media/js/dataTables.bootstrap.min
-
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 
 // BEGIN CORE TEMPLATE JS FOR PAGES
 //= require pages-core/js/pages
