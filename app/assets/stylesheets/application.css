@@ -12,12 +12,11 @@
  *
  * BEGIN VENDOR CSS FOR PAGES
  *= require pages-plugins/boostrapv3/css/bootstrap.min
- *= require pages-plugins/font-awesome/css/font-awesome
+ *= require font-awesome
  *= require pages-plugins/jquery-scrollbar/jquery.scrollbar
  *= require pages-plugins/bootstrap-select2/select2
  *= require pages-plugins/switchery/css/switchery.min
  *= require pages-plugins/jquery-datatable/media/css/dataTables.bootstrap.min
- *= require pages-plugins/font-awesome/css/font-awesome.min.css
  *
  * BEGIN CORE TEMPLATE CSS FOR PAGES
  *= require pages-core/css/pages-icons
