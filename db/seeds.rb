@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
+puts "Creating Question Templates"
 question_templates = [
   {
     title: "Bathing",
@@ -280,28 +280,42 @@ question_templates = [
 ]
 
 QuestionTemplate.create(question_templates) unless QuestionTemplate.exists?
+puts "Question Templates Created"
 
+
+puts "Creating Organization"
 org = Organization.find_or_create_by(
   name: "chirpyhire",
   twilio_account_sid: ENV.fetch("TWILIO_ACCOUNT_SID"),
   twilio_auth_token: ENV.fetch("TWILIO_AUTH_TOKEN")
 )
+puts "Created Organization"
 
+puts "Creating User"
 user = User.find_or_create_by(
  first_name: "Harry",
  last_name: "Whelchel",
  phone_number: "+14047908943"
 )
+puts "Created User"
 
+puts "Creating Account"
 email = "harrywhelchel@gmail.com"
 unless Account.where(email: email).exists?
   Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
 end
+puts "Created Account"
 
+puts "Creating Phone"
 Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
+puts "Created Phone"
+
+puts "Creating Referrer"
 Referrer.find_or_create_by(user: user, organization: org)
+puts "Created Referrer"
 
 if Rails.env.development?
+  puts "Adding fake referrers and fake leads"
   unless Referrer.count > 30
     referrers = FactoryGirl.create_list(:referrer, 32, organization: org)
     referrers.each do |referrer|
@@ -320,5 +334,8 @@ if Rails.env.development?
   searches.take(3).each do |search|
     search.search_leads.sample.good_fit!
   end
+  puts "Development specific seeding completed"
 end
+
+puts "Seed completed"
 
