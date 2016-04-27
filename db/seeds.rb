@@ -314,32 +314,32 @@ if Rails.env.development?
   Referrer.find_or_create_by(user: user, organization: org)
   puts "Created Referrer"
 
-  puts "Creating Lead"
-  lead = Lead.find_or_create_by(user: user, organization: org)
-  puts "Created Lead"
+  puts "Creating Candidate"
+  candidate = Candidate.find_or_create_by(user: user, organization: org)
+  puts "Created Candidate"
 
-  lead.subscribe unless lead.subscribed?
-  puts "Subscribed Lead"
+  candidate.subscribe unless candidate.subscribed?
+  puts "Subscribed Candidate"
 
-  puts "Adding fake referrers and fake leads"
+  puts "Adding fake referrers and fake candidates"
   unless Referrer.count > 30
     referrers = FactoryGirl.create_list(:referrer, 32, organization: org)
     referrers.each do |referrer|
-      referrer.refer(FactoryGirl.create(:lead, :without_phone_number, organization: org), FactoryGirl.create(:message, organization: org))
+      referrer.refer(FactoryGirl.create(:candidate, :without_phone_number, organization: org), FactoryGirl.create(:message, organization: org))
     end
-    26.times { org.leads.sample.subscribe }
+    26.times { org.candidates.sample.subscribe }
   end
 
   account = Account.find_by(email: email)
-  searches = FactoryGirl.create_list(:search, 5, account: account)
+  jobs = FactoryGirl.create_list(:job, 5, account: account)
 
-  searches.each do |search|
-    search.leads << org.leads
+  jobs.each do |job|
+    job.candidates << org.candidates
   end
 
-  searches.take(3).each do |search|
-    if search.search_leads.present?
-      search.search_leads.sample.good_fit!
+  jobs.take(3).each do |job|
+    if job.job_candidates.present?
+      job.job_candidates.sample.good_fit!
     end
   end
   puts "Development specific seeding completed"

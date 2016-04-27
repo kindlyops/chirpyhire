@@ -1,7 +1,7 @@
-= title "Referrers | chirpyhire"
+= title "Candidates | chirpyhire"
 .panel.panel-transparent
     .panel-heading
-      .panel-title Referrers
+      .panel-title Candidates
       .pull-right
         .col-xs-12
           input#search-table.form-control.pull-right type="text" placeholder="Job"
@@ -13,18 +13,18 @@
             th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
             th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Phone
             : activate to sort column descending" Phone
-            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referral
+            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referrer
             th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
         tbody
-          - @referrers.each do |referrer|
+          - @candidates.each do |candidate|
             tr role="row"
               td.v-align-middle
-                p = referrer.name
+                p = candidate.name
               td.v-align-middle
-                p = referrer.phone_number.phony_formatted
+                p = candidate.phone_number.phony_formatted
               td.v-align-middle
-                p = referrer.last_referral_name
+                p = candidate.last_referrer_name
               td.v-align-middle
-                - if referrer.last_referral_at
-                  p = "#{time_ago_in_words(referrer.last_referral_at)} ago"
+                - if candidate.last_referred_at
+                  p = "#{time_ago_in_words(candidate.last_referred_at)} ago"
 

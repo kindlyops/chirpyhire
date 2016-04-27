@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SearchesController, type: :controller do
+RSpec.describe JobsController, type: :controller do
   context "not logged in" do
     describe "#new" do
       it "302s" do
@@ -33,11 +33,11 @@ RSpec.describe SearchesController, type: :controller do
     end
 
     describe "#new" do
-      it "assigns a new search as @search" do
+      it "assigns a new job search as @job" do
         get :new
-        expect(assigns(:search)).to be_a(SearchPresenter)
-        expect(assigns(:search).search).to be_a_new(Search)
-        expect(assigns(:search).account).to eq(account)
+        expect(assigns(:job)).to be_a(JobPresenter)
+        expect(assigns(:job).job).to be_a_new(Job)
+        expect(assigns(:job).account).to eq(account)
       end
     end
 
@@ -47,19 +47,19 @@ RSpec.describe SearchesController, type: :controller do
         expect(response).to be_ok
       end
 
-      context "with searches" do
-        let!(:searches) { create_list(:search, 3, account: account) }
+      context "with jobs" do
+        let!(:jobs) { create_list(:job, 3, account: account) }
 
-        it "returns the organization's searches" do
+        it "returns the organization's jobs" do
           get :index
-          expect(assigns(:searches)).to eq(searches)
+          expect(assigns(:jobs)).to eq(jobs)
         end
 
         context "with other organizations" do
-          let!(:other_searches) { create_list(:search, 2) }
-          it "does not return the other organization's searches" do
+          let!(:other_jobs) { create_list(:job, 2) }
+          it "does not return the other organization's jobs" do
             get :index
-            expect(assigns(:searches)).not_to include(other_searches)
+            expect(assigns(:jobs)).not_to include(other_jobs)
           end
         end
       end
@@ -74,51 +74,51 @@ RSpec.describe SearchesController, type: :controller do
         end
 
         let(:params) do
-          { search: {
+          { job: {
             question_ids: [questions.first.id, questions.last.id]
             }
           }
         end
 
-        context "with leads" do
-          let!(:leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
+        context "with candidates" do
+          let!(:candidates) { create_list(:candidate, 2, :with_subscription, organization: organization) }
 
-          it "creates a search" do
+          it "creates a job" do
             expect {
               post :create, params
-            }.to change{organization.searches.count}.by(1)
+            }.to change{organization.jobs.count}.by(1)
           end
 
-          it "creates search questions" do
+          it "creates job questions" do
             expect {
               post :create, params
-            }.to change{SearchQuestion.count}.by(params[:search][:question_ids].length)
+            }.to change{JobQuestion.count}.by(params[:job][:question_ids].length)
           end
 
-          it "creates search leads" do
+          it "creates job candidates" do
             expect {
               post :create, params
-            }.to change{SearchLead.count}.by(organization.leads.count)
+            }.to change{JobCandidate.count}.by(organization.candidates.count)
           end
 
-          it "creates an InquisitorJob for each lead in the organization" do
+          it "creates an InquisitorJob for each candidate in the organization" do
             expect {
               post :create, params
-            }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.leads.count)
+            }.to change(InquisitorJob.queue_adapter.enqueued_jobs, :size).by(organization.candidates.count)
           end
 
           it "redirects to the search" do
             post :create, params
-            expect(response).to redirect_to(organization.searches.last)
+            expect(response).to redirect_to(organization.jobs.last)
           end
 
-          context "with invalid search params" do
+          context "with invalid job search params" do
             before(:each) do
               request.env["HTTP_REFERER"] = "origin"
             end
 
             let(:invalid_params) do
-              { search: {} }
+              { job: {} }
             end
 
             it "redirects back" do
@@ -126,10 +126,10 @@ RSpec.describe SearchesController, type: :controller do
               expect(response).to redirect_to("origin")
             end
 
-            it "does not create a search" do
+            it "does not create a job" do
               expect {
                 post :create, invalid_params
-              }.not_to change{organization.searches.count}
+              }.not_to change{organization.jobs.count}
             end
 
             it "sets a flash error notifying that no questions were selected" do
@@ -139,8 +139,8 @@ RSpec.describe SearchesController, type: :controller do
           end
         end
 
-        context "without any subscribed leads" do
-          let!(:leads) { create_list(:lead, 2, organization: organization) }
+        context "without any subscribed candidates" do
+          let!(:candidates) { create_list(:candidate, 2, organization: organization) }
 
           before(:each) do
             request.env["HTTP_REFERER"] = "origin"
@@ -151,15 +151,15 @@ RSpec.describe SearchesController, type: :controller do
             expect(response).to redirect_to("origin")
           end
 
-          it "does not create a search" do
+          it "does not create a job" do
             expect {
               post :create, params
-            }.not_to change{organization.searches.count}
+            }.not_to change{organization.jobs.count}
           end
 
-          it "sets a flash alert saying there are no subscribed leads" do
+          it "sets a flash alert saying there are no subscribed candidates" do
             post :create, params
-            expect(flash[:alert]).to include("There are no subscribed leads!")
+            expect(flash[:alert]).to include("There are no subscribed candidates!")
           end
         end
       end

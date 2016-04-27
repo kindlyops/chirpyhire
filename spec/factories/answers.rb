@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :answer do
     question
-    lead
+    candidate
     message
     body { Faker::Company.buzzword }
 

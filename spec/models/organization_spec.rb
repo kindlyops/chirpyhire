@@ -6,9 +6,9 @@ RSpec.describe Organization, type: :model do
 
   describe "#ask", vcr: { cassette_name: "Organization_ask" } do
     let!(:organization) { create(:organization, :with_successful_phone, :with_question) }
-    let(:lead) { create(:lead, organization: organization) }
+    let(:candidate) { create(:candidate, organization: organization) }
     let(:question) { organization.questions.first }
-    let(:inquiry) { lead.inquiries.build(question: question) }
+    let(:inquiry) { candidate.inquiries.build(question: question) }
     it "creates a message" do
       expect {
         organization.ask(inquiry)
@@ -28,31 +28,31 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe "#subscribed_leads" do
-    context "without leads" do
+  describe "#subscribed_candidates" do
+    context "without candidates" do
       it "is empty" do
-        expect(organization.subscribed_leads).to be_empty
+        expect(organization.subscribed_candidates).to be_empty
       end
     end
 
-    context "with leads" do
-      let!(:subscribed_leads) { create_list(:lead, 2, :with_subscription, organization: organization) }
-      let!(:unsubscribed_lead) { create(:lead, organization: organization) }
+    context "with candidates" do
+      let!(:subscribed_candidates) { create_list(:candidate, 2, :with_subscription, organization: organization) }
+      let!(:unsubscribed_candidate) { create(:candidate, organization: organization) }
 
       context "with some unsubscribed" do
-        it "is only the subscribed leads" do
-          expect(organization.subscribed_leads).to eq(subscribed_leads)
+        it "is only the subscribed candidates" do
+          expect(organization.subscribed_candidates).to eq(subscribed_candidates)
         end
 
-        context "with some of the subscribed leads not having a phone number" do
-          let(:subscribed_lead_without_phone_number) do
-            lead = subscribed_leads.sample
-            lead.user.update(phone_number: nil)
-            lead
+        context "with some of the subscribed candidates not having a phone number" do
+          let(:subscribed_candidate_without_phone_number) do
+            candidate = subscribed_candidates.sample
+            candidate.user.update(phone_number: nil)
+            candidate
           end
 
-          it "is only the subscribed leads with a phone number" do
-            expect(organization.subscribed_leads).not_to include(subscribed_lead_without_phone_number)
+          it "is only the subscribed candidates with a phone number" do
+            expect(organization.subscribed_candidates).not_to include(subscribed_candidate_without_phone_number)
           end
         end
       end

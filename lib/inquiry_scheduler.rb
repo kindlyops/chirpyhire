@@ -1,8 +1,8 @@
 class InquiryScheduler
 
-  def initialize(search_lead, search_question)
-    @search_question = search_question
-    @search_lead = search_lead
+  def initialize(job_candidate, job_question)
+    @job_question = job_question
+    @job_candidate = job_candidate
   end
 
   def call
@@ -13,18 +13,18 @@ class InquiryScheduler
 
   private
 
-  attr_reader :search_lead, :search_question
+  attr_reader :job_candidate, :job_question
 
   def inquire
-    Inquisitor.new(search_lead, search_question).call
+    Inquisitor.new(job_candidate, job_question).call
   end
 
   def starting_search?
-    search_question.present? && search_question.starting_search?
+    job_question.present? && job_question.starting_search?
   end
 
   def organization
-    search_lead.organization
+    job_candidate.organization
   end
 
   def ensure_sane_hours
@@ -48,6 +48,6 @@ class InquiryScheduler
   end
 
   def try_later(at:)
-    InquisitorJob.set(wait_until: at).perform_later(search_lead, search_question)
+    InquisitorJob.set(wait_until: at).perform_later(job_candidate, job_question)
   end
 end

@@ -1,7 +1,7 @@
 class AnswersController < SmsController
 
   def create
-    if lead.present? && inquiry.present?
+    if candidate.present? && inquiry.present?
       create_answer
       continue_search
       head :ok
@@ -13,19 +13,19 @@ class AnswersController < SmsController
   private
 
   def continue_search
-    InquisitorJob.perform_later(search_lead, next_search_question)
+    InquisitorJob.perform_later(job_candidate, next_job_question)
   end
 
   def create_answer
-    lead.answers.create(answer_attributes)
+    candidate.answers.create(answer_attributes)
   end
 
-  def lead
-    @lead ||= organization.leads.find_by(user: sender)
+  def candidate
+    @candidate ||= organization.candidates.find_by(user: sender)
   end
 
   def inquiry
-    @inquiry ||= lead.most_recent_inquiry
+    @inquiry ||= candidate.most_recent_inquiry
   end
 
   def answer_attributes
@@ -40,19 +40,19 @@ class AnswersController < SmsController
     @question ||= inquiry.question
   end
 
-  def search_question
-    search.search_questions.find_by(question: question)
+  def job_question
+    job.job_questions.find_by(question: question)
   end
 
-  def search_lead
-    lead.processing_search_lead
+  def job_candidate
+    candidate.processing_job_candidate
   end
 
-  def next_search_question
-    @next_search_question ||= search.search_question_after(search_question)
+  def next_job_question
+    @next_job_question ||= job.job_question_after(job_question)
   end
 
-  def search
-    search_lead.search
+  def job
+    job_candidate.job
   end
 end

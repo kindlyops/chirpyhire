@@ -1,7 +1,7 @@
 class AddScreeningUniquenessConstraints < ActiveRecord::Migration
   def change
-    add_index :search_questions, [:search_id, :question_id], unique: true
-    add_index :search_leads, [:search_id, :lead_id], unique: true
-    add_index :inquiries, [:lead_id, :question_id], unique: true, name: "index_by_search_lead_and_search_question"
+    add_index :job_questions, [:job_id, :question_id], unique: true
+    add_index :job_candidates, [:job_id, :candidate_id], unique: true
+    add_index :inquiries, [:candidate_id, :question_id], unique: true, name: "index_by_job_candidate_and_job_question"
   end
 end

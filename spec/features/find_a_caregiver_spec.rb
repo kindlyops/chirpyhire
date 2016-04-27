@@ -9,11 +9,11 @@ RSpec.feature "Find a Caregiver" do
     login_as(account, scope: :account)
   end
 
-  context "with a subscribed lead" do
-    let!(:lead) { create(:lead, :with_subscription, organization: organization) }
+  context "with a subscribed candidate" do
+    let!(:candidate) { create(:candidate, :with_subscription, organization: organization) }
 
-    scenario "notifies the user the search was created" do
-      visit new_search_path
+    scenario "notifies the user the job search was created" do
+      visit new_job_path
 
       check(question_title)
       click_button("Find a Caregiver")
@@ -21,21 +21,21 @@ RSpec.feature "Find a Caregiver" do
     end
   end
 
-  context "without leads" do
-    scenario "notifies the user there are no subscribed leads" do
-      visit new_search_path
+  context "without candidates" do
+    scenario "notifies the user there are no subscribed candidates" do
+      visit new_job_path
 
       check(question_title)
       click_button("Find a Caregiver")
-      expect(page).to have_text("There are no subscribed leads!")
+      expect(page).to have_text("There are no subscribed candidates!")
     end
   end
 
-  context "viewing a search" do
-    let!(:search) { create(:search, account: account) }
+  context "viewing a job" do
+    let!(:job) { create(:job, account: account) }
 
     scenario "has a table of good fits" do
-      visit search_path(search)
+      visit job_path(job)
       expect(page).to have_text("Name")
       expect(page).to have_text("Phone")
       expect(page).to have_text("Referrer")
@@ -43,10 +43,10 @@ RSpec.feature "Find a Caregiver" do
     end
 
     context "with a good fit" do
-      let!(:good_fit) { create(:search_lead, search: search, fit: SearchLead.fits[:good_fit]).lead }
+      let!(:good_fit) { create(:job_candidate, job: job, fit: JobCandidate.fits[:good_fit]).candidate }
 
       scenario "has the good fit's info" do
-        visit search_path(search)
+        visit job_path(job)
         expect(page).to have_text(good_fit.name)
         expect(page).to have_text(good_fit.phone_number.phony_formatted)
         expect(page).to have_text(good_fit.last_referrer_name)
@@ -55,26 +55,26 @@ RSpec.feature "Find a Caregiver" do
     end
   end
 
-  context "viewing all searches" do
-    scenario "has a table of searches" do
-      visit searches_path
-      expect(page).to have_text("Searches")
+  context "viewing all jobs" do
+    scenario "has a table of jobs" do
+      visit jobs_path
+      expect(page).to have_text("Jobs")
       expect(page).to have_text("Title")
       expect(page).to have_text("Result")
-      expect(page).to have_text("Searcher")
+      expect(page).to have_text("Jober")
       expect(page).to have_text("Created")
     end
 
-    context "with searches" do
+    context "with jobs" do
       include ActionView::Helpers::DateHelper
 
-      let!(:search) { create(:search, account: account) }
-      scenario "has the search information" do
-        visit searches_path
-        expect(page).to have_text(search.title)
-        expect(page).to have_text(search.result)
-        expect(page).to have_text(search.account_name)
-        expect(page).to have_text("#{time_ago_in_words(search.created_at)}")
+      let!(:job) { create(:job, account: account) }
+      scenario "has the job search information" do
+        visit jobs_path
+        expect(page).to have_text(job.title)
+        expect(page).to have_text(job.result)
+        expect(page).to have_text(job.account_name)
+        expect(page).to have_text("#{time_ago_in_words(job.created_at)}")
       end
     end
   end

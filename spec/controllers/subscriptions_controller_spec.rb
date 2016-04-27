@@ -22,8 +22,8 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with an existing user" do
       let!(:user) { create(:user, phone_number: phone_number) }
 
-      context "with an existing lead" do
-        let!(:lead) { create(:lead, user: user, organization: organization) }
+      context "with an existing candidate" do
+        let!(:candidate) { create(:candidate, user: user, organization: organization) }
 
         context "with an active subscription" do
           before(:each) do
@@ -50,11 +50,11 @@ RSpec.describe SubscriptionsController, type: :controller do
         end
       end
 
-      context "without an existing lead" do
-        it "creates a lead for the user" do
+      context "without an existing candidate" do
+        it "creates a candidate for the user" do
           expect {
             post :create, params
-          }.to change{organization.leads.where(user: user).count}.by(1)
+          }.to change{organization.candidates.where(user: user).count}.by(1)
         end
 
         it "creates a subscription" do
@@ -72,10 +72,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{User.where(phone_number: phone_number).count}.by(1)
       end
 
-      it "creates a lead for the user" do
+      it "creates a candidate for the user" do
         expect {
           post :create, params
-        }.to change{organization.leads.count}.by(1)
+        }.to change{organization.candidates.count}.by(1)
       end
 
       it "creates a subscription" do

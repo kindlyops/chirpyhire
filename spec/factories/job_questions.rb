@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :search_question do
-    search
+  factory :job_question do
+    job
     question
   end
 end

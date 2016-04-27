@@ -4,8 +4,8 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
 
   let(:organization) { create(:organization, :with_successful_phone, :with_owner, :with_question) }
   let(:account) { organization.accounts.first }
-  let(:search) { create(:search, account: account) }
-  let(:lead) { create(:lead, organization: organization) }
+  let(:job) { create(:job, account: account) }
+  let(:candidate) { create(:candidate, organization: organization) }
   let(:question) do
     question = create(:question)
     organization.questions << question
@@ -13,19 +13,19 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
   end
 
   before(:each) do
-    search.leads << lead
-    search.questions << question
+    job.candidates << candidate
+    job.questions << question
   end
 
-  let(:search_lead) { search.search_leads.first }
-  let(:search_question) { search.search_questions.first }
+  let(:job_candidate) { job.job_candidates.first }
+  let(:job_question) { job.job_questions.first }
 
-  subject { Inquisitor.new(search_lead, search_question) }
+  subject { Inquisitor.new(job_candidate, job_question) }
 
   describe "#call" do
-    it "ensures the search lead is processing" do
+    it "ensures the job candidate is processing" do
       subject.call
-      expect(search_lead.processing?).to eq(true)
+      expect(job_candidate.processing?).to eq(true)
     end
 
     it "creates a message" do
@@ -34,29 +34,29 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
       }.to change{organization.messages.count}.by(1)
     end
 
-    it "creates an inquiry for the lead and question" do
+    it "creates an inquiry for the candidate and question" do
       expect {
         expect {
           subject.call
         }.to change{question.inquiries.count}.by(1)
-      }.to change{lead.inquiries.count}.by(1)
+      }.to change{candidate.inquiries.count}.by(1)
     end
 
-    context "with an existing search in progress" do
-      let(:existing_search) { create(:search, account: account) }
+    context "with an existing job search in progress" do
+      let(:existing_job) { create(:job, account: account) }
       before(:each) do
-        existing_search.leads << lead
-        existing_search.search_leads.each(&:processing!)
+        existing_job.candidates << candidate
+        existing_job.job_candidates.each(&:processing!)
       end
 
-      context "and the search lead is some how processing" do
+      context "and the job candidate is some how processing" do
         before(:each) do
-          search_lead.processing!
+          job_candidate.processing!
         end
 
-        it "ensures the search lead is pending" do
+        it "ensures the job candidate is pending" do
           subject.call
-          expect(search_lead.pending?).to eq(true)
+          expect(job_candidate.pending?).to eq(true)
         end
 
         it "does not create a message" do
@@ -65,133 +65,133 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
           }.not_to change{organization.messages.count}
         end
 
-        it "does not create an inquiry for the lead and question" do
+        it "does not create an inquiry for the candidate and question" do
           expect {
             expect {
               subject.call
             }.not_to change{question.inquiries.count}
-          }.not_to change{lead.inquiries.count}
+          }.not_to change{candidate.inquiries.count}
         end
       end
     end
 
-    context "if the search question isn't present" do
-      let(:search_question) { nil }
+    context "if the job question isn't present" do
+      let(:job_question) { nil }
 
-      it "marks the search lead as finished" do
+      it "marks the job candidate as finished" do
         subject.call
-        expect(search_lead.finished?).to eq(true)
+        expect(job_candidate.finished?).to eq(true)
       end
 
       context "with all positive answers in the search" do
         before(:each) do
           second_question = create(:question)
           organization.questions << second_question
-          search.questions << second_question
-          create(:answer, lead: lead, question: question, body: "Y")
-          create(:answer, lead: lead, question: second_question, body: "Y")
+          job.questions << second_question
+          create(:answer, candidate: candidate, question: question, body: "Y")
+          create(:answer, candidate: candidate, question: second_question, body: "Y")
         end
 
-        it "marks the search lead as a good fit" do
+        it "marks the job candidate as a good fit" do
           subject.call
-          expect(search_lead.good_fit?).to eq(true)
+          expect(job_candidate.good_fit?).to eq(true)
         end
       end
 
       context "with a negative answer" do
         before(:each) do
-          create(:answer, lead: lead, question: question, body: "N")
+          create(:answer, candidate: candidate, question: question, body: "N")
         end
 
-        it "marks the search lead as a bad fit" do
+        it "marks the job candidate as a bad fit" do
           subject.call
-          expect(search_lead.bad_fit?).to eq(true)
+          expect(job_candidate.bad_fit?).to eq(true)
         end
       end
 
-      context "with other pending searches for the lead" do
-        let(:pending_search) { create(:search, :with_search_question, account: account) }
-        let(:next_search_lead) { pending_search.search_leads.find_by(lead: lead) }
+      context "with other pending jobs for the candidate" do
+        let(:pending_job) { create(:job, :with_job_question, account: account) }
+        let(:next_job_candidate) { pending_job.job_candidates.find_by(candidate: candidate) }
 
         before(:each) do
-          pending_search.leads << lead
+          pending_job.candidates << candidate
         end
 
-        it "starts the pending search with the next search lead" do
-          expect(InquisitorJob).to receive(:perform_later).with(next_search_lead, pending_search.first_search_question)
+        it "starts the pending job search with the next job candidate" do
+          expect(InquisitorJob).to receive(:perform_later).with(next_job_candidate, pending_job.first_job_question)
           subject.call
         end
       end
     end
 
-    context "if the lead recently answered the question negatively" do
-      let!(:answer) { create(:answer, body: "N", question: question, lead: lead) }
+    context "if the candidate recently answered the question negatively" do
+      let!(:answer) { create(:answer, body: "N", question: question, candidate: candidate) }
 
-      it "marks the search lead as a bad fit" do
+      it "marks the job candidate as a bad fit" do
         subject.call
-        expect(search_lead.bad_fit?).to eq(true)
+        expect(job_candidate.bad_fit?).to eq(true)
       end
 
-      it "marks the search lead as finished" do
+      it "marks the job candidate as finished" do
         subject.call
-        expect(search_lead.finished?).to eq(true)
+        expect(job_candidate.finished?).to eq(true)
       end
 
-      context "with other pending searches for the lead" do
-        let(:pending_search) { create(:search, :with_search_question, account: account) }
-        let(:next_search_lead) { pending_search.search_leads.find_by(lead: lead) }
+      context "with other pending jobs for the candidate" do
+        let(:pending_job) { create(:job, :with_job_question, account: account) }
+        let(:next_job_candidate) { pending_job.job_candidates.find_by(candidate: candidate) }
 
         before(:each) do
-          pending_search.leads << lead
+          pending_job.candidates << candidate
         end
 
-        it "starts the pending search with the next search lead" do
-          expect(InquisitorJob).to receive(:perform_later).with(next_search_lead, pending_search.first_search_question)
+        it "starts the pending job search with the next job candidate" do
+          expect(InquisitorJob).to receive(:perform_later).with(next_job_candidate, pending_job.first_job_question)
           subject.call
         end
       end
     end
 
-    context "if the lead recently answered another question in the search negatively" do
+    context "if the candidate recently answered another question in the job search negatively" do
       let(:another_question) do
         question = create(:question)
         organization.questions << question
         question
       end
-      let!(:answer) { create(:answer, body: "N", question: another_question, lead: lead) }
+      let!(:answer) { create(:answer, body: "N", question: another_question, candidate: candidate) }
 
       before(:each) do
-        search.questions << another_question
+        job.questions << another_question
       end
 
-      it "marks the search lead as a bad fit" do
+      it "marks the job candidate as a bad fit" do
         subject.call
-        expect(search_lead.bad_fit?).to eq(true)
+        expect(job_candidate.bad_fit?).to eq(true)
       end
 
-      it "marks the search lead as finished" do
+      it "marks the job candidate as finished" do
         subject.call
-        expect(search_lead.finished?).to eq(true)
+        expect(job_candidate.finished?).to eq(true)
       end
 
-      context "with other pending searches for the lead" do
-        let(:pending_search) { create(:search, :with_search_question, account: account) }
-        let(:next_search_lead) { pending_search.search_leads.find_by(lead: lead) }
-        let(:first_search_question) { pending_search.search_questions.find_by(previous_question: nil) }
+      context "with other pending jobs for the candidate" do
+        let(:pending_job) { create(:job, :with_job_question, account: account) }
+        let(:next_job_candidate) { pending_job.job_candidates.find_by(candidate: candidate) }
+        let(:first_job_question) { pending_job.job_questions.find_by(previous_question: nil) }
 
         before(:each) do
-          pending_search.leads << lead
+          pending_job.candidates << candidate
         end
 
-        it "starts the pending search with the next search lead" do
-          expect(InquisitorJob).to receive(:perform_later).with(next_search_lead, first_search_question)
+        it "starts the pending job search with the next job candidate" do
+          expect(InquisitorJob).to receive(:perform_later).with(next_job_candidate, first_job_question)
           subject.call
         end
       end
     end
 
-    context "if the lead recently answered the question positively" do
-      let!(:answer) { create(:answer, body: "Y", question: question, lead: lead) }
+    context "if the candidate recently answered the question positively" do
+      let!(:answer) { create(:answer, body: "Y", question: question, candidate: candidate) }
 
       context "with a next question" do
         let(:next_question) do
@@ -199,14 +199,14 @@ RSpec.describe Inquisitor, vcr: { cassette_name: "Inquisitor" } do
           organization.questions << question
           question
         end
-        let(:next_search_question) { search.search_questions.create(question: next_question) }
+        let(:next_job_question) { job.job_questions.create(question: next_question) }
 
         before(:each) do
-          search_question.update(next_question: next_question)
+          job_question.update(next_question: next_question)
         end
 
         it "asks the next question" do
-          expect(InquisitorJob).to receive(:perform_later).with(search_lead, next_search_question)
+          expect(InquisitorJob).to receive(:perform_later).with(job_candidate, next_job_question)
           subject.call
         end
       end

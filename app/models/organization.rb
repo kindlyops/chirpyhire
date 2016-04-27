@@ -1,14 +1,14 @@
 class Organization < ActiveRecord::Base
   has_many :accounts
-  has_many :leads
-  has_many :subscribed_leads, -> { subscribed.with_phone_number }, class_name: "Lead"
-  has_many :referrals, through: :leads
+  has_many :candidates
+  has_many :subscribed_candidates, -> { subscribed.with_phone_number }, class_name: "Candidate"
+  has_many :referrals, through: :candidates
   has_many :referrers
   has_many :messages
   has_many :subscriptions
   has_many :questions
   has_many :question_templates, through: :questions
-  has_many :searches, through: :accounts
+  has_many :jobs, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
@@ -17,7 +17,7 @@ class Organization < ActiveRecord::Base
 
   def ask(inquiry, prelude: false)
     message = send_message(
-      to: inquiry.lead_phone_number,
+      to: inquiry.candidate_phone_number,
       body: inquiry.body(prelude: prelude),
       from: phone_number
     )

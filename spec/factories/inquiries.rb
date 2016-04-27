@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :inquiry do
     message
-    lead
+    candidate
     question
 
     trait :stale do

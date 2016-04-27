@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LeadsController, type: :controller do
+RSpec.describe CandidatesController, type: :controller do
   context "not logged in" do
     describe "#index" do
       it "302s" do
@@ -24,19 +24,19 @@ RSpec.describe LeadsController, type: :controller do
         expect(response).to be_ok
       end
 
-      context "with leads" do
-        let!(:leads) { create_list(:lead, 3, organization: organization) }
+      context "with candidates" do
+        let!(:candidates) { create_list(:candidate, 3, organization: organization) }
 
-        it "returns the organization's leads" do
+        it "returns the organization's candidates" do
           get :index
-          expect(assigns(:leads)).to eq(leads)
+          expect(assigns(:candidates)).to eq(candidates)
         end
 
         context "with other organizations" do
-          let!(:other_leads) { create_list(:lead, 2) }
-          it "does not return the other organization's leads" do
+          let!(:other_candidates) { create_list(:candidate, 2) }
+          it "does not return the other organization's candidates" do
             get :index
-            expect(assigns(:leads)).not_to include(other_leads)
+            expect(assigns(:candidates)).not_to include(other_candidates)
           end
         end
       end

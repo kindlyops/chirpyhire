@@ -4,7 +4,7 @@ class AddsUniquenessConstraints < ActiveRecord::Migration
     add_index :accounts, :email, unique: true
 
     add_index :accounts, [:organization_id, :user_id], unique: true
-    add_index :leads, [:organization_id, :user_id], unique: true
+    add_index :candidates, [:organization_id, :user_id], unique: true
     add_index :referrers, [:organization_id, :user_id], unique: true
     add_index :messages, :sid, unique: true
 

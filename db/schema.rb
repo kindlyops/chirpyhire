@@ -53,41 +53,78 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "question_id", null: false
-    t.integer  "lead_id",     null: false
-    t.integer  "message_id",  null: false
-    t.string   "body",        null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "question_id",  null: false
+    t.integer  "candidate_id", null: false
+    t.integer  "message_id",   null: false
+    t.string   "body",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "answers", ["lead_id"], name: "index_answers_on_lead_id", using: :btree
+  add_index "answers", ["candidate_id"], name: "index_answers_on_candidate_id", using: :btree
   add_index "answers", ["message_id"], name: "index_answers_on_message_id", unique: true, using: :btree
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
 
-  create_table "inquiries", force: :cascade do |t|
-    t.integer  "message_id",  null: false
-    t.integer  "lead_id",     null: false
-    t.integer  "question_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "inquiries", ["lead_id", "question_id"], name: "index_by_search_lead_and_search_question", unique: true, using: :btree
-  add_index "inquiries", ["lead_id"], name: "index_inquiries_on_lead_id", using: :btree
-  add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
-  add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
-
-  create_table "leads", force: :cascade do |t|
+  create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",         null: false
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "leads", ["organization_id", "user_id"], name: "index_leads_on_organization_id_and_user_id", unique: true, using: :btree
-  add_index "leads", ["organization_id"], name: "index_leads_on_organization_id", using: :btree
-  add_index "leads", ["user_id"], name: "index_leads_on_user_id", using: :btree
+  add_index "candidates", ["organization_id", "user_id"], name: "index_candidates_on_organization_id_and_user_id", unique: true, using: :btree
+  add_index "candidates", ["organization_id"], name: "index_candidates_on_organization_id", using: :btree
+  add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
+
+  create_table "inquiries", force: :cascade do |t|
+    t.integer  "message_id",   null: false
+    t.integer  "candidate_id", null: false
+    t.integer  "question_id",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "inquiries", ["candidate_id", "question_id"], name: "index_by_job_candidate_and_job_question", unique: true, using: :btree
+  add_index "inquiries", ["candidate_id"], name: "index_inquiries_on_candidate_id", using: :btree
+  add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
+  add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
+
+  create_table "job_candidates", force: :cascade do |t|
+    t.integer  "job_id",                   null: false
+    t.integer  "candidate_id",             null: false
+    t.integer  "status",       default: 0, null: false
+    t.integer  "fit",          default: 0, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "job_candidates", ["candidate_id"], name: "index_job_candidates_on_candidate_id", using: :btree
+  add_index "job_candidates", ["job_id", "candidate_id"], name: "index_job_candidates_on_job_id_and_candidate_id", unique: true, using: :btree
+  add_index "job_candidates", ["job_id"], name: "index_job_candidates_on_job_id", using: :btree
+
+  create_table "job_questions", force: :cascade do |t|
+    t.integer  "job_id",               null: false
+    t.integer  "question_id",          null: false
+    t.integer  "next_question_id"
+    t.integer  "previous_question_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "job_questions", ["job_id", "question_id"], name: "index_job_questions_on_job_id_and_question_id", unique: true, using: :btree
+  add_index "job_questions", ["job_id"], name: "index_job_questions_on_job_id", using: :btree
+  add_index "job_questions", ["next_question_id"], name: "index_job_questions_on_next_question_id", using: :btree
+  add_index "job_questions", ["previous_question_id"], name: "index_job_questions_on_previous_question_id", using: :btree
+  add_index "job_questions", ["question_id"], name: "index_job_questions_on_question_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer  "account_id", null: false
+    t.string   "title",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "jobs", ["account_id"], name: "index_jobs_on_account_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.string   "sid",             null: false
@@ -139,14 +176,14 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "questions", ["question_template_id"], name: "index_questions_on_question_template_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
-    t.integer  "lead_id",     null: false
-    t.integer  "referrer_id", null: false
-    t.integer  "message_id",  null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "candidate_id", null: false
+    t.integer  "referrer_id",  null: false
+    t.integer  "message_id",   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "referrals", ["lead_id"], name: "index_referrals_on_lead_id", using: :btree
+  add_index "referrals", ["candidate_id"], name: "index_referrals_on_candidate_id", using: :btree
   add_index "referrals", ["message_id"], name: "index_referrals_on_message_id", using: :btree
   add_index "referrals", ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
 
@@ -160,43 +197,6 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "referrers", ["organization_id", "user_id"], name: "index_referrers_on_organization_id_and_user_id", unique: true, using: :btree
   add_index "referrers", ["organization_id"], name: "index_referrers_on_organization_id", using: :btree
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
-
-  create_table "search_leads", force: :cascade do |t|
-    t.integer  "search_id",              null: false
-    t.integer  "lead_id",                null: false
-    t.integer  "status",     default: 0, null: false
-    t.integer  "fit",        default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "search_leads", ["lead_id"], name: "index_search_leads_on_lead_id", using: :btree
-  add_index "search_leads", ["search_id", "lead_id"], name: "index_search_leads_on_search_id_and_lead_id", unique: true, using: :btree
-  add_index "search_leads", ["search_id"], name: "index_search_leads_on_search_id", using: :btree
-
-  create_table "search_questions", force: :cascade do |t|
-    t.integer  "search_id",            null: false
-    t.integer  "question_id",          null: false
-    t.integer  "next_question_id"
-    t.integer  "previous_question_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "search_questions", ["next_question_id"], name: "index_search_questions_on_next_question_id", using: :btree
-  add_index "search_questions", ["previous_question_id"], name: "index_search_questions_on_previous_question_id", using: :btree
-  add_index "search_questions", ["question_id"], name: "index_search_questions_on_question_id", using: :btree
-  add_index "search_questions", ["search_id", "question_id"], name: "index_search_questions_on_search_id_and_question_id", unique: true, using: :btree
-  add_index "search_questions", ["search_id"], name: "index_search_questions_on_search_id", using: :btree
-
-  create_table "searches", force: :cascade do |t|
-    t.integer  "account_id", null: false
-    t.string   "title",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "searches", ["account_id"], name: "index_searches_on_account_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id",         null: false
@@ -222,28 +222,28 @@ ActiveRecord::Schema.define(version: 20160423155037) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "users"
-  add_foreign_key "answers", "leads"
+  add_foreign_key "answers", "candidates"
   add_foreign_key "answers", "messages"
   add_foreign_key "answers", "questions"
-  add_foreign_key "inquiries", "leads"
+  add_foreign_key "candidates", "organizations"
+  add_foreign_key "candidates", "users"
+  add_foreign_key "inquiries", "candidates"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
-  add_foreign_key "leads", "organizations"
-  add_foreign_key "leads", "users"
+  add_foreign_key "job_candidates", "candidates"
+  add_foreign_key "job_candidates", "jobs"
+  add_foreign_key "job_questions", "jobs"
+  add_foreign_key "job_questions", "questions"
+  add_foreign_key "jobs", "accounts"
   add_foreign_key "messages", "organizations"
   add_foreign_key "phones", "organizations"
   add_foreign_key "questions", "organizations"
   add_foreign_key "questions", "question_templates"
-  add_foreign_key "referrals", "leads"
+  add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"
-  add_foreign_key "search_leads", "leads"
-  add_foreign_key "search_leads", "searches"
-  add_foreign_key "search_questions", "questions"
-  add_foreign_key "search_questions", "searches"
-  add_foreign_key "searches", "accounts"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "users"
 end

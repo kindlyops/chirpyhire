@@ -37,14 +37,14 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
           }.to change{organization.referrals.count}.by(1)
         end
 
-        context "without an existing lead" do
-          it "creates a lead" do
+        context "without an existing candidate" do
+          it "creates a candidate" do
             expect {
               post :create, params
-            }.to change{organization.leads.count}.by(1)
+            }.to change{organization.candidates.count}.by(1)
           end
 
-          context "without a user with the lead's phone number" do
+          context "without a user with the candidate's phone number" do
             it "creates a user" do
               expect {
                 post :create, params
@@ -52,7 +52,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
             end
           end
 
-          context "with a user with the lead's phone number" do
+          context "with a user with the candidate's phone number" do
             before(:each) do
               create(:user, phone_number: "+14047908943")
             end
@@ -65,16 +65,16 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
           end
         end
 
-        context "with an existing lead" do
+        context "with an existing candidate" do
           before(:each) do
             user = create(:user, phone_number: "+14047908943")
-            create(:lead, organization: organization, user: user)
+            create(:candidate, organization: organization, user: user)
           end
 
-          it "does not create a new lead" do
+          it "does not create a new candidate" do
             expect {
               post :create, params
-            }.not_to change{Lead.count}
+            }.not_to change{Candidate.count}
           end
         end
       end
@@ -86,13 +86,13 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
           }.not_to change{Referral.count}
         end
 
-        it "does not create a lead" do
+        it "does not create a candidate" do
           expect {
             post :create, params
-          }.not_to change{Lead.count}
+          }.not_to change{Candidate.count}
         end
 
-        context "without a user with the lead's phone number" do
+        context "without a user with the candidate's phone number" do
           it "does not create a user" do
             expect {
               post :create, params
@@ -115,10 +115,10 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
         }.not_to change{Referral.count}
       end
 
-      it "does not create a lead" do
+      it "does not create a candidate" do
         expect {
           post :create, params
-        }.not_to change{Lead.count}
+        }.not_to change{Candidate.count}
       end
     end
   end

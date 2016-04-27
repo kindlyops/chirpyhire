@@ -13,13 +13,13 @@ class ReferralsController < SmsController
   private
 
   def referral
-    @referral ||= referrer.refer(lead, message)
+    @referral ||= referrer.refer(candidate, message)
   end
 
   def referral_notice
     Sms::Response.new do |r|
-      r.Message "Awesome! Please copy and text to #{lead.first_name}:"
-      r.Message "Hey #{lead.first_name}. My home care agency, \
+      r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
+      r.Message "Hey #{candidate.first_name}. My home care agency, \
 #{organization.name}, regularly hires caregivers. They \
 treat me very well and have great clients. I think you \
 would be a great fit here. Text START to #{organization.phone_number} \
@@ -35,8 +35,8 @@ to learn about opportunities."
     @vcard_user ||= UserFinder.new(attributes: vcard.attributes).call
   end
 
-  def lead
-    @lead ||= organization.leads.find_or_create_by(user: vcard_user)
+  def candidate
+    @candidate ||= organization.candidates.find_or_create_by(user: vcard_user)
   end
 
   def referrer
