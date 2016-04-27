@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Referrer, type: :model do
   let(:organization) { create(:organization, :with_account) }
   let(:account) { organization.accounts.first }
-  let(:search) { create(:search, account: account) }
+  let(:job) { create(:job, account: account) }
 
   let(:referrer) { create(:referrer, organization: organization) }
 

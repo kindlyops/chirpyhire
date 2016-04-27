@@ -8,7 +8,7 @@ class Organization < ActiveRecord::Base
   has_many :subscriptions
   has_many :questions
   has_many :question_templates, through: :questions
-  has_many :searches, through: :accounts
+  has_many :jobs, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true

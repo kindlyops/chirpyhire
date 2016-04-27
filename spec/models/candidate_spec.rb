@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Candidate, type: :model do
   let(:organization) { create(:organization, :with_account, :with_question) }
   let(:account) { organization.accounts.first }
-  let(:search) { create(:search, account: account) }
+  let(:job) { create(:job, account: account) }
 
   let(:candidate) { create(:candidate, organization: organization) }
   let(:user) { candidate.user }
@@ -144,69 +144,69 @@ RSpec.describe Candidate, type: :model do
   end
 
   describe "#has_other_search_in_progress?" do
-    context "without any searches in progress" do
+    context "without any jobs in progress" do
       it "is false" do
         expect(candidate.has_other_search_in_progress?(nil)).to eq(false)
       end
     end
 
-    context "without another search in progress" do
+    context "without another job search in progress" do
       before(:each) do
-        search.candidates << candidate
-        search.search_candidates.each(&:processing!)
+        job.candidates << candidate
+        job.job_candidates.each(&:processing!)
       end
 
       it "is false" do
-        expect(candidate.has_other_search_in_progress?(search)).to eq(false)
+        expect(candidate.has_other_search_in_progress?job).to eq(false)
       end
     end
 
-    context "with another search in progress" do
-      let(:another_search) { create(:search, account: account) }
+    context "with another job search in progress" do
+      let(:another_job) { create(:job, account: account) }
 
       before(:each) do
-        another_search.candidates << candidate
-        another_search.search_candidates.each(&:processing!)
+        another_job.candidates << candidate
+        another_job.job_candidates.each(&:processing!)
       end
 
       it "is true" do
-        expect(candidate.has_other_search_in_progress?(search)).to eq(true)
+        expect(candidate.has_other_search_in_progress?job).to eq(true)
       end
     end
   end
 
-  describe "#oldest_pending_search_candidate" do
-    context "without search candidates" do
+  describe "#oldest_pending_job_candidate" do
+    context "without job candidates" do
       it "is nil" do
-        expect(candidate.oldest_pending_search_candidate).to be_nil
+        expect(candidate.oldest_pending_job_candidate).to be_nil
       end
     end
 
-    context "with search candidates" do
+    context "with job candidates" do
       before(:each) do
-        search.candidates << candidate
+        job.candidates << candidate
       end
 
       context "that are not pending" do
         before(:each) do
-          search.search_candidates.each(&:processing!)
+          job.job_candidates.each(&:processing!)
         end
 
         it "is nil" do
-          expect(candidate.oldest_pending_search_candidate).to be_nil
+          expect(candidate.oldest_pending_job_candidate).to be_nil
         end
       end
 
       context "that are pending" do
-        let(:another_search) { create(:search, account: account) }
+        let(:another_job) { create(:job, account: account) }
 
         before(:each) do
-          another_search.candidates << candidate
-          search.search_candidates.update_all(created_at: 2.days.ago)
+          another_job.candidates << candidate
+          job.job_candidates.update_all(created_at: 2.days.ago)
         end
 
         it "returns the one with the oldest created_at timestamp" do
-          expect(candidate.oldest_pending_search_candidate).to eq(search.search_candidates.first)
+          expect(candidate.oldest_pending_job_candidate).to eq(job.job_candidates.first)
         end
       end
     end
@@ -297,40 +297,40 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  describe "#processing_search_candidate" do
-    context "without processing search candidates" do
+  describe "#processing_job_candidate" do
+    context "without processing job candidates" do
       it "is nil" do
-        expect(candidate.processing_search_candidate).to be_nil
+        expect(candidate.processing_job_candidate).to be_nil
       end
     end
 
-    context "with a processing search candidate" do
-      let!(:processing_search_candidate) { create(:search_candidate, candidate: candidate, status: SearchCandidate.statuses[:processing]) }
+    context "with a processing job candidate" do
+      let!(:processing_job_candidate) { create(:job_candidate, candidate: candidate, status: JobCandidate.statuses[:processing]) }
 
-      it "is the search candidate" do
-        expect(candidate.processing_search_candidate).to eq(processing_search_candidate)
+      it "is the job candidate" do
+        expect(candidate.processing_job_candidate).to eq(processing_job_candidate)
       end
     end
   end
 
-  describe "#has_pending_searches?" do
-    context "with pending search candidates" do
+  describe "#has_pending_jobs?" do
+    context "with pending job candidates" do
       before(:each) do
-        search.candidates << candidate
+        job.candidates << candidate
       end
 
       it "is true" do
-        expect(candidate.has_pending_searches?).to eq(true)
+        expect(candidate.has_pending_jobs?).to eq(true)
       end
     end
 
-    context "without pending search candidates" do
+    context "without pending job candidates" do
       before(:each) do
-        search.search_candidates.each(&:processing!)
+        job.job_candidates.each(&:processing!)
       end
 
       it "is false" do
-        expect(candidate.has_pending_searches?).to eq(false)
+        expect(candidate.has_pending_jobs?).to eq(false)
       end
     end
   end

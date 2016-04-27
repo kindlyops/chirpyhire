@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :searches, only: [:new, :create, :index, :show]
+  resources :jobs, only: [:new, :create, :index, :show]
   resources :candidates, only: [:index]
   resources :referrers, only: [:index]
 
@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  root 'searches#new'
+  root 'jobs#new'
 end

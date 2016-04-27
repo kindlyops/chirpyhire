@@ -1,9 +1,9 @@
-class SearchPresenter
-  delegate :account, :errors, to: :search
-  attr_reader :search, :questions
+class JobPresenter
+  delegate :account, :errors, to: :job
+  attr_reader :job, :questions
 
-  def initialize(search, questions)
-    @search = search
+  def initialize(job, questions)
+    @job = job
     @questions = questions
   end
 

@@ -13,7 +13,7 @@ class AnswersController < SmsController
   private
 
   def continue_search
-    InquisitorJob.perform_later(search_candidate, next_search_question)
+    InquisitorJob.perform_later(job_candidate, next_job_question)
   end
 
   def create_answer
@@ -40,19 +40,19 @@ class AnswersController < SmsController
     @question ||= inquiry.question
   end
 
-  def search_question
-    search.search_questions.find_by(question: question)
+  def job_question
+    job.job_questions.find_by(question: question)
   end
 
-  def search_candidate
-    candidate.processing_search_candidate
+  def job_candidate
+    candidate.processing_job_candidate
   end
 
-  def next_search_question
-    @next_search_question ||= search.search_question_after(search_question)
+  def next_job_question
+    @next_job_question ||= job.job_question_after(job_question)
   end
 
-  def search
-    search_candidate.search
+  def job
+    job_candidate.job
   end
 end

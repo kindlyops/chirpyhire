@@ -4,17 +4,17 @@
       .panel-title Referrers
       .pull-right
         .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Search"
+          input#search-table.form-control.pull-right type="text" placeholder="Job"
       .clearfix
     .panel-body
-      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+      table#tableWithJob.table.table-hover.no-footer role="grid" aria-describedby="tableWithJob_info"
         thead
           tr role="row"
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Phone
+            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Phone
             : activate to sort column descending" Phone
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referral
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
+            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referral
+            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
         tbody
           - @referrers.each do |referrer|
             tr role="row"

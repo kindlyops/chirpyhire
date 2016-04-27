@@ -5,10 +5,10 @@ class Candidate < ActiveRecord::Base
   has_many :referrers, through: :referrals
   has_many :inquiries
   has_many :answers
-  has_many :search_candidates
-  has_many :searches, through: :search_candidates
-  has_many :search_questions, through: :searches
-  has_many :questions, through: :search_questions
+  has_many :job_candidates
+  has_many :jobs, through: :job_candidates
+  has_many :job_questions, through: :jobs
+  has_many :questions, through: :job_questions
 
   delegate :first_name, :name, :phone_number, to: :user
   delegate :name, to: :organization, prefix: true
@@ -59,16 +59,16 @@ class Candidate < ActiveRecord::Base
     user.unsubscribed_from?(organization)
   end
 
-  def has_other_search_in_progress?(search)
-    search_candidates.where.not(search: search).processing.exists?
+  def has_other_search_in_progress?job
+    job_candidates.where.not(job: job).processing.exists?
   end
 
-  def has_pending_searches?
-    search_candidates.pending.exists?
+  def has_pending_jobs?
+    job_candidates.pending.exists?
   end
 
-  def oldest_pending_search_candidate
-    search_candidates.pending.order(:created_at).first
+  def oldest_pending_job_candidate
+    job_candidates.pending.order(:created_at).first
   end
 
   def recently_answered_negatively?(question)
@@ -83,7 +83,7 @@ class Candidate < ActiveRecord::Base
     inquiries.order(created_at: :desc).first
   end
 
-  def processing_search_candidate
-    search_candidates.processing.first
+  def processing_job_candidate
+    job_candidates.processing.first
   end
 end

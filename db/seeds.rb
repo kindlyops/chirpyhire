@@ -331,15 +331,15 @@ if Rails.env.development?
   end
 
   account = Account.find_by(email: email)
-  searches = FactoryGirl.create_list(:search, 5, account: account)
+  jobs = FactoryGirl.create_list(:job, 5, account: account)
 
-  searches.each do |search|
-    search.candidates << org.candidates
+  jobs.each do |job|
+    job.candidates << org.candidates
   end
 
-  searches.take(3).each do |search|
-    if search.search_candidates.present?
-      search.search_candidates.sample.good_fit!
+  jobs.take(3).each do |job|
+    if job.job_candidates.present?
+      job.job_candidates.sample.good_fit!
     end
   end
   puts "Development specific seeding completed"

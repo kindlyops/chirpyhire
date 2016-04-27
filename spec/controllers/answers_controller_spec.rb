@@ -14,7 +14,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe "#create" do
-    context "without an ongoing search for the candidate" do
+    context "without an ongoing job search for the candidate" do
       it "returns an error" do
         post :create, params
         expect(response.body).to include("Sorry I didn't understand that.")
@@ -33,8 +33,8 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context "with an ongoing search for the candidate" do
-      let(:search) { create(:search, account: account) }
+    context "with an ongoing job search for the candidate" do
+      let(:job) { create(:job, account: account) }
       let(:questions) do
         questions = create_list(:question, 2)
         organization.questions << questions
@@ -42,22 +42,22 @@ RSpec.describe AnswersController, type: :controller do
       let(:user) { create(:user, phone_number: sender_phone_number) }
       let(:candidate) { create(:candidate, organization: organization, user: user) }
 
-      let!(:first_search_question) do
-        search_question = create(:search_question, question: questions.first, next_question: questions.last)
-        search.search_questions << search_question
-        search_question
+      let!(:first_job_question) do
+        job_question = create(:job_question, question: questions.first, next_question: questions.last)
+        job.job_questions << job_question
+        job_question
       end
 
-      let!(:second_search_question) do
-        search_question = create(:search_question, question: questions.last)
-        search.search_questions << search_question
-        search_question
+      let!(:second_job_question) do
+        job_question = create(:job_question, question: questions.last)
+        job.job_questions << job_question
+        job_question
       end
 
-      let!(:search_candidate) do
-        search.candidates << candidate
-        candidate.search_candidates.each(&:processing!)
-        candidate.search_candidates.find_by(search: search)
+      let!(:job_candidate) do
+        job.candidates << candidate
+        candidate.job_candidates.each(&:processing!)
+        candidate.job_candidates.find_by(job: job)
       end
 
       context "without an inquiry" do
@@ -102,7 +102,7 @@ RSpec.describe AnswersController, type: :controller do
         end
 
         it "continues the search" do
-          expect(InquisitorJob).to receive(:perform_later).with(search_candidate, second_search_question)
+          expect(InquisitorJob).to receive(:perform_later).with(job_candidate, second_job_question)
           post :create, params
         end
       end

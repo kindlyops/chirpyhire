@@ -1,44 +1,44 @@
-class SearchesController < ApplicationController
+class JobsController < ApplicationController
   before_action :ensure_subscribed_candidates, only: :create
   before_action :ensure_questions, only: :create
 
   def show
-    @search = searches.find(params[:id])
+    @job = jobs.find(params[:id])
   end
 
   def index
-    @searches = searches
+    @jobs = jobs
   end
 
   def create
-    if search.save
-      search.start
-      redirect_to search, notice: "Finding a caregiver now. Come back and check this page in a little while to see caregivers that would be a good fit."
+    if job.save
+      job.start
+      redirect_to job, notice: "Finding a caregiver now. Come back and check this page in a little while to see caregivers that would be a good fit."
     else
       render :new
     end
   end
 
   def new
-    @search = SearchPresenter.new(current_account.searches.build, questions)
+    @job = JobPresenter.new(current_account.jobs.build, questions)
   end
 
   private
 
-  def search
-    @search ||= current_account.searches.build(search_questions: search_questions, candidates: subscribed_candidates)
+  def job
+    @job ||= current_account.jobs.build(job_questions: job_questions, candidates: subscribed_candidates)
   end
 
-  def searches
-    organization.searches
+  def jobs
+    organization.jobs
   end
 
-  def search_questions
-    question_ids.map.with_index(&method(:build_search_questions))
+  def job_questions
+    question_ids.map.with_index(&method(:build_job_questions))
   end
 
-  def build_search_questions(id, index)
-    SearchQuestion.new(
+  def build_job_questions(id, index)
+    JobQuestion.new(
       question_id: id,
       next_question_id: get_array_value(index+1),
       previous_question_id: get_array_value(index-1)
@@ -55,11 +55,11 @@ class SearchesController < ApplicationController
   end
 
   def question_ids
-    @question_ids ||= search_attributes[:question_ids]
+    @question_ids ||= job_attributes[:question_ids]
   end
 
-  def search_attributes
-    @search_attributes ||= params[:search] || {}
+  def job_attributes
+    @job_attributes ||= params[:job] || {}
   end
 
   def ensure_subscribed_candidates
