@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160423155037) do
+ActiveRecord::Schema.define(version: 20160508194235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,15 +64,18 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",             null: false
+    t.string   "sid",                         null: false
     t.text     "media_url"
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "organization_id",             null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "user_id",                     null: false
+    t.integer  "status",          default: 0, null: false
   end
 
   add_index "messages", ["organization_id"], name: "index_messages_on_organization_id", using: :btree
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -143,6 +146,7 @@ ActiveRecord::Schema.define(version: 20160423155037) do
   add_foreign_key "candidates", "organizations"
   add_foreign_key "candidates", "users"
   add_foreign_key "messages", "organizations"
+  add_foreign_key "messages", "users"
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "messages"

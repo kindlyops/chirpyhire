@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :candidates
   has_many :referrers
   has_many :subscriptions
+  has_many :messages
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
