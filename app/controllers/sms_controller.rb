@@ -12,7 +12,7 @@ class SmsController < ActionController::Base
   private
 
   def message
-    @message ||= organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
+    @message ||= organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"], user: sender)
   end
 
   def vcard

@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(version: 20160508194235) do
 
   create_table "phones", force: :cascade do |t|
     t.integer  "organization_id", null: false
-    t.string   "title",           null: false
     t.string   "number",          null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
