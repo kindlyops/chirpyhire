@@ -6,24 +6,9 @@ class Organization < ActiveRecord::Base
   has_many :referrers
   has_many :messages
   has_many :subscriptions
-  has_many :questions
-  has_many :question_templates, through: :questions
-  has_many :jobs, through: :accounts
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
-
-  before_create :create_questions
-
-  def ask(inquiry, prelude: false)
-    message = send_message(
-      to: inquiry.candidate_phone_number,
-      body: inquiry.body(prelude: prelude),
-      from: phone_number
-    )
-    inquiry.message = message
-    inquiry.save
-  end
 
   def owner
     accounts.find_by(role: Account.roles[:owner])
@@ -42,9 +27,5 @@ class Organization < ActiveRecord::Base
 
   def sms_client
     @sms_client ||= Sms::Client.new(self)
-  end
-
-  def create_questions
-    self.question_templates << QuestionTemplate.all
   end
 end

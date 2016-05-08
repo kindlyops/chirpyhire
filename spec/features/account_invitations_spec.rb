@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Account Invitations" do
   include Features::InvitationHelpers
-  let(:organization) { create(:organization, :with_question, :with_account) }
+  let(:organization) { create(:organization,  :with_account) }
   let(:account) { organization.accounts.first }
   let(:email) { Faker::Internet.email }
 

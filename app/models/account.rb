@@ -7,7 +7,6 @@ class Account < ActiveRecord::Base
   enum role: [:admin, :owner]
   belongs_to :organization
   belongs_to :user
-  has_many :jobs
 
   delegate :first_name, :last_name, :name, to: :user
   accepts_nested_attributes_for :user, :organization

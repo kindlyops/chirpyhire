@@ -4,18 +4,6 @@ RSpec.describe Organization, type: :model do
   let!(:organization) { create(:organization, :with_owner) }
   let(:owner) { organization.accounts.first }
 
-  describe "#ask", vcr: { cassette_name: "Organization_ask" } do
-    let!(:organization) { create(:organization, :with_successful_phone, :with_question) }
-    let(:candidate) { create(:candidate, organization: organization) }
-    let(:question) { organization.questions.first }
-    let(:inquiry) { candidate.inquiries.build(question: question) }
-    it "creates a message" do
-      expect {
-        organization.ask(inquiry)
-      }.to change{organization.messages.count}.by(1)
-    end
-  end
-
   describe "#owner" do
     it "returns an account with the owner role" do
       expect(organization.owner).to eq(owner)

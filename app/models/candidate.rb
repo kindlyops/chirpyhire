@@ -3,12 +3,6 @@ class Candidate < ActiveRecord::Base
   belongs_to :organization
   has_many :referrals
   has_many :referrers, through: :referrals
-  has_many :inquiries
-  has_many :answers
-  has_many :job_candidates
-  has_many :jobs, through: :job_candidates
-  has_many :job_questions, through: :jobs
-  has_many :questions, through: :job_questions
 
   delegate :first_name, :name, :phone_number, to: :user
   delegate :name, to: :organization, prefix: true
@@ -57,33 +51,5 @@ class Candidate < ActiveRecord::Base
 
   def unsubscribed?
     user.unsubscribed_from?(organization)
-  end
-
-  def has_other_search_in_progress?job
-    job_candidates.where.not(job: job).processing.exists?
-  end
-
-  def has_pending_jobs?
-    job_candidates.pending.exists?
-  end
-
-  def oldest_pending_job_candidate
-    job_candidates.pending.order(:created_at).first
-  end
-
-  def recently_answered_negatively?(question)
-    answers.to(question).recent.negative.exists?
-  end
-
-  def recently_answered_positively?(question)
-    answers.to(question).recent.positive.exists?
-  end
-
-  def most_recent_inquiry
-    inquiries.order(created_at: :desc).first
-  end
-
-  def processing_job_candidate
-    job_candidates.processing.first
   end
 end
