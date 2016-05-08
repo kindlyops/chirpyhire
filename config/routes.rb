@@ -2,6 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  resources :templates, only: [:index]
   resources :candidates, only: [:index]
   resources :referrers, only: [:index]
 
