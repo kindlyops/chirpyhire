@@ -4,14 +4,14 @@
       .panel-title Templates
       .pull-right
         .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Job"
+          input#search-table.form-control.pull-right type="text" placeholder="Search"
       .clearfix
     .panel-body
-      table#tableWithJob.table.table-hover.no-footer role="grid" aria-describedby="tableWithJob_info"
+      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
         thead
           tr role="row"
-            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
-            th aria-controls="tableWithJob" rowspan="1" colspan="1" aria-label="Body
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Body
             : activate to sort column descending" Body
         tbody
           - @templates.each do |template|
