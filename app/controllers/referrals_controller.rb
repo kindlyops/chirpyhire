@@ -13,7 +13,7 @@ class ReferralsController < SmsController
   private
 
   def referral
-    @referral ||= referrer.refer(candidate, message)
+    @referral ||= referrer.refer(candidate)
   end
 
   def referral_notice

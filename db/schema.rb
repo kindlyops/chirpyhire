@@ -98,13 +98,11 @@ ActiveRecord::Schema.define(version: 20160508194235) do
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.integer  "referrer_id",  null: false
-    t.integer  "message_id",   null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
   add_index "referrals", ["candidate_id"], name: "index_referrals_on_candidate_id", using: :btree
-  add_index "referrals", ["message_id"], name: "index_referrals_on_message_id", using: :btree
   add_index "referrals", ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
 
   create_table "referrers", force: :cascade do |t|
@@ -148,7 +146,6 @@ ActiveRecord::Schema.define(version: 20160508194235) do
   add_foreign_key "messages", "users"
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "candidates"
-  add_foreign_key "referrals", "messages"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"

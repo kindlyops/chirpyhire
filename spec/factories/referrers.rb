@@ -6,8 +6,7 @@ FactoryGirl.define do
     trait :with_referral do
       after(:create) do |referrer|
         candidate = create(:candidate, organization: referrer.organization)
-        message = create(:message, organization: referrer.organization)
-        referrer.referrals.create(candidate: candidate, message: message)
+        referrer.referrals.create(candidate: candidate)
       end
     end
   end

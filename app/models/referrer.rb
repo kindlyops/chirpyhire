@@ -28,7 +28,7 @@ class Referrer < ActiveRecord::Base
     last_referred.name
   end
 
-  def refer(candidate, message)
-    referrals.create(candidate: candidate, message: message)
+  def refer(candidate)
+    referrals.create(candidate: candidate)
   end
 end
