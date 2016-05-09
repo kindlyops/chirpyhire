@@ -184,12 +184,14 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "triggers", force: :cascade do |t|
-    t.integer  "organization_id", null: false
-    t.string   "event",           null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "organization_id",             null: false
+    t.string   "event",                       null: false
+    t.integer  "status",          default: 0, null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
+  add_index "triggers", ["organization_id", "event"], name: "index_triggers_on_organization_id_and_event", unique: true, using: :btree
   add_index "triggers", ["organization_id"], name: "index_triggers_on_organization_id", using: :btree
 
   create_table "users", force: :cascade do |t|

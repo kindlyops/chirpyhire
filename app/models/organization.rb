@@ -8,7 +8,6 @@ class Organization < ActiveRecord::Base
   has_many :templates
   has_many :triggers
 
-
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
