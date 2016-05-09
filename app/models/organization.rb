@@ -28,12 +28,12 @@ class Organization < ActiveRecord::Base
     candidates.subscribed.with_phone_number
   end
 
-  private
-
-  def send_message(message)
-    message = sms_client.send_message(message.merge(from: phone_number))
-    messages.create(sid: message.sid)
+  def send_message(to:, body:)
+    message = sms_client.send_message(to: to.phone_number, body: body, from: phone_number)
+    to.messages.create(sid: message.sid)
   end
+
+  private
 
   def sms_client
     @sms_client ||= Sms::Client.new(self)

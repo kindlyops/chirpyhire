@@ -295,14 +295,15 @@ if Rails.env.development?
   user = User.find_or_create_by(
    first_name: "Harry",
    last_name: "Whelchel",
-   phone_number: "+14047908943"
+   phone_number: "+14047908943",
+   organization: org
   )
   puts "Created User"
 
   puts "Creating Account"
   email = "harrywhelchel@gmail.com"
-  unless Account.where(email: email).exists?
-    Account.create(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, organization: org, email: email, super_admin: true)
+  unless user.account.present?
+    user.create_account(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, email: email, super_admin: true)
   end
   puts "Created Account"
 
@@ -311,37 +312,57 @@ if Rails.env.development?
   puts "Created Phone"
 
   puts "Creating Referrer"
-  Referrer.find_or_create_by(user: user, organization: org)
+  Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
 
   puts "Creating Candidate"
-  candidate = Candidate.find_or_create_by(user: user, organization: org)
+  candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
   candidate.subscribe unless candidate.subscribed?
   puts "Subscribed Candidate"
 
-  puts "Adding fake referrers and fake candidates"
-  unless Referrer.count > 30
-    referrers = FactoryGirl.create_list(:referrer, 32, organization: org)
-    referrers.each do |referrer|
-      referrer.refer(FactoryGirl.create(:candidate, :without_phone_number, organization: org), FactoryGirl.create(:message, organization: org))
-    end
-    26.times { org.candidates.sample.subscribe }
-  end
+  welcome = org.templates.create(name: "Welcome", body: "{{candidate.first_name}}, this is {{contact.first_name}} at {{organization.name}}. I'm so glad you are interested in learning about opportunities here. I have a few questions to ask you via text message.")
+  welcome_notice = welcome.create_notice
+  location = org.templates.create(name: "Location", body: "{{candidate.first_name}}, what is your street address and zipcode?")
+  location_question = location.create_question
+  tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
+  tb_question = tb_test.create_question(answer_type: Question.answer_types[:image])
+  thank_you = org.templates.create(name: "Thank You", body: "Thanks again for your interest!")
+  thank_you_notice = thank_you.create_notice
 
-  account = Account.find_by(email: email)
-  jobs = FactoryGirl.create_list(:job, 5, account: account)
+  subscription_trigger = org.triggers.create(event: "subscription:create")
+  subscription_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
 
-  jobs.each do |job|
-    job.candidates << org.candidates
-  end
+  location_trigger = org.triggers.create(event: "answer:create:#{location_question.id}")
+  location_trigger.actions.create(actionable: tb_question)
 
-  jobs.take(3).each do |job|
-    if job.job_candidates.present?
-      job.job_candidates.sample.good_fit!
-    end
-  end
+  tb_trigger = org.triggers.create(event: "answer:create:#{tb_question.id}")
+  tb_trigger.actions.create(actionable: thank_you_notice)
+
+
+
+
+
+  # puts "Adding fake referrers and fake candidates"
+  # unless Referrer.count > 30
+  #   users = FactoryGirl.create_list(:user, 32, organization: org)
+  #   referrers = users.map do |user|
+  #     FactoryGirl.create(:referrer, user: user)
+  #   end
+
+  #   other_users = FactoryGirl.create_list(:user, 32, :without_phone_number, organization: org)
+  #   candidates = other_users.map do |user|
+  #     FactoryGirl.create(:candidate, user: user)
+  #   end
+
+
+  #   referrers.each_with_index do |referrer, index|
+  #     referrer.refer(candidates[index])
+  #   end
+
+  #   26.times { candidates.sample.subscribe }
+  # end
   puts "Development specific seeding completed"
 end
 

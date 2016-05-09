@@ -6,7 +6,8 @@ class Candidate < ActiveRecord::Base
 
   enum status: [:potential, :qualified, :bad_fit]
 
-  delegate :first_name, :name, :phone_number, :organization_name, :owner_first_name, to: :user
+  delegate :first_name, :name, :phone_number, :organization_name,
+           :owner_first_name, :organization, to: :user
 
   scope :subscribed, -> { joins(:subscription) }
   scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
@@ -44,6 +45,7 @@ class Candidate < ActiveRecord::Base
   def subscribe
     unsubscribe if subscribed?
     create_subscription
+    AutomatonJob.perform_later(self, "subscription:create")
   end
 
   def unsubscribed?
