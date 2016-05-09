@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509145418) do
+ActiveRecord::Schema.define(version: 20160509145709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,15 @@ ActiveRecord::Schema.define(version: 20160509145418) do
 
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
+  create_table "rules", force: :cascade do |t|
+    t.integer  "automation_id",             null: false
+    t.integer  "status",        default: 0, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "rules", ["automation_id"], name: "index_rules_on_automation_id", using: :btree
+
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.datetime "deleted_at"
@@ -209,6 +218,7 @@ ActiveRecord::Schema.define(version: 20160509145418) do
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
+  add_foreign_key "rules", "automations"
   add_foreign_key "subscriptions", "candidates"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
