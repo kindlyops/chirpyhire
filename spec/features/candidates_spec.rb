@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Candidates" do
-  let(:organization) { create(:organization,  :with_account, :with_successful_phone)}
+  let(:organization) { create(:organization, :with_account, :with_successful_phone)}
   let(:account) { organization.accounts.first }
 
   background(:each) do
@@ -20,8 +20,8 @@ RSpec.feature "Candidates" do
 
     context "with candidates" do
       include ActionView::Helpers::DateHelper
-
-      let!(:candidate) { create(:candidate, :with_referral, organization: organization) }
+      let(:user) { create(:user, organization: organization) }
+      let!(:candidate) { create(:candidate, :with_referral, user: user) }
       scenario "has the candidate information" do
         visit candidates_path
         expect(page).to have_text(candidate.name)

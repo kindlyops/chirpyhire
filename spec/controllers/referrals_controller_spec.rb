@@ -24,11 +24,11 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with a recognized sender" do
-      let!(:sender) { create(:user, phone_number: sender_phone_number) }
+      let!(:sender) { create(:user, organization: organization, phone_number: sender_phone_number) }
 
       context "that is a referrer for the organization" do
         before(:each) do
-          create(:referrer, organization: organization, user: sender)
+          create(:referrer, user: sender)
         end
 
         it "creates a referral" do
@@ -54,7 +54,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
 
           context "with a user with the candidate's phone number" do
             before(:each) do
-              create(:user, phone_number: "+14047908943")
+              create(:user, organization: organization, phone_number: "+14047908943")
             end
 
             it "does not create a new user" do
@@ -67,8 +67,8 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
 
         context "with an existing candidate" do
           before(:each) do
-            user = create(:user, phone_number: "+14047908943")
-            create(:candidate, organization: organization, user: user)
+            user = create(:user, organization: organization, phone_number: "+14047908943", organization: organization)
+            create(:candidate, user: user)
           end
 
           it "does not create a new candidate" do

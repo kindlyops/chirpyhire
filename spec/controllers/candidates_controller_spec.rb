@@ -11,8 +11,9 @@ RSpec.describe CandidatesController, type: :controller do
   end
 
   context "logged in" do
-    let(:account) { create(:account, :with_organization) }
-    let(:organization) { account.organization }
+    let(:user) { create(:user, :with_account) }
+    let(:account) { user.account }
+    let(:organization) { user.organization }
 
     before(:each) do
       sign_in(account)
@@ -25,7 +26,12 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       context "with candidates" do
-        let!(:candidates) { create_list(:candidate, 3, organization: organization) }
+        let!(:users) { create_list(:user, 3, organization: organization) }
+        let!(:candidates) do
+          3.times.map do |i|
+            create(:candidate, user: users[i-1])
+          end
+        end
 
         it "returns the organization's candidates" do
           get :index

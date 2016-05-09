@@ -11,8 +11,9 @@ RSpec.describe ReferrersController, type: :controller do
   end
 
   context "logged in" do
-    let(:account) { create(:account, :with_organization) }
-    let(:organization) { account.organization }
+    let(:user) { create(:user, :with_account) }
+    let(:account) { user.account }
+    let(:organization) { user.organization }
 
     before(:each) do
       sign_in(account)
@@ -25,7 +26,12 @@ RSpec.describe ReferrersController, type: :controller do
       end
 
       context "with referrers" do
-        let!(:referrers) { create_list(:referrer, 3, organization: organization) }
+        let(:users) { create_list(:user, 3, organization: organization) }
+        let!(:referrers) do
+          3.times.map do |i|
+            create(:referrer, user: users[i-1])
+          end
+        end
 
         it "returns the organization's referrers" do
           get :index

@@ -22,7 +22,10 @@ class SubscriptionsController < SmsController
   private
 
   def candidate
-    @candidate ||= organization.candidates.find_or_create_by(user: sender)
+    @candidate ||= begin
+      return sender.candidate if sender.candidate.present?
+      sender.create_candidate
+    end
   end
 
   def subscription_notice

@@ -5,7 +5,7 @@ RSpec.describe Referrer, type: :model do
   let(:account) { organization.accounts.first }
   let(:job) { create(:job, account: account) }
 
-  let(:referrer) { create(:referrer, organization: organization) }
+  let(:referrer) { create(:referrer) }
 
   describe "#last_referral" do
     context "with referrals" do

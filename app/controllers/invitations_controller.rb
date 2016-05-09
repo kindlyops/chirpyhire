@@ -4,7 +4,7 @@ class InvitationsController < Devise::InvitationsController
   def edit
     set_minimum_password_length if respond_to? :set_minimum_password_length
     resource.invitation_token = params[:invitation_token]
-    resource.build_user
+    resource.user
     render :edit
   end
 
@@ -12,6 +12,10 @@ class InvitationsController < Devise::InvitationsController
 
   def invite_resource(&block)
     organization.accounts.invite!(invite_params, current_inviter, &block)
+  end
+
+  def invite_params
+    super.merge(user_attributes: { organization: organization })
   end
 
   def organization

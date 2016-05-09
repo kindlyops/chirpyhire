@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20160508200505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "role",                   default: 0,     null: false
-    t.integer  "organization_id"
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -47,33 +46,26 @@ ActiveRecord::Schema.define(version: 20160508200505) do
   add_index "accounts", ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
   add_index "accounts", ["invitations_count"], name: "index_accounts_on_invitations_count", using: :btree
   add_index "accounts", ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
-  add_index "accounts", ["organization_id", "user_id"], name: "index_accounts_on_organization_id_and_user_id", unique: true, using: :btree
-  add_index "accounts", ["organization_id"], name: "index_accounts_on_organization_id", using: :btree
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "candidates", force: :cascade do |t|
-    t.integer  "user_id",         null: false
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "candidates", ["organization_id", "user_id"], name: "index_candidates_on_organization_id_and_user_id", unique: true, using: :btree
-  add_index "candidates", ["organization_id"], name: "index_candidates_on_organization_id", using: :btree
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",                         null: false
+    t.string   "sid",                    null: false
     t.text     "media_url"
-    t.integer  "organization_id",             null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.integer  "user_id",                     null: false
-    t.integer  "status",          default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "user_id",                null: false
+    t.integer  "category",   default: 0, null: false
   end
 
-  add_index "messages", ["organization_id"], name: "index_messages_on_organization_id", using: :btree
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
@@ -106,27 +98,21 @@ ActiveRecord::Schema.define(version: 20160508200505) do
   add_index "referrals", ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
 
   create_table "referrers", force: :cascade do |t|
-    t.integer  "user_id",         null: false
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "referrers", ["organization_id", "user_id"], name: "index_referrers_on_organization_id_and_user_id", unique: true, using: :btree
-  add_index "referrers", ["organization_id"], name: "index_referrers_on_organization_id", using: :btree
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
-    t.integer  "user_id",         null: false
-    t.integer  "organization_id", null: false
+    t.integer  "candidate_id", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "subscriptions", ["organization_id", "user_id"], name: "index_subscriptions_on_organization_id_and_user_id", unique: true, where: "(deleted_at IS NULL)", using: :btree
-  add_index "subscriptions", ["organization_id"], name: "index_subscriptions_on_organization_id", where: "(deleted_at IS NULL)", using: :btree
-  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", where: "(deleted_at IS NULL)", using: :btree
+  add_index "subscriptions", ["candidate_id"], name: "index_subscriptions_on_candidate_id", unique: true, where: "(deleted_at IS NULL)", using: :btree
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",            null: false
@@ -142,24 +128,22 @@ ActiveRecord::Schema.define(version: 20160508200505) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree
+  add_index "users", ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
+  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
-  add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "users"
-  add_foreign_key "candidates", "organizations"
   add_foreign_key "candidates", "users"
-  add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "users"
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
-  add_foreign_key "referrers", "organizations"
   add_foreign_key "referrers", "users"
-  add_foreign_key "subscriptions", "organizations"
-  add_foreign_key "subscriptions", "users"
+  add_foreign_key "subscriptions", "candidates"
   add_foreign_key "templates", "organizations"
+  add_foreign_key "users", "organizations"
 end

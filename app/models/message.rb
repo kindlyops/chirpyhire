@@ -1,8 +1,7 @@
 class Message < ActiveRecord::Base
-  belongs_to :organization
   belongs_to :user
 
-  enum status: [:outgoing, :incoming]
+  enum category: [:question, :answer, :notice]
 
   def vcard
     return NullVcard unless media_url.present?

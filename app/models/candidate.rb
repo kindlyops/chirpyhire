@@ -1,14 +1,12 @@
 class Candidate < ActiveRecord::Base
   belongs_to :user
-  belongs_to :organization
   has_many :referrals
   has_many :referrers, through: :referrals
+  has_many :subscriptions
 
-  delegate :first_name, :name, :phone_number, to: :user
-  delegate :name, to: :organization, prefix: true
-  delegate :owner_first_name, to: :organization
+  delegate :first_name, :name, :phone_number, :organization_name, :owner_first_name, to: :user
 
-  scope :subscribed, -> { joins(user: :subscriptions) }
+  scope :subscribed, -> { joins(:subscriptions) }
   scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
 
   def last_referrer
@@ -37,19 +35,24 @@ class Candidate < ActiveRecord::Base
     last_referrer.phone_number
   end
 
-  def subscribe
-    user.subscribe_to(organization)
-  end
-
   def subscribed?
-    user.subscribed_to?(organization)
+    subscriptions.exists?
   end
 
-  def unsubscribe
-    user.unsubscribe_from(organization)
+  def subscription
+    subscriptions.first
+  end
+
+  def subscribe
+    unsubscribe
+    subscriptions.create
   end
 
   def unsubscribed?
-    user.unsubscribed_from?(organization)
+    !subscribed?
+  end
+
+  def unsubscribe
+    subscriptions.destroy_all
   end
 end

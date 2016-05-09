@@ -12,13 +12,13 @@ FactoryGirl.define do
 
     trait :with_account do
       after(:create) do |organization|
-        create(:account, organization: organization)
+        create(:user, :with_account, organization: organization)
       end
     end
 
     trait :with_owner do
       after(:create) do |organization|
-        create(:account, role: Account.roles[:owner], organization: organization)
+        create(:user, :with_owner, organization: organization)
       end
     end
 

@@ -1,10 +1,9 @@
 class Referrer < ActiveRecord::Base
   belongs_to :user
-  belongs_to :organization
   has_many :referrals
   has_many :candidates, through: :referrals
 
-  delegate :name, :phone_number, to: :user
+  delegate :name, :phone_number, :organization, to: :user
 
   def last_referral
     @last_referral ||= begin

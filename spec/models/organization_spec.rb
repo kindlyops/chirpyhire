@@ -24,8 +24,14 @@ RSpec.describe Organization, type: :model do
     end
 
     context "with candidates" do
-      let!(:subscribed_candidates) { create_list(:candidate, 2, :with_subscription, organization: organization) }
-      let!(:unsubscribed_candidate) { create(:candidate, organization: organization) }
+      let!(:users) { create_list(:user, 2, organization: organization) }
+
+      let!(:subscribed_candidates) do
+        [create(:candidate, :with_subscription, user: users.first),
+        create(:candidate, :with_subscription, user: users.last)]
+      end
+
+      let!(:unsubscribed_candidate) { create(:candidate, user: create(:user, organization: organization)) }
 
       context "with some unsubscribed" do
         it "is only the subscribed candidates" do

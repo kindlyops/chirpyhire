@@ -4,7 +4,7 @@ RSpec.describe Candidate, type: :model do
   let(:organization) { create(:organization, :with_account, ) }
   let(:account) { organization.accounts.first }
 
-  let(:candidate) { create(:candidate, organization: organization) }
+  let(:candidate) { create(:candidate) }
   let(:user) { candidate.user }
 
   describe "#last_referrer" do
@@ -92,52 +92,80 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  describe "#subscribe" do
-    it "creates a subscription" do
-      expect {
-        candidate.subscribe
-      }.to change{user.subscriptions.with_deleted.count}.by(1)
-    end
-  end
-
   describe "#subscribed?" do
-    context "when subscribed to the organization" do
+    context "with a subscription to the organization" do
+      let!(:subscription) { create(:subscription, candidate: candidate) }
+
       it "is true" do
-        candidate.subscribe
         expect(candidate.subscribed?).to eq(true)
       end
     end
 
-    context "when not subscribed to the organization" do
+    context "without a subscription to the organization" do
       it "is false" do
         expect(candidate.subscribed?).to eq(false)
       end
     end
   end
 
-  describe "#unsubscribe" do
-    context "with a subscription" do
-      let(:subscription) { candidate.subscribe }
+  describe "#subscription" do
+    context "with a subscription to the organization" do
+      let!(:subscription) { create(:subscription, candidate: candidate) }
 
-      it "soft deletes a subscription" do
-        expect {
-          candidate.unsubscribe
-        }.to change{subscription.reload.deleted?}.from(false).to(true)
+      it "returns the subscription" do
+        expect(candidate.subscription).to eq(subscription)
+      end
+    end
+
+    context "without a subscription to the organization" do
+      it "is nil" do
+        expect(candidate.subscription).to be_nil
       end
     end
   end
 
-  describe "#unsubscribed?" do
-    context "when subscribed to the organization" do
-      it "is false" do
+  describe "#subscribe" do
+    context "with an existing subscription" do
+      let!(:subscription) { create(:subscription, candidate: candidate) }
+
+      it "soft deletes existing subscription" do
+        expect {
+          candidate.subscribe
+        }.to change{subscription.reload.deleted?}.from(false).to(true)
+      end
+    end
+
+    it "creates a new subscription" do
+      expect{
         candidate.subscribe
+      }.to change{candidate.subscriptions.with_deleted.count}.by(1)
+    end
+  end
+
+  describe "#unsubscribed?" do
+    context "with a subscription to the organization" do
+      let!(:subscription) { create(:subscription, candidate: candidate) }
+
+      it "is false" do
         expect(candidate.unsubscribed?).to eq(false)
       end
     end
 
-    context "when not subscribed to the organization" do
-      it "is true" do
+    context "without a subscription to the organization" do
+      it "is false" do
         expect(candidate.unsubscribed?).to eq(true)
+      end
+    end
+  end
+
+  describe "#unsubscribe" do
+    context "with an existing subscription" do
+      let!(:subscription) { create(:subscription, candidate: candidate) }
+
+      it "soft deletes existing subscription" do
+        expect {
+          candidate.unsubscribe
+        }.to change{subscription.reload.deleted?}.from(false).to(true)
       end
     end
   end

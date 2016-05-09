@@ -31,15 +31,22 @@ to learn about opportunities."
     return error_message unless referrer.present?
   end
 
-  def vcard_user
-    @vcard_user ||= UserFinder.new(attributes: vcard.attributes).call
+  def referred_user
+    @referred_user ||= UserFinder.new(attributes: vcard.attributes.merge(organization: organization)).call
   end
 
   def candidate
-    @candidate ||= organization.candidates.find_or_create_by(user: vcard_user)
+    @candidate ||= begin
+      return referred_user.candidate if referred_user.candidate.present?
+      referred_user.create_candidate
+    end
   end
 
   def referrer
-    @referrer ||= ReferrerFinder.new(organization: organization, sender: sender).call
+    @referrer ||= referrers.find_by(user: sender)
+  end
+
+  def referrers
+    organization.referrers
   end
 end

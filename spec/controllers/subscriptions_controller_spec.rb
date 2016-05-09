@@ -20,14 +20,14 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context "with an existing user" do
-      let!(:user) { create(:user, phone_number: phone_number) }
+      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
       context "with an existing candidate" do
-        let!(:candidate) { create(:candidate, user: user, organization: organization) }
+        let!(:candidate) { create(:candidate, user: user) }
 
         context "with an active subscription" do
           before(:each) do
-            user.subscribe_to(organization)
+            candidate.subscribe
           end
 
           it "let's the user know they are already subscribed" do
@@ -54,7 +54,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         it "creates a candidate for the user" do
           expect {
             post :create, params
-          }.to change{organization.candidates.where(user: user).count}.by(1)
+          }.to change{user.reload.candidate.present?}.from(false).to(true)
         end
 
         it "creates a subscription" do
@@ -103,15 +103,16 @@ RSpec.describe SubscriptionsController, type: :controller do
     end
 
     context "with an existing user" do
-      let!(:user) { create(:user, phone_number: phone_number) }
+      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
       context "with an existing subscription" do
+        let(:candidate) { create(:candidate, user: user) }
         before(:each) do
-          user.subscribe_to(organization)
+          candidate.subscribe
         end
 
         it "soft deletes the subscription" do
-          subscription = user.subscription_to(organization)
+          subscription = candidate.subscription
 
           expect{
             delete :destroy, params

@@ -12,7 +12,7 @@ class SmsController < ActionController::Base
   private
 
   def message
-    @message ||= organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"], user: sender)
+    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
   end
 
   def vcard
@@ -20,11 +20,11 @@ class SmsController < ActionController::Base
   end
 
   def sender
-    @sender ||= UserFinder.new(attributes: { phone_number: params["From"] }).call
+    @sender ||= organization.users.find_or_create_by(phone_number: params["From"])
   end
 
   def organization
-    @organization ||= Organization.joins(:phone).find_by(phones: { number: params["To"] })
+    @organization ||= Organization.for(phone: params["To"])
   end
 
   def set_header
