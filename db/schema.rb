@@ -188,6 +188,7 @@ ActiveRecord::Schema.define(version: 20160509150049) do
     t.integer  "organization_id",             null: false
     t.integer  "observable_id"
     t.string   "observable_type",             null: false
+    t.integer  "operation",                   null: false
     t.integer  "status",          default: 0, null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false

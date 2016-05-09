@@ -308,7 +308,7 @@ if Rails.env.development?
   puts "Created Account"
 
   puts "Creating Phone"
-  Phone.find_or_create_by(title: "#{org.name} Referrals", number: "+16788417816", organization: org)
+  Phone.find_or_create_by(number: "+16788417816", organization: org)
   puts "Created Phone"
 
   puts "Creating Referrer"
@@ -322,12 +322,12 @@ if Rails.env.development?
   candidate.subscribe unless candidate.subscribed?
   puts "Subscribed Candidate"
 
-  welcome = org.templates.create(name: "Welcome", body: "{{candidate.first_name}}, this is {{contact.first_name}} at {{organization.name}}. I'm so glad you are interested in learning about opportunities here. I have a few questions to ask you via text message.")
+  welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
   welcome_notice = welcome.create_notice
-  location = org.templates.create(name: "Location", body: "{{candidate.first_name}}, what is your street address and zipcode?")
+  location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
   location_question = location.create_question
   tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
-  tb_question = tb_test.create_question(answer_type: Question.answer_types[:image])
+  tb_question = tb_test.create_question(response: Question.responses[:image])
   thank_you = org.templates.create(name: "Thank You", body: "Thanks again for your interest!")
   thank_you_notice = thank_you.create_notice
 
