@@ -45,7 +45,6 @@ class Candidate < ActiveRecord::Base
   def subscribe
     unsubscribe if subscribed?
     create_subscription
-    AutomatonJob.perform_later(self, "subscription:create")
   end
 
   def unsubscribed?

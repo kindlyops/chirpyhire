@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_one :referrer
   has_one :account
   has_many :messages
+  has_many :inquiries, through: :messages
   belongs_to :organization
 
   delegate :name, to: :organization, prefix: true
@@ -18,5 +19,9 @@ class User < ActiveRecord::Base
 
   def phone_number
     super || ""
+  end
+
+  def outstanding_inquiry
+    user.inquiries.unanswered.first
   end
 end

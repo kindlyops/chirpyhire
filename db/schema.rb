@@ -90,14 +90,14 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",                    null: false
-    t.text     "media_url"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "user_id",                null: false
-    t.integer  "category",   default: 0, null: false
+    t.string   "sid",                     null: false
+    t.jsonb    "properties", default: {}, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "user_id",                 null: false
   end
 
+  add_index "messages", ["properties"], name: "index_messages_on_properties", using: :gin
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 

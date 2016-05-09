@@ -1,7 +1,7 @@
 class Vcard
 
-  def initialize(url:)
-    @url = url
+  def initialize(message:)
+    @message = message
   end
 
   def phone_number
@@ -26,14 +26,14 @@ class Vcard
 
   private
 
-  attr_reader :card, :url
+  attr_reader :card, :message
 
   def card
     @card ||= VCardigan.parse(response)
   end
 
   def response
-    HTTParty.get(url)
+    HTTParty.get(message.media_url)
   end
 
   def name

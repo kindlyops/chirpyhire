@@ -4,8 +4,11 @@ class Message < ActiveRecord::Base
   has_one :inquiry
   has_one :answer
 
-  def vcard
-    return NullVcard unless media_url.present?
-    Vcard.new(url: media_url)
+  def body
+    properties["Body"]
+  end
+
+  def media_url
+    properties["MediaUrl0"]
   end
 end
