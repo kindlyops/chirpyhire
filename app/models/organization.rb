@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :messages, through: :users
   has_many :accounts, through: :users
   has_many :templates
+  has_many :automations
 
   has_one :phone
 
