@@ -28,8 +28,7 @@ class Organization < ActiveRecord::Base
   end
 
   def send_message(to:, body:)
-    message = sms_client.send_message(to: to, body: body, from: phone_number)
-    to.messages.create(sid: message.sid)
+    sms_client.send_message(to: to, body: body, from: phone_number)
   end
 
   private

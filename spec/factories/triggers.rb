@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :trigger do
     organization
     association :observable, factory: :question
+    operation :answer
 
     trait :with_actions do
       after(:create) do |trigger|

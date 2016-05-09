@@ -23,11 +23,11 @@ class Automaton
   end
 
   def collection_trigger
-    "(observable_type = #{observable.class} AND observable_id IS NULL)"
+    "(observable_type = '#{observable.class}' AND observable_id IS NULL)"
   end
 
   def instance_trigger
-    "(observable_type = #{observable.class} AND observable_id = #{observable.id})"
+    "(observable_type = '#{observable.class}' AND observable_id = #{observable.id})"
   end
 
   def organization

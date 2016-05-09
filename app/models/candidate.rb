@@ -14,7 +14,8 @@ class Candidate < ActiveRecord::Base
   scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
 
   def receive_message(body:)
-    organization.send_message(to: phone_number, body: body)
+    message = organization.send_message(to: phone_number, body: body)
+    messages.create(sid: message.sid)
   end
 
   def last_referrer

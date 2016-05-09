@@ -49,7 +49,7 @@ RSpec.feature "Account Management", type: :feature do
         fill_in "Email", with: account.email
         fill_in "Password", with: "password"
         click_button "Sign in"
-        expect(page).to have_text("Find a Caregiver")
+        expect(page).to have_text("Screen")
       end
     end
 
@@ -62,7 +62,7 @@ RSpec.feature "Account Management", type: :feature do
         click_button "Sign in"
 
         expect(page).to have_text("Invalid email or password.")
-        expect(page).not_to have_text("Find a Caregiver")
+        expect(page).not_to have_text("Screen")
       end
     end
   end
