@@ -16,7 +16,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "creates a message" do
       expect {
         post :create, params
-      }.to change{organization.messages.count}.by(1)
+      }.to change{Message.count}.by(1)
     end
 
     context "with an existing user" do
@@ -99,7 +99,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "creates a message" do
       expect {
         post :destroy, params
-      }.to change{organization.messages.count}.by(1)
+      }.to change{Message.count}.by(1)
     end
 
     context "with an existing user" do

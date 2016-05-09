@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :messages
   has_many :inquiries, through: :messages
   belongs_to :organization
 

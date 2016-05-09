@@ -11,6 +11,10 @@ class AnswersController < SmsController
 
   private
 
+  def sender
+    user.candidate
+  end
+
   def outstanding_inquiry
     sender.outstanding_inquiry
   end

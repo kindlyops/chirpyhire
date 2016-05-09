@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :message do
-    user
+    association :messageable, factory: :candidate
     sid { Faker::Internet.password(34) }
   end
 end

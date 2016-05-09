@@ -25,10 +25,10 @@ RSpec.describe SmsController, type: :controller do
       expect(response.headers["Content-Type"]).to eq("text/xml")
     end
 
-    it "creates a message" do
+    it "does not create a message" do
       expect {
         post :error_message, { "MessageSid" => "123", "To" => phone.number }
-      }.to change{organization.messages.count}.by(1)
+      }.not_to change{Message.count}
     end
 
     it "returns a friendly error message" do

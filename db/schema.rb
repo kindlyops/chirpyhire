@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20160509150049) do
 
   create_table "actions", force: :cascade do |t|
     t.integer  "trigger_id",      null: false
-    t.integer  "actionable_id"
-    t.string   "actionable_type"
+    t.integer  "actionable_id",   null: false
+    t.string   "actionable_type", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -90,16 +90,17 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",                     null: false
-    t.jsonb    "properties", default: {}, null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "user_id",                 null: false
+    t.string   "sid",                           null: false
+    t.jsonb    "properties",       default: {}, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "messageable_id",                null: false
+    t.string   "messageable_type",              null: false
   end
 
+  add_index "messages", ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
   add_index "messages", ["properties"], name: "index_messages_on_properties", using: :gin
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.integer  "template_id", null: false
@@ -213,7 +214,6 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
-  add_foreign_key "messages", "users"
   add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"

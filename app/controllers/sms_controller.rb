@@ -4,8 +4,6 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def error_message
-    message
-
     render_sms Sms::Response.error
   end
 
@@ -19,8 +17,8 @@ class SmsController < ActionController::Base
     @vcard ||= Vcard.new(message: message)
   end
 
-  def sender
-    @sender ||= organization.users.find_or_create_by(phone_number: params["From"])
+  def user
+    @user ||= organization.users.find_by(phone_number: params["From"])
   end
 
   def organization

@@ -17,18 +17,18 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
   end
 
   describe "#create" do
-    it "creates a message" do
-      expect {
-        post :create, params
-      }.to change{organization.messages.count}.by(1)
-    end
-
     context "with a recognized sender" do
       let!(:sender) { create(:user, organization: organization, phone_number: sender_phone_number) }
 
       context "that is a referrer for the organization" do
         before(:each) do
           create(:referrer, user: sender)
+        end
+
+        it "creates a message" do
+          expect {
+            post :create, params
+          }.to change{Message.count}.by(1)
         end
 
         it "creates a referral" do
@@ -67,7 +67,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
 
         context "with an existing candidate" do
           before(:each) do
-            user = create(:user, organization: organization, phone_number: "+14047908943", organization: organization)
+            user = create(:user, phone_number: "+14047908943", organization: organization)
             create(:candidate, user: user)
           end
 
@@ -80,6 +80,12 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
+        it "does not create a message" do
+          expect {
+            post :create, params
+          }.not_to change{Message.count}
+        end
+
         it "does not create a referral" do
           expect {
             post :create, params
@@ -103,10 +109,16 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with an unrecognized sender" do
-      it "creates a user" do
+      it "does not create a message" do
         expect {
           post :create, params
-        }.to change{User.count}.by(1)
+        }.not_to change{Message.count}
+      end
+
+      it "does not create a user" do
+        expect {
+          post :create, params
+        }.not_to change{User.count}
       end
 
       it "does not create a referral" do

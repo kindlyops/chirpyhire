@@ -2,6 +2,7 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :referrers, through: :referrals
+  has_many :messages, as: :messageable
   has_one :subscription
 
   enum status: [:potential, :qualified, :bad_fit]
@@ -11,6 +12,10 @@ class Candidate < ActiveRecord::Base
 
   scope :subscribed, -> { joins(:subscription) }
   scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
+
+  def receive_message(body:)
+    organization.send_message(to: phone_number, body: body)
+  end
 
   def last_referrer
     @last_referrer ||= begin

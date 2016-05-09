@@ -43,10 +43,14 @@ to learn about opportunities."
   end
 
   def referrer
-    @referrer ||= referrers.find_by(user: sender)
+    @referrer ||= referrers.find_by(user: user)
   end
 
   def referrers
     organization.referrers
+  end
+
+  def sender
+    user.referrer
   end
 end

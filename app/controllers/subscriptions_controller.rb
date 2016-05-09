@@ -24,14 +24,22 @@ class SubscriptionsController < SmsController
 
   def candidate
     @candidate ||= begin
-      return sender.candidate if sender.candidate.present?
-      sender.create_candidate
+      return user.candidate if user.candidate.present?
+      user.create_candidate
     end
+  end
+
+  def sender
+    candidate
+  end
+
+  def user
+    @user ||= organization.users.find_or_create_by(phone_number: params["From"])
   end
 
   def subscription_notice
     Sms::Response.new do |r|
-      r.Message "#{sender.first_name}, this is #{organization.owner_first_name} \
+      r.Message "#{user.first_name}, this is #{organization.owner_first_name} \
 at #{organization.name}. I'm so glad you are interested in learning about \
 opportunities here. When we have a need we'll send out a few text messages \
 asking you questions about your availability and experience. If you ever wish \

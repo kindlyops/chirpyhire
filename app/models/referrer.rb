@@ -1,5 +1,6 @@
 class Referrer < ActiveRecord::Base
   belongs_to :user
+  has_many :messages, as: :messageable
   has_many :referrals
   has_many :candidates, through: :referrals
 

@@ -8,6 +8,6 @@ class Notice < ActiveRecord::Base
   end
 
   def perform(person)
-    organization.send_message(to: person, body: template.render(person))
+    person.receive_message(body: template.render(person))
   end
 end

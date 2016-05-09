@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :messageable, polymorphic: true
   has_one :notification
   has_one :inquiry
   has_one :answer

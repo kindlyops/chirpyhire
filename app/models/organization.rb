@@ -3,7 +3,6 @@ class Organization < ActiveRecord::Base
   has_many :candidates, through: :users
   has_many :referrers, through: :users
   has_many :referrals, through: :referrers
-  has_many :messages, through: :users
   has_many :accounts, through: :users
   has_many :templates
   has_many :triggers
@@ -29,7 +28,7 @@ class Organization < ActiveRecord::Base
   end
 
   def send_message(to:, body:)
-    message = sms_client.send_message(to: to.phone_number, body: body, from: phone_number)
+    message = sms_client.send_message(to: to, body: body, from: phone_number)
     to.messages.create(sid: message.sid)
   end
 
