@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508200505) do
+ActiveRecord::Schema.define(version: 20160509142623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(version: 20160508200505) do
 
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_table "notices", force: :cascade do |t|
+    t.integer  "template_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "notices", ["template_id"], name: "index_notices_on_template_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -140,6 +148,7 @@ ActiveRecord::Schema.define(version: 20160508200505) do
   add_foreign_key "accounts", "users"
   add_foreign_key "candidates", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "notices", "templates"
   add_foreign_key "phones", "organizations"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
