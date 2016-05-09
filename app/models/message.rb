@@ -1,5 +1,6 @@
 class Message < ActiveRecord::Base
   belongs_to :user
+  has_many :notifications
 
   enum category: [:question, :answer, :notice]
 
