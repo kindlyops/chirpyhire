@@ -138,7 +138,7 @@ RSpec.describe Candidate, type: :model do
     it "creates a new subscription" do
       expect{
         candidate.subscribe
-      }.to change{candidate.subscriptions.with_deleted.count}.by(1)
+      }.to change{Subscription.where(candidate: candidate).with_deleted.count}.by(1)
     end
   end
 
