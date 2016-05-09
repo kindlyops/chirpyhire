@@ -4,7 +4,7 @@ class Renderer
   end
 
   def call
-    template.body
+    ERB.new(erbify_body).result(binding)
   end
 
   def initialize(template:, person:)
@@ -15,4 +15,16 @@ class Renderer
   private
 
   attr_reader :person, :template
+
+  def erbify_body
+    template.body.gsub(/{{/, '<%=').gsub(/}}/, '%>')
+  end
+
+  def recipient
+    person
+  end
+
+  def organization
+    person.organization
+  end
 end
