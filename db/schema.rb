@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509142623) do
+ActiveRecord::Schema.define(version: 20160509143619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,6 +96,15 @@ ActiveRecord::Schema.define(version: 20160509142623) do
 
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
+  create_table "questions", force: :cascade do |t|
+    t.integer  "template_id",             null: false
+    t.integer  "response",    default: 0, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "questions", ["template_id"], name: "index_questions_on_template_id", using: :btree
+
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.integer  "referrer_id",  null: false
@@ -150,6 +159,7 @@ ActiveRecord::Schema.define(version: 20160509142623) do
   add_foreign_key "messages", "users"
   add_foreign_key "notices", "templates"
   add_foreign_key "phones", "organizations"
+  add_foreign_key "questions", "templates"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
