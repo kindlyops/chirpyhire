@@ -5,4 +5,8 @@ class Action < ActiveRecord::Base
   def perform(person)
     actionable.children.create(message: actionable.perform(person))
   end
+
+  def description
+    actionable.template_name
+  end
 end

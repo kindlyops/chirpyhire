@@ -331,13 +331,13 @@ if Rails.env.development?
   thank_you = org.templates.create(name: "Thank You", body: "Thanks again for your interest!")
   thank_you_notice = thank_you.create_notice
 
-  subscription_trigger = org.triggers.create(event: "subscription:create:")
+  subscription_trigger = org.triggers.create(observable_type: "Subscription", operation: "subscribe")
   subscription_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
 
-  location_trigger = org.triggers.create(event: "answer:create:#{location_question.id}:")
+  location_trigger = org.triggers.create(observable: location_question, operation: "answer")
   location_trigger.actions.create(actionable: tb_question)
 
-  tb_trigger = org.triggers.create(event: "answer:create:#{tb_question.id}:")
+  tb_trigger = org.triggers.create(observable: tb_question, operation: "answer")
   tb_trigger.actions.create(actionable: thank_you_notice)
 
   # puts "Adding fake referrers and fake candidates"

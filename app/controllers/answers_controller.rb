@@ -1,15 +1,18 @@
 class AnswersController < SmsController
 
   def create
-    if outstanding_inquiry.expects?(message)
-      outstanding_inquiry.create_answer(message: message)
-      AutomatonJob.perform_later(sender, "answer:create:#{question.id}:")
+    if answer.valid?
+      AutomatonJob.perform_later(sender, question, "answer")
     else
-      AutomatonJob.perform_later(sender, "answer:invalid:#{question.id}:")
+      AutomatonJob.perform_later(sender, question, "invalid_answer")
     end
   end
 
   private
+
+  def answer
+    outstanding_inquiry.create_answer(message: message)
+  end
 
   def sender
     user.candidate

@@ -6,7 +6,7 @@ class SubscriptionsController < SmsController
       render_sms already_subscribed
     else
       candidate.subscribe
-      AutomatonJob.perform_later(candidate, "subscription:create:")
+      AutomatonJob.perform_later(candidate, candidate.subscription, "subscribe")
       render_sms subscription_notice
     end
   end

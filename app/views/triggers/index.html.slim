@@ -1,0 +1,27 @@
+= title "Screen | chirpyhire"
+.panel.panel-transparent
+    .panel-heading
+      .panel-title Screen
+      .pull-right
+        .col-xs-12
+          input#search-table.form-control.pull-right type="text" placeholder="Search"
+      .clearfix
+    .panel-body
+      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+        thead
+          tr role="row"
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Triggers: activate to sort column descending" Triggers
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Action
+            : activate to sort column descending" Action
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status
+            : activate to sort column descending" Status
+        tbody
+          - @triggers.each do |trigger|
+            tr role="row"
+              td.v-align-middle
+                p = trigger.description
+              td.v-align-middle
+                p = trigger.actions_description
+              td.v-align-middle
+                p = trigger.status.humanize
+
