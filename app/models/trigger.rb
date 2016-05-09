@@ -10,7 +10,7 @@ class Trigger < ActiveRecord::Base
   end
 
   def description
-    observable.template_name
+    observable.try!(:template_name) || observable_type
   end
 
   def actions_description
