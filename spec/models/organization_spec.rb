@@ -11,6 +11,16 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe "#send_message", vcr: { cassette_name: "Organization_send_message" } do
+    let(:organization) { create(:organization, :with_successful_phone) }
+    let(:user) { create(:user, organization: organization) }
+
+    it "sends the sms message" do
+      message = organization.send_message(to: user.phone_number, body: "Test")
+      expect(message.body).to eq("Test")
+    end
+  end
+
   describe "#owner" do
     it "returns an account with the owner role" do
       expect(organization.owner).to eq(owner)
