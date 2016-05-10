@@ -8,7 +8,9 @@ class Message < ActiveRecord::Base
     properties["Body"]
   end
 
-  def media_url
-    properties["MediaUrl0"]
+  def media_urls
+    (0..9).map do |i|
+      properties["MediaUrl#{i}"]
+    end.compact
   end
 end

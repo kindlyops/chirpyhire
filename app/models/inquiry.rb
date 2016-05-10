@@ -7,7 +7,7 @@ class Inquiry < ActiveRecord::Base
 
   def expects?(message)
     if question.media?
-      message.media_url.present?
+      message.media_urls.present?
     elsif question.text?
       message.body.present?
     end

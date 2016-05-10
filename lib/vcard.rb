@@ -33,7 +33,7 @@ class Vcard
   end
 
   def response
-    HTTParty.get(message.media_url)
+    HTTParty.get(message.media_urls.first)
   end
 
   def name

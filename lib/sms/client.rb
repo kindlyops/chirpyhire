@@ -7,7 +7,7 @@ module Sms
     end
 
     def send_message(message)
-      Message.new(client.account.messages.create(message))
+      Sms::Message.new(client.account.messages.create(message))
     end
 
     attr_accessor :client
