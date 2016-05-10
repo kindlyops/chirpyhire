@@ -24,7 +24,7 @@ class Organization < ActiveRecord::Base
   end
 
   def subscribed_candidates
-    candidates.subscribed.with_phone_number
+    candidates.subscribed
   end
 
   def send_message(to:, body:)

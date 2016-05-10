@@ -12,7 +12,6 @@ class Candidate < ActiveRecord::Base
            :owner_first_name, :organization, to: :user
 
   scope :subscribed, -> { joins(:subscription) }
-  scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
 
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
