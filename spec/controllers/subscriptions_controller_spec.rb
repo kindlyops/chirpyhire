@@ -40,12 +40,18 @@ RSpec.describe SubscriptionsController, type: :controller do
           it "creates a subscription" do
             expect {
               post :create, params
-            }.to change{Subscription.count}.by(1)
+            }.to change{candidate.reload.subscription.present?}.from(false).to(true)
           end
 
           it "instructs them how to opt out" do
             post :create, params
             expect(response.body).to include("reply STOP")
+          end
+
+          it "creates a subscribe Automaton Job" do
+            expect {
+              post :create, params
+            }.to have_enqueued_job(AutomatonJob).exactly(:once)
           end
         end
       end

@@ -23,10 +23,7 @@ class SubscriptionsController < SmsController
   private
 
   def candidate
-    @candidate ||= begin
-      return user.candidate if user.candidate.present?
-      user.create_candidate
-    end
+    @candidate ||= user.candidate || user.create_candidate
   end
 
   def sender

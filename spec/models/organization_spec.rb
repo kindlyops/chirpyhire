@@ -4,6 +4,13 @@ RSpec.describe Organization, type: :model do
   let!(:organization) { create(:organization, :with_owner) }
   let(:owner) { organization.accounts.first }
 
+  describe ".for" do
+    let(:organization) { create(:organization, :with_phone) }
+    it "looks up an organization by phone number" do
+      expect(Organization.for(phone: organization.phone_number)).to eq(organization)
+    end
+  end
+
   describe "#owner" do
     it "returns an account with the owner role" do
       expect(organization.owner).to eq(owner)
