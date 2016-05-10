@@ -1,4 +1,4 @@
-module Sms
+module Messaging
   class Response
     def self.error
       new do |r|

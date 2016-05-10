@@ -1,4 +1,4 @@
-module Sms
+module Messaging
   class Client
     def initialize(context)
       @account_sid = context.twilio_account_sid
@@ -7,7 +7,7 @@ module Sms
     end
 
     def send_message(message)
-      Sms::Message.new(client.account.messages.create(message))
+      Messaging::Message.new(client.account.messages.create(message))
     end
 
     attr_accessor :client

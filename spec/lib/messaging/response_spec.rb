@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe Sms::Response do
+RSpec.describe Messaging::Response do
   describe ".error" do
     it "is an sms response" do
-      expect(Sms::Response.error).to be_an_instance_of(Sms::Response)
+      expect(Messaging::Response.error).to be_an_instance_of(Messaging::Response)
     end
 
     it "includes a friendly error message" do
-      expect(Sms::Response.error.text).to include("Sorry I didn't understand that.")
+      expect(Messaging::Response.error.text).to include("Sorry I didn't understand that.")
     end
   end
 
   describe "#text" do
     let(:response) do
-      Sms::Response.new do |r|
+      Messaging::Response.new do |r|
         r.Message "test message"
       end
     end

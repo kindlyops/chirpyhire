@@ -1,4 +1,4 @@
-module Sms
+module Messaging
   class Message
     def initialize(message)
       @message = message

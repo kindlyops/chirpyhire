@@ -4,7 +4,7 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def error_message
-    render_sms Sms::Response.error
+    render_sms Messaging::Response.error
   end
 
   private

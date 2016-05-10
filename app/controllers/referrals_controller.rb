@@ -17,7 +17,7 @@ class ReferralsController < SmsController
   end
 
   def referral_notice
-    Sms::Response.new do |r|
+    Messaging::Response.new do |r|
       r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
       r.Message "Hey #{candidate.first_name}. My home care agency, \
 #{organization.name}, regularly hires caregivers. They \

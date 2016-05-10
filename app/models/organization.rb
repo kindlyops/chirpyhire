@@ -28,12 +28,12 @@ class Organization < ActiveRecord::Base
   end
 
   def send_message(to:, body:)
-    sms_client.send_message(to: to, body: body, from: phone_number)
+    messaging_client.send_message(to: to, body: body, from: phone_number)
   end
 
   private
 
-  def sms_client
-    @sms_client ||= Sms::Client.new(self)
+  def messaging_client
+    @messaging_client ||= Messaging::Client.new(self)
   end
 end
