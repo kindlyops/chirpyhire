@@ -1,5 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "#expected_format" do
+    let(:answer) { build(:answer) }
+    context "inquiry does not expect the answer's message format" do
+      it "adds an inquiry error to the answer" do
+        answer.valid?
+        expect(answer.errors).to include(:inquiry)
+      end
+    end
+  end
 end
