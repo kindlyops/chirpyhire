@@ -18,7 +18,7 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe "#perform", vcr: { cassette_name: "Question_perform" } do
+  describe "#perform" do
     let(:organization) { create(:organization, :with_successful_phone) }
     let(:user) { create(:user, organization: organization) }
     let(:candidate) { create(:candidate, user: user) }
