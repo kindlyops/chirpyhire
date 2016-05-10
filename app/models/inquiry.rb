@@ -6,7 +6,7 @@ class Inquiry < ActiveRecord::Base
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
   def expects?(message)
-    if question.image?
+    if question.media?
       message.media_url.present?
     elsif question.text?
       message.body.present?

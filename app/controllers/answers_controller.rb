@@ -6,6 +6,7 @@ class AnswersController < SmsController
     else
       AutomatonJob.perform_later(sender, question, "invalid_answer")
     end
+    head :ok
   end
 
   private
@@ -19,7 +20,7 @@ class AnswersController < SmsController
   end
 
   def outstanding_inquiry
-    sender.outstanding_inquiry
+    @outstanding_inquiry ||= sender.outstanding_inquiry
   end
 
   def question

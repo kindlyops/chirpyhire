@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20160509150049) do
 
   create_table "questions", force: :cascade do |t|
     t.integer  "template_id",             null: false
-    t.integer  "response",    default: 0, null: false
+    t.integer  "format",      default: 0, null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end
