@@ -3,7 +3,7 @@ module Constraint
     def matches?(request)
       @request = request
 
-      candidate.present? && outstanding_inquiry.present?
+      user.present? && candidate.present? && outstanding_inquiry.present?
     end
 
     private
@@ -15,7 +15,7 @@ module Constraint
     end
 
     def outstanding_inquiry
-      user.outstanding_inquiry
+      candidate.outstanding_inquiry
     end
 
     def user
