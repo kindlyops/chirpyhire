@@ -10,7 +10,7 @@ class SmsController < ActionController::Base
   private
 
   def message
-    @message ||= MessageFinder.call(sender, params)
+    @message ||= sender.messages.create(sid: params["MessageSid"], properties: params)
   end
 
   def vcard

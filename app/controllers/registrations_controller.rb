@@ -1,7 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   def new
     build_resource({})
-    user = self.resource.build_user
     user.build_organization
     set_minimum_password_length
     yield resource if block_given?
@@ -13,6 +12,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
+
+  def user
+    self.resource.build_user
+  end
 
   def sign_up_params
     allow = [:email, :password, :password_confirmation,

@@ -48,7 +48,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
             it "creates a user" do
               expect {
                 post :create, params
-              }.to change{User.count}.by(1)
+              }.to change{organization.users.count}.by(1)
             end
           end
 
