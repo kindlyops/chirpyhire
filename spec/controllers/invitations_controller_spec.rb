@@ -14,10 +14,10 @@ RSpec.describe InvitationsController, type: :controller do
   end
 
   describe "#create" do
-    it "ties the new account to the inviter's organization" do
+    it "creates the user" do
       expect {
         post :create, invite_params
-      }.to change{organization.accounts.reload.count}.by(1)
+      }.to change{organization.users.count}.by(1)
     end
   end
 end
