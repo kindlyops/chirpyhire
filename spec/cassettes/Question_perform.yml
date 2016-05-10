@@ -5,7 +5,7 @@ http_interactions:
     uri: https://AC32424704a24f1d1d37faf8e195e6c35e:96584707818fd55ededd491bab2be6ce@api.twilio.com/2010-04-01/Accounts/AC32424704a24f1d1d37faf8e195e6c35e/Messages.json
     body:
       encoding: US-ASCII
-      string: To=%2B12142280575&Body=core&From=%2B15005550006
+      string: To=%2B12155075017&Body=Qui+expedita+natus+quia+hic+laborum.+Animi+culpa+provident+quis+accusamus+fugit+voluptates+quo.+Nobis+aspernatur+minus+et+aut+saepe+vitae.&From=%2B15005550006
     headers:
       Accept:
       - application/json
@@ -36,32 +36,33 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 21 Apr 2016 15:50:06 GMT
+      - Tue, 10 May 2016 16:02:13 GMT
       Strict-Transport-Security:
       - max-age=15768000
       Twilio-Request-Duration:
-      - '0.039'
+      - '0.056'
       Twilio-Request-Id:
-      - RQcf86f06d2951466bb2c95ee1fa4ea2e7
+      - RQ4200d3a1f43645848086f31ff3f1f18c
       X-Powered-By:
       - AT-5000
       X-Shenanigans:
       - none
       Content-Length:
-      - '806'
+      - '902'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"sid": "SM51a726bb0c2649468f8647adaecd8530", "date_created": "Thu,
-        21 Apr 2016 15:50:06 +0000", "date_updated": "Thu, 21 Apr 2016 15:50:06 +0000",
+      string: '{"sid": "SM9958c426d51543df8c1b7c54777e2920", "date_created": "Tue,
+        10 May 2016 16:02:13 +0000", "date_updated": "Tue, 10 May 2016 16:02:13 +0000",
         "date_sent": null, "account_sid": "AC32424704a24f1d1d37faf8e195e6c35e", "to":
-        "+12142280575", "from": "+15005550006", "messaging_service_sid": null, "body":
-        "Sent from your Twilio trial account - core", "status": "queued", "num_segments":
-        "1", "num_media": "0", "direction": "outbound-api", "api_version": "2010-04-01",
-        "price": null, "price_unit": "USD", "error_code": null, "error_message": null,
-        "uri": "/2010-04-01/Accounts/AC32424704a24f1d1d37faf8e195e6c35e/Messages/SM51a726bb0c2649468f8647adaecd8530.json",
-        "subresource_uris": {"media": "/2010-04-01/Accounts/AC32424704a24f1d1d37faf8e195e6c35e/Messages/SM51a726bb0c2649468f8647adaecd8530/Media.json"}}'
+        "+12155075017", "from": "+15005550006", "messaging_service_sid": null, "body":
+        "Qui expedita natus quia hic laborum. Animi culpa provident quis accusamus
+        fugit voluptates quo. Nobis aspernatur minus et aut saepe vitae.", "status":
+        "queued", "num_segments": "1", "num_media": "0", "direction": "outbound-api",
+        "api_version": "2010-04-01", "price": null, "price_unit": "USD", "error_code":
+        null, "error_message": null, "uri": "/2010-04-01/Accounts/AC32424704a24f1d1d37faf8e195e6c35e/Messages/SM9958c426d51543df8c1b7c54777e2920.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC32424704a24f1d1d37faf8e195e6c35e/Messages/SM9958c426d51543df8c1b7c54777e2920/Media.json"}}'
     http_version: 
-  recorded_at: Thu, 21 Apr 2016 15:50:06 GMT
+  recorded_at: Tue, 10 May 2016 16:02:13 GMT
 recorded_with: VCR 3.0.1
