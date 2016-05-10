@@ -17,8 +17,8 @@ class SmsController < ActionController::Base
     @vcard ||= Vcard.new(message: message)
   end
 
-  def user
-    @user ||= organization.users.find_by(phone_number: params["From"])
+  def sender
+    @sender ||= UserFinder.new(attributes: {phone_number: params["From"]}, organization: organization).call
   end
 
   def organization

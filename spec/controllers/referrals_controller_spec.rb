@@ -115,10 +115,12 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
         }.not_to change{Message.count}
       end
 
-      it "does not create a user" do
+      it "create a user for the sender" do
         expect {
-          post :create, params
-        }.not_to change{User.count}
+          expect {
+            post :create, params
+          }.not_to change{User.where.not(phone_number: params["From"]).count}
+        }.to change{User.where(phone_number: params["From"]).count}.by(1)
       end
 
       it "does not create a referral" do

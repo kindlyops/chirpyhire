@@ -32,7 +32,7 @@ to learn about opportunities."
   end
 
   def referred_user
-    @referred_user ||= UserFinder.new(attributes: vcard.attributes.merge(organization: organization)).call
+    @referred_user ||= UserFinder.new(attributes: vcard.attributes, organization: organization).call
   end
 
   def candidate
@@ -43,14 +43,10 @@ to learn about opportunities."
   end
 
   def referrer
-    @referrer ||= referrers.find_by(user: user)
+    @referrer ||= referrers.find_by(user: sender)
   end
 
   def referrers
     organization.referrers
-  end
-
-  def sender
-    user.referrer
   end
 end

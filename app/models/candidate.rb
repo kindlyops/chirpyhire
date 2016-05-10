@@ -2,8 +2,6 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :referrers, through: :referrals
-  has_many :messages, as: :messageable
-  has_many :inquiries, through: :messages
   has_one :subscription
 
   enum status: [:potential, :qualified, :bad_fit]
@@ -12,15 +10,6 @@ class Candidate < ActiveRecord::Base
            :owner_first_name, :organization, to: :user
 
   scope :subscribed, -> { joins(:subscription) }
-
-  def receive_message(body:)
-    message = organization.send_message(to: phone_number, body: body)
-    messages.create(sid: message.sid)
-  end
-
-  def outstanding_inquiry
-    inquiries.unanswered.first
-  end
 
   def last_referrer
     @last_referrer ||= begin

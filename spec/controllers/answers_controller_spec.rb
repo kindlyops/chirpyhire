@@ -4,7 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:organization) { create(:organization, :with_phone) }
   let(:user) { create(:user, organization: organization) }
   let(:candidate) { create(:candidate, user: user) }
-  let(:message) { create(:message, messageable: candidate) }
+  let(:message) { create(:message, user: user) }
   let!(:inquiry) { create(:inquiry, message: message) }
 
   describe "#create" do
@@ -32,7 +32,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates an answer automaton job" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(candidate, inquiry.question, "answer")
+        }.to have_enqueued_job(AutomatonJob).with(user, inquiry.question, "answer")
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates an invalid answer automaton job" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(candidate, inquiry.question, "invalid_answer")
+        }.to have_enqueued_job(AutomatonJob).with(user, inquiry.question, "invalid_answer")
       end
     end
   end

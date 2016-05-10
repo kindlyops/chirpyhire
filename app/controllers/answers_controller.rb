@@ -15,10 +15,6 @@ class AnswersController < SmsController
     outstanding_inquiry.create_answer(message: message)
   end
 
-  def sender
-    user.candidate
-  end
-
   def outstanding_inquiry
     @outstanding_inquiry ||= sender.outstanding_inquiry
   end

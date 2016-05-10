@@ -21,12 +21,11 @@ RSpec.describe Notice, type: :model do
   describe "#perform" do
     let(:organization) { create(:organization, :with_successful_phone) }
     let(:user) { create(:user, organization: organization) }
-    let(:candidate) { create(:candidate, user: user) }
 
     it "creates a message" do
       expect{
-        subject.perform(candidate)
-      }.to change{candidate.messages.count}.by(1)
+        subject.perform(user)
+      }.to change{user.messages.count}.by(1)
     end
   end
 end

@@ -1,7 +1,7 @@
 class AutomatonJob < ActiveJob::Base
   queue_as :default
 
-  def perform(person, observable, operation)
-    Automaton.call(person, observable, operation)
+  def perform(user, observable, operation)
+    Automaton.call(user, observable, operation)
   end
 end
