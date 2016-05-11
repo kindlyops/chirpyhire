@@ -4,9 +4,10 @@ class ReferralsController < SmsController
 
   def create
     if referral.valid?
-      render_sms referral_notice
+      AutomatonJob.perform_later(sender, referrer, "refer")
+      head :ok
     else
-      error_message
+      invalid_message
     end
   end
 
@@ -16,19 +17,8 @@ class ReferralsController < SmsController
     @referral ||= referrer.refer(candidate)
   end
 
-  def referral_notice
-    Messaging::Response.new do |r|
-      r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
-      r.Message "Hey #{candidate.first_name}. My home care agency, \
-#{organization.name}, regularly hires caregivers. They \
-treat me very well and have great clients. I think you \
-would be a great fit here. Text START to #{organization.phone_number} \
-to learn about opportunities."
-    end
-  end
-
   def ensure_referrer
-    return error_message unless referrer.present?
+    return invalid_message unless referrer.present?
   end
 
   def referred_user

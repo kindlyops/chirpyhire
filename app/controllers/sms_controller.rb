@@ -3,11 +3,17 @@ class SmsController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  def error_message
-    render_sms Messaging::Response.error
+  def invalid_message
+    AutomatonJob.perform_later(sender, message, "invalid_message")
+
+    head :ok
   end
 
   private
+
+  def messaging_response
+    @messaging_response ||= Messaging::Response.new(organization: organization)
+  end
 
   def message
     @message ||= sender.messages.create(sid: params["MessageSid"], properties: params)

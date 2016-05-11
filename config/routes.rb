@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms#error_message'
+  post 'twilio/text' => 'sms#invalid_message'
 
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 
