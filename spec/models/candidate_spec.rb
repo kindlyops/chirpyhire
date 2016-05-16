@@ -92,80 +92,18 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  describe "#subscribed?" do
-    context "with a subscription to the organization" do
-      let!(:subscription) { create(:subscription, candidate: candidate) }
-
-      it "is true" do
-        expect(candidate.subscribed?).to eq(true)
-      end
-    end
-
-    context "without a subscription to the organization" do
-      it "is false" do
-        expect(candidate.subscribed?).to eq(false)
-      end
-    end
-  end
-
-  describe "#subscription" do
-    context "with a subscription to the organization" do
-      let!(:subscription) { create(:subscription, candidate: candidate) }
-
-      it "returns the subscription" do
-        expect(candidate.subscription).to eq(subscription)
-      end
-    end
-
-    context "without a subscription to the organization" do
-      it "is nil" do
-        expect(candidate.subscription).to be_nil
-      end
-    end
-  end
-
-  describe "#subscribe" do
-    context "with an existing subscription" do
-      let!(:subscription) { create(:subscription, candidate: candidate) }
-
-      it "soft deletes existing subscription" do
-        expect {
-          candidate.subscribe
-        }.to change{subscription.reload.deleted?}.from(false).to(true)
-      end
-    end
-
-    it "creates a new subscription" do
-      expect{
-        candidate.subscribe
-      }.to change{Subscription.where(candidate: candidate).with_deleted.count}.by(1)
-    end
-  end
-
   describe "#unsubscribed?" do
     context "with a subscription to the organization" do
-      let!(:subscription) { create(:subscription, candidate: candidate) }
-
       it "is false" do
+        candidate.update(subscribed: true)
         expect(candidate.unsubscribed?).to eq(false)
       end
     end
 
     context "without a subscription to the organization" do
-      it "is false" do
+      it "is true" do
+        candidate.update(subscribed: false)
         expect(candidate.unsubscribed?).to eq(true)
-      end
-    end
-  end
-
-  describe "#unsubscribe" do
-    context "with an existing subscription" do
-      let!(:subscription) { create(:subscription, candidate: candidate) }
-
-      it "soft deletes existing subscription" do
-        expect {
-          candidate.unsubscribe
-        }.to change{subscription.reload.deleted?}.from(false).to(true)
       end
     end
   end

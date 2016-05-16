@@ -3,20 +3,20 @@ class SubscriptionsController < SmsController
 
   def create
     if candidate.subscribed?
-      AutomatonJob.perform_later(sender, candidate.subscription, "invalid_subscribe")
+      AutomatonJob.perform_later(candidate, "invalid_subscribe")
     else
-      candidate.subscribe
-      AutomatonJob.perform_later(sender, candidate.subscription, "subscribe")
+      candidate.update(subscribed: true)
+      AutomatonJob.perform_later(candidate, "subscribe")
     end
     head :ok
   end
 
   def destroy
     if candidate.unsubscribed?
-      AutomatonJob.perform_later(sender, candidate.subscription, "invalid_unsubscribe")
+      AutomatonJob.perform_later(candidate, "invalid_unsubscribe")
     else
-      candidate.unsubscribe
-      AutomatonJob.perform_later(sender, candidate.subscription, "unsubscribe")
+      candidate.update(subscribed: false)
+      AutomatonJob.perform_later(candidate, "unsubscribe")
     end
     head :ok
   end

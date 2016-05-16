@@ -3,9 +3,7 @@ FactoryGirl.define do
     user
 
     trait :with_subscription do
-      after(:create) do |candidate|
-        candidate.subscribe
-      end
+      subscribed { true }
     end
 
     trait :with_referral do

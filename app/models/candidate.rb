@@ -2,14 +2,13 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :referrers, through: :referrals
-  has_one :subscription
 
   enum status: [:potential, :qualified, :bad_fit]
 
   delegate :first_name, :name, :phone_number, :organization_name,
            :owner_first_name, :organization, to: :user
 
-  scope :subscribed, -> { joins(:subscription) }
+  scope :subscribed, -> { where(subscribed: true) }
 
   def last_referrer
     @last_referrer ||= begin
@@ -37,21 +36,7 @@ class Candidate < ActiveRecord::Base
     last_referrer.phone_number
   end
 
-  def subscribed?
-    subscription.present?
-  end
-
-  def subscribe
-    unsubscribe if subscribed?
-    create_subscription
-  end
-
   def unsubscribed?
     !subscribed?
-  end
-
-  def unsubscribe
-    subscription.destroy
-    reload
   end
 end
