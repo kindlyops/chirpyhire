@@ -25,12 +25,6 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
           create(:referrer, user: sender)
         end
 
-        it "creates a message" do
-          expect {
-            post :create, params
-          }.to change{Message.count}.by(1)
-        end
-
         it "creates a referral" do
           expect {
             post :create, params

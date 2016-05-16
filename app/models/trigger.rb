@@ -13,8 +13,8 @@ class Trigger < ActiveRecord::Base
                    :unsubscribe,
                    :invalid_unsubscribe]
 
-  def fire(person)
-    actions.each { |action| action.perform(person) }
+  def fire(user)
+    actions.each { |action| action.perform(user) }
   end
 
   def description

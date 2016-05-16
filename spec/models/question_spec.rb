@@ -22,10 +22,10 @@ RSpec.describe Question, type: :model do
     let(:organization) { create(:organization, :with_successful_phone) }
     let(:user) { create(:user, organization: organization) }
 
-    it "creates a message" do
+    it "sends a message to the user" do
       expect{
         subject.perform(user)
-      }.to change{user.messages.count}.by(1)
+      }.to change{FakeMessaging.messages.count}.by(1)
     end
   end
 end

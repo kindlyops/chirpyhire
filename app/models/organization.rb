@@ -31,6 +31,10 @@ class Organization < ActiveRecord::Base
     messaging_client.send_message(to: to, body: body, from: phone_number)
   end
 
+  def messages
+    messaging_client.messages
+  end
+
   private
 
   def messaging_client

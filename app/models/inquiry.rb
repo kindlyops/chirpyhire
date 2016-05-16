@@ -1,15 +1,16 @@
 class Inquiry < ActiveRecord::Base
   belongs_to :question
-  belongs_to :message
+  belongs_to :user
   has_one :answer
+  delegate :organization, to: :user
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
-  def expects?(message)
+  def expects?(answer)
     if question.media?
-      message.media_urls.present?
+      answer.has_media?
     elsif question.text?
-      message.body.present?
+      answer.body.present?
     end
   end
 end

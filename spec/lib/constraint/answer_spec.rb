@@ -24,8 +24,7 @@ RSpec.describe Constraint::Answer do
         end
 
         context "with outstanding inquiry" do
-          let(:message) { create(:message, user: user) }
-          let(:inquiry) { create(:inquiry, message: message) }
+          let(:inquiry) { create(:inquiry, user: user) }
 
           it "is true" do
             expect(constraint.matches?(request)).to eq(false)

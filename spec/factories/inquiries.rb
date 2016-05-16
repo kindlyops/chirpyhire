@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :inquiry do
     question
-    message
+    user
+    message_sid { Faker::Number.number(10) }
 
     trait :with_media_question do
       association :question, format: Question.formats[:media]

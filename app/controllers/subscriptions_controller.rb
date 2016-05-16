@@ -1,6 +1,4 @@
 class SubscriptionsController < SmsController
-  before_action :message, only: [:create, :destroy]
-
   def create
     if candidate.subscribed?
       AutomatonJob.perform_later(candidate, "invalid_subscribe")

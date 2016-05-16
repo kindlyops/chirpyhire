@@ -5,9 +5,7 @@ RSpec.describe Vcard, vcr: { cassette_name: "Vcard" } do
   let(:media_url) { "/2010-04-01/Accounts/AC207d54ae9c08379e9e356faa6fb96f41/Messages/MMfaeed26d122c527a06e14768198c6a06/Media/MEdfa8631eb3ab5a0bf472d0e3fb5b7a76" }
   let(:url) { "https://api.twilio.com/#{media_url}"}
 
-  let(:message) { create(:message, properties: { "MediaUrl0" => url }) }
-
-  let(:vcard) { Vcard.new(message: message) }
+  let(:vcard) { Vcard.new(url: url) }
 
   describe "#phone_number" do
     it "returns the phone number" do

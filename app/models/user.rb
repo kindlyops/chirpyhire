@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   has_one :referrer
   has_one :account
   belongs_to :organization
-  has_many :messages
-  has_many :inquiries, through: :messages
+  has_many :inquiries
+  has_many :answers
+  has_many :notifications
 
   delegate :name, to: :organization, prefix: true
   delegate :owner_first_name, to: :organization
@@ -18,8 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def receive_message(body:)
-    message = organization.send_message(to: phone_number, body: body)
-    messages.create(sid: message.sid)
+    organization.send_message(to: phone_number, body: body)
   end
 
   def name

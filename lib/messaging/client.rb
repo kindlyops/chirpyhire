@@ -9,6 +9,10 @@ module Messaging
       @client = self.class.client.new(account_sid, auth_token)
     end
 
+    def messages
+      client.account.messages
+    end
+
     def send_message(message)
       Messaging::Message.new(client.account.messages.create(message))
     end

@@ -4,16 +4,21 @@ RSpec.describe AnswersController, type: :controller do
   let(:organization) { create(:organization, :with_phone) }
   let(:user) { create(:user, organization: organization) }
   let(:candidate) { create(:candidate, user: user) }
-  let(:message) { create(:message, user: user) }
-  let!(:inquiry) { create(:inquiry, message: message) }
+  let!(:inquiry) { create(:inquiry, user: user) }
+
+  let(:messaging) { FakeMessaging.new("foo", "bar") }
+  let(:from) { candidate.phone_number }
+  let(:to) { organization.phone_number }
+  let(:body) { Faker::Lorem.word }
+  let(:message) { messaging.create(from: from, to: to, body: body) }
 
   describe "#create" do
     let(:params) do
       {
-        "To" => organization.phone_number,
-        "From" => candidate.phone_number,
+        "To" => to,
+        "From" => from,
         "Body" => Faker::Lorem.word,
-        "MessageSid" => Faker::Lorem.word
+        "MessageSid" => message.sid
       }
     end
 
@@ -37,12 +42,14 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context "with an answer format that doesn't matches the response format" do
+      let(:message) { messaging.create(from: from, to: to, body: "") }
+
       let(:params) do
         {
-          "To" => organization.phone_number,
-          "From" => candidate.phone_number,
-          "Body" => nil,
-          "MessageSid" => Faker::Lorem.word,
+          "To" => to,
+          "From" => from,
+          "Body" => "",
+          "MessageSid" => message.sid,
           "MediaUrl0" => "/example/path/to/image.png"
         }
       end

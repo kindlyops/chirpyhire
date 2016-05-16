@@ -12,7 +12,7 @@ class AnswersController < SmsController
   private
 
   def answer
-    outstanding_inquiry.create_answer(message: message)
+    outstanding_inquiry.create_answer(user: sender, message_sid: params["MessageSid"])
   end
 
   def outstanding_inquiry

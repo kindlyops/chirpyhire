@@ -4,17 +4,23 @@ RSpec.describe Action, type: :model do
   let(:action) { create(:action) }
   let(:actionable) { action.actionable }
   let(:template) { actionable.template }
-  let(:candidate) { create(:candidate) }
+  let(:user) { create(:user) }
+
+  let(:messaging) { FakeMessaging.new("foo", "bar") }
+  let(:from) { Faker::PhoneNumber.cell_phone }
+  let(:to) { Faker::PhoneNumber.cell_phone }
+  let(:body) { Faker::Lorem.word }
+  let(:message) { messaging.create(from: from, to: to, body: body) }
 
   describe "#perform" do
     before(:each) do
-      allow(actionable).to receive(:perform).and_return(create(:message))
+      allow(actionable).to receive(:perform).and_return(message)
     end
 
     context "actionable question" do
       it "creates an inquiry" do
         expect {
-          action.perform(candidate)
+          action.perform(user)
         }.to change{actionable.inquiries.count}.by(1)
       end
     end
@@ -24,7 +30,7 @@ RSpec.describe Action, type: :model do
 
       it "creates a notification" do
         expect {
-          action.perform(candidate)
+          action.perform(user)
         }.to change{actionable.notifications.count}.by(1)
       end
     end

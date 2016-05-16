@@ -2,23 +2,31 @@ require 'rails_helper'
 
 RSpec.describe Inquiry, type: :model do
 
+  let(:messaging) { FakeMessaging.new("foo", "bar") }
+  let(:from) { Faker::PhoneNumber.cell_phone }
+  let(:to) { Faker::PhoneNumber.cell_phone }
+  let(:body) { Faker::Lorem.word }
+  let(:message) { messaging.create(from: from, to: to, body: body) }
+
   describe "#expects?" do
     context "question expects media" do
       let(:inquiry) { create(:inquiry, :with_media_question) }
 
       context "message has media" do
-        let(:message) { create(:message, properties: { "MediaUrl0" => "path/to/image" }) }
+        let(:message) { messaging.create(from: from, to: to, body: body, num_media: 1) }
+
+        let(:answer) { build(:answer, message_sid: message.sid) }
 
         it "is true" do
-          expect(inquiry.expects?(message)).to eq(true)
+          expect(inquiry.expects?(answer)).to eq(true)
         end
       end
 
       context "message does not have media" do
-        let(:message) { create(:message, properties: { "Body" => Faker::Lorem.word }) }
+        let(:answer) { build(:answer, message_sid: message.sid) }
 
         it "is false" do
-          expect(inquiry.expects?(message)).to eq(false)
+          expect(inquiry.expects?(answer)).to eq(false)
         end
       end
     end
@@ -27,18 +35,19 @@ RSpec.describe Inquiry, type: :model do
       let(:inquiry) { create(:inquiry, :with_text_question) }
 
       context "message has text" do
-        let(:message) { create(:message, properties: { "Body" => Faker::Lorem.word }) }
+        let(:answer) { build(:answer, message_sid: message.sid) }
 
         it "is true" do
-          expect(inquiry.expects?(message)).to eq(true)
+          expect(inquiry.expects?(answer)).to eq(true)
         end
       end
 
       context "message does not have text" do
-        let(:message) { create(:message, properties: { "MediaUrl0" => "path/to/image" }) }
+        let(:message) { messaging.create(from: from, to: to, body: "", num_media: 1) }
+        let(:answer) { build(:answer, message_sid: message.sid) }
 
         it "is false" do
-          expect(inquiry.expects?(message)).to eq(false)
+          expect(inquiry.expects?(answer)).to eq(false)
         end
       end
     end

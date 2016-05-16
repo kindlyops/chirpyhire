@@ -25,12 +25,6 @@ RSpec.describe SmsController, type: :controller do
       expect(response.headers["Content-Type"]).to eq("text/xml")
     end
 
-    it "creates a message" do
-      expect {
-        post :invalid_message, { "MessageSid" => "123", "To" => phone.number }
-      }.to change{Message.count}.by(1)
-    end
-
     it "creates a user" do
       expect {
         post :invalid_message, { "MessageSid" => "123", "To" => phone.number }

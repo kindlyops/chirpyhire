@@ -12,7 +12,7 @@ class Question < ActiveRecord::Base
     inquiries
   end
 
-  def perform(person)
-    person.receive_message(body: template.render(person))
+  def perform(user)
+    user.receive_message(body: template.render(user))
   end
 end

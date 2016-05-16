@@ -4,23 +4,15 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def invalid_message
-    AutomatonJob.perform_later(message, "invalid_message")
+    sender
 
     head :ok
   end
 
   private
 
-  def messaging_response
-    @messaging_response ||= Messaging::Response.new(organization: organization)
-  end
-
-  def message
-    @message ||= sender.messages.create(sid: params["MessageSid"], properties: params)
-  end
-
   def vcard
-    @vcard ||= Vcard.new(message: message)
+    @vcard ||= Vcard.new(url: params["MediaUrl0"])
   end
 
   def sender
