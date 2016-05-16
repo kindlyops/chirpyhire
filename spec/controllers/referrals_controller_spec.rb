@@ -80,10 +80,10 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
-        it "does create a message" do
+        it "creates a invalid refer Automaton Job" do
           expect {
             post :create, params
-          }.to change{Message.count}.by(1)
+          }.to have_enqueued_job(AutomatonJob).with(sender, "invalid_refer")
         end
 
         it "does not create a referral" do
@@ -109,10 +109,10 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with an unrecognized sender" do
-      it "creates a message" do
+      it "creates a invalid refer Automaton Job" do
         expect {
           post :create, params
-        }.to change{Message.count}.by(1)
+        }.to have_enqueued_job(AutomatonJob).exactly(:once)
       end
 
       it "creates a user for the sender" do

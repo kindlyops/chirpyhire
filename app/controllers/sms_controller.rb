@@ -4,7 +4,7 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def invalid_message
-    AutomatonJob.perform_later(sender, message, "invalid_message")
+    AutomatonJob.perform_later(message, "invalid_message")
 
     head :ok
   end

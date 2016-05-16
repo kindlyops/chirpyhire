@@ -4,6 +4,8 @@ class Message < ActiveRecord::Base
   has_one :inquiry
   has_one :answer
 
+  delegate :organization, to: :user
+
   def body
     properties["Body"]
   end

@@ -3,7 +3,15 @@ class Trigger < ActiveRecord::Base
   belongs_to :observable, polymorphic: true
   has_many :actions
   enum status: [:enabled, :disabled]
-  enum operation: [:subscribe, :answer, :invalid_answer]
+  enum operation: [:subscribe,
+                   :invalid_subscribe,
+                   :answer,
+                   :invalid_answer,
+                   :refer,
+                   :invalid_refer,
+                   :invalid_message,
+                   :unsubscribe,
+                   :invalid_unsubscribe]
 
   def fire(person)
     actions.each { |action| action.perform(person) }
