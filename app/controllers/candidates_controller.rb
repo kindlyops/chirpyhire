@@ -6,6 +6,6 @@ class CandidatesController < ApplicationController
   private
 
   def candidates
-    organization.candidates
+    policy_scope Candidate
   end
 end

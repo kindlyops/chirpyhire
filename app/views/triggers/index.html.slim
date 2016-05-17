@@ -12,22 +12,24 @@
             th rowspan="1" colspan="1" aria-label="Status" Status
         tbody
           - @triggers.each do |trigger|
-            tr.trigger role="row"
+            tr.trigger data-link==edit_trigger_path(trigger.id) role="row"
               td.v-align-middle
                 div
                   p
                     i.fa class==trigger.description_class
-                    strong.title = trigger.title
-                  p.subtitle = trigger.subtitle
+                    span.title = trigger.title
+                  p
+                    strong.subtitle = trigger.subtitle
               td.v-align-middle
                 = render partial: "triggers/action", collection: trigger.actions
               td.v-align-middle
                 p
                   i.fa class==trigger.status_class
-                  = trigger.status.humanize
+                  strong = trigger.status.humanize
   .panel.panel-default.new-trigger
     .panel-body
-      button.btn.btn-primary.btn-lg.btn-block.new-rule-btn + Add Rule
+      = link_to new_trigger_path, class: "btn btn-primary btn-lg btn-block new-rule-btn"
+        ' + Add Rule
 
 
 

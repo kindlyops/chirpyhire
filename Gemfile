@@ -49,6 +49,7 @@ group :test do
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'
   gem 'capybara-email', '~> 2.5.0'
+  gem 'pundit-matchers', '~> 1.0.2'
 end
 
 group :development do
@@ -82,3 +83,4 @@ gem 'font-awesome-rails', '~> 4.6.0'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'jquery-datatables-rails', '~>3.4.0'
 gem 'indefinite_article', '~> 0.2.4'
+gem 'pundit', git: "git@github.com:elabs/pundit.git", ref: "58eda659d44a2e9d5e022fd23cc0f65bad7f7d82"

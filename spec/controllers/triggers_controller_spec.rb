@@ -9,6 +9,34 @@ RSpec.describe TriggersController, type: :controller do
     sign_in(account)
   end
 
+  describe "#new" do
+    it "is ok" do
+      get :new
+      expect(response).to be_ok
+    end
+
+    it "assigns a new trigger" do
+      get :new
+      expect(assigns(:trigger)).to be_a(TriggerPresenter)
+      expect(assigns(:trigger).id).to eq(nil)
+    end
+  end
+
+  describe "#edit" do
+    let(:trigger) { create(:trigger, organization: organization) }
+
+    it "is ok" do
+      get :edit, id: trigger.id
+      expect(response).to be_ok
+    end
+
+    it "assigns the trigger" do
+      get :edit, id: trigger.id
+      expect(assigns(:trigger)).to be_a(TriggerPresenter)
+      expect(assigns(:trigger).id).to eq(trigger.id)
+    end
+  end
+
   describe "#index" do
     it "is OK" do
       get :index
@@ -21,14 +49,6 @@ RSpec.describe TriggersController, type: :controller do
       it "returns the organization's triggers" do
         get :index
         expect(assigns(:triggers).map(&:id)).to eq(triggers.map(&:id))
-      end
-
-      context "with other organizations" do
-        let!(:other_triggers) { create_list(:trigger, 2) }
-        it "does not return the other organization's triggers" do
-          get :index
-          expect(assigns(:triggers)).not_to include(other_triggers)
-        end
       end
     end
   end

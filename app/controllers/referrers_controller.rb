@@ -7,6 +7,6 @@ class ReferrersController < ApplicationController
   private
 
   def referrers
-    organization.referrers
+    policy_scope Referrer
   end
 end

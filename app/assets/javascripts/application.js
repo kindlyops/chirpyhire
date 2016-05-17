@@ -32,6 +32,7 @@
 // BEGIN SITE SCRIPTS
 
 //= require indexTable
+//= require triggers
 
 //  I prefer to list scripts in a specific order, so I comment out require_tree .
 // require_tree .

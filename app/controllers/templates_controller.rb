@@ -6,6 +6,6 @@ class TemplatesController < ApplicationController
   private
 
   def templates
-    organization.templates
+    policy_scope Template
   end
 end
