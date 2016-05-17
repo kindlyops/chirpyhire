@@ -19,7 +19,7 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, num_media: 0)
+  def create(from:, to:, body:, num_media: "0")
     message = Message.new(from, to, body, num_media, Faker::Lorem.word)
     self.class.messages << message
     message

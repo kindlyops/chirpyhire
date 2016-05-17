@@ -5,7 +5,7 @@ RSpec.describe Answer, type: :model do
     let(:messaging) { FakeMessaging.new("foo", "bar") }
     let(:from) { Faker::PhoneNumber.cell_phone }
     let(:to) { Faker::PhoneNumber.cell_phone }
-    let(:message) { messaging.create(from: from, to: to, body: "", num_media: 1) }
+    let(:message) { messaging.create(from: from, to: to, body: "", num_media: "1") }
 
     let(:answer) { build(:answer, message_sid: message.sid) }
     context "inquiry does not expect the answer's message format" do

@@ -4,6 +4,10 @@ module Messaging
       @message = message
     end
 
+    def num_media
+      message.num_media.to_i
+    end
+
     private
 
     attr_reader :message

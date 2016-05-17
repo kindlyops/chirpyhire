@@ -10,7 +10,7 @@ module Messaging
     end
 
     def messages
-      client.account.messages
+      Messaging::Messages.new(client.account.messages)
     end
 
     def send_message(message)
