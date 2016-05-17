@@ -43,23 +43,30 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
-  welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-  welcome_notice = welcome.create_notice
-  location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
-  location_question = location.create_question
-  tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
-  tb_question = tb_test.create_question(format: Question.formats[:image])
-  thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
-  thank_you_notice = thank_you.create_notice
+  unless org.templates.present?
+    welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+    location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
+    tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
+    thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
+    puts "Created Templates"
 
-  candidate_trigger = org.triggers.create(observable_type: "Candidate", operation: "subscribe")
-  candidate_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
+    welcome_notice = welcome.create_notice
+    location_question = location.create_question
+    tb_question = tb_test.create_question(format: Question.formats[:image])
+    thank_you_notice = thank_you.create_notice
+    puts "Created Questions and Notices"
+  end
 
-  location_trigger = org.triggers.create(observable: location_question, operation: "answer")
-  location_trigger.actions.create(actionable: tb_question)
+  unless org.triggers.present?
+    candidate_trigger = org.triggers.create(observable_type: "Candidate", operation: "subscribe")
+    location_trigger = org.triggers.create(observable: location_question, operation: "answer")
+    tb_trigger = org.triggers.create(observable: tb_question, operation: "answer")
 
-  tb_trigger = org.triggers.create(observable: tb_question, operation: "answer")
-  tb_trigger.actions.create(actionable: thank_you_notice)
+    candidate_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
+    location_trigger.actions.create(actionable: tb_question)
+    tb_trigger.actions.create(actionable: thank_you_notice)
+    puts "Created triggers and actions"
+  end
 
   puts "Development specific seeding completed"
 end
