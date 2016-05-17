@@ -1,28 +1,18 @@
 class Organization < ActiveRecord::Base
-  has_many :accounts
-  has_many :candidates
-  has_many :subscribed_candidates, -> { subscribed.with_phone_number }, class_name: "Candidate"
-  has_many :referrals, through: :candidates
-  has_many :referrers
-  has_many :messages
-  has_many :subscriptions
-  has_many :questions
-  has_many :question_templates, through: :questions
-  has_many :jobs, through: :accounts
+  has_many :users
+  has_many :candidates, through: :users
+  has_many :referrers, through: :users
+  has_many :referrals, through: :referrers
+  has_many :accounts, through: :users
+  has_many :templates
+  has_many :triggers
+
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
 
-  before_create :create_questions
-
-  def ask(inquiry, prelude: false)
-    message = send_message(
-      to: inquiry.candidate_phone_number,
-      body: inquiry.body(prelude: prelude),
-      from: phone_number
-    )
-    inquiry.message = message
-    inquiry.save
+  def self.for(phone:)
+    joins(:phone).find_by(phones: { number: phone })
   end
 
   def owner
@@ -33,18 +23,21 @@ class Organization < ActiveRecord::Base
     owner.first_name
   end
 
+  def subscribed_candidates
+    candidates.subscribed
+  end
+
+  def send_message(to:, body:)
+    messaging_client.send_message(to: to, body: body, from: phone_number)
+  end
+
+  def messages
+    messaging_client.messages
+  end
+
   private
 
-  def send_message(message)
-    message = sms_client.send_message(message.merge(from: phone_number))
-    messages.create(sid: message.sid)
-  end
-
-  def sms_client
-    @sms_client ||= Sms::Client.new(self)
-  end
-
-  def create_questions
-    self.question_templates << QuestionTemplate.all
+  def messaging_client
+    @messaging_client ||= Messaging::Client.new(self)
   end
 end

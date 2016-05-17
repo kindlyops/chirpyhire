@@ -17,18 +17,17 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
   end
 
   describe "#create" do
-    it "creates a message" do
-      expect {
-        post :create, params
-      }.to change{organization.messages.count}.by(1)
-    end
-
     context "with a recognized sender" do
-      let!(:sender) { create(:user, phone_number: sender_phone_number) }
+      let!(:sender) { create(:user, organization: organization, phone_number: sender_phone_number) }
 
       context "that is a referrer for the organization" do
         before(:each) do
-          create(:referrer, organization: organization, user: sender)
+          create(:referrer, user: sender)
+        end
+
+        it "sends the user a template message to send to the referred candidate" do
+          post :create, params
+          expect(response.body).to include("I think you would be a great fit here.")
         end
 
         it "creates a referral" do
@@ -48,13 +47,13 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
             it "creates a user" do
               expect {
                 post :create, params
-              }.to change{User.count}.by(1)
+              }.to change{organization.users.count}.by(1)
             end
           end
 
           context "with a user with the candidate's phone number" do
             before(:each) do
-              create(:user, phone_number: "+14047908943")
+              create(:user, organization: organization, phone_number: "+14047908943")
             end
 
             it "does not create a new user" do
@@ -67,8 +66,8 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
 
         context "with an existing candidate" do
           before(:each) do
-            user = create(:user, phone_number: "+14047908943")
-            create(:candidate, organization: organization, user: user)
+            user = create(:user, phone_number: "+14047908943", organization: organization)
+            create(:candidate, user: user)
           end
 
           it "does not create a new candidate" do
@@ -80,6 +79,11 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
+        it "lets the user know they are not a referrer" do
+          post :create, params
+          expect(response.body).to include("if you would like to join the referral program.")
+        end
+
         it "does not create a referral" do
           expect {
             post :create, params
@@ -103,10 +107,17 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with an unrecognized sender" do
-      it "creates a user" do
+      it "lets the user know they are not a referrer" do
+        post :create, params
+        expect(response.body).to include("if you would like to join the referral program.")
+      end
+
+      it "creates a user for the sender" do
         expect {
-          post :create, params
-        }.to change{User.count}.by(1)
+          expect {
+            post :create, params
+          }.not_to change{User.where.not(phone_number: params["From"]).count}
+        }.to change{User.where(phone_number: params["From"]).count}.by(1)
       end
 
       it "does not create a referral" do

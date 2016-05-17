@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Candidate, type: :model do
-  let(:organization) { create(:organization, :with_account, :with_question) }
+  let(:organization) { create(:organization, :with_account, ) }
   let(:account) { organization.accounts.first }
-  let(:job) { create(:job, account: account) }
 
-  let(:candidate) { create(:candidate, organization: organization) }
+  let(:candidate) { create(:candidate) }
   let(:user) { candidate.user }
 
   describe "#last_referrer" do
@@ -93,244 +92,18 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  describe "#subscribe" do
-    it "creates a subscription" do
-      expect {
-        candidate.subscribe
-      }.to change{user.subscriptions.with_deleted.count}.by(1)
-    end
-  end
-
-  describe "#subscribed?" do
-    context "when subscribed to the organization" do
-      it "is true" do
-        candidate.subscribe
-        expect(candidate.subscribed?).to eq(true)
-      end
-    end
-
-    context "when not subscribed to the organization" do
-      it "is false" do
-        expect(candidate.subscribed?).to eq(false)
-      end
-    end
-  end
-
-  describe "#unsubscribe" do
-    context "with a subscription" do
-      let(:subscription) { candidate.subscribe }
-
-      it "soft deletes a subscription" do
-        expect {
-          candidate.unsubscribe
-        }.to change{subscription.reload.deleted?}.from(false).to(true)
-      end
-    end
-  end
-
   describe "#unsubscribed?" do
-    context "when subscribed to the organization" do
+    context "with a subscription to the organization" do
       it "is false" do
-        candidate.subscribe
+        candidate.update(subscribed: true)
         expect(candidate.unsubscribed?).to eq(false)
       end
     end
 
-    context "when not subscribed to the organization" do
+    context "without a subscription to the organization" do
       it "is true" do
+        candidate.update(subscribed: false)
         expect(candidate.unsubscribed?).to eq(true)
-      end
-    end
-  end
-
-  describe "#has_other_search_in_progress?" do
-    context "without any jobs in progress" do
-      it "is false" do
-        expect(candidate.has_other_search_in_progress?(nil)).to eq(false)
-      end
-    end
-
-    context "without another job search in progress" do
-      before(:each) do
-        job.candidates << candidate
-        job.job_candidates.each(&:processing!)
-      end
-
-      it "is false" do
-        expect(candidate.has_other_search_in_progress?job).to eq(false)
-      end
-    end
-
-    context "with another job search in progress" do
-      let(:another_job) { create(:job, account: account) }
-
-      before(:each) do
-        another_job.candidates << candidate
-        another_job.job_candidates.each(&:processing!)
-      end
-
-      it "is true" do
-        expect(candidate.has_other_search_in_progress?job).to eq(true)
-      end
-    end
-  end
-
-  describe "#oldest_pending_job_candidate" do
-    context "without job candidates" do
-      it "is nil" do
-        expect(candidate.oldest_pending_job_candidate).to be_nil
-      end
-    end
-
-    context "with job candidates" do
-      before(:each) do
-        job.candidates << candidate
-      end
-
-      context "that are not pending" do
-        before(:each) do
-          job.job_candidates.each(&:processing!)
-        end
-
-        it "is nil" do
-          expect(candidate.oldest_pending_job_candidate).to be_nil
-        end
-      end
-
-      context "that are pending" do
-        let(:another_job) { create(:job, account: account) }
-
-        before(:each) do
-          another_job.candidates << candidate
-          job.job_candidates.update_all(created_at: 2.days.ago)
-        end
-
-        it "returns the one with the oldest created_at timestamp" do
-          expect(candidate.oldest_pending_job_candidate).to eq(job.job_candidates.first)
-        end
-      end
-    end
-  end
-
-  describe "#recently_answered_negatively?" do
-    let(:question) { organization.questions.first }
-
-    context "without recent answers to the question" do
-      it "is false" do
-        expect(candidate.recently_answered_negatively?(question)).to eq(false)
-      end
-    end
-
-    context "with recent answers to the question" do
-      let(:recent_answer) { create(:answer, candidate: candidate, question: question) }
-
-      context "that are positive" do
-        before(:each) do
-          recent_answer.update(body: "Y")
-        end
-
-        it "is false" do
-          expect(candidate.recently_answered_negatively?(question)).to eq(false)
-        end
-      end
-
-      context "that are negative" do
-        before(:each) do
-          recent_answer.update(body: "N")
-        end
-
-        it "is true" do
-          expect(candidate.recently_answered_negatively?(question)).to eq(true)
-        end
-      end
-    end
-  end
-
-  describe "#recently_answered_positively?" do
-    let(:question) { organization.questions.first }
-
-    context "without recent answers to the question" do
-      it "is false" do
-        expect(candidate.recently_answered_positively?(question)).to eq(false)
-      end
-    end
-
-    context "with recent answers to the question" do
-      let(:recent_answer) { create(:answer, candidate: candidate, question: question) }
-
-      context "that are positive" do
-        before(:each) do
-          recent_answer.update(body: "Y")
-        end
-
-        it "is true" do
-          expect(candidate.recently_answered_positively?(question)).to eq(true)
-        end
-      end
-
-      context "that are negative" do
-        before(:each) do
-          recent_answer.update(body: "N")
-        end
-
-        it "is true" do
-          expect(candidate.recently_answered_positively?(question)).to eq(false)
-        end
-      end
-    end
-  end
-
-  describe "#most_recent_inquiry" do
-    context "without inquiries" do
-      it "is nil" do
-        expect(candidate.most_recent_inquiry).to be_nil
-      end
-    end
-
-    context "with inquiries" do
-      let!(:most_recent_inquiry) { create(:inquiry, candidate: candidate) }
-      let!(:older_inquiry) { create(:inquiry, candidate: candidate, created_at: 2.days.ago) }
-
-      it "returns the inquiry with the most recent created_at" do
-        expect(candidate.most_recent_inquiry).to eq(most_recent_inquiry)
-      end
-    end
-  end
-
-  describe "#processing_job_candidate" do
-    context "without processing job candidates" do
-      it "is nil" do
-        expect(candidate.processing_job_candidate).to be_nil
-      end
-    end
-
-    context "with a processing job candidate" do
-      let!(:processing_job_candidate) { create(:job_candidate, candidate: candidate, status: JobCandidate.statuses[:processing]) }
-
-      it "is the job candidate" do
-        expect(candidate.processing_job_candidate).to eq(processing_job_candidate)
-      end
-    end
-  end
-
-  describe "#has_pending_jobs?" do
-    context "with pending job candidates" do
-      before(:each) do
-        job.candidates << candidate
-      end
-
-      it "is true" do
-        expect(candidate.has_pending_jobs?).to eq(true)
-      end
-    end
-
-    context "without pending job candidates" do
-      before(:each) do
-        job.job_candidates.each(&:processing!)
-      end
-
-      it "is false" do
-        expect(candidate.has_pending_jobs?).to eq(false)
       end
     end
   end

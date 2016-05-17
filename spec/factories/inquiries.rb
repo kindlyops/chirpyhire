@@ -1,11 +1,15 @@
 FactoryGirl.define do
   factory :inquiry do
-    message
-    candidate
     question
+    user
+    message_sid { Faker::Number.number(10) }
 
-    trait :stale do
-      created_at { 3.days.ago }
+    trait :with_media_question do
+      association :question, format: Question.formats[:media]
+    end
+
+    trait :with_text_question do
+      association :question, format: Question.formats[:text]
     end
   end
 end

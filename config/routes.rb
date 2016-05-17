@@ -2,15 +2,16 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :jobs, only: [:new, :create, :index, :show]
+  resources :templates, only: [:index]
   resources :candidates, only: [:index]
   resources :referrers, only: [:index]
+  resources :triggers, only: [:index]
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms#error_message'
+  post 'twilio/text' => 'sms#invalid_message'
 
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 
@@ -18,5 +19,5 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  root 'jobs#new'
+  root 'candidates#index'
 end

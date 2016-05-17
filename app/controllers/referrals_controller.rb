@@ -1,23 +1,18 @@
 class ReferralsController < SmsController
 
-  before_action :ensure_referrer, only: :create
-
   def create
-    if referral.valid?
-      render_sms referral_notice
+    if referrer.present?
+      referrer.refer(candidate)
+      render_sms thanks_and_notice
     else
-      error_message
+      render_sms not_referrer
     end
   end
 
   private
 
-  def referral
-    @referral ||= referrer.refer(candidate, message)
-  end
-
-  def referral_notice
-    Sms::Response.new do |r|
+  def thanks_and_notice
+    Messaging::Response.new do |r|
       r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
       r.Message "Hey #{candidate.first_name}. My home care agency, \
 #{organization.name}, regularly hires caregivers. They \
@@ -27,19 +22,28 @@ to learn about opportunities."
     end
   end
 
-  def ensure_referrer
-    return error_message unless referrer.present?
+  def not_referrer
+    Messaging::Response.new do |r|
+      r.Message "Sorry you are not registered. Contact #{organization.name} if you would like to join the referral program."
+    end
   end
 
-  def vcard_user
-    @vcard_user ||= UserFinder.new(attributes: vcard.attributes).call
+  def referred_user
+    @referred_user ||= UserFinder.new(attributes: vcard.attributes, organization: organization).call
   end
 
   def candidate
-    @candidate ||= organization.candidates.find_or_create_by(user: vcard_user)
+    @candidate ||= begin
+      return referred_user.candidate if referred_user.candidate.present?
+      referred_user.create_candidate
+    end
   end
 
   def referrer
-    @referrer ||= ReferrerFinder.new(organization: organization, sender: sender).call
+    @referrer ||= referrers.find_by(user: sender)
+  end
+
+  def referrers
+    organization.referrers
   end
 end

@@ -1,10 +1,10 @@
 class Referrer < ActiveRecord::Base
   belongs_to :user
-  belongs_to :organization
   has_many :referrals
   has_many :candidates, through: :referrals
+  has_one :trigger, as: :observable
 
-  delegate :name, :phone_number, to: :user
+  delegate :name, :phone_number, :organization, to: :user
 
   def last_referral
     @last_referral ||= begin
@@ -28,7 +28,7 @@ class Referrer < ActiveRecord::Base
     last_referred.name
   end
 
-  def refer(candidate, message)
-    referrals.create(candidate: candidate, message: message)
+  def refer(candidate)
+    referrals.create(candidate: candidate)
   end
 end

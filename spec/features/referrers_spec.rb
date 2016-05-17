@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Referrers" do
-  let(:organization) { create(:organization, :with_question, :with_account, :with_successful_phone)}
+  let(:organization) { create(:organization, :with_account, :with_successful_phone)}
   let(:account) { organization.accounts.first }
 
   background(:each) do
@@ -20,8 +20,8 @@ RSpec.feature "Referrers" do
 
     context "with referrers" do
       include ActionView::Helpers::DateHelper
-
-      let!(:referrer) { create(:referrer, :with_referral, organization: organization) }
+      let(:user) { create(:user, organization: organization) }
+      let!(:referrer) { create(:referrer, :with_referral, user: user) }
       scenario "has the referrer information" do
         visit referrers_path
         expect(page).to have_text(referrer.name)

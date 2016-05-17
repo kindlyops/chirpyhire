@@ -3,35 +3,31 @@ class SmsController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  def error_message
-    message
+  def invalid_message
+    sender
 
-    render_sms Sms::Response.error
+    head :ok
   end
 
   private
 
-  def message
-    @message ||= organization.messages.find_or_create_by(sid: params["MessageSid"], media_url: params["MediaUrl0"])
-  end
-
   def vcard
-    @vcard ||= message.vcard
+    @vcard ||= Vcard.new(url: params["MediaUrl0"])
   end
 
   def sender
-    @sender ||= UserFinder.new(attributes: { phone_number: params["From"] }).call
+    @sender ||= UserFinder.new(attributes: {phone_number: params["From"]}, organization: organization).call
   end
 
   def organization
-    @organization ||= Organization.joins(:phone).find_by(phones: { number: params["To"] })
+    @organization ||= Organization.for(phone: params["To"])
   end
 
   def set_header
     response.headers["Content-Type"] = "text/xml"
   end
 
-  def render_sms(sms)
-    render text: sms.text
+  def render_sms(message)
+    render text: message.text
   end
 end

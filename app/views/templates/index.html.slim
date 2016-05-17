@@ -1,0 +1,23 @@
+= title "Templates | chirpyhire"
+.panel.panel-transparent
+    .panel-heading
+      .panel-title Templates
+      .pull-right
+        .col-xs-12
+          input#search-table.form-control.pull-right type="text" placeholder="Search"
+      .clearfix
+    .panel-body
+      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+        thead
+          tr role="row"
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Body
+            : activate to sort column descending" Body
+        tbody
+          - @templates.each do |template|
+            tr role="row"
+              td.v-align-middle
+                p = template.name
+              td.v-align-middle
+                p = template.body
+

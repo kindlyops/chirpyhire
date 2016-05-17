@@ -1,13 +1,37 @@
-class Constraint::Answer
-  ANSWER_RESPONSES = %w(Y N)
+module Constraint
+  class Answer
+    def matches?(request)
+      @request = request
 
-  def matches?(request)
-    ANSWER_RESPONSES.include?(body(request).strip.upcase)
-  end
+      user.present? && candidate.present? && outstanding_inquiry.present?
+    end
 
-  private
+    private
 
-  def body(request)
-    request.request_parameters["Body"]
+    attr_reader :request
+
+    def candidate
+      user.candidate
+    end
+
+    def outstanding_inquiry
+      user.outstanding_inquiry
+    end
+
+    def user
+      @user ||= organization.users.find_by(phone_number: from)
+    end
+
+    def organization
+      Organization.for(phone: to)
+    end
+
+    def to
+      request.request_parameters["To"]
+    end
+
+    def from
+      request.request_parameters["From"]
+    end
   end
 end

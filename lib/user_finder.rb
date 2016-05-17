@@ -1,17 +1,18 @@
 class UserFinder
-  def initialize(attributes:)
+  def initialize(organization:, attributes:)
+    @organization = organization
     @attributes = attributes
   end
 
   def call
-    user = User.find_by(phone_number: attributes[:phone_number])
+    user = organization.users.find_by(phone_number: attributes[:phone_number])
     if user.blank?
-      user = User.create(attributes)
+      user = organization.users.create(attributes)
     end
     user
   end
 
   private
 
-  attr_reader :attributes
+  attr_reader :attributes, :organization
 end

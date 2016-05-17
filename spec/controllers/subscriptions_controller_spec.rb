@@ -13,39 +13,33 @@ RSpec.describe SubscriptionsController, type: :controller do
       }
     end
 
-    it "creates a message" do
-      expect {
-        post :create, params
-      }.to change{organization.messages.count}.by(1)
-    end
-
     context "with an existing user" do
-      let!(:user) { create(:user, phone_number: phone_number) }
+      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
       context "with an existing candidate" do
-        let!(:candidate) { create(:candidate, user: user, organization: organization) }
+        let!(:candidate) { create(:candidate, user: user) }
 
         context "with an active subscription" do
           before(:each) do
-            user.subscribe_to(organization)
+            candidate.update(subscribed: true)
           end
 
-          it "let's the user know they are already subscribed" do
+          it "lets the user know they were already subscribed" do
             post :create, params
-            expect(response.body).to include("You are already subscribed. Thanks for your interest in #{organization.name}.")
+            expect(response.body).to include("You are already subscribed.")
           end
         end
 
         context "without an active subscription" do
-          it "creates a subscription" do
-            expect {
-              post :create, params
-            }.to change{Subscription.count}.by(1)
+          it "sets the subscription flag to true" do
+            post :create, params
+            expect(candidate.reload.subscribed?).to eq(true)
           end
 
-          it "instructs them how to opt out" do
-            post :create, params
-            expect(response.body).to include("reply STOP")
+          it "creates a subscribe Automaton Job" do
+            expect {
+              post :create, params
+            }.to have_enqueued_job(AutomatonJob).with(user, candidate, "subscribe")
           end
         end
       end
@@ -54,13 +48,12 @@ RSpec.describe SubscriptionsController, type: :controller do
         it "creates a candidate for the user" do
           expect {
             post :create, params
-          }.to change{organization.candidates.where(user: user).count}.by(1)
+          }.to change{user.reload.candidate.present?}.from(false).to(true)
         end
 
-        it "creates a subscription" do
-          expect {
-            post :create, params
-          }.to change{Subscription.count}.by(1)
+        it "sets the subscription flag to true" do
+          post :create, params
+          expect(user.candidate.subscribed?).to eq(true)
         end
       end
     end
@@ -78,10 +71,9 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{organization.candidates.count}.by(1)
       end
 
-      it "creates a subscription" do
-        expect {
-          post :create, params
-        }.to change{Subscription.count}.by(1)
+      it "sets the subscription flag to true" do
+        post :create, params
+        expect(User.find_by(phone_number: phone_number).candidate.subscribed?).to eq(true)
       end
     end
   end
@@ -96,46 +88,53 @@ RSpec.describe SubscriptionsController, type: :controller do
       }
     end
 
-    it "creates a message" do
-      expect {
-        post :destroy, params
-      }.to change{organization.messages.count}.by(1)
-    end
+    context "with an existing subscribed candidate" do
+      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
-    context "with an existing user" do
-      let!(:user) { create(:user, phone_number: phone_number) }
+      let!(:candidate) { create(:candidate, user: user, subscribed: true) }
 
-      context "with an existing subscription" do
-        before(:each) do
-          user.subscribe_to(organization)
-        end
-
-        it "soft deletes the subscription" do
-          subscription = user.subscription_to(organization)
-
-          expect{
-            delete :destroy, params
-          }.to change{subscription.reload.deleted?}.from(false).to(true)
-        end
-
-        it "thanks the user and lets them know they are unsubscribed" do
+      it "sets the subscribed flag to false" do
+        expect{
           delete :destroy, params
-          expect(response.body).to include("You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}.")
-        end
+        }.to change{candidate.reload.subscribed?}.from(true).to(false)
       end
 
-      context "without an existing subscription" do
-        it "let's the user know they are not subscribed" do
-          delete :destroy, params
-          expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
-        end
+      it "lets the user know they are unsubscribed now" do
+        delete :destroy, params
+
+        expect(response.body).to include("You are unsubscribed. To subscribe reply with START.")
+      end
+    end
+
+    context "without an existing subscription" do
+      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
+
+      let(:candidate) { create(:candidate, user: user) }
+
+      it "lets the user know they were not subscribed" do
+        delete :destroy, params
+
+        expect(response.body).to include("To subscribe reply with START.")
       end
     end
 
     context "without an existing user" do
-      it "let's the user know they are not subscribed" do
+      it "creates a user" do
+        expect {
+          delete :destroy, params
+        }.to change{organization.users.count}.by(1)
+      end
+
+      it "creates a candidate" do
+        expect {
+          delete :destroy, params
+        }.to change{organization.candidates.count}.by(1)
+      end
+
+      it "lets the user know they aren't subscribed" do
         delete :destroy, params
-        expect(response.body).to include("You were not subscribed. To subscribe reply with START.")
+
+        expect(response.body).to include("To subscribe reply with START.")
       end
     end
   end

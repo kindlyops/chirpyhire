@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_account!
 
   def organization
-    @organization ||= current_account.organization
+    @organization ||= current_user.organization
   end
 
   def subscribed_candidates

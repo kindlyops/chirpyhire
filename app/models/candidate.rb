@@ -1,21 +1,14 @@
 class Candidate < ActiveRecord::Base
   belongs_to :user
-  belongs_to :organization
   has_many :referrals
   has_many :referrers, through: :referrals
-  has_many :inquiries
-  has_many :answers
-  has_many :job_candidates
-  has_many :jobs, through: :job_candidates
-  has_many :job_questions, through: :jobs
-  has_many :questions, through: :job_questions
 
-  delegate :first_name, :name, :phone_number, to: :user
-  delegate :name, to: :organization, prefix: true
-  delegate :owner_first_name, to: :organization
+  enum status: [:potential, :qualified, :bad_fit]
 
-  scope :subscribed, -> { joins(user: :subscriptions) }
-  scope :with_phone_number, -> { joins(:user).merge(User.with_phone_number) }
+  delegate :first_name, :name, :phone_number, :organization_name,
+           :owner_first_name, :organization, to: :user
+
+  scope :subscribed, -> { where(subscribed: true) }
 
   def last_referrer
     @last_referrer ||= begin
@@ -43,47 +36,7 @@ class Candidate < ActiveRecord::Base
     last_referrer.phone_number
   end
 
-  def subscribe
-    user.subscribe_to(organization)
-  end
-
-  def subscribed?
-    user.subscribed_to?(organization)
-  end
-
-  def unsubscribe
-    user.unsubscribe_from(organization)
-  end
-
   def unsubscribed?
-    user.unsubscribed_from?(organization)
-  end
-
-  def has_other_search_in_progress?job
-    job_candidates.where.not(job: job).processing.exists?
-  end
-
-  def has_pending_jobs?
-    job_candidates.pending.exists?
-  end
-
-  def oldest_pending_job_candidate
-    job_candidates.pending.order(:created_at).first
-  end
-
-  def recently_answered_negatively?(question)
-    answers.to(question).recent.negative.exists?
-  end
-
-  def recently_answered_positively?(question)
-    answers.to(question).recent.positive.exists?
-  end
-
-  def most_recent_inquiry
-    inquiries.order(created_at: :desc).first
-  end
-
-  def processing_job_candidate
-    job_candidates.processing.first
+    !subscribed?
   end
 end

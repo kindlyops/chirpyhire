@@ -12,12 +12,12 @@
         .form-group.form-group-default
           = user_form.label :last_name
           = user_form.text_field :last_name, class: "form-control", required: true
-  = f.fields_for :organization do |organization_form|
-    .row
-      .col-sm-12
-        .form-group.form-group-default
-          = organization_form.label :name, "Organization"
-          = organization_form.text_field :name, autocomplete: "off", placeholder: "Your Home Care Co", class: "form-control"
+    = user_form.fields_for :organization do |organization_form|
+      .row
+        .col-sm-12
+          .form-group.form-group-default
+            = organization_form.label :name, "Organization"
+            = organization_form.text_field :name, autocomplete: "off", placeholder: "Your Home Care Co", class: "form-control"
   .row
     .col-sm-12
       .form-group.form-group-default

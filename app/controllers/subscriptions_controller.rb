@@ -1,11 +1,10 @@
 class SubscriptionsController < SmsController
-  before_action :message, only: [:create, :destroy]
-
   def create
     if candidate.subscribed?
       render_sms already_subscribed
     else
-      candidate.subscribe
+      candidate.update(subscribed: true)
+      AutomatonJob.perform_later(sender, candidate, "subscribe")
       render_sms subscription_notice
     end
   end
@@ -14,42 +13,38 @@ class SubscriptionsController < SmsController
     if candidate.unsubscribed?
       render_sms not_subscribed
     else
-      candidate.unsubscribe
+      candidate.update(subscribed: false)
       render_sms unsubscribed_notice
     end
   end
 
   private
 
-  def candidate
-    @candidate ||= organization.candidates.find_or_create_by(user: sender)
-  end
-
   def subscription_notice
-    Sms::Response.new do |r|
-      r.Message "#{sender.first_name}, this is #{organization.owner_first_name} \
-at #{organization.name}. I'm so glad you are interested in learning about \
-opportunities here. When we have a need we'll send out a few text messages \
-asking you questions about your availability and experience. If you ever wish \
-to stop receiving text messages just reply STOP. Thanks again for your interest!"
+    Messaging::Response.new do |r|
+      r.Message "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
     end
   end
 
   def unsubscribed_notice
-    Sms::Response.new do |r|
+    Messaging::Response.new do |r|
       r.Message "You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}."
     end
   end
 
   def already_subscribed
-    Sms::Response.new do |r|
+    Messaging::Response.new do |r|
       r.Message "You are already subscribed. Thanks for your interest in #{organization.name}."
     end
   end
 
   def not_subscribed
-    Sms::Response.new do |r|
-      r.Message "You were not subscribed. To subscribe reply with START."
+    Messaging::Response.new do |r|
+      r.Message "You were not subscribed to #{organization.name}. To subscribe reply with START."
     end
+  end
+
+  def candidate
+    @candidate ||= sender.candidate || sender.create_candidate
   end
 end

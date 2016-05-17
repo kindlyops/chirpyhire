@@ -15,25 +15,20 @@ RSpec.describe SmsController, type: :controller do
       end
 
       it "is OK" do
-        post :error_message, { "MessageSid" => "123", "To" => phone.number }
+        post :invalid_message, { "MessageSid" => "123", "To" => phone.number }
         expect(response).to be_ok
       end
     end
 
     it "sets the Content-Type to text/xml" do
-      post :error_message, { "MessageSid" => "123", "To" => phone.number }
+      post :invalid_message, { "MessageSid" => "123", "To" => phone.number }
       expect(response.headers["Content-Type"]).to eq("text/xml")
     end
 
-    it "creates a message" do
+    it "creates a user" do
       expect {
-        post :error_message, { "MessageSid" => "123", "To" => phone.number }
-      }.to change{organization.messages.count}.by(1)
-    end
-
-    it "returns a friendly error message" do
-      post :error_message, { "MessageSid" => "123", "To" => phone.number }
-      expect(response.body).to include("Sorry I didn't understand that.")
+        post :invalid_message, { "MessageSid" => "123", "To" => phone.number }
+      }.to change{organization.users.count}.by(1)
     end
   end
 end

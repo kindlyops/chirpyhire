@@ -1,30 +1,25 @@
 class User < ActiveRecord::Base
   phony_normalize :phone_number, default_country_code: 'US'
-  has_many :candidates
-  has_many :referrers
-  has_many :subscriptions
+  has_one :candidate
+  has_one :referrer
+  has_one :account
+  belongs_to :organization
+  has_many :inquiries
+  has_many :answers
+  has_many :notifications
+
+  delegate :name, :phone_number, to: :organization, prefix: true
+  delegate :owner_first_name, to: :organization
+  accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
-  def subscribed_to?(organization)
-    subscriptions.where(organization: organization).exists?
+  def outstanding_inquiry
+    inquiries.unanswered.first
   end
 
-  def subscription_to(organization)
-    subscriptions.find_by(organization: organization)
-  end
-
-  def subscribe_to(organization)
-    unsubscribe_from(organization)
-    subscriptions.create(organization: organization)
-  end
-
-  def unsubscribed_from?(organization)
-    !subscribed_to?(organization)
-  end
-
-  def unsubscribe_from(organization)
-    subscriptions.where(organization: organization).destroy_all
+  def receive_message(body:)
+    organization.send_message(to: phone_number, body: body)
   end
 
   def name

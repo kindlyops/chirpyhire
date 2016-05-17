@@ -1,19 +1,27 @@
 class Answer < ActiveRecord::Base
-  belongs_to :question
-  belongs_to :candidate
-  belongs_to :message
+  belongs_to :inquiry
+  belongs_to :user
+  delegate :organization, to: :user
 
-  scope :recent, -> { where('created_at > ?', 7.days.ago) }
+  validate :expected_format
 
-  def self.positive
-    where(body: "Y")
+  def expected_format
+    unless inquiry.expects?(self)
+      errors.add(:inquiry, "expected #{inquiry.question.format}")
+    end
   end
 
-  def self.negative
-    where(body: "N")
+  def body
+    message.body
   end
 
-  def self.to(question)
-    where(question: question)
+  def has_media?
+    message.num_media > 0
+  end
+
+  private
+
+  def message
+    @message ||= organization.messages.get(message_sid)
   end
 end

@@ -13,12 +13,12 @@ RSpec.describe RegistrationsController, type: :controller do
         password_confirmation: "password",
         user_attributes: {
           first_name: "Bob",
-          last_name: "Bobson"
-        },
-        organization_attributes: {
-          name: "Home Instead"
+          last_name: "Bobson",
+          organization_attributes: {
+            name: "Home Instead"
+          }
         }
-      } }
+      }}
     end
 
     it "ties the organization and user to the account" do

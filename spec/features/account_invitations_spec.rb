@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Account Invitations" do
   include Features::InvitationHelpers
-  let(:organization) { create(:organization, :with_question, :with_account) }
+  let(:organization) { create(:organization,  :with_account) }
   let(:account) { organization.accounts.first }
   let(:email) { Faker::Internet.email }
 
@@ -23,7 +23,7 @@ RSpec.feature "Account Invitations" do
       logout(:account)
     end
 
-    let(:invited) { build(:account) }
+    let(:invited) { build(:account, user: create(:user, organization: organization)) }
 
     scenario "accepting the invitation takes the new account to the dashboard" do
       open_email(email)
@@ -36,7 +36,7 @@ RSpec.feature "Account Invitations" do
       fill_in "Password confirmation", with: invited.password_confirmation
 
       click_button "Set your password"
-      expect(page).to have_text("Find a Caregiver")
+      expect(page).to have_text("Screen")
     end
   end
 end
