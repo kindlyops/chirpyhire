@@ -1,0 +1,33 @@
+.new-trigger {
+  width: 33%;
+  float: right;
+
+  .new-rule-btn {
+    font-size: 22px;
+    line-height: 33px;
+  }
+}
+
+.triggers {
+  .trigger {
+    span.fa-stack {
+      margin: 0 10px 0 0;
+      i.fa {
+        margin: 0;
+      }
+    }
+    .subtitle {
+      margin-left: 25px;
+    }
+
+    i.fa {
+      margin: 0 10px 0 0;
+    }
+    .enabled {
+      color: $brand-success;
+    }
+    .disabled {
+      color: $brand-danger;
+    }
+  }
+}

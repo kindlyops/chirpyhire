@@ -12,20 +12,21 @@ RSpec.feature "Triggers" do
     scenario "has a table of Triggers" do
       visit triggers_path
       expect(page).to have_text("Screen")
-      expect(page).to have_text("Triggers")
+      expect(page).to have_text("Trigger")
       expect(page).to have_text("Action")
       expect(page).to have_text("Status")
     end
 
     context "with triggers" do
       let!(:trigger) { create(:trigger, :with_observable, :with_actions, organization: organization, status: "enabled") }
-      let(:description) { trigger.observable.template_name }
-      let(:actions_description) { trigger.actions.map(&:description).join(" + ") }
+      let(:description) { "Answers Question" }
+      let(:actions) { trigger.actions }
 
       scenario "has the trigger information" do
         visit triggers_path
         expect(page).to have_text(description)
-        expect(page).to have_text(actions_description)
+        expect(page).to have_text(actions.first.description)
+        expect(page).to have_text(actions.last.description)
         expect(page).to have_text("Enabled")
       end
     end

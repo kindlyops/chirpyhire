@@ -2,11 +2,11 @@ FactoryGirl.define do
   factory :trigger do
     organization
     observable_type "Candidate"
-    operation :subscribe
+    event :subscribe
 
     trait :with_observable do
       association :observable, factory: :question
-      operation :answer
+      event :answer
     end
 
     trait :with_actions do

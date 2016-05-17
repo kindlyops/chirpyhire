@@ -3,7 +3,7 @@ class Trigger < ActiveRecord::Base
   belongs_to :observable, polymorphic: true
   has_many :actions
   enum status: [:enabled, :disabled]
-  enum operation: [:subscribe,
+  enum event: [:subscribe,
                    :invalid_subscribe,
                    :answer,
                    :invalid_answer,
@@ -18,13 +18,5 @@ class Trigger < ActiveRecord::Base
 
   def fire(user)
     actions.each { |action| action.perform(user) }
-  end
-
-  def description
-    observable.try!(:template_name) || observable_type
-  end
-
-  def actions_description
-    actions.map(&:description).join(" + ")
   end
 end

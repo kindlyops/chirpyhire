@@ -20,7 +20,7 @@ RSpec.describe TriggersController, type: :controller do
 
       it "returns the organization's triggers" do
         get :index
-        expect(assigns(:triggers)).to eq(triggers)
+        expect(assigns(:triggers).map(&:id)).to eq(triggers.map(&:id))
       end
 
       context "with other organizations" do

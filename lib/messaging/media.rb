@@ -1,12 +1,13 @@
 module Messaging
   class Media
+    include Enumerable
 
     def initialize(media)
       @media = media
     end
 
-    def any?(&block)
-      list.any?(&block)
+    def each(&block)
+      list.each(&block)
     end
 
     private
