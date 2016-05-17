@@ -4,8 +4,8 @@ FactoryGirl.define do
     user
     message_sid { Faker::Number.number(10) }
 
-    trait :with_media_question do
-      association :question, format: Question.formats[:media]
+    trait :with_image_question do
+      association :question, format: Question.formats[:image]
     end
 
     trait :with_text_question do

@@ -42,22 +42,54 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context "with an answer format that doesn't matches the response format" do
-      let(:message) { messaging.create(from: from, to: to, body: "") }
+      context "text mismatch" do
+        let(:message) { messaging.create(from: from, to: to, body: "", format: :image) }
 
-      let(:params) do
-        {
-          "To" => to,
-          "From" => from,
-          "Body" => "",
-          "MessageSid" => message.sid,
-          "MediaUrl0" => "/example/path/to/image.png"
-        }
+        let(:params) do
+          {
+            "To" => to,
+            "From" => from,
+            "Body" => "",
+            "MessageSid" => message.sid,
+            "MediaUrl0" => "/example/path/to/image.png"
+          }
+        end
+
+        it "lets the user know the format was wrong" do
+          post :create, params
+          expect(response.body).to include("We were looking for a text answer but you sent an image. Please answer with a text.")
+        end
+
+        it "does not create an answer" do
+          expect {
+            post :create, params
+          }.not_to change{Answer.count}
+        end
       end
 
-      it "does not create an answer" do
-        expect {
+      context "image mismatch" do
+        let!(:inquiry) { create(:inquiry, :with_image_question, user: user) }
+        let(:message) { messaging.create(from: from, to: to, body: "foo", format: :text) }
+
+        let(:params) do
+          {
+            "To" => to,
+            "From" => from,
+            "Body" => "foo",
+            "MessageSid" => message.sid
+          }
+        end
+
+        it "lets the user know the format was wrong" do
           post :create, params
-        }.not_to change{Answer.count}
+          expect(response.body).to include("We were looking for an image answer but you sent a text. Please answer with an image.")
+        end
+
+        it "does not create an answer" do
+          expect {
+            post :create, params
+          }.not_to change{Answer.count}
+        end
       end
     end
   end

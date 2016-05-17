@@ -102,6 +102,8 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    indefinite_article (0.2.4)
+      activesupport
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -293,6 +295,7 @@ DEPENDENCIES
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.6.0)
   httparty (~> 0.13.0)
+  indefinite_article (~> 0.2.4)
   jbuilder (~> 2.0)
   jquery-datatables-rails (~> 3.4.0)
   jquery-rails

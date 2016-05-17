@@ -1,5 +1,23 @@
 class FakeMessaging
-  Message = Struct.new(:from, :to, :body, :num_media, :sid)
+  MediaInstance = Struct.new(:content_type) do
+    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)
+
+    def image?
+      IMAGE_TYPES.include?(content_type)
+    end
+  end
+
+  Media = Struct.new(:media_instances) do
+    def list
+      media_instances
+    end
+  end
+
+  Message = Struct.new(:from, :to, :body, :media, :sid) do
+    def num_media
+      media.list.count.to_s
+    end
+  end
 
   cattr_accessor :messages
   self.messages = []
@@ -19,8 +37,14 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, num_media: "0")
-    message = Message.new(from, to, body, num_media, Faker::Lorem.word)
+  def create(from:, to:, body:, format: :text)
+    if format == :text
+      media = Media.new([])
+    elsif format == :image
+      media = Media.new([MediaInstance.new("image/jpeg")])
+    end
+
+    message = Message.new(from, to, body, media, Faker::Lorem.word)
     self.class.messages << message
     message
   end

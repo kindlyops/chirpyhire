@@ -8,6 +8,10 @@ module Messaging
       message.num_media.to_i
     end
 
+    def media
+      Messaging::Media.new(message.media)
+    end
+
     private
 
     attr_reader :message

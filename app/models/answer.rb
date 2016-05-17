@@ -15,8 +15,13 @@ class Answer < ActiveRecord::Base
     message.body
   end
 
-  def has_media?
-    message.num_media > 0
+  def has_images?
+    message.media.any?(&:image?)
+  end
+
+  def format
+    return :image if has_images?
+    :text
   end
 
   private

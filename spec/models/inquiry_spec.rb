@@ -10,10 +10,10 @@ RSpec.describe Inquiry, type: :model do
 
   describe "#expects?" do
     context "question expects media" do
-      let(:inquiry) { create(:inquiry, :with_media_question) }
+      let(:inquiry) { create(:inquiry, :with_image_question) }
 
       context "message has media" do
-        let(:message) { messaging.create(from: from, to: to, body: body, num_media: "1") }
+        let(:message) { messaging.create(from: from, to: to, body: body, format: :image) }
 
         let(:answer) { build(:answer, message_sid: message.sid) }
 
@@ -43,7 +43,7 @@ RSpec.describe Inquiry, type: :model do
       end
 
       context "message does not have text" do
-        let(:message) { messaging.create(from: from, to: to, body: "", num_media: "1") }
+        let(:message) { messaging.create(from: from, to: to, body: "", format: :image) }
         let(:answer) { build(:answer, message_sid: message.sid) }
 
         it "is false" do

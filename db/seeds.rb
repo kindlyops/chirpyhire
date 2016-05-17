@@ -48,7 +48,7 @@ if Rails.env.development?
   location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
   location_question = location.create_question
   tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
-  tb_question = tb_test.create_question(format: Question.formats[:media])
+  tb_question = tb_test.create_question(format: Question.formats[:image])
   thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
   thank_you_notice = thank_you.create_notice
 
