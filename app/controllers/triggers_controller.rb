@@ -1,6 +1,6 @@
 class TriggersController < ApplicationController
   def index
-    @triggers = triggers
+    @triggers = TriggersPresenter.new(triggers)
   end
 
   private

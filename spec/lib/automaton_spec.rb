@@ -4,22 +4,22 @@ RSpec.describe Automaton do
 
   let(:user) { create(:user) }
   let(:observable) { create(:question) }
-  let(:operation) { "answer" }
+  let(:event) { "answer" }
 
   describe ".call" do
     it "creates an automaton" do
-      expect(Automaton).to receive(:new).with(user, observable, operation).and_call_original
-      Automaton.call(user, observable, operation)
+      expect(Automaton).to receive(:new).with(user, observable, event).and_call_original
+      Automaton.call(user, observable, event)
     end
   end
 
   describe "#call" do
-    let(:automaton) { Automaton.new(user, observable, operation) }
+    let(:automaton) { Automaton.new(user, observable, event) }
 
     context "with triggers" do
       context "on the organization" do
         context "a collection trigger for the observable" do
-          let!(:trigger) { create(:trigger, operation: operation, observable_type: observable.class, organization: user.organization) }
+          let!(:trigger) { create(:trigger, event: event, observable_type: observable.class, organization: user.organization) }
 
           it "is fired" do
             expect_any_instance_of(Trigger).to receive(:fire).with(user)
@@ -28,7 +28,7 @@ RSpec.describe Automaton do
         end
 
         context "a instance trigger for the observable" do
-          let!(:trigger) { create(:trigger, operation: operation, observable: observable, organization: user.organization) }
+          let!(:trigger) { create(:trigger, event: event, observable: observable, organization: user.organization) }
 
           it "is fired" do
             expect_any_instance_of(Trigger).to receive(:fire).with(user)
@@ -37,7 +37,7 @@ RSpec.describe Automaton do
         end
 
         context "with a trigger not for the observable" do
-          let!(:trigger) { create(:trigger, operation: operation, observable_type: "Candidate", organization: user.organization) }
+          let!(:trigger) { create(:trigger, event: event, observable_type: "Candidate", organization: user.organization) }
 
           it "is not fired" do
             expect_any_instance_of(Trigger).not_to receive(:fire)
@@ -47,7 +47,7 @@ RSpec.describe Automaton do
       end
 
       context "a collection trigger for the observable" do
-        let!(:trigger) { create(:trigger, operation: operation, observable_type: observable.class) }
+        let!(:trigger) { create(:trigger, event: event, observable_type: observable.class) }
 
         it "is not fired" do
           expect_any_instance_of(Trigger).not_to receive(:fire)
@@ -56,7 +56,7 @@ RSpec.describe Automaton do
       end
 
       context "a instance trigger for the observable" do
-        let!(:trigger) { create(:trigger, operation: operation, observable: observable) }
+        let!(:trigger) { create(:trigger, event: event, observable: observable) }
 
         it "is not fired" do
           expect_any_instance_of(Trigger).not_to receive(:fire)
@@ -65,7 +65,7 @@ RSpec.describe Automaton do
       end
 
       context "with a trigger not for the observable" do
-        let!(:trigger) { create(:trigger, operation: operation, observable_type: "Candidate") }
+        let!(:trigger) { create(:trigger, event: event, observable_type: "Candidate") }
 
         it "is not fired" do
           expect_any_instance_of(Trigger).not_to receive(:fire)

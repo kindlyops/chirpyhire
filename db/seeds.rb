@@ -58,9 +58,9 @@ if Rails.env.development?
   end
 
   unless org.triggers.present?
-    candidate_trigger = org.triggers.create(observable_type: "Candidate", operation: "subscribe")
-    location_trigger = org.triggers.create(observable: location_question, operation: "answer")
-    tb_trigger = org.triggers.create(observable: tb_question, operation: "answer")
+    candidate_trigger = org.triggers.create(observable_type: "Candidate", event: "subscribe")
+    location_trigger = org.triggers.create(observable: location_question, event: "answer")
+    tb_trigger = org.triggers.create(observable: tb_question, event: "answer")
 
     candidate_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
     location_trigger.actions.create(actionable: tb_question)

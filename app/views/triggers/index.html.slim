@@ -1,28 +1,33 @@
 = title "Screen | chirpyhire"
 .page-header
   h2 Screen
-.panel.panel-default
-    .panel-heading
-      .pull-right
-        .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Search"
-      .clearfix
+.screening
+  .panel.panel-default.triggers
     .panel-body
-      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+      table.table.table-hover.no-footer role="grid"
         thead
           tr role="row"
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Triggers: activate to sort column descending" Triggers
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Action
-            : activate to sort column descending" Action
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Status
-            : activate to sort column descending" Status
+            th rowspan="1" colspan="1" aria-label="Trigger" Trigger
+            th rowspan="1" colspan="1" aria-label="Action" Action
+            th rowspan="1" colspan="1" aria-label="Status" Status
         tbody
           - @triggers.each do |trigger|
-            tr role="row"
+            tr.trigger role="row"
               td.v-align-middle
-                p = trigger.description
+                div
+                  p
+                    i.fa class==trigger.description_class
+                    strong.title = trigger.title
+                  p.subtitle = trigger.subtitle
               td.v-align-middle
-                p = trigger.actions_description
+                = render partial: "triggers/action", collection: trigger.actions
               td.v-align-middle
-                p = trigger.status.humanize
+                p
+                  i.fa class==trigger.status_class
+                  = trigger.status.humanize
+  .panel.panel-default.new-trigger
+    .panel-body
+      button.btn.btn-primary.btn-lg.btn-block.new-rule-btn + Add Rule
+
+
 
