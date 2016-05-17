@@ -8,7 +8,8 @@ class Automaton
     triggers.each { |trigger| trigger.fire(user) }
   end
 
-  def initialize(observable, operation)
+  def initialize(user, observable, operation)
+    @user = user
     @observable = observable
     @operation = operation
   end
