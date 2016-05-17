@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
   has_many :actions, as: :actionable
   has_one :trigger, as: :observable
 
-  enum format: [:text, :media]
+  enum format: [:text, :image]
   delegate :organization, to: :template
   delegate :name, to: :template, prefix: true
 
