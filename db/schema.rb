@@ -174,6 +174,8 @@ ActiveRecord::Schema.define(version: 20160509150049) do
     t.datetime "updated_at",      null: false
   end
 
+  add_index "templates", ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
+  add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "triggers", force: :cascade do |t|

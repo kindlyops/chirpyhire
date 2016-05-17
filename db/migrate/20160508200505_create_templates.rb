@@ -6,5 +6,8 @@ class CreateTemplates < ActiveRecord::Migration
       t.belongs_to :organization, null: false, index: true, foreign_key: true
       t.timestamps null: false
     end
+
+    add_index :templates, [:body, :organization_id], unique: true
+    add_index :templates, [:name, :organization_id], unique: true
   end
 end
