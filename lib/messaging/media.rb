@@ -5,17 +5,17 @@ module Messaging
       @media = media
     end
 
-    def list
-      media.list.map(&method(:wrap))
-    end
-
     def any?(&block)
-      media.list.any?(&block)
+      list.any?(&block)
     end
 
     private
 
     attr_reader :media
+
+    def list
+      media.list.map(&method(:wrap))
+    end
 
     def wrap(media_instance)
       Messaging::MediaInstance.new(media_instance)
