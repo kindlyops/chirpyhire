@@ -3,7 +3,7 @@ class Template < ActiveRecord::Base
   has_one :notice
   has_one :question
 
-  def render(person)
-    Renderer.call(self, person)
+  def render(user)
+    Renderer.call(self, user)
   end
 end
