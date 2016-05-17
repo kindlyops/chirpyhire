@@ -5,5 +5,7 @@ class CreateActions < ActiveRecord::Migration
       t.references :actionable, polymorphic: true, index: true, null: false
       t.timestamps null: false
     end
+
+    add_index :actions, :trigger_id, where: "actionable_type = 'Question'", unique: true, name: "index_unique_question_action_per_trigger"
   end
 end

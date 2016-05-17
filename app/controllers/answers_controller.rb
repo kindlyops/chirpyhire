@@ -3,8 +3,6 @@ class AnswersController < SmsController
   def create
     if answer.valid?
       AutomatonJob.perform_later(question, "answer")
-    else
-      AutomatonJob.perform_later(question, "invalid_answer")
     end
     head :ok
   end

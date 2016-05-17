@@ -26,8 +26,4 @@ class SmsController < ActionController::Base
   def set_header
     response.headers["Content-Type"] = "text/xml"
   end
-
-  def render_sms(sms)
-    render text: sms.text
-  end
 end

@@ -59,12 +59,6 @@ RSpec.describe AnswersController, type: :controller do
           post :create, params
         }.not_to change{Answer.count}
       end
-
-      it "creates an invalid answer automaton job" do
-        expect {
-          post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(inquiry.question, "invalid_answer")
-      end
     end
   end
 end

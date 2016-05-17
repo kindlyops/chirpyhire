@@ -3,12 +3,14 @@ class ReferralsController < SmsController
   def create
     if referrer.present?
       referrer.refer(candidate)
-      AutomatonJob.perform_later(referrer, "refer")
-    else
-      AutomatonJob.perform_later(sender, "invalid_refer")
-    end
+      messaging_response = Messaging::Response.new(subject: candidate)
 
-    head :ok
+      render text: messaging_response.referral_notice
+    else
+      messaging_response = Messaging::Response.new(subject: sender)
+
+      render text: messaging_response.no_referrer
+    end
   end
 
   private

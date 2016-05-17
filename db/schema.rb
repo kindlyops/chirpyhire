@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20160509150049) do
 
   add_index "actions", ["actionable_type", "actionable_id"], name: "index_actions_on_actionable_type_and_actionable_id", using: :btree
   add_index "actions", ["trigger_id"], name: "index_actions_on_trigger_id", using: :btree
+  add_index "actions", ["trigger_id"], name: "index_unique_question_action_per_trigger", unique: true, where: "((actionable_type)::text = 'Question'::text)", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id",  null: false

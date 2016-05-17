@@ -11,7 +11,8 @@ FactoryGirl.define do
 
     trait :with_actions do
       after(:create) do |trigger|
-        create_list(:action, 2, trigger: trigger)
+        create(:action, trigger: trigger)
+        create(:action, :with_notice, trigger: trigger)
       end
     end
   end

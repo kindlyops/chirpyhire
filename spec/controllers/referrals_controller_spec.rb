@@ -25,6 +25,11 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
           create(:referrer, user: sender)
         end
 
+        it "sends the user a template message to send to the referred candidate" do
+          post :create, params
+          expect(response.body).to include("I think you would be a great fit here.")
+        end
+
         it "creates a referral" do
           expect {
             post :create, params
@@ -74,10 +79,9 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
-        it "creates a invalid refer Automaton Job" do
-          expect {
-            post :create, params
-          }.to have_enqueued_job(AutomatonJob).with(sender, "invalid_refer")
+        it "lets the user know they are not a referrer" do
+          post :create, params
+          expect(response.body).to include("if you would like to join the referral program.")
         end
 
         it "does not create a referral" do
@@ -103,10 +107,9 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     end
 
     context "with an unrecognized sender" do
-      it "creates a invalid refer Automaton Job" do
-        expect {
-          post :create, params
-        }.to have_enqueued_job(AutomatonJob).exactly(:once)
+      it "lets the user know they are not a referrer" do
+        post :create, params
+        expect(response.body).to include("if you would like to join the referral program.")
       end
 
       it "creates a user for the sender" do

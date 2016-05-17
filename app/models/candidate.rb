@@ -6,6 +6,7 @@ class Candidate < ActiveRecord::Base
   enum status: [:potential, :qualified, :bad_fit]
 
   delegate :first_name, :name, :phone_number, :organization_name,
+           :organization_phone_number,
            :owner_first_name, :organization, to: :user
 
   scope :subscribed, -> { where(subscribed: true) }

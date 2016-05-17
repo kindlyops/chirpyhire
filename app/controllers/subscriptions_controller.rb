@@ -1,25 +1,28 @@
 class SubscriptionsController < SmsController
   def create
     if candidate.subscribed?
-      AutomatonJob.perform_later(candidate, "invalid_subscribe")
+      render text: messaging_response.already_subscribed
     else
       candidate.update(subscribed: true)
       AutomatonJob.perform_later(candidate, "subscribe")
+      render text: messaging_response.subscription_notice
     end
-    head :ok
   end
 
   def destroy
     if candidate.unsubscribed?
-      AutomatonJob.perform_later(candidate, "invalid_unsubscribe")
+      render text: messaging_response.not_subscribed
     else
       candidate.update(subscribed: false)
-      AutomatonJob.perform_later(candidate, "unsubscribe")
+      render text: messaging_response.unsubscribed_notice
     end
-    head :ok
   end
 
   private
+
+  def messaging_response
+    @messaging_response ||= Messaging::Response.new(subject: candidate)
+  end
 
   def candidate
     @candidate ||= sender.candidate || sender.create_candidate

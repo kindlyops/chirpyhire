@@ -24,10 +24,9 @@ RSpec.describe SubscriptionsController, type: :controller do
             candidate.update(subscribed: true)
           end
 
-          it "creates an invalid_subscribe Automaton Job" do
-            expect {
-              post :create, params
-            }.to have_enqueued_job(AutomatonJob).with(candidate, "invalid_subscribe")
+          it "lets the user know they were already subscribed" do
+            post :create, params
+            expect(response.body).to include("You are already subscribed.")
           end
         end
 
@@ -92,7 +91,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with an existing subscribed candidate" do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
-      let(:candidate) { create(:candidate, user: user, subscribed: true) }
+      let!(:candidate) { create(:candidate, user: user, subscribed: true) }
 
       it "sets the subscribed flag to false" do
         expect{
@@ -100,10 +99,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{candidate.reload.subscribed?}.from(true).to(false)
       end
 
-      it "creates an unsubscribe Automaton Job" do
-        expect {
-          delete :destroy, params
-        }.to have_enqueued_job(AutomatonJob).with(candidate, "unsubscribe")
+      it "lets the user know they are unsubscribed now" do
+        delete :destroy, params
+
+        expect(response.body).to include("You are unsubscribed. To subscribe reply with START.")
       end
     end
 
@@ -112,10 +111,10 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       let(:candidate) { create(:candidate, user: user) }
 
-      it "creates an invalid_unsubscribe Automaton Job" do
-        expect {
-          delete :destroy, params
-        }.to have_enqueued_job(AutomatonJob).with(candidate, "invalid_unsubscribe")
+      it "lets the user know they were not subscribed" do
+        delete :destroy, params
+
+        expect(response.body).to include("To subscribe reply with START.")
       end
     end
 
@@ -132,10 +131,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{organization.candidates.count}.by(1)
       end
 
-      it "creates an invalid_unsubscribe Automaton Job" do
-        expect {
-          delete :destroy, params
-        }.to have_enqueued_job(AutomatonJob).exactly(:once)
+      it "lets the user know they aren't subscribed" do
+        delete :destroy, params
+
+        expect(response.body).to include("To subscribe reply with START.")
       end
     end
   end

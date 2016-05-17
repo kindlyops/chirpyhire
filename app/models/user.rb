@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :notifications
 
-  delegate :name, to: :organization, prefix: true
+  delegate :name, :phone_number, to: :organization, prefix: true
   delegate :owner_first_name, to: :organization
   accepts_nested_attributes_for :organization
 
