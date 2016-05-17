@@ -1,27 +1,47 @@
 class SubscriptionsController < SmsController
   def create
     if candidate.subscribed?
-      render text: messaging_response.already_subscribed
+      render_sms already_subscribed
     else
       candidate.update(subscribed: true)
       AutomatonJob.perform_later(sender, candidate, "subscribe")
-      render text: messaging_response.subscription_notice
+      render_sms subscription_notice
     end
   end
 
   def destroy
     if candidate.unsubscribed?
-      render text: messaging_response.not_subscribed
+      render_sms not_subscribed
     else
       candidate.update(subscribed: false)
-      render text: messaging_response.unsubscribed_notice
+      render_sms unsubscribed_notice
     end
   end
 
   private
 
-  def messaging_response
-    @messaging_response ||= Messaging::Response.new(subject: candidate)
+  def subscription_notice
+    Messaging::Response.new do |r|
+      r.Message "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
+    end
+  end
+
+  def unsubscribed_notice
+    Messaging::Response.new do |r|
+      r.Message "You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}."
+    end
+  end
+
+  def already_subscribed
+    Messaging::Response.new do |r|
+      r.Message "You are already subscribed. Thanks for your interest in #{organization.name}."
+    end
+  end
+
+  def not_subscribed
+    Messaging::Response.new do |r|
+      r.Message "You were not subscribed to #{organization.name}. To subscribe reply with START."
+    end
   end
 
   def candidate

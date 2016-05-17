@@ -3,17 +3,30 @@ class ReferralsController < SmsController
   def create
     if referrer.present?
       referrer.refer(candidate)
-      messaging_response = Messaging::Response.new(subject: candidate)
-
-      render text: messaging_response.referral_notice
+      render_sms thanks_and_notice
     else
-      messaging_response = Messaging::Response.new(subject: sender)
-
-      render text: messaging_response.no_referrer
+      render_sms not_referrer
     end
   end
 
   private
+
+  def thanks_and_notice
+    Messaging::Response.new do |r|
+      r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
+      r.Message "Hey #{candidate.first_name}. My home care agency, \
+#{organization.name}, regularly hires caregivers. They \
+treat me very well and have great clients. I think you \
+would be a great fit here. Text START to #{organization.phone_number} \
+to learn about opportunities."
+    end
+  end
+
+  def not_referrer
+    Messaging::Response.new do |r|
+      r.Message "Sorry you are not registered. Contact #{organization.name} if you would like to join the referral program."
+    end
+  end
 
   def referred_user
     @referred_user ||= UserFinder.new(attributes: vcard.attributes, organization: organization).call
