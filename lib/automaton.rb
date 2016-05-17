@@ -1,7 +1,7 @@
 class Automaton
 
-  def self.call(observable, operation)
-    new(observable, operation).call
+  def self.call(user, observable, operation)
+    new(user, observable, operation).call
   end
 
   def call
@@ -15,7 +15,7 @@ class Automaton
 
   private
 
-  attr_reader :observable, :operation
+  attr_reader :user, :observable, :operation
 
   def triggers
     organization.triggers.where(operation: Trigger.operations[operation]).where("#{collection_trigger} OR #{instance_trigger}")
@@ -30,6 +30,6 @@ class Automaton
   end
 
   def organization
-    observable.organization
+    user.organization
   end
 end
