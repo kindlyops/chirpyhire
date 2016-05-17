@@ -1,30 +1,37 @@
 class Renderer
-  def self.call(template, person)
-    new(template: template, person: person).call
+  Recipient = Struct.new(:first_name)
+  Organization = Struct.new(:name)
+
+  def self.call(template, user)
+    new(template: template, user: user).call
   end
 
   def call
-    ERB.new(erbify_body).result(binding)
+    Erubis::Eruby.new(erbify_body, pattern: "{{ }}").evaluate(context)
   end
 
-  def initialize(template:, person:)
+  def initialize(template:, user:)
     @template = template
-    @person = person
+    @user = user
   end
 
   private
 
-  attr_reader :person, :template
+  attr_reader :user, :template
+
+  def context
+    OpenStruct.new(recipient: recipient, organization: organization)
+  end
 
   def erbify_body
-    template.body.gsub(/{{/, '<%=').gsub(/}}/, '%>')
+    template.body.gsub(/{{/, '{{=')
   end
 
   def recipient
-    person
+    Recipient.new(user.first_name)
   end
 
   def organization
-    person.organization
+    Organization.new(user.organization_name)
   end
 end
