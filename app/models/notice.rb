@@ -5,11 +5,8 @@ class Notice < ActiveRecord::Base
   has_many :notifications
   has_many :actions, as: :actionable
 
-  def children
-    notifications
-  end
-
   def perform(user)
-    user.receive_message(body: template.render(user))
+    message = user.receive_message(body: template.render(user))
+    notifications.create(user: user, message_sid: message.sid)
   end
 end

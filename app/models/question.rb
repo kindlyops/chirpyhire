@@ -8,11 +8,10 @@ class Question < ActiveRecord::Base
   delegate :organization, to: :template
   delegate :name, to: :template, prefix: true
 
-  def children
-    inquiries
-  end
-
   def perform(user)
-    user.receive_message(body: template.render(user))
+    return if user.outstanding_inquiry.present?
+
+    message = user.receive_message(body: template.render(user))
+    inquiries.create(user: user, message_sid: message.sid)
   end
 end

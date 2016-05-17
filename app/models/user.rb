@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
   phony_normalize :phone_number, default_country_code: 'US'
+  belongs_to :organization
+
   has_one :candidate
   has_one :referrer
   has_one :account
-  belongs_to :organization
   has_many :inquiries
   has_many :answers
   has_many :notifications
