@@ -39,7 +39,7 @@ RSpec.describe SubscriptionsController, type: :controller do
           it "creates a subscribe Automaton Job" do
             expect {
               post :create, params
-            }.to have_enqueued_job(AutomatonJob).with(candidate, "subscribe")
+            }.to have_enqueued_job(AutomatonJob).with(user, candidate, "subscribe")
           end
         end
       end

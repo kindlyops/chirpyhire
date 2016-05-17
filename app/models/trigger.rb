@@ -13,6 +13,9 @@ class Trigger < ActiveRecord::Base
                    :unsubscribe,
                    :invalid_unsubscribe]
 
+  validates :observable_type, inclusion: { in: %w(Candidate Question),
+      message: "%{value} is not a valid observable type" }
+
   def fire(user)
     actions.each { |action| action.perform(user) }
   end

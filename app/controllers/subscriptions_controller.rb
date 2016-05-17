@@ -4,7 +4,7 @@ class SubscriptionsController < SmsController
       render text: messaging_response.already_subscribed
     else
       candidate.update(subscribed: true)
-      AutomatonJob.perform_later(candidate, "subscribe")
+      AutomatonJob.perform_later(sender, candidate, "subscribe")
       render text: messaging_response.subscription_notice
     end
   end

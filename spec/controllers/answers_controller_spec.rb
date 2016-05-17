@@ -37,7 +37,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates an answer automaton job" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(inquiry.question, "answer")
+        }.to have_enqueued_job(AutomatonJob).with(user, inquiry.question, "answer")
       end
     end
 

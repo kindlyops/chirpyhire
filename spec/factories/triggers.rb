@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :trigger do
     organization
-    observable_type "Subscription"
+    observable_type "Candidate"
     operation :subscribe
 
     trait :with_observable do
