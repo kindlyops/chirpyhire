@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :candidate do
     user
-    status "potential"
 
     trait :with_subscription do
       subscribed { true }
