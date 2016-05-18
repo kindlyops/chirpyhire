@@ -1,39 +1,28 @@
 class TriggerPresenter
-  OBSERVABLES = {
-    "Candidate" => {
-      "subscribe" => {
-        "title" => "Subscribes",
-        "subtitle" => ->(trigger) {},
-        "class" => "fa-hand-paper-o"
-      }
-    },
-    "Question" => {
-      "answer" => {
-        "title" => "Answers Question",
-        "subtitle" => ->(trigger) { trigger.observable.template_name },
-        "class" => "fa-reply"
-      }
-    }
-  }
+
+  delegate :title, :subtitle, :icon_class, to: :observable_template
+  delegate :observables, to: :observable_options
 
   def initialize(trigger)
     @trigger = trigger
   end
 
-  def description_class
-    "#{observable_template['class']}"
+  def observable_options
+    ObservableOptions.new(trigger)
+  end
+
+  def actionable_options
+    ActionableOptions.new(trigger)
   end
 
   def state_class
     "fa-circle #{state}"
   end
 
-  def title
-    observable_template["title"]
-  end
-
-  def subtitle
-    observable_template["subtitle"].call(trigger)
+  def template_name
+    if trigger.observable.present?
+      trigger.observable.template_name
+    end
   end
 
   def actions
@@ -45,7 +34,7 @@ class TriggerPresenter
   attr_reader :trigger
 
   def observable_template
-    @observable_template ||= OBSERVABLES[observable_type][event]
+    @observable_template ||= observable_options[event.to_sym]
   end
 
   def method_missing(method, *args, &block)

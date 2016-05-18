@@ -35,6 +35,14 @@ class Organization < ActiveRecord::Base
     messaging_client.messages
   end
 
+  def questions
+    templates.joins(:question).map(&:question)
+  end
+
+  def notices
+    templates.joins(:notice).map(&:notice)
+  end
+
   private
 
   def messaging_client

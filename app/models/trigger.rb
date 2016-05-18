@@ -12,6 +12,8 @@ class Trigger < ActiveRecord::Base
   validates :observable_type, inclusion: { in: %w(Candidate Question),
       message: "%{value} is not a valid observable type" }
 
+  accepts_nested_attributes_for :actions
+
   def fire(user)
     actions.each { |action| action.perform(user) }
   end

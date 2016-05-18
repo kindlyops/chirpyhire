@@ -9,8 +9,8 @@ RSpec.describe TriggerPresenter do
       let(:trigger) { create(:trigger, :with_observable) }
       let(:template) { trigger.observable.template }
 
-      it "is Answers Question" do
-        expect(subject.title).to eq("Answers Question")
+      it "is Answers a question" do
+        expect(subject.title).to eq("Answers a question")
       end
     end
 

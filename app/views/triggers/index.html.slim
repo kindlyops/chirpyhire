@@ -16,10 +16,10 @@
               td.v-align-middle
                 div
                   p
-                    i.fa class==trigger.description_class
+                    i.fa class==trigger.icon_class
                     span.title = trigger.title
                   p
-                    strong.subtitle = trigger.subtitle
+                    strong.subtitle = trigger.template_name
               td.v-align-middle
                 = render partial: "triggers/action", collection: trigger.actions
               td.v-align-middle

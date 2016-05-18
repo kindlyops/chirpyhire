@@ -1,4 +1,13 @@
 GIT
+  remote: git@github.com:DockYard/capybara-email.git
+  revision: c30c5f0a211d32ad489bc3070cbb4a9cc809d20c
+  ref: c30c5f0
+  specs:
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
+
+GIT
   remote: git@github.com:elabs/pundit.git
   revision: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
   ref: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
@@ -62,9 +71,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-email (2.5.0)
-      capybara (~> 2.4)
-      mail
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -298,7 +304,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   brakeman (~> 3.3.0)
   capybara (~> 2.7.0)
-  capybara-email (~> 2.5.0)
+  capybara-email!
   coffee-rails (~> 4.1.0)
   database_cleaner (~> 1.5.0)
   devise (~> 4.0.0)

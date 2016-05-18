@@ -19,7 +19,7 @@ RSpec.feature "Triggers" do
 
     context "with triggers" do
       let!(:trigger) { create(:trigger, :with_observable, :with_actions, organization: organization) }
-      let(:description) { "Answers Question" }
+      let(:description) { "Answers a question" }
       let(:actions) { trigger.actions }
 
       scenario "has the trigger information" do

@@ -2,6 +2,8 @@ class TriggersController < ApplicationController
 
   def new
     trigger = triggers.build
+    trigger.actions.build
+
     @trigger = TriggerPresenter.new(authorize trigger)
   end
 

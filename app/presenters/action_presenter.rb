@@ -1,19 +1,10 @@
 class ActionPresenter
-  ACTIONABLES = {
-    "Notice" => {
-      "class" => "fa-info"
-    },
-    "Question" => {
-      "class" => "fa-question"
-    }
-  }
+
+  delegate :title, :subtitle, :icon_class, to: :actionable_template
+  delegate :actionables, to: :actionable_options
 
   def initialize(action)
     @action = action
-  end
-
-  def actionable_class
-    actionable_template["class"]
   end
 
   private
@@ -21,7 +12,11 @@ class ActionPresenter
   attr_reader :action
 
   def actionable_template
-    @actionable_template ||= ACTIONABLES[actionable_type]
+    @actionable_template ||= actionable_options[actionable_type]
+  end
+
+  def actionable_options
+    @actionable_options ||= ActionableOptions.new(action)
   end
 
   def method_missing(method, *args, &block)
