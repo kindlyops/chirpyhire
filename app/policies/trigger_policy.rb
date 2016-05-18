@@ -23,8 +23,12 @@ class TriggerPolicy < ApplicationPolicy
     create?
   end
 
+  def destroy?
+    create?
+  end
+
   def permitted_attributes
-    [:status, :observable_type, :observable_id, :event]
+    [:enabled, :observable_type, :observable_id, :event]
   end
 
   class Scope

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :notifications
 
   delegate :name, :phone_number, to: :organization, prefix: true
-  delegate :owner_first_name, to: :organization
+  delegate :contact_first_name, to: :organization
   accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }

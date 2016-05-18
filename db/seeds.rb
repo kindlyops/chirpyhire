@@ -27,7 +27,7 @@ if Rails.env.development?
   puts "Creating Account"
   email = ENV.fetch("DEV_EMAIL")
   unless user.account.present?
-    user.create_account(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, email: email, super_admin: true)
+    user.create_account(password: "password", password_confirmation: "password", user: user, email: email, super_admin: true)
   end
   puts "Created Account"
 
@@ -51,8 +51,8 @@ if Rails.env.development?
     puts "Created Templates"
 
     welcome_notice = welcome.create_notice
-    location_question = location.create_question
-    tb_question = tb_test.create_question(format: Question.formats[:image])
+    location_question = location.create_question(format: "text")
+    tb_question = tb_test.create_question(format: "image")
     thank_you_notice = thank_you.create_notice
     puts "Created Questions and Notices"
   end

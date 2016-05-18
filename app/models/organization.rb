@@ -15,12 +15,12 @@ class Organization < ActiveRecord::Base
     joins(:phone).find_by(phones: { number: phone })
   end
 
-  def owner
-    accounts.find_by(role: Account.roles[:owner])
+  def contact
+    users.find_by(contact: true)
   end
 
-  def owner_first_name
-    owner.first_name
+  def contact_first_name
+    contact.first_name
   end
 
   def subscribed_candidates

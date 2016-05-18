@@ -4,8 +4,8 @@ class CreateTriggers < ActiveRecord::Migration
       t.belongs_to :organization, null: false, index: true, foreign_key: true
       t.integer :observable_id, index: true
       t.string :observable_type, null: false
-      t.integer :event, null: false
-      t.integer :status, null: false, default: 0
+      t.string :event, null: false
+      t.boolean :enabled, null: false, default: true
       t.timestamps null: false
     end
 

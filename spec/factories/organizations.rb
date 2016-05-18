@@ -16,9 +16,9 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_owner do
+    trait :with_contact do
       after(:create) do |organization|
-        create(:user, :with_owner, organization: organization)
+        create(:user, contact: true, organization: organization)
       end
     end
 

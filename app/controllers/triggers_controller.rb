@@ -1,7 +1,8 @@
 class TriggersController < ApplicationController
 
   def new
-    @trigger = TriggerPresenter.new(authorize triggers.build)
+    trigger = triggers.build
+    @trigger = TriggerPresenter.new(authorize trigger)
   end
 
   def edit
@@ -9,10 +10,11 @@ class TriggersController < ApplicationController
   end
 
   def create
-    trigger = triggers.build(permitted_attributes(trigger))
+    trigger = triggers.build(permitted_attributes(Trigger))
+    authorize trigger
 
     if trigger.save
-      redirect_to trigger, notice: 'Rule was successfully created.'
+      redirect_to triggers_path, notice: 'Rule was successfully created.'
     else
       render :new
     end
@@ -20,7 +22,7 @@ class TriggersController < ApplicationController
 
   def update
     if trigger.update(permitted_attributes(trigger))
-      redirect_to trigger, notice: 'Rule was successfully updated.'
+      redirect_to triggers_path, notice: 'Rule was successfully updated.'
     else
       render :edit
     end
@@ -28,6 +30,11 @@ class TriggersController < ApplicationController
 
   def index
     @triggers = TriggersPresenter.new(triggers)
+  end
+
+  def destroy
+    trigger.destroy
+    redirect_to triggers_path, notice: 'Rule was successfully destroyed.'
   end
 
   private

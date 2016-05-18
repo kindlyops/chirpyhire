@@ -3,10 +3,12 @@ class Candidate < ActiveRecord::Base
   has_many :referrals
   has_many :referrers, through: :referrals
 
-  enum status: [:potential, :qualified, :bad_fit]
+  validates :status, inclusion: { in: %w(potential qualified bad_fit) }
 
   delegate :first_name, :name, :phone_number, :organization_name,
-           :owner_first_name, :organization, to: :user
+           :organization, to: :user
+
+  delegate :contact_first_name, to: :organization
 
   scope :subscribed, -> { where(subscribed: true) }
 

@@ -12,6 +12,7 @@ RSpec.describe TriggerPolicy do
 
     it { should forbid_new_and_create_actions }
     it { should forbid_edit_and_update_actions }
+    it { should forbid_action(:destroy) }
   end
 
   context "having an account" do
@@ -20,6 +21,7 @@ RSpec.describe TriggerPolicy do
 
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
+      it { should forbid_action(:destroy) }
 
       it 'excludes trigger in resolved scope' do
         expect(resolved_scope).not_to include(trigger)
@@ -32,7 +34,8 @@ RSpec.describe TriggerPolicy do
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }
-      it { should permit_mass_assignment_of(:status) }
+      it { should permit_action(:destroy) }
+      it { should permit_mass_assignment_of(:enabled) }
       it { should permit_mass_assignment_of(:observable_type) }
       it { should permit_mass_assignment_of(:observable_id) }
       it { should permit_mass_assignment_of(:event) }

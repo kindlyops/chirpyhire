@@ -24,8 +24,8 @@
                 = render partial: "triggers/action", collection: trigger.actions
               td.v-align-middle
                 p
-                  i.fa class==trigger.status_class
-                  strong = trigger.status.humanize
+                  i.fa class==trigger.state_class
+                  strong = trigger.state.humanize
   .panel.panel-default.new-trigger
     .panel-body
       = link_to new_trigger_path, class: "btn btn-primary btn-lg btn-block new-rule-btn"

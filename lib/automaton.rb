@@ -19,7 +19,7 @@ class Automaton
   attr_reader :user, :observable, :event
 
   def triggers
-    organization.triggers.where(event: Trigger.events[event]).where("#{collection_trigger} OR #{instance_trigger}")
+    organization.triggers.where(event: event).where("#{collection_trigger} OR #{instance_trigger}")
   end
 
   def collection_trigger

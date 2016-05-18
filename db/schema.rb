@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20160509150049) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role",                   default: 0,     null: false
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -73,11 +72,11 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
   create_table "candidates", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.integer  "status",     default: 0,     null: false
-    t.boolean  "subscribed", default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "user_id",                          null: false
+    t.string   "status",     default: "potential", null: false
+    t.boolean  "subscribed", default: false,       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
@@ -131,10 +130,10 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.integer  "template_id",             null: false
-    t.integer  "format",      default: 0, null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "template_id", null: false
+    t.string   "format",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "questions", ["template_id"], name: "index_questions_on_template_id", using: :btree
@@ -179,13 +178,13 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "triggers", force: :cascade do |t|
-    t.integer  "organization_id",             null: false
+    t.integer  "organization_id",                null: false
     t.integer  "observable_id"
-    t.string   "observable_type",             null: false
-    t.integer  "event",                       null: false
-    t.integer  "status",          default: 0, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "observable_type",                null: false
+    t.string   "event",                          null: false
+    t.boolean  "enabled",         default: true, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "triggers", ["observable_id"], name: "index_triggers_on_observable_id", using: :btree
@@ -196,11 +195,13 @@ ActiveRecord::Schema.define(version: 20160509150049) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone_number"
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.boolean  "contact",         default: false, null: false
+    t.integer  "organization_id",                 null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
+  add_index "users", ["contact", "organization_id"], name: "index_users_on_contact_and_organization_id", unique: true, where: "(contact = true)", using: :btree
   add_index "users", ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 

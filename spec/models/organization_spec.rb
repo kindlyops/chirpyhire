@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  let!(:organization) { create(:organization, :with_owner) }
-  let(:owner) { organization.accounts.first }
+  let!(:organization) { create(:organization, :with_contact) }
+  let(:contact) { organization.users.find_by(contact: true) }
 
   describe ".for" do
     let(:organization) { create(:organization, :with_phone) }
@@ -22,15 +22,15 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe "#owner" do
-    it "returns an account with the owner role" do
-      expect(organization.owner).to eq(owner)
+  describe "#contact" do
+    it "returns the contact user" do
+      expect(organization.contact).to eq(contact)
     end
   end
 
-  describe "#owner_first_name" do
-    it "returns the owner's first name" do
-      expect(organization.owner_first_name).to eq(owner.first_name)
+  describe "#contact_first_name" do
+    it "returns the contact's first name" do
+      expect(organization.contact_first_name).to eq(contact.first_name)
     end
   end
 

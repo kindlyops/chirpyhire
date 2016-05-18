@@ -39,19 +39,6 @@ RSpec.describe Account, type: :model do
     end
   end
 
-  describe "#role" do
-    it "is admin by default" do
-      expect(account.role).to eq("admin")
-    end
-  end
-
-  describe ".roles" do
-    let(:roles) { ["admin", "owner"] }
-    it "is the appropriate roles" do
-      expect(Account.roles.keys).to eq(roles)
-    end
-  end
-
   describe "#send_reset_password_instructions" do
     context "with an invitation token" do
       let(:account) { create(:account, invitation_token: "123") }

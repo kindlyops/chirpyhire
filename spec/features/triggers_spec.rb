@@ -18,7 +18,7 @@ RSpec.feature "Triggers" do
     end
 
     context "with triggers" do
-      let!(:trigger) { create(:trigger, :with_observable, :with_actions, organization: organization, status: "enabled") }
+      let!(:trigger) { create(:trigger, :with_observable, :with_actions, organization: organization) }
       let(:description) { "Answers Question" }
       let(:actions) { trigger.actions }
 

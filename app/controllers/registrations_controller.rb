@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super { |account| account.role = "owner" }
+    super { |account| account.user.contact = true }
   end
 
   private

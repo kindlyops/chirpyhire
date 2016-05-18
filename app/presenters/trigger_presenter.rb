@@ -24,8 +24,8 @@ class TriggerPresenter
     "#{observable_template['class']}"
   end
 
-  def status_class
-    "fa-circle #{status}"
+  def state_class
+    "fa-circle #{state}"
   end
 
   def title

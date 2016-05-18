@@ -17,10 +17,8 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_owner do
-      after(:create) do |user|
-        create(:account, user: user, role: Account.roles[:owner])
-      end
+    trait :with_contact do
+      contact { true }
     end
   end
 end
