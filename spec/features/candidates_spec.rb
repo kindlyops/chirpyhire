@@ -21,13 +21,13 @@ RSpec.feature "Candidates" do
     context "with candidates" do
       include ActionView::Helpers::DateHelper
       let(:user) { create(:user, organization: organization) }
-      let!(:candidate) { create(:candidate, :with_referral, user: user) }
+      let!(:candidate) { create(:candidate, :with_referral, user: user).decorate }
       scenario "has the candidate information" do
         visit candidates_path
         expect(page).to have_text(candidate.name)
         expect(page).to have_text(candidate.phone_number.phony_formatted)
         expect(page).to have_text(candidate.last_referrer_name)
-        expect(page).to have_text("#{time_ago_in_words(candidate.last_referred_at)}")
+        expect(page).to have_text("#{time_ago_in_words(candidate.last_referral_created_at)}")
       end
     end
   end

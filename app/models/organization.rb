@@ -10,6 +10,7 @@ class Organization < ActiveRecord::Base
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
+  delegate :first_name, to: :contact, prefix: true
 
   def self.for(phone:)
     joins(:phone).find_by(phones: { number: phone })
@@ -17,10 +18,6 @@ class Organization < ActiveRecord::Base
 
   def contact
     users.find_by(contact: true)
-  end
-
-  def contact_first_name
-    contact.first_name
   end
 
   def subscribed_candidates

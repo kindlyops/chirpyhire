@@ -5,19 +5,13 @@ class Candidate < ActiveRecord::Base
 
   validates :status, inclusion: { in: %w(potential qualified bad_fit) }
 
-  delegate :first_name, :name, :phone_number, :organization_name,
+  delegate :first_name, :phone_number, :organization_name,
            :organization, to: :user
 
   delegate :contact_first_name, to: :organization
+  delegate :created_at, to: :last_referral, prefix: true
 
   scope :subscribed, -> { where(subscribed: true) }
-
-  def last_referrer
-    @last_referrer ||= begin
-      return NullReferrer.new unless referrers.present?
-      last_referral.referrer
-    end
-  end
 
   def last_referral
     @last_referral ||= begin
@@ -26,16 +20,11 @@ class Candidate < ActiveRecord::Base
     end
   end
 
-  def last_referred_at
-    last_referral.created_at
-  end
-
-  def last_referrer_name
-    last_referrer.name
-  end
-
-  def last_referrer_phone_number
-    last_referrer.phone_number
+  def last_referrer
+    @last_referrer ||= begin
+      return NullReferrer.new unless referrers.present?
+      last_referral.referrer
+    end
   end
 
   def unsubscribed?

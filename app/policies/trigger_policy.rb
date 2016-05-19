@@ -28,7 +28,7 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:enabled, :observable_type, :observable_id, :event]
+    [:enabled, :observable_type, :observable_id, :event, actions_attributes: [:actionable_id, :actionable_type, :id, :_destroy]]
   end
 
   class Scope

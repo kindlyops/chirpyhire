@@ -1,12 +1,13 @@
 class ReferrersController < ApplicationController
+  decorates_assigned :referrers
 
   def index
-    @referrers = referrers
+    @referrers = scoped_referrers
   end
 
   private
 
-  def referrers
-    policy_scope Referrer
+  def scoped_referrers
+    policy_scope(Referrer)
   end
 end

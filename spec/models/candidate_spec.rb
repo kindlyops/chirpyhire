@@ -7,23 +7,6 @@ RSpec.describe Candidate, type: :model do
   let(:candidate) { create(:candidate) }
   let(:user) { candidate.user }
 
-  describe "#last_referrer" do
-    context "with referrers" do
-      let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
-      let!(:last_referral) { create(:referral, candidate: candidate) }
-
-      it "returns the referrer created last" do
-        expect(candidate.last_referrer).to eq(last_referral.referrer)
-      end
-    end
-
-    context "without referrers" do
-      it "is a NullReferrer" do
-        expect(candidate.last_referrer).to be_a(NullReferrer)
-      end
-    end
-  end
-
   describe "#last_referral" do
     context "with referrals" do
       let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
@@ -41,53 +24,36 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  describe "#last_referred_at" do
+  describe "#last_referral_created_at" do
     context "with referrals" do
       let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
       let!(:last_referral) { create(:referral, candidate: candidate) }
 
       it "returns the last referral's created_at" do
-        expect(candidate.last_referred_at).to eq(last_referral.created_at)
+        expect(candidate.last_referral_created_at).to eq(last_referral.created_at)
       end
     end
 
     context "without referrals" do
       it "is nil" do
-        expect(candidate.last_referred_at).to be_nil
+        expect(candidate.last_referral_created_at).to be_nil
       end
     end
   end
 
-  describe "#last_referrer_name" do
+  describe "#last_referrer" do
     context "with referrers" do
       let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
       let!(:last_referral) { create(:referral, candidate: candidate) }
 
-      it "returns the last referrer's name" do
-        expect(candidate.last_referrer_name).to eq(last_referral.referrer.name)
+      it "returns the referrer created last" do
+        expect(candidate.last_referrer).to eq(last_referral.referrer)
       end
     end
 
     context "without referrers" do
-      it "is nil" do
-        expect(candidate.last_referrer_name).to be_blank
-      end
-    end
-  end
-
-  describe "#last_referrer_phone_number" do
-    context "with referrers" do
-      let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
-      let!(:last_referral) { create(:referral, candidate: candidate) }
-
-      it "returns the last referrer's phone number" do
-        expect(candidate.last_referrer_phone_number).to eq(last_referral.referrer.phone_number)
-      end
-    end
-
-    context "without referrers" do
-      it "is nil" do
-        expect(candidate.last_referrer_phone_number).to be_blank
+      it "is a NullReferrer" do
+        expect(candidate.last_referrer).to be_a(NullReferrer)
       end
     end
   end

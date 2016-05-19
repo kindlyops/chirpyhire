@@ -45,19 +45,11 @@
               h1 Action
               span ...do this.
           hr
-          - @trigger.actions.each do |action|
-            = f.fields_for :actions, action do |a|
-                = a.hidden_field(:actionable_type, value: action.actionable_type)
-                .row.flex.flex-center.action
-                  .col-xs-3.flex.flex-center
-                    i.fa.fa-5x.rule-icon class== action.icon_class
-                  .col-xs-9
-                    h1 = action.title
-                    span = action.subtitle
-                - if action.actionables.present?
-                  .row
-                    .col-xs-12
-                      = a.collection_select(:actionable_id, action.actionables, :id, :template_name, {}, style: "width: 100%")
+          #actions
+            = f.fields_for :actions do |action|
+              = render 'action_fields', a: action
+            .links
+              = link_to_add_association 'add action', f, :actions
   .row
     .col-xs-12
       .panel.panel-default

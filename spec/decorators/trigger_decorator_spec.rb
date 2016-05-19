@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe TriggerPresenter do
+RSpec.describe TriggerDecorator do
 
-  subject { TriggerPresenter.new(trigger) }
+  subject { TriggerDecorator.new(trigger) }
 
   describe "#title" do
     context "with question observable" do

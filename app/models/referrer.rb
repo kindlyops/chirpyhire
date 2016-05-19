@@ -4,7 +4,11 @@ class Referrer < ActiveRecord::Base
   has_many :candidates, through: :referrals
   has_one :trigger, as: :observable
 
-  delegate :name, :phone_number, :organization, to: :user
+  delegate :phone_number, :organization, to: :user
+
+  def refer(candidate)
+    referrals.create(candidate: candidate)
+  end
 
   def last_referral
     @last_referral ||= begin
@@ -18,17 +22,5 @@ class Referrer < ActiveRecord::Base
       return NullCandidate.new unless candidates.present?
       last_referral.candidate
     end
-  end
-
-  def last_referral_at
-    last_referral.created_at
-  end
-
-  def last_referral_name
-    last_referred.name
-  end
-
-  def refer(candidate)
-    referrals.create(candidate: candidate)
   end
 end

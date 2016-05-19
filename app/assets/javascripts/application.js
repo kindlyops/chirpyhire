@@ -32,6 +32,8 @@
 
 // BEGIN SITE SCRIPTS
 
+//= require cocoon
+
 //= require indexTable
 //= require triggers
 //= require rule

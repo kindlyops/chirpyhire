@@ -1,18 +1,20 @@
 class TriggersController < ApplicationController
+  decorates_assigned :trigger
+  decorates_assigned :triggers
 
   def new
-    trigger = triggers.build
+    trigger = scoped_triggers.build
     trigger.actions.build
 
-    @trigger = TriggerPresenter.new(authorize trigger)
+    @trigger = authorize trigger
   end
 
   def edit
-    @trigger = TriggerPresenter.new(trigger)
+    @trigger = authorized_trigger
   end
 
   def create
-    trigger = triggers.build(permitted_attributes(Trigger))
+    trigger = scoped_triggers.build(permitted_attributes(Trigger))
     authorize trigger
 
     if trigger.save
@@ -23,7 +25,7 @@ class TriggersController < ApplicationController
   end
 
   def update
-    if trigger.update(permitted_attributes(trigger))
+    if authorized_trigger.update(permitted_attributes(authorized_trigger))
       redirect_to triggers_path, notice: 'Rule was successfully updated.'
     else
       render :edit
@@ -31,21 +33,21 @@ class TriggersController < ApplicationController
   end
 
   def index
-    @triggers = TriggersPresenter.new(triggers)
+    @triggers = scoped_triggers
   end
 
   def destroy
-    trigger.destroy
+    authorized_trigger.destroy
     redirect_to triggers_path, notice: 'Rule was successfully destroyed.'
   end
 
   private
 
-  def trigger
+  def authorized_trigger
     authorize Trigger.find(params[:id])
   end
 
-  def triggers
+  def scoped_triggers
     policy_scope Trigger
   end
 end

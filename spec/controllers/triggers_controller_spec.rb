@@ -17,7 +17,7 @@ RSpec.describe TriggersController, type: :controller do
 
     it "assigns a new trigger" do
       get :new
-      expect(assigns(:trigger)).to be_a(TriggerPresenter)
+      expect(assigns(:trigger)).to be_a(Trigger)
       expect(assigns(:trigger).id).to eq(nil)
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe TriggersController, type: :controller do
 
     it "assigns the trigger" do
       get :edit, id: trigger.id
-      expect(assigns(:trigger)).to be_a(TriggerPresenter)
+      expect(assigns(:trigger)).to be_a(Trigger)
       expect(assigns(:trigger).id).to eq(trigger.id)
     end
   end

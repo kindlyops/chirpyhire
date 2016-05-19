@@ -4,8 +4,4 @@ class Action < ActiveRecord::Base
 
   delegate :perform, to: :actionable
   delegate :organization, to: :trigger
-
-  def description
-    actionable.template_name
-  end
 end

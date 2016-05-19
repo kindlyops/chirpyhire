@@ -22,12 +22,4 @@ class User < ActiveRecord::Base
   def receive_message(body:)
     organization.send_message(to: phone_number, body: body)
   end
-
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def phone_number
-    super || ""
-  end
 end

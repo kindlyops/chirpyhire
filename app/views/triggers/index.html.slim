@@ -11,7 +11,7 @@
             th rowspan="1" colspan="1" aria-label="Action" Action
             th rowspan="1" colspan="1" aria-label="Status" Status
         tbody
-          - @triggers.each do |trigger|
+          - triggers.each do |trigger|
             tr.trigger data-link==edit_trigger_path(trigger.id) role="row"
               td.v-align-middle
                 div
