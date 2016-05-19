@@ -24,15 +24,15 @@
           .row.flex.flex-center.observable
             = f.hidden_field(:trigger_type, value: rule.trigger_type)
             .col-xs-3.flex.flex-center
-              i.fa.fa-5x class== rule.icon_class
+              i.fa.fa-5x class== rule.trigger_icon_class
             .col-xs-9
               = f.hidden_field(:event, value: rule.event)
-              h1 = rule.title
-              span = rule.subtitle
-          - if rule.observables.present?
+              h1 = rule.trigger_title
+              span = rule.trigger_subtitle
+          - if rule.trigger_options.present?
             .row
               .col-xs-12
-                = f.collection_select(:observable_id, rule.observables, :id, :template_name, {}, style: "width: 100%")
+                = f.collection_select(:observable_id, rule.trigger_options, :id, :template_name, {}, style: "width: 100%")
     .col-xs-2
       i.fa.fa-arrow-right.fa-5x
     .col-xs-5
@@ -45,8 +45,17 @@
               h1 Action
               span ...do this.
           hr
-          = f.fields_for :action do |action|
-            = render 'action_fields', f: action
+          .row.flex.flex-center.action
+            = f.hidden_field(:action_type, value: rule.action_type)
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x.rule-icon class== rule.action_icon_class
+            .col-xs-9
+              h1 = rule.action_title
+              span = rule.action_subtitle
+          - if rule.action_options.present?
+            .row
+              .col-xs-12
+                = f.collection_select(:action_id, rule.action_options, :id, :template_name, {}, style: "width: 100%")
   .row
     .col-xs-12
       .panel.panel-default
@@ -57,9 +66,9 @@
 
 = javascript_tag
   | var ruleOptions = {};
-    ruleOptions.observableOptions =
-  ==rule.observable_options.to_json
+    ruleOptions.triggerOptions =
+  ==rule.trigger_options.to_json
   | ;
-  | ruleOptions.actionableOptions =
-  ==rule.actionable_options.to_json
+  | ruleOptions.actionOptions =
+  ==rule.action_options.to_json
   | ;

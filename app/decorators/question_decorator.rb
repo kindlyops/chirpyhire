@@ -12,4 +12,8 @@ class QuestionDecorator < Draper::Decorator
   def icon_class
     "fa-question"
   end
+
+  def options
+    organization.questions
+  end
 end

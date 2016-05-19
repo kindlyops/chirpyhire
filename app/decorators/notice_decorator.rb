@@ -12,4 +12,8 @@ class NoticeDecorator < Draper::Decorator
   def icon_class
     "fa-info"
   end
+
+  def options
+    organization.notices
+  end
 end

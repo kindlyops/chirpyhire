@@ -14,4 +14,8 @@ class CandidateSubscribeDecorator < CandidateDecorator
   def icon_class
     "fa-hand-paper-o"
   end
+
+  def options
+    []
+  end
 end

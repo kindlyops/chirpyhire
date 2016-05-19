@@ -21,7 +21,11 @@
                   p
                     strong.subtitle = rule.trigger_template_name
               td.v-align-middle
-                = render partial: "rules/action", object: rule.action
+                p
+                  span.fa-stack
+                    i.fa.fa-comment-o.fa-stack-2x
+                    i.fa.fa-stack-1x class==rule.action_icon_class
+                  strong = rule.action_template_name
               td.v-align-middle
                 p
                   i.fa class==rule.state_class

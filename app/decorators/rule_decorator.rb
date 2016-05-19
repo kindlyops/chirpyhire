@@ -9,8 +9,8 @@ class RuleDecorator < Draper::Decorator
     @trigger ||= "#{object.trigger_type}#{event.humanize}Decorator".constantize.new(object.trigger)
   end
 
-  delegate :title, :subtitle, :icon_class, to: :action, prefix: true
-  delegate :title, :subtitle, :icon_class, :template_name, to: :trigger, prefix: true
+  delegate :title, :subtitle, :icon_class, :template_name, :options, to: :action, prefix: true
+  delegate :title, :subtitle, :icon_class, :template_name, :options, to: :trigger, prefix: true
 
   def state_class
     "fa-circle #{state.downcase}"
