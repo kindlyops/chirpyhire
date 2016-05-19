@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe TriggerPolicy do
-  subject { TriggerPolicy.new(account, trigger) }
+RSpec.describe RulePolicy do
+  subject { RulePolicy.new(account, rule) }
 
-  let(:trigger) { create(:trigger) }
+  let(:rule) { create(:rule) }
 
-  let(:resolved_scope) { TriggerPolicy::Scope.new(account, Trigger.all).resolve }
+  let(:resolved_scope) { RulePolicy::Scope.new(account, Rule.all).resolve }
 
   context "being a visitor" do
     let(:account) { nil }
@@ -23,25 +23,27 @@ RSpec.describe TriggerPolicy do
       it { should forbid_edit_and_update_actions }
       it { should forbid_action(:destroy) }
 
-      it 'excludes trigger in resolved scope' do
-        expect(resolved_scope).not_to include(trigger)
+      it 'excludes rule in resolved scope' do
+        expect(resolved_scope).not_to include(rule)
       end
     end
 
-    context "account is on the same organization as the trigger" do
-      let(:user) { create(:user, organization: trigger.organization) }
+    context "account is on the same organization as the rule" do
+      let(:user) { create(:user, organization: rule.organization) }
       let(:account) { create(:account, user: user) }
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }
       it { should permit_action(:destroy) }
       it { should permit_mass_assignment_of(:enabled) }
-      it { should permit_mass_assignment_of(:observable_type) }
-      it { should permit_mass_assignment_of(:observable_id) }
+      it { should permit_mass_assignment_of(:trigger_type) }
+      it { should permit_mass_assignment_of(:trigger_id) }
+      it { should permit_mass_assignment_of(:action_id) }
+      it { should permit_mass_assignment_of(:action_type) }
       it { should permit_mass_assignment_of(:event) }
 
-      it 'includes trigger in resolved scope' do
-        expect(resolved_scope).to include(trigger)
+      it 'includes rule in resolved scope' do
+        expect(resolved_scope).to include(rule)
       end
     end
   end

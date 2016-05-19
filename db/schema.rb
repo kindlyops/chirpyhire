@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509150049) do
+ActiveRecord::Schema.define(version: 20160509145833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,18 +47,6 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "accounts", ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
-
-  create_table "actions", force: :cascade do |t|
-    t.integer  "trigger_id",      null: false
-    t.integer  "actionable_id",   null: false
-    t.string   "actionable_type", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "actions", ["actionable_type", "actionable_id"], name: "index_actions_on_actionable_type_and_actionable_id", using: :btree
-  add_index "actions", ["trigger_id"], name: "index_actions_on_trigger_id", using: :btree
-  add_index "actions", ["trigger_id"], name: "index_unique_question_action_per_trigger", unique: true, where: "((actionable_type)::text = 'Question'::text)", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id",  null: false
@@ -156,6 +144,22 @@ ActiveRecord::Schema.define(version: 20160509150049) do
 
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
+  create_table "rules", force: :cascade do |t|
+    t.integer  "organization_id",                null: false
+    t.boolean  "enabled",         default: true, null: false
+    t.string   "event",                          null: false
+    t.integer  "trigger_id"
+    t.string   "trigger_type",                   null: false
+    t.integer  "action_id",                      null: false
+    t.string   "action_type",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "rules", ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
+  add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
+  add_index "rules", ["trigger_id"], name: "index_rules_on_trigger_id", using: :btree
+
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.datetime "deleted_at"
@@ -177,20 +181,6 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
-  create_table "triggers", force: :cascade do |t|
-    t.integer  "organization_id",                null: false
-    t.integer  "observable_id"
-    t.string   "observable_type",                null: false
-    t.string   "event",                          null: false
-    t.boolean  "enabled",         default: true, null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "triggers", ["observable_id"], name: "index_triggers_on_observable_id", using: :btree
-  add_index "triggers", ["organization_id", "observable_id"], name: "index_triggers_on_organization_id_and_observable_id", unique: true, where: "((observable_type)::text = 'Question'::text)", using: :btree
-  add_index "triggers", ["organization_id"], name: "index_triggers_on_organization_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -206,7 +196,6 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
   add_foreign_key "accounts", "users"
-  add_foreign_key "actions", "triggers"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "users"
   add_foreign_key "candidates", "users"
@@ -220,8 +209,8 @@ ActiveRecord::Schema.define(version: 20160509150049) do
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
+  add_foreign_key "rules", "organizations"
   add_foreign_key "subscriptions", "candidates"
   add_foreign_key "templates", "organizations"
-  add_foreign_key "triggers", "organizations"
   add_foreign_key "users", "organizations"
 end

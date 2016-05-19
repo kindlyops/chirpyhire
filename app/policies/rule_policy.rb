@@ -1,14 +1,14 @@
-class TriggerPolicy < ApplicationPolicy
-  attr_reader :account, :trigger
+class RulePolicy < ApplicationPolicy
+  attr_reader :account, :rule
 
-  def initialize(account, trigger)
+  def initialize(account, rule)
     @account = account
-    @trigger = trigger
+    @rule = rule
   end
 
   def create?
     return unless account.present?
-    account.organization == trigger.organization
+    account.organization == rule.organization
   end
 
   def update?
@@ -28,7 +28,7 @@ class TriggerPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:enabled, :observable_type, :observable_id, :event, actions_attributes: [:actionable_id, :actionable_type, :id, :_destroy]]
+    [:enabled, :trigger_type, :trigger_id, :event, :action_id, :action_type]
   end
 
   class Scope

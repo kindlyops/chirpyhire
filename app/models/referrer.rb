@@ -2,7 +2,6 @@ class Referrer < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :candidates, through: :referrals
-  has_one :trigger, as: :observable
 
   delegate :phone_number, :organization, to: :user
 

@@ -1,0 +1,65 @@
+= form_for @rule do |f|
+  - if @rule.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@rule.errors.count, "error")} prohibited this rule from being saved:"
+      ul
+        - @rule.errors.full_messages.each do |message|
+          li = message
+  .row
+    .col-xs-12
+      .panel.panel-default
+        .panel-body
+          h1 Screening Rule
+  .row.flex.flex-center
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-bolt.fa-5x
+            .col-xs-9
+              h1 Trigger
+              span When this event happens...
+          hr
+          .row.flex.flex-center.observable
+            = f.hidden_field(:trigger_type, value: rule.trigger_type)
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x class== rule.icon_class
+            .col-xs-9
+              = f.hidden_field(:event, value: rule.event)
+              h1 = rule.title
+              span = rule.subtitle
+          - if rule.observables.present?
+            .row
+              .col-xs-12
+                = f.collection_select(:observable_id, rule.observables, :id, :template_name, {}, style: "width: 100%")
+    .col-xs-2
+      i.fa.fa-arrow-right.fa-5x
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-gear.fa-5x
+            .col-xs-9
+              h1 Action
+              span ...do this.
+          hr
+          = f.fields_for :action do |action|
+            = render 'action_fields', f: action
+  .row
+    .col-xs-12
+      .panel.panel-default
+        .panel-body
+          = link_to 'Delete Rule', @rule, method: :delete, class: "btn btn-danger"
+          = f.submit 'Save Rule', class: "btn btn-primary btn-lg pull-right"
+          = link_to 'Cancel', rules_path, class: "btn btn-default pull-right"
+
+= javascript_tag
+  | var ruleOptions = {};
+    ruleOptions.observableOptions =
+  ==rule.observable_options.to_json
+  | ;
+  | ruleOptions.actionableOptions =
+  ==rule.actionable_options.to_json
+  | ;

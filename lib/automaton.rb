@@ -1,33 +1,33 @@
 class Automaton
 
-  def self.call(user, observable, event)
-    new(user, observable, event).call
+  def self.call(user, trigger, event)
+    new(user, trigger, event).call
   end
 
   def call
-    triggers.each { |trigger| trigger.fire(user) }
+    rules.each { |rule| rule.perform(user) }
   end
 
-  def initialize(user, observable, event)
+  def initialize(user, trigger, event)
     @user = user
-    @observable = observable
+    @trigger = trigger
     @event = event
   end
 
   private
 
-  attr_reader :user, :observable, :event
+  attr_reader :user, :trigger, :event
 
-  def triggers
-    organization.triggers.where(event: event).where("#{collection_trigger} OR #{instance_trigger}")
+  def rules
+    organization.rules.where(event: event).where("#{collection_rule} OR #{instance_rule}")
   end
 
-  def collection_trigger
-    "(observable_type = '#{observable.class}' AND observable_id IS NULL)"
+  def collection_rule
+    "(trigger_type = '#{trigger.class}' AND trigger_id IS NULL)"
   end
 
-  def instance_trigger
-    "(observable_type = '#{observable.class}' AND observable_id = #{observable.id})"
+  def instance_rule
+    "(trigger_type = '#{trigger.class}' AND trigger_id = #{trigger.id})"
   end
 
   def organization

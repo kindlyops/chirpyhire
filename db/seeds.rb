@@ -57,15 +57,13 @@ if Rails.env.development?
     puts "Created Questions and Notices"
   end
 
-  unless org.triggers.present?
-    candidate_trigger = org.triggers.create(observable_type: "Candidate", event: "subscribe")
-    location_trigger = org.triggers.create(observable: location_question, event: "answer")
-    tb_trigger = org.triggers.create(observable: tb_question, event: "answer")
+  unless org.rules.present?
+    candidate_rule = org.rules.create(trigger_type: "Candidate", event: "subscribe", action: welcome_notice)
+    candidate_rule_2 = org.rules.create(trigger_type: "Candidate", event: "subscribe", action: location_question)
 
-    candidate_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
-    location_trigger.actions.create(actionable: tb_question)
-    tb_trigger.actions.create(actionable: thank_you_notice)
-    puts "Created triggers and actions"
+    location_rule = org.rules.create(trigger: location_question, event: "answer", action: tb_question)
+    tb_rule = org.rules.create(trigger: tb_question, event: "answer", action: thank_you_notice)
+    puts "Created rules"
   end
 
   puts "Development specific seeding completed"

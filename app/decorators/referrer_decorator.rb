@@ -1,5 +1,6 @@
 class ReferrerDecorator < Draper::Decorator
   delegate_all
+
   decorates_association :user
   delegate :name, to: :user
   delegate :name, to: :last_referred, prefix: true

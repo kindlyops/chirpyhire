@@ -1,8 +1,8 @@
 class Question < ActiveRecord::Base
   belongs_to :template
   has_many :inquiries
-  has_many :actions, as: :actionable
-  has_one :trigger, as: :observable
+  has_many :rules, as: :action
+  has_one :rule, as: :trigger
 
   validates :format, inclusion: { in: %w(text image) }
 
@@ -15,6 +15,10 @@ class Question < ActiveRecord::Base
 
   def text?
     format == "text"
+  end
+
+  def options
+    organization.questions
   end
 
   def perform(user)

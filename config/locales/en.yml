@@ -23,7 +23,7 @@ en:
   hello: "Hello world"
   pundit:
     default: 'You cannot perform this action.'
-    trigger_policy:
+    rule_policy:
       update?: 'You cannot edit this rule!'
       create?: 'You cannot create rules!'
       destroy?: 'You cannot destroy rules!'

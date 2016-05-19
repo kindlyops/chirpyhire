@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :action do
-    trigger
+    rule
     association :actionable, factory: :question
 
     trait :with_notice do

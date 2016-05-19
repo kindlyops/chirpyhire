@@ -32,10 +32,8 @@
 
 // BEGIN SITE SCRIPTS
 
-//= require cocoon
-
 //= require indexTable
-//= require triggers
+//= require rules
 //= require rule
 
 //  I prefer to list scripts in a specific order, so I comment out require_tree .

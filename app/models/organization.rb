@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   has_many :referrals, through: :referrers
   has_many :accounts, through: :users
   has_many :templates
-  has_many :triggers
+  has_many :rules
 
   has_one :phone
 
