@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Automaton do
 
   let(:user) { create(:user) }
-  let(:trigger) { create(:trigger, :answer) }
+  let(:trigger) { create(:trigger, event: :answer) }
   let(:observable) { create(:observable) }
 
   describe ".call" do

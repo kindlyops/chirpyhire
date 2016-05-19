@@ -45,7 +45,7 @@
               span ...do this.
           hr
           .row.flex.flex-center.action
-            = f.hidden_field(:action_type, value: rule.actionable_type)
+            = f.hidden_field(:action_id, value: rule.action_id)
             .col-xs-3.flex.flex-center
               i.fa.fa-5x.rule-icon class== rule.actionable_icon_class
             .col-xs-9

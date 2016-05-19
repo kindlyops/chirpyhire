@@ -49,6 +49,6 @@ class SubscriptionsController < SmsController
   end
 
   def trigger
-    organization.triggers.find_by(observable_type: "Candidate", event: "subscribe")
+    organization.triggers.find_by(event: "subscribe")
   end
 end

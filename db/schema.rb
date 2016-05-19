@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   create_table "questions", force: :cascade do |t|
     t.integer  "template_id", null: false
     t.integer  "action_id"
+    t.integer  "trigger_id"
     t.string   "format",      null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 20160509145833) do
 
   add_index "questions", ["action_id"], name: "index_questions_on_action_id", using: :btree
   add_index "questions", ["template_id"], name: "index_questions_on_template_id", using: :btree
+  add_index "questions", ["trigger_id"], name: "index_questions_on_trigger_id", unique: true, using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
@@ -190,13 +192,10 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   create_table "triggers", force: :cascade do |t|
     t.string   "event",           null: false
     t.integer  "organization_id", null: false
-    t.integer  "observable_id"
-    t.string   "observable_type", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
 
-  add_index "triggers", ["observable_id"], name: "index_triggers_on_observable_id", using: :btree
   add_index "triggers", ["organization_id"], name: "index_triggers_on_organization_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -226,6 +225,7 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_foreign_key "phones", "organizations"
   add_foreign_key "questions", "actions"
   add_foreign_key "questions", "templates"
+  add_foreign_key "questions", "triggers"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"

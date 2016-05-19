@@ -43,6 +43,12 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
+  unless org.triggers.present?
+    subscribe_trigger = org.triggers.create(event: "subscribe")
+    location_trigger = org.triggers.create(event: "answer")
+    tb_trigger = org.triggers.create(event: "answer")
+  end
+
   unless org.templates.present?
     welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
     location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
@@ -51,16 +57,10 @@ if Rails.env.development?
     puts "Created Templates"
 
     welcome_notice = welcome.create_notice
-    location_question = location.create_question(format: "text")
-    tb_question = tb_test.create_question(format: "image")
+    location_question = location.create_question(format: "text", trigger: location_trigger)
+    tb_question = tb_test.create_question(format: "image", trigger: tb_trigger)
     thank_you_notice = thank_you.create_notice
     puts "Created Questions and Notices"
-  end
-
-  unless org.triggers.present?
-    subscribe_trigger = org.triggers.create(event: "subscribe", observable_type: "Candidate")
-    location_trigger = org.triggers.create(event: "answer", observable: location_question)
-    tb_trigger = org.triggers.create(event: "answer", observable: tb_question)
   end
 
   unless org.rules.present?

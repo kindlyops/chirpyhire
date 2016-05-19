@@ -30,7 +30,7 @@ class AnswersController < SmsController
   end
 
   def trigger
-    organization.triggers.find_by(observable: question, event: "answer")
+    question.trigger
   end
 
 end

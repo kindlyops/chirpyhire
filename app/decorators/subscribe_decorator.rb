@@ -1,4 +1,6 @@
-class CandidateSubscribeDecorator < CandidateDecorator
+class SubscribeDecorator < Draper::Decorator
+  delegate_all
+
   def template_name
     ""
   end

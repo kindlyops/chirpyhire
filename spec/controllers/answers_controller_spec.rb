@@ -2,16 +2,18 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:organization) { create(:organization, :with_phone) }
+  let(:trigger) { create(:trigger, event: :answer, organization: organization) }
+  let(:question) { create(:question, trigger: trigger) }
+
   let(:user) { create(:user, organization: organization) }
   let(:candidate) { create(:candidate, user: user) }
-  let!(:inquiry) { create(:inquiry, user: user) }
+  let!(:inquiry) { create(:inquiry, user: user, question: question) }
 
   let(:messaging) { FakeMessaging.new("foo", "bar") }
   let(:from) { candidate.phone_number }
   let(:to) { organization.phone_number }
   let(:body) { Faker::Lorem.word }
   let(:message) { messaging.create(from: from, to: to, body: body) }
-  let!(:trigger) { create(:trigger, :answer, organization: organization, observable: inquiry.question) }
 
   describe "#create" do
     let(:params) do

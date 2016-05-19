@@ -1,4 +1,6 @@
-class QuestionAnswerDecorator < QuestionDecorator
+class AnswerDecorator < Draper::Decorator
+  delegate_all
+
   def title
     "Answers a question"
   end
