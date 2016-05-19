@@ -44,12 +44,12 @@ RSpec.describe RulesController, type: :controller do
 
       let(:trigger) { create(:trigger, organization: organization) }
       let(:notice) { create(:notice, template: notice_template) }
+      let(:action) { notice.create_action }
 
       let(:rule_params) do
         { rule: {
           trigger_id: trigger.id,
-          action_id: notice.id,
-          action_type: notice.class.to_s
+          action_id: action.id
         } }
       end
 
@@ -69,8 +69,7 @@ RSpec.describe RulesController, type: :controller do
       let(:invalid_params) do
         { rule: {
             trigger_id: 1,
-            action_id: 1023,
-            action_type: "Candidate"
+            action_id: 1023
         } }
       end
 
@@ -116,8 +115,7 @@ RSpec.describe RulesController, type: :controller do
         { id: rule.id,
           rule: {
           trigger_id: 1,
-          action_id: 1023,
-          action_type: "Candidate"
+          action_id: 1023
       } }
       end
 

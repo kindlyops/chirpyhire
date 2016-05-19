@@ -28,7 +28,7 @@ class RulePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:enabled, :trigger_id, :event, :action_id, :action_type]
+    [:enabled, :trigger_id, :action_id]
   end
 
   class Scope

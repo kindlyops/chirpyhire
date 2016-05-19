@@ -4,7 +4,7 @@ class Notice < ActiveRecord::Base
   delegate :organization, to: :template
 
   has_many :notifications
-  has_many :rules, as: :action
+  belongs_to :action
 
   def perform(user)
     message = user.receive_message(body: template.render(user))

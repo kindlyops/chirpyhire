@@ -20,7 +20,7 @@ RSpec.feature "Rules" do
     context "with rules" do
       let!(:rule) { create(:rule, organization: organization) }
       let(:description) { "Answers a question" }
-      let(:action) { rule.action.decorate }
+      let(:action) { rule.actionable.decorate }
       let(:trigger_title) { rule.decorate.trigger.title }
 
       scenario "has the rule information" do

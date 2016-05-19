@@ -1,8 +1,8 @@
 class Question < ActiveRecord::Base
   belongs_to :template
   has_many :inquiries
-  has_many :rules, as: :action
   has_one :trigger, as: :observable
+  belongs_to :action
 
   validates :format, inclusion: { in: %w(text image) }
 

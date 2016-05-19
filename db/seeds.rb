@@ -64,11 +64,11 @@ if Rails.env.development?
   end
 
   unless org.rules.present?
-    candidate_rule = org.rules.create(trigger: subscribe_trigger, action: welcome_notice)
-    candidate_rule_2 = org.rules.create(trigger: subscribe_trigger, action: location_question)
+    candidate_rule = org.rules.create(trigger: subscribe_trigger, action: welcome_notice.create_action)
+    candidate_rule_2 = org.rules.create(trigger: subscribe_trigger, action: location_question.create_action)
 
-    location_rule = org.rules.create(trigger: location_trigger, action: tb_question)
-    tb_rule = org.rules.create(trigger: tb_trigger, action: thank_you_notice)
+    location_rule = org.rules.create(trigger: location_trigger, action: tb_question.create_action)
+    tb_rule = org.rules.create(trigger: tb_trigger, action: thank_you_notice.create_action)
     puts "Created rules"
   end
 

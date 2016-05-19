@@ -38,8 +38,6 @@ RSpec.describe RulePolicy do
       it { should permit_mass_assignment_of(:enabled) }
       it { should permit_mass_assignment_of(:trigger_id) }
       it { should permit_mass_assignment_of(:action_id) }
-      it { should permit_mass_assignment_of(:action_type) }
-      it { should permit_mass_assignment_of(:event) }
 
       it 'includes rule in resolved scope' do
         expect(resolved_scope).to include(rule)
