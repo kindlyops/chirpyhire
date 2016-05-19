@@ -42,14 +42,12 @@ RSpec.describe RulesController, type: :controller do
       let(:template) { create(:template, organization: organization)}
       let(:notice_template) { create(:template, organization: organization)}
 
-      let(:question) { create(:question, template: template) }
+      let(:trigger) { create(:trigger, organization: organization) }
       let(:notice) { create(:notice, template: notice_template) }
 
       let(:rule_params) do
         { rule: {
-          trigger_type: "Question",
-          trigger_id: question.id,
-          event: "answer",
+          trigger_id: trigger.id,
           action_id: notice.id,
           action_type: notice.class.to_s
         } }
@@ -70,9 +68,9 @@ RSpec.describe RulesController, type: :controller do
     context "with invalid params" do
       let(:invalid_params) do
         { rule: {
-          trigger_type: "Foo",
-          trigger_id: 1,
-          event: "baz"
+            trigger_id: 1,
+            action_id: 1023,
+            action_type: "Candidate"
         } }
       end
 
@@ -117,10 +115,10 @@ RSpec.describe RulesController, type: :controller do
       let(:invalid_params) do
         { id: rule.id,
           rule: {
-          trigger_type: "Foo",
           trigger_id: 1,
-          event: "baz"
-        } }
+          action_id: 1023,
+          action_type: "Candidate"
+      } }
       end
 
       it "does not create a rule" do

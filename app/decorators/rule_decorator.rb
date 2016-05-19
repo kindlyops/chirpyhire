@@ -6,7 +6,7 @@ class RuleDecorator < Draper::Decorator
   end
 
   def trigger
-    @trigger ||= "#{object.trigger_type}#{event.humanize}Decorator".constantize.new(object.trigger)
+    @trigger ||= "#{object.trigger.observable_type}#{object.trigger.event.humanize}Decorator".constantize.new(object.trigger)
   end
 
   delegate :title, :subtitle, :icon_class, :template_name, :options, to: :action, prefix: true

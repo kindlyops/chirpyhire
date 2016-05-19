@@ -146,10 +146,8 @@ ActiveRecord::Schema.define(version: 20160509145833) do
 
   create_table "rules", force: :cascade do |t|
     t.integer  "organization_id",                null: false
+    t.integer  "trigger_id",                     null: false
     t.boolean  "enabled",         default: true, null: false
-    t.string   "event",                          null: false
-    t.integer  "trigger_id"
-    t.string   "trigger_type",                   null: false
     t.integer  "action_id",                      null: false
     t.string   "action_type",                    null: false
     t.datetime "created_at",                     null: false
@@ -181,6 +179,18 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
+  create_table "triggers", force: :cascade do |t|
+    t.string   "event",           null: false
+    t.integer  "organization_id", null: false
+    t.integer  "observable_id"
+    t.string   "observable_type", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "triggers", ["observable_id"], name: "index_triggers_on_observable_id", using: :btree
+  add_index "triggers", ["organization_id"], name: "index_triggers_on_organization_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -210,7 +220,9 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "organizations"
+  add_foreign_key "rules", "triggers"
   add_foreign_key "subscriptions", "candidates"
   add_foreign_key "templates", "organizations"
+  add_foreign_key "triggers", "organizations"
   add_foreign_key "users", "organizations"
 end

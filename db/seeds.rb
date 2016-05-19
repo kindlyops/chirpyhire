@@ -57,12 +57,18 @@ if Rails.env.development?
     puts "Created Questions and Notices"
   end
 
-  unless org.rules.present?
-    candidate_rule = org.rules.create(trigger_type: "Candidate", event: "subscribe", action: welcome_notice)
-    candidate_rule_2 = org.rules.create(trigger_type: "Candidate", event: "subscribe", action: location_question)
+  unless org.triggers.present?
+    subscribe_trigger = org.triggers.create(event: "subscribe", observable_type: "Candidate")
+    location_trigger = org.triggers.create(event: "answer", observable: location_question)
+    tb_trigger = org.triggers.create(event: "answer", observable: tb_question)
+  end
 
-    location_rule = org.rules.create(trigger: location_question, event: "answer", action: tb_question)
-    tb_rule = org.rules.create(trigger: tb_question, event: "answer", action: thank_you_notice)
+  unless org.rules.present?
+    candidate_rule = org.rules.create(trigger: subscribe_trigger, action: welcome_notice)
+    candidate_rule_2 = org.rules.create(trigger: subscribe_trigger, action: location_question)
+
+    location_rule = org.rules.create(trigger: location_trigger, action: tb_question)
+    tb_rule = org.rules.create(trigger: tb_trigger, action: thank_you_notice)
     puts "Created rules"
   end
 

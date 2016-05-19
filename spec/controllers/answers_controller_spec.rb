@@ -11,6 +11,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:to) { organization.phone_number }
   let(:body) { Faker::Lorem.word }
   let(:message) { messaging.create(from: from, to: to, body: body) }
+  let!(:trigger) { create(:trigger, :answer, organization: organization, observable: inquiry.question) }
 
   describe "#create" do
     let(:params) do
@@ -37,7 +38,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates an answer automaton job" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(user, inquiry.question, "answer")
+        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
       end
     end
 

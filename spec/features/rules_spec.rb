@@ -18,13 +18,14 @@ RSpec.feature "Rules" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, :with_trigger, organization: organization) }
+      let!(:rule) { create(:rule, organization: organization) }
       let(:description) { "Answers a question" }
       let(:action) { rule.action.decorate }
+      let(:trigger_title) { rule.decorate.trigger.title }
 
       scenario "has the rule information" do
         visit rules_path
-        expect(page).to have_text(description)
+        expect(page).to have_text(trigger_title)
         expect(page).to have_text(action.template_name)
         expect(page).to have_text("Enabled")
       end

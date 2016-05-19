@@ -22,11 +22,10 @@
               span When this event happens...
           hr
           .row.flex.flex-center.observable
-            = f.hidden_field(:trigger_type, value: rule.trigger_type)
+            = f.hidden_field(:trigger_id, value: rule.trigger_id)
             .col-xs-3.flex.flex-center
               i.fa.fa-5x class== rule.trigger_icon_class
             .col-xs-9
-              = f.hidden_field(:event, value: rule.event)
               h1 = rule.trigger_title
               span = rule.trigger_subtitle
           - if rule.trigger_options.present?

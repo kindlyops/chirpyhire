@@ -6,6 +6,7 @@ class Organization < ActiveRecord::Base
   has_many :accounts, through: :users
   has_many :templates
   has_many :rules
+  has_many :triggers
 
   has_one :phone
 
