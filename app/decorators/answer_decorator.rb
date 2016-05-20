@@ -1,6 +1,10 @@
 class AnswerDecorator < Draper::Decorator
   delegate_all
 
+  def label
+    template_name
+  end
+
   def title
     "Answers a question"
   end

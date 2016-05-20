@@ -5,5 +5,5 @@ class ActionDecorator < Draper::Decorator
     @actionable ||= object.actionable.decorate
   end
 
-  delegate :title, :subtitle, :icon_class, to: :actionable
+  delegate :title, :subtitle, :icon_class, :label, to: :actionable
 end

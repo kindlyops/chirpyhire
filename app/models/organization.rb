@@ -22,6 +22,10 @@ class Organization < ActiveRecord::Base
     users.find_by(contact: true)
   end
 
+  def screen
+    automations.first
+  end
+
   def subscribed_candidates
     candidates.subscribed
   end

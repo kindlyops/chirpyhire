@@ -3,8 +3,8 @@ class RuleDecorator < Draper::Decorator
   decorates_association :trigger
   decorates_association :action
 
-  delegate :title, :subtitle, :icon_class, to: :action, prefix: true
-  delegate :title, :subtitle, :icon_class, to: :trigger, prefix: true
+  delegate :title, :subtitle, :icon_class, :label, to: :action, prefix: true
+  delegate :title, :subtitle, :icon_class, :label, to: :trigger, prefix: true
 
   def state_class
     "fa-circle #{state.downcase}"

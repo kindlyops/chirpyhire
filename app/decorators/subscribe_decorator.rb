@@ -1,7 +1,7 @@
 class SubscribeDecorator < Draper::Decorator
   delegate_all
 
-  def template_name
+  def label
     ""
   end
 

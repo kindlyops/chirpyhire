@@ -10,8 +10,4 @@ class Notice < ActiveRecord::Base
     message = user.receive_message(body: template.render(user))
     notifications.create(user: user, message_sid: message.sid)
   end
-
-  def options
-    organization.notices
-  end
 end

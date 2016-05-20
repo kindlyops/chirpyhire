@@ -1,6 +1,10 @@
 class QuestionDecorator < Draper::Decorator
   delegate_all
 
+  def label
+    template_name
+  end
+
   def title
     "Ask a question"
   end

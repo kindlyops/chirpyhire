@@ -27,9 +27,10 @@
             .col-xs-9
               h1 = rule.trigger_title
               span = rule.trigger_subtitle
-          .row
-            .col-xs-12
-              = f.collection_select(:trigger_id, current_organization.triggers.for(rule.trigger_event), :id, :template_name, {}, style: "width: 100%")
+          - if rule.trigger_event != "subscribe"
+            .row
+              .col-xs-12
+                = f.collection_select(:trigger_id, current_organization.triggers.for(rule.trigger_event).decorate, :id, :label, {}, style: "width: 100%")
     .col-xs-2
       i.fa.fa-arrow-right.fa-5x
     .col-xs-5
@@ -50,7 +51,7 @@
               span = rule.action_subtitle
           .row
             .col-xs-12
-              = f.collection_select(:action_id, current_organization.actions, :id, :template_name, {}, style: "width: 100%")
+              = f.collection_select(:action_id, current_organization.actions.for(rule.action).decorate, :id, :label, {}, style: "width: 100%")
   .row
     .col-xs-12
       .panel.panel-default
@@ -59,11 +60,3 @@
           = f.submit 'Save Rule', class: "btn btn-primary btn-lg pull-right"
           = link_to 'Cancel', rule.automation, class: "btn btn-default pull-right"
 
-= javascript_tag
-  | var ruleOptions = {};
-    ruleOptions.triggerOptions =
-  ==rule.trigger_options.to_json
-  | ;
-  | ruleOptions.actionOptions =
-  ==rule.action_options.to_json
-  | ;

@@ -1,6 +1,10 @@
 class NoticeDecorator < Draper::Decorator
   delegate_all
 
+  def label
+    template_name
+  end
+
   def title
     "Notify candidate"
   end
