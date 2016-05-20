@@ -19,10 +19,10 @@ RSpec.feature "Automation" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, automation: automation) }
+      let!(:rule) { create(:rule, :answer, automation: automation) }
       let(:description) { "Answers a question" }
-      let(:action) { rule.actionable.decorate }
-      let(:trigger_title) { rule.decorate.trigger.title }
+      let(:action) { rule.action.decorate }
+      let(:trigger_title) { rule.decorate.trigger_title }
 
       scenario "has the rule information" do
         visit automation_path(automation)

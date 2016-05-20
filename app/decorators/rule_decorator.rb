@@ -1,16 +1,10 @@
 class RuleDecorator < Draper::Decorator
   delegate_all
+  decorates_association :trigger
+  decorates_association :action
 
-  def actionable
-    @actionable ||= "#{object.actionable.class}Decorator".constantize.new(object.actionable)
-  end
-
-  def trigger
-    @trigger ||= "#{object.trigger.event.humanize}Decorator".constantize.new(object.trigger)
-  end
-
-  delegate :title, :subtitle, :icon_class, :template_name, :options, to: :actionable, prefix: true
-  delegate :title, :subtitle, :icon_class, :template_name, :options, to: :trigger, prefix: true
+  delegate :title, :subtitle, :icon_class, to: :action, prefix: true
+  delegate :title, :subtitle, :icon_class, to: :trigger, prefix: true
 
   def state_class
     "fa-circle #{state.downcase}"

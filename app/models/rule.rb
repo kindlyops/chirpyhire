@@ -7,4 +7,6 @@ class Rule < ActiveRecord::Base
   delegate :organization, to: :automation
 
   validates :trigger, :automation, :action, presence: true
+  delegate :template_name, :options, to: :action, prefix: true
+  delegate :template_name, :options, :event, to: :trigger, prefix: true
 end
