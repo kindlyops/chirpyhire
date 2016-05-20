@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :templates, only: [:index]
   resources :candidates, only: [:index]
   resources :referrers, only: [:index]
-  resources :rules
+  resources :automations, only: [:show] do
+    resources :rules, except: [:index, :destroy, :show], shallow: true
+  end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new

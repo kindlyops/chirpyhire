@@ -49,9 +49,12 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "actions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
+
+  add_index "actions", ["organization_id"], name: "index_actions_on_organization_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id",  null: false
@@ -63,6 +66,14 @@ ActiveRecord::Schema.define(version: 20160509145833) do
 
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+
+  create_table "automations", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "automations", ["organization_id"], name: "index_automations_on_organization_id", using: :btree
 
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
@@ -156,16 +167,16 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "rules", force: :cascade do |t|
-    t.integer  "organization_id",                null: false
-    t.integer  "trigger_id",                     null: false
-    t.integer  "action_id",                      null: false
-    t.boolean  "enabled",         default: true, null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.integer  "automation_id",                null: false
+    t.integer  "trigger_id",                   null: false
+    t.integer  "action_id",                    null: false
+    t.boolean  "enabled",       default: true, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "rules", ["action_id"], name: "index_rules_on_action_id", using: :btree
-  add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
+  add_index "rules", ["automation_id"], name: "index_rules_on_automation_id", using: :btree
   add_index "rules", ["trigger_id"], name: "index_rules_on_trigger_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
@@ -213,8 +224,10 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "actions", "organizations"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "users"
+  add_foreign_key "automations", "organizations"
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "questions"
   add_foreign_key "inquiries", "users"
@@ -230,7 +243,7 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "actions"
-  add_foreign_key "rules", "organizations"
+  add_foreign_key "rules", "automations"
   add_foreign_key "rules", "triggers"
   add_foreign_key "subscriptions", "candidates"
   add_foreign_key "templates", "organizations"

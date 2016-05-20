@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe RulePolicy do
   subject { RulePolicy.new(account, rule) }
 
-  let(:rule) { create(:rule) }
+  let!(:automation) { create(:automation) }
+  let!(:rule) { create(:rule) }
 
-  let(:resolved_scope) { RulePolicy::Scope.new(account, Rule.all).resolve }
+  let(:resolved_scope) { RulePolicy::Scope.new(automation, Rule.all).resolve }
 
   context "being a visitor" do
     let(:account) { nil }
@@ -28,9 +29,10 @@ RSpec.describe RulePolicy do
       end
     end
 
-    context "account is on the same organization as the rule" do
-      let(:user) { create(:user, organization: rule.organization) }
-      let(:account) { create(:account, user: user) }
+    context "rule is on the same organization as the automation" do
+      let(:account) { create(:account) }
+      let(:automation) { create(:automation, organization: account.organization) }
+      let!(:rule) { create(:rule, automation: automation) }
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }

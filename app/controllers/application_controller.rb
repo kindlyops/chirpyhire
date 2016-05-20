@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
+  helper_method :current_organization
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -15,12 +16,12 @@ class ApplicationController < ActionController::Base
     current_account
   end
 
-  def organization
-    @organization ||= current_user.organization
+  def current_organization
+    @current_organization ||= current_user.organization
   end
 
   def subscribed_candidates
-    @subscribed_candidates ||= organization.subscribed_candidates
+    @subscribed_candidates ||= current_organization.subscribed_candidates
   end
 
   def current_user

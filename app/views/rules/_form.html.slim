@@ -31,7 +31,7 @@
           - if rule.trigger_options.present?
             .row
               .col-xs-12
-                = f.collection_select(:observable_id, rule.trigger_options, :id, :template_name, {}, style: "width: 100%")
+                = f.collection_select(:trigger_id, current_organization.triggers, :id, :template_name, {}, style: "width: 100%")
     .col-xs-2
       i.fa.fa-arrow-right.fa-5x
     .col-xs-5
@@ -54,7 +54,7 @@
           - if rule.actionable_options.present?
             .row
               .col-xs-12
-                = f.collection_select(:action_id, rule.actionable_options, :id, :template_name, {}, style: "width: 100%")
+                = f.collection_select(:action_id, current_organization.actions, :id, :template_name, {}, style: "width: 100%")
   .row
     .col-xs-12
       .panel.panel-default

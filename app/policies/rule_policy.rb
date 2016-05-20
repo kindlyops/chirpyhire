@@ -28,19 +28,19 @@ class RulePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:enabled, :trigger_id, :action_id]
+    [:enabled, :trigger_id, :action_id, :automation_id]
   end
 
   class Scope
-    attr_reader :account, :scope
+    attr_reader :automation, :scope
 
-    def initialize(account, scope)
-      @account = account
+    def initialize(automation, scope)
+      @automation = automation
       @scope = scope
     end
 
     def resolve
-      scope.where(organization: account.organization)
+      scope.where(automation: automation)
     end
   end
 end

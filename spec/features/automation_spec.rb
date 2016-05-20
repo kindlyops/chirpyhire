@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-RSpec.feature "Rules" do
+RSpec.feature "Automation" do
   let(:organization) { create(:organization,  :with_account, :with_successful_phone)}
   let(:account) { organization.accounts.first }
+  let(:automation) { create(:automation, organization: organization)}
 
   background(:each) do
     login_as(account, scope: :account)
@@ -10,7 +11,7 @@ RSpec.feature "Rules" do
 
   context "viewing all rules" do
     scenario "has a table of Rules" do
-      visit rules_path
+      visit automation_path(automation)
       expect(page).to have_text("Screen")
       expect(page).to have_text("Rule")
       expect(page).to have_text("Action")
@@ -18,13 +19,13 @@ RSpec.feature "Rules" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, organization: organization) }
+      let!(:rule) { create(:rule, automation: automation) }
       let(:description) { "Answers a question" }
       let(:action) { rule.actionable.decorate }
       let(:trigger_title) { rule.decorate.trigger.title }
 
       scenario "has the rule information" do
-        visit rules_path
+        visit automation_path(automation)
         expect(page).to have_text(trigger_title)
         expect(page).to have_text(action.template_name)
         expect(page).to have_text("Enabled")

@@ -11,7 +11,7 @@
             th rowspan="1" colspan="1" aria-label="Action" Action
             th rowspan="1" colspan="1" aria-label="Status" Status
         tbody
-          - rules.each do |rule|
+          - automation.rules.each do |rule|
             tr.rule data-link==edit_rule_path(rule.id) role="row"
               td.v-align-middle
                 div
@@ -32,7 +32,7 @@
                   strong = rule.state
   .panel.panel-default.new-rule
     .panel-body
-      = link_to new_rule_path, class: "btn btn-primary btn-lg btn-block new-rule-btn"
+      = link_to new_automation_rule_path(automation), class: "btn btn-primary btn-lg btn-block new-rule-btn"
         ' + Add Rule
 
 

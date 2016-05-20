@@ -3,6 +3,6 @@ class Trigger < ActiveRecord::Base
   has_many :rules
   has_one :question
 
-  delegate :template_name, to: :question
+  delegate :template_name, :options, to: :question
   validates :event, inclusion: { in: %w(subscribe answer) }
 end

@@ -15,9 +15,8 @@ class RulesController < ApplicationController
   def create
     rule = scoped_rules.build(permitted_attributes(Rule))
     authorize rule
-
     if rule.save
-      redirect_to rules_path, notice: 'Rule was successfully created.'
+      redirect_to rule, notice: 'Rule was successfully created.'
     else
       render :new
     end
@@ -25,19 +24,10 @@ class RulesController < ApplicationController
 
   def update
     if authorized_rule.update(permitted_attributes(authorized_rule))
-      redirect_to rules_path, notice: 'Rule was successfully updated.'
+      redirect_to authorized_rule, notice: 'Rule was successfully updated.'
     else
       render :edit
     end
-  end
-
-  def index
-    @rules = scoped_rules
-  end
-
-  def destroy
-    authorized_rule.destroy
-    redirect_to rules_path, notice: 'Rule was successfully destroyed.'
   end
 
   private
@@ -46,7 +36,13 @@ class RulesController < ApplicationController
     authorize Rule.find(params[:id])
   end
 
+  def authorized_automation
+    automation = Automation.find(params[:automation_id])
+    raise Pundit::NotAuthorizedError unless AutomationPolicy.new(current_account, automation).show?
+    automation
+  end
+
   def scoped_rules
-    policy_scope Rule
+    RulePolicy::Scope.new(authorized_automation, Rule).resolve
   end
 end

@@ -5,6 +5,7 @@ RSpec.describe Automaton do
   let(:user) { create(:user) }
   let(:trigger) { create(:trigger, event: :answer) }
   let(:observable) { create(:observable) }
+  let(:automation) { create(:automation, organization: user.organization) }
 
   describe ".call" do
     it "creates an automaton" do
@@ -20,7 +21,7 @@ RSpec.describe Automaton do
       context "on the organization" do
         context "a collection rule for the trigger" do
           let(:trigger) { create(:trigger) }
-          let!(:rule) { create(:rule, trigger: trigger, organization: user.organization) }
+          let!(:rule) { create(:rule, trigger: trigger, automation: automation) }
 
           it "is fired" do
             expect_any_instance_of(Rule).to receive(:perform).with(user)
@@ -29,7 +30,7 @@ RSpec.describe Automaton do
         end
 
         context "a instance rule for the trigger" do
-          let!(:rule) { create(:rule, trigger: trigger, organization: user.organization) }
+          let!(:rule) { create(:rule, trigger: trigger, automation: automation) }
 
           it "is fired" do
             expect_any_instance_of(Rule).to receive(:perform).with(user)

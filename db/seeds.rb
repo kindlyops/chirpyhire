@@ -63,12 +63,13 @@ if Rails.env.development?
     puts "Created Questions and Notices"
   end
 
-  unless org.rules.present?
-    candidate_rule = org.rules.create(trigger: subscribe_trigger, action: welcome_notice.create_action)
-    candidate_rule_2 = org.rules.create(trigger: subscribe_trigger, action: location_question.create_action)
+  unless org.automations.present?
+    automation = org.automations.create
+    candidate_rule = automation.rules.create(trigger: subscribe_trigger, action: welcome_notice.create_action(organization: org))
+    candidate_rule_2 = automation.rules.create(trigger: subscribe_trigger, action: location_question.create_action(organization: org))
 
-    location_rule = org.rules.create(trigger: location_trigger, action: tb_question.create_action)
-    tb_rule = org.rules.create(trigger: tb_trigger, action: thank_you_notice.create_action)
+    location_rule = automation.rules.create(trigger: location_trigger, action: tb_question.create_action(organization: org))
+    tb_rule = automation.rules.create(trigger: tb_trigger, action: thank_you_notice.create_action(organization: org))
     puts "Created rules"
   end
 

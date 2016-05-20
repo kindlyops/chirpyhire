@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :action do
+    organization
+
     trait :with_question do
       after(:create) do |action|
         create(:question, action: action)

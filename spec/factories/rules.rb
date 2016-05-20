@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :rule do
-    organization
+    automation
     trigger
     association :action, :with_notice
   end
