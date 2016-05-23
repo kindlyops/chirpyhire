@@ -19,26 +19,44 @@ RSpec.feature "Candidate" do
     expect(page).to have_text(candidate.status)
   end
 
-  context "with sent questions" do
-    scenario "has the sent questions" do
+  context "with inquiries" do
+    let(:question) { create(:template, :with_question).question }
+    let(:inquiry) { question.perform(user) }
+    let!(:inquiry_message) { inquiry.message.decorate }
+
+    scenario "has the inquiries" do
       visit candidate_path(candidate)
-      expect(page).to have_text(message.sender)
-      expect(page).to have_text(message.body)
-      expect(page).to have_text(time_ago_in_words(message.created_at))
+      expect(page).to have_text(inquiry_message.sender_name)
+      expect(page).to have_text(inquiry_message.body)
+      expect(page).to have_text(time_ago_in_words(inquiry_message.created_at))
     end
 
-    # context "with replies" do
-    #   scenario "has the replies" do
-    #     visit candidate_path(candidate)
+    context "with answers" do
+      let(:answer) { inquiry.perform(user, attributes_for(:message, body: Faker::Lorem.sentence)) }
+      let!(:answer_message) { answer.message.decorate }
 
-    #   end
-    # end
+      scenario "has the answer" do
+        visit candidate_path(candidate)
+        expect(page).to have_text(inquiry_message.sender_name)
+        expect(page).to have_text(inquiry_message.body)
+        expect(page).to have_text(time_ago_in_words(inquiry_message.created_at))
+        expect(page).to have_text(answer_message.sender_name)
+        expect(page).to have_text(answer_message.body)
+        expect(page).to have_text(time_ago_in_words(answer_message.created_at))
+      end
+    end
   end
 
-  # context "with notifications" do
-  #   scenario "has the notifications" do
-  #     visit candidate_path(candidate)
+  context "with notifications" do
+    let(:notice) { create(:template, :with_notice).notice }
+    let(:notification) { notice.perform(user) }
+    let!(:notification_message) { notification.message.decorate }
 
-  #   end
-  # end
+    scenario "has the notifications" do
+      visit candidate_path(candidate)
+      expect(page).to have_text(notification_message.sender_name)
+      expect(page).to have_text(notification_message.body)
+      expect(page).to have_text(time_ago_in_words(notification_message.created_at))
+    end
+  end
 end

@@ -7,7 +7,7 @@ class Candidate < ActiveRecord::Base
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
-           :organization, to: :user
+           :organization, :messages, to: :user
 
   delegate :contact_first_name, to: :organization
   delegate :created_at, to: :last_referral, prefix: true

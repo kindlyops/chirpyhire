@@ -7,10 +7,12 @@ class Message < ActiveRecord::Base
   delegate :organization, to: :user
 
   def sender
-    if inquiry || notification
-      organization
-    else
-      user
+    @sender ||= begin
+      if inquiry || notification
+        organization
+      else
+        user
+      end
     end
   end
 
