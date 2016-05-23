@@ -1,0 +1,52 @@
+.rule
+  .row
+    .col-xs-12
+      .panel.panel-default
+        .panel-body
+          h1 Screening Rule
+  .row.flex.flex-center
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-bolt.fa-5x
+            .col-xs-9
+              h1 Trigger
+              span When this event happens...
+          hr
+          .row.flex.flex-center.observable
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x class== rule.trigger_icon_class
+            .col-xs-9
+              h1 = rule.trigger_title
+              span = rule.trigger_subtitle
+          - if rule.trigger_event != "subscribe"
+            .row
+              .col-xs-12
+                .panel.panel-default
+                  .panel-body
+                    strong = rule.trigger_label
+    .col-xs-2
+      i.fa.fa-arrow-right.fa-5x
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-gear.fa-5x
+            .col-xs-9
+              h1 Action
+              span ...do this.
+          hr
+          .row.flex.flex-center.action
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x.rule-icon class== rule.action_icon_class
+            .col-xs-9
+              h1 = rule.action_title
+              span = rule.action_subtitle
+          .row
+            .col-xs-12
+              .panel.panel-default
+                .panel-body
+                  strong = rule.action_label

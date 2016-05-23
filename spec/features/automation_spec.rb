@@ -13,7 +13,7 @@ RSpec.feature "Automation" do
     scenario "has a table of Rules" do
       visit automation_path(automation)
       expect(page).to have_text("Screen")
-      expect(page).to have_text("Rule")
+      expect(page).to have_text("Trigger")
       expect(page).to have_text("Action")
       expect(page).to have_text("Status")
     end

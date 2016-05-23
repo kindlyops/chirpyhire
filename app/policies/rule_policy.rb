@@ -11,12 +11,16 @@ class RulePolicy < ApplicationPolicy
     account.organization == rule.organization
   end
 
+  def show?
+    create?
+  end
+
   def update?
     create?
   end
 
   def edit?
-    update?
+    create?
   end
 
   def new?
