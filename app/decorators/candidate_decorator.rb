@@ -8,4 +8,8 @@ class CandidateDecorator < Draper::Decorator
   def last_referrer
     object.last_referrer.decorate
   end
+
+  def statuses
+    Candidate::STATUSES
+  end
 end

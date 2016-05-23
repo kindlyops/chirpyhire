@@ -1,7 +1,22 @@
 class CandidatePolicy < ApplicationPolicy
+
+  def initialize(account, candidate)
+    @account = account
+    @candidate = candidate
+  end
+
   def index?
     true
   end
+
+  def show?
+    return unless account.present?
+    account.organization == candidate.organization
+  end
+
+  private
+
+  attr_reader :account, :candidate
 
   class Scope
     attr_reader :account, :scope

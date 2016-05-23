@@ -33,8 +33,8 @@
 // BEGIN SITE SCRIPTS
 
 //= require indexTable
-//= require rules
-//= require rule
+//= require clickTable
+//= require select
 
 //  I prefer to list scripts in a specific order, so I comment out require_tree .
 // require_tree .

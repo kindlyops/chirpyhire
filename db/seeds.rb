@@ -50,8 +50,8 @@ if Rails.env.development?
   end
 
   unless org.templates.present?
-    welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-    location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
+    welcome = org.templates.create(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+    location = org.templates.create(name: "Location", body: "What is your street address and zipcode?")
     tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
     thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
     puts "Created Templates"

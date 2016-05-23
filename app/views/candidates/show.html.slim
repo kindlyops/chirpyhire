@@ -1,0 +1,31 @@
+.candidate
+  .row
+    .col-xs-3
+      .page-header
+        h2 = candidate.name
+    .col-xs-9
+      button.btn.btn-default
+        ' Message
+        i.fa.fa-commenting
+      = select_tag "status", options_for_select(candidate.statuses, candidate.status)
+  .row
+    .col-xs-3
+      = candidate.phone_number.phony_formatted
+    .col-xs-9
+      .panel.panel-default.messages
+        .panel-body
+          table.table.table-hover.no-footer role="grid"
+            thead
+              tr role="row"
+                th rowspan="1" colspan="1" aria-label="Sender" Sender
+                th rowspan="1" colspan="1" aria-label="Body" Body
+                th rowspan="1" colspan="1" aria-label="Sent At" Sent At
+            tbody
+              / - candidate.messages.each do |message|
+              /   tr.message role="row"
+              /     td.v-align-middle
+              /       p = message.sender
+              /     td.v-align-middle
+              /       p = message.body
+              /     td.v-align-middle
+              /       p = "#{time_ago_in_words(message.created_at)} ago"

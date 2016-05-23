@@ -3,7 +3,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
 
   resources :templates, only: :index
-  resources :candidates, only: :index
+  resources :candidates, only: [:index, :show]
   resources :referrers, only: :index
   resources :automations, only: :show do
     resources :rules, except: [:index, :destroy], shallow: true
