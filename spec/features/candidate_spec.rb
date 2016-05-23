@@ -32,7 +32,7 @@ RSpec.feature "Candidate" do
     end
 
     context "with answers" do
-      let(:answer) { inquiry.perform(user, attributes_for(:message, body: Faker::Lorem.sentence)) }
+      let(:answer) { user.answer(inquiry, attributes_for(:message, body: Faker::Lorem.sentence)) }
       let!(:answer_message) { answer.message.decorate }
 
       scenario "has the answer" do

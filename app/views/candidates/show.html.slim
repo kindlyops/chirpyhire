@@ -4,14 +4,22 @@
       .page-header
         h2 = candidate.name
     .col-xs-9
-      button.btn.btn-default
+      button.btn.btn-default.message
         ' Message
         i.fa.fa-commenting
-      = select_tag "status", options_for_select(candidate.statuses, candidate.status)
+      = select_tag "status", options_for_select(candidate.statuses, candidate.status), disabled: true, class: "pull-right"
   .row
     .col-xs-3
       = candidate.phone_number.phony_formatted
     .col-xs-9
+      = select_tag "template", options_from_collection_for_select(current_organization.templates, "body", "name"), prompt: "Choose a template...", class: "pull-right"
+      textarea.form-control
+      button.btn.btn-primary.pull-right.btn-sm
+        ' Send
+        i.fa.fa-paper-plane-o
+      i.fa.fa-trash
+  .row
+    .col-xs-9.col-xs-offset-3
       .panel.panel-default.messages
         .panel-body
           table.table.table-hover.no-footer role="grid"

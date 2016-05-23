@@ -18,7 +18,7 @@ class AnswersController < SmsController
   end
 
   def answer
-    outstanding_inquiry.perform(sender, body: params["Body"], sid: params["MessageSid"])
+    sender.answer(outstanding_inquiry, body: params["Body"], sid: params["MessageSid"])
   end
 
   def outstanding_inquiry

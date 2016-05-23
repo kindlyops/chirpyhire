@@ -20,6 +20,11 @@ class User < ActiveRecord::Base
     inquiries.unanswered.first
   end
 
+  def answer(inquiry, answer)
+    message = messages.create(body: answer[:body], sid: answer[:sid])
+    inquiry.create_answer(message: message)
+  end
+
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
     messages.create(body: message.body, sid: message.sid)
