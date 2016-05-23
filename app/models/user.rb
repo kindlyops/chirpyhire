@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :notifications
 
   delegate :name, :phone_number, to: :organization, prefix: true
-  delegate :owner_first_name, to: :organization
+  delegate :contact_first_name, to: :organization
   accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
@@ -21,13 +21,5 @@ class User < ActiveRecord::Base
 
   def receive_message(body:)
     organization.send_message(to: phone_number, body: body)
-  end
-
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def phone_number
-    super || ""
   end
 end

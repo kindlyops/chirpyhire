@@ -1,3 +1,20 @@
+GIT
+  remote: git@github.com:DockYard/capybara-email.git
+  revision: c30c5f0a211d32ad489bc3070cbb4a9cc809d20c
+  ref: c30c5f0
+  specs:
+    capybara-email (2.5.0)
+      capybara (~> 2.4)
+      mail
+
+GIT
+  remote: git@github.com:elabs/pundit.git
+  revision: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
+  ref: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
+  specs:
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,9 +71,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-email (2.5.0)
-      capybara (~> 2.4)
-      mail
     coderay (1.1.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -85,6 +99,11 @@ GEM
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
+    draper (2.1.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0)
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.7.0)
@@ -130,7 +149,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
-    minitest (5.8.4)
+    minitest (5.9.0)
     multi_json (1.11.2)
     multi_xml (0.5.5)
     namae (0.10.1)
@@ -155,6 +174,9 @@ GEM
     puma (3.4.0)
     puma-heroku (1.0.0)
       puma (~> 3.0)
+    pundit-matchers (1.0.2)
+      pundit (~> 1.0, >= 1.0.0)
+      rspec-rails (>= 3.0.0)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -193,6 +215,7 @@ GEM
     rdoc (4.2.2)
       json (~> 1.4)
     redis (3.3.0)
+    request_store (1.3.1)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
     rollbar (2.10.0)
@@ -287,12 +310,13 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
   brakeman (~> 3.3.0)
   capybara (~> 2.7.0)
-  capybara-email (~> 2.5.0)
+  capybara-email!
   coffee-rails (~> 4.1.0)
   database_cleaner (~> 1.5.0)
   devise (~> 4.0.0)
   devise_invitable (~> 1.6.0)
   dotenv-rails (~> 2.1.0)
+  draper (~> 2.1.0)
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.6.0)
@@ -310,6 +334,8 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.4.0)
   puma-heroku (~> 1.0.0)
+  pundit!
+  pundit-matchers (~> 1.0.2)
   rails (= 4.2.6)
   rails_12factor (~> 0.0.3)
   rollbar (~> 2.10.0)

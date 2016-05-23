@@ -1,11 +1,12 @@
 class CandidatesController < ApplicationController
+  decorates_assigned :candidates
   def index
-    @candidates = candidates
+    @candidates = scoped_candidates
   end
 
   private
 
-  def candidates
-    organization.candidates
+  def scoped_candidates
+    policy_scope(Candidate)
   end
 end

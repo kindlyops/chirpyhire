@@ -27,7 +27,7 @@ if Rails.env.development?
   puts "Creating Account"
   email = ENV.fetch("DEV_EMAIL")
   unless user.account.present?
-    user.create_account(password: "password", password_confirmation: "password", role: Account.roles[:owner], user: user, email: email, super_admin: true)
+    user.create_account(password: "password", password_confirmation: "password", user: user, email: email, super_admin: true)
   end
   puts "Created Account"
 
@@ -43,6 +43,12 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
+  unless org.triggers.present?
+    subscribe_trigger = org.triggers.create(event: "subscribe")
+    location_trigger = org.triggers.create(event: "answer")
+    tb_trigger = org.triggers.create(event: "answer")
+  end
+
   unless org.templates.present?
     welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
     location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
@@ -51,21 +57,20 @@ if Rails.env.development?
     puts "Created Templates"
 
     welcome_notice = welcome.create_notice
-    location_question = location.create_question
-    tb_question = tb_test.create_question(format: Question.formats[:image])
+    location_question = location.create_question(format: "text", trigger: location_trigger)
+    tb_question = tb_test.create_question(format: "image", trigger: tb_trigger)
     thank_you_notice = thank_you.create_notice
     puts "Created Questions and Notices"
   end
 
-  unless org.triggers.present?
-    candidate_trigger = org.triggers.create(observable_type: "Candidate", event: "subscribe")
-    location_trigger = org.triggers.create(observable: location_question, event: "answer")
-    tb_trigger = org.triggers.create(observable: tb_question, event: "answer")
+  unless org.automations.present?
+    automation = org.automations.create
+    candidate_rule = automation.rules.create(trigger: subscribe_trigger, action: welcome_notice.create_action(organization: org))
+    candidate_rule_2 = automation.rules.create(trigger: subscribe_trigger, action: location_question.create_action(organization: org))
 
-    candidate_trigger.actions.create([{actionable: welcome_notice},{actionable: location_question}])
-    location_trigger.actions.create(actionable: tb_question)
-    tb_trigger.actions.create(actionable: thank_you_notice)
-    puts "Created triggers and actions"
+    location_rule = automation.rules.create(trigger: location_trigger, action: tb_question.create_action(organization: org))
+    tb_rule = automation.rules.create(trigger: tb_trigger, action: thank_you_notice.create_action(organization: org))
+    puts "Created rules"
   end
 
   puts "Development specific seeding completed"

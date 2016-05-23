@@ -6,9 +6,10 @@ RSpec.describe RegistrationsController, type: :controller do
   end
 
   describe "#create" do
+    let(:email) { "bob@someemail.com" }
     let(:account_params) do
       { account: {
-        email: "bob@someemail.com",
+        email: email,
         password: "password",
         password_confirmation: "password",
         user_attributes: {
@@ -44,6 +45,11 @@ RSpec.describe RegistrationsController, type: :controller do
       expect {
         post :create, account_params
       }.to change{User.count}.by(1)
+    end
+
+    it "creates a contact user" do
+      post :create, account_params
+      expect(Account.find_by(email: email).user.contact?).to eq(true)
     end
   end
 end

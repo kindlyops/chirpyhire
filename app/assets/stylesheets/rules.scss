@@ -1,4 +1,4 @@
-.new-trigger {
+.new-rule {
   width: 33%;
   float: right;
 
@@ -8,8 +8,10 @@
   }
 }
 
-.triggers {
-  .trigger {
+.rules {
+  .rule {
+    cursor: pointer;
+
     span.fa-stack {
       margin: 0 10px 0 0;
       i.fa {

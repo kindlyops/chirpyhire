@@ -1,22 +1,16 @@
 class Trigger < ActiveRecord::Base
   belongs_to :organization
-  belongs_to :observable, polymorphic: true
-  has_many :actions
-  enum status: [:enabled, :disabled]
-  enum event: [:subscribe,
-                   :invalid_subscribe,
-                   :answer,
-                   :invalid_answer,
-                   :refer,
-                   :invalid_refer,
-                   :invalid_message,
-                   :unsubscribe,
-                   :invalid_unsubscribe]
+  has_many :rules
+  has_one :question
 
-  validates :observable_type, inclusion: { in: %w(Candidate Question),
-      message: "%{value} is not a valid observable type" }
+  delegate :template_name, :options, to: :question
+  validates :event, inclusion: { in: %w(subscribe answer) }
 
-  def fire(user)
-    actions.each { |action| action.perform(user) }
+  def decorator_class
+    "#{event.humanize}Decorator".constantize
+  end
+
+  def self.for(event)
+    where(event: event)
   end
 end

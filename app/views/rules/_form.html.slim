@@ -1,0 +1,62 @@
+= form_for @rule do |f|
+  - if @rule.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@rule.errors.count, "error")} prohibited this rule from being saved:"
+      ul
+        - @rule.errors.full_messages.each do |message|
+          li = message
+  .row
+    .col-xs-12
+      .panel.panel-default
+        .panel-body
+          h1 Screening Rule
+  .row.flex.flex-center
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-bolt.fa-5x
+            .col-xs-9
+              h1 Trigger
+              span When this event happens...
+          hr
+          .row.flex.flex-center.observable
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x class== rule.trigger_icon_class
+            .col-xs-9
+              h1 = rule.trigger_title
+              span = rule.trigger_subtitle
+          - if rule.trigger_event != "subscribe"
+            .row
+              .col-xs-12
+                = f.collection_select(:trigger_id, current_organization.triggers.for(rule.trigger_event).decorate, :id, :label, {}, style: "width: 100%")
+    .col-xs-2
+      i.fa.fa-arrow-right.fa-5x
+    .col-xs-5
+      .panel.panel-default
+        .panel-body
+          .row.flex.flex-center
+            .col-xs-3.flex.flex-center
+              i.fa.fa-gear.fa-5x
+            .col-xs-9
+              h1 Action
+              span ...do this.
+          hr
+          .row.flex.flex-center.action
+            .col-xs-3.flex.flex-center
+              i.fa.fa-5x.rule-icon class== rule.action_icon_class
+            .col-xs-9
+              h1 = rule.action_title
+              span = rule.action_subtitle
+          .row
+            .col-xs-12
+              = f.collection_select(:action_id, current_organization.actions.for(rule.action).decorate, :id, :label, {}, style: "width: 100%")
+  .row
+    .col-xs-12
+      .panel.panel-default
+        .panel-body
+          = link_to 'Delete Rule', @rule, method: :delete, class: "btn btn-danger"
+          = f.submit 'Save Rule', class: "btn btn-primary btn-lg pull-right"
+          = link_to 'Cancel', rule.automation, class: "btn btn-default pull-right"
+

@@ -48,7 +48,8 @@ group :test do
   gem 'capybara', '~> 2.7.0'
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'capybara-email', '~> 2.5.0'
+  gem 'capybara-email', git: "git@github.com:DockYard/capybara-email.git", ref: "c30c5f0"
+  gem 'pundit-matchers', '~> 1.0.2'
 end
 
 group :development do
@@ -80,5 +81,7 @@ gem 'puma', '~> 3.4.0'
 gem 'puma-heroku', '~> 1.0.0'
 gem 'font-awesome-rails', '~> 4.6.0'
 gem 'bootstrap-sass', '~> 3.3.6'
-gem 'jquery-datatables-rails', '~>3.4.0'
+gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'indefinite_article', '~> 0.2.4'
+gem 'pundit', git: 'git@github.com:elabs/pundit.git', ref: '58eda659d44a2e9d5e022fd23cc0f65bad7f7d82'
+gem 'draper', '~> 2.1.0'

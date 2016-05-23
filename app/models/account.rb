@@ -4,7 +4,6 @@ class Account < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  enum role: [:admin, :owner]
   belongs_to :user
 
   delegate :first_name, :last_name, :name, :organization, to: :user

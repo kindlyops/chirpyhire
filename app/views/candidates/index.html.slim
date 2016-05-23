@@ -17,7 +17,7 @@
             th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referrer
             th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
         tbody
-          - @candidates.each do |candidate|
+          - candidates.each do |candidate|
             tr role="row"
               td.v-align-middle
                 p = candidate.name
@@ -26,6 +26,6 @@
               td.v-align-middle
                 p = candidate.last_referrer_name
               td.v-align-middle
-                - if candidate.last_referred_at
-                  p = "#{time_ago_in_words(candidate.last_referred_at)} ago"
+                - if candidate.last_referral_created_at
+                  p = "#{time_ago_in_words(candidate.last_referral_created_at)} ago"
 

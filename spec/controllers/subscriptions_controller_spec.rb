@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let(:organization) { create(:organization, :with_phone, :with_owner) }
+  let(:organization) { create(:organization, :with_phone, :with_contact) }
   let(:phone_number) { "+15555555555" }
   describe "#create" do
     let(:params) do
@@ -17,6 +17,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
       context "with an existing candidate" do
+        let!(:trigger) { create(:trigger, organization: user.organization) }
         let!(:candidate) { create(:candidate, user: user) }
 
         context "with an active subscription" do
@@ -39,7 +40,7 @@ RSpec.describe SubscriptionsController, type: :controller do
           it "creates a subscribe Automaton Job" do
             expect {
               post :create, params
-            }.to have_enqueued_job(AutomatonJob).with(user, candidate, "subscribe")
+            }.to have_enqueued_job(AutomatonJob).with(user, trigger)
           end
         end
       end

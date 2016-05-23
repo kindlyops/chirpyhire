@@ -23,6 +23,7 @@
 //= require pages-plugins/imagesloaded/imagesloaded.pkgd.min
 //= require pages-plugins/jquery-actual/jquery.actual.min
 //= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
+//= require pages-plugins/bootstrap-select2/select2.min.js
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 
@@ -32,6 +33,8 @@
 // BEGIN SITE SCRIPTS
 
 //= require indexTable
+//= require rules
+//= require rule
 
 //  I prefer to list scripts in a specific order, so I comment out require_tree .
 // require_tree .

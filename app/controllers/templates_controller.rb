@@ -1,4 +1,5 @@
 class TemplatesController < ApplicationController
+
   def index
     @templates = templates
   end
@@ -6,6 +7,6 @@ class TemplatesController < ApplicationController
   private
 
   def templates
-    organization.templates
+    policy_scope Template
   end
 end

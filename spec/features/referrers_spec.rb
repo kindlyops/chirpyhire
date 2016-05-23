@@ -21,13 +21,13 @@ RSpec.feature "Referrers" do
     context "with referrers" do
       include ActionView::Helpers::DateHelper
       let(:user) { create(:user, organization: organization) }
-      let!(:referrer) { create(:referrer, :with_referral, user: user) }
+      let!(:referrer) { create(:referrer, :with_referral, user: user).decorate }
       scenario "has the referrer information" do
         visit referrers_path
         expect(page).to have_text(referrer.name)
         expect(page).to have_text(referrer.phone_number.phony_formatted)
-        expect(page).to have_text(referrer.last_referral_name)
-        expect(page).to have_text("#{time_ago_in_words(referrer.last_referral_at)}")
+        expect(page).to have_text(referrer.last_referred_name)
+        expect(page).to have_text("#{time_ago_in_words(referrer.last_referral_created_at)}")
       end
     end
   end

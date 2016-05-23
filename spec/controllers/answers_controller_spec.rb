@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:organization) { create(:organization, :with_phone) }
+  let(:trigger) { create(:trigger, event: :answer, organization: organization) }
+  let(:question) { create(:question, trigger: trigger) }
+
   let(:user) { create(:user, organization: organization) }
   let(:candidate) { create(:candidate, user: user) }
-  let!(:inquiry) { create(:inquiry, user: user) }
+  let!(:inquiry) { create(:inquiry, user: user, question: question) }
 
   let(:messaging) { FakeMessaging.new("foo", "bar") }
   let(:from) { candidate.phone_number }
@@ -37,7 +40,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates an answer automaton job" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(user, inquiry.question, "answer")
+        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
       end
     end
 

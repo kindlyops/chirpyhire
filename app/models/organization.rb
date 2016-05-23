@@ -5,22 +5,25 @@ class Organization < ActiveRecord::Base
   has_many :referrals, through: :referrers
   has_many :accounts, through: :users
   has_many :templates
+  has_many :automations
   has_many :triggers
+  has_many :actions
 
   has_one :phone
 
   delegate :number, to: :phone, prefix: true
+  delegate :first_name, to: :contact, prefix: true
 
   def self.for(phone:)
     joins(:phone).find_by(phones: { number: phone })
   end
 
-  def owner
-    accounts.find_by(role: Account.roles[:owner])
+  def contact
+    users.find_by(contact: true)
   end
 
-  def owner_first_name
-    owner.first_name
+  def screen
+    automations.first
   end
 
   def subscribed_candidates
@@ -33,6 +36,14 @@ class Organization < ActiveRecord::Base
 
   def messages
     messaging_client.messages
+  end
+
+  def questions
+    templates.joins(:question).map(&:question)
+  end
+
+  def notices
+    templates.joins(:notice).map(&:notice)
   end
 
   private

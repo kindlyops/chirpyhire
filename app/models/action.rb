@@ -1,10 +1,16 @@
 class Action < ActiveRecord::Base
-  belongs_to :actionable, polymorphic: true
-  belongs_to :trigger
+  has_many :rules
+  belongs_to :organization
+  has_one :question
+  has_one :notice
 
-  delegate :perform, to: :actionable
+  delegate :template_name, :actions, to: :actionable
 
-  def description
-    actionable.template_name
+  def self.for(action)
+    joins(action.actionable.model_name.param_key.to_sym)
+  end
+
+  def actionable
+    question || notice
   end
 end

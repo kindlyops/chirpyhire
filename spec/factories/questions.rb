@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :question do
     template
+    format "text"
 
     trait :with_inquiry do
       after(:create) do |question|
