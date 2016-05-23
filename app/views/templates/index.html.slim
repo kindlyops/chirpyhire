@@ -1,24 +1,34 @@
 = title "Templates | chirpyhire"
-.page-header
-  h2 Templates
-.panel.panel-default
-    .panel-heading
-      .pull-right
-        .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Search"
-      .clearfix
-    .panel-body
-      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
-        thead
-          tr role="row"
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Body
-            : activate to sort column descending" Body
-        tbody
-          - @templates.each do |template|
+
+.templates
+  .page-header
+    h2 Templates
+  .panel.panel-default
+      .panel-heading
+        .pull-right
+          .col-xs-12
+            input#search-table.form-control.pull-right type="text" placeholder="Search"
+        .clearfix
+      .panel-body
+        table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+          thead
             tr role="row"
-              td.v-align-middle
-                p = template.name
-              td.v-align-middle
-                p = template.body
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Body
+              : activate to sort column descending" Body
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Created
+              : activate to sort column descending" Created
+          tbody
+            - @templates.each do |template|
+              tr role="row"
+                td.v-align-middle.name
+                  p
+                    span.fa-stack.icon title==template.category
+                      i.fa.fa-comment-o.fa-stack-2x
+                      i.fa.fa-stack-1x class==template.icon_class
+                    strong = template.name
+                td.v-align-middle.body
+                  p = template.body
+                td.v-align-middle
+                  p = "#{time_ago_in_words(template.created_at)} ago"
 

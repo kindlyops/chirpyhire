@@ -20,4 +20,8 @@ class NoticeDecorator < Draper::Decorator
   def options
     organization.notices
   end
+
+  def category
+    object.class.to_s.humanize
+  end
 end
