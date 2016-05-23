@@ -8,6 +8,6 @@ class Notice < ActiveRecord::Base
 
   def perform(user)
     message = user.receive_message(body: template.render(user))
-    notifications.create(user: user, message_sid: message.sid)
+    notifications.create(message: message)
   end
 end

@@ -1,8 +1,8 @@
 class Inquiry < ActiveRecord::Base
   belongs_to :question
-  belongs_to :user
+  belongs_to :message
   has_one :answer
-  delegate :organization, to: :user
+  delegate :organization, to: :message
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 

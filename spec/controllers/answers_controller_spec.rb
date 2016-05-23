@@ -5,9 +5,9 @@ RSpec.describe AnswersController, type: :controller do
   let(:trigger) { create(:trigger, event: :answer, organization: organization) }
   let(:question) { create(:question, trigger: trigger) }
 
-  let(:user) { create(:user, organization: organization) }
+  let(:user) { create(:user, :with_message, organization: organization) }
   let(:candidate) { create(:candidate, user: user) }
-  let!(:inquiry) { create(:inquiry, user: user, question: question) }
+  let!(:inquiry) { create(:inquiry, message: user.messages.first, question: question) }
 
   let(:messaging) { FakeMessaging.new("foo", "bar") }
   let(:from) { candidate.phone_number }
@@ -71,7 +71,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context "image mismatch" do
-        let!(:inquiry) { create(:inquiry, :with_image_question, user: user) }
+        let!(:inquiry) { create(:inquiry, :with_image_question, message: user.messages.first) }
         let(:message) { messaging.create(from: from, to: to, body: "foo", format: :text) }
 
         let(:params) do

@@ -21,6 +21,6 @@ class Question < ActiveRecord::Base
     return if user.outstanding_inquiry.present?
 
     message = user.receive_message(body: template.render(user))
-    inquiries.create(user: user, message_sid: message.sid)
+    inquiries.create(message: message)
   end
 end

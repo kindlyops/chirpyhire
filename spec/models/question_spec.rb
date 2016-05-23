@@ -20,7 +20,9 @@ RSpec.describe Question, type: :model do
     end
 
     context "with an outstanding inquiry" do
-      let!(:inquiry) { create(:inquiry, user: user) }
+      before(:each) do
+        subject.perform(user)
+      end
 
       it "does not create an inquiry" do
         expect {

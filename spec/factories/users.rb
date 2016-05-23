@@ -17,6 +17,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_message do
+      after(:create) do |user|
+        create(:message, user: user)
+      end
+    end
+
     trait :with_contact do
       contact { true }
     end

@@ -1,9 +1,10 @@
 class Answer < ActiveRecord::Base
   belongs_to :inquiry
-  belongs_to :user
-  delegate :organization, to: :user
+  belongs_to :message
+  delegate :organization, to: :message
 
   validate :expected_format
+  accepts_nested_attributes_for :message
 
   def expected_format
     unless inquiry.expects?(self)
@@ -22,11 +23,5 @@ class Answer < ActiveRecord::Base
   def format
     return :image if has_images?
     :text
-  end
-
-  private
-
-  def message
-    @message ||= organization.messages.get(message_sid)
   end
 end

@@ -18,7 +18,7 @@ class AnswersController < SmsController
   end
 
   def answer
-    outstanding_inquiry.create_answer(user: sender, message_sid: params["MessageSid"])
+    outstanding_inquiry.create_answer(message_attributes: { user: sender, body: params["Body"], sid: params["MessageSid"] })
   end
 
   def outstanding_inquiry
