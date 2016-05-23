@@ -8,6 +8,10 @@ class RulesController < ApplicationController
     @rule = authorize rule
   end
 
+  def show
+    @rule = authorized_rule
+  end
+
   def edit
     @rule = authorized_rule
   end
@@ -26,7 +30,7 @@ class RulesController < ApplicationController
     if authorized_rule.update(permitted_attributes(authorized_rule))
       redirect_to authorized_rule, notice: 'Rule was successfully updated.'
     else
-      render :edit
+      render :show
     end
   end
 

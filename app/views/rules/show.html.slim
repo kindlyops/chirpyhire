@@ -1,10 +1,9 @@
-= form_for @rule do |f|
-  - if @rule.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@rule.errors.count, "error")} prohibited this rule from being saved:"
-      ul
-        - @rule.errors.full_messages.each do |message|
-          li = message
+.rule
+  .row
+    .col-xs-12
+      .panel.panel-default.rule-title
+        .panel-body
+          h1 Screening Rule
   .row.flex.flex-center
     .col-xs-5
       .panel.panel-default
@@ -25,7 +24,9 @@
           - if rule.trigger_event != "subscribe"
             .row
               .col-xs-12
-                = f.collection_select(:trigger_id, current_organization.triggers.for(rule.trigger_event).decorate, :id, :label, {}, style: "width: 100%")
+                .panel.panel-default
+                  .panel-body
+                    strong = rule.trigger_label
     .col-xs-2
       i.fa.fa-arrow-right.fa-5x
     .col-xs-5
@@ -46,12 +47,6 @@
               span = rule.action_subtitle
           .row
             .col-xs-12
-              = f.collection_select(:action_id, current_organization.actions.for(rule.action).decorate, :id, :label, {}, style: "width: 100%")
-  .row
-    .col-xs-12
-      .panel.panel-default
-        .panel-body
-          = link_to 'Delete Rule', @rule, method: :delete, class: "btn btn-danger"
-          = f.submit 'Save Rule', class: "btn btn-primary btn-lg pull-right"
-          = link_to 'Cancel', rule.automation, class: "btn btn-default pull-right"
-
+              .panel.panel-default
+                .panel-body
+                  strong = rule.action_label

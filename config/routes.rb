@@ -2,11 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
-  resources :templates, only: [:index]
-  resources :candidates, only: [:index]
-  resources :referrers, only: [:index]
-  resources :automations, only: [:show] do
-    resources :rules, except: [:index, :destroy, :show], shallow: true
+  resources :templates, only: :index
+  resources :candidates, only: :index
+  resources :referrers, only: :index
+  resources :automations, only: :show do
+    resources :rules, except: [:index, :destroy], shallow: true
   end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new

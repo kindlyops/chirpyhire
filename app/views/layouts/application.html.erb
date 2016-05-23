@@ -30,14 +30,16 @@
             <span class="icon-thumbnail "><i class="fa fa-comment"></i>
                     </span>
           </li>
-          <li class="">
-            <a href=<%= "/automations/#{current_organization.screen.id}" %> class="detailed">
-              <span class="title">Screen</span>
-              <span class="details">Find Quality Caregivers</span>
-            </a>
-            <span class="icon-thumbnail "><i class="fa fa-filter"></i>
-                    </span>
-          </li>
+          <% if current_organization.screen.present? %>
+            <li class="">
+              <a href=<%= "/automations/#{current_organization.screen.id}" %> class="detailed">
+                <span class="title">Screen</span>
+                <span class="details">Find Quality Caregivers</span>
+              </a>
+              <span class="icon-thumbnail "><i class="fa fa-filter"></i>
+                      </span>
+            </li>
+          <% end %>
           <li class="">
             <a href="/referrers">
               <span class="title">Referrers</span>

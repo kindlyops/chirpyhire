@@ -125,10 +125,10 @@ RSpec.describe RulesController, type: :controller do
         }.not_to change{automation.rules.count}
       end
 
-      it "renders the edit template" do
+      it "renders the show template" do
         put :update, invalid_params
 
-        expect(response).to render_template("edit")
+        expect(response).to render_template("show")
       end
     end
   end

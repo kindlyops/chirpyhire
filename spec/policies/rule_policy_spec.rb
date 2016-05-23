@@ -36,7 +36,9 @@ RSpec.describe RulePolicy do
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }
+      it { should permit_action(:show) }
       it { should permit_action(:destroy) }
+
       it { should permit_mass_assignment_of(:enabled) }
       it { should permit_mass_assignment_of(:trigger_id) }
       it { should permit_mass_assignment_of(:action_id) }

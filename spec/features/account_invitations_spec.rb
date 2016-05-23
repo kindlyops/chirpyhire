@@ -36,7 +36,7 @@ RSpec.feature "Account Invitations" do
       fill_in "Password confirmation", with: invited.password_confirmation
 
       click_button "Set your password"
-      expect(page).to have_text("Screen")
+      expect(page).to have_text("Candidates")
     end
   end
 end
