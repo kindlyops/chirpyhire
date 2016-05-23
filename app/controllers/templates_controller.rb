@@ -1,7 +1,7 @@
 class TemplatesController < ApplicationController
 
   def index
-    @templates = templates
+    @templates = templates.decorate
   end
 
   private

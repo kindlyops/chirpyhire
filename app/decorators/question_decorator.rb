@@ -20,4 +20,8 @@ class QuestionDecorator < Draper::Decorator
   def options
     organization.questions
   end
+
+  def category
+    object.class.to_s.humanize
+  end
 end
