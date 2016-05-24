@@ -4,20 +4,13 @@
       .page-header
         h2 = candidate.name
     .col-xs-9
-      button.btn.btn-default.message
+      = link_to new_message_path(user_id: candidate.user_id), remote: true, class: "btn btn-default send-message" do
         ' Message
         i.fa.fa-commenting
       = select_tag "status", options_for_select(candidate.statuses, candidate.status), disabled: true, class: "pull-right"
-  .row
+  .row#new-message
     .col-xs-3
       = candidate.phone_number.phony_formatted
-    .col-xs-9
-      = select_tag "template", options_from_collection_for_select(current_organization.templates, "body", "name"), prompt: "Choose a template...", class: "pull-right"
-      textarea.form-control
-      button.btn.btn-primary.pull-right.btn-sm
-        ' Send
-        i.fa.fa-paper-plane-o
-      i.fa.fa-trash
   .row
     .col-xs-9.col-xs-offset-3
       .panel.panel-default.messages
@@ -29,11 +22,4 @@
                 th rowspan="1" colspan="1" aria-label="Body" Body
                 th rowspan="1" colspan="1" aria-label="Sent At" Sent At
             tbody
-              - candidate.messages.each do |message|
-                tr.message role="row"
-                  td.v-align-middle
-                    p = message.sender_name
-                  td.v-align-middle
-                    p = message.body
-                  td.v-align-middle
-                    p = "#{time_ago_in_words(message.created_at)} ago"
+              - render partial: "messages/message", collection: candidate.messages

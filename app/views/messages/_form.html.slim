@@ -1,0 +1,10 @@
+= form_for message do |f|
+  .col-xs-9
+    = select_tag "template", options_from_collection_for_select(current_organization.templates, "body", "name"), prompt: "Choose a template...", class: "pull-right"
+    = f.text_area(:body, placeholder: "Text a caregiver candidate...", class: "form-control")
+    button.btn.btn-primary.pull-right.btn-sm
+      ' Send
+      i.fa.fa-paper-plane-o
+    i.fa.fa-trash.cancel-message
+
+

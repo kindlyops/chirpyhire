@@ -1,0 +1,7 @@
+tr.message role="row"
+  td.v-align-middle
+    p = message.sender_name
+  td.v-align-middle
+    p = message.body
+  td.v-align-middle
+    p = "#{time_ago_in_words(message.created_at)} ago"
