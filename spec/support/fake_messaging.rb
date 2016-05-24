@@ -13,7 +13,7 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :sid) do
+  Message = Struct.new(:from, :to, :body, :media, :direction, :sid) do
     def num_media
       media.list.count.to_s
     end
@@ -37,14 +37,14 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, format: :text)
+  def create(from:, to:, body:, direction: "outbound-api", format: :text)
     if format == :text
       media = Media.new([])
     elsif format == :image
       media = Media.new([MediaInstance.new("image/jpeg")])
     end
 
-    message = Message.new(from, to, body, media, Faker::Lorem.word)
+    message = Message.new(from, to, body, media, direction, Faker::Lorem.word)
     self.class.messages << message
     message
   end

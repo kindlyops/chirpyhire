@@ -30,8 +30,8 @@ class Organization < ActiveRecord::Base
     candidates.subscribed
   end
 
-  def send_message(to:, body:)
-    messaging_client.send_message(to: to, body: body, from: phone_number)
+  def send_message(to:, body:, from: phone_number)
+    messaging_client.send_message(to: to, body: body, from: from)
   end
 
   def messages

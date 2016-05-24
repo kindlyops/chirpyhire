@@ -3,7 +3,7 @@
     .col-xs-3
       .page-header
         h2 = candidate.name
-    .col-xs-9
+    .col-xs-9.menu
       = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting

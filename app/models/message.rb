@@ -8,12 +8,16 @@ class Message < ActiveRecord::Base
 
   def sender
     @sender ||= begin
-      if inquiry || notification
+      if direction == "outbound-api"
         organization
-      else
+      elsif direction == "inbound"
         user
       end
     end
+  end
+
+  def direction
+    message.direction
   end
 
   def media
