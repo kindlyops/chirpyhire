@@ -12,10 +12,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = scoped_messages.build(permitted_attributes(Message))
-    if message.valid?
-      authorize message
-      message.relay
+    @message = scoped_messages.build(permitted_attributes(Message))
+    if @message.valid?
+      authorize @message
+      @message.relay
 
       respond_to do |format|
         format.js {}
@@ -30,6 +30,6 @@ class MessagesController < ApplicationController
   end
 
   def recipient
-    User.find(params[:user_id])
+    @recipient ||= User.find(params[:user_id])
   end
 end

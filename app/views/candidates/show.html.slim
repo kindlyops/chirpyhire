@@ -4,7 +4,7 @@
       .page-header
         h2 = candidate.name
     .col-xs-9
-      = link_to new_message_path(user_id: candidate.user_id), remote: true, class: "btn btn-default send-message" do
+      = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-default send-message" do
         ' Message
         i.fa.fa-commenting
       = select_tag "status", options_for_select(candidate.statuses, candidate.status), disabled: true, class: "pull-right"

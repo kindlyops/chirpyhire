@@ -22,7 +22,8 @@ class Message < ActiveRecord::Base
 
   def relay
     return if sid.present?
-    user.receive_message(body: body)
+    message = user.receive_message(body: body)
+    update(sid: message.sid)
   end
 
   private
