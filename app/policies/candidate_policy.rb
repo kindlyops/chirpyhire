@@ -14,6 +14,14 @@ class CandidatePolicy < ApplicationPolicy
     account.organization == candidate.organization
   end
 
+  def update?
+    show?
+  end
+
+  def permitted_attributes
+    [:status]
+  end
+
   private
 
   attr_reader :account, :candidate

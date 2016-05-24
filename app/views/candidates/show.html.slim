@@ -4,18 +4,23 @@
       .page-header
         h2 = candidate.name
     .col-xs-9
-      = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-default send-message" do
+      = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
-      = select_tag "status", options_for_select(candidate.statuses, candidate.status), disabled: true, class: "pull-right"
+      = render "form", locals: { candidate: candidate }
   .row#new-message
     .col-xs-3
       = candidate.phone_number.phony_formatted
   .row
     .col-xs-9.col-xs-offset-3
       .panel.panel-default.messages
+        .panel-heading
+          .pull-right
+            .col-xs-12
+              input#search-table.form-control.pull-right type="text" placeholder="Search"
+          .clearfix
         .panel-body
-          table.table.table-hover.no-footer role="grid"
+          table.table#tableNoSortWithSearch.table-hover.no-footer role="grid"
             thead
               tr role="row"
                 th rowspan="1" colspan="1" aria-label="Sender" Sender

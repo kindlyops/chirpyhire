@@ -10,6 +10,18 @@ class CandidatesController < ApplicationController
     @candidates = scoped_candidates
   end
 
+  def update
+    if authorized_candidate.update(permitted_attributes(Candidate))
+      @candidate = authorized_candidate
+
+      respond_to do |format|
+        format.js {
+          render :update
+        }
+      end
+    end
+  end
+
   private
 
   def authorized_candidate
