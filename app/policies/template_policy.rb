@@ -1,6 +1,18 @@
 class TemplatePolicy < ApplicationPolicy
+  attr_reader :account, :template
+
+  def initialize(account, template)
+    @account = account
+    @template = template
+  end
+
   def index?
     true
+  end
+
+  def preview?
+    return unless account.present?
+    account.organization == template.organization
   end
 
   class Scope

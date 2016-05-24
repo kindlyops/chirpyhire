@@ -7,7 +7,7 @@ class CandidateDecorator < Draper::Decorator
   delegate :name, :phone_number, to: :last_referrer, prefix: true
 
   def messages
-    @messages ||= object.messages.decorate
+    @messages ||= object.messages.order(created_at: :desc).decorate
   end
 
   def last_referrer

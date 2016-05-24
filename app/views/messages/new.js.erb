@@ -1,2 +1,9 @@
 $("<%= escape_javascript(render partial: 'form', locals: { user: @recipient, message: @message }) %>").appendTo("#new-message");
 $("#new-message select").select2();
+$("select#template").on("change", function(e) {
+  if (e.currentTarget.value === "") { return; }
+
+  $.get("/templates/" + e.currentTarget.value + "/preview?user_id=<%= @recipient.id %>", function(data) {
+    $("textarea#message_body").val(data);
+  }, "text");
+});

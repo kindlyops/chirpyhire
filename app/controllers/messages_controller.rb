@@ -12,10 +12,10 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = scoped_messages.build(permitted_attributes(Message))
-    if @message.valid?
-      authorize @message
-      @message.relay
+    message = scoped_messages.build(permitted_attributes(Message))
+    if message.valid?
+      authorize message
+      @message = message.relay
 
       respond_to do |format|
         format.js {}
@@ -30,6 +30,13 @@ class MessagesController < ApplicationController
   end
 
   def recipient
-    @recipient ||= User.find(params[:user_id])
+    @recipient ||= begin
+      recipient = User.find(params[:user_id])
+      if UserPolicy.new(current_account, recipient).show?
+        recipient
+      else
+        raise Pundit::NotAuthorizedError
+      end
+    end
   end
 end
