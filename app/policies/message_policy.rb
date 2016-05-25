@@ -11,24 +11,8 @@ class MessagePolicy < ApplicationPolicy
     account.organization == message.organization
   end
 
-  def show?
-    false
-  end
-
-  def update?
-    false
-  end
-
-  def edit?
-    false
-  end
-
   def new?
     create?
-  end
-
-  def destroy?
-    false
   end
 
   def permitted_attributes
@@ -36,15 +20,15 @@ class MessagePolicy < ApplicationPolicy
   end
 
   class Scope
-    attr_reader :recipient, :scope
+    attr_reader :account, :scope
 
-    def initialize(recipient, scope)
-      @recipient = recipient
+    def initialize(account, scope)
+      @account = account
       @scope = scope
     end
 
     def resolve
-      recipient.messages
+      scope.includes(:user).where(users: { organization_id: account.organization.id})
     end
   end
 end

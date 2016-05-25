@@ -26,7 +26,7 @@ class MessagesController < ApplicationController
   private
 
   def scoped_messages
-    MessagePolicy::Scope.new(recipient, Message).resolve
+    policy_scope(Message).where(user: recipient)
   end
 
   def recipient
