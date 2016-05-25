@@ -42,7 +42,7 @@ RSpec.describe RulePolicy do
       it { should permit_action(:show) }
       it { should permit_action(:destroy) }
 
-      it { should permit_mass_assignment_of(:enabled, :trigger_id, :action_id) }
+      it { should permit_mass_assignment_of(:enabled, :trigger_id, :action_id, :action_type, :automation_id) }
 
       it 'includes rule in resolved scope' do
         expect(resolved_scope).to include(rule)
