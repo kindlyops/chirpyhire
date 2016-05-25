@@ -5,10 +5,14 @@ FactoryGirl.define do
 
     transient do
       format :text
+      organization nil
     end
 
     before(:create) do |rule, evaluator|
       rule.actionable = create(:notice, organization: rule.organization)
+      if evaluator.organization
+        rule.automation = create(:automation, organization: evaluator.organization)
+      end
     end
 
     trait :answer_trigger do

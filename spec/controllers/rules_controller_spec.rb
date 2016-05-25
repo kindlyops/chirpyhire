@@ -4,8 +4,8 @@ RSpec.describe RulesController, type: :controller do
   let(:user) { create(:user, :with_account) }
   let(:account) { user.account }
   let(:organization) { user.organization }
-  let(:automation) { create(:automation, :with_rule, organization: organization) }
-  let!(:rule) { automation.rules.first }
+  let(:rule) { create(:rule, organization: organization) }
+  let!(:automation) { rule.automation }
 
   before(:each) do
     sign_in(account)
