@@ -27,7 +27,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
           it "lets the user know they were already subscribed" do
             post :create, params
-            expect(response.body).to include("You are already subscribed.")
+            expect(FakeMessaging.messages.last.body).to include("You are already subscribed.")
           end
         end
 
@@ -103,7 +103,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "lets the user know they are unsubscribed now" do
         delete :destroy, params
 
-        expect(response.body).to include("You are unsubscribed. To subscribe reply with START.")
+        expect(FakeMessaging.messages.last.body).to include("You are unsubscribed. To subscribe reply with START.")
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "lets the user know they were not subscribed" do
         delete :destroy, params
 
-        expect(response.body).to include("To subscribe reply with START.")
+        expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "lets the user know they aren't subscribed" do
         delete :destroy, params
 
-        expect(response.body).to include("To subscribe reply with START.")
+        expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
       end
     end
   end

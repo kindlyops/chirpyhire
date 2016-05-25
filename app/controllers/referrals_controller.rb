@@ -3,29 +3,30 @@ class ReferralsController < SmsController
   def create
     if referrer.present?
       referrer.refer(candidate)
-      render_sms thanks_and_notice
+      sender.receive_message(body: thanks)
+      sender.receive_message(body: notice)
     else
-      render_sms not_referrer
+      sender.receive_message(body: not_referrer)
     end
+    head :ok
   end
 
   private
 
-  def thanks_and_notice
-    Messaging::Response.new do |r|
-      r.Message "Awesome! Please copy and text to #{candidate.first_name}:"
-      r.Message "Hey #{candidate.first_name}. My home care agency, \
+  def thanks
+    "Awesome! Please copy and text to #{candidate.first_name}:"
+  end
+
+  def notice
+    "Hey #{candidate.first_name}. My home care agency, \
 #{organization.name}, regularly hires caregivers. They \
 treat me very well and have great clients. I think you \
 would be a great fit here. Text START to #{organization.phone_number} \
 to learn about opportunities."
-    end
   end
 
   def not_referrer
-    Messaging::Response.new do |r|
-      r.Message "Sorry you are not registered. Contact #{organization.name} if you would like to join the referral program."
-    end
+    "Sorry you are not registered. Contact #{organization.name} if you would like to join the referral program."
   end
 
   def referred_user

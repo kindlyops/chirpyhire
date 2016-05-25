@@ -3,18 +3,16 @@ class AnswersController < SmsController
   def create
     if answer.valid?
       AutomatonJob.perform_later(sender, trigger)
-      head :ok
     else
-      render_sms wrong_format_answer
+      sender.receive_message(body: wrong_format_answer)
     end
+    head :ok
   end
 
   private
 
   def wrong_format_answer
-    Messaging::Response.new do |r|
-      r.Message "We were looking for #{question.format.indefinitize} answer but you sent #{answer.format.indefinitize}. Please answer with #{question.format.indefinitize}."
-    end
+    "We were looking for #{question.format.indefinitize} answer but you sent #{answer.format.indefinitize}. Please answer with #{question.format.indefinitize}."
   end
 
   def answer
