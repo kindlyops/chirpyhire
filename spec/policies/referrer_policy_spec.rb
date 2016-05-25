@@ -11,6 +11,7 @@ RSpec.describe ReferrerPolicy do
   it { should forbid_new_and_create_actions }
   it { should forbid_edit_and_update_actions }
   it { should forbid_action(:destroy) }
+  it { should forbid_action(:show) }
 
   context "having an account" do
     context "account is on a different organization" do

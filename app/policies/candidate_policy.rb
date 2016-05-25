@@ -1,17 +1,6 @@
 class CandidatePolicy < ApplicationPolicy
-
-  def initialize(account, candidate)
-    @account = account
-    @candidate = candidate
-  end
-
-  def index?
-    true
-  end
-
-  def show?
-    return unless account.present?
-    account.organization == candidate.organization
+  def edit?
+    show?
   end
 
   def update?
@@ -22,18 +11,7 @@ class CandidatePolicy < ApplicationPolicy
     [:status]
   end
 
-  private
-
-  attr_reader :account, :candidate
-
-  class Scope
-    attr_reader :account, :scope
-
-    def initialize(account, scope)
-      @account = account
-      @scope = scope
-    end
-
+  class Scope < ApplicationPolicy::Scope
     def resolve
       scope.includes(:user).where(users: { organization_id: account.organization.id })
     end

@@ -1,12 +1,5 @@
 class ReferrerPolicy < ApplicationPolicy
-  class Scope
-    attr_reader :account, :scope
-
-    def initialize(account, scope)
-      @account = account
-      @scope = scope
-    end
-
+  class Scope < ApplicationPolicy::Scope
     def resolve
       scope.includes(:user).where(users: { organization_id: account.organization.id })
     end

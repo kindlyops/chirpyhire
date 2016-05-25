@@ -10,10 +10,11 @@ RSpec.describe TemplatePolicy do
   context "being a visitor" do
     let(:account) { nil }
 
-    it { should forbid_new_and_create_actions }
-    it { should forbid_edit_and_update_actions }
-    it { should forbid_action(:destroy) }
-    it { should forbid_action(:preview) }
+    it "raises a NotAuthorizedError" do
+      expect {
+        subject
+      }.to raise_error(Pundit::NotAuthorizedError)
+    end
   end
 
   context "having an account" do
@@ -26,6 +27,7 @@ RSpec.describe TemplatePolicy do
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
       it { should forbid_action(:destroy) }
+      it { should forbid_action(:show) }
       it { should forbid_action(:preview) }
     end
 
@@ -40,6 +42,7 @@ RSpec.describe TemplatePolicy do
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
       it { should forbid_action(:destroy) }
+      it { should forbid_action(:show) }
       it { should permit_action(:preview) }
     end
   end

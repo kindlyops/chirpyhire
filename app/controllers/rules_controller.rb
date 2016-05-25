@@ -47,6 +47,6 @@ class RulesController < ApplicationController
   end
 
   def scoped_rules
-    RulePolicy::Scope.new(authorized_automation, Rule).resolve
+    policy_scope(Rule).where(automation: authorized_automation)
   end
 end

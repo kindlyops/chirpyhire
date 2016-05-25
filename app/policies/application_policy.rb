@@ -13,7 +13,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    scope.where(id: record.id).exists?
   end
 
   def create?
@@ -38,6 +38,10 @@ class ApplicationPolicy
 
   def scope
     Pundit.policy_scope!(account, record.class)
+  end
+
+  def user
+    account
   end
 
   class Scope
