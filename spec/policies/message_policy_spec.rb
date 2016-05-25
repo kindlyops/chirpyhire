@@ -40,7 +40,7 @@ RSpec.describe MessagePolicy do
         expect(resolved_scope).to include(message)
       end
 
-      it { should permit_mass_assignment_of(:body, :user_id) }
+      it { should permit_mass_assignment_of(:user_id) }
       it { should permit_new_and_create_actions }
     end
   end

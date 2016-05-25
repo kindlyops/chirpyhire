@@ -12,14 +12,11 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = scoped_messages.build(permitted_attributes(Message))
-    if message.valid?
-      authorize message
-      @message = message.relay
+    message = recipient.receive_message(body: params[:body])
+    @message = authorize message
 
-      respond_to do |format|
-        format.js {}
-      end
+    respond_to do |format|
+      format.js {}
     end
   end
 

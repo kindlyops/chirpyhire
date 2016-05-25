@@ -7,7 +7,7 @@ RSpec.describe Answer, type: :model do
     let(:to) { Faker::PhoneNumber.cell_phone }
     let(:message) { messaging.create(from: from, to: to, body: "", format: :image) }
 
-    let(:answer) { build(:answer, message: create(:message, sid: message.sid, body: message.body)) }
+    let(:answer) { build(:answer, message: create(:message, sid: message.sid)) }
     context "inquiry does not expect the answer's message format" do
       it "adds an inquiry error to the answer" do
         answer.valid?
