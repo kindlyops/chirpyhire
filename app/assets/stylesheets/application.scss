@@ -11,9 +11,13 @@
 @import "pages-core/scss/pages";
 @import "pages-asset-pipeline";
 
+@import "click-table";
+@import "icons";
+
 // Custom
 @import "search";
 @import "alerts";
 @import "rules";
 @import "rule";
 @import "templates";
+@import "candidate";

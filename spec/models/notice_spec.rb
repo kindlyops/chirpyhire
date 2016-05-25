@@ -4,7 +4,7 @@ RSpec.describe Notice, type: :model do
   subject { create(:notice) }
 
   describe "#perform" do
-    let(:organization) { create(:organization, :with_successful_phone) }
+    let(:organization) { create(:organization) }
     let(:user) { create(:user, organization: organization) }
 
     it "sends a message to the user" do

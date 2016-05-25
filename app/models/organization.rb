@@ -5,6 +5,8 @@ class Organization < ActiveRecord::Base
   has_many :referrals, through: :referrers
   has_many :accounts, through: :users
   has_many :templates
+  has_many :questions, through: :templates
+  has_many :notices, through: :templates
   has_many :automations
   has_many :triggers
   has_many :actions
@@ -30,20 +32,12 @@ class Organization < ActiveRecord::Base
     candidates.subscribed
   end
 
-  def send_message(to:, body:)
-    messaging_client.send_message(to: to, body: body, from: phone_number)
+  def send_message(to:, body:, from: phone_number)
+    messaging_client.send_message(to: to, body: body, from: from)
   end
 
   def messages
     messaging_client.messages
-  end
-
-  def questions
-    templates.joins(:question).map(&:question)
-  end
-
-  def notices
-    templates.joins(:notice).map(&:notice)
   end
 
   private

@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :notification do
-    message_sid { Faker::Number.number(10) }
+    message
     notice
-    user
   end
 end

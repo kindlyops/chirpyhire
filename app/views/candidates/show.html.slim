@@ -1,0 +1,31 @@
+= title "#{candidate.name} | chirpyhire"
+.candidate
+  .row
+    .col-xs-3
+      .page-header
+        h2 = candidate.name
+    .col-xs-9.menu
+      = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-primary send-message" do
+        ' Message
+        i.fa.fa-commenting
+      = render "form", locals: { candidate: candidate }
+  .row#new-message
+    .col-xs-3
+      = candidate.phone_number.phony_formatted
+  .row
+    .col-xs-9.col-xs-offset-3
+      .panel.panel-default.messages
+        .panel-heading
+          .pull-right
+            .col-xs-12
+              input#search-table.form-control.pull-right type="text" placeholder="Search"
+          .clearfix
+        .panel-body
+          table.table#tableNoSortWithSearch.table-hover.no-footer role="grid"
+            thead
+              tr role="row"
+                th rowspan="1" colspan="1" aria-label="Sender" Sender
+                th rowspan="1" colspan="1" aria-label="Body" Body
+                th rowspan="1" colspan="1" aria-label="Sent At" Sent At
+            tbody
+              = render partial: "messages/message", collection: candidate.messages

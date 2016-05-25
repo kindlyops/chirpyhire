@@ -5,9 +5,10 @@ class User < ActiveRecord::Base
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :inquiries
-  has_many :answers
-  has_many :notifications
+  has_many :messages
+  has_many :inquiries, through: :messages
+  has_many :answers, through: :messages
+  has_many :notifications, through: :messages
 
   delegate :name, :phone_number, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
@@ -19,7 +20,13 @@ class User < ActiveRecord::Base
     inquiries.unanswered.first
   end
 
+  def answer(inquiry, answer)
+    message = messages.create(body: answer[:body], sid: answer[:sid])
+    inquiry.create_answer(message: message)
+  end
+
   def receive_message(body:)
-    organization.send_message(to: phone_number, body: body)
+    message = organization.send_message(to: phone_number, body: body)
+    messages.create(body: message.body, sid: message.sid)
   end
 end

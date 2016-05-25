@@ -1,16 +1,17 @@
 class CandidatePolicy < ApplicationPolicy
-  def index?
-    true
+  def edit?
+    show?
   end
 
-  class Scope
-    attr_reader :account, :scope
+  def update?
+    show?
+  end
 
-    def initialize(account, scope)
-      @account = account
-      @scope = scope
-    end
+  def permitted_attributes
+    [:status]
+  end
 
+  class Scope < ApplicationPolicy::Scope
     def resolve
       scope.includes(:user).where(users: { organization_id: account.organization.id })
     end

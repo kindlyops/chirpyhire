@@ -1,0 +1,24 @@
+.candidate {
+  .menu {
+    margin-top: 45px;
+  }
+
+  .new_message {
+    .fa-trash {
+      margin-top: 10px;
+      margin-left: 3px;
+    }
+
+    .btn[type="submit"] {
+      margin-top: 10px;
+    }
+
+    .select2-container {
+      margin-bottom: 10px;
+    }
+  }
+
+  .edit_candidate {
+    float: right;
+  }
+}

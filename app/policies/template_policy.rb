@@ -1,16 +1,14 @@
 class TemplatePolicy < ApplicationPolicy
-  def index?
-    true
+  def show?
+    false
   end
 
-  class Scope
-    attr_reader :account, :scope
+  def preview?
+    return unless account.present?
+    account.organization == record.organization
+  end
 
-    def initialize(account, scope)
-      @account = account
-      @scope = scope
-    end
-
+  class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where(organization: account.organization)
     end

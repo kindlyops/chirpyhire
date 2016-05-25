@@ -50,8 +50,8 @@ if Rails.env.development?
   end
 
   unless org.templates.present?
-    welcome = org.templates.create(name: "Welcome", body: "{{recipient.first_name}}, this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-    location = org.templates.create(name: "Location", body: "{{recipient.first_name}}, what is your street address and zipcode?")
+    welcome = org.templates.create(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+    location = org.templates.create(name: "Location", body: "What is your street address and zipcode?")
     tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
     thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
     puts "Created Templates"
@@ -65,11 +65,11 @@ if Rails.env.development?
 
   unless org.automations.present?
     automation = org.automations.create
-    candidate_rule = automation.rules.create(trigger: subscribe_trigger, action: welcome_notice.create_action(organization: org))
-    candidate_rule_2 = automation.rules.create(trigger: subscribe_trigger, action: location_question.create_action(organization: org))
+    candidate_rule = automation.rules.create(trigger: subscribe_trigger, actionable: welcome_notice)
+    candidate_rule_2 = automation.rules.create(trigger: subscribe_trigger, actionable: location_question)
 
-    location_rule = automation.rules.create(trigger: location_trigger, action: tb_question.create_action(organization: org))
-    tb_rule = automation.rules.create(trigger: tb_trigger, action: thank_you_notice.create_action(organization: org))
+    location_rule = automation.rules.create(trigger: location_trigger, actionable: tb_question)
+    tb_rule = automation.rules.create(trigger: tb_trigger, actionable: thank_you_notice)
     puts "Created rules"
   end
 

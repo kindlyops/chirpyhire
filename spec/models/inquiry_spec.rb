@@ -15,7 +15,7 @@ RSpec.describe Inquiry, type: :model do
       context "message has media" do
         let(:message) { messaging.create(from: from, to: to, body: body, format: :image) }
 
-        let(:answer) { build(:answer, message_sid: message.sid) }
+        let(:answer) { build(:answer, message: create(:message, sid: message.sid, body: message.body)) }
 
         it "is true" do
           expect(inquiry.expects?(answer)).to eq(true)
@@ -23,7 +23,7 @@ RSpec.describe Inquiry, type: :model do
       end
 
       context "message does not have media" do
-        let(:answer) { build(:answer, message_sid: message.sid) }
+        let(:answer) { build(:answer, message: create(:message, sid: message.sid, body: message.body)) }
 
         it "is false" do
           expect(inquiry.expects?(answer)).to eq(false)
@@ -35,7 +35,7 @@ RSpec.describe Inquiry, type: :model do
       let(:inquiry) { create(:inquiry, :with_text_question) }
 
       context "message has text" do
-        let(:answer) { build(:answer, message_sid: message.sid) }
+        let(:answer) { build(:answer, message: create(:message, sid: message.sid, body: message.body)) }
 
         it "is true" do
           expect(inquiry.expects?(answer)).to eq(true)
@@ -44,7 +44,7 @@ RSpec.describe Inquiry, type: :model do
 
       context "message does not have text" do
         let(:message) { messaging.create(from: from, to: to, body: "", format: :image) }
-        let(:answer) { build(:answer, message_sid: message.sid) }
+        let(:answer) { build(:answer, message: create(:message, sid: message.sid, body: message.body)) }
 
         it "is false" do
           expect(inquiry.expects?(answer)).to eq(false)

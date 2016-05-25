@@ -9,4 +9,8 @@ class Rule < ActiveRecord::Base
   validates :trigger, :automation, :action, presence: true
   delegate :template_name, to: :action, prefix: true
   delegate :template_name, :event, to: :trigger, prefix: true
+
+  def actionable=(actionable)
+    self.action = actionable.action
+  end
 end

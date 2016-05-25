@@ -6,8 +6,12 @@ class Notice < ActiveRecord::Base
   has_many :notifications
   belongs_to :action
 
+  def action
+    super || create_action(organization: organization)
+  end
+
   def perform(user)
     message = user.receive_message(body: template.render(user))
-    notifications.create(user: user, message_sid: message.sid)
+    notifications.create(message: message)
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509145833) do
+ActiveRecord::Schema.define(version: 20160523191344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,15 +57,14 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "actions", ["organization_id"], name: "index_actions_on_organization_id", using: :btree
 
   create_table "answers", force: :cascade do |t|
-    t.integer  "inquiry_id",  null: false
-    t.integer  "user_id",     null: false
-    t.string   "message_sid", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "inquiry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "message_id", null: false
   end
 
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+  add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
 
   create_table "automations", force: :cascade do |t|
     t.integer  "organization_id", null: false
@@ -77,7 +76,7 @@ ActiveRecord::Schema.define(version: 20160509145833) do
 
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
-    t.string   "status",     default: "potential", null: false
+    t.string   "status",     default: "Potential", null: false
     t.boolean  "subscribed", default: false,       null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -87,14 +86,23 @@ ActiveRecord::Schema.define(version: 20160509145833) do
 
   create_table "inquiries", force: :cascade do |t|
     t.integer  "question_id", null: false
-    t.integer  "user_id",     null: false
-    t.string   "message_sid", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "message_id",  null: false
   end
 
+  add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
-  add_index "inquiries", ["user_id"], name: "index_inquiries_on_user_id", using: :btree
+
+  create_table "messages", force: :cascade do |t|
+    t.text     "body",       null: false
+    t.string   "sid",        null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
     t.integer  "template_id", null: false
@@ -107,15 +115,14 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_index "notices", ["template_id"], name: "index_notices_on_template_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "notice_id",   null: false
-    t.integer  "user_id",     null: false
-    t.string   "message_sid", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "notice_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "message_id", null: false
   end
 
+  add_index "notifications", ["message_id"], name: "index_notifications_on_message_id", using: :btree
   add_index "notifications", ["notice_id"], name: "index_notifications_on_notice_id", using: :btree
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -226,15 +233,16 @@ ActiveRecord::Schema.define(version: 20160509145833) do
   add_foreign_key "accounts", "users"
   add_foreign_key "actions", "organizations"
   add_foreign_key "answers", "inquiries"
-  add_foreign_key "answers", "users"
+  add_foreign_key "answers", "messages"
   add_foreign_key "automations", "organizations"
   add_foreign_key "candidates", "users"
+  add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
-  add_foreign_key "inquiries", "users"
+  add_foreign_key "messages", "users"
   add_foreign_key "notices", "actions"
   add_foreign_key "notices", "templates"
+  add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"
-  add_foreign_key "notifications", "users"
   add_foreign_key "phones", "organizations"
   add_foreign_key "questions", "actions"
   add_foreign_key "questions", "templates"

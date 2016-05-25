@@ -3,8 +3,16 @@ FactoryGirl.define do
     organization
 
     trait :with_rule do
-      after(:create) do |automation|
-        create(:rule, automation: automation)
+      transient do
+        answer false
+      end
+
+      after(:create) do |automation, evaluator|
+        if evaluator.answer
+          create(:rule, :answer_trigger, automation: automation)
+        else
+          create(:rule, automation: automation)
+        end
       end
     end
   end

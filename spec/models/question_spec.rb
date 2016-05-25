@@ -4,7 +4,7 @@ RSpec.describe Question, type: :model do
   subject { create(:question) }
 
   describe "#perform" do
-    let(:organization) { create(:organization, :with_successful_phone) }
+    let(:organization) { create(:organization) }
     let(:user) { create(:user, organization: organization) }
 
     it "sends a message to the user" do
@@ -20,7 +20,9 @@ RSpec.describe Question, type: :model do
     end
 
     context "with an outstanding inquiry" do
-      let!(:inquiry) { create(:inquiry, user: user) }
+      before(:each) do
+        subject.perform(user)
+      end
 
       it "does not create an inquiry" do
         expect {

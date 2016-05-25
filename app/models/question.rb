@@ -17,10 +17,14 @@ class Question < ActiveRecord::Base
     format == "text"
   end
 
+  def action
+    super || create_action(organization: organization)
+  end
+
   def perform(user)
     return if user.outstanding_inquiry.present?
 
     message = user.receive_message(body: template.render(user))
-    inquiries.create(user: user, message_sid: message.sid)
+    inquiries.create(message: message)
   end
 end

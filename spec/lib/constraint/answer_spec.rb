@@ -4,7 +4,7 @@ RSpec.describe Constraint::Answer do
 
   let(:request) { ActionDispatch::Request.new({}) }
   let(:constraint) { Constraint::Answer.new }
-  let(:organization) { create(:organization, :with_phone) }
+  let(:organization) { create(:organization) }
 
   before(:each) do
     allow(request).to receive(:request_parameters).and_return(parameters)

@@ -12,6 +12,10 @@ $(document).on("page:change", function() {
           "iDisplayLength": 5
       };
       table.dataTable(settings);
+      var noSortTable = $('#tableNoSortWithSearch');
+      settings.bSort = false;
+      noSortTable.dataTable(settings);
+
       $('#search-table').keyup(function() {
           table.fnFilter($(this).val());
       });

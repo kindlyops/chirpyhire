@@ -7,5 +7,9 @@ FactoryGirl.define do
     trait :with_question do
       question
     end
+
+    trait :with_notice do
+      notice
+    end
   end
 end

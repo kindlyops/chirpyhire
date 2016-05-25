@@ -16,12 +16,7 @@ RSpec.describe CandidatesController, type: :controller do
     end
 
     context "with candidates" do
-      let!(:users) { create_list(:user, 3, organization: organization) }
-      let!(:candidates) do
-        3.times.map do |i|
-          create(:candidate, user: users[i-1])
-        end
-      end
+      let!(:candidates) { create_list(:candidate, 3, organization: organization) }
 
       it "returns the organization's candidates" do
         get :index

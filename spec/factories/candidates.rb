@@ -2,8 +2,27 @@ FactoryGirl.define do
   factory :candidate do
     user
 
+    transient do
+      inquiry_format :text
+      organization nil
+    end
+
     trait :with_subscription do
       subscribed { true }
+    end
+
+    before(:create) do |candidate, evaluator|
+      if evaluator.organization
+        candidate.user = create(:user, organization: evaluator.organization)
+      end
+    end
+
+    trait :with_inquiry do
+      after(:create) do |candidate, evaluator|
+        automation = create(:automation, organization: candidate.organization)
+        rule = create(:rule, :asks_question, format: evaluator.inquiry_format, automation: automation)
+        rule.perform(candidate.user)
+      end
     end
 
     trait :with_referral do

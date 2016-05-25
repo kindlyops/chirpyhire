@@ -3,10 +3,11 @@ class Candidate < ActiveRecord::Base
   has_many :referrals
   has_many :referrers, through: :referrals
 
-  validates :status, inclusion: { in: %w(potential qualified bad_fit) }
+  STATUSES = ["Potential", "Qualified", "Bad Fit"]
+  validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
-           :organization, to: :user
+           :organization, :messages, :outstanding_inquiry, to: :user
 
   delegate :contact_first_name, to: :organization
   delegate :created_at, to: :last_referral, prefix: true

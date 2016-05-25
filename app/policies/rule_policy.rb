@@ -1,18 +1,7 @@
 class RulePolicy < ApplicationPolicy
-  attr_reader :account, :rule
-
-  def initialize(account, rule)
-    @account = account
-    @rule = rule
-  end
-
   def create?
     return unless account.present?
-    account.organization == rule.organization
-  end
-
-  def show?
-    create?
+    account.organization == record.organization
   end
 
   def update?
@@ -35,16 +24,9 @@ class RulePolicy < ApplicationPolicy
     [:enabled, :trigger_id, :action_id, :automation_id]
   end
 
-  class Scope
-    attr_reader :automation, :scope
-
-    def initialize(automation, scope)
-      @automation = automation
-      @scope = scope
-    end
-
+  class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(automation: automation)
+      scope.includes(:automation).where(automations: { organization_id: account.organization.id })
     end
   end
 end

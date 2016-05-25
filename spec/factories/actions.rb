@@ -4,13 +4,15 @@ FactoryGirl.define do
 
     trait :with_question do
       after(:create) do |action|
-        create(:question, action: action)
+        template = create(:template, organization: action.organization)
+        create(:question, template: template, action: action)
       end
     end
 
     trait :with_notice do
       after(:create) do |action|
-        create(:notice, action: action)
+        template = create(:template, organization: action.organization)
+        create(:notice, template: template, action: action)
       end
     end
   end
