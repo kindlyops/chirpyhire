@@ -6,10 +6,6 @@ class TemplatePolicy < ApplicationPolicy
     @template = template
   end
 
-  def index?
-    true
-  end
-
   def preview?
     return unless account.present?
     account.organization == template.organization

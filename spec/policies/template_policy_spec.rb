@@ -7,6 +7,15 @@ RSpec.describe TemplatePolicy do
 
   let(:resolved_scope) { TemplatePolicy::Scope.new(account, Template.all).resolve }
 
+  context "being a visitor" do
+    let(:account) { nil }
+
+    it { should forbid_new_and_create_actions }
+    it { should forbid_edit_and_update_actions }
+    it { should forbid_action(:destroy) }
+    it { should forbid_action(:preview) }
+  end
+
   context "having an account" do
     context "account is on a different organization" do
       let(:account) { create(:account) }
@@ -14,6 +23,10 @@ RSpec.describe TemplatePolicy do
       it 'excludes template in resolved scope' do
         expect(resolved_scope).not_to include(template)
       end
+      it { should forbid_new_and_create_actions }
+      it { should forbid_edit_and_update_actions }
+      it { should forbid_action(:destroy) }
+      it { should forbid_action(:preview) }
     end
 
     context "account is on the same organization as the template" do
@@ -23,6 +36,11 @@ RSpec.describe TemplatePolicy do
       it 'includes template in resolved scope' do
         expect(resolved_scope).to include(template)
       end
+
+      it { should forbid_new_and_create_actions }
+      it { should forbid_edit_and_update_actions }
+      it { should forbid_action(:destroy) }
+      it { should permit_action(:preview) }
     end
   end
 end

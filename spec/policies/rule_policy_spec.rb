@@ -31,8 +31,8 @@ RSpec.describe RulePolicy do
 
     context "rule is on the same organization as the automation" do
       let(:account) { create(:account) }
-      let(:automation) { create(:automation, organization: account.organization) }
-      let!(:rule) { create(:rule, automation: automation) }
+      let(:automation) { create(:automation, :with_rule, organization: account.organization) }
+      let!(:rule) { automation.rules.first }
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }
