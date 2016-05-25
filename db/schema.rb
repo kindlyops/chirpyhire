@@ -95,7 +95,6 @@ ActiveRecord::Schema.define(version: 20160523191344) do
   add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.text     "body",       null: false
     t.string   "sid",        null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false

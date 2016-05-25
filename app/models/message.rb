@@ -16,6 +16,10 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def body
+    message.body
+  end
+
   def direction
     message.direction
   end

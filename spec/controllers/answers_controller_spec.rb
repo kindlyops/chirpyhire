@@ -52,7 +52,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it "lets the user know the format was wrong" do
           post :create, params
-          expect(response.body).to include("We were looking for a text answer but you sent an image. Please answer with a text.")
+          expect(FakeMessaging.messages.last.body).to include("We were looking for a text answer but you sent an image. Please answer with a text.")
         end
 
         it "does not create an answer" do
@@ -77,7 +77,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it "lets the user know the format was wrong" do
           post :create, params
-          expect(response.body).to include("We were looking for an image answer but you sent a text. Please answer with an image.")
+          expect(FakeMessaging.messages.last.body).to include("We were looking for an image answer but you sent a text. Please answer with an image.")
         end
 
         it "does not create an answer" do

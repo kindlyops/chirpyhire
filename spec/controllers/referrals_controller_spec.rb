@@ -27,7 +27,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
 
         it "sends the user a template message to send to the referred candidate" do
           post :create, params
-          expect(response.body).to include("I think you would be a great fit here.")
+          expect(FakeMessaging.messages.last.body).to include("I think you would be a great fit here.")
         end
 
         it "creates a referral" do
@@ -81,7 +81,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       context "that is not a referrer for the organization" do
         it "lets the user know they are not a referrer" do
           post :create, params
-          expect(response.body).to include("if you would like to join the referral program.")
+          expect(FakeMessaging.messages.last.body).to include("if you would like to join the referral program.")
         end
 
         it "does not create a referral" do
@@ -109,7 +109,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
     context "with an unrecognized sender" do
       it "lets the user know they are not a referrer" do
         post :create, params
-        expect(response.body).to include("if you would like to join the referral program.")
+        expect(FakeMessaging.messages.last.body).to include("if you would like to join the referral program.")
       end
 
       it "creates a user for the sender" do
