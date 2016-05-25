@@ -1,8 +1,4 @@
 class ReferrerPolicy < ApplicationPolicy
-  def index?
-    true
-  end
-
   class Scope
     attr_reader :account, :scope
 
