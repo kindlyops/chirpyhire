@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SmsController, type: :controller do
-  let(:organization) { create(:organization, :with_phone) }
+  let(:organization) { create(:organization) }
   let(:phone) { organization.phone }
 
   describe "#text" do

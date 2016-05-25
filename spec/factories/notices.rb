@@ -14,11 +14,5 @@ FactoryGirl.define do
       end
       notice.template = template
     end
-
-    trait :with_notification do
-      after(:create) do |notice|
-        create(:notification, notice: notice)
-      end
-    end
   end
 end

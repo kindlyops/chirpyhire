@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Templates" do
-  let(:organization) { create(:organization,  :with_account, :with_successful_phone)}
+  let(:organization) { create(:organization,  :with_account)}
   let(:account) { organization.accounts.first }
 
   background(:each) do

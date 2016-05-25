@@ -7,25 +7,9 @@ FactoryGirl.define do
     last_name { Faker::Name.last_name }
     phone_number { Faker::PhoneNumber.cell_phone }
 
-    trait :without_phone_number do
-      phone_number { nil }
-    end
-
     trait :with_account do
       after(:create) do |user|
         create(:account, user: user)
-      end
-    end
-
-    trait :with_candidate do
-      after(:create) do |user|
-        create(:candidate, user: user)
-      end
-    end
-
-    trait :with_message do
-      after(:create) do |user|
-        create(:message, user: user)
       end
     end
 

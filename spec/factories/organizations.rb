@@ -24,11 +24,5 @@ FactoryGirl.define do
         create(:user, contact: true, organization: organization)
       end
     end
-
-    trait :with_successful_phone do
-      after(:create) do |organization|
-        create(:phone, :successful, organization: organization)
-      end
-    end
   end
 end

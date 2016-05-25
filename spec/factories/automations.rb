@@ -9,7 +9,7 @@ FactoryGirl.define do
 
       after(:create) do |automation, evaluator|
         if evaluator.answer
-          create(:rule, :answer, automation: automation)
+          create(:rule, :answer_trigger, automation: automation)
         else
           create(:rule, automation: automation)
         end

@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :question do
+    format :text
     transient do
       organization nil
     end
@@ -11,14 +12,6 @@ FactoryGirl.define do
         template = create(:template)
       end
       question.template = template
-    end
-
-    format "text"
-
-    trait :with_inquiry do
-      after(:create) do |question|
-        create(:inquiry, question: question)
-      end
     end
   end
 end

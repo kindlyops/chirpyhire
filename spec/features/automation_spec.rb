@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Automation" do
-  let(:organization) { create(:organization,  :with_account, :with_successful_phone)}
+  let(:organization) { create(:organization,  :with_account)}
   let(:account) { organization.accounts.first }
   let(:automation) { create(:automation, organization: organization)}
 
@@ -19,7 +19,7 @@ RSpec.feature "Automation" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, :answer, automation: automation) }
+      let!(:rule) { create(:rule, :answer_trigger, automation: automation) }
       let(:description) { "Answers a question" }
       let(:action) { rule.action.decorate }
       let(:trigger_title) { rule.decorate.trigger_title }

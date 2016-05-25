@@ -3,26 +3,25 @@ FactoryGirl.define do
     automation
     trigger
 
-    before(:create) do |rule|
-      rule.actionable = create(:notice, organization: rule.organization)
-    end
-
     transient do
       format :text
     end
 
+    before(:create) do |rule, evaluator|
+      rule.actionable = create(:notice, organization: rule.organization)
+    end
+
+    trait :answer_trigger do
+      before(:create) do |rule, evaluator|
+        trigger = create(:trigger, event: :answer, organization: rule.organization)
+        question = create(:question, trigger: trigger, organization: rule.organization)
+        rule.trigger = trigger
+      end
+    end
 
     trait :asks_question do
       before(:create) do |rule, evaluator|
         rule.actionable = create(:question, format: evaluator.format, organization: rule.organization)
-      end
-    end
-
-    trait :answer do
-      association :trigger, event: :answer
-
-      after(:create) do |rule|
-        create(:template, :with_question, organization: rule.organization)
       end
     end
   end

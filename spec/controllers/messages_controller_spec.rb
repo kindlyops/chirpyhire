@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let(:organization) { create(:organization, :with_successful_phone) }
+  let(:organization) { create(:organization) }
   let(:user) { create(:user, organization: organization) }
   let(:admin) { create(:user, :with_account, organization: organization) }
 

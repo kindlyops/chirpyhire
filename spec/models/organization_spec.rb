@@ -5,14 +5,14 @@ RSpec.describe Organization, type: :model do
   let(:contact) { organization.users.find_by(contact: true) }
 
   describe ".for" do
-    let(:organization) { create(:organization, :with_phone) }
+    let(:organization) { create(:organization) }
     it "looks up an organization by phone number" do
       expect(Organization.for(phone: organization.phone_number)).to eq(organization)
     end
   end
 
   describe "#send_message" do
-    let(:organization) { create(:organization, :with_successful_phone) }
+    let(:organization) { create(:organization) }
     let(:user) { create(:user, organization: organization) }
 
     it "sends the sms message" do

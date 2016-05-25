@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature "Candidate" do
   include ActionView::Helpers::DateHelper
 
-  let(:organization) { create(:organization, :with_account, :with_successful_phone)}
+  let(:organization) { create(:organization, :with_account)}
   let(:account) { organization.accounts.first }
   let(:user) { create(:user, organization: organization) }
   let!(:candidate) { create(:candidate, :with_referral, user: user).decorate }
