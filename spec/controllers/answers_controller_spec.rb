@@ -1,27 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:organization) { create(:organization, :with_phone) }
-  let(:trigger) { create(:trigger, event: :answer, organization: organization) }
-  let(:question) { create(:question, trigger: trigger) }
-
-  let(:user) { create(:user, :with_message, organization: organization) }
-  let(:candidate) { create(:candidate, user: user) }
-  let!(:inquiry) { create(:inquiry, message: user.messages.first, question: question) }
-
-  let(:messaging) { FakeMessaging.new("foo", "bar") }
-  let(:from) { candidate.phone_number }
-  let(:to) { organization.phone_number }
-  let(:body) { Faker::Lorem.word }
-  let(:message) { messaging.create(from: from, to: to, body: body) }
+  let(:candidate) { create(:candidate, :with_inquiry) }
+  let(:user) { candidate.user }
+  let(:answer) { FakeMessaging.inbound_message(user, candidate.organization) }
 
   describe "#create" do
     let(:params) do
       {
-        "To" => to,
-        "From" => from,
-        "Body" => Faker::Lorem.word,
-        "MessageSid" => message.sid
+        "To" => answer.to,
+        "From" => answer.from,
+        "Body" => answer.body,
+        "MessageSid" => answer.sid
       }
     end
 
@@ -31,6 +21,8 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context "with an answer format that matches the response format" do
+      let(:trigger) { candidate.outstanding_inquiry.trigger }
+
       it "creates an answer" do
         expect {
           post :create, params
@@ -46,15 +38,15 @@ RSpec.describe AnswersController, type: :controller do
 
     context "with an answer format that doesn't matches the response format" do
       context "text mismatch" do
-        let(:message) { messaging.create(from: from, to: to, body: "", format: :image) }
+        let(:answer) { FakeMessaging.inbound_message(user, candidate.organization, format: :image) }
 
         let(:params) do
           {
-            "To" => to,
-            "From" => from,
-            "Body" => "",
-            "MessageSid" => message.sid,
-            "MediaUrl0" => "/example/path/to/image.png"
+            "To" => answer.to,
+            "From" => answer.from,
+            "Body" => answer.body,
+            "MessageSid" => answer.sid,
+            "MediaUrl0" => answer.media_urls[0]
           }
         end
 
@@ -71,15 +63,15 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       context "image mismatch" do
-        let!(:inquiry) { create(:inquiry, :with_image_question, message: user.messages.first) }
-        let(:message) { messaging.create(from: from, to: to, body: "foo", format: :text) }
+        let(:candidate) { create(:candidate, :with_inquiry, inquiry_format: :image) }
+        let(:answer) { FakeMessaging.inbound_message(candidate.user, candidate.organization) }
 
         let(:params) do
           {
-            "To" => to,
-            "From" => from,
-            "Body" => "foo",
-            "MessageSid" => message.sid
+            "To" => answer.to,
+            "From" => answer.from,
+            "Body" => answer.body,
+            "MessageSid" => answer.sid
           }
         end
 

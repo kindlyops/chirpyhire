@@ -17,6 +17,10 @@ class Question < ActiveRecord::Base
     format == "text"
   end
 
+  def action
+    super || create_action(organization: organization)
+  end
+
   def perform(user)
     return if user.outstanding_inquiry.present?
 

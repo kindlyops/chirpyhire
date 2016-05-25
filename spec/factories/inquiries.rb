@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :inquiry do
     question
     message
+
     trait :with_image_question do
       association :question, format: :image
     end
