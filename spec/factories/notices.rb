@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :notice do
-    action
 
     transient do
       organization nil

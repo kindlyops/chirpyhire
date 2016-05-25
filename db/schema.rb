@@ -48,14 +48,6 @@ ActiveRecord::Schema.define(version: 20160523191344) do
   add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
-  create_table "actions", force: :cascade do |t|
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "actions", ["organization_id"], name: "index_actions_on_organization_id", using: :btree
-
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id", null: false
     t.datetime "created_at", null: false
@@ -105,12 +97,10 @@ ActiveRecord::Schema.define(version: 20160523191344) do
 
   create_table "notices", force: :cascade do |t|
     t.integer  "template_id", null: false
-    t.integer  "action_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "notices", ["action_id"], name: "index_notices_on_action_id", using: :btree
   add_index "notices", ["template_id"], name: "index_notices_on_template_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
@@ -143,14 +133,12 @@ ActiveRecord::Schema.define(version: 20160523191344) do
 
   create_table "questions", force: :cascade do |t|
     t.integer  "template_id", null: false
-    t.integer  "action_id"
     t.integer  "trigger_id"
     t.string   "format",      null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "questions", ["action_id"], name: "index_questions_on_action_id", using: :btree
   add_index "questions", ["template_id"], name: "index_questions_on_template_id", using: :btree
   add_index "questions", ["trigger_id"], name: "index_questions_on_trigger_id", unique: true, using: :btree
 
@@ -175,13 +163,14 @@ ActiveRecord::Schema.define(version: 20160523191344) do
   create_table "rules", force: :cascade do |t|
     t.integer  "automation_id",                null: false
     t.integer  "trigger_id",                   null: false
-    t.integer  "action_id",                    null: false
+    t.integer  "action_id"
+    t.string   "action_type"
     t.boolean  "enabled",       default: true, null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
 
-  add_index "rules", ["action_id"], name: "index_rules_on_action_id", using: :btree
+  add_index "rules", ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
   add_index "rules", ["automation_id"], name: "index_rules_on_automation_id", using: :btree
   add_index "rules", ["trigger_id"], name: "index_rules_on_trigger_id", using: :btree
 
@@ -230,7 +219,6 @@ ActiveRecord::Schema.define(version: 20160523191344) do
   add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
   add_foreign_key "accounts", "users"
-  add_foreign_key "actions", "organizations"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "automations", "organizations"
@@ -238,18 +226,15 @@ ActiveRecord::Schema.define(version: 20160523191344) do
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
   add_foreign_key "messages", "users"
-  add_foreign_key "notices", "actions"
   add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"
   add_foreign_key "phones", "organizations"
-  add_foreign_key "questions", "actions"
   add_foreign_key "questions", "templates"
   add_foreign_key "questions", "triggers"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
-  add_foreign_key "rules", "actions"
   add_foreign_key "rules", "automations"
   add_foreign_key "rules", "triggers"
   add_foreign_key "subscriptions", "candidates"

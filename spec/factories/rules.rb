@@ -9,7 +9,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |rule, evaluator|
-      rule.actionable = create(:notice, organization: rule.organization)
+      rule.action = create(:notice, organization: rule.organization)
       if evaluator.organization
         rule.automation = create(:automation, organization: evaluator.organization)
       end
@@ -25,7 +25,7 @@ FactoryGirl.define do
 
     trait :asks_question do
       before(:create) do |rule, evaluator|
-        rule.actionable = create(:question, format: evaluator.format, organization: rule.organization)
+        rule.action = create(:question, format: evaluator.format, organization: rule.organization)
       end
     end
   end
