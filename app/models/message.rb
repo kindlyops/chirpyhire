@@ -28,11 +28,6 @@ class Message < ActiveRecord::Base
     message.media
   end
 
-  def relay
-    return if sid.present?
-    user.receive_message(body: body)
-  end
-
   private
 
   def message
