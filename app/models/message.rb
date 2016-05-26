@@ -5,6 +5,7 @@ class Message < ActiveRecord::Base
   has_one :answer
 
   delegate :organization, to: :user
+  delegate :name, to: :sender, prefix: true
 
   def sender
     @sender ||= begin

@@ -1,17 +1,18 @@
-= title "#{candidate.name} | chirpyhire"
-.candidate
+= title "#{user.name} | chirpyhire"
+.user
   .row
     .col-xs-3
       .page-header
-        h2 = candidate.name
+        h2 = user.name
     .col-xs-9.menu
-      = link_to new_user_message_path(candidate.user), remote: true, class: "btn btn-primary send-message" do
+      = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
-      = render "form", locals: { candidate: candidate }
+      - if user.candidate.present?
+        = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
   .row#new-message
     .col-xs-3
-      = candidate.phone_number.phony_formatted
+      = user.phone_number.phony_formatted
   .row
     .col-xs-9.col-xs-offset-3
       .panel.panel-default.messages
@@ -28,4 +29,4 @@
                 th rowspan="1" colspan="1" aria-label="Body" Body
                 th rowspan="1" colspan="1" aria-label="Sent At" Sent At
             tbody
-              = render partial: "messages/message", collection: candidate.messages
+              = render partial: "messages/message", collection: user.messages

@@ -18,7 +18,7 @@
             th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
         tbody
           - referrers.each do |referrer|
-            tr role="row"
+            tr data-link==user_path(referrer.user_id) role="row"
               td.v-align-middle
                 p = referrer.name
               td.v-align-middle
