@@ -26,7 +26,7 @@ class RulePolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.includes(:automation).where(automations: { organization_id: account.organization.id })
+      scope.joins(:automation).where(automations: { organization_id: account.organization.id })
     end
   end
 end
