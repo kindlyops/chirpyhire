@@ -23,6 +23,12 @@ RSpec.describe AnswersController, type: :controller do
     context "with an answer format that matches the response format" do
       let(:trigger) { candidate.outstanding_inquiry.trigger }
 
+      it "creates a message" do
+        expect {
+          post :create, params
+        }.to change{user.messages.count}.by(1)
+      end
+
       it "creates an answer" do
         expect {
           post :create, params
@@ -50,9 +56,16 @@ RSpec.describe AnswersController, type: :controller do
           }
         end
 
-        it "lets the user know the format was wrong" do
-          post :create, params
-          expect(FakeMessaging.messages.last.body).to include("We were looking for a text answer but you sent an image. Please answer with a text.")
+        it "creates a message" do
+          expect {
+            post :create, params
+          }.to change{user.messages.count}.by(1)
+        end
+
+        it "creates a task" do
+          expect {
+            post :create, params
+          }.to change{Task.count}.by(1)
         end
 
         it "does not create an answer" do
@@ -75,9 +88,16 @@ RSpec.describe AnswersController, type: :controller do
           }
         end
 
-        it "lets the user know the format was wrong" do
-          post :create, params
-          expect(FakeMessaging.messages.last.body).to include("We were looking for an image answer but you sent a text. Please answer with an image.")
+        it "creates a message" do
+          expect {
+            post :create, params
+          }.to change{user.messages.count}.by(1)
+        end
+
+        it "creates a task" do
+          expect {
+            post :create, params
+          }.to change{Task.count}.by(1)
         end
 
         it "does not create an answer" do

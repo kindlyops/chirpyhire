@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20160526134021) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "notices", force: :cascade do |t|
