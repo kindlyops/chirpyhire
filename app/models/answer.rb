@@ -1,7 +1,7 @@
 class Answer < ActiveRecord::Base
   belongs_to :inquiry
   belongs_to :message
-  delegate :organization, to: :message
+  delegate :organization, :has_images?, to: :message
 
   validate :expected_format
   accepts_nested_attributes_for :message
@@ -14,10 +14,6 @@ class Answer < ActiveRecord::Base
 
   def body
     message.body
-  end
-
-  def has_images?
-    message.media.any?(&:image?)
   end
 
   def format
