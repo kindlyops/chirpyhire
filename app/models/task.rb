@@ -3,4 +3,8 @@ class Task < ActiveRecord::Base
 
   delegate :user, to: :message
   delegate :organization, to: :user
+
+  def incomplete?
+    !done?
+  end
 end

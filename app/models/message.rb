@@ -18,6 +18,10 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def incomplete_task?
+    task && task.incomplete?
+  end
+
   def body
     message.body
   end

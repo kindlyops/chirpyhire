@@ -5,6 +5,7 @@ class TasksController < ApplicationController
 
   def update
     authorized_task.update(permitted_attributes(Task))
+    @task = authorized_task
 
     respond_to do |format|
       format.js {}
