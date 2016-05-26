@@ -34,6 +34,14 @@ class Message < ActiveRecord::Base
     message.media
   end
 
+  def has_images?
+    media.any?(&:image?)
+  end
+
+  def images
+    media.select(&:image?)
+  end
+
   private
 
   def message
