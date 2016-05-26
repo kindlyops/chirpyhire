@@ -13,4 +13,8 @@ class CandidateDecorator < Draper::Decorator
   def statuses
     Candidate::STATUSES
   end
+
+  def subscription_status
+    subscribed? ? "Subscribed" : "Unsubscribed"
+  end
 end
