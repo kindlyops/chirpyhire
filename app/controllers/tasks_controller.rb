@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  decorates_assigned :task
+
   def index
     @tasks = scoped_tasks
   end
