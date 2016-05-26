@@ -1,0 +1,26 @@
+= title "Tasks | chirpyhire"
+.page-header
+  h2 Tasks
+.panel.panel-default
+    .panel-heading
+      .pull-right
+        .col-xs-12
+          input#search-table.form-control.pull-right type="text" placeholder="Search"
+      .clearfix
+    .panel-body
+      table.table#tableNoSortWithSearch.table-hover.no-footer role="grid"
+        thead
+          tr role="row"
+            th rowspan="1" colspan="1" aria-label="Sender" Sender
+            th rowspan="1" colspan="1" aria-label="Body" Body
+            th rowspan="1" colspan="1" aria-label="Sent At" Sent At
+        tbody
+          - @tasks.each do |task|
+            tr data-link==user_path(task.user.id) role="row"
+              td.v-align-middle
+                p = task.message_sender_name
+              td.v-align-middle
+                p = task.message_body
+              td.v-align-middle
+                p = "#{time_ago_in_words(task.message_created_at)} ago"
+

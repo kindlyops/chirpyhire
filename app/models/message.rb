@@ -3,6 +3,7 @@ class Message < ActiveRecord::Base
   has_one :inquiry
   has_one :notification
   has_one :answer
+  has_one :task
 
   delegate :organization, to: :user
   delegate :name, to: :sender, prefix: true
