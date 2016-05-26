@@ -15,7 +15,7 @@
             th rowspan="1" colspan="1" aria-label="Body" Body
             th rowspan="1" colspan="1" aria-label="Sent At" Sent At
         tbody
-          - inbox.tasks.each do |task|
+          - @inbox.tasks.each do |task|
             tr data-link==user_path(task.user.id) role="row"
               td.v-align-middle
                 p = task.message_sender_name

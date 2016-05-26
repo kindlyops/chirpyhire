@@ -42,6 +42,10 @@ class Organization < ActiveRecord::Base
     messaging_client.messages.get(sid)
   end
 
+  def inbox
+    Inbox.new(organization: self)
+  end
+
   private
 
   def messaging_client

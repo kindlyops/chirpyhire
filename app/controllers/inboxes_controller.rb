@@ -6,6 +6,6 @@ class InboxesController < ApplicationController
   private
 
   def authorized_inbox
-    authorize Inbox.new(organization: current_organization)
+    authorize current_organization.inbox
   end
 end

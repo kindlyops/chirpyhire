@@ -20,8 +20,13 @@
             <a href="/inbox">
               <span class="title">Inbox</span>
             </a>
-            <span class="icon-thumbnail "><i class="fa fa-inbox"></i>
-                    </span>
+            <span class="icon-thumbnail ">
+              <% if current_inbox.tasks.present? %>
+                <%= current_inbox.tasks.count %>
+              <% else %>
+                <i class="fa fa-inbox"></i>
+              <% end %>
+            </span>
           </li>
           <li>
             <a href="/candidates">
