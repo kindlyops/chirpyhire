@@ -6,10 +6,11 @@ Rails.application.routes.draw do
     get 'preview'
   end
 
-  resources :users, only: [:show]
+  resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index
-  resources :tasks, only: [:index, :update]
+  resources :tasks, only: :update
+  resource :inbox, only: :show
   resources :automations, only: :show do
     resources :rules, except: [:index, :destroy], shallow: true
   end

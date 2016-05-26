@@ -37,6 +37,6 @@ class Message < ActiveRecord::Base
   private
 
   def message
-    @message ||= organization.messages.get(sid)
+    @message ||= organization.get_message(sid)
   end
 end

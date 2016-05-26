@@ -4,6 +4,8 @@ class Organization < ActiveRecord::Base
   has_many :referrers, through: :users
   has_many :referrals, through: :referrers
   has_many :accounts, through: :users
+  has_many :messages, through: :users
+  has_many :tasks, through: :messages
   has_many :templates
   has_many :questions, through: :templates
   has_many :notices, through: :templates
@@ -36,8 +38,8 @@ class Organization < ActiveRecord::Base
     messaging_client.send_message(to: to, body: body, from: from)
   end
 
-  def messages
-    messaging_client.messages
+  def get_message(sid)
+    messaging_client.messages.get(sid)
   end
 
   private
