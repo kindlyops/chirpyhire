@@ -3,7 +3,7 @@
     .panel.panel-default
       .panel-body
         = select_tag "template", options_from_collection_for_select(current_organization.templates, "id", "name"), prompt: "Choose a template...", class: "pull-right"
-        = f.text_area(:body, placeholder: "Text #{user.first_name}...", class: "form-control")
+        = text_area_tag(:body, nil, placeholder: "Text #{user.first_name}...", class: "form-control")
         = button_tag(type: "submit", class: "btn btn-sm btn-primary pull-right") do
           ' Send
           i.fa.fa-paper-plane-o
