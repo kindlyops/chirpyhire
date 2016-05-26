@@ -1,7 +1,12 @@
-tr.message role="row"
+tr.message data-id==message.id role="row"
   td.v-align-middle
     p = message.sender_name
   td.v-align-middle
     p = message.body
   td.v-align-middle
     p = "#{time_ago_in_words(message.created_at)} ago"
+  td.v-align-middle
+    - if message.incomplete_task?
+      = form_for message.task, remote: true do |f|
+        = f.hidden_field(:done, value: true)
+        = f.submit "✓ Done", class: "btn btn-success btn-sm"

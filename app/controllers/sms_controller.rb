@@ -3,13 +3,17 @@ class SmsController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  def invalid_message
-    sender
+  def unknown_message
+    message.create_task
 
     head :ok
   end
 
   private
+
+  def message
+    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"])
+  end
 
   def vcard
     @vcard ||= Vcard.new(url: params["MediaUrl0"])
@@ -25,9 +29,5 @@ class SmsController < ActionController::Base
 
   def set_header
     response.headers["Content-Type"] = "text/xml"
-  end
-
-  def render_sms(message)
-    render text: message.text
   end
 end

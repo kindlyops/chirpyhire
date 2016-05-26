@@ -3,6 +3,14 @@
     margin-top: 45px;
   }
 
+  .subscribed_true {
+    color: $color-success;
+  }
+
+  .subscribed_false {
+    color: $color-danger;
+  }
+
   .new_message {
     .fa-trash {
       margin-top: 10px;

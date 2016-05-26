@@ -6,9 +6,11 @@ Rails.application.routes.draw do
     get 'preview'
   end
 
-  resources :users, only: [:show]
+  resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index
+  resources :tasks, only: :update
+  resource :inbox, only: :show
   resources :automations, only: :show do
     resources :rules, except: [:index, :destroy], shallow: true
   end
@@ -21,7 +23,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms#invalid_message'
+  post 'twilio/text' => 'sms#unknown_message'
 
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 

@@ -13,6 +13,8 @@ class CreateMessages < ActiveRecord::Migration
     remove_column :inquiries, :message_sid
     remove_column :notifications, :message_sid
 
+    add_index :messages, :sid, unique: true
+
     add_reference :answers, :message, null: false, index: true, foreign_key: true
     add_reference :inquiries, :message, null: false, index: true, foreign_key: true
     add_reference :notifications, :message, null: false, index: true, foreign_key: true

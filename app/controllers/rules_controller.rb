@@ -27,7 +27,7 @@ class RulesController < ApplicationController
   end
 
   def update
-    if authorized_rule.update(permitted_attributes(authorized_rule))
+    if authorized_rule.update(permitted_attributes(Rule))
       redirect_to authorized_rule, notice: 'Rule was successfully updated.'
     else
       render :show

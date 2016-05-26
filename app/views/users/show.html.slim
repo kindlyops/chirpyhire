@@ -3,14 +3,18 @@
   .row
     .col-xs-3
       .page-header
-        h2 = user.name
+        h2
+          - if user.candidate.present?
+            i.fa.fa-circle class="subscribed_#{user.candidate.subscribed?}" title="#{user.candidate.subscription_status}"
+            '
+          = user.name
     .col-xs-9.menu
       = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
       - if user.candidate.present?
         = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
-  .row#new-message
+  .row
     .col-xs-3
       = user.phone_number.phony_formatted
   .row
@@ -28,5 +32,6 @@
                 th rowspan="1" colspan="1" aria-label="Sender" Sender
                 th rowspan="1" colspan="1" aria-label="Body" Body
                 th rowspan="1" colspan="1" aria-label="Sent At" Sent At
+                th rowspan="1" colspan="1" aria-label="Task"
             tbody
               = render partial: "messages/message", collection: user.messages
