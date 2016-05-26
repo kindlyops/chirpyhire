@@ -3,7 +3,7 @@ class SmsController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  def invalid_message
+  def unknown_message
     sender
 
     head :ok
