@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show]
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index
-  resources :tasks, only: :index
+  resources :tasks, only: [:index, :update]
   resources :automations, only: :show do
     resources :rules, except: [:index, :destroy], shallow: true
   end

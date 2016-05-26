@@ -16,12 +16,7 @@ RSpec.describe ReferrersController, type: :controller do
     end
 
     context "with referrers" do
-      let(:users) { create_list(:user, 3, organization: organization) }
-      let!(:referrers) do
-        3.times.map do |i|
-          create(:referrer, user: users[i-1])
-        end
-      end
+      let(:referrers) { create_list(:referrer, 3, organization: organization) }
 
       it "returns the organization's referrers" do
         get :index
