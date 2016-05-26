@@ -4,6 +4,8 @@ class Task < ActiveRecord::Base
   delegate :user, to: :message
   delegate :organization, to: :user
 
+  scope :incomplete, -> { where(done: false) }
+
   def incomplete?
     !done?
   end

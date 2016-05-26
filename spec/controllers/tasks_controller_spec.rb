@@ -51,11 +51,20 @@ RSpec.describe TasksController, type: :controller do
     end
 
     context "with tasks" do
-      let(:tasks) { create_list(:task, 3, organization: organization) }
+      let!(:tasks) { create_list(:task, 3, organization: organization) }
 
       it "returns the organization's tasks" do
         get :index
         expect(assigns(:tasks)).to eq(tasks)
+      end
+
+      context "with done tasks" do
+        let!(:task) { create(:task, done: true, organization: organization) }
+
+        it "does not include done tasks" do
+          get :index
+          expect(assigns(:tasks)).not_to include(task)
+        end
       end
 
       context "with other organizations" do
