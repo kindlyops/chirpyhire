@@ -7,8 +7,18 @@
     color: $color-success;
   }
 
+  .fa-stack {
+    color: $color-master;
+    margin-left: 10px;
+
+    .fa-cog {
+      left: 13px;
+      bottom: 13px;
+    }
+  }
+
   .subscribed_false {
-    color: $color-danger;
+    color: mix($color-master, #fff, 26.9%);
   }
 
   .new_message {

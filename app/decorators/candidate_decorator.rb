@@ -14,7 +14,7 @@ class CandidateDecorator < Draper::Decorator
     Candidate::STATUSES
   end
 
-  def subscription_status
-    subscribed? ? "Subscribed" : "Unsubscribed"
+  def screening_status
+    subscribed? ? "Screening in Progress" : "Screening not in Progress"
   end
 end
