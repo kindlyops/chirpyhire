@@ -24,7 +24,7 @@ RSpec.describe InboxesController, type: :controller do
       end
 
       context "with done tasks" do
-        let!(:task) { create(:task, done: true, organization: organization) }
+        let!(:task) { create(:task, outstanding: false, organization: organization) }
 
         it "does not include done tasks" do
           get :show

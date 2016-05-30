@@ -12,7 +12,7 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:done]
+    [:outstanding]
   end
 
   class Scope < ApplicationPolicy::Scope

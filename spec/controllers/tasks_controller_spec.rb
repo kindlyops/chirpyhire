@@ -16,14 +16,14 @@ RSpec.describe TasksController, type: :controller do
       let(:task_params) do
         { id: task.id,
           task: {
-          done: true
+          outstanding: false
         } }
       end
 
       it "updates the task" do
         expect {
           xhr :put, :update, task_params
-        }.to change{task.reload.done?}.from(false).to(true)
+        }.to change{task.reload.outstanding?}.from(true).to(false)
       end
     end
 
