@@ -43,6 +43,6 @@ class SubscriptionsController < SmsController
   end
 
   def trigger
-    organization.triggers.find_by(event: "subscribe")
+    Trigger.for("subscribe")
   end
 end

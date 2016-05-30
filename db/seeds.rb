@@ -43,10 +43,10 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
-  unless org.triggers.present?
-    subscribe_trigger = org.triggers.create(event: "subscribe")
-    location_trigger = org.triggers.create(event: "answer")
-    tb_trigger = org.triggers.create(event: "answer")
+  unless Trigger.all.present?
+    subscribe_trigger = Trigger.create(event: "subscribe")
+    location_trigger = Trigger.create(event: "answer")
+    tb_trigger = Trigger.create(event: "answer")
   end
 
   unless org.templates.present?

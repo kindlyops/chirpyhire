@@ -13,7 +13,7 @@ FactoryGirl.define do
 
     trait :screen_trigger do
       before(:create) do |rule, evaluator|
-        trigger = create(:trigger, event: :screen, organization: rule.organization)
+        trigger = create(:trigger, event: :screen)
         rule.trigger = trigger
       end
     end

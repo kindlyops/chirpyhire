@@ -63,7 +63,7 @@ RSpec.describe RulesController, type: :controller do
   describe "#create" do
     context "with valid rule params" do
       let(:template) { create(:template, organization: organization)}
-      let(:trigger) { create(:trigger, organization: organization) }
+      let(:trigger) { create(:trigger) }
 
       let(:rule_params) do
         { rule: {

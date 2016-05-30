@@ -195,13 +195,10 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "triggers", force: :cascade do |t|
-    t.string   "event",           null: false
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "event",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
-
-  add_index "triggers", ["organization_id"], name: "index_triggers_on_organization_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -237,6 +234,5 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_foreign_key "rules", "triggers"
   add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
-  add_foreign_key "triggers", "organizations"
   add_foreign_key "users", "organizations"
 end
