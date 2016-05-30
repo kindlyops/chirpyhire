@@ -185,13 +185,15 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   add_index "subscriptions", ["candidate_id"], name: "index_subscriptions_on_candidate_id", unique: true, where: "(deleted_at IS NULL)", using: :btree
 
   create_table "tasks", force: :cascade do |t|
-    t.integer  "message_id",                 null: false
+    t.integer  "user_id",                    null: false
+    t.string   "category",                   null: false
     t.boolean  "done",       default: false, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "tasks", ["message_id"], name: "index_tasks_on_message_id", using: :btree
+  add_index "tasks", ["category"], name: "index_tasks_on_category", using: :btree
+  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",            null: false
@@ -248,7 +250,7 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   add_foreign_key "rules", "automations"
   add_foreign_key "rules", "triggers"
   add_foreign_key "subscriptions", "candidates"
-  add_foreign_key "tasks", "messages"
+  add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
   add_foreign_key "triggers", "organizations"
   add_foreign_key "users", "organizations"

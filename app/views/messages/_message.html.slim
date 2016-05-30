@@ -9,7 +9,3 @@ tr.message data-id==message.id role="row"
     - message.images.each do |image|
       a href="https://api.twilio.com#{image.uri.split('.').first}"
         = image_tag("https://api.twilio.com#{image.uri.split('.').first}", size: "128", alt: image.sid)
-    - if message.incomplete_task?
-      = form_for message.task, remote: true do |f|
-        = f.hidden_field(:done, value: true)
-        = f.submit "✓ Done", class: "btn btn-success btn-sm"

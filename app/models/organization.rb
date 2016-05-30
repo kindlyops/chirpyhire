@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   has_many :referrals, through: :referrers
   has_many :accounts, through: :users
   has_many :messages, through: :users
-  has_many :tasks, through: :messages
+  has_many :tasks, through: :users
   has_many :templates
   has_many :questions, through: :templates
   has_many :notices, through: :templates

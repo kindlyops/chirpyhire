@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :task do
-    message
+    user
+    category "reply"
 
     transient do
       organization nil
@@ -8,8 +9,7 @@ FactoryGirl.define do
 
     before(:create) do |task, evaluator|
       if evaluator.organization
-        user = create(:user, organization: evaluator.organization)
-        task.message = create(:message, user: user)
+        task.user = create(:user, organization: evaluator.organization)
       end
     end
   end

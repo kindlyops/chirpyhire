@@ -3,7 +3,6 @@ class Message < ActiveRecord::Base
   has_one :inquiry
   has_one :notification
   has_one :answer
-  has_one :task
 
   delegate :organization, to: :user
   delegate :name, to: :sender, prefix: true
@@ -16,10 +15,6 @@ class Message < ActiveRecord::Base
         user
       end
     end
-  end
-
-  def incomplete_task?
-    task && task.incomplete?
   end
 
   def body
