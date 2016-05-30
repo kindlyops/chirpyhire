@@ -17,7 +17,7 @@ RSpec.feature "Templates" do
     end
 
     context "with templates" do
-      let!(:template) { create(:template, :with_notice, organization: organization) }
+      let!(:template) { create(:template, organization: organization) }
       scenario "has the template information" do
         visit templates_path
         expect(page).to have_text(template.name)

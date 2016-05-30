@@ -49,8 +49,8 @@ RSpec.feature "User" do
   end
 
   context "with notifications" do
-    let(:notice) { create(:template, :with_notice).notice }
-    let(:notification) { notice.perform(user) }
+    let(:template) { create(:template) }
+    let(:notification) { template.perform(user) }
     let!(:notification_message) { notification.message.decorate }
 
     scenario "has the notifications" do

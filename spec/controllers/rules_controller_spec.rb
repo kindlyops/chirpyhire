@@ -63,16 +63,13 @@ RSpec.describe RulesController, type: :controller do
   describe "#create" do
     context "with valid rule params" do
       let(:template) { create(:template, organization: organization)}
-      let(:notice_template) { create(:template, organization: organization)}
-
       let(:trigger) { create(:trigger, organization: organization) }
-      let(:notice) { create(:notice, template: notice_template) }
 
       let(:rule_params) do
         { rule: {
           trigger_id: trigger.id,
-          action_id: notice.id,
-          action_type: notice.class
+          action_id: template.id,
+          action_type: template.class
         } }
       end
 
@@ -93,7 +90,7 @@ RSpec.describe RulesController, type: :controller do
           { rule: {
             trigger_id: 1,
             action_id: 1023,
-            action_type: "Notice"
+            action_type: "Template"
         } }
       end
 

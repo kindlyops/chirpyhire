@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Notice, type: :model do
-  subject { create(:notice) }
+RSpec.describe Template, type: :model do
+  subject { create(:template) }
 
   describe "#perform" do
     let(:organization) { create(:organization) }

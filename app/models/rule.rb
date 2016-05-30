@@ -8,6 +8,6 @@ class Rule < ActiveRecord::Base
   delegate :template_name, to: :action, prefix: true
   delegate :template_name, :event, to: :trigger, prefix: true
 
-  validates :action_type, inclusion: { in: %w(Notice Question) }
+  validates :action_type, inclusion: { in: %w(Template Profile) }
 
 end

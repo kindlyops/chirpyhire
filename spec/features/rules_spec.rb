@@ -26,7 +26,7 @@ RSpec.feature "Rules" do
       scenario "has the rule information" do
         visit rules_path
         expect(page).to have_text(trigger_title)
-        expect(page).to have_text(action.template_name)
+        expect(page).to have_text(action.name)
         expect(page).to have_text("Enabled")
       end
     end

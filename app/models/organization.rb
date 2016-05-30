@@ -8,8 +8,6 @@ class Organization < ActiveRecord::Base
   has_many :messages, through: :users
   has_many :tasks, through: :users
   has_many :templates
-  has_many :questions, through: :templates
-  has_many :notices, through: :templates
   has_many :rules
   has_many :triggers
   has_many :actions

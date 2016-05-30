@@ -8,7 +8,7 @@ FactoryGirl.define do
     end
 
     before(:create) do |rule, evaluator|
-      rule.action = create(:notice, organization: rule.organization)
+      rule.action = create(:template, organization: rule.organization)
     end
 
     trait :screen_trigger do

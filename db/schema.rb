@@ -98,23 +98,15 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
-  create_table "notices", force: :cascade do |t|
+  create_table "notifications", force: :cascade do |t|
     t.integer  "template_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  add_index "notices", ["template_id"], name: "index_notices_on_template_id", using: :btree
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer  "notice_id",  null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "message_id", null: false
+    t.integer  "message_id",  null: false
   end
 
   add_index "notifications", ["message_id"], name: "index_notifications_on_message_id", using: :btree
-  add_index "notifications", ["notice_id"], name: "index_notifications_on_notice_id", using: :btree
+  add_index "notifications", ["template_id"], name: "index_notifications_on_template_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -234,9 +226,8 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "messages", "users"
-  add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
-  add_foreign_key "notifications", "notices"
+  add_foreign_key "notifications", "templates"
   add_foreign_key "profile_features", "profiles"
   add_foreign_key "profiles", "organizations"
   add_foreign_key "referrals", "candidates"
