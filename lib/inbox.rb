@@ -4,7 +4,7 @@ class Inbox
   end
 
   def tasks
-    organization.tasks.incomplete
+    organization.tasks.outstanding
   end
 
   private

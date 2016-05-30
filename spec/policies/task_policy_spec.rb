@@ -29,7 +29,7 @@ RSpec.describe TaskPolicy do
       it { should forbid_action(:edit) }
       it { should forbid_action(:destroy) }
       it { should forbid_action(:show) }
-      it { should permit_mass_assignment_of(:done) }
+      it { should permit_mass_assignment_of(:outstanding) }
       it { should forbid_mass_assignment_of(:message_id) }
 
       it 'includes task in resolved scope' do

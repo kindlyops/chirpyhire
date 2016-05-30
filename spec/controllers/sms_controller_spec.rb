@@ -30,5 +30,27 @@ RSpec.describe SmsController, type: :controller do
         post :unknown_message, { "MessageSid" => "123", "To" => phone.number }
       }.to change{organization.users.count}.by(1)
     end
+
+    context "without an outstanding reply task" do
+      it "creates an outstanding reply task for the user" do
+        expect {
+          post :unknown_message, { "MessageSid" => "123", "To" => phone.number }
+        }.to change{organization.tasks.outstanding.count}.by(1)
+      end
+    end
+
+    context "with a preexisting outstanding reply task" do
+      let(:user) { create(:user, organization: organization) }
+
+      before(:each) do
+        user.tasks.create(category: "reply")
+      end
+
+      it "does not create a new reply task" do
+        expect {
+          post :unknown_message, { "MessageSid" => "123", "From" => user.phone_number, "To" => phone.number }
+        }.not_to change{organization.tasks.outstanding.count}
+      end
+    end
   end
 end

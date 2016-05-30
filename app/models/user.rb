@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :referrer
   has_one :account
   has_many :messages
+  has_many :tasks
   has_many :inquiries, through: :messages
   has_many :answers, through: :messages
   has_many :notifications, through: :messages
@@ -15,6 +16,14 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
+
+  def outstanding_tasks
+    tasks.outstanding
+  end
+
+  def outstanding_reply_task?
+    outstanding_tasks.where(category: "reply").present?
+  end
 
   def outstanding_inquiry
     inquiries.unanswered.first

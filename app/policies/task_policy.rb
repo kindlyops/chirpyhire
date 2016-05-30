@@ -12,12 +12,12 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:done]
+    [:outstanding]
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(message: :user).where(users: { organization_id: account.organization.id })
+      scope.joins(:user).where(users: { organization_id: account.organization.id })
     end
   end
 end

@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   private
 
   def scoped_tasks
-    policy_scope(Task).incomplete
+    policy_scope(Task).outstanding
   end
 
   def authorized_task

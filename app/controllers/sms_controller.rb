@@ -4,7 +4,7 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def unknown_message
-    message.create_task
+    sender.tasks.create(category: "reply") unless sender.outstanding_reply_task?
 
     head :ok
   end

@@ -1,13 +1,8 @@
 class Task < ActiveRecord::Base
-  belongs_to :message
+  belongs_to :user
 
-  delegate :user, to: :message
-  delegate :sender_name, :body, :created_at, to: :message, prefix: true
   delegate :organization, to: :user
+  validates :category, inclusion: { in: %w(reply review) }
 
-  scope :incomplete, -> { where(done: false) }
-
-  def incomplete?
-    !done?
-  end
+  scope :outstanding, -> { where(outstanding: true) }
 end
