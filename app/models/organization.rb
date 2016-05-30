@@ -13,6 +13,7 @@ class Organization < ActiveRecord::Base
   has_many :rules
   has_many :triggers
   has_many :actions
+  has_one :profile
 
   delegate :first_name, to: :contact, prefix: true
 

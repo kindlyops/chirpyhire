@@ -2,6 +2,8 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :referrers, through: :referrals
+  has_many :candidate_features
+  has_many :features, through: :candidate_features
 
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526134021) do
+ActiveRecord::Schema.define(version: 20160530214449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,17 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
   add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
 
+  create_table "candidate_features", force: :cascade do |t|
+    t.integer  "feature_id",               null: false
+    t.integer  "candidate_id",             null: false
+    t.integer  "status",       default: 0, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "candidate_features", ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
+  add_index "candidate_features", ["feature_id"], name: "index_candidate_features_on_feature_id", using: :btree
+
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
     t.string   "status",     default: "Potential", null: false
@@ -67,6 +78,16 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   end
 
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
+
+  create_table "features", force: :cascade do |t|
+    t.integer  "profile_id", null: false
+    t.string   "format",     null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "features", ["profile_id"], name: "index_features_on_profile_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
     t.integer  "question_id", null: false
@@ -117,6 +138,14 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   end
 
   add_index "organizations", ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
+
+  create_table "profiles", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "profiles", ["organization_id"], name: "index_profiles_on_organization_id", using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.integer  "template_id", null: false
@@ -211,13 +240,17 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
+  add_foreign_key "candidate_features", "candidates"
+  add_foreign_key "candidate_features", "features"
   add_foreign_key "candidates", "users"
+  add_foreign_key "features", "profiles"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
   add_foreign_key "messages", "users"
   add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"
+  add_foreign_key "profiles", "organizations"
   add_foreign_key "questions", "templates"
   add_foreign_key "questions", "triggers"
   add_foreign_key "referrals", "candidates"
