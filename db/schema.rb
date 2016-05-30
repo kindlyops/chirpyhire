@@ -118,19 +118,13 @@ ActiveRecord::Schema.define(version: 20160526134021) do
     t.string   "name",                                                      null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
+    t.string   "phone_number"
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
   end
 
-  create_table "phones", force: :cascade do |t|
-    t.integer  "organization_id", null: false
-    t.string   "number",          null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "phones", ["organization_id"], name: "index_phones_on_organization_id", unique: true, using: :btree
+  add_index "organizations", ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.integer  "template_id", null: false
@@ -233,7 +227,6 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"
-  add_foreign_key "phones", "organizations"
   add_foreign_key "questions", "templates"
   add_foreign_key "questions", "triggers"
   add_foreign_key "referrals", "candidates"

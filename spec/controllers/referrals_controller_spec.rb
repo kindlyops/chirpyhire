@@ -21,9 +21,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       let!(:sender) { create(:user, organization: organization, phone_number: sender_phone_number) }
 
       context "that is a referrer for the organization" do
-        before(:each) do
-          create(:referrer, user: sender)
-        end
+        let!(:referrer) { create(:referrer, user: sender) }
 
         it "sends the user a template message to send to the referred candidate" do
           post :create, params
@@ -33,7 +31,7 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
         it "creates a referral" do
           expect {
             post :create, params
-          }.to change{organization.referrals.count}.by(1)
+          }.to change{referrer.referrals.count}.by(1)
         end
 
         context "without an existing candidate" do
