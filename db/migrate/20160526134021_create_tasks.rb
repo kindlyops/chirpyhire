@@ -6,5 +6,7 @@ class CreateTasks < ActiveRecord::Migration
       t.boolean :done, null: false, default: false
       t.timestamps null: false
     end
+
+    add_index :tasks, [:user_id, :category], where: "done = 'f'", unique: true
   end
 end

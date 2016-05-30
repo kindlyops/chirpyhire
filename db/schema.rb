@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20160526134021) do
   end
 
   add_index "tasks", ["category"], name: "index_tasks_on_category", using: :btree
+  add_index "tasks", ["user_id", "category"], name: "index_tasks_on_user_id_and_category", unique: true, where: "(done = false)", using: :btree
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
