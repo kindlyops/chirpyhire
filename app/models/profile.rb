@@ -1,6 +1,6 @@
 class Profile < ActiveRecord::Base
   belongs_to :organization
-  has_many :features
+  has_many :profile_features
 
   def advance(user)
 

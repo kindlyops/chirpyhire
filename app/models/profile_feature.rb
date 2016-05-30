@@ -1,4 +1,4 @@
-class Feature < ActiveRecord::Base
+class ProfileFeature < ActiveRecord::Base
   belongs_to :profile
   has_many :candidate_features
 

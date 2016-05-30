@@ -3,7 +3,7 @@ class Inquiry < ActiveRecord::Base
   belongs_to :message
   has_one :answer
   delegate :organization, to: :message
-  delegate :feature_format, to: :candidate_feature
+  delegate :profile_feature_format, to: :candidate_feature
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
