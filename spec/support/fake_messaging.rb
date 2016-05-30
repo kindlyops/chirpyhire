@@ -1,9 +1,13 @@
 class FakeMessaging
-  MediaInstance = Struct.new(:content_type, :url) do
+  MediaInstance = Struct.new(:content_type, :uri) do
     IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)
 
     def image?
       IMAGE_TYPES.include?(content_type)
+    end
+
+    def sid
+      Faker::Number.number(10)
     end
   end
 
@@ -19,14 +23,14 @@ class FakeMessaging
     end
 
     def media_urls
-      media.list.map(&:url)
+      media.list.map(&:uri)
     end
   end
 
   cattr_accessor :messages
   self.messages = []
 
-  def self.inbound_message(sender, organization, format: :text)
+  def self.inbound_message(sender, organization, format: :image)
     body = format == :text ? Faker::Lorem.word : ""
 
     new("foo", "bar").create(
@@ -53,7 +57,7 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, direction: "outbound-api", format: :text)
+  def create(from:, to:, body:, direction: "outbound-api", format: :image)
     if format == :text
       media = Media.new([])
     elsif format == :image

@@ -3,8 +3,7 @@ class Trigger < ActiveRecord::Base
   has_many :rules
   has_one :question
 
-  delegate :template_name, :options, to: :question
-  validates :event, inclusion: { in: %w(subscribe answer) }
+  validates :event, inclusion: { in: %w(subscribe screen) }
 
   def decorator_class
     "#{event.humanize}Decorator".constantize

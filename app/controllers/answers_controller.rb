@@ -2,7 +2,7 @@ class AnswersController < SmsController
 
   def create
     if answer.valid?
-      AutomatonJob.perform_later(sender, trigger)
+      ProfileJob.perform_later(sender, profile)
       head :ok
     else
       unknown_message
@@ -12,19 +12,14 @@ class AnswersController < SmsController
   private
 
   def answer
-    sender.answer(outstanding_inquiry, params["MessageSid"])
+    @answer ||= sender.answer(outstanding_inquiry, params["MessageSid"])
   end
 
   def outstanding_inquiry
     @outstanding_inquiry ||= sender.outstanding_inquiry
   end
 
-  def question
-    outstanding_inquiry.question
+  def profile
+    organization.profile
   end
-
-  def trigger
-    question.trigger
-  end
-
 end

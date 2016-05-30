@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :candidate_feature do
-    candidate
     feature
+    candidate
   end
 end

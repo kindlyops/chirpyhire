@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530214449) do
+ActiveRecord::Schema.define(version: 20160530224444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,11 +59,10 @@ ActiveRecord::Schema.define(version: 20160530214449) do
   add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "feature_id",               null: false
-    t.integer  "candidate_id",             null: false
-    t.integer  "status",       default: 0, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.integer  "candidate_id", null: false
+    t.integer  "feature_id",   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "candidate_features", ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
@@ -90,14 +89,14 @@ ActiveRecord::Schema.define(version: 20160530214449) do
   add_index "features", ["profile_id"], name: "index_features_on_profile_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
-    t.integer  "question_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "message_id",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "message_id",           null: false
+    t.integer  "candidate_feature_id", null: false
   end
 
+  add_index "inquiries", ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
   add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
-  add_index "inquiries", ["question_id"], name: "index_inquiries_on_question_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.string   "sid",        null: false
@@ -146,17 +145,6 @@ ActiveRecord::Schema.define(version: 20160530214449) do
   end
 
   add_index "profiles", ["organization_id"], name: "index_profiles_on_organization_id", using: :btree
-
-  create_table "questions", force: :cascade do |t|
-    t.integer  "template_id", null: false
-    t.integer  "trigger_id"
-    t.string   "format",      null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "questions", ["template_id"], name: "index_questions_on_template_id", using: :btree
-  add_index "questions", ["trigger_id"], name: "index_questions_on_trigger_id", unique: true, using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
@@ -244,15 +232,13 @@ ActiveRecord::Schema.define(version: 20160530214449) do
   add_foreign_key "candidate_features", "features"
   add_foreign_key "candidates", "users"
   add_foreign_key "features", "profiles"
+  add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
-  add_foreign_key "inquiries", "questions"
   add_foreign_key "messages", "users"
   add_foreign_key "notices", "templates"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "notices"
   add_foreign_key "profiles", "organizations"
-  add_foreign_key "questions", "templates"
-  add_foreign_key "questions", "triggers"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"

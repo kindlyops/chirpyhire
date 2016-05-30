@@ -4,6 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:candidate) { create(:candidate, :with_inquiry) }
   let(:user) { candidate.user }
   let(:answer) { FakeMessaging.inbound_message(user, candidate.organization) }
+  let!(:profile) { create(:profile, :with_features, organization: user.organization) }
 
   describe "#create" do
     let(:params) do
@@ -11,7 +12,8 @@ RSpec.describe AnswersController, type: :controller do
         "To" => answer.to,
         "From" => answer.from,
         "Body" => answer.body,
-        "MessageSid" => answer.sid
+        "MessageSid" => answer.sid,
+        "MediaUrl0" => answer.media_urls[0]
       }
     end
 
@@ -35,49 +37,17 @@ RSpec.describe AnswersController, type: :controller do
         }.to change{Answer.count}.by(1)
       end
 
-      it "creates an answer automaton job" do
+      it "creates a ProfileJob" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
+        }.to have_enqueued_job(ProfileJob).with(user, profile)
       end
     end
 
     context "with an answer format that doesn't matches the response format" do
-      context "text mismatch" do
-        let(:answer) { FakeMessaging.inbound_message(user, candidate.organization, format: :image) }
-
-        let(:params) do
-          {
-            "To" => answer.to,
-            "From" => answer.from,
-            "Body" => answer.body,
-            "MessageSid" => answer.sid,
-            "MediaUrl0" => answer.media_urls[0]
-          }
-        end
-
-        it "creates a message" do
-          expect {
-            post :create, params
-          }.to change{user.messages.count}.by(1)
-        end
-
-        it "creates a task" do
-          expect {
-            post :create, params
-          }.to change{Task.count}.by(1)
-        end
-
-        it "does not create an answer" do
-          expect {
-            post :create, params
-          }.not_to change{Answer.count}
-        end
-      end
-
       context "image mismatch" do
-        let(:candidate) { create(:candidate, :with_inquiry, inquiry_format: :image) }
-        let(:answer) { FakeMessaging.inbound_message(candidate.user, candidate.organization) }
+        let(:candidate) { create(:candidate, :with_inquiry) }
+        let(:answer) { FakeMessaging.inbound_message(candidate.user, candidate.organization, format: :text) }
 
         let(:params) do
           {

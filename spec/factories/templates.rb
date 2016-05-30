@@ -4,10 +4,6 @@ FactoryGirl.define do
     name { Faker::Lorem.words(rand(1..3)).join }
     body { Faker::Lorem.paragraph(rand(1..5)) }
 
-    trait :with_question do
-      question
-    end
-
     trait :with_notice do
       notice
     end

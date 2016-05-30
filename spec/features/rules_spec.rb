@@ -18,8 +18,8 @@ RSpec.feature "Rules" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, :answer_trigger, organization: organization) }
-      let(:description) { "Answers a question" }
+      let!(:rule) { create(:rule, :screen_trigger, organization: organization) }
+      let(:description) { "Screened" }
       let(:action) { rule.action.decorate }
       let(:trigger_title) { rule.decorate.trigger_title }
 

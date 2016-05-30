@@ -3,4 +3,8 @@ class Feature < ActiveRecord::Base
   has_many :candidate_features
 
   validates :format, inclusion: { in: %w(document) }
+
+  def document?
+    format == "document"
+  end
 end
