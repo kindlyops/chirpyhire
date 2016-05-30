@@ -4,5 +4,5 @@ class Task < ActiveRecord::Base
   delegate :organization, to: :user
   validates :category, inclusion: { in: %w(reply review) }
 
-  scope :incomplete, -> { where(done: false) }
+  scope :outstanding, -> { where(done: false) }
 end

@@ -17,7 +17,7 @@
   .row
     .col-xs-3
       = user.phone_number.phony_formatted
-      - user.incomplete_tasks.each do |task|
+      - user.outstanding_tasks.each do |task|
         = form_for task, remote: true do |f|
           = f.hidden_field(:done, value: true)
           = f.submit "✓ Done", class: "btn btn-success btn-sm"

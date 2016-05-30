@@ -17,8 +17,12 @@ class User < ActiveRecord::Base
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
-  def incomplete_tasks
-    tasks.incomplete
+  def outstanding_tasks
+    tasks.outstanding
+  end
+
+  def outstanding_reply_task?
+    outstanding_tasks.where(category: "reply").present?
   end
 
   def outstanding_inquiry
