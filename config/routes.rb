@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   resources :referrers, only: :index
   resources :tasks, only: :update
   resource :inbox, only: :show
-  resources :automations, only: :show do
-    resources :rules, except: [:index, :destroy], shallow: true
-  end
+  resources :rules, except: [:destroy], shallow: true
 
   resources :users, only: [] do
     resources :messages, only: [:new, :create], shallow: true

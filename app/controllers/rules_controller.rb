@@ -2,6 +2,10 @@ class RulesController < ApplicationController
   decorates_assigned :rule
   decorates_assigned :rules
 
+  def index
+    @rules = scoped_rules
+  end
+
   def new
     rule = scoped_rules.build
 
@@ -40,13 +44,7 @@ class RulesController < ApplicationController
     authorize Rule.find(params[:id])
   end
 
-  def authorized_automation
-    automation = Automation.find(params[:automation_id])
-    raise Pundit::NotAuthorizedError unless AutomationPolicy.new(current_account, automation).show?
-    automation
-  end
-
   def scoped_rules
-    policy_scope(Rule).where(automation: authorized_automation)
+    policy_scope(Rule)
   end
 end

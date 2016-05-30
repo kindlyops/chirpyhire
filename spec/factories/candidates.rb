@@ -19,8 +19,7 @@ FactoryGirl.define do
 
     trait :with_inquiry do
       after(:create) do |candidate, evaluator|
-        automation = create(:automation, organization: candidate.organization)
-        rule = create(:rule, :asks_question, format: evaluator.inquiry_format, automation: automation)
+        rule = create(:rule, :asks_question, format: evaluator.inquiry_format, organization: candidate.organization)
         rule.perform(candidate.user)
       end
     end

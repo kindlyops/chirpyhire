@@ -11,7 +11,7 @@
             th rowspan="1" colspan="1" aria-label="Action" Action
             th rowspan="1" colspan="1" aria-label="Status" Status
         tbody
-          - automation.rules.each do |rule|
+          - rules.each do |rule|
             tr.rule data-link==rule_path(rule.id) role="row"
               td.v-align-middle
                 div

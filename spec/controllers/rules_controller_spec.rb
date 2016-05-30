@@ -5,20 +5,43 @@ RSpec.describe RulesController, type: :controller do
   let(:account) { user.account }
   let(:organization) { user.organization }
   let(:rule) { create(:rule, organization: organization) }
-  let!(:automation) { rule.automation }
 
   before(:each) do
     sign_in(account)
   end
 
+  describe "#index" do
+    it "is OK" do
+      get :index
+      expect(response).to be_ok
+    end
+
+    context "with rules" do
+      let!(:rules) { create_list(:rule, 3, organization: organization) }
+
+      it "returns the organization's rules" do
+        get :index
+        expect(assigns(:rules)).to eq(rules)
+      end
+
+      context "with other organizations" do
+        let!(:other_rules) { create_list(:rule, 2) }
+        it "does not return the other organization's rules" do
+          get :index
+          expect(assigns(:rules)).not_to include(other_rules)
+        end
+      end
+    end
+  end
+
   describe "#new" do
     it "is ok" do
-      get :new, automation_id: automation.id
+      get :new
       expect(response).to be_ok
     end
 
     it "assigns a new rule" do
-      get :new, automation_id: automation.id
+      get :new
       expect(assigns(:rule)).to be_a(Rule)
       expect(assigns(:rule).id).to eq(nil)
     end
@@ -46,8 +69,7 @@ RSpec.describe RulesController, type: :controller do
       let(:notice) { create(:notice, template: notice_template) }
 
       let(:rule_params) do
-        { automation_id: automation.id,
-          rule: {
+        { rule: {
           trigger_id: trigger.id,
           action_id: notice.id,
           action_type: notice.class
@@ -57,7 +79,7 @@ RSpec.describe RulesController, type: :controller do
       it "creates a rule" do
         expect {
           post :create, rule_params
-        }.to change{automation.rules.count}.by(1)
+        }.to change{organization.rules.count}.by(1)
       end
 
       it "redirects to index" do
@@ -68,8 +90,7 @@ RSpec.describe RulesController, type: :controller do
 
     context "with invalid params" do
       let(:invalid_params) do
-          { automation_id: automation.id,
-            rule: {
+          { rule: {
             trigger_id: 1,
             action_id: 1023,
             action_type: "Notice"
@@ -79,7 +100,7 @@ RSpec.describe RulesController, type: :controller do
       it "does not create a rule" do
         expect {
           post :create, invalid_params
-        }.not_to change{automation.rules.count}
+        }.not_to change{organization.rules.count}
       end
 
       it "renders the new template" do
@@ -108,29 +129,6 @@ RSpec.describe RulesController, type: :controller do
       it "redirects to index" do
         put :update, rule_params
         expect(response).to redirect_to(rule_path(rule))
-      end
-    end
-
-    context "with invalid params" do
-      let(:invalid_params) do
-        { id: rule.id,
-          rule: {
-          trigger_id: 1,
-          action_id: 1023,
-          action_type: "Notice"
-      } }
-      end
-
-      it "does not create a rule" do
-        expect {
-          put :update, invalid_params
-        }.not_to change{automation.rules.count}
-      end
-
-      it "renders the show template" do
-        put :update, invalid_params
-
-        expect(response).to render_template("show")
       end
     end
   end

@@ -5,12 +5,6 @@ FactoryGirl.define do
     twilio_auth_token ENV.fetch('TWILIO_TEST_AUTH_TOKEN')
     phone_number { Faker::PhoneNumber.cell_phone }
 
-    trait :with_automation do |organization|
-      after(:create) do |organization|
-        create(:automation, :with_rule, answer: true, organization: organization)
-      end
-    end
-
     trait :with_account do
       after(:create) do |organization|
         create(:user, :with_account, organization: organization)

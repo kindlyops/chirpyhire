@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
   has_many :templates
   has_many :questions, through: :templates
   has_many :notices, through: :templates
-  has_many :automations
+  has_many :rules
   has_many :triggers
   has_many :actions
 
@@ -22,10 +22,6 @@ class Organization < ActiveRecord::Base
 
   def contact
     users.find_by(contact: true)
-  end
-
-  def screen
-    automations.first
   end
 
   def subscribed_candidates

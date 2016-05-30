@@ -42,9 +42,9 @@
             <span class="icon-thumbnail "><i class="fa fa-comment"></i>
                     </span>
           </li>
-          <% if current_organization.screen.present? %>
+          <% if current_organization.rules.present? %>
             <li class="">
-              <a href=<%= "/automations/#{current_organization.screen.id}" %> class="detailed">
+              <a href=<%= "/rules" %> class="detailed">
                 <span class="title">Screen</span>
                 <span class="details">Find Quality Caregivers</span>
               </a>
