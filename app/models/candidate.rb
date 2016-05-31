@@ -2,12 +2,15 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   has_many :referrals
   has_many :referrers, through: :referrals
+  has_many :candidate_features
+  has_many :profile_features, through: :candidate_features
 
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
-           :organization, :messages, :outstanding_inquiry, to: :user
+           :organization, :messages, :outstanding_inquiry,
+           :receive_message, to: :user
 
   delegate :contact_first_name, to: :organization
   delegate :created_at, to: :last_referral, prefix: true

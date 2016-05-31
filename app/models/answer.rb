@@ -8,7 +8,7 @@ class Answer < ActiveRecord::Base
 
   def expected_format
     unless inquiry.expects?(self)
-      errors.add(:inquiry, "expected #{inquiry.question.format}")
+      errors.add(:inquiry, "expected #{inquiry.profile_feature_format}")
     end
   end
 

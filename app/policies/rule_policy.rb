@@ -21,12 +21,12 @@ class RulePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:enabled, :trigger_id, :action_id, :action_type, :automation_id]
+    [:enabled, :trigger_id, :action_id, :action_type]
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(:automation).where(automations: { organization_id: account.organization.id })
+      scope.where(organization: account.organization)
     end
   end
 end

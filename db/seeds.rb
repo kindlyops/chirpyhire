@@ -11,7 +11,8 @@ if Rails.env.development?
   org = Organization.find_or_create_by(
     name: "chirpyhire",
     twilio_account_sid: ENV.fetch("TWILIO_ACCOUNT_SID"),
-    twilio_auth_token: ENV.fetch("TWILIO_AUTH_TOKEN")
+    twilio_auth_token: ENV.fetch("TWILIO_AUTH_TOKEN"),
+    phone_number: ENV.fetch("TEST_ORG_PHONE")
   )
   puts "Created Organization"
 
@@ -31,10 +32,6 @@ if Rails.env.development?
   end
   puts "Created Account"
 
-  puts "Creating Phone"
-  Phone.find_or_create_by(number: ENV.fetch("TEST_ORG_PHONE"), organization: org)
-  puts "Created Phone"
-
   puts "Creating Referrer"
   Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
@@ -43,33 +40,27 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
-  unless org.triggers.present?
-    subscribe_trigger = org.triggers.create(event: "subscribe")
-    location_trigger = org.triggers.create(event: "answer")
-    tb_trigger = org.triggers.create(event: "answer")
+  unless Trigger.all.present?
+    subscribe_trigger = Trigger.create(event: "subscribe")
+    screen_trigger = Trigger.create(event: "screen")
+  end
+
+  unless org.profile.present?
+    profile = org.create_profile
+    profile.features.create(format: "document", name: "TB Test")
+    puts "Created Profile and Features"
   end
 
   unless org.templates.present?
     welcome = org.templates.create(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-    location = org.templates.create(name: "Location", body: "What is your street address and zipcode?")
-    tb_test = org.templates.create(name: "TB Test", body: "If you have a current TB test please send a photo of it.")
     thank_you = org.templates.create(name: "Thank You", body: "Thanks for your interest!")
     puts "Created Templates"
-
-    welcome_notice = welcome.create_notice
-    location_question = location.create_question(format: "text", trigger: location_trigger)
-    tb_question = tb_test.create_question(format: "image", trigger: tb_trigger)
-    thank_you_notice = thank_you.create_notice
-    puts "Created Questions and Notices"
   end
 
-  unless org.automations.present?
-    automation = org.automations.create
-    candidate_rule = automation.rules.create(trigger: subscribe_trigger, action: welcome_notice)
-    candidate_rule_2 = automation.rules.create(trigger: subscribe_trigger, action: location_question)
-
-    location_rule = automation.rules.create(trigger: location_trigger, action: tb_question)
-    tb_rule = automation.rules.create(trigger: tb_trigger, action: thank_you_notice)
+  unless org.rules.present?
+    subscribe_rule = org.rules.create(trigger: subscribe_trigger, action: welcome)
+    subscribe_rule_2 = org.rules.create(trigger: subscribe_trigger, action: profile)
+    screen_rule = org.rules.create(trigger: screen_trigger, action: thank_you)
     puts "Created rules"
   end
 

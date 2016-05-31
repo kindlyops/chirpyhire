@@ -7,7 +7,7 @@ RSpec.describe Rule, type: :model do
     let(:user) { create(:user) }
 
     it "performs the action" do
-      expect_any_instance_of(Notice).to receive(:perform).with(user)
+      expect_any_instance_of(Template).to receive(:perform).with(user)
       rule.perform(user)
     end
   end

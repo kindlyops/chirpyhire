@@ -3,9 +3,8 @@ require 'rails_helper'
 RSpec.describe Automaton do
 
   let(:user) { create(:user) }
-  let(:trigger) { create(:trigger, event: :answer) }
-  let(:observable) { create(:observable) }
-  let(:automation) { create(:automation, organization: user.organization) }
+  let(:trigger) { create(:trigger, event: :screen) }
+  let(:organization) { user.organization }
 
   describe ".call" do
     it "creates an automaton" do
@@ -19,23 +18,11 @@ RSpec.describe Automaton do
 
     context "with rules" do
       context "on the organization" do
-        context "a collection rule for the trigger" do
-          let(:trigger) { create(:trigger) }
-          let!(:rule) { create(:rule, trigger: trigger, automation: automation) }
+        let!(:rule) { create(:rule, trigger: trigger, organization: organization) }
 
-          it "is fired" do
-            expect_any_instance_of(Rule).to receive(:perform).with(user)
-            automaton.call
-          end
-        end
-
-        context "a instance rule for the trigger" do
-          let!(:rule) { create(:rule, trigger: trigger, automation: automation) }
-
-          it "is fired" do
-            expect_any_instance_of(Rule).to receive(:perform).with(user)
-            automaton.call
-          end
+        it "is fired" do
+          expect_any_instance_of(Rule).to receive(:perform).with(user)
+          automaton.call
         end
       end
     end

@@ -1,33 +1,25 @@
 class Organization < ActiveRecord::Base
+  phony_normalize :phone_number, default_country_code: 'US'
+
   has_many :users
   has_many :candidates, through: :users
   has_many :referrers, through: :users
-  has_many :referrals, through: :referrers
   has_many :accounts, through: :users
   has_many :messages, through: :users
   has_many :tasks, through: :users
   has_many :templates
-  has_many :questions, through: :templates
-  has_many :notices, through: :templates
-  has_many :automations
-  has_many :triggers
+  has_many :rules
   has_many :actions
+  has_one :profile
 
-  has_one :phone
-
-  delegate :number, to: :phone, prefix: true
   delegate :first_name, to: :contact, prefix: true
 
   def self.for(phone:)
-    joins(:phone).find_by(phones: { number: phone })
+    find_by(phone_number: phone)
   end
 
   def contact
     users.find_by(contact: true)
-  end
-
-  def screen
-    automations.first
   end
 
   def subscribed_candidates

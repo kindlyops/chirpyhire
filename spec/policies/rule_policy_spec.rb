@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe RulePolicy do
   subject { RulePolicy.new(account, rule) }
 
-  let!(:automation) { create(:automation) }
+  let!(:organization) { create(:organization) }
   let!(:rule) { create(:rule) }
 
   let(:resolved_scope) { RulePolicy::Scope.new(account, Rule.all).resolve }
@@ -32,17 +32,17 @@ RSpec.describe RulePolicy do
       end
     end
 
-    context "rule is on the same organization as the automation" do
+    context "rule is on the same organization as the organization" do
       let(:account) { create(:account) }
-      let(:automation) { create(:automation, :with_rule, organization: account.organization) }
-      let!(:rule) { automation.rules.first }
+      let(:organization) { account.organization }
+      let!(:rule) { create(:rule, organization: organization) }
 
       it { should permit_new_and_create_actions }
       it { should permit_edit_and_update_actions }
       it { should permit_action(:show) }
       it { should permit_action(:destroy) }
 
-      it { should permit_mass_assignment_of(:enabled, :trigger_id, :action_id, :action_type, :automation_id) }
+      it { should permit_mass_assignment_of(:enabled, :trigger_id, :action_id, :action_type, :organization_id) }
 
       it 'includes rule in resolved scope' do
         expect(resolved_scope).to include(rule)

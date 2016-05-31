@@ -18,6 +18,10 @@ class Automaton
   attr_reader :user, :trigger
 
   def rules
-    trigger.rules
+    organization.rules.where(trigger: trigger)
+  end
+
+  def organization
+    @organization ||= user.organization
   end
 end

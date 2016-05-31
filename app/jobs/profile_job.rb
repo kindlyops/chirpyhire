@@ -1,0 +1,35 @@
+class ProfileJob < ActiveJob::Base
+  queue_as :default
+
+  def perform(candidate, profile)
+    @profile = profile
+    @candidate = candidate
+
+    if next_profile_feature.present?
+      next_candidate_feature.inquire
+    else
+      user.tasks.create(category: "review") unless user.outstanding_review_task?
+      AutomatonJob.perform_later(user, trigger)
+    end
+  end
+
+  private
+
+  attr_reader :candidate, :profile
+
+  def next_profile_feature
+    @next_profile_feature ||= profile.features.stale_for(candidate).first
+  end
+
+  def next_candidate_feature
+    @next_candidate_feature ||= next_profile_feature.candidate_features.create(candidate: candidate)
+  end
+
+  def user
+    @user ||= candidate.user
+  end
+
+  def trigger
+    Trigger.for("screen")
+  end
+end

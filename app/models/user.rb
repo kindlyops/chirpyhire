@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     outstanding_tasks.where(category: "reply").present?
   end
 
+  def outstanding_review_task?
+    outstanding_tasks.where(category: "review").present?
+  end
+
   def outstanding_inquiry
     inquiries.unanswered.first
   end

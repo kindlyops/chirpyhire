@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :notification do
     message
-    notice
+    template
   end
 end
