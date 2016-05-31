@@ -27,7 +27,12 @@ class Message < ActiveRecord::Base
   end
 
   def media
+    return [] if num_media.zero?
     message.media
+  end
+
+  def num_media
+    message.num_media
   end
 
   def has_images?

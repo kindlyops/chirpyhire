@@ -8,7 +8,7 @@ class ScreenPresenter
   end
 
   def icon_class
-    "fa-reply"
+    "fa-reply-all"
   end
 
   def event
