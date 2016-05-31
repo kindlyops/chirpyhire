@@ -13,4 +13,12 @@ class UserDecorator < Draper::Decorator
   def phone_number
     object.phone_number || ""
   end
+
+  def from
+    name || phone_number
+  end
+
+  def from_short
+    first_name || phone_number
+  end
 end

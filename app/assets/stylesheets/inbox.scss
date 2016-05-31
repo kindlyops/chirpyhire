@@ -1,73 +1,80 @@
 .inbox.inner-content {
   margin-left: 0;
-}
 
-.split-view {
-  .split-list {
-    .item {
-      height: 79px;
-
-      .subject {
-        height: 21px;
-      }
+  .new_message {
+    .cancel-message {
+      display: none;
     }
   }
 
-  .split-details .task-content-wrapper{
-    background: #fff;
-    height: 100%;
-    width: auto;
-    overflow: auto;
+  .split-view {
+    .split-list {
+      .item {
+        height: 79px;
 
-    .actions-wrapper{
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 50px;
-      z-index: $zIndex-navbar - 1;
-    }
-    .task-content{
-      margin:0 auto;
-      width: 600px;
-      display: block;
-      padding-top: 62px;
-      padding-bottom: 70px;
-      padding-left: 20px;
-      padding-right: 20px;
-      .task-content-header{
-        .sender{
-          .name{
-            font-size: 15px;
-            color: $color-info;
-          }
-          .datetime{
-            color: $color-master;
-            opacity: .45;
-            font-family: arial;
-          }
-        }
-        .subject{
-          font-family: arial;
-          color: $color-info;
-          font-size:15.2px;
-          line-height: 17px;
+        .subject {
           height: 21px;
         }
-        .fromto{
-          .btn-xs{
-            border-radius: 13px;
+      }
+    }
+
+    .split-details .task-content-wrapper{
+      background: #fff;
+      height: 100%;
+      width: auto;
+      overflow: auto;
+
+      .actions-wrapper{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 50px;
+        z-index: $zIndex-navbar - 1;
+      }
+      .task-content{
+        margin:0 auto;
+        width: 600px;
+        display: block;
+        padding-top: 62px;
+        padding-bottom: 70px;
+        padding-left: 20px;
+        padding-right: 20px;
+        .task-content-header{
+          .sender{
+            .name{
+              font-size: 15px;
+              color: $color-info;
+            }
+            .datetime{
+              color: $color-master;
+              opacity: .45;
+              font-family: arial;
+            }
+          }
+          .subject{
+            font-family: arial;
+            color: $color-info;
+            font-size:15.2px;
+            line-height: 17px;
+            height: 21px;
+          }
+          .fromto{
+            .btn-xs{
+              border-radius: 13px;
+            }
           }
         }
-      }
-      .task-content-body p{
-        line-height: 23px;
-        color: $body-color;
-        letter-spacing: 0.001em;
-      }
-      .task-reply{
-        min-height:200px;
+        .task-content-body p{
+          line-height: 23px;
+          color: $body-color;
+          letter-spacing: 0.001em;
+        }
+        .task-reply{
+          min-height:200px;
+        }
       }
     }
   }
 }
+

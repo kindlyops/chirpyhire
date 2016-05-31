@@ -1,8 +1,8 @@
-li.item.padding-15 data-task-id==task.id
+li.item.padding-15 data-link==task_path(task)
   .thumbnail-wrapper.d32.circular.bordered class="b-#{task.color}"
     i.fa class==task.icon_class
   .inline.m-l-15
     p.recipients.no-margin.hint-text.small = task.from
     p.subject.no-margin = task.body
-  .datetime = task.time
+  .datetime = task.time_ago
   .clearfix
