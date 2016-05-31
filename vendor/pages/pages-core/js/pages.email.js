@@ -33,8 +33,8 @@
         "html": false, //Button which allows you to edit the generated HTML. Default false
         "link": true, //Button to insert a link. Default true
         "image": true, //Button to insert an image. Default true,
-        "color": false, //Button to change color of font  
-        "blockquote": true, //Blockquote  
+        "color": false, //Button to change color of font
+        "blockquote": true, //Blockquote
         stylesheets: ["pages/css/editor.css"],
         customTemplates: editorTemplate
     };

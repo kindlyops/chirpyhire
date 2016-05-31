@@ -4,20 +4,22 @@
     .split-list
       a.list-refresh href="#"
         i.fa.fa-refresh
-      .list-view data-email="list"
-    .split-details data-email="opened"
+      .list-view data-task="list"
+        = render partial: "task_group", collection: @inbox.task_groups
+
+    .split-details data-task="opened"
       .no-result
-        h1 No email has been selected
-      .email-content-wrapper style="display:none"
+        h1 No task has been selected
+      .task-content-wrapper style="display:none"
         .actions-wrapper.menuclipper.bg-master-lightest
           ul.actions.menuclipper-menu.no-margin.p-l-20
             li.no-padding
               a.text-info href="#" Reply
           .clearfix
-        .email-content
-          .email-content-header
+        .task-content
+          .task-content-header
             .thumbnail-wrapper.d48.circular.bordered.b-success
-              i.fa.fa-user
+              i.fa.fa-user.fa-2x
             .sender.inline.m-l-10
               p.name.no-margin.bold
               p.datetime.no-margin
@@ -26,10 +28,11 @@
             .fromto
               .pull-left
                 label.inline
-                  span.muted &nbsp;&nbsp;to
-                  span.small-text johnsmith@skyace.com
+                  span.small-text David Nester
+                  span.muted &nbsp;&nbsp;to&nbsp;&nbsp;
+                  span.small-text Chirpyhire
           .clearfix
-          .email-content-body.m-t-20
-          .wysiwyg5-wrapper.b-a.b-grey.m-t-30
-            textarea.email-reply placeholder="Reply"
+          .task-content-body.m-t-20
+          .b-a.b-grey.m-t-30
+            textarea.task-reply.form-control placeholder="Reply"
 

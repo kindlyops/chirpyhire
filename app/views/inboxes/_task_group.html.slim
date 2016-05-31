@@ -1,0 +1,5 @@
+.list-view-group-container
+  .list-view-group-header
+    span = task_group.title
+  ul.no-padding
+    = render partial: "task", collection: task_group.tasks

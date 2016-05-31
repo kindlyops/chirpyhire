@@ -20,9 +20,9 @@
           - candidates.each do |candidate|
             tr data-link==user_path(candidate.user_id) role="row"
               td.v-align-middle
-                p = candidate.name
+                p = candidate.user_name
               td.v-align-middle
-                p = candidate.phone_number.phony_formatted
+                p = candidate.user_phone_number.phony_formatted
               td.v-align-middle
                 p = candidate.last_referrer_name
               td.v-align-middle
