@@ -1,5 +1,5 @@
 = form_for [user, message], remote: true do |f|
-  = select_tag "template", options_from_collection_for_select(current_organization.templates, "id", "name"), prompt: "Choose a template...", class: "pull-right m-b-10"
+  = select_tag "template", options_from_collection_for_select(current_organization.templates, "id", "name"), prompt: "Choose a template...", class: "pull-right m-b-10", data: { user_id: user.id }
   = text_area_tag(:body, nil, placeholder: "Text #{user.from_short}...", class: "form-control")
   = button_tag(type: "submit", class: "btn btn-sm btn-primary pull-right m-t-10") do
     ' Send

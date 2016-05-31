@@ -1,6 +1,10 @@
 .inbox.inner-content {
   margin-left: 0;
 
+  .edit_task {
+    float: right;
+  }
+
   .new_message {
     .cancel-message {
       display: none;

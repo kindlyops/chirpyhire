@@ -18,9 +18,7 @@
     .col-xs-3
       = user.phone_number.phony_formatted
       - user.outstanding_tasks.each do |task|
-        = form_for task, remote: true do |f|
-          = f.hidden_field(:outstanding, value: false)
-          = f.submit "✓ Done", class: "btn btn-success btn-sm"
+        = render partial: "tasks/form", locals: { task: task }
   .row
     .col-xs-9.col-xs-offset-3
       .panel.panel-default.messages

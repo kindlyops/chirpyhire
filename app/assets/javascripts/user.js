@@ -19,12 +19,4 @@ $(document).on("page:change", function() {
       $("form.edit_user input[name='authenticity_token']").replaceWith(authToken);
     });
   });
-
-  $(".user").on("change", "select#template", function(e) {
-    if (e.currentTarget.value === "") { return; }
-
-    $.get("/templates/" + e.currentTarget.value + "/preview?user_id=<%= @recipient.id %>", function(data) {
-      $("textarea#message_body").val(data);
-    }, "text");
-  });
 });
