@@ -40,12 +40,6 @@ if Rails.env.development?
   candidate = Candidate.find_or_create_by(user: user)
   puts "Created Candidate"
 
-  unless Trigger.all.present?
-    subscribe_trigger = Trigger.create(event: "subscribe")
-    screen_trigger = Trigger.create(event: "screen")
-    answer_trigger = Trigger.create(event: "answer")
-  end
-
   unless org.profile.present?
     profile = org.create_profile
     profile.features.create(format: "document", name: "TB Test")
@@ -59,10 +53,10 @@ if Rails.env.development?
   end
 
   unless org.rules.present?
-    subscribe_rule = org.rules.create(trigger: subscribe_trigger, action: welcome)
-    subscribe_rule_2 = org.rules.create(trigger: subscribe_trigger, action: profile)
-    answer_rule = org.rules.create(trigger: answer_trigger, action: profile)
-    screen_rule = org.rules.create(trigger: screen_trigger, action: thank_you)
+    subscribe_rule = org.rules.create(trigger: "subscribe", action: welcome)
+    subscribe_rule_2 = org.rules.create(trigger: "subscribe", action: profile)
+    answer_rule = org.rules.create(trigger: "answer", action: profile)
+    screen_rule = org.rules.create(trigger: "screen", action: thank_you)
     puts "Created rules"
   end
 

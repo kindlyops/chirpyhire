@@ -22,8 +22,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context "with an answer format that matches the response format" do
-      let(:trigger) { create(:trigger, event: :answer) }
-
       it "creates a message" do
         expect {
           post :create, params
@@ -39,7 +37,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates a AutomatonJob" do
         expect {
           post :create, params
-        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
+        }.to have_enqueued_job(AutomatonJob).with(user, "answer")
       end
     end
 

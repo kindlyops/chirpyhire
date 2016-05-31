@@ -6,7 +6,6 @@ RSpec.describe ProfileAdvancer do
   let(:candidate) { create(:candidate) }
   let(:profile) { create(:profile, organization: candidate.organization) }
   let(:user) { candidate.user }
-  let(:trigger) { create(:trigger, event: :screen) }
 
   describe ".call" do
     context "with an undetermined or stale profile features" do
@@ -31,7 +30,7 @@ RSpec.describe ProfileAdvancer do
       it "creates an AutomatonJob for the screen event" do
         expect{
           ProfileAdvancer.call(candidate, profile)
-        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
+        }.to have_enqueued_job(AutomatonJob).with(user, "screen")
       end
 
       it "creates a review task for the candidate's user" do

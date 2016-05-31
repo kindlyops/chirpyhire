@@ -63,11 +63,10 @@ RSpec.describe RulesController, type: :controller do
   describe "#create" do
     context "with valid rule params" do
       let(:template) { create(:template, organization: organization)}
-      let(:trigger) { create(:trigger) }
 
       let(:rule_params) do
         { rule: {
-          trigger_id: trigger.id,
+          trigger: "subscribe",
           action_id: template.id,
           action_type: template.class
         } }
@@ -88,7 +87,7 @@ RSpec.describe RulesController, type: :controller do
     context "with invalid params" do
       let(:invalid_params) do
           { rule: {
-            trigger_id: 1,
+            trigger: "subscribe",
             action_id: 1023,
             action_type: "Template"
         } }

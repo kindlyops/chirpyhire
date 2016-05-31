@@ -18,7 +18,7 @@ RSpec.feature "Rules" do
     end
 
     context "with rules" do
-      let!(:rule) { create(:rule, :screen_trigger, organization: organization) }
+      let!(:rule) { create(:rule, trigger: "screen", organization: organization) }
       let(:description) { "Screened" }
       let(:action) { rule.action.decorate }
       let(:trigger_title) { rule.decorate.trigger_title }

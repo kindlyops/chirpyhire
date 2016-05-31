@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe ScreenDecorator do
-  let(:model) { create(:trigger, event: "screen") }
-  let(:trigger) { ScreenDecorator.new(model) }
+RSpec.describe ScreenPresenter do
+  let(:trigger) { ScreenPresenter.new }
 
   describe "#title" do
     it "is the right title" do

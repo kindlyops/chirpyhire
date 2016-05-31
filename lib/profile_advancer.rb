@@ -14,7 +14,7 @@ class ProfileAdvancer
       next_candidate_feature.inquire
     else
       user.tasks.create(category: "review") unless user.outstanding_review_task?
-      AutomatonJob.perform_later(user, trigger)
+      AutomatonJob.perform_later(user, "screen")
     end
   end
 
@@ -32,9 +32,5 @@ class ProfileAdvancer
 
   def user
     @user ||= candidate.user
-  end
-
-  def trigger
-    Trigger.for("screen")
   end
 end

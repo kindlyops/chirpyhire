@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe SubscribeDecorator do
-  let(:model) { create(:trigger, event: "subscribe") }
-  let(:trigger) { SubscribeDecorator.new(model) }
+RSpec.describe SubscribePresenter do
+  let(:trigger) { SubscribePresenter.new }
 
   describe "#title" do
     it "is the right title" do

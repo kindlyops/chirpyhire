@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :rule do
     organization
-    trigger
+    trigger { "subscribe" }
 
     transient do
       format :text
@@ -9,13 +9,6 @@ FactoryGirl.define do
 
     before(:create) do |rule, evaluator|
       rule.action = create(:template, organization: rule.organization)
-    end
-
-    trait :screen_trigger do
-      before(:create) do |rule, evaluator|
-        trigger = create(:trigger, event: :screen)
-        rule.trigger = trigger
-      end
     end
   end
 end

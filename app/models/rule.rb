@@ -1,13 +1,11 @@
 class Rule < ActiveRecord::Base
+  TRIGGERS = %w(subscribe screen answer)
   belongs_to :action, polymorphic: true
   belongs_to :organization
-  belongs_to :trigger
+
   delegate :perform, to: :action
 
-  validates :trigger, :organization, :action, presence: true
-  delegate :template_name, to: :action, prefix: true
-  delegate :template_name, :event, to: :trigger, prefix: true
-
+  validates :organization, :action, presence: true
   validates :action_type, inclusion: { in: %w(Template Profile) }
-
+  validates :trigger, inclusion: { in: TRIGGERS }
 end
