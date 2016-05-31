@@ -1,10 +1,15 @@
-class ProfileJob < ActiveJob::Base
-  queue_as :default
+class ProfileAdvancer
 
-  def perform(candidate, profile)
-    @profile = profile
+  def self.call(candidate, profile)
+    new(candidate, profile).call
+  end
+
+  def initialize(candidate, profile)
     @candidate = candidate
+    @profile = profile
+  end
 
+  def call
     if next_profile_feature.present?
       next_candidate_feature.inquire
     else

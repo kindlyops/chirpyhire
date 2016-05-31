@@ -43,6 +43,7 @@ if Rails.env.development?
   unless Trigger.all.present?
     subscribe_trigger = Trigger.create(event: "subscribe")
     screen_trigger = Trigger.create(event: "screen")
+    answer_trigger = Trigger.create(event: "answer")
   end
 
   unless org.profile.present?
@@ -60,6 +61,7 @@ if Rails.env.development?
   unless org.rules.present?
     subscribe_rule = org.rules.create(trigger: subscribe_trigger, action: welcome)
     subscribe_rule_2 = org.rules.create(trigger: subscribe_trigger, action: profile)
+    answer_rule = org.rules.create(trigger: answer_trigger, action: profile)
     screen_rule = org.rules.create(trigger: screen_trigger, action: thank_you)
     puts "Created rules"
   end

@@ -1,5 +1,5 @@
 class Trigger < ActiveRecord::Base
-  validates :event, inclusion: { in: %w(subscribe screen) }
+  validates :event, inclusion: { in: %w(subscribe screen answer) }
 
   def decorator_class
     "#{event.humanize}Decorator".constantize

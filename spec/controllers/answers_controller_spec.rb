@@ -4,7 +4,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:candidate) { create(:candidate, :with_inquiry) }
   let(:user) { candidate.user }
   let(:answer) { FakeMessaging.inbound_message(user, candidate.organization) }
-  let!(:profile) { create(:profile, :with_features, organization: user.organization) }
 
   describe "#create" do
     let(:params) do
@@ -23,7 +22,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context "with an answer format that matches the response format" do
-      let(:trigger) { candidate.outstanding_inquiry.trigger }
+      let(:trigger) { create(:trigger, event: :answer) }
 
       it "creates a message" do
         expect {
@@ -37,10 +36,10 @@ RSpec.describe AnswersController, type: :controller do
         }.to change{Answer.count}.by(1)
       end
 
-      it "creates a ProfileJob" do
+      it "creates a AutomatonJob" do
         expect {
           post :create, params
-        }.to have_enqueued_job(ProfileJob).with(candidate, profile)
+        }.to have_enqueued_job(AutomatonJob).with(user, trigger)
       end
     end
 
