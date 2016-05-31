@@ -4,7 +4,7 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def unknown_message
-    sender.tasks.create(category: "reply") unless sender.outstanding_reply_task?
+    sender.tasks.create(taskable: message) unless sender.outstanding_task_for?(message)
 
     head :ok
   end
@@ -12,7 +12,7 @@ class SmsController < ActionController::Base
   private
 
   def message
-    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"])
+    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"], direction: "inbound", body: params["Body"])
   end
 
   def vcard

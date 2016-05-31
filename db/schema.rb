@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160530224444) do
+ActiveRecord::Schema.define(version: 20160531214812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,8 +88,21 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "inquiries", ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
   add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
 
+  create_table "media_instances", force: :cascade do |t|
+    t.string   "sid",          null: false
+    t.string   "content_type", null: false
+    t.text     "uri",          null: false
+    t.integer  "message_id",   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "media_instances", ["message_id"], name: "index_media_instances_on_message_id", using: :btree
+
   create_table "messages", force: :cascade do |t|
     t.string   "sid",        null: false
+    t.text     "body"
+    t.string   "direction",  null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -170,15 +183,14 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.string   "category",                   null: false
-    t.boolean  "outstanding", default: true, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "user_id",                      null: false
+    t.integer  "taskable_id",                  null: false
+    t.string   "taskable_type",                null: false
+    t.boolean  "outstanding",   default: true, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "tasks", ["category"], name: "index_tasks_on_category", using: :btree
-  add_index "tasks", ["user_id", "category"], name: "index_tasks_on_user_id_and_category", unique: true, where: "(outstanding = true)", using: :btree
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
@@ -215,6 +227,7 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
+  add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"

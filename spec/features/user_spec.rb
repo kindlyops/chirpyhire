@@ -5,7 +5,7 @@ RSpec.feature "User" do
 
   let(:organization) { create(:organization, :with_account)}
   let(:account) { organization.accounts.first }
-  let(:user) { create(:user, organization: organization).decorate }
+  let(:user) { create(:user, organization: organization) }
   let!(:candidate) { create(:candidate, :with_referral, user: user) }
 
   background(:each) do
@@ -14,7 +14,7 @@ RSpec.feature "User" do
 
   scenario "has a view of a user" do
     visit user_path(user)
-    expect(page).to have_text(user.name)
+    expect(page).to have_text(user.decorate.name)
     expect(page).to have_text(user.phone_number.phony_formatted)
     expect(page).to have_text(candidate.status)
   end
@@ -33,7 +33,9 @@ RSpec.feature "User" do
 
     context "with answers" do
       let(:message) { FakeMessaging.inbound_message(user, organization) }
-      let(:answer) { user.answer(inquiry, message.sid) }
+      let(:answer) do
+        AnswerHandler.call(user, inquiry, message.sid)
+      end
       let!(:answer_message) { answer.message.decorate }
 
       scenario "has the answer" do

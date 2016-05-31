@@ -9,6 +9,7 @@ module Messaging
     end
 
     def media
+      return [] if num_media.zero?
       Messaging::Media.new(message.media)
     end
 

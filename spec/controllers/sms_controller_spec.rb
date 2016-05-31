@@ -43,10 +43,10 @@ RSpec.describe SmsController, type: :controller do
       let(:user) { create(:user, organization: organization) }
 
       before(:each) do
-        user.tasks.create(category: "reply")
+        user.tasks.create(taskable: create(:message, sid: "123", user: user))
       end
 
-      it "does not create a new reply task" do
+      it "does not create a new task" do
         expect {
           post :unknown_message, { "MessageSid" => "123", "From" => user.phone_number, "To" => phone_number }
         }.not_to change{organization.tasks.outstanding.count}

@@ -1,2 +1,2 @@
-$("<%= escape_javascript(render partial: 'form', locals: { user: @recipient, message: @message }) %>").appendTo("#new-message");
+$("<%= escape_javascript(render partial: 'form', locals: { user: user, message: message }) %>").appendTo("#new-message");
 $("#new-message select").select2();

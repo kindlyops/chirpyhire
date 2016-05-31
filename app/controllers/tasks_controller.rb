@@ -1,6 +1,12 @@
 class TasksController < ApplicationController
   decorates_assigned :task
 
+  def show
+    @task = authorized_task
+
+    render layout: false
+  end
+
   def index
     @tasks = scoped_tasks
   end

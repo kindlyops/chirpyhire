@@ -1,33 +1,34 @@
-= title "Screen | chirpyhire"
-.page-header
-  h2 Screen
-.screening
-  .panel.panel-default.rules
-    .panel-body
-      table.table.table-hover.no-footer role="grid"
-        thead
-          tr role="row"
-            th rowspan="1" colspan="1" aria-label="Trigger" Trigger
-            th rowspan="1" colspan="1" aria-label="Action" Action
-            th rowspan="1" colspan="1" aria-label="Status" Status
-        tbody
-          - rules.each do |rule|
-            tr.rule data-link==rule_path(rule.id) role="row"
-              td.v-align-middle
-                div
+= title "Automation | chirpyhire"
+.container-fluid.container-fixed-lg
+  .page-header
+    h2 Automation
+  .screening
+    .panel.panel-default.rules
+      .panel-body
+        table.table.table-hover.no-footer role="grid"
+          thead
+            tr role="row"
+              th rowspan="1" colspan="1" aria-label="Trigger" Trigger
+              th rowspan="1" colspan="1" aria-label="Action" Action
+              th rowspan="1" colspan="1" aria-label="Status" Status
+          tbody
+            - rules.each do |rule|
+              tr.rule data-link==rule_path(rule.id) role="row"
+                td.v-align-middle
+                  div
+                    p
+                      i.fa class==rule.trigger_icon_class
+                      span.title = rule.trigger_title
+                td.v-align-middle
                   p
-                    i.fa class==rule.trigger_icon_class
-                    span.title = rule.trigger_title
-              td.v-align-middle
-                p
-                  span.fa-stack
-                    i.fa.fa-comment-o.fa-stack-2x
-                    i.fa.fa-stack-1x class==rule.action_icon_class
-                  strong = rule.action_label
-              td.v-align-middle
-                p
-                  i.fa class==rule.state_class
-                  strong = rule.state
+                    span.fa-stack
+                      i.fa.fa-comment-o.fa-stack-2x
+                      i.fa.fa-stack-1x class==rule.action_icon_class
+                    strong = rule.action_label
+                td.v-align-middle
+                  p
+                    i.fa class==rule.state_class
+                    strong = rule.state
 
 
 

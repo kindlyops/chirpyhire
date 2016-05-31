@@ -1,14 +1,10 @@
 class TaskPolicy < ApplicationPolicy
   def update?
-    scope.where(id: record.id).exists?
-  end
-
-  def show?
-    false
+    show?
   end
 
   def edit?
-    show?
+    false
   end
 
   def permitted_attributes

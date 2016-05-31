@@ -1,31 +1,32 @@
 = title "Referrers | chirpyhire"
-.page-header
-  h2 Referrers
-.panel.panel-default
-    .panel-heading
-      .pull-right
-        .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Search"
-      .clearfix
-    .panel-body
-      table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
-        thead
-          tr role="row"
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Phone
-            : activate to sort column descending" Phone
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referral
-            th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
-        tbody
-          - referrers.each do |referrer|
-            tr data-link==user_path(referrer.user_id) role="row"
-              td.v-align-middle
-                p = referrer.name
-              td.v-align-middle
-                p = referrer.phone_number.phony_formatted
-              td.v-align-middle
-                p = referrer.last_referred_name
-              td.v-align-middle
-                - if referrer.last_referral_created_at
-                  p = "#{time_ago_in_words(referrer.last_referral_created_at)} ago"
+.container-fluid.container-fixed-lg
+  .page-header
+    h2 Referrers
+  .panel.panel-default
+      .panel-heading
+        .pull-right
+          .col-xs-12
+            input#search-table.form-control.pull-right type="text" placeholder="Search"
+        .clearfix
+      .panel-body
+        table#tableWithSearch.table.table-hover.no-footer role="grid" aria-describedby="tableWithSearch_info"
+          thead
+            tr role="row"
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" Name
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Phone
+              : activate to sort column descending" Phone
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referrer: activate to sort column descending" Last Referral
+              th aria-controls="tableWithSearch" rowspan="1" colspan="1" aria-label="Last Referred: activate to sort column descending" Last Referred
+          tbody
+            - referrers.each do |referrer|
+              tr data-link==user_path(referrer.user_id) role="row"
+                td.v-align-middle
+                  p = referrer.name
+                td.v-align-middle
+                  p = referrer.phone_number.phony_formatted
+                td.v-align-middle
+                  p = referrer.last_referred_name
+                td.v-align-middle
+                  - if referrer.last_referral_created_at
+                    p = "#{time_ago_in_words(referrer.last_referral_created_at)} ago"
 

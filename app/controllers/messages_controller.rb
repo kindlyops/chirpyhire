@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   decorates_assigned :message
+  decorates_assigned :user
 
   def new
     message = scoped_messages.build
@@ -12,7 +13,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    message = recipient.receive_message(body: params[:body])
+    message = user.receive_message(body: params[:body])
     @message = authorize message
 
     respond_to do |format|
@@ -23,14 +24,14 @@ class MessagesController < ApplicationController
   private
 
   def scoped_messages
-    policy_scope(Message).where(user: recipient)
+    policy_scope(Message).where(user: user)
   end
 
-  def recipient
-    @recipient ||= begin
-      recipient = User.find(params[:user_id])
-      if UserPolicy.new(current_account, recipient).show?
-        recipient
+  def user
+    @user ||= begin
+      user = User.find(params[:user_id])
+      if UserPolicy.new(current_account, user).show?
+        user
       else
         raise Pundit::NotAuthorizedError
       end

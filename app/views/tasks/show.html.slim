@@ -1,0 +1,33 @@
+.task-content-wrapper
+  .actions-wrapper.menuclipper.bg-master-lightest
+    ul.actions.menuclipper-menu.no-margin.p-l-20
+    .clearfix
+  .task-content
+    .task-content-header
+      .thumbnail-wrapper.d48.circular.bordered.b-complete
+        i.fa.fa-user.fa-2x
+      .sender.inline.m-l-10
+        p.name.no-margin.bold
+          = link_to task.from, task.user
+        p.datetime.no-margin = task.time_at
+      .clearfix
+      .fromto.m-t-20.m-b-20
+        .pull-left
+          label.inline
+            span.small-text = task.from
+            span.muted &nbsp;&nbsp;to&nbsp;&nbsp;
+            span.small-text = task.to
+    .clearfix
+    .task-content-body.m-t-20
+      p = task.body
+    .m-t-30
+      - if task.has_message?
+        = render partial: "messages/form", locals: { user: task.user, message: Message.new(user: task.user) }
+      - else
+        = link_to task.user, class: "btn btn-complete btn-block btn-lg" do
+          ' Review
+          '
+          i.fa.fa-search
+
+    .m-t-10
+      = render partial: "tasks/form", locals: { task: task }

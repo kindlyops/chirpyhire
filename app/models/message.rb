@@ -1,5 +1,7 @@
 class Message < ActiveRecord::Base
   belongs_to :user
+  has_many :tasks, as: :taskable
+  has_many :media_instances
   has_one :inquiry
   has_one :notification
   has_one :answer
@@ -17,29 +19,15 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def body
-    message.body
-  end
-
-  def direction
-    message.direction
-  end
-
   def media
-    message.media
+    media_instances
   end
 
   def has_images?
-    media.any?(&:image?)
+    media_instances.images.present?
   end
 
   def images
-    media.select(&:image?)
-  end
-
-  private
-
-  def message
-    @message ||= organization.get_message(sid)
+    media_instances.images
   end
 end

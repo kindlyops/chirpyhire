@@ -17,29 +17,20 @@ class User < ActiveRecord::Base
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
+  def outstanding_task_for?(taskable)
+    outstanding_tasks.where(taskable: taskable).present?
+  end
+
   def outstanding_tasks
     tasks.outstanding
-  end
-
-  def outstanding_reply_task?
-    outstanding_tasks.where(category: "reply").present?
-  end
-
-  def outstanding_review_task?
-    outstanding_tasks.where(category: "review").present?
   end
 
   def outstanding_inquiry
     inquiries.unanswered.first
   end
 
-  def answer(inquiry, sid)
-    message = messages.create(sid: sid)
-    inquiry.create_answer(message: message)
-  end
-
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
-    messages.create(sid: message.sid)
+    messages.create(sid: message.sid, direction: message.direction, body: body)
   end
 end

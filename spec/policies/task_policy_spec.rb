@@ -28,7 +28,7 @@ RSpec.describe TaskPolicy do
       it { should forbid_new_and_create_actions }
       it { should forbid_action(:edit) }
       it { should forbid_action(:destroy) }
-      it { should forbid_action(:show) }
+      it { should permit_action(:show) }
       it { should permit_mass_assignment_of(:outstanding) }
       it { should forbid_mass_assignment_of(:message_id) }
 

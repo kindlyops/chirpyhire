@@ -33,8 +33,8 @@
         "html": false, //Button which allows you to edit the generated HTML. Default false
         "link": true, //Button to insert a link. Default true
         "image": true, //Button to insert an image. Default true,
-        "color": false, //Button to change color of font  
-        "blockquote": true, //Blockquote  
+        "color": false, //Button to change color of font
+        "blockquote": true, //Blockquote
         stylesheets: ["pages/css/editor.css"],
         customTemplates: editorTemplate
     };
@@ -77,7 +77,7 @@
                     var color = colors[Math.floor(Math.random() * (6))];
                     var li = '<li class="item padding-15" data-email-id="' + id + '"> \
                                 <div class="thumbnail-wrapper d32 circular bordered ' + color + '"> \
-                                    <img width="40" height="40" alt="" data-src-retina="' + dpRetina + '" data-src="' + dp + '" src="' + dpRetina + '"> \
+                                    <i class="fa fa-user"></i> \
                                 </div> \
                                 <div class="checkbox  no-margin p-l-10"> \
                                     <input type="checkbox" value="1" id="emailcheckbox-' + i + "-" + j + '"> \

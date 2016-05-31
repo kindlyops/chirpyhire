@@ -18,14 +18,15 @@
         <ul class="menu-items">
           <li class="m-t-30">
             <a href="/inbox">
-              <span class="title">Inbox</span>
+              <span class="title">
+                Inbox
+                <% if current_inbox.tasks.present? %>
+                  <span class="badge"><%= current_inbox.tasks.count %></span>
+                <% end %>
+              </span>
             </a>
             <span class="icon-thumbnail ">
-              <% if current_inbox.tasks.present? %>
-                <%= current_inbox.tasks.count %>
-              <% else %>
-                <i class="fa fa-inbox"></i>
-              <% end %>
+              <i class="fa fa-inbox"></i>
             </span>
           </li>
           <li>
@@ -45,10 +46,10 @@
           <% if current_organization.rules.present? %>
             <li class="">
               <a href=<%= "/rules" %> class="detailed">
-                <span class="title">Screen</span>
+                <span class="title">Automation</span>
                 <span class="details">Find Quality Caregivers</span>
               </a>
-              <span class="icon-thumbnail "><i class="fa fa-filter"></i>
+              <span class="icon-thumbnail "><i class="fa fa-cogs"></i>
                       </span>
             </li>
           <% end %>
@@ -69,7 +70,7 @@
     <div class="page-container">
       <!-- START PAGE HEADER WRAPPER -->
       <!-- START HEADER -->
-      <div class="header ">
+      <div class="header">
         <!-- START MOBILE CONTROLS -->
         <!-- LEFT SIDE -->
         <div class="pull-left full-height visible-sm visible-xs">
@@ -120,18 +121,16 @@
       <!-- END HEADER -->
       <!-- END PAGE HEADER WRAPPER -->
       <!-- START PAGE CONTENT WRAPPER -->
-      <div class="page-content-wrapper">
+      <div class="page-content-wrapper full-height">
         <!-- START PAGE CONTENT -->
-        <div class="content">
-          <div class="container-fluid container-fixed-lg">
-            <% if notice %>
-              <p class="notice alert-info"><%= notice %></p>
-            <% end %>
-            <% if alert %>
-              <p class="alert alert-danger"><%= alert %></p>
-            <% end %>
-            <%= yield %>
-            </div>
+        <div class="content full-height">
+          <% if notice %>
+            <p class="notice alert-info"><%= notice %></p>
+          <% end %>
+          <% if alert %>
+            <p class="alert alert-danger"><%= alert %></p>
+          <% end %>
+          <%= yield %>
         </div>
         <!-- END PAGE CONTENT -->
         <!-- START FOOTER -->

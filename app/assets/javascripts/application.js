@@ -24,6 +24,9 @@
 //= require pages-plugins/jquery-actual/jquery.actual.min
 //= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
 //= require pages-plugins/bootstrap-select2/select2.min.js
+//= require pages-plugins/jquery-menuclipper/jquery.menuclipper.js
+//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
+
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 
@@ -36,6 +39,7 @@
 //= require clickTable
 //= require select
 //= require user
+//= require inbox
 
 //  I prefer to list scripts in a specific order, so I comment out require_tree .
 // require_tree .
