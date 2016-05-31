@@ -18,14 +18,15 @@
         <ul class="menu-items">
           <li class="m-t-30">
             <a href="/inbox">
-              <span class="title">Inbox</span>
+              <span class="title">
+                Inbox
+                <% if current_inbox.tasks.present? %>
+                  <span class="badge"><%= current_inbox.tasks.count %></span>
+                <% end %>
+              </span>
             </a>
             <span class="icon-thumbnail ">
-              <% if current_inbox.tasks.present? %>
-                <%= current_inbox.tasks.count %>
-              <% else %>
-                <i class="fa fa-inbox"></i>
-              <% end %>
+              <i class="fa fa-inbox"></i>
             </span>
           </li>
           <li>
