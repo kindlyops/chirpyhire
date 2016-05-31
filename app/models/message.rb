@@ -22,10 +22,6 @@ class Message < ActiveRecord::Base
     message.body
   end
 
-  def direction
-    message.direction
-  end
-
   def media
     return [] if num_media.zero?
     message.media

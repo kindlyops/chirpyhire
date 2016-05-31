@@ -33,7 +33,10 @@ RSpec.feature "User" do
 
     context "with answers" do
       let(:message) { FakeMessaging.inbound_message(user, organization) }
-      let(:answer) { user.answer(inquiry, message.sid) }
+      let(:message_params) do
+        { "MessageSid" => message.sid, "Body" => message.body }
+      end
+      let(:answer) { user.answer(inquiry, message_params) }
       let!(:answer_message) { answer.message.decorate }
 
       scenario "has the answer" do

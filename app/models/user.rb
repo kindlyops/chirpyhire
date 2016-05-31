@@ -29,13 +29,13 @@ class User < ActiveRecord::Base
     inquiries.unanswered.first
   end
 
-  def answer(inquiry, sid)
-    message = messages.create(sid: sid)
-    inquiry.create_answer(message: message)
+  def answer(inquiry, message)
+    answer = messages.create(sid: message["MessageSid"], body: message["Body"], direction: "inbound")
+    inquiry.create_answer(message: answer)
   end
 
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
-    messages.create(sid: message.sid)
+    messages.create(sid: message.sid, direction: message.direction, body: body)
   end
 end

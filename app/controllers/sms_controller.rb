@@ -12,7 +12,7 @@ class SmsController < ActionController::Base
   private
 
   def message
-    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"])
+    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"], direction: "inbound", body: params["Body"])
   end
 
   def vcard

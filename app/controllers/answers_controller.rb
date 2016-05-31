@@ -12,7 +12,7 @@ class AnswersController < SmsController
   private
 
   def answer
-    @answer ||= sender.answer(outstanding_inquiry, params["MessageSid"])
+    @answer ||= sender.answer(outstanding_inquiry, params)
   end
 
   def outstanding_inquiry
