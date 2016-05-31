@@ -1,6 +1,6 @@
 class Template < ActiveRecord::Base
   belongs_to :organization
-  has_many :rules, as: :action
+  has_one :rules, as: :action
   has_many :notifications
 
   def render(user)
