@@ -11,7 +11,7 @@ RSpec.feature "Rules" do
   context "viewing all rules" do
     scenario "has a table of Rules" do
       visit rules_path
-      expect(page).to have_text("Screen")
+      expect(page).to have_text("Automation")
       expect(page).to have_text("Trigger")
       expect(page).to have_text("Action")
       expect(page).to have_text("Status")

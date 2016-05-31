@@ -4,6 +4,8 @@ class CandidateDecorator < Draper::Decorator
   decorates_association :user
 
   delegate :name, :phone_number, to: :user, prefix: true
+  delegate :name, to: :user
+
   delegate :name, :phone_number, to: :last_referrer, prefix: true
 
   def last_referrer

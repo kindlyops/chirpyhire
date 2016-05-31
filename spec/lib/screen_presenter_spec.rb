@@ -17,7 +17,7 @@ RSpec.describe ScreenPresenter do
 
   describe "#icon_class" do
     it "is the right icon class" do
-      expect(trigger.icon_class).to eq("fa-reply")
+      expect(trigger.icon_class).to eq("fa-reply-all")
     end
   end
 end

@@ -4,7 +4,7 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def edit?
-    show?
+    false
   end
 
   def permitted_attributes
