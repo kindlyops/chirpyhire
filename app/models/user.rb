@@ -17,16 +17,12 @@ class User < ActiveRecord::Base
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
+  def outstanding_task_for?(taskable)
+    outstanding_tasks.where(taskable: taskable).present?
+  end
+
   def outstanding_tasks
     tasks.outstanding
-  end
-
-  def outstanding_reply_task?
-    outstanding_tasks.where(category: "reply").present?
-  end
-
-  def outstanding_review_task?
-    outstanding_tasks.where(category: "review").present?
   end
 
   def outstanding_inquiry

@@ -13,7 +13,7 @@ class ProfileAdvancer
     if next_profile_feature.present?
       next_candidate_feature.inquire
     else
-      user.tasks.create(category: "review") unless user.outstanding_review_task?
+      user.tasks.create(taskable: candidate)
       AutomatonJob.perform_later(user, "screen")
     end
   end

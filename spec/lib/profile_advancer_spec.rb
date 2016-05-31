@@ -36,7 +36,7 @@ RSpec.describe ProfileAdvancer do
       it "creates a review task for the candidate's user" do
         expect{
           ProfileAdvancer.call(candidate, profile)
-        }.to change{user.tasks.where(category: "review").count}.by(1)
+        }.to change{user.tasks.where(taskable: candidate).count}.by(1)
       end
     end
   end

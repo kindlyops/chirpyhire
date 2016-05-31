@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :task do
     user
-    category "reply"
+    association :taskable, factory: :message
 
     transient do
       organization nil

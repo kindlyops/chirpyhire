@@ -170,15 +170,14 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.string   "category",                   null: false
-    t.boolean  "outstanding", default: true, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "user_id",                      null: false
+    t.integer  "taskable_id",                  null: false
+    t.string   "taskable_type",                null: false
+    t.boolean  "outstanding",   default: true, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  add_index "tasks", ["category"], name: "index_tasks_on_category", using: :btree
-  add_index "tasks", ["user_id", "category"], name: "index_tasks_on_user_id_and_category", unique: true, where: "(outstanding = true)", using: :btree
   add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
