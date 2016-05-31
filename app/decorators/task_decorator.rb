@@ -32,9 +32,9 @@ class TaskDecorator < Draper::Decorator
 
   def time_at
     if friendly_day
-      "#{friendly_day} at#{created_at.strftime('%l:%M%P')}"
+      "#{friendly_day} at #{created_at.strftime('%l:%M%P')}"
     else
-      "#{created_at.strftime('%B %d')} at#{created_at.strftime('%l:%M%P')}"
+      "#{created_at.strftime('%B %d')} at #{created_at.strftime('%l:%M%P')}"
     end
   end
 end

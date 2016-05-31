@@ -4,13 +4,12 @@
     .clearfix
   .task-content
     .task-content-header
-      .thumbnail-wrapper.d48.circular.bordered.b-success
+      .thumbnail-wrapper.d48.circular.bordered.b-complete
         i.fa.fa-user.fa-2x
       .sender.inline.m-l-10
         p.name.no-margin.bold
           = link_to task.from, task.user
         p.datetime.no-margin = task.time_at
-      = render partial: "tasks/form", locals: { task: task }
       .clearfix
       .fromto.m-t-20.m-b-20
         .pull-left
@@ -22,5 +21,13 @@
     .task-content-body.m-t-20
       p = task.body
     .m-t-30
-      = render partial: "messages/form", locals: { user: task.user, message: Message.new(user: task.user) }
+      - if task.has_message?
+        = render partial: "messages/form", locals: { user: task.user, message: Message.new(user: task.user) }
+      - else
+        = link_to task.user, class: "btn btn-complete btn-block btn-lg" do
+          ' Review
+          '
+          i.fa.fa-search
 
+    .m-t-10
+      = render partial: "tasks/form", locals: { task: task }

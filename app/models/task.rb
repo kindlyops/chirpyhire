@@ -5,4 +5,8 @@ class Task < ActiveRecord::Base
   delegate :organization, to: :user
 
   scope :outstanding, -> { where(outstanding: true) }
+
+  def has_message?
+    taskable_type == "Message"
+  end
 end

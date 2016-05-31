@@ -10,10 +10,10 @@ class MessageDecorator < Draper::Decorator
   end
 
   def color
-    "complete"
+    "primary"
   end
 
   def icon_class
-    "fa-envelope"
+    "fa-commenting"
   end
 end

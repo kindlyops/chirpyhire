@@ -21,11 +21,11 @@ class CandidateDecorator < Draper::Decorator
   end
 
   def color
-    "success"
+    "complete"
   end
 
   def body
-    "Woohoo! This candidate is ready for review."
+    "Woohoo! #{user.from_short}'s profile is completed. Please review at your convenience."
   end
 
   def icon_class
