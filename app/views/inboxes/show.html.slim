@@ -1,26 +1,15 @@
 = title "Inbox | chirpyhire"
-.page-header
-  h2 Inbox
-.panel.panel-default
-    .panel-heading
-      .pull-right
-        .col-xs-12
-          input#search-table.form-control.pull-right type="text" placeholder="Search"
-      .clearfix
-    .panel-body
-      table.table#tableNoSortWithSearch.table-hover.no-footer role="grid"
-        thead
-          tr role="row"
-            th rowspan="1" colspan="1" aria-label="Sender" Sender
-            th rowspan="1" colspan="1" aria-label="Body" Body
-            th rowspan="1" colspan="1" aria-label="Sent At" Sent At
-        tbody
-          - @inbox.tasks.each do |task|
-            tr data-link==user_path(task.user.id) role="row"
-              td.v-align-middle
-                p = task.message_sender_name
-              td.v-align-middle
-                p = task.message_body
-              td.v-align-middle
-                p = "#{time_ago_in_words(task.message_created_at)} ago"
-
+.inbox.inner-content.full-height
+  .split-view
+    .split-list
+      a.list-refresh href="#"
+        i.fa.fa-refresh
+      .list-view data-email="list"
+    .split-details data-email="opened"
+      .no-result
+        h1 No email has been selected
+      .email-content-wrapper
+        .actions-wrapper.menuclipper.bg-master-lightest
+          ul.actions.menuclipper-menu.no-margin.p-l-20
+            li.no-padding
+              a.text-info href="#" Reply

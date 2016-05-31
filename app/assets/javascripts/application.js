@@ -24,11 +24,15 @@
 //= require pages-plugins/jquery-actual/jquery.actual.min
 //= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
 //= require pages-plugins/bootstrap-select2/select2.min.js
+//= require pages-plugins/jquery-menuclipper/jquery.menuclipper.js
+//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
+
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 
 // BEGIN CORE TEMPLATE JS FOR PAGES
 //= require pages-core/js/pages
+//= require pages-core/js/pages.email
 
 // BEGIN SITE SCRIPTS
 
