@@ -1,15 +1,20 @@
-class ProfileJob < ActiveJob::Base
-  queue_as :default
+class ProfileAdvancer
 
-  def perform(candidate, profile)
-    @profile = profile
+  def self.call(candidate, profile)
+    new(candidate, profile).call
+  end
+
+  def initialize(candidate, profile)
     @candidate = candidate
+    @profile = profile
+  end
 
+  def call
     if next_profile_feature.present?
       next_candidate_feature.inquire
     else
       user.tasks.create(category: "review") unless user.outstanding_review_task?
-      AutomatonJob.perform_later(user, trigger)
+      AutomatonJob.perform_later(user, "screen")
     end
   end
 
@@ -27,9 +32,5 @@ class ProfileJob < ActiveJob::Base
 
   def user
     @user ||= candidate.user
-  end
-
-  def trigger
-    Trigger.for("screen")
   end
 end

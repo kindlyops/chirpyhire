@@ -6,6 +6,6 @@ class Profile < ActiveRecord::Base
   alias :features :profile_features
 
   def perform(user)
-    ProfileJob.perform_later(user.candidate, self)
+    ProfileAdvancer.call(user.candidate, self)
   end
 end

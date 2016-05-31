@@ -1,10 +1,4 @@
-class ScreenDecorator < Draper::Decorator
-  delegate_all
-
-  def label
-    ""
-  end
-
+class ScreenPresenter
   def title
     "Screened"
   end
@@ -15,5 +9,9 @@ class ScreenDecorator < Draper::Decorator
 
   def icon_class
     "fa-reply"
+  end
+
+  def event
+    "screen"
   end
 end

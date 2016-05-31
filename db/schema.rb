@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20160530224444) do
 
   create_table "rules", force: :cascade do |t|
     t.integer  "organization_id",                null: false
-    t.integer  "trigger_id",                     null: false
+    t.string   "trigger",                        null: false
     t.integer  "action_id"
     t.string   "action_type"
     t.boolean  "enabled",         default: true, null: false
@@ -168,7 +168,6 @@ ActiveRecord::Schema.define(version: 20160530224444) do
 
   add_index "rules", ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
   add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
-  add_index "rules", ["trigger_id"], name: "index_rules_on_trigger_id", using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.integer  "user_id",                    null: false
@@ -193,12 +192,6 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_index "templates", ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
   add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
-
-  create_table "triggers", force: :cascade do |t|
-    t.string   "event",      null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -231,7 +224,6 @@ ActiveRecord::Schema.define(version: 20160530224444) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "organizations"
-  add_foreign_key "rules", "triggers"
   add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"

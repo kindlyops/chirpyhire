@@ -1,9 +1,4 @@
-class SubscribeDecorator < Draper::Decorator
-  delegate_all
-
-  def label
-    ""
-  end
+class SubscribePresenter
 
   def title
     "Subscribes"
@@ -17,7 +12,7 @@ class SubscribeDecorator < Draper::Decorator
     "fa-hand-paper-o"
   end
 
-  def options
-    []
+  def event
+    "subscribe"
   end
 end
