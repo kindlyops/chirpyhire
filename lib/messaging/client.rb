@@ -13,6 +13,10 @@ module Messaging
       Messaging::Messages.new(client.account.messages)
     end
 
+    def media
+      Messaging::Media.new(client.account.media)
+    end
+
     def send_message(message)
       Messaging::Message.new(client.account.messages.create(message))
     end

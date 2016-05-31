@@ -34,6 +34,10 @@ class Organization < ActiveRecord::Base
     messaging_client.messages.get(sid)
   end
 
+  def get_media(sid)
+    messaging_client.media.get(sid)
+  end
+
   def inbox
     Inbox.new(organization: self)
   end
