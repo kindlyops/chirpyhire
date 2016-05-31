@@ -40,7 +40,7 @@ RSpec.describe AnswersController, type: :controller do
       it "creates a ProfileJob" do
         expect {
           post :create, params
-        }.to have_enqueued_job(ProfileJob).with(user, profile)
+        }.to have_enqueued_job(ProfileJob).with(candidate, profile)
       end
     end
 

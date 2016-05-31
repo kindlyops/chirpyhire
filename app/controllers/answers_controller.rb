@@ -2,7 +2,7 @@ class AnswersController < SmsController
 
   def create
     if answer.valid?
-      ProfileJob.perform_later(sender, profile)
+      ProfileJob.perform_later(sender.candidate, profile)
       head :ok
     else
       unknown_message
