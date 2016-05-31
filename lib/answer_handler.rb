@@ -5,7 +5,6 @@ class AnswerHandler
   end
 
   def call
-    create_media_instances
     if answer.valid?
       AutomatonJob.perform_later(sender, "answer")
       answer
@@ -37,21 +36,7 @@ class AnswerHandler
   end
 
   def message
-    @message ||= sender.messages.create(
-      sid: external_message.sid,
-      body: external_message.body,
-      direction: external_message.direction
-    )
-  end
-
-  def create_media_instances
-    external_message.media.each do |media_instance|
-      message.media_instances.create(
-        content_type: media_instance.content_type,
-        sid: media_instance.sid,
-        uri: media_instance.uri
-      )
-    end
+    @message ||= MessageHandler.call(sender, external_message)
   end
 
   def create_message_task
