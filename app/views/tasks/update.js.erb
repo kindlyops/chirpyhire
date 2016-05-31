@@ -1,1 +1,3 @@
-$(".messages .message[data-id=<%= task.message.id %>]").replaceWith($("<%= escape_javascript(render partial: 'messages/message', object: task.message) %>"))
+$('.item[data-link="/tasks/' + <%= task.id %>).remove();
+$('.actions, .task-content-wrapper').hide();
+$('.no-result').show();
