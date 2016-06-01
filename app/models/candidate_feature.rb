@@ -4,7 +4,7 @@ class CandidateFeature < ActiveRecord::Base
   has_many :inquiries
 
   delegate :document?, to: :profile_feature
-  delegate :format, to: :profile_feature, prefix: true
+  delegate :format, :name, to: :profile_feature, prefix: true
 
   def inquire
     message = candidate.receive_message(body: body)
