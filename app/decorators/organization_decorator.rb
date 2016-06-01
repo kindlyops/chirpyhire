@@ -5,6 +5,10 @@ class OrganizationDecorator < Draper::Decorator
     object.name
   end
 
+  def from
+    to
+  end
+
   def icon_class
     "fa-home"
   end

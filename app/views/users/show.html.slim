@@ -1,5 +1,5 @@
 = title "#{user.name} | chirpyhire"
-.user.container-fluid.full-height.content
+.user.container-fluid.full-height
   .row
     .col-xs-3
       .page-header
@@ -11,12 +11,12 @@
         i.fa.fa-commenting
       - if user.candidate.present?
         = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
-  .row
+  .row.main-content-wrapper
     .col-xs-3
       = user.phone_number.phony_formatted
-  .row.user-timeline-container
-    .col-xs-9.col-xs-offset-3.user-timeline-wrapper
-      section.timeline.list-view-wrapper
+    .col-xs-9.main-content
+      #new-message
+      section.timeline.list-view-wrapper.m-t-10
         - user.messages.each do |message|
           = render partial: "#{message.messageable}/timeline", locals: { message: message }
 
