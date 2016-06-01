@@ -17,8 +17,13 @@ class UserDecorator < Draper::Decorator
   def from
     name || phone_number
   end
+  alias :to :from
 
   def from_short
     first_name || phone_number
+  end
+
+  def icon_class
+    "fa-user"
   end
 end

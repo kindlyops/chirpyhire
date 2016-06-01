@@ -39,4 +39,22 @@
   .edit_candidate {
     float: right;
   }
+
+  .timeline-point {
+    .fa-stack {
+      margin-left: -11px;
+
+      i {
+        margin-top: -9px;
+      }
+    }
+    i {
+      margin-top: -10px;
+    }
+  }
+
+  .card.share .card-header .user-pic {
+    border-radius: 0;
+    overflow: visible;
+  }
 }

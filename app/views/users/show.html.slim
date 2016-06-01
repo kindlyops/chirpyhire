@@ -3,22 +3,5 @@
   .timeline-container
     section.timeline
       - user.messages.each do |message|
-        .timeline-block
-          .timeline-point.success
-            i.fa.fa-commenting
-          .timeline-content
-            .card.share.full-width
-              .circle data-toggle="tooltip" data-container="body" data-original-title="Label"
-              .card-header.clearfix
-                i.fa.fa-user.user-pic
-                h5 David Nester
-                h6
-                  ' Subscribed
-                  i.fa.fa-hand-paper-o
-                  '  to Happy Home Care
-              .card-description
-                p = message.body
-                .via via text message
-            .event-date
-              small.fa-12.hint-text = message.time_at
+        = render partial: "#{message.messageable}/timeline", locals: { message: message }
 

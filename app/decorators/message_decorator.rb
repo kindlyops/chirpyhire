@@ -1,12 +1,19 @@
 class MessageDecorator < Draper::Decorator
   delegate_all
   decorates_association :user
+  decorates_association :notification
+  decorates_association :inquiry
+  decorates_association :answer
 
   delegate :name, to: :sender, prefix: true
   delegate :name, :phone_number, to: :user, prefix: true
 
   def sender
     @sender ||= object.sender.decorate
+  end
+
+  def recipient
+    @recipient ||= object.recipient.decorate
   end
 
   def color
@@ -32,5 +39,17 @@ class MessageDecorator < Draper::Decorator
     else
       "#{created_at.strftime('%B %d')} at #{created_at.strftime('%l:%M%P')}"
     end
+  end
+
+  def messageable
+    (object.inquiry || object.notification || object.answer || object).class.table_name
+  end
+
+  def time_ago
+    "#{h.time_ago_in_words(created_at)} ago"
+  end
+
+  def subtitle
+    "Sent to #{recipient.name}"
   end
 end
