@@ -41,14 +41,20 @@
   }
 
   .timeline-point {
-    .fa-stack {
-      margin-left: -11px;
-
-      i {
-        margin-top: -9px;
-      }
+    .fa-commenting {
+      margin-left: -10px;
     }
+
+    .fa-info {
+      margin-left: -4px;
+    }
+
+    .fa-reply {
+      margin-left: -11px;
+    }
+
     i {
+      font-size: 21px;
       margin-top: -10px;
     }
   }
