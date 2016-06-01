@@ -8,6 +8,12 @@ $(document).on("page:change", function() {
     }
   });
 
+  setInterval(function() {
+    $.get("/users/" + $('.user').data('id') + "/messages").then(function(data) {
+      $('section.timeline').html(data);
+    });
+  }, 3000);
+
   $(".user").on("change", "select#candidate_status", function(e) {
     var editCandidateForm = $("form.edit_candidate");
     $.ajax({

@@ -1,0 +1,2 @@
+- messages.each do |message|
+  = render partial: "#{message.messageable}/timeline", locals: { message: message }
