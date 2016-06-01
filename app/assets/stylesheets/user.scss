@@ -40,6 +40,14 @@
     float: right;
   }
 
+  .user-timeline-container {
+    height: calc(100% - 150px);
+  }
+
+  .user-timeline-wrapper {
+    height: 100%;
+  }
+
   .timeline-point {
     .fa-commenting {
       margin-left: -10px;

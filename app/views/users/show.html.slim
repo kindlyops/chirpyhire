@@ -1,7 +1,22 @@
 = title "#{user.name} | chirpyhire"
-.user.container-fluid
-  .timeline-container
-    section.timeline
-      - user.messages.each do |message|
-        = render partial: "#{message.messageable}/timeline", locals: { message: message }
+.user.container-fluid.full-height.content
+  .row
+    .col-xs-3
+      .page-header
+        h2
+          = user.name
+    .col-xs-9.menu
+      = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
+        ' Message
+        i.fa.fa-commenting
+      - if user.candidate.present?
+        = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
+  .row
+    .col-xs-3
+      = user.phone_number.phony_formatted
+  .row.user-timeline-container
+    .col-xs-9.col-xs-offset-3.user-timeline-wrapper
+      section.timeline.list-view-wrapper
+        - user.messages.each do |message|
+          = render partial: "#{message.messageable}/timeline", locals: { message: message }
 
