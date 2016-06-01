@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :rules, except: [:destroy], shallow: true
 
   resources :users, only: [] do
-    resources :messages, only: [:new, :create], shallow: true
+    resources :messages, only: [:index, :new, :create], shallow: true
   end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new

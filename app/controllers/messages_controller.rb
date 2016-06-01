@@ -1,5 +1,11 @@
 class MessagesController < ApplicationController
-  decorates_assigned :message, :user
+  decorates_assigned :message, :user, :messages
+
+  def index
+    @messages = scoped_messages.order(created_at: :desc)
+
+    render layout: false
+  end
 
   def new
     message = scoped_messages.build
