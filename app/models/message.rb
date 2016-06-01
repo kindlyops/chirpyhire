@@ -40,4 +40,8 @@ class Message < ActiveRecord::Base
   def images
     media_instances.images
   end
+
+  def outstanding_task
+    tasks.outstanding.first
+  end
 end

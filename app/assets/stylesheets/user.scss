@@ -21,6 +21,12 @@
     color: mix($color-master, #fff, 26.9%);
   }
 
+  .edit_task {
+    position: absolute;
+    top: 12px;
+    right: 50px;
+  }
+
   .new_message {
     .fa-trash {
       margin-top: 10px;

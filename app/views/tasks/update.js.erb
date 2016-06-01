@@ -1,3 +1,4 @@
 $('.item[data-link="/tasks/' + <%= task.id %>).remove();
+$('#edit_task_'+ <%= task.id %>).remove();
 $('.actions, .task-content-wrapper').hide();
 $('.no-result').show();

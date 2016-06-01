@@ -52,4 +52,9 @@ class MessageDecorator < Draper::Decorator
   def subtitle
     "Sent to #{recipient.name}"
   end
+
+  def outstanding_task
+    return unless object.outstanding_task
+    object.outstanding_task.decorate
+  end
 end
