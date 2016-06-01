@@ -19,6 +19,16 @@ class Message < ActiveRecord::Base
     end
   end
 
+  def recipient
+    @recipient ||= begin
+      if direction == "outbound-api"
+        user
+      elsif direction == "inbound"
+        organization
+      end
+    end
+  end
+
   def media
     media_instances
   end
@@ -29,5 +39,9 @@ class Message < ActiveRecord::Base
 
   def images
     media_instances.images
+  end
+
+  def outstanding_task
+    tasks.outstanding.first
   end
 end

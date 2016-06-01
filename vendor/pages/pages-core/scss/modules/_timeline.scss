@@ -7,7 +7,7 @@
   http://codyhouse.co/gem/vertical-timeline/
 */
 
-/* -------------------------------- 
+/* --------------------------------
 
 Modules - reusable parts of our design
 
@@ -15,13 +15,13 @@ Modules - reusable parts of our design
 
 .timeline-container {
     /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
-    
+
     width: 90%;
     max-width: 1170px;
     margin: 0 auto;
     &::after {
         /* clearfix */
-        
+
         content: '';
         display: table;
         clear: both;
@@ -37,9 +37,9 @@ Modules - reusable parts of our design
         }
     }
 }
-/* -------------------------------- 
+/* --------------------------------
 
-Main components 
+Main components
 
 -------------------------------- */
 
@@ -50,7 +50,7 @@ Main components
     margin-bottom: 2em;
     &::before {
         /* this is the vertical line */
-        
+
         content: '';
         position: absolute;
         top: 0;
@@ -119,7 +119,6 @@ Main components
     }
     i {
         color: #fff;
-        font-size: 14px;
         left: 50%;
         margin-left: -7px;
         margin-top: -7px;
@@ -152,7 +151,7 @@ Main components
                 left: 50%;
                 margin-left: -21px;
                 /* Force Hardware Acceleration in WebKit */
-                
+
                 -webkit-transform: translateZ(0);
                 -webkit-backface-visibility: hidden;
                 &.is-hidden {
@@ -236,7 +235,7 @@ Main components
     .event-date {
         display: inline-block;
         float: left;
-        padding: 8em 0;
+        padding: .8em 0;
         opacity: .7;
         clear: both;
     }
@@ -310,7 +309,7 @@ Main components
 }
 @media only screen and (min-width: 1170px) {
     /* inverse bounce effect on even content blocks */
-    
+
     .timeline-container:not(.left) {
         .timeline {
             .timeline-block:nth-child(even) .timeline-content.bounce-in {
@@ -437,7 +436,7 @@ Main components
                 left: 50%;
                 margin-left: -21px;
                 /* Force Hardware Acceleration in WebKit */
-                
+
                 -webkit-transform: translateZ(0);
                 -webkit-backface-visibility: hidden;
                 &.is-hidden {

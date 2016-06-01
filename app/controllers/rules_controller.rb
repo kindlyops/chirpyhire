@@ -1,6 +1,5 @@
 class RulesController < ApplicationController
-  decorates_assigned :rule
-  decorates_assigned :rules
+  decorates_assigned :rule, :rules
 
   def index
     @rules = scoped_rules

@@ -1,6 +1,5 @@
 class CandidatesController < ApplicationController
-  decorates_assigned :candidates
-  decorates_assigned :candidate
+  decorates_assigned :candidates, :candidate
 
   def show
     @candidate = authorized_candidate

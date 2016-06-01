@@ -1,39 +1,22 @@
 = title "#{user.name} | chirpyhire"
-.user
+.user.container-fluid.full-height
   .row
     .col-xs-3
       .page-header
         h2
-          = user.name
+          = user.from
     .col-xs-9.menu
       = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
       - if user.candidate.present?
-        span.fa-stack.pull-right.fa-lg title="#{user.candidate.screening_status}"
-          i.fa.fa-filter.fa-stack-2x
-          i.fa.fa-cog.fa-stack-1x class="subscribed_#{user.candidate.subscribed?}"
         = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
-  .row
+  .row.main-content-wrapper
     .col-xs-3
       = user.phone_number.phony_formatted
-      - user.outstanding_tasks.each do |task|
-        = render partial: "tasks/form", locals: { task: task }
-  .row
-    .col-xs-9.col-xs-offset-3
-      .panel.panel-default.messages
-        .panel-heading
-          .pull-right
-            .col-xs-12
-              input#search-table.form-control.pull-right type="text" placeholder="Search"
-          .clearfix
-        .panel-body
-          table.table#tableNoSortWithSearch.table-hover.no-footer role="grid"
-            thead
-              tr role="row"
-                th rowspan="1" colspan="1" aria-label="Sender" Sender
-                th rowspan="1" colspan="1" aria-label="Body" Body
-                th rowspan="1" colspan="1" aria-label="Sent At" Sent At
-                th rowspan="1" colspan="1" aria-label="Task"
-            tbody
-              = render partial: "messages/message", collection: user.messages
+    .col-xs-9.main-content
+      #new-message
+      section.timeline.list-view-wrapper.m-t-10
+        - user.messages.each do |message|
+          = render partial: "#{message.messageable}/timeline", locals: { message: message }
+

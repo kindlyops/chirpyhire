@@ -1,0 +1,9 @@
+.card-content
+  ul.buttons
+    li
+      a href="https://api.twilio.com#{image.uri.split('.').first}"
+        i.fa.fa-expand
+    li
+      a href="#"
+        i.fa.fa-check
+  = image_tag("https://api.twilio.com#{image.uri.split('.').first}", alt: "#{message.answer.subtitle}")

@@ -1,3 +1,4 @@
 $("<%= escape_javascript(render partial: 'message', object: message) %>").prependTo(".messages tbody");
+$("<%= escape_javascript(render partial: 'messages/timeline', locals: { message: message }) %>").prependTo("section.list-view-wrapper");
 $("textarea#body").val("");
 $('<p class="notice alert-info">Message sent.</p>').prependTo('.actions-wrapper');

@@ -4,6 +4,7 @@ $(document).on("page:change", function() {
       e.stopPropagation();
       e.preventDefault();
       $("form.new_message").remove();
+      $('.main-content-wrapper').css('height', 'calc(100% - 150px)')
     }
   });
 

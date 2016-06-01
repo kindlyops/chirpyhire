@@ -1,0 +1,15 @@
+.timeline-block
+  .timeline-point.info
+    i.fa.fa-info
+  .timeline-content
+    .card.share.full-width
+      .circle data-toggle="tooltip" data-container="body" data-original-title==message.time_at
+      .card-header.clearfix
+        i.fa.fa-2x.user-pic class==message.sender.icon_class
+        h5 = message.sender.from
+        h6 = message.notification.subtitle
+      .card-description
+        p = message.body
+        .via via text message
+    .event-date
+      small.fa-12.hint-text = message.time_ago

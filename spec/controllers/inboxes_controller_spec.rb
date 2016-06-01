@@ -20,7 +20,7 @@ RSpec.describe InboxesController, type: :controller do
 
       it "returns the organization's tasks" do
         get :show
-        expect(assigns(:inbox).tasks).to eq(tasks)
+        expect(assigns(:inbox).tasks.map(&:id)).to match_array(tasks.map(&:id))
       end
 
       context "with done tasks" do
