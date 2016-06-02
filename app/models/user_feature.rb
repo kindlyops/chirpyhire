@@ -3,15 +3,11 @@ class UserFeature < ActiveRecord::Base
   belongs_to :profile_feature
   has_many :inquiries
 
-  delegate :document?, to: :profile_feature
-  delegate :format, :name, to: :profile_feature, prefix: true
+  delegate :name, to: :profile_feature, prefix: true
+  delegate :format, to: :profile_feature
 
   def inquire
-    message = user.receive_message(body: body)
+    message = user.receive_message(body: profile_feature.question)
     inquiries.create(message: message)
-  end
-
-  def body
-    "Please send a photo of your #{profile_feature.name}" if document?
   end
 end

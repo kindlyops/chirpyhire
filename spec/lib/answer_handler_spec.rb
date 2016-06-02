@@ -29,8 +29,9 @@ RSpec.describe AnswerHandler do
     end
 
     context "with an answer format that doesn't matches the feature format" do
-      context "image mismatch" do
-        let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization, format: :text) }
+      context "image mismatch", vcr: { cassette_name: "AnswerHandlerFormatMismatch" } do
+        let(:body) { "a test body" }
+        let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization, body, format: :text) }
 
         it "creates a message" do
           expect {
