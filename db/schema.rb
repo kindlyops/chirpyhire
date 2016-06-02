@@ -58,16 +58,6 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
   add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
 
-  create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",       null: false
-    t.integer  "profile_feature_id", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "candidate_features", ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
-  add_index "candidate_features", ["profile_feature_id"], name: "index_candidate_features_on_profile_feature_id", using: :btree
-
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
     t.string   "status",     default: "Potential", null: false
@@ -79,14 +69,14 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "message_id",           null: false
-    t.integer  "candidate_feature_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "message_id",      null: false
+    t.integer  "user_feature_id", null: false
   end
 
-  add_index "inquiries", ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
   add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
+  add_index "inquiries", ["user_feature_id"], name: "index_inquiries_on_user_feature_id", using: :btree
 
   create_table "media_instances", force: :cascade do |t|
     t.string   "sid",          null: false
@@ -205,6 +195,16 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
+  create_table "user_features", force: :cascade do |t|
+    t.integer  "user_id",            null: false
+    t.integer  "profile_feature_id", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "user_features", ["profile_feature_id"], name: "index_user_features_on_profile_feature_id", using: :btree
+  add_index "user_features", ["user_id"], name: "index_user_features_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -222,11 +222,9 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
-  add_foreign_key "candidate_features", "candidates"
-  add_foreign_key "candidate_features", "profile_features"
   add_foreign_key "candidates", "users"
-  add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
+  add_foreign_key "inquiries", "user_features"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "messages"
@@ -239,5 +237,7 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_foreign_key "rules", "organizations"
   add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
+  add_foreign_key "user_features", "profile_features"
+  add_foreign_key "user_features", "users"
   add_foreign_key "users", "organizations"
 end

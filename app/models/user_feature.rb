@@ -1,5 +1,5 @@
-class CandidateFeature < ActiveRecord::Base
-  belongs_to :candidate
+class UserFeature < ActiveRecord::Base
+  belongs_to :user
   belongs_to :profile_feature
   has_many :inquiries
 
@@ -7,7 +7,7 @@ class CandidateFeature < ActiveRecord::Base
   delegate :format, :name, to: :profile_feature, prefix: true
 
   def inquire
-    message = candidate.receive_message(body: body)
+    message = user.receive_message(body: body)
     inquiries.create(message: message)
   end
 

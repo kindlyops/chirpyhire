@@ -1,6 +1,6 @@
 class ProfileFeature < ActiveRecord::Base
   belongs_to :profile
-  has_many :candidate_features
+  has_many :user_features
 
   validates :format, inclusion: { in: %w(document) }
 
@@ -8,7 +8,7 @@ class ProfileFeature < ActiveRecord::Base
     format == "document"
   end
 
-  def self.stale_for(candidate)
-    joins("LEFT OUTER JOIN candidate_features ON candidate_features.profile_feature_id=profile_features.id").where("candidate_features.id IS NULL")
+  def self.stale
+    joins("LEFT OUTER JOIN user_features ON user_features.profile_feature_id=profile_features.id").where("user_features.id IS NULL")
   end
 end

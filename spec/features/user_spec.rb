@@ -20,8 +20,8 @@ RSpec.feature "User" do
   end
 
   context "with inquiries" do
-    let(:candidate_feature) { create(:candidate_feature, candidate: candidate) }
-    let(:inquiry) { candidate_feature.inquire }
+    let(:user_feature) { create(:user_feature, user: user) }
+    let(:inquiry) { user_feature.inquire }
     let!(:inquiry_message) { inquiry.message.decorate }
 
     scenario "has the inquiries" do

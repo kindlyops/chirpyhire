@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :inquiry do
-    candidate_feature
+    user_feature
     message
 
     transient do
@@ -10,8 +10,7 @@ FactoryGirl.define do
     before(:create) do |inquiry, evaluator|
       if evaluator.user
         inquiry.message = create(:message, user: evaluator.user)
-        candidate = create(:candidate, user: evaluator.user)
-        inquiry.candidate_feature = create(:candidate_feature, candidate: candidate)
+        inquiry.user_feature = create(:user_feature, user: evaluator.user)
       end
     end
   end

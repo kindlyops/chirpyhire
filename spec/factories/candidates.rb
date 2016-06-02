@@ -17,13 +17,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_inquiry do
-      after(:create) do |candidate, evaluator|
-        candidate_feature = create(:candidate_feature, candidate: candidate)
-        candidate_feature.inquiries << create(:inquiry, message: create(:message, user: candidate.user))
-      end
-    end
-
     trait :with_referral do
       after(:create) do |candidate|
         referrer = create(:referrer)
