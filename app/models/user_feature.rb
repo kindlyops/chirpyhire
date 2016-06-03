@@ -10,4 +10,8 @@ class UserFeature < ActiveRecord::Base
     message = user.receive_message(body: profile_feature.question)
     inquiries.create(message: message)
   end
+
+  def child_class
+    properties['child_class'] || "user_feature"
+  end
 end

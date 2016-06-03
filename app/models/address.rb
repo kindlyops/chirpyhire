@@ -7,7 +7,8 @@ class Address < UserFeature
       longitude: address.longitude,
       postal_code: address.postal_code,
       country: address.country,
-      city: address.city
+      city: address.city,
+      child_class: "address"
     }
   end
 end

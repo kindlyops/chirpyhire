@@ -33,7 +33,6 @@ class Vcard
   end
 
   def response
-    # binding.pry
     HTTParty.get(url)
   end
 

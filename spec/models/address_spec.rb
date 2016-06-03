@@ -20,7 +20,8 @@ RSpec.describe Address, type: :model do
         country: "USA",
         latitude: 38.028531,
         longitude: -78.473088,
-        postal_code: "22902"}
+        postal_code: "22902",
+        child_class: "address"}
     end
 
     before(:each) do

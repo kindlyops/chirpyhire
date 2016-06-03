@@ -14,8 +14,8 @@
   .row.main-content-wrapper
     .col-xs-4
       = user.phone_number.phony_formatted
-      - if user.user_features.last.properties['latitude']
-        #map.m-t-10 data-lat==user.user_features.last.properties['latitude'] data-long==user.user_features.last.properties['longitude']
+      - user.user_features.each do |feature|
+          = render partial: "user_features/#{feature.child_class}", locals: { feature: feature }
     .col-xs-8.main-content
       #new-message
       section.timeline.list-view-wrapper.m-t-10

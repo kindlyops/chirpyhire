@@ -8,7 +8,8 @@ RSpec.describe Document, type: :model do
 
     let(:document_hash) do
       {
-        url0: "#{Document::URI_BASE}#{document_path}"
+        url0: "#{Document::URI_BASE}#{document_path}",
+        child_class: "document"
       }
     end
 
