@@ -196,13 +196,15 @@ ActiveRecord::Schema.define(version: 20160531214812) do
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "user_features", force: :cascade do |t|
-    t.integer  "user_id",            null: false
-    t.integer  "profile_feature_id", null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.integer  "user_id",                         null: false
+    t.integer  "profile_feature_id",              null: false
+    t.jsonb    "properties",         default: {}, null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "user_features", ["profile_feature_id"], name: "index_user_features_on_profile_feature_id", using: :btree
+  add_index "user_features", ["properties"], name: "index_user_features_on_properties", using: :gin
   add_index "user_features", ["user_id"], name: "index_user_features_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
