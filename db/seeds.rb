@@ -60,6 +60,20 @@ if Rails.env.development?
     puts "Created rules"
   end
 
+  # unless user.tasks.present?
+  #   raw_messages = Organization.first.send(:messaging_client).messages.list.select do |message|
+  #     message.direction == "inbound"
+  #   end
+
+  #   messages = raw_messages.map do |message|
+  #     MessageHandler.call(User.first, Messaging::Message.new(message))
+  #   end
+
+  #   20.times do |i|
+  #     FactoryGirl.create(:task, user: User.first, taskable: messages[i])
+  #   end
+  # end
+
   puts "Development specific seeding completed"
 end
 
