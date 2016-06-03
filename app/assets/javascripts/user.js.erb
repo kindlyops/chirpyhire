@@ -16,6 +16,44 @@ $(document).on("page:change", function() {
     }, 3000);
   }
 
+  mapboxgl.accessToken = <%= ENV['MAPBOX_TOKEN'] %>;
+  var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center: [$('#map').data('long'), $('#map').data('lat')],
+      zoom: 14
+  });
+  map.on('load', function() {
+    map.addSource("symbols", {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            $('#map').data('long'),
+                            $('#map').data('lat')
+
+                        ]
+                    }
+                }
+            ]
+        }
+    });
+    map.addLayer({
+        "id": "symbols",
+        "type": "symbol",
+        "source": "symbols",
+        "layout": {
+            "icon-image": "circle-stroked-11"
+        }
+    });
+  });
+
   $(".user").on("change", "select#candidate_status", function(e) {
     var editCandidateForm = $("form.edit_candidate");
     $.ajax({

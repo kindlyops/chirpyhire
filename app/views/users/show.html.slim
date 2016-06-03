@@ -1,20 +1,21 @@
 = title "#{user.name} | chirpyhire"
 .user.container-fluid.full-height data-id==user.id
   .row
-    .col-xs-3
+    .col-xs-4
       .page-header
         h2
           = user.from
-    .col-xs-9.menu
+    .col-xs-8.menu
       = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
       - if user.candidate.present?
         = render partial: "candidates/form", locals: { candidate: user.candidate.decorate }
   .row.main-content-wrapper
-    .col-xs-3
+    .col-xs-4
       = user.phone_number.phony_formatted
-    .col-xs-9.main-content
+      #map.m-t-10 data-lat==user.user_features.first.properties['latitude'] data-long==user.user_features.first.properties['longitude']
+    .col-xs-8.main-content
       #new-message
       section.timeline.list-view-wrapper.m-t-10
         - user.messages.each do |message|
