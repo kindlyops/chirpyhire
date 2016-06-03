@@ -34,7 +34,7 @@
 //= require pages-core/js/pages
 
 // BEGIN SITE SCRIPTS
-
+//= require leaflet
 //= require indexTable
 //= require clickTable
 //= require select
