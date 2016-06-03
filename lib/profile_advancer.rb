@@ -23,7 +23,7 @@ class ProfileAdvancer
   attr_reader :user, :profile
 
   def next_profile_feature
-    @next_profile_feature ||= profile.features.stale.first
+    @next_profile_feature ||= profile.features.stale_for(user).first
   end
 
   def next_user_feature

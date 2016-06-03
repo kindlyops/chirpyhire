@@ -4,8 +4,8 @@ class ProfileFeature < ActiveRecord::Base
 
   validates :format, inclusion: { in: %w(document address) }
 
-  def self.stale
-    joins("LEFT OUTER JOIN user_features ON user_features.profile_feature_id = profile_features.id").where("user_features.id IS NULL")
+  def self.stale_for(user)
+    where.not(id: user.user_features.pluck(:profile_feature_id))
   end
 
   def question
