@@ -14,7 +14,8 @@
   .row.main-content-wrapper
     .col-xs-4
       = user.phone_number.phony_formatted
-      #map.m-t-10 data-lat==user.user_features.first.properties['latitude'] data-long==user.user_features.first.properties['longitude']
+      - if user.user_features.last.properties['latitude']
+        #map.m-t-10 data-lat==user.user_features.last.properties['latitude'] data-long==user.user_features.last.properties['longitude']
     .col-xs-8.main-content
       #new-message
       section.timeline.list-view-wrapper.m-t-10
