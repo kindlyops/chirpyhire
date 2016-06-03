@@ -4,13 +4,15 @@ class ProfileFeature < ActiveRecord::Base
 
   validates :format, inclusion: { in: %w(document address) }
 
-  def self.stale_for(user)
-    where.not(id: user.user_features.pluck(:profile_feature_id))
+  def self.next_for(user)
+    where.not(id: user.user_features.pluck(:profile_feature_id)).first
   end
 
   def question
     questions[format.to_sym]
   end
+
+  private
 
   def questions
     {
