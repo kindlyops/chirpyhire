@@ -43,6 +43,7 @@ if Rails.env.development?
   unless org.profile.present?
     profile = org.create_profile
     profile.features.create(format: "document", name: "TB Test")
+    profile.features.create(format: "address", name: "Address and Zipcode")
     puts "Created Profile and Features"
   end
 
@@ -57,22 +58,70 @@ if Rails.env.development?
     subscribe_rule_2 = org.rules.create(trigger: "subscribe", action: profile)
     answer_rule = org.rules.create(trigger: "answer", action: profile)
     screen_rule = org.rules.create(trigger: "screen", action: thank_you)
-    puts "Created rules"
+    puts "Created Rules"
   end
 
-  # unless user.tasks.present?
-  #   raw_messages = Organization.first.send(:messaging_client).messages.list.select do |message|
-  #     message.direction == "inbound"
-  #   end
+  unless user.tasks.present?
+    raw_messages = org.send(:messaging_client).messages.list.select do |message|
+      message.direction == "inbound"
+    end
 
-  #   messages = raw_messages.map do |message|
-  #     MessageHandler.call(User.first, Messaging::Message.new(message))
-  #   end
+    bodies = ["Will my CNA license from Florida transfer?",
+              "Will you hire me if I just have my PCA?"]
 
-  #   20.times do |i|
-  #     FactoryGirl.create(:task, user: User.first, taskable: messages[i])
-  #   end
-  # end
+    NEEDED_SIDS = ["MMcb3589b5256ee750a86f05dc5e418e31", "SM3ca817b0df3d27e633d0eaa111d5561c", "SM141d3c61f986414fb8db473078e68b24"]
+
+    needed_messages = raw_messages.select{|m| NEEDED_SIDS.include?(m.sid) }
+    needed_messages.each do |message|
+      MessageHandler.call(user, Messaging::Message.new(message))
+    end
+
+    ok_messages = raw_messages.reject{|m| NEEDED_SIDS.include?(m.sid) }
+
+    2.times do |i|
+
+      message = MessageHandler.call(user, Messaging::Message.new(ok_messages[i]))
+      message.update(body: bodies[i], created_at: rand(6.hours.ago..Time.now))
+
+      FactoryGirl.create(:task, user: user, taskable: message)
+    end
+
+    FactoryGirl.create(:task, user: user, taskable: user.candidate)
+    puts "Created Tasks"
+  end
+
+  unless user.inquiries.present?
+    profile = org.profile
+    inquiry = ProfileAdvancer.call(user, org.profile)
+    sids = {
+      document: "MMcb3589b5256ee750a86f05dc5e418e31",
+      address: "SM3ca817b0df3d27e633d0eaa111d5561c"
+    }
+    first_answer_message = Message.find_by(sid: sids[inquiry.format.to_sym])
+    first_answer_message.update(created_at: 4.hours.ago)
+    inquiry.message.update(created_at: 4.hours.ago - 5.minutes)
+    inquiry.create_answer(message: first_answer_message)
+    inquiry = ProfileAdvancer.call(user, org.profile)
+    second_answer_message = Message.find_by(sid: sids[inquiry.format.to_sym])
+    second_answer_message.update(created_at: 3.hours.ago)
+    inquiry.message.update(created_at: 3.hours.ago - 5.minutes)
+    address_answer = inquiry.create_answer(message: second_answer_message)
+
+    user.user_features.last.update(properties: Address.extract(second_answer_message))
+
+    puts "Created Inquiries, Answers"
+  end
+
+  unless user.notifications.present?
+    thank_you = org.templates.find_by(body: "Thanks for your interest!")
+    thank_you_sid = "SM141d3c61f986414fb8db473078e68b24"
+
+    thank_you_message = Message.find_or_create_by(user: user, sid: thank_you_sid, body: thank_you.body, direction: "outbound-api")
+    thank_you_message.update(created_at: 2.hours.ago)
+    thank_you.notifications.create(message: thank_you_message)
+
+    puts "Created Notification"
+  end
 
   puts "Development specific seeding completed"
 end
