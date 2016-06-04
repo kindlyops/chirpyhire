@@ -1,16 +1,16 @@
-class TaskDecorator < Draper::Decorator
+class ActivityDecorator < Draper::Decorator
   delegate_all
   decorates_association :user
 
-  delegate :color, :icon_class, :body, to: :taskable
+  delegate :color, :icon_class, :body, to: :trackable
   delegate :organization, :from, :from_short, to: :user
 
   def day
     "#{friendly_day} #{created_at.strftime('%B %d')}".squish
   end
 
-  def taskable
-    @taskable ||= "#{object.taskable.class}Decorator".constantize.new(object.taskable)
+  def trackable
+    @trackable ||= "#{object.trackable.class}Decorator".constantize.new(object.trackable)
   end
 
   def to

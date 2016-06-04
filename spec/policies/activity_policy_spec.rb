@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe TaskPolicy do
-  subject { TaskPolicy.new(account, task) }
+RSpec.describe ActivityPolicy do
+  subject { ActivityPolicy.new(account, activity) }
 
-  let(:task) { create(:task) }
+  let(:activity) { create(:activity) }
 
-  let(:resolved_scope) { TaskPolicy::Scope.new(account, Task.all).resolve }
+  let(:resolved_scope) { ActivityPolicy::Scope.new(account, Activity.all).resolve }
 
   context "having an account" do
     let(:account) { create(:account) }
@@ -15,13 +15,13 @@ RSpec.describe TaskPolicy do
       it { should forbid_action(:destroy) }
       it { should forbid_action(:show) }
 
-      it 'excludes task in resolved scope' do
-        expect(resolved_scope).not_to include(task)
+      it 'excludes activity in resolved scope' do
+        expect(resolved_scope).not_to include(activity)
       end
     end
 
-    context "account is on the same organization as the task" do
-      let(:user) { create(:user, organization: task.organization) }
+    context "account is on the same organization as the activity" do
+      let(:user) { create(:user, organization: activity.organization) }
       let(:account) { create(:account, user: user) }
 
       it { should permit_action(:update) }
@@ -32,8 +32,8 @@ RSpec.describe TaskPolicy do
       it { should permit_mass_assignment_of(:outstanding) }
       it { should forbid_mass_assignment_of(:message_id) }
 
-      it 'includes task in resolved scope' do
-        expect(resolved_scope).to include(task)
+      it 'includes activity in resolved scope' do
+        expect(resolved_scope).to include(activity)
       end
     end
   end

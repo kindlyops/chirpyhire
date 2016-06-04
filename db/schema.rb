@@ -214,17 +214,6 @@ ActiveRecord::Schema.define(version: 20160604160317) do
   add_index "rules", ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
   add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
 
-  create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id",                      null: false
-    t.integer  "taskable_id",                  null: false
-    t.string   "taskable_type",                null: false
-    t.boolean  "outstanding",   default: true, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
-
   create_table "templates", force: :cascade do |t|
     t.string   "name",            null: false
     t.string   "body",            null: false
@@ -270,7 +259,6 @@ ActiveRecord::Schema.define(version: 20160604160317) do
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "organizations"
-  add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
 end

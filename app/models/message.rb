@@ -1,6 +1,5 @@
 class Message < ActiveRecord::Base
   belongs_to :user
-  has_many :tasks, as: :taskable
   has_many :media_instances
   belongs_to :messageable, polymorphic: true
 
@@ -47,9 +46,5 @@ class Message < ActiveRecord::Base
 
   def images
     media_instances.images
-  end
-
-  def outstanding_task
-    tasks.outstanding.first
   end
 end

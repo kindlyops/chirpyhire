@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TasksController, type: :controller do
+RSpec.describe ActivitiesController, type: :controller do
   let(:user) { create(:user, :with_account) }
   let(:account) { user.account }
   let(:organization) { user.organization }
@@ -10,36 +10,36 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe "#update" do
-    let!(:task) { create(:task, organization: organization) }
+    let!(:activity) { create(:activity, outstanding: true, organization: organization) }
 
     context "with valid rule params" do
-      let(:task_params) do
-        { id: task.id,
-          task: {
+      let(:activity_params) do
+        { id: activity.id,
+          activity: {
           outstanding: false
         } }
       end
 
-      it "updates the task" do
+      it "updates the activity" do
         expect {
-          xhr :put, :update, task_params
-        }.to change{task.reload.outstanding?}.from(true).to(false)
+          xhr :put, :update, activity_params
+        }.to change{activity.reload.outstanding?}.from(true).to(false)
       end
     end
 
     context "with invalid params" do
       let(:invalid_params) do
-        { id: task.id,
-          task: {
+        { id: activity.id,
+          activity: {
             message_id: 1
           }
         }
       end
 
-      it "does not create a task" do
+      it "does not create a activity" do
         expect {
           xhr :put, :update, invalid_params
-        }.not_to change{Task.count}
+        }.not_to change{Activity.count}
       end
     end
   end

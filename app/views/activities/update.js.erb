@@ -1,0 +1,4 @@
+$('.item[data-link="/activities/' + <%= activity.id %>).remove();
+$('#edit_activity_'+ <%= activity.id %>).remove();
+$('.actions, .task-content-wrapper').hide();
+$('.no-result').show();

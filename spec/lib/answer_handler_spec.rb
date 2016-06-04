@@ -39,10 +39,10 @@ RSpec.describe AnswerHandler do
           }.to change{Message.count}.by(1)
         end
 
-        it "creates a task" do
+        it "creates an outstanding activity" do
           expect {
             AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{Task.count}.by(1)
+          }.to change{user.outstanding_activities.count}.by(1)
         end
 
         it "does not create an answer" do

@@ -5,7 +5,6 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   belongs_to :ideal_profile
   has_many :candidate_features
-  has_many :tasks, as: :taskable
   has_many :referrals
   has_many :referrers, through: :referrals
 

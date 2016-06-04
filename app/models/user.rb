@@ -17,10 +17,6 @@ class User < ActiveRecord::Base
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
 
-  def outstanding_task_for?(taskable)
-    outstanding_tasks.where(taskable: taskable).present?
-  end
-
   def outstanding_activities
     activities.outstanding
   end

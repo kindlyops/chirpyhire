@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index
-  resources :tasks, only: [:update, :show]
+  resources :activities, only: [:update, :show]
   resource :inbox, only: :show
   resources :rules, except: [:destroy], shallow: true
 
