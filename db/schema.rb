@@ -50,13 +50,13 @@ ActiveRecord::Schema.define(version: 20160604000354) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id", null: false
+    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "message_id", null: false
   end
 
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
-  add_index "answers", ["message_id"], name: "index_answers_on_message_id", using: :btree
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
@@ -69,21 +69,19 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
 
   create_table "chirps", force: :cascade do |t|
-    t.integer  "message_id", null: false
+    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "chirps", ["message_id"], name: "index_chirps_on_message_id", using: :btree
+  add_index "chirps", ["user_id"], name: "index_chirps_on_user_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "message_id",      null: false
     t.integer  "user_feature_id", null: false
   end
 
-  add_index "inquiries", ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   add_index "inquiries", ["user_feature_id"], name: "index_inquiries_on_user_feature_id", using: :btree
 
   create_table "media_instances", force: :cascade do |t|
@@ -98,26 +96,27 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   add_index "media_instances", ["message_id"], name: "index_media_instances_on_message_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",        null: false
+    t.string   "sid",              null: false
     t.text     "body"
-    t.string   "direction",  null: false
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "direction",        null: false
+    t.integer  "messageable_id",   null: false
+    t.string   "messageable_type", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
+  add_index "messages", ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
   add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "template_id", null: false
+    t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "message_id",  null: false
   end
 
-  add_index "notifications", ["message_id"], name: "index_notifications_on_message_id", using: :btree
   add_index "notifications", ["template_id"], name: "index_notifications_on_template_id", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -231,15 +230,13 @@ ActiveRecord::Schema.define(version: 20160604000354) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
-  add_foreign_key "answers", "messages"
+  add_foreign_key "answers", "users"
   add_foreign_key "candidates", "users"
-  add_foreign_key "chirps", "messages"
-  add_foreign_key "inquiries", "messages"
+  add_foreign_key "chirps", "users"
   add_foreign_key "inquiries", "user_features"
   add_foreign_key "media_instances", "messages"
-  add_foreign_key "messages", "users"
-  add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
+  add_foreign_key "notifications", "users"
   add_foreign_key "profile_features", "profiles"
   add_foreign_key "profiles", "organizations"
   add_foreign_key "referrals", "candidates"

@@ -22,7 +22,7 @@ RSpec.describe ProfileAdvancer do
       it "creates a message" do
         expect {
           ProfileAdvancer.call(user, profile)
-        }.to change{user.messages.count}.by(1)
+        }.to change{Message.count}.by(1)
       end
     end
 

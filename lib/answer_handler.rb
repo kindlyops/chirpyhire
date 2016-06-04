@@ -10,7 +10,7 @@ class AnswerHandler
       user_feature.update(properties: extracted_properties)
       answer
     else
-      create_message_task
+      create_chirp_task
     end
   end
 
@@ -27,7 +27,7 @@ class AnswerHandler
   end
 
   def answer
-    @answer ||= inquiry.create_answer(message: message)
+    @answer ||= inquiry.create_answer(user: sender, message: message)
   end
 
   def user_feature
@@ -52,7 +52,8 @@ class AnswerHandler
     answer.format.titlecase.constantize
   end
 
-  def create_message_task
-    sender.tasks.create(taskable: message) unless sender.outstanding_task_for?(message)
+  def create_chirp_task
+    chirp = sender.chirps.create(message: message)
+    sender.tasks.create(taskable: chirp)
   end
 end

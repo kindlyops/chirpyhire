@@ -2,9 +2,7 @@ class Message < ActiveRecord::Base
   belongs_to :user
   has_many :tasks, as: :taskable
   has_many :media_instances
-  has_one :inquiry
-  has_one :notification
-  has_one :answer
+  belongs_to :messageable, polymorphic: true
 
   delegate :organization, to: :user
   delegate :name, to: :sender, prefix: true
@@ -34,6 +32,7 @@ class Message < ActiveRecord::Base
   end
 
   def has_images?
+    return media_instances.any?(&:image?) unless persisted?
     media_instances.images.present?
   end
 

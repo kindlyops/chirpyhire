@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :message do
-    user
+    association :messageable, factory: :notification
     direction { "inbound" }
     sid { Faker::Number.number(10) }
 

@@ -7,25 +7,6 @@ class MessagesController < ApplicationController
     render layout: false
   end
 
-  def new
-    message = scoped_messages.build
-
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
-  def create
-    message = message_user.receive_message(body: params[:body])
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
   private
 
   def scoped_messages

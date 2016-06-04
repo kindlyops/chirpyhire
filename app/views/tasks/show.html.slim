@@ -21,7 +21,7 @@
     .task-content-body.m-t-20
       p = task.body
     .m-t-30
-      - if task.has_message?
+      - if task.has_chirp?
         = render partial: "messages/form", locals: { user: task.user, message: Message.new(user: task.user) }
       - else
         = link_to task.user, class: "btn btn-complete btn-block btn-lg" do

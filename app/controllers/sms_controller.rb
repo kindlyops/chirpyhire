@@ -3,16 +3,20 @@ class SmsController < ActionController::Base
 
   protect_from_forgery with: :null_session
 
-  def unknown_message
-    sender.tasks.create(taskable: message) unless sender.outstanding_task_for?(message)
+  def unknown_chirp
+    sender.tasks.create(taskable: chirp)
 
     head :ok
   end
 
   private
 
+  def chirp
+    @chirp ||= sender.chirps.create(message: message)
+  end
+
   def message
-    @message ||= sender.messages.find_or_create_by(sid: params["MessageSid"], direction: "inbound", body: params["Body"])
+    @message ||= Message.find_or_initialize_by(sid: params["MessageSid"], direction: "inbound", body: params["Body"])
   end
 
   def vcard

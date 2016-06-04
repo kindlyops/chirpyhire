@@ -15,41 +15,27 @@ RSpec.describe SmsController, type: :controller do
       end
 
       it "is OK" do
-        post :unknown_message, { "MessageSid" => "123", "To" => phone_number }
+        post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
         expect(response).to be_ok
       end
     end
 
     it "sets the Content-Type to text/xml" do
-      post :unknown_message, { "MessageSid" => "123", "To" => phone_number }
+      post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
       expect(response.headers["Content-Type"]).to eq("text/xml")
     end
 
     it "creates a user" do
       expect {
-        post :unknown_message, { "MessageSid" => "123", "To" => phone_number }
+        post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
       }.to change{organization.users.count}.by(1)
     end
 
     context "without an outstanding reply task" do
       it "creates an outstanding reply task for the user" do
         expect {
-          post :unknown_message, { "MessageSid" => "123", "To" => phone_number }
+          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
         }.to change{organization.tasks.outstanding.count}.by(1)
-      end
-    end
-
-    context "with a preexisting outstanding reply task" do
-      let(:user) { create(:user, organization: organization) }
-
-      before(:each) do
-        user.tasks.create(taskable: create(:message, sid: "123", user: user))
-      end
-
-      it "does not create a new task" do
-        expect {
-          post :unknown_message, { "MessageSid" => "123", "From" => user.phone_number, "To" => phone_number }
-        }.not_to change{organization.tasks.outstanding.count}
       end
     end
   end
