@@ -8,7 +8,7 @@ RSpec.describe UserFeature, type: :model do
     it "creates a message" do
       expect{
         user_feature.inquire
-      }.to change{user.messages.count}.by(1)
+      }.to change{Message.count}.by(1)
     end
 
     it "creates an inquiry" do

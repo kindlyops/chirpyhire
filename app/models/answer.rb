@@ -1,6 +1,7 @@
 class Answer < ActiveRecord::Base
   belongs_to :inquiry
-  belongs_to :message
+  belongs_to :user
+  has_one :message, as: :messageable
   delegate :organization, to: :message
   delegate :question_name, to: :inquiry
 

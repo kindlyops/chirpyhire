@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :answer do
     inquiry
-    message
+    user
   end
 end

@@ -1,29 +1,10 @@
 class MessagesController < ApplicationController
-  decorates_assigned :message, :user, :messages
+  decorates_assigned :messages
 
   def index
     @messages = scoped_messages.order(created_at: :desc)
 
     render layout: false
-  end
-
-  def new
-    message = scoped_messages.build
-
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
-  def create
-    message = message_user.receive_message(body: params[:body])
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
   end
 
   private

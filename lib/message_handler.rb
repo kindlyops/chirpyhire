@@ -6,7 +6,7 @@ class MessageHandler
 
   def call
     external_message.media.each do |media_instance|
-      message.media_instances.create(
+      message.media_instances.new(
         content_type: media_instance.content_type,
         sid: media_instance.sid,
         uri: media_instance.uri
@@ -26,7 +26,7 @@ class MessageHandler
   attr_reader :sender, :external_message
 
   def message
-    @message ||= sender.messages.create(
+    @message ||= Message.new(
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction

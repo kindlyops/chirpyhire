@@ -12,7 +12,7 @@ RSpec.describe AnswerHandler do
       it "creates a message" do
         expect {
           AnswerHandler.call(user, inquiry, inbound_message.sid)
-        }.to change{user.messages.count}.by(1)
+        }.to change{Message.count}.by(1)
       end
 
       it "creates an answer" do
@@ -36,7 +36,7 @@ RSpec.describe AnswerHandler do
         it "creates a message" do
           expect {
             AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{user.messages.count}.by(1)
+          }.to change{Message.count}.by(1)
         end
 
         it "creates a task" do

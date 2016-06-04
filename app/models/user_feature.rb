@@ -8,7 +8,7 @@ class UserFeature < ActiveRecord::Base
 
   def inquire
     message = user.receive_message(body: profile_feature.question)
-    inquiries.create(message: message)
+    inquiries.create(message_attributes: { sid: message.sid, direction: message.direction, body: message.body })
   end
 
   def child_class

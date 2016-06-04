@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :messages
   has_many :user_features
+  has_many :inquiries, through: :user_features
   has_many :tasks
-  has_many :inquiries, through: :messages
-  has_many :answers, through: :messages
-  has_many :notifications, through: :messages
+  has_many :answers
+  has_many :notifications
+  has_many :chirps
 
   delegate :name, :phone_number, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
@@ -31,7 +31,6 @@ class User < ActiveRecord::Base
   end
 
   def receive_message(body:)
-    message = organization.send_message(to: phone_number, body: body)
-    messages.create(sid: message.sid, direction: message.direction, body: body)
+    organization.send_message(to: phone_number, body: body)
   end
 end

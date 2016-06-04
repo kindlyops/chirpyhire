@@ -6,7 +6,7 @@ class Task < ActiveRecord::Base
 
   scope :outstanding, -> { where(outstanding: true) }
 
-  def has_message?
-    taskable_type == "Message"
+  def has_chirp?
+    taskable_type == "Chirp"
   end
 end

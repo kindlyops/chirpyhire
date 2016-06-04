@@ -1,0 +1,3 @@
+$("<%= escape_javascript(render partial: 'form', locals: { user: user, message: chirp.message }) %>").appendTo("#new-message");
+$("#new-message select").select2();
+$('.main-content-wrapper').css('height', 'calc(100% - 335px)');

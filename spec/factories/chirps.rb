@@ -1,6 +1,5 @@
 FactoryGirl.define do
-  factory :notification do
+  factory :chirp do
     user
-    template
   end
 end
