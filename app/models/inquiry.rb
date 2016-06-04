@@ -1,12 +1,12 @@
 class Inquiry < ActiveRecord::Base
-  belongs_to :candidate_profile_feature
+  belongs_to :candidate_feature
   belongs_to :user
 
   has_one :message, as: :messageable
   has_one :answer
 
   delegate :organization, to: :user
-  delegate :format, :ideal_feature_name, to: :candidate_profile_feature
+  delegate :format, :ideal_feature_name, to: :candidate_feature
   accepts_nested_attributes_for :message
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }

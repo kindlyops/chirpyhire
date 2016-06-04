@@ -3,30 +3,30 @@ require 'rails_helper'
 RSpec.describe IdealFeature, type: :model do
 
   let(:ideal_features) { create_list(:ideal_feature, 2) }
-  let(:candidate_profile) { create(:candidate_profile) }
+  let(:candidate) { create(:candidate) }
 
   describe ".next_for" do
     context "with candidate features for each profile feature" do
       before(:each) do
 
         ideal_features.each do |feature|
-          feature.candidate_profile_features.create(candidate_profile: candidate_profile)
+          feature.candidate_features.create(candidate: candidate)
         end
       end
 
       it "is empty" do
-        expect(IdealFeature.next_for(candidate_profile)).to eq(nil)
+        expect(IdealFeature.next_for(candidate)).to eq(nil)
       end
     end
 
     context "without a candidate feature for one of the profile features" do
       before(:each) do
         feature = ideal_features.first
-        feature.candidate_profile_features.create(candidate_profile: candidate_profile)
+        feature.candidate_features.create(candidate: candidate)
       end
 
       it "returns the profile feature" do
-        expect(IdealFeature.next_for(candidate_profile)).to eq(ideal_features.last)
+        expect(IdealFeature.next_for(candidate)).to eq(ideal_features.last)
       end
     end
   end

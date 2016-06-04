@@ -1,11 +1,10 @@
-class CandidateProfileFeature < ActiveRecord::Base
-  belongs_to :candidate_profile
+class CandidateFeature < ActiveRecord::Base
+  belongs_to :candidate
   belongs_to :ideal_feature
   has_many :inquiries
 
   delegate :name, to: :ideal_feature, prefix: true
   delegate :format, to: :ideal_feature
-  delegate :candidate, to: :candidate_profile
   delegate :user, to: :candidate
 
   def inquire
@@ -14,6 +13,6 @@ class CandidateProfileFeature < ActiveRecord::Base
   end
 
   def child_class
-    properties['child_class'] || "candidate_profile_feature"
+    properties['child_class'] || "candidate_feature"
   end
 end

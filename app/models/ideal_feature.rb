@@ -1,11 +1,11 @@
 class IdealFeature < ActiveRecord::Base
   belongs_to :ideal_profile
-  has_many :candidate_profile_features
+  has_many :candidate_features
 
   validates :format, inclusion: { in: %w(document address) }
 
-  def self.next_for(candidate_profile)
-    where.not(id: candidate_profile.candidate_profile_features.pluck(:ideal_feature_id)).first
+  def self.next_for(candidate)
+    where.not(id: candidate.candidate_features.pluck(:ideal_feature_id)).first
   end
 
   def question

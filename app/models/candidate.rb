@@ -1,6 +1,7 @@
 class Candidate < ActiveRecord::Base
   belongs_to :user
-  has_one :candidate_profile
+  belongs_to :ideal_profile
+  has_many :candidate_features
   has_many :tasks, as: :taskable
   has_many :referrals
   has_many :referrers, through: :referrals
@@ -8,14 +9,14 @@ class Candidate < ActiveRecord::Base
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
 
+  enum profile_status: [:sleeping, :running, :finished]
+
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
            :receive_message, to: :user
 
   delegate :contact_first_name, to: :organization
   delegate :created_at, to: :last_referral, prefix: true
-
-  delegate :candidate_profile_features, to: :candidate_profile
 
   scope :subscribed, -> { where(subscribed: true) }
 
