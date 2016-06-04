@@ -1,11 +1,5 @@
 class ChirpsController < ApplicationController
-  decorates_assigned :chirp, :user, :chirps
-
-  def index
-    @chirps = scoped_chirps.order(created_at: :desc)
-
-    render layout: false
-  end
+  decorates_assigned :chirp, :user
 
   def new
     chirp = scoped_chirps.build
