@@ -14,6 +14,8 @@ class Organization < ActiveRecord::Base
 
   delegate :first_name, to: :contact, prefix: true
 
+  after_create :create_ideal_profile
+
   def self.for(phone:)
     find_by(phone_number: phone)
   end

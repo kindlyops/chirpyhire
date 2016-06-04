@@ -6,7 +6,7 @@ RSpec.feature "User" do
   let(:organization) { create(:organization, :with_account)}
   let(:account) { organization.accounts.first }
   let(:user) { create(:user, organization: organization) }
-  let!(:candidate) { create(:candidate, :with_profile, :with_referral, user: user) }
+  let!(:candidate) { create(:candidate, :with_referral, user: user) }
 
   background(:each) do
     login_as(account, scope: :account)
@@ -20,8 +20,8 @@ RSpec.feature "User" do
   end
 
   context "with inquiries" do
-    let(:candidate_profile_feature) { create(:candidate_profile_feature, user: user) }
-    let(:inquiry) { candidate_profile_feature.inquire }
+    let(:candidate_feature) { create(:candidate_feature, user: user) }
+    let(:inquiry) { candidate_feature.inquire }
     let!(:inquiry_message) { inquiry.message.decorate }
 
     scenario "has the inquiries" do

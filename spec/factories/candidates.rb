@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :candidate do
     user
+    ideal_profile
 
     transient do
       inquiry_format :text
@@ -14,12 +15,6 @@ FactoryGirl.define do
     before(:create) do |candidate, evaluator|
       if evaluator.organization
         candidate.user = create(:user, organization: evaluator.organization)
-      end
-    end
-
-    trait :with_profile do
-      after(:create) do |candidate|
-        create(:candidate_profile, candidate: candidate)
       end
     end
 

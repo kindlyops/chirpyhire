@@ -11,9 +11,10 @@ class ProfileAdvancer
 
   def call
     if next_profile_feature.present?
-      next_candidate_profile_feature.inquire
+      candidate.running! if candidate.candidate_features.empty?
+      next_candidate_feature.inquire
     else
-      candidate_profile.finished!
+      candidate.finished!
       user.tasks.create(taskable: user.candidate)
       AutomatonJob.perform_later(user, "screen")
     end
@@ -24,31 +25,18 @@ class ProfileAdvancer
   attr_reader :user, :profile
 
   def next_profile_feature
-    @next_profile_feature ||= profile.features.next_for(candidate_profile)
+    @next_profile_feature ||= profile.features.next_for(candidate)
   end
 
-  def next_candidate_profile_feature
-    @next_candidate_profile_feature ||= candidate_profile_features.create(candidate_profile: candidate_profile)
+  def next_candidate_feature
+    @next_candidate_feature ||= candidate_features.create(candidate: candidate)
   end
 
-  def candidate_profile_features
-    @candidate_profile_features ||= next_profile_feature.candidate_profile_features
-  end
-
-  def candidate_profile
-    @candidate_profile ||= begin
-      return candidate.candidate_profile if candidate.candidate_profile.present?
-      candidate_profile = candidate.create_candidate_profile(ideal_profile: ideal_profile)
-      candidate_profile.running!
-      candidate_profile
-    end
+  def candidate_features
+    @candidate_features ||= next_profile_feature.candidate_features
   end
 
   def candidate
     @candidate ||= user.candidate
-  end
-
-  def ideal_profile
-    user.organization_ideal_profile
   end
 end

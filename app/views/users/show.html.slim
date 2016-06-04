@@ -15,7 +15,7 @@
     .col-xs-4
       = user.phone_number.phony_formatted
       - if user.candidate.present?
-        = render partial: "candidate_profile_features/candidate_profile_features", locals: { candidate: user.candidate }
+        = render partial: "candidate_features/candidate_features", locals: { candidate: user.candidate }
     .col-xs-8.main-content
       #new-message
       section.timeline.list-view-wrapper.m-t-10

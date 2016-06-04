@@ -4,5 +4,7 @@ class CreateIdealProfiles < ActiveRecord::Migration
       t.belongs_to :organization, null: false, index: true, foreign_key: true
       t.timestamps null: false
     end
+
+    add_reference :candidates, :ideal_profile, null: false, index: true, foreign_key: true
   end
 end

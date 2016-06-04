@@ -1,0 +1,2 @@
+- candidate.candidate_features.each do |feature|
+    = render partial: "candidate_features/#{feature.child_class}", locals: { feature: feature }

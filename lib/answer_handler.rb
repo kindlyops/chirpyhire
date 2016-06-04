@@ -7,7 +7,7 @@ class AnswerHandler
   def call
     if answer.valid?
       AutomatonJob.perform_later(sender, "answer")
-      candidate_profile_feature.update(properties: extracted_properties)
+      candidate_feature.update(properties: extracted_properties)
       answer
     else
       create_chirp_task
@@ -30,8 +30,8 @@ class AnswerHandler
     @answer ||= inquiry.create_answer(user: sender, message: message)
   end
 
-  def candidate_profile_feature
-    @candidate_profile_feature ||= inquiry.candidate_profile_feature
+  def candidate_feature
+    @candidate_feature ||= inquiry.candidate_feature
   end
 
   attr_reader :inquiry, :sender, :message_sid
