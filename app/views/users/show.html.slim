@@ -20,5 +20,5 @@
       #new-message
       section.timeline.list-view-wrapper.m-t-10
         - user.messages.each do |message|
-          = render partial: "#{message.messageable}/timeline", locals: { message: message }
+          = render partial: "#{message.messageable_name}/timeline", locals: { message: message }
 

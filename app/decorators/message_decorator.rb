@@ -41,8 +41,8 @@ class MessageDecorator < Draper::Decorator
     end
   end
 
-  def messageable
-    (object.inquiry || object.notification || object.answer || object.chirp).class.table_name
+  def messageable_name
+    messageable.class.table_name
   end
 
   def time_ago
