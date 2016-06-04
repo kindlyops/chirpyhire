@@ -11,10 +11,10 @@ class ProfileAdvancer
 
   def call
     if next_profile_feature.present?
-      candidate.running! if candidate.candidate_features.empty?
       next_candidate_feature.inquire
     else
-      candidate.finished!
+      candidate.update(screened: true)
+      candidate.create_activity :screened
       user.tasks.create(taskable: user.candidate)
       AutomatonJob.perform_later(user, "screen")
     end

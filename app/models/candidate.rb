@@ -1,4 +1,7 @@
 class Candidate < ActiveRecord::Base
+  include PublicActivity::Model
+  tracked owner: :user, only: :create
+
   belongs_to :user
   belongs_to :ideal_profile
   has_many :candidate_features
@@ -8,8 +11,6 @@ class Candidate < ActiveRecord::Base
 
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
-
-  enum profile_status: [:sleeping, :running, :finished]
 
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,

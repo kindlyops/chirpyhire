@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20160604160317) do
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                                null: false
     t.string   "status",           default: "Potential", null: false
-    t.integer  "profile_status",   default: 0,           null: false
+    t.boolean  "screened",         default: false,       null: false
     t.boolean  "subscribed",       default: false,       null: false
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false

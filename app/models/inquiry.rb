@@ -1,4 +1,7 @@
 class Inquiry < ActiveRecord::Base
+  include PublicActivity::Model
+  tracked owner: :user, only: :create
+
   belongs_to :candidate_feature
   belongs_to :user
 

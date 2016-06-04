@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :notifications
   has_many :chirps
+  has_many :activities, class_name: "PublicActivity::Activity", as: :owner
 
   delegate :name, :phone_number, :ideal_profile, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
