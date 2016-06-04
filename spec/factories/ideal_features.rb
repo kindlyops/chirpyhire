@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :profile_feature do
-    profile
+  factory :ideal_feature do
+    ideal_profile
     format { "document" }
     name { ["TB Test", "CPR Exam", "CNA License"].sample }
   end

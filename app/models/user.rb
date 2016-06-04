@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :user_features
-  has_many :inquiries, through: :user_features
+  has_many :inquiries
   has_many :tasks
   has_many :answers
   has_many :notifications

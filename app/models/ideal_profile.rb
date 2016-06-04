@@ -1,9 +1,9 @@
-class Profile < ActiveRecord::Base
+class IdealProfile < ActiveRecord::Base
   belongs_to :organization
-  has_many :profile_features
+  has_many :ideal_features
   has_one :rules, as: :action
 
-  alias :features :profile_features
+  alias :features :ideal_features
 
   def perform(user)
     ProfileAdvancer.call(user, self)
