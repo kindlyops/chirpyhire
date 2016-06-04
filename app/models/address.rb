@@ -1,4 +1,4 @@
-class Address < UserFeature
+class Address < CandidateProfileFeature
   def self.extract(message)
     address = message.address
     {

@@ -58,6 +58,29 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
   add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
+  create_table "candidate_profile_features", force: :cascade do |t|
+    t.integer  "candidate_profile_id",              null: false
+    t.integer  "ideal_feature_id",                  null: false
+    t.jsonb    "properties",           default: {}, null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "candidate_profile_features", ["candidate_profile_id"], name: "index_candidate_profile_features_on_candidate_profile_id", using: :btree
+  add_index "candidate_profile_features", ["ideal_feature_id"], name: "index_candidate_profile_features_on_ideal_feature_id", using: :btree
+  add_index "candidate_profile_features", ["properties"], name: "index_candidate_profile_features_on_properties", using: :gin
+
+  create_table "candidate_profiles", force: :cascade do |t|
+    t.integer  "candidate_id",                 null: false
+    t.integer  "ideal_profile_id",             null: false
+    t.integer  "status",           default: 0, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "candidate_profiles", ["candidate_id"], name: "index_candidate_profiles_on_candidate_id", using: :btree
+  add_index "candidate_profiles", ["ideal_profile_id"], name: "index_candidate_profiles_on_ideal_profile_id", using: :btree
+
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                          null: false
     t.string   "status",     default: "Potential", null: false
@@ -76,13 +99,33 @@ ActiveRecord::Schema.define(version: 20160604000354) do
 
   add_index "chirps", ["user_id"], name: "index_chirps_on_user_id", using: :btree
 
-  create_table "inquiries", force: :cascade do |t|
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "user_feature_id", null: false
+  create_table "ideal_features", force: :cascade do |t|
+    t.integer  "ideal_profile_id", null: false
+    t.string   "format",           null: false
+    t.string   "name",             null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "inquiries", ["user_feature_id"], name: "index_inquiries_on_user_feature_id", using: :btree
+  add_index "ideal_features", ["ideal_profile_id"], name: "index_ideal_features_on_ideal_profile_id", using: :btree
+
+  create_table "ideal_profiles", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "ideal_profiles", ["organization_id"], name: "index_ideal_profiles_on_organization_id", using: :btree
+
+  create_table "inquiries", force: :cascade do |t|
+    t.integer  "user_id",                      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "candidate_profile_feature_id", null: false
+  end
+
+  add_index "inquiries", ["candidate_profile_feature_id"], name: "index_inquiries_on_candidate_profile_feature_id", using: :btree
+  add_index "inquiries", ["user_id"], name: "index_inquiries_on_user_id", using: :btree
 
   create_table "media_instances", force: :cascade do |t|
     t.string   "sid",          null: false
@@ -129,24 +172,6 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   end
 
   add_index "organizations", ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
-
-  create_table "profile_features", force: :cascade do |t|
-    t.integer  "profile_id", null: false
-    t.string   "format",     null: false
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "profile_features", ["profile_id"], name: "index_profile_features_on_profile_id", using: :btree
-
-  create_table "profiles", force: :cascade do |t|
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
-  add_index "profiles", ["organization_id"], name: "index_profiles_on_organization_id", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
@@ -202,18 +227,6 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
   add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
-  create_table "user_features", force: :cascade do |t|
-    t.integer  "user_id",                         null: false
-    t.integer  "profile_feature_id",              null: false
-    t.jsonb    "properties",         default: {}, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "user_features", ["profile_feature_id"], name: "index_user_features_on_profile_feature_id", using: :btree
-  add_index "user_features", ["properties"], name: "index_user_features_on_properties", using: :gin
-  add_index "user_features", ["user_id"], name: "index_user_features_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -231,21 +244,24 @@ ActiveRecord::Schema.define(version: 20160604000354) do
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "users"
+  add_foreign_key "candidate_profile_features", "candidate_profiles"
+  add_foreign_key "candidate_profile_features", "ideal_features"
+  add_foreign_key "candidate_profiles", "candidates"
+  add_foreign_key "candidate_profiles", "ideal_profiles"
   add_foreign_key "candidates", "users"
   add_foreign_key "chirps", "users"
-  add_foreign_key "inquiries", "user_features"
+  add_foreign_key "ideal_features", "ideal_profiles"
+  add_foreign_key "ideal_profiles", "organizations"
+  add_foreign_key "inquiries", "candidate_profile_features"
+  add_foreign_key "inquiries", "users"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "notifications", "templates"
   add_foreign_key "notifications", "users"
-  add_foreign_key "profile_features", "profiles"
-  add_foreign_key "profiles", "organizations"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "organizations"
   add_foreign_key "tasks", "users"
   add_foreign_key "templates", "organizations"
-  add_foreign_key "user_features", "profile_features"
-  add_foreign_key "user_features", "users"
   add_foreign_key "users", "organizations"
 end

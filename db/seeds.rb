@@ -107,7 +107,7 @@ if Rails.env.development?
     inquiry.message.update(created_at: 3.hours.ago - 5.minutes)
     address_answer = inquiry.create_answer(message: second_answer_message)
 
-    user.user_features.last.update(properties: Address.extract(second_answer_message))
+    candidate.candidate_profile_features.last.update(properties: Address.extract(second_answer_message))
 
     puts "Created Inquiries, Answers"
   end
