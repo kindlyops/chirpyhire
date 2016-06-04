@@ -6,11 +6,10 @@ class User < ActiveRecord::Base
   has_one :referrer
   has_one :account
   has_many :inquiries
-  has_many :tasks
   has_many :answers
   has_many :notifications
   has_many :chirps
-  has_many :activities, class_name: "PublicActivity::Activity", as: :owner
+  has_many :activities, as: :owner
 
   delegate :name, :phone_number, :ideal_profile, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
@@ -22,8 +21,8 @@ class User < ActiveRecord::Base
     outstanding_tasks.where(taskable: taskable).present?
   end
 
-  def outstanding_tasks
-    tasks.outstanding
+  def outstanding_activities
+    activities.outstanding
   end
 
   def outstanding_inquiry

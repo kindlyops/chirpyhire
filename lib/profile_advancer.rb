@@ -14,8 +14,7 @@ class ProfileAdvancer
       next_candidate_feature.inquire
     else
       candidate.update(screened: true)
-      candidate.create_activity :screened
-      user.tasks.create(taskable: user.candidate)
+      candidate.create_activity :screened, outstanding: true
       AutomatonJob.perform_later(user, "screen")
     end
   end
