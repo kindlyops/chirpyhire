@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_many :chirps
 
-  delegate :name, :phone_number, to: :organization, prefix: true
+  delegate :name, :phone_number, :ideal_profile, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
   accepts_nested_attributes_for :organization
 

@@ -10,7 +10,7 @@ class Organization < ActiveRecord::Base
   has_many :templates
   has_many :rules
   has_many :actions
-  has_one :profile
+  has_one :ideal_profile
 
   delegate :first_name, to: :contact, prefix: true
 

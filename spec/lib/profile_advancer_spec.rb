@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
-  let(:candidate) { create(:candidate, :with_profile) }
+  let(:candidate) { create(:candidate) }
   let(:ideal_profile) { create(:ideal_profile, organization: candidate.organization) }
   let(:user) { candidate.user }
 
