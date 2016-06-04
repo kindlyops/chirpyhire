@@ -30,8 +30,8 @@ class FakeMessaging
   cattr_accessor :messages
   self.messages = []
 
-  def self.inbound_message(sender, organization, format: :image)
-    body = format == :text ? Faker::Lorem.word : ""
+  def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
+    body = format == :text ? body : ""
 
     new("foo", "bar").create(
       from: sender.phone_number,

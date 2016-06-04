@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get 'preview'
   end
 
+  resource :scenes, only: :show
+
   resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index

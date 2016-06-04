@@ -1,15 +1,15 @@
 class Answer < ActiveRecord::Base
   belongs_to :inquiry
   belongs_to :message
-  delegate :organization, :has_images?, to: :message
+  delegate :organization, to: :message
   delegate :question_name, to: :inquiry
 
   validate :expected_format
   accepts_nested_attributes_for :message
 
   def expected_format
-    unless inquiry.expects?(self)
-      errors.add(:inquiry, "expected #{inquiry.profile_feature_format}")
+    unless inquiry.format == format
+      errors.add(:inquiry, "expected #{inquiry.format} but received #{format}")
     end
   end
 
@@ -18,7 +18,8 @@ class Answer < ActiveRecord::Base
   end
 
   def format
-    return :image if has_images?
-    :text
+    return "document" if message.has_images?
+    return "address" if message.has_address?
+    "text"
   end
 end

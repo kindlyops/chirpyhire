@@ -7,6 +7,7 @@ class AnswerHandler
   def call
     if answer.valid?
       AutomatonJob.perform_later(sender, "answer")
+      user_feature.update(properties: extracted_properties)
       answer
     else
       create_message_task
@@ -21,8 +22,16 @@ class AnswerHandler
 
   private
 
+  def extracted_properties
+    property_extractor.extract(message)
+  end
+
   def answer
     @answer ||= inquiry.create_answer(message: message)
+  end
+
+  def user_feature
+    @user_feature ||= inquiry.user_feature
   end
 
   attr_reader :inquiry, :sender, :message_sid
@@ -37,6 +46,10 @@ class AnswerHandler
 
   def message
     @message ||= MessageHandler.call(sender, external_message)
+  end
+
+  def property_extractor
+    answer.format.titlecase.constantize
   end
 
   def create_message_task

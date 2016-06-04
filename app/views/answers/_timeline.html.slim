@@ -11,7 +11,8 @@
       .card-description
         p = message.body
         .via via text message
-      = render partial: "messages/image", locals: { message: message, image: message.images.first }
+      - message.images.each do |image|
+        = render partial: "messages/image", locals: { message: message, image: image }
     .event-date
       small.fa-12.hint-text = message.time_ago
 

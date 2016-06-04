@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use postgresql as the database for Active Record
@@ -85,3 +85,5 @@ gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'indefinite_article', '~> 0.2.4'
 gem 'pundit', git: 'git@github.com:elabs/pundit.git', ref: '58eda659d44a2e9d5e022fd23cc0f65bad7f7d82'
 gem 'draper', '~> 2.1.0'
+gem 'geocoder', '~> 1.3.6'
+gem 'leaflet-rails', '~> 0.7.7'

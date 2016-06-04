@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://search.mapzen.com/v1/search?api_key=MAPZEN_SEARCH_KEY&size=1&text=a%20test%20body
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Charset:
+      - utf8
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"2ef-up9egFgD1lg8vIvm8zDWdg"
+      X-Apiaxleproxy-Qpd-Left:
+      - '29992'
+      X-Apiaxleproxy-Qpm-Left:
+      - '5'
+      X-Apiaxleproxy-Qps-Left:
+      - undefined
+      X-Powered-By:
+      - mapzen
+      Content-Length:
+      - '426'
+      Date:
+      - Thu, 02 Jun 2016 22:23:58 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - public, max-age=120
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type, Accept, Origin, User-Agent, Cache-Control, Keep-Alive,
+        If-Modified-Since, If-None-Match, X-Requested-With
+      Access-Control-Expose-Headers:
+      - Content-Type, Cache-Control, ETag, Expires, Last-Modified, Content-Length
+      X-Served-By:
+      - cache-atl6244-ATL
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1464906238.386662,VS0,VE163
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '{"geocoding":{"version":"0.1","attribution":"https://search.mapzen.com/v1/attribution","query":{"text":"a
+        test body","size":1,"private":false,"querySize":1},"engine":{"name":"Pelias","author":"Mapzen","version":"1.0"},"timestamp":1464906238533},"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[21.36694,44.185]},"properties":{"id":"839364","gid":"geonames:locality:839364","layer":"locality","source":"geonames","source_id":"839364","name":"AAA
+        TEST","confidence":0.54,"country":"Serbia","country_gid":"whosonfirst:country:85633755","country_a":"SRB","region":"Pomoravski
+        upravni okrug","region_gid":"whosonfirst:region:85688309","label":"AAA TEST,
+        Serbia"}}],"bbox":[21.36694,44.185,21.36694,44.185]}'
+    http_version:
+  recorded_at: Thu, 02 Jun 2016 22:23:58 GMT
+recorded_with: VCR 3.0.1

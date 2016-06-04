@@ -16,6 +16,14 @@ $(document).on("page:change", function() {
     }, 3000);
   }
 
+  var map = L.map('map');
+  var layer = Tangram.leafletLayer({
+    scene: '/scenes',
+    attribution: '<a href="https://mapzen.com/tangram" target="_blank">Tangram</a> | <a href="http://www.openstreetmap.org/about" target="_blank">&copy; OSM contributors | <a href="https://mapzen.com/" target="_blank">Mapzen</a>',
+  });
+  layer.addTo(map);
+  map.setView([$('#map').data('lat'), $('#map').data('long')], 16)
+
   $(".user").on("change", "select#candidate_status", function(e) {
     var editCandidateForm = $("form.edit_candidate");
     $.ajax({

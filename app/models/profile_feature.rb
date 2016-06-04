@@ -1,14 +1,23 @@
 class ProfileFeature < ActiveRecord::Base
   belongs_to :profile
-  has_many :candidate_features
+  has_many :user_features
 
-  validates :format, inclusion: { in: %w(document) }
+  validates :format, inclusion: { in: %w(document address) }
 
-  def document?
-    format == "document"
+  def self.next_for(user)
+    where.not(id: user.user_features.pluck(:profile_feature_id)).first
   end
 
-  def self.stale_for(candidate)
-    joins("LEFT OUTER JOIN candidate_features ON candidate_features.profile_feature_id=profile_features.id").where("candidate_features.id IS NULL")
+  def question
+    questions[format.to_sym]
+  end
+
+  private
+
+  def questions
+    {
+      document: "Please send a photo of your #{name}",
+      address: "What is your street address and zipcode?"
+    }
   end
 end

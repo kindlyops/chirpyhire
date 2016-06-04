@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_one :referrer
   has_one :account
   has_many :messages
+  has_many :user_features
   has_many :tasks
   has_many :inquiries, through: :messages
   has_many :answers, through: :messages

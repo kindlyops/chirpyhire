@@ -37,6 +37,15 @@ class Message < ActiveRecord::Base
     media_instances.images.present?
   end
 
+  def has_address?
+    return false unless body.present?
+    address.found?
+  end
+
+  def address
+    @address ||= AddressFinder.new(body)
+  end
+
   def images
     media_instances.images
   end

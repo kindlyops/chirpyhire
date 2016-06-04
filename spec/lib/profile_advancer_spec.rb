@@ -15,13 +15,13 @@ RSpec.describe ProfileAdvancer do
 
       it "creates an inquiry of the next candidate feature" do
         expect {
-          ProfileAdvancer.call(candidate, profile)
+          ProfileAdvancer.call(user, profile)
         }.to change{user.inquiries.count}.by(1)
       end
 
       it "creates a message" do
         expect {
-          ProfileAdvancer.call(candidate, profile)
+          ProfileAdvancer.call(user, profile)
         }.to change{user.messages.count}.by(1)
       end
     end
@@ -29,13 +29,13 @@ RSpec.describe ProfileAdvancer do
     context "with all profile features present" do
       it "creates an AutomatonJob for the screen event" do
         expect{
-          ProfileAdvancer.call(candidate, profile)
+          ProfileAdvancer.call(user, profile)
         }.to have_enqueued_job(AutomatonJob).with(user, "screen")
       end
 
       it "creates a review task for the candidate's user" do
         expect{
-          ProfileAdvancer.call(candidate, profile)
+          ProfileAdvancer.call(user, profile)
         }.to change{user.tasks.where(taskable: candidate).count}.by(1)
       end
     end

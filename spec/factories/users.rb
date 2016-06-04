@@ -16,5 +16,12 @@ FactoryGirl.define do
     trait :with_contact do
       contact { true }
     end
+
+    trait :with_inquiry do
+      after(:create) do |user, evaluator|
+        user_feature = create(:user_feature, user: user)
+        user_feature.inquiries << create(:inquiry, message: create(:message, user: user))
+      end
+    end
   end
 end

@@ -1,36 +1,32 @@
 class ProfileAdvancer
 
-  def self.call(candidate, profile)
-    new(candidate, profile).call
+  def self.call(user, profile)
+    new(user, profile).call
   end
 
-  def initialize(candidate, profile)
-    @candidate = candidate
+  def initialize(user, profile)
+    @user = user
     @profile = profile
   end
 
   def call
     if next_profile_feature.present?
-      next_candidate_feature.inquire
+      next_user_feature.inquire
     else
-      user.tasks.create(taskable: candidate)
+      user.tasks.create(taskable: user.candidate)
       AutomatonJob.perform_later(user, "screen")
     end
   end
 
   private
 
-  attr_reader :candidate, :profile
+  attr_reader :user, :profile
 
   def next_profile_feature
-    @next_profile_feature ||= profile.features.stale_for(candidate).first
+    @next_profile_feature ||= profile.features.next_for(user)
   end
 
-  def next_candidate_feature
-    @next_candidate_feature ||= next_profile_feature.candidate_features.create(candidate: candidate)
-  end
-
-  def user
-    @user ||= candidate.user
+  def next_user_feature
+    @next_user_feature ||= next_profile_feature.user_features.create(user: user)
   end
 end
