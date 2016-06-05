@@ -1,6 +1,7 @@
 class Candidate < ActiveRecord::Base
   include PublicActivity::Model
   tracked owner: :user, only: :create
+  has_many :activities, as: :trackable
 
   belongs_to :user
   belongs_to :ideal_profile

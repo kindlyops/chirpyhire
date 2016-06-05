@@ -1,14 +1,24 @@
 class ActivitiesController < ApplicationController
-  decorates_assigned :activity
+  decorates_assigned :activity, :activities
 
   def show
     @activity = authorized_activity
 
-    render layout: false
+    respond_to do |format|
+      format.js {
+        render layout: false
+      }
+    end
   end
 
   def index
     @activities = scoped_activities
+
+    respond_to do |format|
+      format.js {
+        render partial: "activities/activities"
+      }
+    end
   end
 
   def update

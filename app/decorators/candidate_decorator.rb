@@ -31,4 +31,12 @@ class CandidateDecorator < Draper::Decorator
   def icon_class
     "fa-star"
   end
+
+  def subtitle
+    "Candidate answers all screening questions"
+  end
+
+  def attachments
+    []
+  end
 end
