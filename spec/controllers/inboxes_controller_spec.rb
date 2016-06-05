@@ -16,7 +16,7 @@ RSpec.describe InboxesController, type: :controller do
     end
 
     context "with tasks" do
-      let!(:tasks) { create_list(:task, 3, organization: organization) }
+      let!(:tasks) { create_list(:activity, 3, outstanding: true, organization: organization) }
 
       it "returns the organization's tasks" do
         get :show
@@ -24,7 +24,7 @@ RSpec.describe InboxesController, type: :controller do
       end
 
       context "with done tasks" do
-        let!(:task) { create(:task, outstanding: false, organization: organization) }
+        let!(:task) { create(:activity, outstanding: false, organization: organization) }
 
         it "does not include done tasks" do
           get :show
@@ -33,7 +33,7 @@ RSpec.describe InboxesController, type: :controller do
       end
 
       context "with other organizations" do
-        let!(:other_tasks) { create_list(:task, 2) }
+        let!(:other_tasks) { create_list(:activity, 2) }
         it "does not return the other organization's tasks" do
           get :show
           expect(assigns(:inbox).tasks).not_to include(other_tasks)

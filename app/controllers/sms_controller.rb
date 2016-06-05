@@ -4,7 +4,7 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def unknown_chirp
-    sender.tasks.create(taskable: chirp)
+    chirp
 
     head :ok
   end

@@ -1,0 +1,18 @@
+.timeline-block
+  .timeline-point class=activity.color
+    i.fa.fa-reply
+  .timeline-content
+    .card.share.full-width
+      .circle data-toggle="tooltip" data-container="body" data-original-title==activity.time_at
+      .card-header.clearfix
+        i.fa.fa-2x.user-pic class==activity.icon_class
+        h5 = activity.from
+        h6 = activity.subtitle
+      .card-description
+        p = activity.body
+        .via via text message
+      - activity.attachments.each do |attachment|
+        = render partial: "activities/attachment", locals: { activity: activity, attachment: attachment }
+    .event-date
+      small.fa-12.hint-text = activity.time_ago
+

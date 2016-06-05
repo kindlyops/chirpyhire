@@ -4,7 +4,7 @@ class Inbox
   end
 
   def tasks
-    organization.tasks.outstanding.order(created_at: :desc).decorate
+    organization.outstanding_activities.order(created_at: :desc).decorate
   end
 
   def task_groups

@@ -8,23 +8,23 @@
         i.fa.fa-user.fa-2x
       .sender.inline.m-l-10
         p.name.no-margin.bold
-          = link_to task.from, task.user
-        p.datetime.no-margin = task.time_at
+          = link_to activity.from, activity.owner
+        p.datetime.no-margin = activity.time_at
       .clearfix
       .fromto.m-t-20.m-b-20
         .pull-left
           label.inline
-            span.small-text = task.from
+            span.small-text = activity.from
             span.muted &nbsp;&nbsp;to&nbsp;&nbsp;
-            span.small-text = task.to
+            span.small-text = activity.to
     .clearfix
     .task-content-body.m-t-20
-      p = task.body
+      p = activity.body
     .m-t-30
-      - if task.has_chirp?
-        = render partial: "messages/form", locals: { user: task.user, message: Message.new(user: task.user) }
+      - if activity.has_chirp?
+        = render partial: "messages/form", locals: { user: activity.owner, message: Message.new(user: activity.owner) }
       - else
-        = link_to task.user, class: "btn btn-complete btn-block btn-lg" do
+        = link_to activity.owner, class: "btn btn-complete btn-block btn-lg" do
           ' Review
           '
           i.fa.fa-search

@@ -1,15 +1,15 @@
 class Candidate < ActiveRecord::Base
+  include PublicActivity::Common
+  has_many :activities, as: :trackable
+
   belongs_to :user
   belongs_to :ideal_profile
   has_many :candidate_features
-  has_many :tasks, as: :taskable
   has_many :referrals
   has_many :referrers, through: :referrals
 
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
-
-  enum profile_status: [:sleeping, :running, :finished]
 
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,

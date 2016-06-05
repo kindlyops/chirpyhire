@@ -1,16 +1,16 @@
 $(document).on("page:change", function() {
-  $(".user").on("click", ".send-message, .cancel-message", function(e) {
-    if($("form.new_message").length) {
+  $(".user").on("click", ".send-chirp, .cancel-chirp", function(e) {
+    if($("form.new_chirp").length) {
       e.stopPropagation();
       e.preventDefault();
-      $("form.new_message").remove();
+      $("form.new_chirp").remove();
       $('.main-content-wrapper').css('height', 'calc(100% - 150px)')
     }
   });
 
   if ($('.user section.timeline').length) {
     setInterval(function() {
-      $.get("/users/" + $('.user').data('id') + "/messages").then(function(data) {
+      $.get("/users/" + $('.user').data('id') + "/activities").then(function(data) {
         $('section.timeline').html(data);
       });
     }, 3000);

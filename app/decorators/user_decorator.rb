@@ -1,6 +1,7 @@
 class UserDecorator < Draper::Decorator
   delegate_all
   decorates_association :candidate
+  decorates_association :activities
 
   def messages
     @messages ||= object.messages.order(created_at: :desc).decorate

@@ -87,3 +87,4 @@ gem 'pundit', git: 'git@github.com:elabs/pundit.git', ref: '58eda659d44a2e9d5e02
 gem 'draper', '~> 2.1.0'
 gem 'geocoder', '~> 1.3.6'
 gem 'leaflet-rails', '~> 0.7.7'
+gem 'public_activity', '~> 1.5.0'

@@ -10,7 +10,7 @@ class AnswerHandler
       candidate_feature.update(properties: extracted_properties)
       answer
     else
-      create_chirp_task
+      sender.chirps.create(message: message)
     end
   end
 
@@ -50,10 +50,5 @@ class AnswerHandler
 
   def property_extractor
     answer.format.titlecase.constantize
-  end
-
-  def create_chirp_task
-    chirp = sender.chirps.create(message: message)
-    sender.tasks.create(taskable: chirp)
   end
 end

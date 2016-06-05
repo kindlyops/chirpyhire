@@ -31,11 +31,11 @@ RSpec.describe SmsController, type: :controller do
       }.to change{organization.users.count}.by(1)
     end
 
-    context "without an outstanding reply task" do
-      it "creates an outstanding reply task for the user" do
+    context "without an outstanding activity" do
+      it "creates an outstanding activity for the user" do
         expect {
           post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
-        }.to change{organization.tasks.outstanding.count}.by(1)
+        }.to change{organization.outstanding_activities.count}.by(1)
       end
     end
   end

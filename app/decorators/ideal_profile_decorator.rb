@@ -1,4 +1,4 @@
-class ProfileDecorator < Draper::Decorator
+class IdealProfileDecorator < Draper::Decorator
   delegate_all
 
   def icon_class

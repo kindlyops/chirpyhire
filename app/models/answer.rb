@@ -1,21 +1,18 @@
 class Answer < ActiveRecord::Base
+  include PublicActivity::Model
+  tracked owner: :user, only: :create
+  has_many :activities, as: :trackable
   belongs_to :inquiry
   belongs_to :user
-  has_one :message, as: :messageable
-  delegate :organization, to: :message
+  delegate :organization, to: :user
   delegate :question_name, to: :inquiry
-
   validate :expected_format
-  accepts_nested_attributes_for :message
+  include Messageable
 
   def expected_format
     unless inquiry.format == format
       errors.add(:inquiry, "expected #{inquiry.format} but received #{format}")
     end
-  end
-
-  def body
-    message.body
   end
 
   def format

@@ -33,10 +33,10 @@ RSpec.describe ProfileAdvancer do
         }.to have_enqueued_job(AutomatonJob).with(user, "screen")
       end
 
-      it "creates a review task for the candidate's user" do
+      it "creates an outstanding screen activity for the candidate's user" do
         expect{
           ProfileAdvancer.call(user, ideal_profile)
-        }.to change{user.tasks.where(taskable: candidate).count}.by(1)
+        }.to change{user.outstanding_activities.where(trackable: candidate).count}.by(1)
       end
     end
   end
