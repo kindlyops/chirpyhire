@@ -1,4 +1,4 @@
-class AnswerDecorator < Draper::Decorator
+class AnswerCreateDecorator < Draper::Decorator
   delegate_all
 
   def subtitle
