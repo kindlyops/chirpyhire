@@ -20,14 +20,24 @@ RSpec.feature "Candidates" do
 
     context "with candidates" do
       include ActionView::Helpers::DateHelper
-      let(:user) { create(:user, organization: organization) }
+      let!(:user) { create(:user, organization: organization) }
       let!(:candidate) { create(:candidate, :with_referral, user: user).decorate }
+
       scenario "has the candidate information" do
         visit candidates_path
         expect(page).to have_text(candidate.user_name)
         expect(page).to have_text(candidate.phone_number.phony_formatted)
         expect(page).to have_text(candidate.last_referrer_name)
         expect(page).to have_text("#{time_ago_in_words(candidate.last_referral_created_at)}")
+      end
+
+      scenario "each candidate leads to the candidate's page", js: true do
+        visit candidates_path
+        find(:xpath, "//tr[@data-link]").click
+        expect(page).to have_text(candidate.user_name)
+        expect(page).to have_text(candidate.phone_number.phony_formatted)
+        expect(page).to have_text("Message")
+        expect(page).to have_text(candidate.status)
       end
     end
   end

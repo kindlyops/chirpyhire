@@ -50,6 +50,7 @@ group :test do
   gem 'launchy', '~> 2.4.3'
   gem 'capybara-email', git: "git@github.com:DockYard/capybara-email.git", ref: "c30c5f0"
   gem 'pundit-matchers', '~> 1.0.2'
+  gem 'poltergeist', '~> 1.9.0'
 end
 
 group :development do
