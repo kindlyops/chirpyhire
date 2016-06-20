@@ -9,7 +9,7 @@ class ProfileAdvancer
   end
 
   def call
-    if next_ideal_feature.present?
+    if next_persona_feature.present?
       next_candidate_feature.inquire
     else
       candidate.update(screened: true)
@@ -22,12 +22,12 @@ class ProfileAdvancer
 
   attr_reader :candidate
 
-  def next_ideal_feature
-    @next_ideal_feature ||= candidate.next_ideal_feature
+  def next_persona_feature
+    @next_persona_feature ||= candidate.next_persona_feature
   end
 
   def next_candidate_feature
-    @next_candidate_feature ||= candidate.features.create(ideal_feature: next_ideal_feature)
+    @next_candidate_feature ||= candidate.features.create(persona_feature: next_persona_feature)
   end
 
   def user

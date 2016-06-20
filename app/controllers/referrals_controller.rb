@@ -36,7 +36,7 @@ to learn about opportunities."
   def candidate
     @candidate ||= begin
       return referred_user.candidate if referred_user.candidate.present?
-      referred_user.create_candidate(ideal_profile: organization.ideal_profile)
+      referred_user.create_candidate(candidate_persona: organization.candidate_persona)
     end
   end
 

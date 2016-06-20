@@ -6,6 +6,6 @@ class Rule < ActiveRecord::Base
   delegate :perform, to: :action
 
   validates :organization, :action, presence: true
-  validates :action_type, inclusion: { in: %w(Template IdealProfile) }
+  validates :action_type, inclusion: { in: %w(Template CandidatePersona) }
   validates :trigger, inclusion: { in: TRIGGERS }
 end

@@ -3,7 +3,7 @@ class Candidate < ActiveRecord::Base
   has_many :activities, as: :trackable
 
   belongs_to :user
-  belongs_to :ideal_profile
+  belongs_to :candidate_persona
   has_many :candidate_features
   has_many :referrals
   has_many :referrers, through: :referrals
@@ -29,8 +29,8 @@ class Candidate < ActiveRecord::Base
     end
   end
 
-  def next_ideal_feature
-    ideal_profile.features.next_for(self)
+  def next_persona_feature
+    candidate_persona.features.next_for(self)
   end
 
   def last_referrer

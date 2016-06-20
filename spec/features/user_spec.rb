@@ -20,8 +20,8 @@ RSpec.feature "User" do
   end
 
   context "with inquiries" do
-    let(:ideal_feature) { create(:ideal_feature, ideal_profile: organization.ideal_profile) }
-    let(:candidate_feature) { create(:candidate_feature, ideal_feature: ideal_feature, user: user) }
+    let(:persona_feature) { create(:persona_feature, candidate_persona: organization.candidate_persona) }
+    let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature, user: user) }
     let(:inquiry) { candidate_feature.inquire }
     let!(:inquiry_activity) { inquiry.activities.first.decorate }
 

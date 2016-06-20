@@ -4,13 +4,13 @@ RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
   let(:candidate) { create(:candidate) }
-  let(:ideal_profile) { candidate.ideal_profile }
+  let(:candidate_persona) { candidate.candidate_persona }
   let(:user) { candidate.user }
 
   describe ".call" do
     context "with an undetermined or stale profile feature" do
       before(:each) do
-        create(:ideal_feature, ideal_profile: ideal_profile)
+        create(:persona_feature, candidate_persona: candidate_persona)
       end
 
       it "creates an inquiry of the next candidate feature" do
