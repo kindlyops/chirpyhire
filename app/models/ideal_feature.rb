@@ -5,7 +5,7 @@ class IdealFeature < ActiveRecord::Base
   validates :format, inclusion: { in: %w(document address) }
 
   def self.next_for(candidate)
-    where.not(id: candidate.candidate_features.pluck(:ideal_feature_id)).first
+    where.not(id: candidate.features.pluck(:ideal_feature_id)).first
   end
 
   def question

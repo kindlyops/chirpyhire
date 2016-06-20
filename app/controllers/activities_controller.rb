@@ -12,7 +12,7 @@ class ActivitiesController < ApplicationController
   end
 
   def index
-    @activities = scoped_activities
+    @activities = scoped_activities.order(created_at: :desc)
 
     respond_to do |format|
       format.js {
@@ -33,10 +33,21 @@ class ActivitiesController < ApplicationController
   private
 
   def scoped_activities
-    policy_scope(Activity).outstanding
+    policy_scope(Activity).where(owner: activity_user)
   end
 
   def authorized_activity
     authorize Activity.find(params[:id])
+  end
+
+  def activity_user
+    @user ||= begin
+      activity_user = User.find(params[:user_id])
+      if UserPolicy.new(current_account, activity_user).show?
+        activity_user
+      else
+        raise Pundit::NotAuthorizedError
+      end
+    end
   end
 end

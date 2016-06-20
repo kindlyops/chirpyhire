@@ -1,7 +1,10 @@
 FactoryGirl.define do
   factory :candidate do
     user
-    ideal_profile
+
+    before(:create) do |candidate|
+      candidate.ideal_profile = candidate.organization.ideal_profile
+    end
 
     transient do
       inquiry_format :text

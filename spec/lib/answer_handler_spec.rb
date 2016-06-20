@@ -3,8 +3,11 @@ require 'rails_helper'
 RSpec.describe AnswerHandler do
   include RSpec::Rails::Matchers
 
-  let!(:user) { create(:user) }
-  let!(:inquiry) { create(:inquiry, user: user) }
+  let(:candidate) { create(:candidate) }
+  let!(:user) { candidate.user }
+  let(:ideal_feature) { create(:ideal_feature, ideal_profile: candidate.ideal_profile) }
+  let(:candidate_feature) { create(:candidate_feature, ideal_feature: ideal_feature, candidate: candidate) }
+  let!(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
   let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
   describe ".call" do

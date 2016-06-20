@@ -11,12 +11,11 @@ Rails.application.routes.draw do
   resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :referrers, only: :index
-  resources :activities, only: [:update, :show]
   resource :inbox, only: :show
   resources :rules, except: [:destroy], shallow: true
 
   resources :users, only: [] do
-    resources :messages, only: [:index], shallow: true
+    resources :activities, only: [:index, :update, :show], shallow: true
     resources :chirps, only: [:new, :create], shallow: true
   end
 

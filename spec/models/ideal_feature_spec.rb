@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe IdealFeature, type: :model do
 
-  let(:ideal_features) { create_list(:ideal_feature, 2) }
   let(:candidate) { create(:candidate) }
+  let(:ideal_features) { create_list(:ideal_feature, 2, ideal_profile: candidate.ideal_profile) }
 
   describe ".next_for" do
     context "with candidate features for each profile feature" do
@@ -32,8 +32,8 @@ RSpec.describe IdealFeature, type: :model do
   end
 
   describe "#question" do
-    let(:document_ideal_feature) { create(:ideal_feature, format: :document) }
-    let(:address_ideal_feature) { create(:ideal_feature, format: :address) }
+    let(:document_ideal_feature) { create(:ideal_feature, ideal_profile: candidate.ideal_profile, format: :document) }
+    let(:address_ideal_feature) { create(:ideal_feature, ideal_profile: candidate.ideal_profile, format: :address) }
 
     it "returns a question for the format" do
       expect(document_ideal_feature.question).to eq("Please send a photo of your #{document_ideal_feature.name}")

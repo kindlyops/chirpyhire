@@ -8,6 +8,8 @@ class Candidate < ActiveRecord::Base
   has_many :referrals
   has_many :referrers, through: :referrals
 
+  alias :features :candidate_features
+
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
 
@@ -25,6 +27,10 @@ class Candidate < ActiveRecord::Base
       return NullReferral.new unless referrals.present?
       referrals.order(:created_at).last
     end
+  end
+
+  def next_ideal_feature
+    ideal_profile.features.next_for(self)
   end
 
   def last_referrer

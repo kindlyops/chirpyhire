@@ -1,7 +1,9 @@
 FactoryGirl.define do
   factory :candidate_feature do
-    ideal_feature
     candidate
+    before(:create) do |candidate_feature|
+      candidate_feature.ideal_feature = create(:ideal_feature, ideal_profile: candidate_feature.candidate.ideal_profile)
+    end
 
     transient do
       user nil

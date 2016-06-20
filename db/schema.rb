@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 20160604160317) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "ideal_profiles", ["organization_id"], name: "index_ideal_profiles_on_organization_id", using: :btree
+  add_index "ideal_profiles", ["organization_id"], name: "index_ideal_profiles_on_organization_id", unique: true, using: :btree
 
   create_table "inquiries", force: :cascade do |t|
     t.integer  "user_id",              null: false

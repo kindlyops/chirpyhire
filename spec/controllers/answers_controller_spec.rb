@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:inquiry) { create(:inquiry, user: user) }
+  let(:ideal_profile) { user.organization.ideal_profile }
   let(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
   describe "#create" do
@@ -20,6 +20,10 @@ RSpec.describe AnswersController, type: :controller do
       post :create, params
       expect(response).to be_ok
     end
+
+    let(:ideal_feature) { create(:ideal_feature, ideal_profile: ideal_profile) }
+    let(:candidate_feature) { create(:candidate_feature, ideal_feature: ideal_feature) }
+    let(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
 
     it "creates a AnswerHandlerJob" do
       expect {
