@@ -29,6 +29,14 @@ RSpec.feature "Referrers" do
         expect(page).to have_text(referrer.last_referred_name)
         expect(page).to have_text("#{time_ago_in_words(referrer.last_referral_created_at)}")
       end
+
+      scenario "each referrer leads to the referrer's page", js: true do
+        visit referrers_path
+        find(:xpath, "//tr[@data-link]").click
+        expect(page).to have_text(referrer.name)
+        expect(page).to have_text(referrer.phone_number.phony_formatted)
+        expect(page).to have_text("Message")
+      end
     end
   end
 end

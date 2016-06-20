@@ -1,7 +1,9 @@
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/email/rspec'
+require 'capybara/poltergeist'
 
+Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 3001
 Capybara.app_host = 'http://localhost:3001'
 Capybara.save_path = Dir.pwd

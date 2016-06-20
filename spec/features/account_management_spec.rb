@@ -67,6 +67,34 @@ RSpec.feature "Account Management", type: :feature do
     end
   end
 
+  feature "forgot password" do
+    context "with an account" do
+      let(:organization) { create(:organization,  :with_account) }
+      let(:account) { organization.accounts.first }
+
+      scenario "it sends an email with a password reset link that can reset the password" do
+        visit "/accounts/password/new"
+
+        fill_in "Email", with: account.email
+        click_button "Send me reset password instructions"
+        open_email(account.email)
+        current_email.click_link("Change my password")
+        fill_in "New password", with: "s3cr$t$$"
+        fill_in "Confirm new password", with: "s3cr$t$$"
+        click_button "Change my password"
+        expect(page).to have_text("Your password has been changed successfully. You are now signed in.")
+      end
+    end
+
+    scenario "it gives the password reset message" do
+      visit "/accounts/password/new"
+
+      fill_in "Email", with: Faker::Internet.email
+      click_button "Send me reset password instructions"
+      expect(page).to have_text("receive a password recovery link")
+    end
+  end
+
   feature "sign out" do
     let(:organization) { create(:organization,  :with_account)}
     let(:account) { organization.accounts.first }

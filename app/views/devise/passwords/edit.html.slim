@@ -1,4 +1,4 @@
-= title "Change your password | chirpyhire"
+= title "Change your password | Chirpyhire"
 
 p
   small Create a new password
@@ -14,8 +14,9 @@ p
     = f.label :password_confirmation, "Confirm new password"
     = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
   .row
-    .col-md-6.text-right
+    .text-right
       a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
+
   = f.submit "Change my password", class: "btn btn-primary btn-cons m-t-10"
 
 

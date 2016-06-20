@@ -25,6 +25,10 @@ class FakeMessaging
     def media_urls
       media.list.map(&:uri)
     end
+
+    def address
+      @address ||= AddressFinder.new(body)
+    end
   end
 
   cattr_accessor :messages

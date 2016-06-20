@@ -1,4 +1,4 @@
-= title "Forgot your password? | chirpyhire"
+= title "Forgot your password? | Chirpyhire"
 
 p
   small Enter your email to reset your password
@@ -11,6 +11,7 @@ p
     .controls
       = f.email_field :email, autofocus: true, required: true, class: "form-control"
   .row
-    .col-med-6.text-right
+    .text-right
       a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
+
   = f.submit "Send me reset password instructions", class: "btn btn-primary btn-cons m-t-10"

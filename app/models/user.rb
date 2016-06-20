@@ -28,4 +28,9 @@ class User < ActiveRecord::Base
   def receive_message(body:)
     organization.send_message(to: phone_number, body: body)
   end
+
+  def receive_chirp(body:)
+    message = receive_message(body: body)
+    chirps.create(message_attributes: { sid: message.sid, body: message.body, direction: message.direction })
+  end
 end

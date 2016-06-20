@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://search.mapzen.com/v1/search?api_key=MAPZEN_SEARCH_KEY&size=1&text=1000%20E.%20Market%20St.%2022902
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Charset:
+      - utf8
+      Content-Type:
+      - application/json; charset=utf-8
+      X-Apiaxleproxy-Qpd-Left:
+      - '29999'
+      X-Apiaxleproxy-Qps-Left:
+      - '5'
+      X-Powered-By:
+      - mapzen
+      Content-Length:
+      - '609'
+      Date:
+      - Mon, 20 Jun 2016 19:17:16 GMT
+      Age:
+      - '0'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - public, max-age=120
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, HEAD
+      Access-Control-Allow-Headers:
+      - Authorization, Content-Type, Accept, Origin, User-Agent, Cache-Control, Keep-Alive,
+        If-Modified-Since, If-None-Match, X-Requested-With
+      Access-Control-Expose-Headers:
+      - Content-Type, Cache-Control, ETag, Expires, Last-Modified, Content-Length
+      X-Served-By:
+      - cache-atl6244-ATL
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1466450236.104393,VS0,VE590
+      Vary:
+      - Accept-Encoding
+    body:
+      encoding: ASCII-8BIT
+      string: '{"geocoding":{"version":"0.1","attribution":"https://search.mapzen.com/v1/attribution","query":{"text":"1000
+        E. Market St. 22902","parsed_text":{"number":"1000","street":"E. Market St","postalcode":"22902","regions":[]},"size":1,"private":false,"querySize":1},"engine":{"name":"Pelias","author":"Mapzen","version":"1.0"},"timestamp":1466450236679},"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Point","coordinates":[-78.473088,38.028531]},"properties":{"id":"us/va/statewide:2341406","gid":"openaddresses:address:us/va/statewide:2341406","layer":"address","source":"openaddresses","source_id":"us/va/statewide:2341406","name":"1000
+        East Market Street","housenumber":"1000","street":"East Market Street","postalcode":"22,902","confidence":0.5,"country":"United
+        States","country_gid":"whosonfirst:country:85633793","country_a":"USA","region":"Virginia","region_gid":"whosonfirst:region:85688747","region_a":"VA","county":"Charlottesville
+        city","county_gid":"whosonfirst:county:102080639","locality":"Charlottesville","locality_gid":"whosonfirst:locality:101728535","neighbourhood":"Martha
+        Jefferson","neighbourhood_gid":"whosonfirst:neighbourhood:420547859","label":"1000
+        East Market Street, Charlottesville, VA, USA"}}],"bbox":[-78.473088,38.028531,-78.473088,38.028531]}'
+    http_version: 
+  recorded_at: Mon, 20 Jun 2016 19:17:17 GMT
+recorded_with: VCR 3.0.1

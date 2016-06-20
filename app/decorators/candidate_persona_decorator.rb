@@ -1,4 +1,4 @@
-class IdealProfileDecorator < Draper::Decorator
+class CandidatePersonaDecorator < Draper::Decorator
   delegate_all
 
   def icon_class
@@ -6,7 +6,7 @@ class IdealProfileDecorator < Draper::Decorator
   end
 
   def label
-    "Ideal Candidate Profile"
+    "Candidate Persona"
   end
 
   def title

@@ -1,4 +1,4 @@
-= title "Welcome! | chirpyhire"
+= title "Welcome! | Chirpyhire"
 h3 Accept Invitation
 
 = form_for resource, :as => resource_name, :url => invitation_path(resource_name), class: "p-t-15", :html => { :method => :put, role: "form" } do |f|
@@ -29,7 +29,7 @@ h3 Accept Invitation
     .col-md-6
       p
         ' I agree to the
-        a.text-info.small href="#" chirpyhire terms.
+        a.text-info.small href="https://chirpyhire.com/terms-of-service/" Chirpyhire terms.
     .col-md-6.text-right
       a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
   = f.submit "Set your password", class: "btn btn-primary btn-cons m-t-10"

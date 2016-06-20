@@ -15,3 +15,13 @@ VCR.configure do |c|
   c.filter_sensitive_data('TEST_ORG_PHONE') { ENV['TEST_ORG_PHONE'] }
   c.filter_sensitive_data('SMARTY_STREETS_AUTH_TOKEN') { ENV['SMARTY_STREETS_AUTH_TOKEN'] }
 end
+
+RSpec.configure do |config|
+  config.before(:each, js: true) do
+    VCR.configure do |c|
+      c.ignore_request do |request|
+        URI(request.uri).port == Capybara.server_port
+      end
+    end
+  end
+end
