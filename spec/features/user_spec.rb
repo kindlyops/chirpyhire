@@ -19,6 +19,18 @@ RSpec.feature "User" do
     expect(page).to have_text(candidate.status)
   end
 
+  let(:message) { Faker::Lorem.sentence }
+  scenario "can send a message to the user", js: true do
+    visit user_path(user)
+    click_link("Message")
+    fill_in "body", with: message
+    click_button "Send"
+
+    card = find('.card')
+    expect(card.find('.card-header').text).to eq(user.decorate.name)
+    expect(card.find('.card-description').text).to include(message)
+  end
+
   context "with inquiries" do
     let(:persona_feature) { create(:persona_feature, candidate_persona: organization.candidate_persona) }
     let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature, user: user) }
