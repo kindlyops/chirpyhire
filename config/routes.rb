@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  resource :health, only: :show
 
   resources :templates, only: :index do
     get 'preview'
