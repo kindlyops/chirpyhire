@@ -5,8 +5,8 @@ RSpec.describe AnswerHandler do
 
   let(:candidate) { create(:candidate) }
   let!(:user) { candidate.user }
-  let(:ideal_feature) { create(:ideal_feature, ideal_profile: candidate.ideal_profile) }
-  let(:candidate_feature) { create(:candidate_feature, ideal_feature: ideal_feature, candidate: candidate) }
+  let(:persona_feature) { create(:persona_feature, candidate_persona: candidate.candidate_persona) }
+  let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature, candidate: candidate) }
   let!(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
   let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 

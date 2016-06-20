@@ -41,6 +41,6 @@ class SubscriptionsController < SmsController
   end
 
   def candidate
-    @candidate ||= sender.candidate || sender.create_candidate(ideal_profile: organization.ideal_profile)
+    @candidate ||= sender.candidate || sender.create_candidate(candidate_persona: organization.candidate_persona)
   end
 end

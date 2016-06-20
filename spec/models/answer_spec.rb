@@ -8,9 +8,9 @@ RSpec.describe Answer, type: :model do
     let(:message) { messaging.create(from: from, to: to, body: "", format: :text) }
 
     let(:organization) { create(:organization, phone_number: to) }
-    let(:ideal_profile) { organization.ideal_profile }
-    let(:ideal_feature) { create(:ideal_feature, ideal_profile: ideal_profile) }
-    let(:candidate_feature) { create(:candidate_feature, ideal_feature: ideal_feature) }
+    let(:candidate_persona) { organization.candidate_persona }
+    let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
+    let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature) }
     let(:inquiry) { create(:inquiry, candidate_feature: candidate_feature) }
     let(:answer) { build(:answer, inquiry: inquiry, message: create(:message, sid: message.sid)) }
     context "inquiry does not expect the answer's message format" do

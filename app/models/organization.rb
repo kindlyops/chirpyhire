@@ -10,11 +10,11 @@ class Organization < ActiveRecord::Base
   has_many :templates
   has_many :rules
   has_many :actions
-  has_one :ideal_profile
+  has_one :candidate_persona
 
   delegate :first_name, to: :contact, prefix: true
 
-  after_create :create_ideal_profile
+  after_create :create_candidate_persona
 
   def self.for(phone:)
     find_by(phone_number: phone)

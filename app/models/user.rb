@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :chirps
   has_many :activities, as: :owner
 
-  delegate :name, :phone_number, :ideal_profile, to: :organization, prefix: true
+  delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
   accepts_nested_attributes_for :organization
 

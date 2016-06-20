@@ -36,15 +36,15 @@ if Rails.env.development?
   Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
 
-  unless org.ideal_profile.features.present?
-    org.ideal_profile.features.create!(format: "address", name: "Address and Zipcode")
-    org.ideal_profile.features.create!(format: "document", name: "TB Test")
-    org.ideal_profile.features.create!(format: "document", name: "CNA License")
+  unless org.candidate_persona.features.present?
+    org.candidate_persona.features.create!(format: "address", name: "Address and Zipcode")
+    org.candidate_persona.features.create!(format: "document", name: "TB Test")
+    org.candidate_persona.features.create!(format: "document", name: "CNA License")
     puts "Created Profile Features"
   end
 
   puts "Creating Candidate"
-  candidate = Candidate.find_or_create_by!(user: user, ideal_profile: org.ideal_profile)
+  candidate = Candidate.find_or_create_by!(user: user, candidate_persona: org.candidate_persona)
   puts "Created Candidate"
 
   unless org.templates.present?
@@ -55,8 +55,8 @@ if Rails.env.development?
 
   unless org.rules.present?
     subscribe_rule = org.rules.create!(trigger: "subscribe", action: welcome)
-    subscribe_rule_2 = org.rules.create!(trigger: "subscribe", action: org.ideal_profile)
-    answer_rule = org.rules.create!(trigger: "answer", action: org.ideal_profile)
+    subscribe_rule_2 = org.rules.create!(trigger: "subscribe", action: org.candidate_persona)
+    answer_rule = org.rules.create!(trigger: "answer", action: org.candidate_persona)
     screen_rule = org.rules.create!(trigger: "screen", action: thank_you)
     puts "Created Rules"
   end
@@ -91,7 +91,7 @@ if Rails.env.development?
   # end
 
   # unless user.inquiries.present?
-  #   ideal_profile = org.ideal_profile
+  #   candidate_persona = org.candidate_persona
   #   inquiry = ProfileAdvancer.call(user.candidate)
   #   sids = {
   #     document: "MMcb3589b5256ee750a86f05dc5e418e31",

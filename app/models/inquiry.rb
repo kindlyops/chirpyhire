@@ -6,13 +6,13 @@ class Inquiry < ActiveRecord::Base
   belongs_to :user
   has_one :answer
   delegate :organization, to: :user
-  delegate :format, :ideal_feature_name, to: :candidate_feature
+  delegate :format, :persona_feature_name, to: :candidate_feature
 
   include Messageable
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
   def question_name
-    ideal_feature_name
+    persona_feature_name
   end
 end

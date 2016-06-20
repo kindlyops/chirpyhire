@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :candidate_profile do
-    ideal_profile
+    candidate_persona
     candidate
 
     transient do

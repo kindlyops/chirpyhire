@@ -3,7 +3,7 @@ FactoryGirl.define do
     user
 
     before(:create) do |candidate|
-      candidate.ideal_profile = candidate.organization.ideal_profile
+      candidate.candidate_persona = candidate.organization.candidate_persona
     end
 
     transient do
