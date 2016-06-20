@@ -2,5 +2,13 @@
 <%= javascript_include_tag 'application', 'data-turbolinks-track' => true, 'data-turbolinks-eval' => false %>
 
 <script src="https://mapzen.com/tangram/tangram.min.js"></script>
+
+<% if Rails.env.production? %>
+  <script src="https://cdn.smooch.io/smooch.min.js"></script>
+  <script>
+      Smooch.init({appToken: <%= ENV['SMOOCH_TOKEN'] %>});
+  </script>
+<% end %>
+
 </body>
 </html>
