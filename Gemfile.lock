@@ -8,7 +8,7 @@ GIT
       mail
 
 GIT
-  remote: git@github.com:elabs/pundit.git
+  remote: https://github.com/elabs/pundit.git
   revision: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
   ref: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
   specs:
