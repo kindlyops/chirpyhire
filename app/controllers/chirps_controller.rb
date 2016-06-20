@@ -22,8 +22,7 @@ class ChirpsController < ApplicationController
   private
 
   def created_chirp
-    message = chirp_user.receive_message(body: params[:body])
-    chirp_user.chirps.create(message_attributes: { sid: message.sid, body: message.body, direction: message.direction })
+    chirp_user.receive_chirp(body: params[:body])
   end
 
   def scoped_chirps
