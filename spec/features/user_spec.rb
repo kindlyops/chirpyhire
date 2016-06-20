@@ -31,6 +31,16 @@ RSpec.feature "User" do
     expect(card.find('.card-description').text).to include(message)
   end
 
+  context "with an address", vcr: { cassette_name: "User_with_an_address" } do
+    let(:message) { FakeMessaging.inbound_message(user, organization, "1000 E. Market St. 22902", format: :text) }
+    let!(:candidate_feature) { create(:candidate_feature, candidate: candidate, properties: Address.extract(message)) }
+
+    scenario "shows a map of the address" do
+      visit user_path(user)
+      expect(page).to have_css("#map")
+    end
+  end
+
   context "with inquiries" do
     let(:persona_feature) { create(:persona_feature, candidate_persona: organization.candidate_persona) }
     let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature, user: user) }
