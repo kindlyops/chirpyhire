@@ -23,7 +23,7 @@
     <% if Rails.env.production? %>
         <script>
         var _rollbarConfig = {
-            accessToken: <%= ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'] %>,
+            accessToken: '<%= ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'] %>',
             captureUncaught: true,
             captureUnhandledRejections: false,
             payload: {
