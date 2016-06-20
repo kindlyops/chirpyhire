@@ -43,10 +43,6 @@ if Rails.env.development?
     puts "Created Profile Features"
   end
 
-  puts "Creating Candidate"
-  candidate = Candidate.find_or_create_by!(user: user, candidate_persona: org.candidate_persona)
-  puts "Created Candidate"
-
   unless org.templates.present?
     welcome = org.templates.create!(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
     thank_you = org.templates.create!(name: "Thank You", body: "Thanks for your interest!")
