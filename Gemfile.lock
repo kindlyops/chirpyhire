@@ -84,6 +84,7 @@ GEM
     connection_pool (2.2.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    dalli (2.7.6)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.0.0)
@@ -321,6 +322,7 @@ DEPENDENCIES
   brakeman (~> 3.3.0)
   capybara (~> 2.7.0)
   capybara-email!
+  dalli (~> 2.7.6)
   database_cleaner (~> 1.5.0)
   devise (~> 4.0.0)
   devise_invitable (~> 1.6.0)
