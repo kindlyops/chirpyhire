@@ -23,6 +23,12 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       context "that is a referrer for the organization" do
         let!(:referrer) { create(:referrer, user: sender) }
 
+        it "creates two chirps" do
+          expect {
+            post :create, params
+          }.to change{sender.chirps.count}.by(2)
+        end
+
         it "sends the user a template message to send to the referred candidate" do
           post :create, params
           expect(FakeMessaging.messages.last.body).to include("I think you would be a great fit here.")
@@ -77,6 +83,12 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
+        it "creates one chirp" do
+          expect {
+            post :create, params
+          }.to change{sender.chirps.count}.by(1)
+        end
+
         it "lets the user know they are not a referrer" do
           post :create, params
           expect(FakeMessaging.messages.last.body).to include("if you would like to join the referral program.")

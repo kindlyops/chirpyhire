@@ -3,10 +3,10 @@ class ReferralsController < SmsController
   def create
     if referrer.present?
       referrer.refer(candidate)
-      sender.receive_message(body: thanks)
-      sender.receive_message(body: notice)
+      sender.receive_chirp(body: thanks)
+      sender.receive_chirp(body: notice)
     else
-      sender.receive_message(body: not_referrer)
+      sender.receive_chirp(body: not_referrer)
     end
     head :ok
   end
