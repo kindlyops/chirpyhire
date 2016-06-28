@@ -49,11 +49,11 @@ ActiveRecord::Schema.define(version: 20160604160317) do
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "activities", force: :cascade do |t|
-    t.integer  "trackable_id"
-    t.string   "trackable_type"
-    t.integer  "owner_id"
-    t.string   "owner_type"
-    t.string   "key"
+    t.integer  "trackable_id",                   null: false
+    t.string   "trackable_type",                 null: false
+    t.integer  "owner_id",                       null: false
+    t.string   "owner_type",                     null: false
+    t.string   "key",                            null: false
     t.text     "parameters"
     t.integer  "recipient_id"
     t.string   "recipient_type"

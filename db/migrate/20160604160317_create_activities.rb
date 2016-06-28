@@ -3,9 +3,9 @@ class CreateActivities < ActiveRecord::Migration
   # Create table
   def self.up
     create_table :activities do |t|
-      t.belongs_to :trackable, polymorphic: true
-      t.belongs_to :owner, polymorphic: true
-      t.string  :key
+      t.belongs_to :trackable, polymorphic: true, null: false
+      t.belongs_to :owner, polymorphic: true, null: false
+      t.string  :key, null: false
       t.text    :parameters
       t.belongs_to :recipient, polymorphic: true
       t.boolean :outstanding, null: false, default: false
