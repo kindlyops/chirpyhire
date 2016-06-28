@@ -1,5 +1,6 @@
 class CandidateScreenDecorator < Draper::Decorator
   delegate_all
+  decorates_association :user
 
   def color
     "complete"

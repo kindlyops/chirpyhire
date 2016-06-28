@@ -1,5 +1,6 @@
 class CandidateUnsubscribeDecorator < Draper::Decorator
   delegate_all
+  decorates_association :user
 
   def color
     "danger"
