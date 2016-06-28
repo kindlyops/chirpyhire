@@ -10,9 +10,11 @@ $(document).on("page:change", function() {
 
   if ($('.user section.timeline').length) {
     setInterval(function() {
-      $.get("/users/" + $('.user').data('id') + "/activities").then(function(data) {
-        $('section.timeline').html(data);
-      });
+      if($('.user').data('id')) {
+        $.get("/users/" + $('.user').data('id') + "/activities").then(function(data) {
+          $('section.timeline').html(data);
+        });
+      }
     }, 3000);
   }
 
