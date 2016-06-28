@@ -68,7 +68,7 @@ class FakeMessaging
       media = Media.new([MediaInstance.new("image/jpeg", "/example/path/to/image.png")])
     end
 
-    message = Message.new(from, to, body, media, direction, Faker::Lorem.word)
+    message = Message.new(from, to, body, media, direction, Faker::Number.number(10))
     self.class.messages << message
     message
   end

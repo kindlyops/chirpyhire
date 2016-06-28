@@ -29,6 +29,16 @@ RSpec.feature "Rules" do
         expect(page).to have_text(action.name)
         expect(page).to have_text("Enabled")
       end
+
+      scenario "each rule leads to the rule's page", js: true do
+        visit rules_path
+        find(:xpath, "//tr[@data-link]").click
+        expect(page).to have_text("Automation Rule")
+        expect(page).to have_text("Trigger")
+        expect(page).to have_text("Action")
+        expect(page).to have_text(action.title)
+        expect(page).to have_text(action.subtitle)
+      end
     end
   end
 end

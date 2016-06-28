@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe ActivityPolicy do
   subject { ActivityPolicy.new(account, activity) }
 
-  let(:activity) { create(:activity) }
+  let(:chirp) { create(:chirp) }
+  let(:activity) { chirp.activities.last }
 
   let(:resolved_scope) { ActivityPolicy::Scope.new(account, Activity.all).resolve }
 
@@ -30,7 +31,6 @@ RSpec.describe ActivityPolicy do
       it { should forbid_action(:destroy) }
       it { should permit_action(:show) }
       it { should permit_mass_assignment_of(:outstanding) }
-      it { should forbid_mass_assignment_of(:message_id) }
 
       it 'includes activity in resolved scope' do
         expect(resolved_scope).to include(activity)

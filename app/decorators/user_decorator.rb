@@ -3,12 +3,10 @@ class UserDecorator < Draper::Decorator
   decorates_association :candidate
   decorates_association :activities
 
-  def messages
-    @messages ||= object.messages.order(created_at: :desc).decorate
-  end
-
   def name
-    "#{first_name} #{last_name}"
+    if first_name.present?
+      "#{first_name} #{last_name}".squish
+    end
   end
 
   def phone_number
@@ -16,13 +14,14 @@ class UserDecorator < Draper::Decorator
   end
 
   def from
-    name || object.phone_number
+    name || phone_number
   end
   alias :to :from
 
   def from_short
-    first_name || object.phone_number
+    first_name || phone_number
   end
+  alias :to_short :from_short
 
   def icon_class
     "fa-user"

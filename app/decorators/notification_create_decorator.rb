@@ -1,8 +1,9 @@
 class NotificationCreateDecorator < Draper::Decorator
   delegate_all
+  decorates_association :recipient
 
   def subtitle
-    "Notification sent to #{recipient.decorate.from_short}"
+    "Notification sent to #{recipient.to_short}"
   end
 
   def color
