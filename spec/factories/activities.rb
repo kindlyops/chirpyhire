@@ -7,6 +7,11 @@ FactoryGirl.define do
     end
 
     before(:create) do |activity, evaluator|
+      unless activity.trackable
+        activity.trackable = create(:chirp, :with_message, user: activity.owner)
+        activity.key = 'chirp.create'
+      end
+
       if evaluator.organization
         activity.owner = create(:user, organization: evaluator.organization)
       end

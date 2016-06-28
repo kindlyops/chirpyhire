@@ -12,7 +12,7 @@ $(document).on("page:change", function() {
     e.stopPropagation();
 
     var link = $(this).attr('data-link');
-    $.get(link).then(function(data) {
+    $.get(link, {}, function(data) {
       $('.task-content-wrapper').replaceWith($(data));
       $("#new_message select").select2();
       $('.no-result').hide();
@@ -29,7 +29,7 @@ $(document).on("page:change", function() {
       $('.menuclipper').menuclipper({
         bufferWidth: 20
       });
-    });
+    }, "html");
 
     $('.item').removeClass('active');
     $(this).addClass('active');
