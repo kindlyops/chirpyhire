@@ -4,10 +4,12 @@ class OrganizationDecorator < Draper::Decorator
   def to
     object.name
   end
+  alias :to_short :to
 
   def from
     to
   end
+  alias :from_short :from
 
   def icon_class
     "fa-home"

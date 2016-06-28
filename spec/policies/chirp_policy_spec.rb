@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ChirpPolicy do
   subject { ChirpPolicy.new(account, chirp) }
 
-  let(:chirp) { create(:chirp, :with_message) }
+  let(:chirp) { create(:chirp) }
 
   let(:resolved_scope) { ChirpPolicy::Scope.new(account, Chirp.all).resolve }
 

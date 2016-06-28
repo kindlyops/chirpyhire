@@ -10,7 +10,8 @@ RSpec.describe ActivitiesController, type: :controller do
   end
 
   describe "#update" do
-    let!(:activity) { create(:activity, outstanding: true, organization: organization) }
+    let(:chirp) { create(:chirp, user: user) }
+    let!(:activity) { chirp.activities.last }
 
     context "with valid rule params" do
       let(:activity_params) do
