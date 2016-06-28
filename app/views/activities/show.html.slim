@@ -22,7 +22,7 @@
       p = activity.body
     .m-t-30
       - if activity.has_chirp?
-        = render partial: "messages/form", locals: { user: activity.owner, message: Message.new(user: activity.owner) }
+        = render partial: "chirps/form", locals: { user: activity.owner, chirp: Chirp.new(user: activity.owner) }
       - else
         = link_to activity.owner, class: "btn btn-complete btn-block btn-lg" do
           ' Review
