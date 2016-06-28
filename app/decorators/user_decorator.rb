@@ -5,7 +5,7 @@ class UserDecorator < Draper::Decorator
 
   def name
     if first_name.present?
-      "#{first_name} #{last_name}"
+      "#{first_name} #{last_name}".squish
     end
   end
 

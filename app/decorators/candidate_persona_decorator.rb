@@ -14,6 +14,6 @@ class CandidatePersonaDecorator < Draper::Decorator
   end
 
   def subtitle
-    "Ensure candidate matches your Candidate Persona"
+    "Ensure candidate matches your Candidate Persona."
   end
 end
