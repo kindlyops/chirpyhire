@@ -124,3 +124,19 @@ end
 
 puts "Seed completed"
 
+
+### Pilot Seed ###
+
+# organization = Organization.find_by(name:)
+# organization.update(twilio_account_sid:,twilio_auth_token:,phone_number:)
+
+# welcome = organization.templates.create!(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+# thank_you = organization.templates.create!(name: "Thank You", body: "Thanks for your interest!")
+
+# subscribe_rule = organization.rules.create!(trigger: "subscribe", action: welcome)
+# subscribe_rule_2 = organization.rules.create!(trigger: "subscribe", action: organization.candidate_persona)
+# answer_rule = organization.rules.create!(trigger: "answer", action: organization.candidate_persona)
+# screen_rule = organization.rules.create!(trigger: "screen", action: thank_you)
+
+# organization.candidate_persona.features.create!(format:, name:)
+
