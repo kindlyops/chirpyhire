@@ -1,6 +1,5 @@
 class CandidateScreenDecorator < Draper::Decorator
   delegate_all
-  decorates_association :user
 
   def color
     "complete"
@@ -20,5 +19,9 @@ class CandidateScreenDecorator < Draper::Decorator
 
   def attachments
     []
+  end
+
+  def user
+    @user ||= object.user.decorate
   end
 end

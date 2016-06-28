@@ -1,5 +1,4 @@
 class SubscribePresenter
-
   def title
     "Subscribes"
   end

@@ -16,12 +16,12 @@ class UserDecorator < Draper::Decorator
   end
 
   def from
-    name || phone_number
+    name || object.phone_number
   end
   alias :to :from
 
   def from_short
-    first_name || phone_number
+    first_name || object.phone_number
   end
 
   def icon_class
