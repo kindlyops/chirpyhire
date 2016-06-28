@@ -4,4 +4,8 @@ class Activity < PublicActivity::Activity
   def self.outstanding
     where(outstanding: true)
   end
+
+  def has_chirp?
+    trackable_type == "Chirp"
+  end
 end
