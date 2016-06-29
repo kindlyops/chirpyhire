@@ -4,7 +4,7 @@ RSpec.describe SmsController, type: :controller do
   let(:organization) { create(:organization) }
   let(:phone_number) { organization.phone_number }
 
-  describe "#text" do
+  describe "#unknown_chirp" do
     context "without authenticity token" do
       before(:each) do
         ActionController::Base.allow_forgery_protection = true
@@ -18,6 +18,18 @@ RSpec.describe SmsController, type: :controller do
         post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
         expect(response).to be_ok
       end
+
+      it "does not create a chirp" do
+        expect {
+          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+        }.not_to change{Chirp.count}
+      end
+
+      it "creates an UnknownChirpHandlerJob" do
+        expect {
+          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+        }.to have_enqueued_job(UnknownChirpHandlerJob)
+      end
     end
 
     it "sets the Content-Type to text/xml" do
@@ -29,14 +41,6 @@ RSpec.describe SmsController, type: :controller do
       expect {
         post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
       }.to change{organization.users.count}.by(1)
-    end
-
-    context "without an outstanding activity" do
-      it "creates an outstanding activity for the user" do
-        expect {
-          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
-        }.to change{organization.outstanding_activities.count}.by(1)
-      end
     end
   end
 end

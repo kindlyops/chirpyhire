@@ -13,6 +13,10 @@ class ReferralsController < SmsController
 
   private
 
+  def vcard
+    @vcard ||= Vcard.new(url: params["MediaUrl0"])
+  end
+
   def thanks
     "Awesome! Please copy and text to #{candidate.first_name}:"
   end
