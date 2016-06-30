@@ -29,7 +29,9 @@ class Organization < ActiveRecord::Base
   end
 
   def send_message(to:, body:, from: phone_number)
-    messaging_client.send_message(to: to, body: body, from: from)
+    sent_message = messaging_client.send_message(to: to, body: body, from: from)
+
+    Message.new(sid: sent_message.sid, body: sent_message.body, direction: sent_message.direction)
   end
 
   def get_message(sid)

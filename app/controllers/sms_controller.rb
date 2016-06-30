@@ -4,24 +4,12 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def unknown_chirp
-    chirp
+    UnknownChirpHandlerJob.perform_later(sender, params["MessageSid"])
 
     head :ok
   end
 
   private
-
-  def chirp
-    @chirp ||= sender.chirps.create(message: message)
-  end
-
-  def message
-    @message ||= Message.find_or_initialize_by(sid: params["MessageSid"], direction: "inbound", body: params["Body"])
-  end
-
-  def vcard
-    @vcard ||= Vcard.new(url: params["MediaUrl0"])
-  end
 
   def sender
     @sender ||= UserFinder.new(attributes: {phone_number: params["From"]}, organization: organization).call

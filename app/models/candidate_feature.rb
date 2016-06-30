@@ -9,7 +9,7 @@ class CandidateFeature < ActiveRecord::Base
 
   def inquire
     message = candidate.receive_message(body: persona_feature.question)
-    inquiries.create(user: user, message_attributes: { sid: message.sid, direction: message.direction, body: message.body })
+    inquiries.create(user: user, message: message)
   end
 
   def child_class
