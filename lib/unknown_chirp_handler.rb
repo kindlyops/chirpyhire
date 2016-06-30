@@ -9,7 +9,7 @@ class UnknownChirpHandler
   end
 
   def call
-    sender.chirps.create(message_attributes: { sid: message.sid, body: message.body, direction: message.direction })
+    sender.chirps.create(message: message)
   end
 
   private

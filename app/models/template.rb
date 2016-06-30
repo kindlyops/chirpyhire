@@ -9,9 +9,6 @@ class Template < ActiveRecord::Base
 
   def perform(user)
     message = user.receive_message(body: render(user))
-    notifications.create(
-      user: user,
-      message_attributes: { sid: message.sid, direction: message.direction, body: message.body }
-    )
+    notifications.create(user: user, message: message)
   end
 end

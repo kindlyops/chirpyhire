@@ -31,6 +31,6 @@ class User < ActiveRecord::Base
 
   def receive_chirp(body:)
     message = receive_message(body: body)
-    chirps.create(message_attributes: { sid: message.sid, body: message.body, direction: message.direction })
+    chirps.create(message: message)
   end
 end
