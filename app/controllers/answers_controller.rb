@@ -1,8 +1,12 @@
 class AnswersController < SmsController
 
   def create
-    AnswerHandlerJob.perform_later(sender, outstanding_inquiry, params["MessageSid"])
-    head :ok
+    if outstanding_inquiry.present?
+      AnswerHandlerJob.perform_later(sender, outstanding_inquiry, params["MessageSid"])
+      head :ok
+    else
+      unknown_chirp
+    end
   end
 
   private
