@@ -15,4 +15,8 @@ class Inquiry < ActiveRecord::Base
   def question_name
     persona_feature_name
   end
+
+  def unanswered?
+    answer.blank?
+  end
 end

@@ -29,6 +29,34 @@ RSpec.describe AnswerHandler do
           AnswerHandler.call(user, inquiry, inbound_message.sid)
         }.to have_enqueued_job(AutomatonJob).with(user, "answer")
       end
+
+      context "when the inquiry has already been answered" do
+        let!(:inquiry) { create(:inquiry, :with_answer, user: user, candidate_feature: candidate_feature) }
+
+        it "does not create an answer" do
+          expect {
+            AnswerHandler.call(user, inquiry, inbound_message.sid)
+          }.not_to change{Answer.count}
+        end
+
+        it "does not create an AutomatonJob" do
+          expect {
+            AnswerHandler.call(user, inquiry, inbound_message.sid)
+          }.not_to have_enqueued_job(AutomatonJob)
+        end
+
+        it "creates a message" do
+          expect {
+            AnswerHandler.call(user, inquiry, inbound_message.sid)
+          }.to change{Message.count}.by(1)
+        end
+
+        it "creates a chirp" do
+          expect {
+            AnswerHandler.call(user, inquiry, inbound_message.sid)
+          }.to change{Chirp.count}.by(1)
+        end
+      end
     end
 
     context "with an answer format that doesn't matches the feature format" do
