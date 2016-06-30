@@ -23,12 +23,31 @@ RSpec.describe AnswersController, type: :controller do
 
     let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
     let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature) }
-    let(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
 
-    it "creates a AnswerHandlerJob" do
-      expect {
-        post :create, params
-      }.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
+    context "with an outstanding inquiry" do
+      let(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
+
+      it "creates a AnswerHandlerJob" do
+        expect {
+          post :create, params
+        }.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
+      end
+    end
+
+    context "without an outstanding inquiry" do
+      let(:inquiry) { nil }
+
+      it "does not create an AnswerHandlerJob" do
+        expect {
+          post :create, params
+        }.not_to have_enqueued_job(AnswerHandlerJob)
+      end
+
+      it "creates an UnknownChirpHandlerJob" do
+        expect {
+          post :create, params
+        }.to have_enqueued_job(UnknownChirpHandlerJob).with(user, inbound_message.sid)
+      end
     end
   end
 end

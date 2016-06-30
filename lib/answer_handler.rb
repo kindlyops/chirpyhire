@@ -5,7 +5,7 @@ class AnswerHandler
   end
 
   def call
-    if answer.valid?
+    if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
       candidate_feature.update(properties: extracted_properties)
       answer
