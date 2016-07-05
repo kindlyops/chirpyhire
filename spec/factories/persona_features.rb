@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     trait :choice do
       format "choice"
-      name "Availability"
+      name "What is your availability?"
       properties { { choice_options: { 'a' => 'Live-in', 'b' => 'Hourly', 'c' => 'Both' } } }
     end
   end

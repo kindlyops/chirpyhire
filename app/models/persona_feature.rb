@@ -5,7 +5,7 @@ class PersonaFeature < ActiveRecord::Base
   validates :format, inclusion: { in: %w(document address choice) }
 
   def self.next_for(candidate)
-    where.not(id: candidate.features.pluck(:persona_feature_id)).first
+    where.not(id: candidate.features.order(updated_at: :asc).pluck(:persona_feature_id)).first
   end
 
   def question
@@ -27,7 +27,7 @@ class PersonaFeature < ActiveRecord::Base
   def choice_template
     return "" unless properties['choice_options'].present?
     <<-template
-What is your #{name.downcase}?
+#{name}
 
 #{choice_options_list}
 
