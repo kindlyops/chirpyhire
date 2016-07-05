@@ -20,7 +20,7 @@ class Message < ActiveRecord::Base
 
   def has_choice?
     return false unless body.present?
-    /\A([a-zA-Z]){1}\)?\z/ === body.strip
+    /\A([a-z]){1}\)?\z/ === body.strip.downcase
   end
 
   def address

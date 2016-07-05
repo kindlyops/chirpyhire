@@ -23,7 +23,7 @@ class AnswerHandler
   private
 
   def extracted_properties
-    property_extractor.extract(message)
+    property_extractor.extract(message, candidate_feature.persona_feature)
   end
 
   def answer

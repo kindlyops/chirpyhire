@@ -33,7 +33,7 @@ RSpec.feature "User" do
 
   context "with an address", vcr: { cassette_name: "User_with_an_address" } do
     let(:message) { FakeMessaging.inbound_message(user, organization, "1000 E. Market St. 22902", format: :text) }
-    let!(:candidate_feature) { create(:candidate_feature, candidate: candidate, properties: Address.extract(message)) }
+    let!(:candidate_feature) { create(:candidate_feature, candidate: candidate, properties: Address.extract(message, double())) }
 
     scenario "shows a map of the address" do
       visit user_path(user)

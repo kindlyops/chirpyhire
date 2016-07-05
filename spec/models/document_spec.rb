@@ -17,8 +17,8 @@ RSpec.describe Document, type: :model do
       allow(message).to receive(:images).and_return([document])
     end
 
-    it "returns an address hash" do
-      expect(Document.extract(message)).to eq(document_hash)
+    it "returns an document hash" do
+      expect(Document.extract(message, double())).to eq(document_hash)
     end
   end
 end

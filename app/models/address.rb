@@ -1,5 +1,5 @@
 class Address < CandidateFeature
-  def self.extract(message)
+  def self.extract(message, persona_feature)
     address = message.address
     {
       address: address.address,
