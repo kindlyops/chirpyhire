@@ -18,6 +18,11 @@ class Message < ActiveRecord::Base
     address.found?
   end
 
+  def has_choice?
+    return false unless body.present?
+    /\A([a-zA-Z]){1}\)?\z/ === body.strip
+  end
+
   def address
     @address ||= AddressFinder.new(body)
   end
