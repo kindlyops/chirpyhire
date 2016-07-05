@@ -3,5 +3,11 @@ FactoryGirl.define do
     candidate_persona
     format { "document" }
     name { ["TB Test", "CPR Exam", "CNA License"].sample }
+
+    trait :choice do
+      format "choice"
+      name "Availability"
+      properties { { choice_options: { 'a' => 'Live-in', 'b' => 'Hourly', 'c' => 'Both' } } }
+    end
   end
 end
