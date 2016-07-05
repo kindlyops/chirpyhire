@@ -66,7 +66,7 @@ gem 'namae', '~> 0.10.0'
 gem 'twilio-ruby', '~> 4.11.0'
 gem 'naught', '~> 1.1.0'
 gem 'sidekiq', '~> 4.0.0'
-gem 'sinatra', '~> 1.4.0', require: nil
+gem 'sinatra', '~> 1.4.0', require: false
 gem 'puma', '~> 3.4.0'
 gem 'puma-heroku', '~> 1.0.0'
 gem 'font-awesome-rails', '~> 4.6.0'
