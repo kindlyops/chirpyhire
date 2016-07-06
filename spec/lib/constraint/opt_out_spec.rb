@@ -68,6 +68,14 @@ RSpec.describe Constraint::OptOut do
         end
       end
 
+      context "with punctuation" do
+        let(:parameters) { { "Body" => "    STOP. " } }
+
+        it "is true" do
+          expect(constraint.matches?(request)).to eq(true)
+        end
+      end
+
       context "with additional text" do
         let(:parameters) { { "Body" => "STOP to do the limbo?" } }
 

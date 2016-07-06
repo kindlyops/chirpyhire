@@ -17,6 +17,13 @@ RSpec.describe Constraint::OptIn do
       end
     end
 
+    context "START. as body" do
+      let(:parameters) { { "Body" => "START." } }
+      it "is true" do
+        expect(constraint.matches?(request)).to eq(true)
+      end
+    end
+
     context "YES as body" do
       let(:parameters) { { "Body" => "YES" } }
       it "is true" do
