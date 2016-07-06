@@ -24,10 +24,10 @@ RSpec.describe Constraint::Answer do
         end
 
         context "with outstanding inquiry" do
-          let(:inquiry) { create(:inquiry, user: user) }
+          let!(:inquiry) { create(:inquiry, user: user) }
 
           it "is true" do
-            expect(constraint.matches?(request)).to eq(false)
+            expect(constraint.matches?(request)).to eq(true)
           end
         end
       end
