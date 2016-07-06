@@ -151,7 +151,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it "creates a chirp" do
         expect {
-          post :create, params
+          delete :destroy, params
         }.to change{Chirp.count}.by(1)
       end
 
