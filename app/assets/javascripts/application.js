@@ -11,28 +11,6 @@
 // about supported directives.
 //
 
-// BEGIN VENDOR JS FOR PAGES (plus add in jquery.turbolinks)
-//= require jquery
-//= require jquery_ujs
-//= require pages-plugins/modernizr.custom
-//= require bootstrap-sprockets
-//= require pages-plugins/jquery/jquery-easy
-//= require pages-plugins/jquery-unveil/jquery.unveil.min
-//= require pages-plugins/jquery-bez/jquery.bez.min
-//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
-//= require pages-plugins/imagesloaded/imagesloaded.pkgd.min
-//= require pages-plugins/jquery-actual/jquery.actual.min
-//= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
-//= require pages-plugins/bootstrap-select2/select2.min.js
-//= require pages-plugins/jquery-menuclipper/jquery.menuclipper.js
-//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
-
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-
-// BEGIN CORE TEMPLATE JS FOR PAGES
-//= require pages-core/js/pages
-
 // BEGIN SITE SCRIPTS
 //= require leaflet
 //= require indexTable
