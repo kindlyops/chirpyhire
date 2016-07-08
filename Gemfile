@@ -46,11 +46,10 @@ end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
+  gem 'skylight', '~> 0.10.4'
 end
 
-# Instrumentation
 gem 'rollbar', '~> 2.11.5'
-gem 'skylight', '~> 0.10.4'
 
 # Authentication
 gem 'devise', '~> 4.2.0'
