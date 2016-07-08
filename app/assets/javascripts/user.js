@@ -1,4 +1,4 @@
-$(document).on("page:change", function() {
+$(document).on("turbolinks:load", function() {
   $(".user").on("click", ".send-chirp, .cancel-chirp", function(e) {
     if($("form.new_chirp").length) {
       e.stopPropagation();

@@ -1,4 +1,4 @@
-$(document).on("page:change", function() {
+$(document).on("turbolinks:load", function() {
   'use strict';
 
   var taskList = $('[data-task="list"]');
