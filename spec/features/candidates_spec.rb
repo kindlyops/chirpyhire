@@ -34,6 +34,7 @@ RSpec.feature "Candidates" do
       scenario "each candidate leads to the candidate's page", js: true do
         visit candidates_path
         find(:xpath, "//tr[@data-link]").click
+
         expect(page).to have_text(candidate.user_name)
         expect(page).to have_text(candidate.phone_number.phony_formatted)
         expect(page).to have_text("Message")

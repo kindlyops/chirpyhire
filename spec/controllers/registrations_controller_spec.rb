@@ -23,7 +23,7 @@ RSpec.describe RegistrationsController, type: :controller do
     end
 
     it "ties the organization and user to the account" do
-      post :create, account_params
+      post :create, params: account_params
       account = Account.find_by(email: account_params[:account][:email])
       expect(account.organization.present?).to eq(true)
       expect(account.user.present?).to eq(true)
@@ -31,24 +31,24 @@ RSpec.describe RegistrationsController, type: :controller do
 
     it "creates an account" do
       expect {
-        post :create, account_params
+        post :create, params: account_params
       }.to change{Account.count}.by(1)
     end
 
     it "creates an organization" do
       expect {
-        post :create, account_params
+        post :create, params: account_params
       }.to change{Organization.count}.by(1)
     end
 
     it "creates a user" do
       expect {
-        post :create, account_params
+        post :create, params: account_params
       }.to change{User.count}.by(1)
     end
 
     it "creates a contact user" do
-      post :create, account_params
+      post :create, params: account_params
       expect(Account.find_by(email: email).user.contact?).to eq(true)
     end
   end

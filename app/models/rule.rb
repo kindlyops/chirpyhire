@@ -1,4 +1,4 @@
-class Rule < ActiveRecord::Base
+class Rule < ApplicationRecord
   TRIGGERS = %w(subscribe screen answer)
   belongs_to :action, polymorphic: true
   belongs_to :organization

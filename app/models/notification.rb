@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   include PublicActivity::Model
   tracked owner: :user, only: :create
   has_many :activities, as: :trackable

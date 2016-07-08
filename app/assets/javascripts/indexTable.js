@@ -1,4 +1,4 @@
-$(document).on("page:change", function() {
+$(document).on("turbolinks:load", function() {
   var initTableWithSearch = function() {
       var table = $('#tableWithSearch');
       var settings = {

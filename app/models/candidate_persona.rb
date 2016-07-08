@@ -1,4 +1,4 @@
-class CandidatePersona < ActiveRecord::Base
+class CandidatePersona < ApplicationRecord
   belongs_to :organization
   has_many :persona_features
   has_one :rules, as: :action

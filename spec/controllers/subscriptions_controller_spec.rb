@@ -18,7 +18,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it "creates a chirp" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to change{user.chirps.count}.by(1)
       end
 
@@ -31,20 +31,20 @@ RSpec.describe SubscriptionsController, type: :controller do
           end
 
           it "lets the user know they were already subscribed" do
-            post :create, params
+            post :create, params: params
             expect(FakeMessaging.messages.last.body).to include("You are already subscribed.")
           end
         end
 
         context "without an active subscription" do
           it "sets the subscription flag to true" do
-            post :create, params
+            post :create, params: params
             expect(candidate.reload.subscribed?).to eq(true)
           end
 
           it "creates a subscribe Automaton Job" do
             expect {
-              post :create, params
+              post :create, params: params
             }.to have_enqueued_job(AutomatonJob).with(user, "subscribe")
           end
         end
@@ -53,12 +53,12 @@ RSpec.describe SubscriptionsController, type: :controller do
       context "without an existing candidate" do
         it "creates a candidate for the user" do
           expect {
-            post :create, params
+            post :create, params: params
           }.to change{user.reload.candidate.present?}.from(false).to(true)
         end
 
         it "sets the subscription flag to true" do
-          post :create, params
+          post :create, params: params
           expect(user.candidate.subscribed?).to eq(true)
         end
       end
@@ -67,24 +67,24 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "without an existing user" do
       it "creates a user using the phone number" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to change{User.where(phone_number: phone_number).count}.by(1)
       end
 
       it "creates a chirp" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to change{Chirp.count}.by(1)
       end
 
       it "creates a candidate for the user" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to change{organization.candidates.count}.by(1)
       end
 
       it "sets the subscription flag to true" do
-        post :create, params
+        post :create, params: params
         expect(User.find_by(phone_number: phone_number).candidate.subscribed?).to eq(true)
       end
     end
@@ -105,7 +105,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it "creates a chirp" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to change{user.chirps.count}.by(1)
       end
 
@@ -114,18 +114,18 @@ RSpec.describe SubscriptionsController, type: :controller do
 
         it "creates a chirp" do
           expect {
-            post :create, params
+            post :create, params: params
           }.to change{user.chirps.count}.by(1)
         end
 
         it "sets the subscribed flag to false" do
           expect{
-            delete :destroy, params
+            delete :destroy, params: params
           }.to change{candidate.reload.subscribed?}.from(true).to(false)
         end
 
         it "lets the user know they are unsubscribed now" do
-          delete :destroy, params
+          delete :destroy, params: params
 
           expect(FakeMessaging.messages.last.body).to include("You are unsubscribed. To subscribe reply with START.")
         end
@@ -135,7 +135,7 @@ RSpec.describe SubscriptionsController, type: :controller do
         let(:candidate) { create(:candidate, user: user) }
 
         it "lets the user know they were not subscribed" do
-          delete :destroy, params
+          delete :destroy, params: params
 
           expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
         end
@@ -145,24 +145,24 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "without an existing user" do
       it "creates a user" do
         expect {
-          delete :destroy, params
+          delete :destroy, params: params
         }.to change{organization.users.count}.by(1)
       end
 
       it "creates a chirp" do
         expect {
-          delete :destroy, params
+          delete :destroy, params: params
         }.to change{Chirp.count}.by(1)
       end
 
       it "creates a candidate" do
         expect {
-          delete :destroy, params
+          delete :destroy, params: params
         }.to change{organization.candidates.count}.by(1)
       end
 
       it "lets the user know they aren't subscribed" do
-        delete :destroy, params
+        delete :destroy, params: params
 
         expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
       end

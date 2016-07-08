@@ -1,4 +1,4 @@
-class Template < ActiveRecord::Base
+class Template < ApplicationRecord
   belongs_to :organization
   has_one :rules, as: :action
   has_many :notifications

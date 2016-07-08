@@ -20,7 +20,7 @@ RSpec.describe CandidatesController, type: :controller do
 
       it "returns the organization's candidates" do
         get :index
-        expect(assigns(:candidates)).to eq(candidates)
+        expect(assigns(:candidates)).to match_array(candidates)
       end
 
       context "with other organizations" do

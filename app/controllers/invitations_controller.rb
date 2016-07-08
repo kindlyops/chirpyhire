@@ -1,5 +1,5 @@
 class InvitationsController < Devise::InvitationsController
-  before_filter :add_user_params, only: :update
+  before_action :add_user_params, only: :update
 
   def edit
     set_minimum_password_length if respond_to? :set_minimum_password_length

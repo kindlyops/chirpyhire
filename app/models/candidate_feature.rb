@@ -1,4 +1,4 @@
-class CandidateFeature < ActiveRecord::Base
+class CandidateFeature < ApplicationRecord
   belongs_to :candidate
   belongs_to :persona_feature
   has_many :inquiries

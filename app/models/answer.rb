@@ -1,4 +1,4 @@
-class Answer < ActiveRecord::Base
+class Answer < ApplicationRecord
   include PublicActivity::Model
   tracked owner: :user, only: :create
   has_many :activities, as: :trackable

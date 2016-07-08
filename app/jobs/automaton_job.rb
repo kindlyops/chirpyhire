@@ -1,4 +1,4 @@
-class AutomatonJob < ActiveJob::Base
+class AutomatonJob < ApplicationJob
   queue_as :default
 
   def perform(user, trigger)

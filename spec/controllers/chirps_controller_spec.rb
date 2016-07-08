@@ -12,14 +12,14 @@ RSpec.describe ChirpsController, type: :controller do
   describe "#new" do
     context "xhr" do
       it "assigns a new chirp" do
-        xhr :get, :new, user_id: user.id
+        get :new, xhr: true, params: { user_id: user.id }
 
         expect(assigns(:chirp)).to be_a(Chirp)
         expect(assigns(:chirp)).not_to be_persisted
       end
 
       it "is ok" do
-        xhr :get, :new, user_id: user.id
+        get :new, xhr: true, params: { user_id: user.id }
         expect(response).to be_ok
       end
     end
@@ -38,13 +38,13 @@ RSpec.describe ChirpsController, type: :controller do
     context "xhr" do
       it "creates a new chirp" do
         expect {
-          xhr :post, :create, chirp_params
+          post :create, xhr: true, params: chirp_params
         }.to change{user.chirps.count}.by(1)
       end
 
       it "sends the chirp" do
         expect {
-          xhr :post, :create, chirp_params
+          post :create, xhr: true, params: chirp_params
         }.to change{FakeMessaging.messages.count}.by(1)
       end
     end

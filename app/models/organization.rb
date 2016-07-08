@@ -1,4 +1,4 @@
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
 
   has_many :users

@@ -2,7 +2,7 @@ class ScenesController < ApplicationController
   skip_after_action :verify_authorized, only: :show
 
   def show
-    render text: scene
+    render plain: scene
   end
 
   private

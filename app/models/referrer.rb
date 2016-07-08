@@ -1,4 +1,4 @@
-class Referrer < ActiveRecord::Base
+class Referrer < ApplicationRecord
   belongs_to :user
   has_many :referrals
   has_many :candidates, through: :referrals

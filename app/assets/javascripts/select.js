@@ -1,4 +1,4 @@
-$(document).on("page:change", function() {
+$(document).on("turbolinks:load", function() {
   $("select").select2();
 
   $(".content").on("change", "select#template", function(e) {
