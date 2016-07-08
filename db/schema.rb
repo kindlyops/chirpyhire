@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -39,14 +38,13 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
+    t.index ["email"], name: "index_accounts_on_email", unique: true, using: :btree
+    t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
+    t.index ["invitations_count"], name: "index_accounts_on_invitations_count", using: :btree
+    t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
+    t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
+    t.index ["user_id"], name: "index_accounts_on_user_id", using: :btree
   end
-
-  add_index "accounts", ["email"], name: "index_accounts_on_email", unique: true, using: :btree
-  add_index "accounts", ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
-  add_index "accounts", ["invitations_count"], name: "index_accounts_on_invitations_count", using: :btree
-  add_index "accounts", ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
-  add_index "accounts", ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
-  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",                   null: false
@@ -60,21 +58,19 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.boolean  "outstanding",    default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end
-
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id", null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
+    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
-
-  add_index "answers", ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
   create_table "candidate_features", force: :cascade do |t|
     t.integer  "candidate_id",                    null: false
@@ -82,19 +78,17 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.jsonb    "properties",         default: {}, null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
+    t.index ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
+    t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
-
-  add_index "candidate_features", ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
-  add_index "candidate_features", ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
-  add_index "candidate_features", ["properties"], name: "index_candidate_features_on_properties", using: :gin
 
   create_table "candidate_personas", force: :cascade do |t|
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_candidate_personas_on_organization_id", unique: true, using: :btree
   end
-
-  add_index "candidate_personas", ["organization_id"], name: "index_candidate_personas_on_organization_id", unique: true, using: :btree
 
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                                    null: false
@@ -104,28 +98,25 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
     t.integer  "candidate_persona_id",                       null: false
+    t.index ["candidate_persona_id"], name: "index_candidates_on_candidate_persona_id", using: :btree
+    t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
   end
-
-  add_index "candidates", ["candidate_persona_id"], name: "index_candidates_on_candidate_persona_id", using: :btree
-  add_index "candidates", ["user_id"], name: "index_candidates_on_user_id", using: :btree
 
   create_table "chirps", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_chirps_on_user_id", using: :btree
   end
-
-  add_index "chirps", ["user_id"], name: "index_chirps_on_user_id", using: :btree
 
   create_table "inquiries", force: :cascade do |t|
     t.integer  "user_id",              null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
+    t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
+    t.index ["user_id"], name: "index_inquiries_on_user_id", using: :btree
   end
-
-  add_index "inquiries", ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
-  add_index "inquiries", ["user_id"], name: "index_inquiries_on_user_id", using: :btree
 
   create_table "media_instances", force: :cascade do |t|
     t.string   "sid",          null: false
@@ -134,9 +125,8 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.integer  "message_id",   null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["message_id"], name: "index_media_instances_on_message_id", using: :btree
   end
-
-  add_index "media_instances", ["message_id"], name: "index_media_instances_on_message_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.string   "sid",              null: false
@@ -146,20 +136,18 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.string   "messageable_type", null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
+    t.index ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
   end
-
-  add_index "messages", ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
-  add_index "messages", ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "template_id", null: false
     t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
-
-  add_index "notifications", ["template_id"], name: "index_notifications_on_template_id", using: :btree
-  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",                                                      null: false
@@ -169,40 +157,36 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
+    t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
   end
-
-  add_index "organizations", ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
 
   create_table "persona_features", force: :cascade do |t|
-    t.integer  "candidate_persona_id",              null: false
-    t.string   "format",                            null: false
-    t.string   "name",                              null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.jsonb    "properties",           default: {}, null: false
+    t.integer  "candidate_persona_id",                null: false
+    t.string   "format",                              null: false
+    t.string   "name",                                null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
+    t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
+    t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
   end
-
-  add_index "persona_features", ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
-  add_index "persona_features", ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
 
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.integer  "referrer_id",  null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["candidate_id"], name: "index_referrals_on_candidate_id", using: :btree
+    t.index ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
   end
-
-  add_index "referrals", ["candidate_id"], name: "index_referrals_on_candidate_id", using: :btree
-  add_index "referrals", ["referrer_id"], name: "index_referrals_on_referrer_id", using: :btree
 
   create_table "referrers", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_referrers_on_user_id", using: :btree
   end
-
-  add_index "referrers", ["user_id"], name: "index_referrers_on_user_id", using: :btree
 
   create_table "rules", force: :cascade do |t|
     t.integer  "organization_id",                null: false
@@ -212,10 +196,9 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.boolean  "enabled",         default: true, null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.index ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
+    t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
   end
-
-  add_index "rules", ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
-  add_index "rules", ["organization_id"], name: "index_rules_on_organization_id", using: :btree
 
   create_table "templates", force: :cascade do |t|
     t.string   "name",            null: false
@@ -223,11 +206,10 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.index ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
+    t.index ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
+    t.index ["organization_id"], name: "index_templates_on_organization_id", using: :btree
   end
-
-  add_index "templates", ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
-  add_index "templates", ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
-  add_index "templates", ["organization_id"], name: "index_templates_on_organization_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
@@ -237,11 +219,10 @@ ActiveRecord::Schema.define(version: 20160705155949) do
     t.integer  "organization_id",                 null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.index ["contact", "organization_id"], name: "index_users_on_contact_and_organization_id", unique: true, where: "(contact = true)", using: :btree
+    t.index ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
+    t.index ["organization_id"], name: "index_users_on_organization_id", using: :btree
   end
-
-  add_index "users", ["contact", "organization_id"], name: "index_users_on_contact_and_organization_id", unique: true, where: "(contact = true)", using: :btree
-  add_index "users", ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
-  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
 
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
