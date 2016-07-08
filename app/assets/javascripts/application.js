@@ -11,14 +11,8 @@
 // about supported directives.
 //
 
-// BEGIN SITE SCRIPTS
-//= require leaflet
-//= require indexTable
-//= require clickTable
-//= require select
-//= require user
-//= require inbox
-
-//  I prefer to list scripts in a specific order, so I comment out require_tree .
-// require_tree .
+//= require jquery2
+//= require jquery_ujs
 //= require turbolinks
+//= require components/navigation.js
+// require_tree .

@@ -1,25 +1,16 @@
-// Framework
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import "normalize-rails";
+@import "bourbon";
+@import "neat";
+@import "base/base";
 @import "font-awesome";
-@import "pages-plugins/jquery-scrollbar/jquery.scrollbar";
-@import "pages-plugins/bootstrap-select2/select2";
-@import "pages-plugins/switchery/css/switchery.min";
-@import "pages-plugins/jquery-menuclipper/jquery.menuclipper";
-@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap";
 
-// Pages Core
-@import "pages-core/scss/pages";
-@import "pages-asset-pipeline";
-@import "leaflet";
-@import "click-table";
-@import "icons";
-@import "color";
-// Custom
-@import "search";
-@import "alerts";
-@import "rules";
-@import "rule";
-@import "templates";
-@import "user";
-@import "inbox";
+
+@import "components";
+
+// @import "search";
+// @import "alerts";
+// @import "rules";
+// @import "rule";
+// @import "templates";
+// @import "user";
+// @import "inbox";
