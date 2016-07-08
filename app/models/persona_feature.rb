@@ -1,4 +1,4 @@
-class PersonaFeature < ActiveRecord::Base
+class PersonaFeature < ApplicationRecord
   belongs_to :candidate_persona
   has_many :candidate_features
 

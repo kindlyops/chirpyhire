@@ -20,7 +20,6 @@ RSpec.describe CandidatesController, type: :controller do
 
       it "returns the organization's candidates" do
         get :index
-        # binding.pry
         expect(assigns(:candidates)).to match_array(candidates)
       end
 

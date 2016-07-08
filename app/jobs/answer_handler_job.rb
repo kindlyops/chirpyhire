@@ -1,4 +1,4 @@
-class AnswerHandlerJob < ActiveJob::Base
+class AnswerHandlerJob < ApplicationJob
   queue_as :default
 
   def perform(sender, inquiry, message_sid)

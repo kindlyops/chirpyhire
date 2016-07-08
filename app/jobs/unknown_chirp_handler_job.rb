@@ -1,4 +1,4 @@
-class UnknownChirpHandlerJob < ActiveJob::Base
+class UnknownChirpHandlerJob < ApplicationJob
   queue_as :default
 
   def perform(sender, message_sid)

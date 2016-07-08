@@ -1,7 +1,7 @@
 class SmsController < ActionController::Base
+  protect_from_forgery with: :null_session
   after_action :set_header
 
-  protect_from_forgery with: :null_session
 
   def unknown_chirp
     UnknownChirpHandlerJob.perform_later(sender, params["MessageSid"])

@@ -1,4 +1,4 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   MESSAGEABLES = %w(Notification Chirp Answer Inquiry)
   has_many :media_instances
   belongs_to :messageable, polymorphic: true

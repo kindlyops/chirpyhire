@@ -1,4 +1,4 @@
-class Candidate < ActiveRecord::Base
+class Candidate < ApplicationRecord
   include PublicActivity::Common
   has_many :activities, as: :trackable
 

@@ -1,4 +1,4 @@
-class MediaInstance < ActiveRecord::Base
+class MediaInstance < ApplicationRecord
   belongs_to :message
 
   IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)

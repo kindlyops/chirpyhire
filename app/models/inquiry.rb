@@ -1,4 +1,4 @@
-class Inquiry < ActiveRecord::Base
+class Inquiry < ApplicationRecord
   include PublicActivity::Model
   tracked owner: :user, only: :create
   has_many :activities, as: :trackable

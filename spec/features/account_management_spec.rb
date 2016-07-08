@@ -61,7 +61,7 @@ RSpec.feature "Account Management", type: :feature do
         fill_in "Password", with: "badpassword"
         click_button "Sign in"
 
-        expect(page).to have_text("Invalid email or password.")
+        expect(page).to have_text("Invalid Email or password.")
         expect(page).not_to have_text("Candidates")
       end
     end
