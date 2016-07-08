@@ -1,5 +1,5 @@
 class SmsController < ActionController::Base
-  after_filter :set_header
+  after_action :set_header
 
   protect_from_forgery with: :null_session
 

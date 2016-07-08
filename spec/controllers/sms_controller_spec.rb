@@ -15,31 +15,31 @@ RSpec.describe SmsController, type: :controller do
       end
 
       it "is OK" do
-        post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+        post :unknown_chirp, params: { "MessageSid" => "123", "To" => phone_number }
         expect(response).to be_ok
       end
 
       it "does not create a chirp" do
         expect {
-          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+          post :unknown_chirp, params: { "MessageSid" => "123", "To" => phone_number }
         }.not_to change{Chirp.count}
       end
 
       it "creates an UnknownChirpHandlerJob" do
         expect {
-          post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+          post :unknown_chirp, params: { "MessageSid" => "123", "To" => phone_number }
         }.to have_enqueued_job(UnknownChirpHandlerJob)
       end
     end
 
     it "sets the Content-Type to text/xml" do
-      post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+      post :unknown_chirp, params: { "MessageSid" => "123", "To" => phone_number }
       expect(response.headers["Content-Type"]).to eq("text/xml")
     end
 
     it "creates a user" do
       expect {
-        post :unknown_chirp, { "MessageSid" => "123", "To" => phone_number }
+        post :unknown_chirp, params: { "MessageSid" => "123", "To" => phone_number }
       }.to change{organization.users.count}.by(1)
     end
   end

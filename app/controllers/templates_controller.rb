@@ -7,7 +7,7 @@ class TemplatesController < ApplicationController
   def preview
     respond_to do |format|
       format.js {
-        render text: authorized_template.render(recipient)
+        render plain: authorized_template.render(recipient)
       }
     end
   end

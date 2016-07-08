@@ -49,12 +49,12 @@ RSpec.describe RulesController, type: :controller do
 
   describe "#edit" do
     it "is ok" do
-      get :edit, id: rule.id
+      get :edit, params: { id: rule.id }
       expect(response).to be_ok
     end
 
     it "assigns the rule" do
-      get :edit, id: rule.id
+      get :edit, params: { id: rule.id }
       expect(assigns(:rule)).to be_a(Rule)
       expect(assigns(:rule).id).to eq(rule.id)
     end
@@ -74,12 +74,12 @@ RSpec.describe RulesController, type: :controller do
 
       it "creates a rule" do
         expect {
-          post :create, rule_params
+          post :create, params: rule_params
         }.to change{organization.rules.count}.by(1)
       end
 
       it "redirects to index" do
-        post :create, rule_params
+        post :create, params: rule_params
         expect(response).to redirect_to(rule_path(Rule.last))
       end
     end
@@ -95,12 +95,12 @@ RSpec.describe RulesController, type: :controller do
 
       it "does not create a rule" do
         expect {
-          post :create, invalid_params
+          post :create, params: invalid_params
         }.not_to change{organization.rules.count}
       end
 
       it "renders the new template" do
-        post :create, invalid_params
+        post :create, params: invalid_params
 
         expect(response).to render_template("new")
       end
@@ -118,12 +118,12 @@ RSpec.describe RulesController, type: :controller do
 
       it "updates the rule" do
         expect {
-          put :update, rule_params
+          put :update, params: rule_params
         }.to change{rule.reload.enabled?}.from(true).to(false)
       end
 
       it "redirects to index" do
-        put :update, rule_params
+        put :update, params: rule_params
         expect(response).to redirect_to(rule_path(rule))
       end
     end

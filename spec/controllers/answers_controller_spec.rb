@@ -17,7 +17,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     it "is ok" do
-      post :create, params
+      post :create, params: params
       expect(response).to be_ok
     end
 
@@ -29,7 +29,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it "creates a AnswerHandlerJob" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
       end
     end
@@ -39,13 +39,13 @@ RSpec.describe AnswersController, type: :controller do
 
       it "does not create an AnswerHandlerJob" do
         expect {
-          post :create, params
+          post :create, params: params
         }.not_to have_enqueued_job(AnswerHandlerJob)
       end
 
       it "creates an UnknownChirpHandlerJob" do
         expect {
-          post :create, params
+          post :create, params: params
         }.to have_enqueued_job(UnknownChirpHandlerJob).with(user, inbound_message.sid)
       end
     end

@@ -23,7 +23,7 @@ RSpec.describe ActivitiesController, type: :controller do
 
       it "updates the activity" do
         expect {
-          xhr :put, :update, activity_params
+          put :update, xhr: true, params: activity_params
         }.to change{activity.reload.outstanding?}.from(true).to(false)
       end
     end
@@ -39,7 +39,7 @@ RSpec.describe ActivitiesController, type: :controller do
 
       it "does not create a activity" do
         expect {
-          xhr :put, :update, invalid_params
+          put :update, xhr: true, params: invalid_params
         }.not_to change{Activity.count}
       end
     end

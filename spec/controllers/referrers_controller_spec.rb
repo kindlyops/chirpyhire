@@ -20,7 +20,7 @@ RSpec.describe ReferrersController, type: :controller do
 
       it "returns the organization's referrers" do
         get :index
-        expect(assigns(:referrers)).to eq(referrers)
+        expect(assigns(:referrers)).to match_array(referrers)
       end
 
       context "with other organizations" do

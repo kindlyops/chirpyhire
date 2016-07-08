@@ -53,7 +53,7 @@ RSpec.describe Organization, type: :model do
 
       context "with some unsubscribed" do
         it "is only the subscribed candidates" do
-          expect(organization.subscribed_candidates).to eq(subscribed_candidates)
+          expect(organization.subscribed_candidates).to match_array(subscribed_candidates)
         end
       end
     end

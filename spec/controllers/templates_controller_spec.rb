@@ -16,7 +16,7 @@ RSpec.describe TemplatesController, type: :controller do
     let(:rendered_template) { "Hello this is #{organization.name}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message." }
 
     it "is a rendered template" do
-      xhr :get, :preview, { template_id: template.id, user_id: user.id }
+      get :preview, xhr: true, params: { template_id: template.id, user_id: user.id }
       expect(response.body).to eq(rendered_template)
     end
   end
