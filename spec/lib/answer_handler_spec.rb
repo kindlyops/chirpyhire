@@ -65,6 +65,12 @@ RSpec.describe AnswerHandler do
           }.to change{Message.count}.by(1)
         end
 
+        it "creates an outstanding activity for the user" do
+          expect {
+            AnswerHandler.call(user, inquiry, inbound_message.sid)
+          }.to change{user.outstanding_activities.count}.by(1)
+        end
+
         it "does not create an answer" do
           expect {
             AnswerHandler.call(user, inquiry, inbound_message.sid)

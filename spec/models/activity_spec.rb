@@ -23,23 +23,32 @@ RSpec.describe Activity do
     end
   end
 
-  describe "#has_chirp?" do
-    let(:activity) { create(:chirp).activities.last }
+  describe "#has_message?" do
 
     context "when the trackable type is Chirp" do
+      let(:activity) { create(:chirp).activities.last }
       it "is true" do
-        expect(activity.has_chirp?).to eq(true)
+        expect(activity.has_message?).to eq(true)
       end
     end
 
-    context "when the trackable type is not Chirp" do
+    context "when the trackable type is Message" do
+      let(:message) { create(:message) }
+      let(:activity) { message.create_activity(key: 'message.create', owner: create(:user), outstanding: true) }
+
+      it "is true" do
+        expect(activity.has_message?).to eq(true)
+      end
+    end
+
+    context "when the trackable type is not Message or Chirp" do
       let(:candidate) { create(:candidate) }
       let(:activity) do
         candidate.create_activity :screen, owner: candidate.user
       end
 
       it "is false" do
-        expect(activity.has_chirp?).to eq(false)
+        expect(activity.has_message?).to eq(false)
       end
     end
   end

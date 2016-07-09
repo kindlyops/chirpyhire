@@ -37,6 +37,17 @@ RSpec.feature "Inbox" do
         end
       end
 
+      context "task has a message", js: true do
+        let(:message) { create(:message) }
+        let!(:task) { message.create_activity(key: 'message.create', owner: user, outstanding: true).decorate }
+
+        it "has a form to send a message back" do
+          visit inbox_path
+          find(:xpath, "//li[@data-link]").click
+          expect(page).to have_text("Send")
+        end
+      end
+
       scenario "each task leads to the task's page", js: true do
         visit inbox_path
         find(:xpath, "//li[@data-link]").click

@@ -21,7 +21,7 @@
     .task-content-body.m-t-20
       p = activity.body
     .m-t-30
-      - if activity.has_chirp?
+      - if activity.has_message?
         = render partial: "messages/form", locals: { user: activity.owner, message: Message.new(user: activity.owner) }
       - else
         = link_to activity.owner, class: "btn btn-complete btn-block btn-lg" do
