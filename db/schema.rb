@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 20160709033129) do
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "users"
   add_foreign_key "media_instances", "messages"
+  add_foreign_key "messages", "users"
   add_foreign_key "notifications", "templates"
   add_foreign_key "notifications", "users"
   add_foreign_key "persona_features", "candidate_personas"

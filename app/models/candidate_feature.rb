@@ -9,9 +9,7 @@ class CandidateFeature < ApplicationRecord
 
   def inquire
     message = candidate.receive_message(body: persona_feature.question)
-    inquiry = inquiries.create(user: user, message: message)
-    inquiry.update(message_id: message.id)
-    inquiry
+    inquiries.create(user: user, message: message)
   end
 
   def child_class

@@ -9,8 +9,6 @@ class Template < ApplicationRecord
 
   def perform(user)
     message = user.receive_message(body: render(user))
-    notification = notifications.create(user: user, message: message)
-    notification.update(message_id: message.id)
-    notification
+    notifications.create(user: user, message: message)
   end
 end
