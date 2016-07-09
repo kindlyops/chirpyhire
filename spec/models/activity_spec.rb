@@ -24,7 +24,7 @@ RSpec.describe Activity do
   end
 
   describe "#has_chirp?" do
-    let(:activity) { create(:activity, trackable_type: "Chirp", trackable_id: 1) }
+    let(:activity) { create(:chirp).activities.last }
 
     context "when the trackable type is Chirp" do
       it "is true" do
