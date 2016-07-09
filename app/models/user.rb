@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :notifications
   has_many :chirps
   has_many :activities, as: :owner
+  has_many :messages
 
   delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization

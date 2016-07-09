@@ -3,6 +3,7 @@ class Message < ApplicationRecord
   has_many :media_instances
   belongs_to :messageable, polymorphic: true
   validates :messageable_type, inclusion: { in: MESSAGEABLES }
+  belongs_to :user
 
   def media
     media_instances
