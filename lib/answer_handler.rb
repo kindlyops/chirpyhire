@@ -10,7 +10,9 @@ class AnswerHandler
       candidate_feature.update(properties: extracted_properties)
       answer
     else
-      sender.chirps.create(message: message)
+      chirp = sender.chirps.create(message: message)
+      chirp.update(message_id: message.id)
+      chirp
     end
   end
 
@@ -27,7 +29,11 @@ class AnswerHandler
   end
 
   def answer
-    @answer ||= inquiry.create_answer(user: sender, message: message)
+    @answer ||= begin
+      answer = inquiry.create_answer(user: sender, message: message)
+      answer.update(message_id: message.id)
+      answer
+    end
   end
 
   def candidate_feature
