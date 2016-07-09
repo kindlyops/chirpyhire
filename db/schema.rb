@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709033129) do
+ActiveRecord::Schema.define(version: 20160709035045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20160709033129) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.integer  "invited_by_id"
     t.integer  "invitations_count",      default: 0
     t.index ["email"], name: "index_accounts_on_email", unique: true, using: :btree
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
@@ -47,14 +47,14 @@ ActiveRecord::Schema.define(version: 20160709033129) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.integer  "trackable_id",                   null: false
     t.string   "trackable_type",                 null: false
-    t.integer  "owner_id",                       null: false
+    t.integer  "trackable_id",                   null: false
     t.string   "owner_type",                     null: false
+    t.integer  "owner_id",                       null: false
     t.string   "key",                            null: false
     t.text     "parameters"
-    t.integer  "recipient_id"
     t.string   "recipient_type"
+    t.integer  "recipient_id"
     t.boolean  "outstanding",    default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -65,13 +65,11 @@ ActiveRecord::Schema.define(version: 20160709033129) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id", null: false
-    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "message_id"
     t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
     t.index ["message_id"], name: "index_answers_on_message_id", using: :btree
-    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
 
   create_table "candidate_features", force: :cascade do |t|
@@ -105,23 +103,19 @@ ActiveRecord::Schema.define(version: 20160709033129) do
   end
 
   create_table "chirps", force: :cascade do |t|
-    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "message_id"
     t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
-    t.index ["user_id"], name: "index_chirps_on_user_id", using: :btree
   end
 
   create_table "inquiries", force: :cascade do |t|
-    t.integer  "user_id",              null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
     t.integer  "message_id"
     t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
-    t.index ["user_id"], name: "index_inquiries_on_user_id", using: :btree
   end
 
   create_table "media_instances", force: :cascade do |t|
@@ -147,13 +141,11 @@ ActiveRecord::Schema.define(version: 20160709033129) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "template_id", null: false
-    t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "message_id"
     t.index ["message_id"], name: "index_notifications_on_message_id", using: :btree
     t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
-    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -198,8 +190,8 @@ ActiveRecord::Schema.define(version: 20160709033129) do
   create_table "rules", force: :cascade do |t|
     t.integer  "organization_id",                null: false
     t.string   "trigger",                        null: false
-    t.integer  "action_id"
     t.string   "action_type"
+    t.integer  "action_id"
     t.boolean  "enabled",         default: true, null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
@@ -233,19 +225,15 @@ ActiveRecord::Schema.define(version: 20160709033129) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
-  add_foreign_key "answers", "users"
   add_foreign_key "candidate_features", "candidates"
   add_foreign_key "candidate_features", "persona_features"
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
-  add_foreign_key "chirps", "users"
   add_foreign_key "inquiries", "candidate_features"
-  add_foreign_key "inquiries", "users"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "templates"
-  add_foreign_key "notifications", "users"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"

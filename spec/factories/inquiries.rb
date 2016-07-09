@@ -1,17 +1,13 @@
 FactoryGirl.define do
   factory :inquiry do
     candidate_feature
-    user
-
-    after(:create) do |inquiry|
-      create(:message, inquiry: inquiry)
-    end
+    message
 
     trait :with_answer do
       after(:create) do |inquiry|
-        message = build(:message)
-        message.media_instances.new(attributes_for(:media_instance))
-        inquiry.create_answer(message: message, user: inquiry.user)
+        answer_message = create(:message, user: inquiry.message.user)
+        answer_message.media_instances.create(attributes_for(:media_instance))
+        inquiry.create_answer(message: answer_message)
       end
     end
   end

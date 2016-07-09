@@ -1,20 +1,12 @@
-class ActivityDecorator < Draper::Decorator
+class MessageDecorator < Draper::Decorator
   delegate_all
-  decorates_association :owner
+  decorates_association :user
+  decorates_association :activities
 
-  delegate :color, :icon_class, :body, :subtitle, :attachments, to: :trackable
-  delegate :organization, :from, :from_short, to: :owner
+  delegate :from, to: :user
 
-  def day
-    "#{friendly_day} #{created_at.strftime('%B %d')}".squish
-  end
-
-  def trackable
-    @trackable ||= "#{object.trackable_type}#{key.split('.').last.titlecase}Decorator".constantize.new(object.trackable)
-  end
-
-  def trackable_name
-    trackable.class.table_name
+  def subtitle
+    ""
   end
 
   def to
@@ -40,5 +32,17 @@ class ActivityDecorator < Draper::Decorator
     else
       "#{created_at.strftime('%B %d')} at #{created_at.strftime('%l:%M%P')}"
     end
+  end
+
+  def color
+    "primary"
+  end
+
+  def icon_class
+    "fa-commenting-o"
+  end
+
+  def attachments
+    media_instances
   end
 end

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature "Inbox" do
   let(:organization) { create(:organization, :with_account)}
   let(:account) { organization.accounts.first }
+  let(:message) { create(:message, user: account.user) }
 
   background(:each) do
     login_as(account, scope: :account)
@@ -26,7 +27,7 @@ RSpec.feature "Inbox" do
       end
 
       context "task has a chirp", js: true do
-        let(:chirp) { create(:chirp, user: user) }
+        let(:chirp) { create(:chirp, message: message) }
         let!(:task) { chirp.activities.last.decorate }
 
         it "has a form to send a message back" do

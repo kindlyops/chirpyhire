@@ -6,6 +6,7 @@ class Message < ApplicationRecord
   has_one :inquiry
   has_one :answer
   has_one :notification
+  delegate :organization, to: :user
 
   def media
     media_instances
@@ -32,5 +33,9 @@ class Message < ApplicationRecord
 
   def images
     media_instances.images
+  end
+
+  def inbound?
+    direction == "inbound"
   end
 end

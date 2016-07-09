@@ -13,6 +13,7 @@ RSpec.describe Constraint::Answer do
   describe "#matches?" do
     context "with user present" do
       let(:user) { create(:user, organization: organization) }
+      let(:message) { create(:message, user: user) }
       context "with candidate present" do
         let(:candidate) { create(:candidate, user: user) }
 
@@ -24,7 +25,7 @@ RSpec.describe Constraint::Answer do
         end
 
         context "with outstanding inquiry" do
-          let!(:inquiry) { create(:inquiry, user: user) }
+          let!(:inquiry) { create(:inquiry, message: message) }
 
           it "is true" do
             expect(constraint.matches?(request)).to eq(true)

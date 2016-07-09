@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ActivitiesController, type: :controller do
   let(:user) { create(:user, :with_account) }
+  let(:message) { create(:message, user: user) }
   let(:account) { user.account }
   let(:organization) { user.organization }
 
@@ -10,8 +11,8 @@ RSpec.describe ActivitiesController, type: :controller do
   end
 
   describe "#update" do
-    let(:chirp) { create(:chirp, user: user) }
-    let!(:activity) { chirp.activities.last }
+    let(:candidate) { create(:candidate, user: user) }
+    let!(:activity) { candidate.create_activity :screen, outstanding: true, owner: user }
 
     context "with valid rule params" do
       let(:activity_params) do

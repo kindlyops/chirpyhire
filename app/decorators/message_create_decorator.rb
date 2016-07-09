@@ -1,7 +1,5 @@
-class ChirpCreateDecorator < Draper::Decorator
+class MessageCreateDecorator < Draper::Decorator
   delegate_all
-  decorates_association :message
-  delegate :body, to: :message
 
   def subtitle
     ""
@@ -13,5 +11,9 @@ class ChirpCreateDecorator < Draper::Decorator
 
   def icon_class
     "fa-commenting-o"
+  end
+
+  def attachments
+    media_instances
   end
 end

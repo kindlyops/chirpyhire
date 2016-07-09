@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
+  let(:message) { create(:message, user: user) }
   let(:candidate_persona) { user.organization.candidate_persona }
   let(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
@@ -25,7 +26,7 @@ RSpec.describe AnswersController, type: :controller do
     let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature) }
 
     context "with an outstanding inquiry" do
-      let(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
+      let(:inquiry) { create(:inquiry, message: message, candidate_feature: candidate_feature) }
 
       it "creates a AnswerHandlerJob" do
         expect {
@@ -43,10 +44,10 @@ RSpec.describe AnswersController, type: :controller do
         }.not_to have_enqueued_job(AnswerHandlerJob)
       end
 
-      it "creates an UnknownChirpHandlerJob" do
+      it "creates an UnknownMessageHandlerJob" do
         expect {
           post :create, params: params
-        }.to have_enqueued_job(UnknownChirpHandlerJob).with(user, inbound_message.sid)
+        }.to have_enqueued_job(UnknownMessageHandlerJob).with(user, inbound_message.sid)
       end
     end
   end

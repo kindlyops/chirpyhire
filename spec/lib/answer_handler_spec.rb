@@ -5,9 +5,10 @@ RSpec.describe AnswerHandler do
 
   let(:candidate) { create(:candidate) }
   let!(:user) { candidate.user }
+  let!(:message) { create(:message, user: user) }
   let(:persona_feature) { create(:persona_feature, candidate_persona: candidate.candidate_persona) }
   let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature, candidate: candidate) }
-  let!(:inquiry) { create(:inquiry, user: user, candidate_feature: candidate_feature) }
+  let!(:inquiry) { create(:inquiry, message: message, candidate_feature: candidate_feature) }
   let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
   describe ".call" do
@@ -31,7 +32,7 @@ RSpec.describe AnswerHandler do
       end
 
       context "when the inquiry has already been answered" do
-        let!(:inquiry) { create(:inquiry, :with_answer, user: user, candidate_feature: candidate_feature) }
+        let!(:inquiry) { create(:inquiry, :with_answer, message: message, candidate_feature: candidate_feature) }
 
         it "does not create an answer" do
           expect {
@@ -50,12 +51,6 @@ RSpec.describe AnswerHandler do
             AnswerHandler.call(user, inquiry, inbound_message.sid)
           }.to change{Message.count}.by(1)
         end
-
-        it "creates a chirp" do
-          expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{Chirp.count}.by(1)
-        end
       end
     end
 
@@ -68,12 +63,6 @@ RSpec.describe AnswerHandler do
           expect {
             AnswerHandler.call(user, inquiry, inbound_message.sid)
           }.to change{Message.count}.by(1)
-        end
-
-        it "creates an outstanding activity" do
-          expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{user.outstanding_activities.count}.by(1)
         end
 
         it "does not create an answer" do

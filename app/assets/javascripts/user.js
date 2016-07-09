@@ -1,9 +1,9 @@
 $(document).on("turbolinks:load", function() {
-  $(".user").on("click", ".send-chirp, .cancel-chirp", function(e) {
-    if($("form.new_chirp").length) {
+  $(".user").on("click", ".send-message, .cancel-message", function(e) {
+    if($("form.new_message").length) {
       e.stopPropagation();
       e.preventDefault();
-      $("form.new_chirp").remove();
+      $("form.new_message").remove();
       $('.main-content-wrapper').css('height', 'calc(100% - 150px)')
     }
   });

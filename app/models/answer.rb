@@ -1,13 +1,11 @@
 class Answer < ApplicationRecord
   include PublicActivity::Model
+  include Messageable
   tracked owner: :user, only: :create
   has_many :activities, as: :trackable
   belongs_to :inquiry
-  belongs_to :user
-  delegate :organization, to: :user
   delegate :question_name, to: :inquiry
   validate :expected_format
-  include Messageable
 
   def expected_format
     unless inquiry.format == format
