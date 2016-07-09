@@ -6,7 +6,7 @@
         h2
           = user.from
     .col-xs-8.menu
-      = link_to new_user_chirp_path(user), remote: true, class: "btn btn-primary send-chirp" do
+      = link_to new_user_message_path(user), remote: true, class: "btn btn-primary send-message" do
         ' Message
         i.fa.fa-commenting
       - if user.candidate.present?
@@ -17,7 +17,7 @@
       - if user.candidate.present?
         = render partial: "candidate_features/candidate_features", locals: { candidate: user.candidate }
     .col-xs-8.main-content
-      #new-chirp
+      #new-message
       section.timeline.list-view-wrapper.m-t-10
         = render partial: "activities/activity", collection: user.activities
 

@@ -23,10 +23,10 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       context "that is a referrer for the organization" do
         let!(:referrer) { create(:referrer, user: sender) }
 
-        it "creates two chirps" do
+        it "creates two messages" do
           expect {
             post :create, params: params
-          }.to change{sender.chirps.count}.by(2)
+          }.to change{sender.messages.count}.by(2)
         end
 
         it "sends the user a template message to send to the referred candidate" do
@@ -83,10 +83,10 @@ RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" 
       end
 
       context "that is not a referrer for the organization" do
-        it "creates one chirp" do
+        it "creates one messages" do
           expect {
             post :create, params: params
-          }.to change{sender.chirps.count}.by(1)
+          }.to change{sender.messages.count}.by(1)
         end
 
         it "lets the user know they are not a referrer" do

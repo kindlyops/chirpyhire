@@ -1,4 +1,4 @@
-class ChirpPolicy < ApplicationPolicy
+class MessagePolicy < ApplicationPolicy
   def create?
     return unless account.present?
     account.organization == record.organization
@@ -14,7 +14,7 @@ class ChirpPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(:user).where(users: { organization_id: account.organization.id})
+      scope.joins(:user).where(users: { organization_id: account.organization.id })
     end
   end
 end

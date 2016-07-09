@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe ActivityPolicy do
   subject { ActivityPolicy.new(account, activity) }
 
-  let(:chirp) { create(:chirp) }
-  let(:activity) { chirp.activities.last }
+  let(:notification) { create(:notification) }
+  let(:activity) { notification.activities.last }
 
   let(:resolved_scope) { ActivityPolicy::Scope.new(account, Activity.all).resolve }
 

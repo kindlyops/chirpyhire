@@ -3,8 +3,8 @@ class SmsController < ActionController::Base
   after_action :set_header
 
 
-  def unknown_chirp
-    UnknownChirpHandlerJob.perform_later(sender, params["MessageSid"])
+  def unknown_message
+    UnknownMessageHandlerJob.perform_later(sender, params["MessageSid"])
 
     head :ok
   end

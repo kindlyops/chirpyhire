@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe ChirpPolicy do
-  subject { ChirpPolicy.new(account, chirp) }
+RSpec.describe MessagePolicy do
+  subject { MessagePolicy.new(account, message) }
 
-  let(:chirp) { create(:chirp) }
+  let(:message) { create(:message) }
 
-  let(:resolved_scope) { ChirpPolicy::Scope.new(account, Chirp.all).resolve }
+  let(:resolved_scope) { MessagePolicy::Scope.new(account, Message.all).resolve }
 
   context "being a visitor" do
     let(:account) { nil }
@@ -19,11 +19,11 @@ RSpec.describe ChirpPolicy do
 
   context "having an account" do
     let(:account) { create(:account) }
-    let(:recipient) { chirp.user }
+    let(:recipient) { message.user }
 
     context "account is on a different organization" do
-      it 'excludes chirp in resolved scope' do
-        expect(resolved_scope).not_to include(chirp)
+      it 'excludes message in resolved scope' do
+        expect(resolved_scope).not_to include(message)
       end
 
       it { should forbid_new_and_create_actions }
@@ -32,12 +32,12 @@ RSpec.describe ChirpPolicy do
       it { should forbid_action(:show) }
     end
 
-    context "account is on the same organization as the chirp" do
+    context "account is on the same organization as the message" do
       let(:user) { create(:user, organization: recipient.organization) }
       let(:account) { create(:account, user: user) }
 
-      it 'includes chirp in resolved scope' do
-        expect(resolved_scope).to include(chirp)
+      it 'includes message in resolved scope' do
+        expect(resolved_scope).to include(message)
       end
 
       it { should permit_mass_assignment_of(:user_id) }

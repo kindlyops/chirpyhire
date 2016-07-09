@@ -5,7 +5,7 @@ class AnswersController < SmsController
       AnswerHandlerJob.perform_later(sender, outstanding_inquiry, params["MessageSid"])
       head :ok
     else
-      unknown_chirp
+      unknown_message
     end
   end
 

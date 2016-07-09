@@ -1,4 +1,7 @@
 class Message < ApplicationRecord
+  include PublicActivity::Common
+  has_many :activities, as: :trackable
+
   has_many :media_instances
 
   belongs_to :user
@@ -6,6 +9,7 @@ class Message < ApplicationRecord
   has_one :inquiry
   has_one :answer
   has_one :notification
+  delegate :organization, to: :user
 
   def media
     media_instances
@@ -32,5 +36,9 @@ class Message < ApplicationRecord
 
   def images
     media_instances.images
+  end
+
+  def inbound?
+    direction == "inbound"
   end
 end

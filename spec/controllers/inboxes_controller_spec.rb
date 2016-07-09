@@ -16,8 +16,10 @@ RSpec.describe InboxesController, type: :controller do
     end
 
     context "with tasks" do
-      let(:chirps) { create_list(:chirp, 3, user: user) }
-      let!(:tasks) { chirps.map {|c| c.activities.last } }
+      let(:candidates) { create_list(:candidate, 3, user: user) }
+      let!(:tasks) do
+        candidates.map {|candidate| candidate.create_activity :screen, outstanding: true, owner: user }
+      end
 
       it "returns the organization's tasks" do
         get :show
@@ -25,7 +27,8 @@ RSpec.describe InboxesController, type: :controller do
       end
 
       context "with done tasks" do
-        let(:inquiry) { create(:inquiry, user: user) }
+        let(:message) { create(:message, user: user) }
+        let(:inquiry) { create(:inquiry, message: message) }
         let!(:task) { inquiry.activities.last }
 
         it "does not include done tasks" do
@@ -35,8 +38,8 @@ RSpec.describe InboxesController, type: :controller do
       end
 
       context "with other organizations" do
-        let(:other_chirps) { create_list(:chirp, 2, user: user) }
-        let!(:other_tasks) { other_chirps.map {|c| c.activities.last } }
+        let(:other_candidates) { create_list(:candidate, 2) }
+        let!(:other_tasks) { other_candidates.map {|c| c.create_activity :screen, outstanding: true, owner: user } }
 
         it "does not return the other organization's tasks" do
           get :show

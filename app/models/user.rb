@@ -5,12 +5,12 @@ class User < ApplicationRecord
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :inquiries
-  has_many :answers
-  has_many :notifications
-  has_many :chirps
   has_many :activities, as: :owner
   has_many :messages
+  has_many :inquiries, through: :messages
+  has_many :answers, through: :messages
+  has_many :notifications, through: :messages
+  has_many :chirps, through: :messages
 
   delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization
@@ -29,11 +29,7 @@ class User < ApplicationRecord
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
     message.user = self
+    message.save
     message
-  end
-
-  def receive_chirp(body:)
-    message = receive_message(body: body)
-    chirps.create(message: message)
   end
 end
