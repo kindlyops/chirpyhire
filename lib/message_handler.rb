@@ -29,7 +29,8 @@ class MessageHandler
     @message ||= Message.new(
       sid: external_message.sid,
       body: external_message.body,
-      direction: external_message.direction
+      direction: external_message.direction,
+      user: sender
     )
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe UnknownChirpHandler do
   let(:message) { FakeMessaging.inbound_message(sender, organization, "test body", format: :text) }
   let(:chirp_handler) { UnknownChirpHandler.new(sender, message.sid) }
 
-  let(:new_message) { Message.new(sid: message.sid, body: message.body, direction: message.direction) }
+  let(:new_message) { Message.new(sid: message.sid, body: message.body, direction: message.direction, user: sender) }
 
   describe "#call" do
     it "creates a chirp" do

@@ -1,9 +1,11 @@
 class Message < ApplicationRecord
-  MESSAGEABLES = %w(Notification Chirp Answer Inquiry)
   has_many :media_instances
-  belongs_to :messageable, polymorphic: true
-  validates :messageable_type, inclusion: { in: MESSAGEABLES }
+
   belongs_to :user
+  has_one :chirp
+  has_one :inquiry
+  has_one :answer
+  has_one :notification
 
   def media
     media_instances

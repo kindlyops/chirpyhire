@@ -4,7 +4,7 @@ FactoryGirl.define do
     user
 
     after(:create) do |inquiry|
-      create(:message, messageable: inquiry)
+      create(:message, inquiry: inquiry)
     end
 
     trait :with_answer do
