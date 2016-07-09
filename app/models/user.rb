@@ -27,7 +27,9 @@ class User < ApplicationRecord
   end
 
   def receive_message(body:)
-    organization.send_message(to: phone_number, body: body)
+    message = organization.send_message(to: phone_number, body: body)
+    message.user = self
+    message
   end
 
   def receive_chirp(body:)
