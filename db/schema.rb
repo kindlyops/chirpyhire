@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709023456) do
+ActiveRecord::Schema.define(version: 20160709024523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,9 @@ ActiveRecord::Schema.define(version: 20160709023456) do
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "message_id"
     t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
+    t.index ["message_id"], name: "index_answers_on_message_id", using: :btree
     t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
 
@@ -106,6 +108,8 @@ ActiveRecord::Schema.define(version: 20160709023456) do
     t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "message_id"
+    t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
     t.index ["user_id"], name: "index_chirps_on_user_id", using: :btree
   end
 
@@ -114,7 +118,9 @@ ActiveRecord::Schema.define(version: 20160709023456) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
+    t.integer  "message_id"
     t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
+    t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
     t.index ["user_id"], name: "index_inquiries_on_user_id", using: :btree
   end
 
@@ -147,6 +153,8 @@ ActiveRecord::Schema.define(version: 20160709023456) do
     t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "message_id"
+    t.index ["message_id"], name: "index_notifications_on_message_id", using: :btree
     t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
     t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
