@@ -6,7 +6,6 @@ class Organization < ApplicationRecord
   has_many :referrers, through: :users
   has_many :accounts, through: :users
   has_many :messages, through: :users
-  has_many :chirps, through: :messages
   has_many :activities, through: :users
   has_many :templates
   has_many :rules

@@ -1,7 +1,5 @@
 class ChirpCreateDecorator < Draper::Decorator
   delegate_all
-  decorates_association :message
-  delegate :body, to: :message
 
   def subtitle
     ""

@@ -10,7 +10,7 @@ class ActivityDecorator < Draper::Decorator
   end
 
   def trackable
-    @trackable ||= "#{object.trackable_type}#{key.split('.').last.titlecase}Decorator".constantize.new(object.trackable)
+    @trackable ||= "#{object.trackable.class}#{key.split('.').last.titlecase}Decorator".constantize.new(object.trackable)
   end
 
   def trackable_name
