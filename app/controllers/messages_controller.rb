@@ -13,6 +13,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = authorize created_message
+    @message.create_activity key: 'message.create', owner: message_user
 
     respond_to do |format|
       format.js {}

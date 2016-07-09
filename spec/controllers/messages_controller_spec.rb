@@ -42,6 +42,12 @@ RSpec.describe MessagesController, type: :controller do
         }.to change{user.messages.count}.by(1)
       end
 
+      it "creates a new activity" do
+        expect {
+          post :create, xhr: true, params: message_params
+        }.to change{user.activities.count}.by(1)
+      end
+
       it "sends the message" do
         expect {
           post :create, xhr: true, params: message_params
