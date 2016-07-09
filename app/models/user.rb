@@ -34,8 +34,6 @@ class User < ApplicationRecord
 
   def receive_chirp(body:)
     message = receive_message(body: body)
-    chirp = chirps.create(message: message)
-    chirp.update(message_id: message.id)
-    chirp
+    chirps.create(message: message)
   end
 end

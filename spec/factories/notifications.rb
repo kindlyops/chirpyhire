@@ -4,7 +4,7 @@ FactoryGirl.define do
     template
 
     after(:create) do |notification|
-      create(:message, messageable: notification)
+      create(:message, notification: notification)
     end
   end
 end

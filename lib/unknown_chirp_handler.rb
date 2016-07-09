@@ -9,9 +9,7 @@ class UnknownChirpHandler
   end
 
   def call
-    chirp = sender.chirps.create(message: message)
-    chirp.update(message_id: message.id)
-    chirp
+    sender.chirps.create(message: message)
   end
 
   private
