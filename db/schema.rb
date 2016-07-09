@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20160709035045) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.string   "invited_by_type"
     t.integer  "invited_by_id"
+    t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.index ["email"], name: "index_accounts_on_email", unique: true, using: :btree
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
@@ -47,14 +47,14 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   end
 
   create_table "activities", force: :cascade do |t|
-    t.string   "trackable_type",                 null: false
     t.integer  "trackable_id",                   null: false
-    t.string   "owner_type",                     null: false
+    t.string   "trackable_type",                 null: false
     t.integer  "owner_id",                       null: false
+    t.string   "owner_type",                     null: false
     t.string   "key",                            null: false
     t.text     "parameters"
-    t.string   "recipient_type"
     t.integer  "recipient_id"
+    t.string   "recipient_type"
     t.boolean  "outstanding",    default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -190,8 +190,8 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   create_table "rules", force: :cascade do |t|
     t.integer  "organization_id",                null: false
     t.string   "trigger",                        null: false
-    t.string   "action_type"
     t.integer  "action_id"
+    t.string   "action_type"
     t.boolean  "enabled",         default: true, null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
