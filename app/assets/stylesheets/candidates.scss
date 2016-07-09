@@ -1,0 +1,11 @@
+.candidates {
+  @include outer-container;
+  padding-top: 1em;
+
+  .card-header {
+    .created_at {
+      display: inline;
+      float: right;
+    }
+  }
+}

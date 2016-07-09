@@ -138,7 +138,11 @@ header.navigation {
   }
 
   ul li.sub-nav-link {
-    padding-right: 0.8em;
+    padding-right: 1.2em;
+
+    a {
+      width: 100%
+    }
   }
 
   .active-nav-item a {

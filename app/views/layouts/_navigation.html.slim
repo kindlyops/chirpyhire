@@ -3,26 +3,25 @@ header.navigation role="banner"
       nav role="navigation"
         ul.navigation-menu.show
           li.nav-link
-            a href="javascript:void(0)"
+            a href="/candidates"
               i.fa.fa-user.fa-2x
           li.nav-link
-            a href="javascript:void(0)"
+            a href="/messages"
               i.fa.fa-commenting-o.fa-2x
           li.nav-link
-            a href="javascript:void(0)"
+            a href="/search"
               i.fa.fa-search.fa-2x
           li.nav-link#js-mobile-menu
             a.navigation-menu-button href="javascript:void(0)"
               i.fa.fa-gear.fa-2x
         ul#js-navigation-menu.navigation-menu.show
           li.sub-nav-link
-            a href="javascript:void(0)"  Invite User
+            = link_to "Invite User", new_account_invitation_path
           li.sub-nav-link
-            a href="javascript:void(0)"  Templates
+            = link_to "Templates", templates_path
           li.sub-nav-link
-            a href="javascript:void(0)"  Automation
+            = link_to "Automation", rules_path
           li.sub-nav-link
-            a href="javascript:void(0)"  Referrers
+            = link_to "Referrers", referrers_path
           li.sub-nav-link
-                a href="javascript:void(0)"  Sign Out
-
+            = link_to "Sign Out", destroy_account_session_path, method: :delete
