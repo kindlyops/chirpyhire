@@ -11,7 +11,7 @@ class UnknownMessageHandler
   def call
     message = MessageHandler.call(sender, external_message)
     message.save
-    message.create_activity key: 'message.create', owner: sender, outstanding: true
+    message.create_activity key: 'message.create', owner: sender, outstanding: message.inbound?
     message
   end
 

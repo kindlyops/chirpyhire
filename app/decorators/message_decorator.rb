@@ -3,8 +3,6 @@ class MessageDecorator < Draper::Decorator
   decorates_association :user
   decorates_association :activities
 
-  delegate :from, to: :user
-
   def subtitle
     ""
   end

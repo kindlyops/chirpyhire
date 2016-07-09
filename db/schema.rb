@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160709035045) do
     t.integer  "inquiry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "message_id"
+    t.integer  "message_id", null: false
     t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
     t.index ["message_id"], name: "index_answers_on_message_id", using: :btree
   end
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   create_table "chirps", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "message_id"
+    t.integer  "message_id", null: false
     t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
   end
 
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20160709035045) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
-    t.integer  "message_id"
+    t.integer  "message_id",           null: false
     t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   end
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20160709035045) do
     t.integer  "template_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "message_id"
+    t.integer  "message_id",  null: false
     t.index ["message_id"], name: "index_notifications_on_message_id", using: :btree
     t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
   end
@@ -225,14 +225,18 @@ ActiveRecord::Schema.define(version: 20160709035045) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
+  add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
   add_foreign_key "candidate_features", "persona_features"
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
+  add_foreign_key "chirps", "messages"
   add_foreign_key "inquiries", "candidate_features"
+  add_foreign_key "inquiries", "messages"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "referrals", "candidates"
