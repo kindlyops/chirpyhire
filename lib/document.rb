@@ -24,8 +24,8 @@ class Document
     feature.persona_feature.name
   end
 
-  def one_page?
-    uris.count == 1
+  def additional_uris
+    uris.drop(1)
   end
 
   private
