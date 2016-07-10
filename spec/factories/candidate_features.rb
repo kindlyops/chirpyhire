@@ -2,8 +2,11 @@ FactoryGirl.define do
   factory :candidate_feature do
     candidate
     before(:create) do |candidate_feature|
-      candidate_feature.persona_feature = create(:persona_feature, candidate_persona: candidate_feature.candidate.candidate_persona)
+      unless candidate_feature.persona_feature.present?
+        candidate_feature.persona_feature = create(:persona_feature, candidate_persona: candidate_feature.candidate.candidate_persona)
+      end
     end
+
 
     transient do
       user nil

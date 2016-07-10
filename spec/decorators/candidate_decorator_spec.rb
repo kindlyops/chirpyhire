@@ -4,7 +4,6 @@ RSpec.describe CandidateDecorator do
   let(:model) { create(:candidate) }
   let(:candidate) { CandidateDecorator.new(model) }
 
-
   describe "#last_referrer_name" do
     context "with referrers" do
       let!(:old_referral) { create(:referral, candidate: candidate, created_at: 2.days.ago) }
@@ -73,6 +72,34 @@ RSpec.describe CandidateDecorator do
 
       it "does not have a longitude" do
         expect(candidate.address.latitude).to eq(nil)
+      end
+    end
+  end
+
+  describe "#choices" do
+    context "with choices" do
+      let(:persona_feature) { create(:persona_feature, :choice, candidate_persona: model.organization.candidate_persona) }
+      let(:option) { "Live-in" }
+      let(:choice_properties) do
+        {
+          choice_option: option,
+          child_class: "choice"
+        }
+      end
+
+      before(:each) do
+        create(:candidate_feature, candidate: model, properties: choice_properties, persona_feature: persona_feature)
+      end
+
+      it "is an array of choices" do
+        expect(candidate.choices.first.option).to eq(option)
+        expect(candidate.choices.first.category).to eq(persona_feature.name)
+      end
+    end
+
+    context "without choices" do
+      it "is an empty array" do
+        expect(candidate.choices).to eq([])
       end
     end
   end

@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require components/navigation.js
-//= require user.js
+//= require candidates.js
 
 //= require leaflet
 // require_tree .

@@ -21,4 +21,11 @@ class CandidateDecorator < Draper::Decorator
       Address.new(address_feature)
     end
   end
+
+  def choices
+    @choices ||= begin
+      return [] unless choice_features.present?
+      choice_features.map {|c| Choice.new(c) }
+    end
+  end
 end

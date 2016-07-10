@@ -8,4 +8,20 @@ class Choice
     properties[:choice_option] = persona_feature.properties['choice_options'][choice_option]
     properties
   end
+
+  def initialize(feature)
+    @feature = feature
+  end
+
+  def option
+    feature.properties['choice_option']
+  end
+
+  def category
+    feature.persona_feature.name
+  end
+
+  private
+
+  attr_reader :feature
 end

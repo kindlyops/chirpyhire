@@ -47,4 +47,8 @@ class Candidate < ApplicationRecord
   def address_feature
     candidate_features.where("properties->>'child_class' = ?", "address").first
   end
+
+  def choice_features
+    candidate_features.where("properties->>'child_class' = ?", "choice")
+  end
 end

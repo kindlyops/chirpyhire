@@ -12,4 +12,8 @@
         .card-image
           #map data-lat==candidate.address.latitude data-long==candidate.address.longitude
         .card-copy
-          p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, officiis sunt neque facilis culpa molestiae necessitatibus delectus veniam provident.
+          - candidate.choices.each do |feature|
+            p
+              = feature.category
+              '
+              strong = feature.option
