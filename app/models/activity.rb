@@ -5,7 +5,7 @@ class Activity < PublicActivity::Activity
     where(outstanding: true)
   end
 
-  def has_chirp?
-    trackable_type == "Chirp"
+  def has_message?
+    trackable_type == "Message" || trackable_type == "Chirp"
   end
 end

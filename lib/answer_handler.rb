@@ -10,7 +10,9 @@ class AnswerHandler
       candidate_feature.update(properties: extracted_properties)
       answer
     else
-      sender.chirps.create(message: message)
+      message.save
+      message.create_activity key: 'message.create', owner: sender, outstanding: message.inbound?
+      message
     end
   end
 
@@ -27,7 +29,7 @@ class AnswerHandler
   end
 
   def answer
-    @answer ||= inquiry.create_answer(user: sender, message: message)
+    @answer ||= inquiry.create_answer(message: message)
   end
 
   def candidate_feature

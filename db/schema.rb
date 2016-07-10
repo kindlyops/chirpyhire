@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705155949) do
+ActiveRecord::Schema.define(version: 20160709035045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,11 +65,11 @@ ActiveRecord::Schema.define(version: 20160705155949) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "inquiry_id", null: false
-    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "message_id", null: false
     t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
-    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
+    t.index ["message_id"], name: "index_answers_on_message_id", using: :btree
   end
 
   create_table "candidate_features", force: :cascade do |t|
@@ -103,19 +103,19 @@ ActiveRecord::Schema.define(version: 20160705155949) do
   end
 
   create_table "chirps", force: :cascade do |t|
-    t.integer  "user_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_chirps_on_user_id", using: :btree
+    t.integer  "message_id", null: false
+    t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
   end
 
   create_table "inquiries", force: :cascade do |t|
-    t.integer  "user_id",              null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
+    t.integer  "message_id",           null: false
     t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
-    t.index ["user_id"], name: "index_inquiries_on_user_id", using: :btree
+    t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   end
 
   create_table "media_instances", force: :cascade do |t|
@@ -129,24 +129,23 @@ ActiveRecord::Schema.define(version: 20160705155949) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string   "sid",              null: false
+    t.string   "sid",        null: false
     t.text     "body"
-    t.string   "direction",        null: false
-    t.integer  "messageable_id",   null: false
-    t.string   "messageable_type", null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["messageable_type", "messageable_id"], name: "index_messages_on_messageable_type_and_messageable_id", using: :btree
+    t.string   "direction",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
     t.index ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
+    t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "template_id", null: false
-    t.integer  "user_id",     null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "message_id",  null: false
+    t.index ["message_id"], name: "index_notifications_on_message_id", using: :btree
     t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
-    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -161,12 +160,12 @@ ActiveRecord::Schema.define(version: 20160705155949) do
   end
 
   create_table "persona_features", force: :cascade do |t|
-    t.integer  "candidate_persona_id",                null: false
-    t.string   "format",                              null: false
-    t.string   "name",                                null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.jsonb    "properties",           default: "{}", null: false
+    t.integer  "candidate_persona_id",              null: false
+    t.string   "format",                            null: false
+    t.string   "name",                              null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.jsonb    "properties",           default: {}, null: false
     t.datetime "deleted_at"
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
@@ -226,18 +225,19 @@ ActiveRecord::Schema.define(version: 20160705155949) do
 
   add_foreign_key "accounts", "users"
   add_foreign_key "answers", "inquiries"
-  add_foreign_key "answers", "users"
+  add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
   add_foreign_key "candidate_features", "persona_features"
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
-  add_foreign_key "chirps", "users"
+  add_foreign_key "chirps", "messages"
   add_foreign_key "inquiries", "candidate_features"
-  add_foreign_key "inquiries", "users"
+  add_foreign_key "inquiries", "messages"
   add_foreign_key "media_instances", "messages"
+  add_foreign_key "messages", "users"
+  add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
-  add_foreign_key "notifications", "users"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"

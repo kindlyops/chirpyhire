@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChirpsController, type: :controller do
+RSpec.describe MessagesController, type: :controller do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, organization: organization) }
   let(:admin) { create(:user, :with_account, organization: organization) }
@@ -11,11 +11,11 @@ RSpec.describe ChirpsController, type: :controller do
 
   describe "#new" do
     context "xhr" do
-      it "assigns a new chirp" do
+      it "assigns a new message" do
         get :new, xhr: true, params: { user_id: user.id }
 
-        expect(assigns(:chirp)).to be_a(Chirp)
-        expect(assigns(:chirp)).not_to be_persisted
+        expect(assigns(:message)).to be_a(Message)
+        expect(assigns(:message)).not_to be_persisted
       end
 
       it "is ok" do
@@ -26,25 +26,31 @@ RSpec.describe ChirpsController, type: :controller do
   end
 
   describe "#create" do
-    let(:chirp_params) do
+    let(:message_params) do
       {
         user_id: user.id,
-        chirp: {
+        message: {
           body: Faker::Lorem.sentence
         }
       }
     end
 
     context "xhr" do
-      it "creates a new chirp" do
+      it "creates a new message" do
         expect {
-          post :create, xhr: true, params: chirp_params
-        }.to change{user.chirps.count}.by(1)
+          post :create, xhr: true, params: message_params
+        }.to change{user.messages.count}.by(1)
       end
 
-      it "sends the chirp" do
+      it "creates a new activity" do
         expect {
-          post :create, xhr: true, params: chirp_params
+          post :create, xhr: true, params: message_params
+        }.to change{user.activities.count}.by(1)
+      end
+
+      it "sends the message" do
+        expect {
+          post :create, xhr: true, params: message_params
         }.to change{FakeMessaging.messages.count}.by(1)
       end
     end

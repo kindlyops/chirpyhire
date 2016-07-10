@@ -16,10 +16,10 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with an existing user" do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
-      it "creates a chirp" do
+      it "creates a message" do
         expect {
           post :create, params: params
-        }.to change{user.chirps.count}.by(1)
+        }.to change{user.messages.count}.by(1)
       end
 
       context "with an existing candidate" do
@@ -71,10 +71,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{User.where(phone_number: phone_number).count}.by(1)
       end
 
-      it "creates a chirp" do
+      it "creates a message" do
         expect {
           post :create, params: params
-        }.to change{Chirp.count}.by(1)
+        }.to change{Message.count}.by(1)
       end
 
       it "creates a candidate for the user" do
@@ -103,19 +103,19 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with a user" do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
-      it "creates a chirp" do
+      it "creates a message" do
         expect {
           post :create, params: params
-        }.to change{user.chirps.count}.by(1)
+        }.to change{user.messages.count}.by(1)
       end
 
       context "with an existing subscribed candidate" do
         let!(:candidate) { create(:candidate, user: user, subscribed: true) }
 
-        it "creates a chirp" do
+        it "creates a message" do
           expect {
             post :create, params: params
-          }.to change{user.chirps.count}.by(1)
+          }.to change{user.messages.count}.by(1)
         end
 
         it "sets the subscribed flag to false" do
@@ -149,10 +149,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.to change{organization.users.count}.by(1)
       end
 
-      it "creates a chirp" do
+      it "creates a message" do
         expect {
           delete :destroy, params: params
-        }.to change{Chirp.count}.by(1)
+        }.to change{Message.count}.by(1)
       end
 
       it "creates a candidate" do

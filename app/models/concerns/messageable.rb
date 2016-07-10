@@ -2,8 +2,10 @@ module Messageable
   extend ActiveSupport::Concern
 
   included do
-    has_one :message, as: :messageable
+    belongs_to :message
     accepts_nested_attributes_for :message
+    delegate :user, to: :message
+    delegate :organization, to: :user
     delegate :name, to: :sender, prefix: true
     delegate :direction, :body, to: :message
   end
