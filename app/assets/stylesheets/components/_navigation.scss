@@ -118,8 +118,11 @@ header.navigation {
 
     a {
       color: $navigation-color;
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       text-decoration: none;
+      height: $navigation-height;
 
       @include media ($horizontal-bar-mode) {
         padding-right: 1em;
@@ -135,12 +138,14 @@ header.navigation {
   ul li.nav-link {
     display: flex;
     justify-content: center;
+
   }
 
   ul li.sub-nav-link {
     padding-right: 1.2em;
 
     a {
+      display: inline-block;
       width: 100%
     }
   }
