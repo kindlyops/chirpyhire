@@ -17,3 +17,4 @@
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
               = render partial: "candidates/#{cta}", locals: { candidate: candidate }
+  = paginate @candidates

@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    @candidates = scoped_candidates
+    @candidates = scoped_candidates.page(params.fetch(:page, 1))
   end
 
   def update
