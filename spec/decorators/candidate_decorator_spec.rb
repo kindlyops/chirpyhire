@@ -103,4 +103,32 @@ RSpec.describe CandidateDecorator do
       end
     end
   end
+
+  describe "#documents" do
+    context "with documents" do
+      let(:persona_feature) { create(:persona_feature, candidate_persona: model.organization.candidate_persona) }
+      let(:url0) { "http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" }
+      let(:document_properties) do
+        {
+          url0: url0,
+          child_class: "document"
+        }
+      end
+
+      before(:each) do
+        create(:candidate_feature, candidate: model, properties: document_properties, persona_feature: persona_feature)
+      end
+
+      it "is an array of documents" do
+        expect(candidate.documents.first.first_page).to eq(url0)
+        expect(candidate.documents.first.category).to eq(persona_feature.name)
+      end
+    end
+
+    context "without documents" do
+      it "is an empty array" do
+        expect(candidate.documents).to eq([])
+      end
+    end
+  end
 end

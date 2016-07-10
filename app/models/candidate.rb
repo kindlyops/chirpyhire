@@ -51,4 +51,8 @@ class Candidate < ApplicationRecord
   def choice_features
     candidate_features.where("properties->>'child_class' = ?", "choice")
   end
+
+  def document_features
+    candidate_features.where("properties->>'child_class' = ?", "document")
+  end
 end

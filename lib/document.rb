@@ -7,4 +7,28 @@ class Document
     properties[:child_class] = "document"
     properties
   end
+
+  def initialize(feature)
+    @feature = feature
+  end
+
+  def first_page
+    feature.properties["url0"]
+  end
+
+  def uris
+    feature.properties.select {|k,_| k["url"] }.values
+  end
+
+  def category
+    feature.persona_feature.name
+  end
+
+  def one_page?
+    uris.count == 1
+  end
+
+  private
+
+  attr_reader :feature
 end

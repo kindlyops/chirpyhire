@@ -28,4 +28,11 @@ class CandidateDecorator < Draper::Decorator
       choice_features.map {|c| Choice.new(c) }
     end
   end
+
+  def documents
+    @documents ||= begin
+      return [] unless document_features.present?
+      document_features.map {|c| Document.new(c) }
+    end
+  end
 end

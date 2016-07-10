@@ -17,3 +17,11 @@
               = feature.category
               '
               strong = feature.option
+          - candidate.documents.each do |document|
+            - if document.one_page?
+              p = link_to document.category, document.first_page, target: "_blank"
+            - else
+              p = document.category
+              ul
+                - document.uris.each_with_index do |uri, index|
+                  li = link_to "Page #{index + 1}", uri, target: "_blank"
