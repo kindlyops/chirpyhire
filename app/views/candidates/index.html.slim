@@ -10,24 +10,10 @@
             '
             = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
         .card-image
-          #map data-lat==candidate.address.latitude data-long==candidate.address.longitude
+          = render partial: "candidates/address", locals: { address: candidate.address }
         .card-copy
-          - candidate.choices.each do |feature|
-            p
-              = feature.category
-              '
-              strong = feature.option
-          - candidate.documents.each do |document|
-            p
-              = link_to document.category, document.first_page, target: "_blank"
-              - document.additional_uris.each_with_index do |uri, index|
-                ',
-                = link_to "page #{index + 2}", uri, target: "_blank"
-                '
+          = render partial: "candidates/choice", collection: candidate.choices
+          = render partial: "candidates/document", collection: candidate.documents
           .card-call-to-actions
-            button
-              i.fa.fa-thumbs-down
-            button
-              i.fa.fa-thumbs-up
-            button
-              i.fa.fa-commenting
+            - candidate.call_to_actions.each do |cta|
+              = render partial: "candidates/#{cta}", locals: { candidate: candidate }

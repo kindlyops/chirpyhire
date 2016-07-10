@@ -4,8 +4,8 @@
   justify-content: space-between;
 }
 
-$card-image-height: 300px;
 .card {
+  $card-image-height: 300px;
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;
   $base-background-color: white !default;
@@ -69,16 +69,11 @@ $card-image-height: 300px;
   .card-call-to-actions {
     display: flex;
     justify-content: center;
+
     button {
-      margin: 0 0.25em;
       background-color: $card-background;
-      flex-grow: 1;
       border: 1px solid $base-border-color;
-      border-radius: 0;
       color: $base-font-color;
-      i {
-        font-size: 1.5em;
-      }
     }
   }
 
