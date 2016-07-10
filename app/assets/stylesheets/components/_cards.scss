@@ -66,6 +66,22 @@ $card-image-height: 300px;
     }
   }
 
+  .card-call-to-actions {
+    display: flex;
+    justify-content: center;
+    button {
+      margin: 0 0.25em;
+      background-color: $card-background;
+      flex-grow: 1;
+      border: 1px solid $base-border-color;
+      border-radius: 0;
+      color: $base-font-color;
+      i {
+        font-size: 1.5em;
+      }
+    }
+  }
+
   &:focus,
   &:hover {
     cursor: pointer;
