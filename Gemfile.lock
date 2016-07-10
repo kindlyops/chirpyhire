@@ -11,8 +11,8 @@ GIT
       request_store (~> 1.0)
 
 GIT
-  remote: git://github.com/greetpoint/administrate.git
-  revision: 3ac84a8820a72ffc8ed6568ca899bcc9a8e0cdba
+  remote: git://github.com/hwhelchel/administrate.git
+  revision: 085028c9613036fda0125c2e16d9cbda8ce296ad
   branch: rails5
   specs:
     administrate (0.2.1)
@@ -22,7 +22,7 @@ GIT
       kaminari (~> 0.17)
       momentjs-rails (~> 2.8)
       neat (~> 1.1)
-      normalize-rails (~> 3.0)
+      normalize-rails (~> 4.1)
       rails (>= 4.0, < 5.1)
       sass-rails (~> 5.0)
       selectize-rails (~> 0.6)
@@ -412,6 +412,7 @@ DEPENDENCIES
   indefinite_article (~> 0.2.4)
   jquery-datatables-rails (~> 3.4.0)
   jquery-rails
+  kaminari (~> 0.17)
   launchy (~> 2.4.3)
   leaflet-rails (~> 0.7.7)
   namae (~> 0.10.0)
