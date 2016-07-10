@@ -6,8 +6,10 @@
         .card-header
           = candidate.user_phone_number.phony_formatted
           .created_at
-            = "#{time_ago_in_words(candidate.created_at)} ago"
+            i.fa.fa-clock-o
+            '
+            = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
         .card-image
-          #map.m-t-10 data-lat==candidate.address.latitude data-long==candidate.address.longitude
+          #map data-lat==candidate.address.latitude data-long==candidate.address.longitude
         .card-copy
           p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, officiis sunt neque facilis culpa molestiae necessitatibus delectus veniam provident.

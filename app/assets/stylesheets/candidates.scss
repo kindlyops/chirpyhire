@@ -2,6 +2,11 @@
   @include outer-container;
   padding-top: 1em;
 
+  .card-image {
+    #map {
+      height: $card-image-height;
+    }
+  }
   .card-header {
     .created_at {
       display: inline;

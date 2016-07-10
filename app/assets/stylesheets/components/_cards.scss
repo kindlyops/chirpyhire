@@ -4,6 +4,7 @@
   justify-content: space-between;
 }
 
+$card-image-height: 150px;
 .card {
   $base-border-color: gainsboro !default;
   $base-border-radius: 3px !default;
@@ -33,8 +34,8 @@
 
   .card-image {
     background-color: $card-image-hover-color;
-    height: 150px;
-    max-height: 150px;
+    height: $card-image-height;
+    max-height: $card-image-height;
     overflow: hidden;
 
     img {
