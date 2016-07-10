@@ -10,7 +10,7 @@ class Candidate < ApplicationRecord
 
   alias :features :candidate_features
 
-  STATUSES = ["Potential", "Qualified", "Bad Fit"]
+  STATUSES = ["Potential", "Screened", "Qualified", "Bad Fit"]
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
@@ -54,5 +54,21 @@ class Candidate < ApplicationRecord
 
   def document_features
     candidate_features.where("properties->>'child_class' = ?", "document")
+  end
+
+  def qualified?
+    status == "Qualified"
+  end
+
+  def screened?
+    status == "Screened"
+  end
+
+  def bad_fit?
+    status == "Bad Fit"
+  end
+
+  def potential?
+    status == "Potential"
   end
 end

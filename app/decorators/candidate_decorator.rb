@@ -35,4 +35,11 @@ class CandidateDecorator < Draper::Decorator
       document_features.map {|c| Document.new(c) }
     end
   end
+
+  def call_to_actions
+    return ["bad_fit", "qualified", "message"] if screened? || potential?
+    return ["qualified", "message"] if bad_fit?
+    return ["call", "message"] if qualified?
+    []
+  end
 end
