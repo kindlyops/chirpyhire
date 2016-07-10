@@ -31,6 +31,31 @@ Rails.application.routes.draw do
 
   authenticate :account, lambda { |a| a.super_admin? } do
     mount Sidekiq::Web => '/sidekiq'
+    namespace :admin do
+      resources :accounts
+      resources :candidates
+      resources :candidate_personas
+      resources :messages
+      resources :organizations
+      resources :referrers
+      resources :rules
+      resources :templates
+      resources :users
+      resources :candidate_features
+      resources :answers
+      resources :chirps
+      resources :inquiries
+      resources :media_instances
+      resources :notifications
+      resources :persona_features
+      resources :referrals
+      resources :addresses
+      resources :choices
+      resources :documents
+      resources :activities
+
+      root to: "accounts#index"
+    end
   end
 
   root 'candidates#index'

@@ -9,7 +9,6 @@ class Organization < ApplicationRecord
   has_many :activities, through: :users
   has_many :templates
   has_many :rules
-  has_many :actions
   has_one :candidate_persona
 
   delegate :first_name, to: :contact, prefix: true
