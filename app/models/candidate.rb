@@ -43,4 +43,8 @@ class Candidate < ApplicationRecord
   def unsubscribed?
     !subscribed?
   end
+
+  def address_feature
+    candidate_features.where("properties->>'child_class' = ?", "address").first
+  end
 end

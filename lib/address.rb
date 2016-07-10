@@ -1,4 +1,4 @@
-class Address < CandidateFeature
+class Address
   def self.extract(message, persona_feature)
     address = message.address
     {
@@ -11,4 +11,21 @@ class Address < CandidateFeature
       child_class: "address"
     }
   end
+
+  def initialize(feature)
+    @feature = feature
+  end
+
+  def latitude
+    feature['properties']['latitude']
+  end
+
+  def longitude
+    feature['properties']['longitude']
+  end
+
+  private
+
+  attr_reader :feature
+
 end

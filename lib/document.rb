@@ -1,4 +1,4 @@
-class Document < CandidateFeature
+class Document
   URI_BASE = "https://api.twilio.com"
   def self.extract(message, persona_feature)
     properties = message.images.each_with_object({}).with_index do |(image, properties), index|

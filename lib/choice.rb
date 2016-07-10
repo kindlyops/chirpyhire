@@ -1,4 +1,4 @@
-class Choice < CandidateFeature
+class Choice
   def self.extract(message, persona_feature)
     properties = {}
     properties[:child_class] = "choice"
