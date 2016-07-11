@@ -3,11 +3,12 @@
     span
       | To:
       '
-      span.name Dog Woofson
-  = render partial: "messages/message", collection: messages
+      span.name = user.phone_number.phony_formatted
+  = link_to_next_page @messages, 'Load more messages'
+  .chat
+    = render partial: "messages/message", collection: messages
   .write
     textarea
     button
       ' Send
       i.fa.fa-paper-plane
-= paginate @messages

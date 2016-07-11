@@ -22,7 +22,7 @@
   }
   .chat {
     overflow: hidden;
-    padding: 0 1.5em 1em;
+    padding: 1em 1em;
 
     @include media ($horizontal-bar-mode) {
       padding: 0 3.75em 1em;
@@ -35,6 +35,10 @@
     flex-direction: column;
   }
   .write {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
     textarea {
       margin: 1em auto;
       font-size: 1em;
@@ -46,7 +50,7 @@
     }
     button {
       width: 90%;
-      margin: 0.5em auto;
+      margin: 0.75em auto;
       display: block;
     }
   }
@@ -58,28 +62,17 @@
     padding: 0.9em 0.9em;
     vertical-align: top;
     border-radius: 5px;
-    &.you {
+    &.inbound {
       float: left;
       color: $white;
       background-color: $blue;
       align-self: flex-start;
     }
-    &.me {
+    &.outbound-api {
       float: right;
       color: $base-font-color;
       background-color: #eceff1;
       align-self: flex-end;
     }
   }
-  .conversation-start {
-    width: 100%;
-    padding: 1em 0;
-    text-align: center;
-    span {
-      font-size: 14px;
-      display: inline-block;
-      color: $medium-gray;
-    }
-  }
-
 }

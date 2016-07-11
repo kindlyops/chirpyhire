@@ -9,7 +9,7 @@ class MessageDecorator < Draper::Decorator
   end
 
   def contents
-    return "image" if true #images.present?
+    return "image" if images.present?
     "text"
   end
 end

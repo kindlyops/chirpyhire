@@ -1,1 +1,2 @@
-= render partial: "messages/#{message.direction}", locals: { message: message }
+.bubble class==message.direction
+  = render partial: "messages/#{message.contents}", locals: { message: message }
