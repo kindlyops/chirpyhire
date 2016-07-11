@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function() {
   setTimeout(function() {
-    $('.alert, .notice').slideUp();
-  }, 4000);
+    $('.flash-alert, .flash-notice').slideUp();
+  }, 3000);
 });

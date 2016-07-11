@@ -11,13 +11,9 @@ class CandidatesController < ApplicationController
 
   def update
     if authorized_candidate.update(permitted_attributes(Candidate))
-      @candidate = authorized_candidate
-
-      respond_to do |format|
-        format.js {
-          render :update
-        }
-      end
+      redirect_to candidates_url, notice: "Nice! #{authorized_candidate.phone_number.phony_formatted} marked as #{authorized_candidate.status}"
+    else
+      redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's status"
     end
   end
 
