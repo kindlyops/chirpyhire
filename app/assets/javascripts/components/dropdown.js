@@ -3,7 +3,8 @@ $(document).on("turbolinks:load", function(event) {
     var $button, $menu;
     $button = $(this);
     $menu = $button.siblings(".dropdown-menu");
-    $menu.toggleClass("show-menu");
+    $('.dropdown .dropdown-menu.show-menu').removeClass("show-menu");
+    $menu.addClass("show-menu");
     $menu.children("li").click(function() {
       $menu.removeClass("show-menu");
       $button.html($(this).html());

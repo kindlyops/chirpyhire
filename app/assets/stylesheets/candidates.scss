@@ -49,6 +49,16 @@
     .dropdown-container {
       &.status {
         margin-right: 1em;
+
+        .dropdown-menu {
+          left: 0;
+        }
+      }
+
+      &.recency {
+        .dropdown-menu {
+          left: -4em;
+        }
       }
 
       .dropdown-button {
