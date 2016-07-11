@@ -1,12 +1,13 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
+  DEFAULT_FILTER = { status: "Potential" }
 
   def show
     @candidate = authorized_candidate
   end
 
   def index
-    @candidates = scoped_candidates.filter(filter_params).page(params.fetch(:page, 1))
+    @candidates = scoped_candidates.status(status).page(params.fetch(:page, 1))
   end
 
   def update
@@ -27,9 +28,17 @@ class CandidatesController < ApplicationController
     policy_scope(Candidate)
   end
 
-  def filter_params
-    status = params.slice(:status)
-    return { status: "Potential" } unless status.present?
-    status
+  def status
+    status = params[:status]
+
+    if status.present?
+      cookies[:candidate_status_filter] = { value: status }
+      status
+    elsif cookies[:candidate_status_filter].present?
+      cookies[:candidate_status_filter]
+    else
+      cookies[:candidate_status_filter] = { value: DEFAULT_FILTER }
+      return DEFAULT_FILTER
+    end
   end
 end
