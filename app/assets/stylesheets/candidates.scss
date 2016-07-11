@@ -1,6 +1,10 @@
 .candidates {
   $base-font-color: $dark-gray !default;
   $card-image-height: 300px;
+  $base-border-color: gainsboro !default;
+  $base-border-radius: 3px !default;
+  $dropdown-border: 1px solid silver;
+  $dropdown-padding: 1em;
 
   @include outer-container;
   padding-top: 1em;
@@ -37,4 +41,25 @@
       float: right;
     }
   }
+
+  .dropdown {
+    display: flex;
+    padding: 0 1em 1em 1em;
+
+    .dropdown-container {
+      &.status {
+        margin-right: 1em;
+      }
+
+      .dropdown-button {
+        border-bottom-left-radius: $base-border-radius;
+        border-left: $dropdown-border;
+        border-top-left-radius: $base-border-radius;
+        padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
+      }
+
+    }
+  }
+
+
 }
