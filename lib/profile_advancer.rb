@@ -9,7 +9,7 @@ class ProfileAdvancer
   end
 
   def call
-    if next_persona_feature.present?
+    if next_persona_feature.present? && candidate.subscribed?
       next_candidate_feature.inquire
     else
       candidate.update(status: "Screened")
