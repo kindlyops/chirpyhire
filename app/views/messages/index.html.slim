@@ -1,0 +1,13 @@
+.messages
+  .top
+    span
+      | To:
+      '
+      span.name Dog Woofson
+  = render partial: "messages/message", collection: messages
+  .write
+    textarea
+    button
+      ' Send
+      i.fa.fa-paper-plane
+= paginate @messages

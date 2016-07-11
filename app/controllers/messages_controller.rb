@@ -1,5 +1,9 @@
 class MessagesController < ApplicationController
-  decorates_assigned :message, :user
+  decorates_assigned :message, :messages, :user
+
+  def index
+    @messages = scoped_messages.page(params.fetch(:page, 1))
+  end
 
   def new
     message = scoped_messages.build

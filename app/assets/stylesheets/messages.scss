@@ -1,0 +1,85 @@
+.messages {
+  $base-font-color: $dark-gray !default;
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
+
+  $white: #fff;
+  $bg: #f8f8f8;
+  $light: #e6e6e6;
+
+  .top {
+    width: 100%;
+    height: 3.25em;
+    padding: 0.9em 1em;
+    background-color: #eceff1;
+    span {
+      font-size: 0.95em;
+      color: $medium-gray;
+      .name {
+        color: $base-font-color;
+      }
+    }
+  }
+  .chat {
+    overflow: hidden;
+    padding: 0 1.5em 1em;
+
+    @include media ($horizontal-bar-mode) {
+      padding: 0 3.75em 1em;
+    }
+    border-width: 1px 1px 1px 0;
+    border-style: solid;
+    border-color: $light;
+    height: 100%;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+  .write {
+    textarea {
+      margin: 1em auto;
+      font-size: 1em;
+      width: 90%;
+      color: $base-font-color;
+      border: 0;
+      outline: none;
+      background-color: #eceff1;
+    }
+    button {
+      width: 90%;
+      margin: 0.5em auto;
+      display: block;
+    }
+  }
+  .bubble {
+    font-size: 1em;
+    display: inline-block;
+    clear: both;
+    margin-bottom: 8px;
+    padding: 0.9em 0.9em;
+    vertical-align: top;
+    border-radius: 5px;
+    &.you {
+      float: left;
+      color: $white;
+      background-color: $blue;
+      align-self: flex-start;
+    }
+    &.me {
+      float: right;
+      color: $base-font-color;
+      background-color: #eceff1;
+      align-self: flex-end;
+    }
+  }
+  .conversation-start {
+    width: 100%;
+    padding: 1em 0;
+    text-align: center;
+    span {
+      font-size: 14px;
+      display: inline-block;
+      color: $medium-gray;
+    }
+  }
+
+}
