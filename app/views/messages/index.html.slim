@@ -8,7 +8,8 @@
   .chat
     = render partial: "messages/message", collection: messages
   .write
-    textarea
-    button
-      ' Send
-      i.fa.fa-paper-plane
+    = form_for [user, user.messages.build] do |f|
+      = f.text_area(:body)
+      button type="submit"
+        ' Send
+        i.fa.fa-paper-plane

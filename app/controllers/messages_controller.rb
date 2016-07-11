@@ -24,16 +24,16 @@ class MessagesController < ApplicationController
     if authorize created_message
       @message = created_message
       @message.create_activity key: 'message.create', owner: message_user
-      redirect_to user_messages(message_user), notice: "Message sent!"
+      redirect_to user_messages_url(message_user), notice: "Message sent!"
     else
-      redirect_to user_messages(message_user), notice: "Unable to send message!"
+      redirect_to user_messages_url(message_user), notice: "Unable to send message!"
     end
   end
 
   private
 
   def created_message
-    message_user.receive_message(body: params[:body])
+    @created_message ||= message_user.receive_message(body: params[:message][:body])
   end
 
   def scoped_messages
