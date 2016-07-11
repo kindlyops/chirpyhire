@@ -39,10 +39,10 @@ RSpec.describe ProfileAdvancer do
         }.to change{user.outstanding_activities.where(trackable: candidate).count}.by(1)
       end
 
-      it "marks the candidate as screened" do
+      it "changes the candidate's status to Screened" do
         expect{
           ProfileAdvancer.call(user.candidate)
-        }.to change{candidate.screened?}.from(false).to(true)
+        }.to change{candidate.status}.from("Potential").to("Screened")
       end
     end
   end

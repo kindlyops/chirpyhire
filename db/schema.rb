@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709035045) do
+ActiveRecord::Schema.define(version: 20160711220523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,11 +73,11 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   end
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",                    null: false
-    t.integer  "persona_feature_id",              null: false
-    t.jsonb    "properties",         default: {}, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "candidate_id",                      null: false
+    t.integer  "persona_feature_id",                null: false
+    t.jsonb    "properties",         default: "{}", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   create_table "candidates", force: :cascade do |t|
     t.integer  "user_id",                                    null: false
     t.string   "status",               default: "Potential", null: false
-    t.boolean  "screened",             default: false,       null: false
     t.boolean  "subscribed",           default: false,       null: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
@@ -160,12 +159,12 @@ ActiveRecord::Schema.define(version: 20160709035045) do
   end
 
   create_table "persona_features", force: :cascade do |t|
-    t.integer  "candidate_persona_id",              null: false
-    t.string   "format",                            null: false
-    t.string   "name",                              null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.jsonb    "properties",           default: {}, null: false
+    t.integer  "candidate_persona_id",                null: false
+    t.string   "format",                              null: false
+    t.string   "name",                                null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
