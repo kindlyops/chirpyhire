@@ -7,7 +7,7 @@ class AddressFinder
   delegate :address, :latitude, :longitude, :country, :city, to: :result
 
   def found?
-    result.layer == "address"
+    result && result.layer == "address"
   end
 
   def postal_code
