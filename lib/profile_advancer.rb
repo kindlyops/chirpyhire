@@ -12,7 +12,7 @@ class ProfileAdvancer
     if next_persona_feature.present?
       next_candidate_feature.inquire
     else
-      candidate.update(screened: true)
+      candidate.update(status: "Screened")
       candidate.create_activity :screen, outstanding: true, owner: user
       AutomatonJob.perform_later(user, "screen")
     end
