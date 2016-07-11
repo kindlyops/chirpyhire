@@ -7,7 +7,7 @@ $flashes: (
 ) !default;
 
 @each $flash-type, $color in $flashes {
-  .#{$flash-type} {
+  .flash-#{$flash-type} {
     background-color: $color;
     color: shade($color, 60%);
     display: block;
