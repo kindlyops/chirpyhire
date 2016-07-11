@@ -46,6 +46,12 @@
     }
   }
 
+  #map.empty-map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .dropdown {
     display: flex;
 

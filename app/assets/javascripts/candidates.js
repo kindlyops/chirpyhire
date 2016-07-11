@@ -1,11 +1,23 @@
 $(document).on("turbolinks:load", function() {
-  var map = L.map('map', {minZoom: 10, maxZoom: 10});
-  var layer = Tangram.leafletLayer({
-    scene: '/scenes'
+  $('.card').each(function(index, card) {
+    var mapEl = $(card).find('#map');
+    var lat = mapEl.data('lat');
+    var long = mapEl.data('long');
+
+    if (lat && long) {
+      var map = L.map(mapEl[0], {minZoom: 10, maxZoom: 10});
+      var layer = Tangram.leafletLayer({
+        scene: '/scenes'
+      });
+      layer.addTo(map);
+      map.setView([lat, long], 10);
+      var marker = L.marker([lat, long]).addTo(map);
+    } else {
+      mapEl.addClass("empty-map");
+      mapEl.append("<div>No address found yet</div>");
+    }
+
   });
-  layer.addTo(map);
-  map.setView([$('#map').data('lat'), $('#map').data('long')], 10);
-  var marker = L.marker([$('#map').data('lat'), $('#map').data('long')]).addTo(map);
 
   $(document).on("change", ".dropdown select", function(event) {
     var newSearch, queryParamRegExp;
