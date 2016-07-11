@@ -7,7 +7,11 @@
   $dropdown-padding: 1em;
 
   @include outer-container;
-  padding-top: 1em;
+  padding: 1em;
+
+  .card {
+    margin: 0 0 1.5em 0;
+  }
 
   .card-image {
     #map {
@@ -44,32 +48,9 @@
 
   .dropdown {
     display: flex;
-    padding: 0 1em 1em 1em;
 
-    .dropdown-container {
-      &.status {
-        margin-right: 1em;
-
-        .dropdown-menu {
-          left: 0;
-        }
-      }
-
-      &.recency {
-        .dropdown-menu {
-          left: -4em;
-        }
-      }
-
-      .dropdown-button {
-        border-bottom-left-radius: $base-border-radius;
-        border-left: $dropdown-border;
-        border-top-left-radius: $base-border-radius;
-        padding: 0 ($dropdown-padding * 2.5) 0 $dropdown-padding;
-      }
-
+    .status {
+      margin-right: 1em;
     }
   }
-
-
 }

@@ -11,6 +11,7 @@ class Candidate < ApplicationRecord
   alias :features :candidate_features
 
   STATUSES = ["Potential", "Qualified", "Bad Fit"]
+  RECENCY = ["Today", "Past Week", "Past Month", "Past Year"]
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,

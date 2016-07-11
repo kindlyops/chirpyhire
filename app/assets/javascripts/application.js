@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require components/navigation.js
-//= require components/dropdown.js
 //= require candidates.js
 //= require flash.js
 
