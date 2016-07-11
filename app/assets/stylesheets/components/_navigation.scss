@@ -72,8 +72,19 @@ header.navigation {
     min-height: $navigation-height;
     z-index: 9999999;
 
+    .desktop {
+      display: none;
+    }
+
     @include media ($horizontal-bar-mode) {
       float: left;
+      padding-right: 1em;
+      .desktop {
+        display: inline;
+      }
+      .mobile {
+        display: none;
+      }
     }
   }
 
@@ -93,7 +104,7 @@ header.navigation {
     @include media ($horizontal-bar-mode) {
       display: inline;
       margin: 0;
-      padding: 0;
+      padding: 0 5em;
     }
   }
 

@@ -4,21 +4,13 @@ header.navigation role="banner"
         ul.navigation-menu.show
           li.nav-link
             a href="/candidates"
-              i.fa.fa-user.fa-2x
+              span.desktop Candidates
+              i.mobile.fa.fa-user.fa-2x
           li.nav-link
             a href="/conversations"
-              i.fa.fa-commenting.fa-2x
-          li.nav-link#js-mobile-menu
-            a.navigation-menu-button href="javascript:void(0)"
-              i.fa.fa-gear.fa-2x
-        ul#js-navigation-menu.navigation-menu.show
-          li.sub-nav-link
-            = link_to "Invite User", new_account_invitation_path
-          li.sub-nav-link
-            = link_to "Templates", templates_path
-          li.sub-nav-link
-            = link_to "Automation", rules_path
-          li.sub-nav-link
-            = link_to "Referrers", referrers_path
-          li.sub-nav-link
-            = link_to "Sign Out", destroy_account_session_path, method: :delete
+              span.desktop Conversations
+              i.mobile.fa.fa-commenting.fa-2x
+          li.nav-link
+            = link_to destroy_account_session_path, method: :delete do
+                span.desktop Sign Out
+                i.mobile.fa.fa-sign-out.fa-2x
