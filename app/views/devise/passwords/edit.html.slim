@@ -1,22 +1,22 @@
-= title "Change your password | Chirpyhire"
-
-p
-  small Create a new password
-
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "p-t-15", role: "form"}) do |f|
-  - if devise_error_messages!
-    = devise_error_messages!
+h2
+  | Change your password
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+  = devise_error_messages!
   = f.hidden_field :reset_password_token
-  .form-group.form-group-default
+  .field
     = f.label :password, "New password"
-    = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum", class: "form-control", autofocus: true
-  .form-group.form-group-default
+    br
+    - if @minimum_password_length
+      em
+        | (
+        = @minimum_password_length
+        |  characters minimum)
+      br
+    = f.password_field :password, autofocus: true, autocomplete: "off"
+  .field
     = f.label :password_confirmation, "Confirm new password"
-    = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
-  .row
-    .text-right
-      a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
-
-  = f.submit "Change my password", class: "btn btn-primary btn-cons m-t-10"
-
-
+    br
+    = f.password_field :password_confirmation, autocomplete: "off"
+  .actions
+    = f.submit "Change my password"
+= render "devise/shared/links"

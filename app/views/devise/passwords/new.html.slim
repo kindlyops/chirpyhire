@@ -1,17 +1,12 @@
-= title "Forgot your password? | Chirpyhire"
-
-p
-  small Enter your email to reset your password
-
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "p-t-15", role: "form"}) do |f|
-  - if devise_error_messages!
+.passwords
+  h2
+    | Forgot your password?
+  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
     = devise_error_messages!
-  .form-group.form-group-default
-    = f.label :email
-    .controls
-      = f.email_field :email, autofocus: true, required: true, class: "form-control"
-  .row
-    .text-right
-      a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
-
-  = f.submit "Send me reset password instructions", class: "btn btn-primary btn-cons m-t-10"
+    .field
+      = f.label :email
+      br
+      = f.email_field :email, autofocus: true
+    .actions
+      = f.submit "Reset password"
+  = render "devise/shared/links"
