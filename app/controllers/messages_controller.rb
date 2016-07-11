@@ -3,6 +3,11 @@ class MessagesController < ApplicationController
 
   def index
     @messages = scoped_messages.page(params.fetch(:page, 1))
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
   end
 
   def new
@@ -16,11 +21,12 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = authorize created_message
-    @message.create_activity key: 'message.create', owner: message_user
-
-    respond_to do |format|
-      format.js {}
+    if authorize created_message
+      @message = created_message
+      @message.create_activity key: 'message.create', owner: message_user
+      redirect_to user_messages(message_user), notice: "Message sent!"
+    else
+      redirect_to user_messages(message_user), notice: "Unable to send message!"
     end
   end
 

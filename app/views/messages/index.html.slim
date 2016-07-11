@@ -4,7 +4,7 @@
       | To:
       '
       span.name = user.phone_number.phony_formatted
-  = link_to_next_page @messages, 'Load more messages'
+  = link_to_next_page @messages, 'Load more messages', class: 'load_more', remote: true
   .chat
     = render partial: "messages/message", collection: messages
   .write
