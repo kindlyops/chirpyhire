@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    @candidates = scoped_candidates.page(params.fetch(:page, 1))
+    @candidates = scoped_candidates.filter(filter_params).page(params.fetch(:page, 1))
   end
 
   def update
@@ -29,5 +29,11 @@ class CandidatesController < ApplicationController
 
   def scoped_candidates
     policy_scope(Candidate)
+  end
+
+  def filter_params
+    status = params.slice(:status)
+    return { status: "Potential" } unless status.present?
+    status
   end
 end

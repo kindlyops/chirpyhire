@@ -23,6 +23,15 @@ class Candidate < ApplicationRecord
 
   scope :subscribed, -> { where(subscribed: true) }
 
+  def self.filter(filter_params)
+    status(filter_params[:status])
+  end
+
+  def self.status(status)
+    return self unless status.present?
+    where(status: status)
+  end
+
   def last_referral
     @last_referral ||= begin
       return NullReferral.new unless referrals.present?

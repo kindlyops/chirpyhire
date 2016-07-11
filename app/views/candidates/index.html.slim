@@ -3,8 +3,6 @@
   .dropdown
     select.status name="status"
       = options_for_select(Candidate::STATUSES, params.fetch(:status, "Potential"))
-    select.status name="recency"
-      = options_for_select(Candidate::RECENCY, params.fetch(:recency, "Past Week"))
 
   .cards
     - candidates.each do |candidate|
