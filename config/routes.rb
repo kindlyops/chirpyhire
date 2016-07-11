@@ -4,22 +4,11 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
 
-  resources :templates, only: :index do
-    get 'preview'
-  end
-
   resource :scenes, only: :show
-
-  resources :users, only: :show
   resources :candidates, only: [:index, :update]
   resources :conversations, only: :index
-  resources :referrers, only: :index
-  resource :inbox, only: :show
-  resources :rules, except: [:destroy], shallow: true
-
 
   resources :users, only: [] do
-    resources :activities, only: [:index, :update, :show], shallow: true
     resources :messages, only: [:index, :new, :create], shallow: true
   end
 
