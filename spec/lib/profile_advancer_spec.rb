@@ -13,16 +13,40 @@ RSpec.describe ProfileAdvancer do
         create(:persona_feature, candidate_persona: candidate_persona)
       end
 
-      it "creates an inquiry of the next candidate feature" do
-        expect {
-          ProfileAdvancer.call(user.candidate)
-        }.to change{user.inquiries.count}.by(1)
+      context "when the candidate is unsubscribed" do
+        before(:each) do
+          candidate.update(subscribed: false)
+        end
+
+        it "does not create an inquiry of the next candidate feature" do
+          expect {
+            ProfileAdvancer.call(user.candidate)
+          }.not_to change{user.inquiries.count}
+        end
+
+        it "does not create a message" do
+          expect {
+            ProfileAdvancer.call(user.candidate)
+          }.not_to change{Message.count}
+        end
       end
 
-      it "creates a message" do
-        expect {
-          ProfileAdvancer.call(user.candidate)
-        }.to change{Message.count}.by(1)
+      context "when the candidate is subscribed" do
+        before(:each) do
+          candidate.update(subscribed: true)
+        end
+
+        it "creates an inquiry of the next candidate feature" do
+          expect {
+            ProfileAdvancer.call(user.candidate)
+          }.to change{user.inquiries.count}.by(1)
+        end
+
+        it "creates a message" do
+          expect {
+            ProfileAdvancer.call(user.candidate)
+          }.to change{Message.count}.by(1)
+        end
       end
     end
 
