@@ -7,10 +7,10 @@
   $dropdown-padding: 1em;
 
   @include outer-container;
-  padding: 1em;
+  padding: 1em 0;
 
-  .card {
-    margin: 0 0 1.5em 0;
+  .dropdown {
+    margin-left: 1em;
   }
 
   .card-image {
