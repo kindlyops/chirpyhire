@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require components/navigation.js
 //= require candidates.js
+//= require flash.js
 
 //= require leaflet
 // require_tree .
