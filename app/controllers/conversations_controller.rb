@@ -1,5 +1,5 @@
 class ConversationsController < ApplicationController
-  decorates_assigned :conversations, :conversation
+  decorates_assigned :conversations
 
   def index
     @conversations = scoped_conversations.page(params.fetch(:page, 1))
