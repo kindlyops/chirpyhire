@@ -20,6 +20,10 @@
     width: 100%;
     height: 3.25em;
     padding: 0.9em 1em;
+    @include media ($horizontal-bar-mode) {
+      padding: 0.9em 4em;
+    }
+
     background-color: #eceff1;
     span {
       font-size: 0.95em;

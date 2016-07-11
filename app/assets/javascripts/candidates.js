@@ -19,6 +19,11 @@ $(document).on("turbolinks:load", function() {
 
   });
 
+  $(document).on("click", ".card-call-to-actions button", function(event) {
+    var $button = $(this);
+    Turbolinks.visit($button.find('a').attr('href'));
+  });
+
   $(document).on("change", ".dropdown select", function(event) {
     var newSearch, queryParamRegExp;
     var search = location.search;
