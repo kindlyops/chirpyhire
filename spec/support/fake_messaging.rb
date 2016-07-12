@@ -17,7 +17,7 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :direction, :sent_at, :sid) do
+  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :sid) do
     def num_media
       media.list.count.to_s
     end
