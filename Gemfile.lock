@@ -390,6 +390,7 @@ PLATFORMS
 DEPENDENCIES
   activemodel-serializers-xml!
   administrate!
+  autoprefixer-rails (~> 6.3.7)
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.3.6)
