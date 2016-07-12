@@ -18,5 +18,4 @@
 //= require candidates
 //= require flash
 
-//= require leaflet
 // require_tree .
