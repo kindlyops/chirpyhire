@@ -6,7 +6,7 @@
       span.name = user.phone_number.phony_formatted
   = link_to_next_page @messages, 'Load more messages', class: 'load_more', remote: true
   .chat
-    = render partial: "messages/message", collection: messages
+    = render partial: "messages/message", collection: messages.reverse
   .write
     = form_for [user, user.messages.build] do |f|
       = f.text_area(:body)
