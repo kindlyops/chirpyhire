@@ -24,6 +24,10 @@ class Address
     feature['properties']['longitude']
   end
 
+  def formatted_address
+    feature['properties']['address']
+  end
+
   private
 
   attr_reader :feature
