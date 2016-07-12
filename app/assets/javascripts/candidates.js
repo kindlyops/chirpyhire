@@ -1,4 +1,9 @@
 $(document).on("turbolinks:load", function() {
+  $('iframe.address').each(function(i, el) {
+    var frame = $(el);
+    frame.attr('src', frame.attr('data-src'));
+  });
+
   $(document).on("click", ".card-call-to-actions button", function(event) {
     var $button = $(this);
     Turbolinks.visit($button.find('a').attr('href'));
