@@ -1,4 +1,6 @@
 p
   | Address:
   '
-  strong = address.formatted_address
+  a target="_blank" href="https://www.google.com/maps/place/#{address.formatted_address}"
+    strong = address.formatted_address
+
