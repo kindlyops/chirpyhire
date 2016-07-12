@@ -14,9 +14,9 @@
 //= require jquery2
 //= require jquery_ujs
 //= require turbolinks
-//= require components/navigation.js
-//= require candidates.js
-//= require flash.js
+//= require components/navigation
+//= require candidates
+//= require flash
 
 //= require leaflet
 // require_tree .

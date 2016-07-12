@@ -13,12 +13,6 @@
     margin-left: 1em;
   }
 
-  .card-image {
-    #map {
-      height: $card-image-height;
-    }
-  }
-
   .card-call-to-actions {
     form, button {
       flex-grow: 1;
@@ -46,10 +40,23 @@
     }
   }
 
-  #map.empty-map {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  #address {
+    .empty-map {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: $card-image-height;
+      background-color: #F8F2B4;
+    }
+  }
+
+  .card-image {
+    background-color: $medium-gray;
+
+    iframe {
+      width: 100%;
+      height: $card-image-height;
+    }
   }
 
   .dropdown {

@@ -1,6 +1,7 @@
 class Candidate < ApplicationRecord
   include PublicActivity::Common
   has_many :activities, as: :trackable
+  paginates_per 4
 
   belongs_to :user
   belongs_to :candidate_persona
@@ -71,5 +72,9 @@ class Candidate < ApplicationRecord
 
   def potential?
     status == "Potential"
+  end
+
+  def screened?
+    status == "Screened"
   end
 end

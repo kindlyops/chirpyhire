@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resource :health, only: :show
 
   resource :scenes, only: :show
-  resources :candidates, only: [:index, :update]
+  resources :candidates, only: [:index, :update] do
+    resource :map, only: :show
+  end
   resources :conversations, only: :index
 
   resources :users, only: [] do

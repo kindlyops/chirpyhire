@@ -1,1 +1,5 @@
-#map data-lat==address.latitude data-long==address.longitude
+#address
+  - if address.latitude && address.longitude
+    iframe src="/candidates/#{candidate.id}/map"
+  - else
+    .empty-map No address found yet
