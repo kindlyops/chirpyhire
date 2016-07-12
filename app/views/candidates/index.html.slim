@@ -14,8 +14,9 @@
             '
             = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
         .card-image
-          = render partial: "candidates/address", locals: { candidate: candidate, address: candidate.address }
+          = render partial: "candidates/map", locals: { address: candidate.address }
         .card-copy
+          = render partial: "candidates/address", locals: { address: candidate.address }
           = render partial: "candidates/choice", collection: candidate.choices
           = render partial: "candidates/document", collection: candidate.documents
           .card-call-to-actions
