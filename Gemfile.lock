@@ -200,7 +200,6 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    leaflet-rails (0.7.7)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -415,7 +414,6 @@ DEPENDENCIES
   jquery-rails
   kaminari (~> 0.17)
   launchy (~> 2.4.3)
-  leaflet-rails (~> 0.7.7)
   namae (~> 0.10.0)
   naught (~> 1.1.0)
   neat
