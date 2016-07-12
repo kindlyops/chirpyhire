@@ -17,7 +17,7 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :direction, :sid) do
+  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :sid) do
     def num_media
       media.list.count.to_s
     end
@@ -68,7 +68,7 @@ class FakeMessaging
       media = Media.new([MediaInstance.new("image/jpeg", "/example/path/to/image.png")])
     end
 
-    message = Message.new(from, to, body, media, direction, Faker::Number.number(10))
+    message = Message.new(from, to, body, media, direction, DateTime.current, Faker::Number.number(10))
     self.class.messages << message
     message
   end

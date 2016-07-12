@@ -67,17 +67,17 @@ ActiveRecord::Schema.define(version: 20160712030724) do
     t.integer  "inquiry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "message_id", null: false
+    t.integer  "message_id"
     t.index ["inquiry_id"], name: "index_answers_on_inquiry_id", using: :btree
     t.index ["message_id"], name: "index_answers_on_message_id", using: :btree
   end
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",                    null: false
-    t.integer  "persona_feature_id",              null: false
-    t.jsonb    "properties",         default: {}, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "candidate_id",                      null: false
+    t.integer  "persona_feature_id",                null: false
+    t.jsonb    "properties",         default: "{}", null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
@@ -160,12 +160,12 @@ ActiveRecord::Schema.define(version: 20160712030724) do
   end
 
   create_table "persona_features", force: :cascade do |t|
-    t.integer  "candidate_persona_id",              null: false
-    t.string   "format",                            null: false
-    t.string   "name",                              null: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.jsonb    "properties",           default: {}, null: false
+    t.integer  "candidate_persona_id",                null: false
+    t.string   "format",                              null: false
+    t.string   "name",                                null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
