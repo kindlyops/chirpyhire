@@ -10,15 +10,8 @@
   display: flex;
   flex-direction: column;
 
-  .load_more {
-    display: block;
-    padding: 0.5em;
-    text-align: center;
-  }
-
   .top {
     width: 100%;
-    height: 3.25em;
     padding: 0.9em 1em;
     @include media ($horizontal-bar-mode) {
       padding: 0.9em 4em;
@@ -33,21 +26,43 @@
       }
     }
   }
+
+  .load_more {
+    padding: 0.5em;
+    text-align: center;
+    border-bottom: 1px solid $light;
+  }
+
   .chat {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     padding: 1em 1em;
 
     @include media ($horizontal-bar-mode) {
       padding: 1em 3.75em 1em 3.75em;
     }
-    border-width: 1px 1px 1px 0;
-    border-style: solid;
-    border-color: $light;
-    height: 100%;
-    justify-content: flex-end;
-    flex-direction: column;
+
+    .bubble {
+      font-size: 1em;
+      margin-bottom: 8px;
+      padding: 0.9em 0.9em;
+      vertical-align: top;
+      border-radius: 5px;
+      &.inbound {
+        color: $white;
+        background-color: $blue;
+        align-self: flex-start;
+      }
+      &.outbound-api {
+        color: $base-font-color;
+        background-color: #eceff1;
+        align-self: flex-end;
+      }
+    }
   }
+
   .write {
+    border-top: 1px solid $light;
     width: 100%;
 
     textarea {
@@ -57,33 +72,15 @@
       color: $base-font-color;
       border: 0;
       outline: none;
+      border: 1px solid $light;
       background-color: #eceff1;
     }
+
     button {
+      display: block;
       width: 90%;
       margin: 0.75em auto;
-      display: block;
     }
   }
-  .bubble {
-    font-size: 1em;
-    display: inline-block;
-    clear: both;
-    margin-bottom: 8px;
-    padding: 0.9em 0.9em;
-    vertical-align: top;
-    border-radius: 5px;
-    &.inbound {
-      float: left;
-      color: $white;
-      background-color: $blue;
-      align-self: flex-start;
-    }
-    &.outbound-api {
-      float: right;
-      color: $base-font-color;
-      background-color: #eceff1;
-      align-self: flex-end;
-    }
-  }
+
 }
