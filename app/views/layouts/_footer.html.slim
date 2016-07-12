@@ -1,4 +1,4 @@
 - if Rails.env.production?
   script src="https://cdn.smooch.io/smooch.min.js"
   javascript:
-    | Smooch.init({appToken: '#{ENV['SMOOCH_TOKEN']}'});
+    Smooch.init({appToken: '#{ENV['SMOOCH_TOKEN']}'});
