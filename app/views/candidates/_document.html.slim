@@ -1,0 +1,6 @@
+p
+  = link_to document.category, document.first_page, target: "_blank"
+  - document.additional_uris.each_with_index do |uri, index|
+    ',
+    = link_to "page #{index + 2}", uri, target: "_blank"
+    '

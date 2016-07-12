@@ -1,0 +1,5 @@
+#address
+  - if address.latitude && address.longitude
+    iframe.address data-src="/candidates/#{candidate.id}/map"
+  - else
+    .empty-map No address found yet

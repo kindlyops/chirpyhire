@@ -52,6 +52,10 @@ class Organization < ApplicationRecord
     activities.outstanding
   end
 
+  def conversations
+    messages.conversations
+  end
+
   private
 
   def messaging_client

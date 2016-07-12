@@ -1,0 +1,32 @@
+html
+  head
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"
+    script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"
+    script src="https://mapzen.com/tangram/tangram.min.js"
+    script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"
+
+    css:
+      #map {
+        height: 285px;
+      }
+
+  body
+    = yield
+    footer
+      javascript:
+        var mapEl = $('#map');
+        var lat = mapEl.data('lat');
+        var long = mapEl.data('long');
+
+        if (lat && long) {
+          var map = L.map(mapEl[0], {zoomControl: false, minZoom: 10, maxZoom: 10});
+          var layer = Tangram.leafletLayer({
+            scene: '/scenes'
+          });
+          layer.addTo(map);
+          map.setView([lat, long], 10);
+          var marker = L.marker([lat, long]).addTo(map);
+        }

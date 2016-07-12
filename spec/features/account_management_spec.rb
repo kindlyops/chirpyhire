@@ -76,7 +76,7 @@ RSpec.feature "Account Management", type: :feature do
         visit "/accounts/password/new"
 
         fill_in "Email", with: account.email
-        click_button "Send me reset password instructions"
+        click_button "Reset password"
         open_email(account.email)
         current_email.click_link("Change my password")
         fill_in "New password", with: "s3cr$t$$"
@@ -90,7 +90,7 @@ RSpec.feature "Account Management", type: :feature do
       visit "/accounts/password/new"
 
       fill_in "Email", with: Faker::Internet.email
-      click_button "Send me reset password instructions"
+      click_button "Reset password"
       expect(page).to have_text("receive a password recovery link")
     end
   end

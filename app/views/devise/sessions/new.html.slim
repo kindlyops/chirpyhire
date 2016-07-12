@@ -1,22 +1,19 @@
-= title "Sign in | Chirpyhire"
-
-= form_for(resource, as: resource_name, url: session_path(resource_name), html: {id: "form-login", class: "p-t-15", role: "form"}) do |f|
-  .form-group.form-group-default
-    = f.label :email
-    .controls
-      = f.email_field :email, class: "form-control", required: true, autofocus: true
-  .form-group.form-group-default
-    = f.label :password
-    .controls
-      = f.password_field :password, autocomplete: "off", required: true, class: "form-control"
-  .row
+.sessions
+  h2
+    | Sign in
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    .field
+      = f.label :email
+      br
+      = f.email_field :email, autofocus: true
+    .field
+      = f.label :password
+      br
+      = f.password_field :password, autocomplete: "off"
     - if devise_mapping.rememberable?
-      .col-md-6.no-padding
-        .checkbox.check-success
-          = f.check_box :remember_me
-          = f.label :remember_me
-    .col-med-6.text-right
-      a.text-info.small href="mailto:support@chirpyhire.com" Help? Contact Support
-  = f.submit "Sign in", class: "btn btn-primary btn-cons m-t-10"
-
-
+      .field
+        = f.label :remember_me
+        = f.check_box :remember_me
+    .actions
+      = f.submit "Sign in"
+  = render "devise/shared/links"

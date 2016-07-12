@@ -1,0 +1,7 @@
+= link_to user_messages_path(conversation.user) do
+  .conversation
+    .conversation-content
+      p.conversation-detail
+        = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
+      h1 = conversation.user_phone_number.phony_formatted
+      = render partial: "conversations/#{conversation.contents}", locals: { conversation: conversation }

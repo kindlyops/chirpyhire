@@ -9,7 +9,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:user_id]
+    [:body]
   end
 
   class Scope < ApplicationPolicy::Scope

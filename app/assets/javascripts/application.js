@@ -11,36 +11,12 @@
 // about supported directives.
 //
 
-// BEGIN VENDOR JS FOR PAGES (plus add in jquery.turbolinks)
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
-//= require pages-plugins/modernizr.custom
-//= require bootstrap-sprockets
-//= require pages-plugins/jquery/jquery-easy
-//= require pages-plugins/jquery-unveil/jquery.unveil.min
-//= require pages-plugins/jquery-bez/jquery.bez.min
-//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
-//= require pages-plugins/imagesloaded/imagesloaded.pkgd.min
-//= require pages-plugins/jquery-actual/jquery.actual.min
-//= require pages-plugins/jquery-scrollbar/jquery.scrollbar.min
-//= require pages-plugins/bootstrap-select2/select2.min.js
-//= require pages-plugins/jquery-menuclipper/jquery.menuclipper.js
-//= require pages-plugins/jquery-ios-list/jquery.ioslist.min
-
-//= require dataTables/jquery.dataTables
-//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
-
-// BEGIN CORE TEMPLATE JS FOR PAGES
-//= require pages-core/js/pages
-
-// BEGIN SITE SCRIPTS
-//= require leaflet
-//= require indexTable
-//= require clickTable
-//= require select
-//= require user
-//= require inbox
-
-//  I prefer to list scripts in a specific order, so I comment out require_tree .
-// require_tree .
 //= require turbolinks
+//= require components/navigation
+//= require candidates
+//= require flash
+
+//= require leaflet
+// require_tree .

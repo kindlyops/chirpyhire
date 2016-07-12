@@ -22,6 +22,11 @@ class Candidate < ApplicationRecord
 
   scope :subscribed, -> { where(subscribed: true) }
 
+  def self.status(status)
+    return self unless status.present?
+    where(status: status)
+  end
+
   def last_referral
     @last_referral ||= begin
       return NullReferral.new unless referrals.present?
@@ -42,5 +47,33 @@ class Candidate < ApplicationRecord
 
   def unsubscribed?
     !subscribed?
+  end
+
+  def address_feature
+    candidate_features.where("properties->>'child_class' = ?", "address").first
+  end
+
+  def choice_features
+    candidate_features.where("properties->>'child_class' = ?", "choice")
+  end
+
+  def document_features
+    candidate_features.where("properties->>'child_class' = ?", "document")
+  end
+
+  def qualified?
+    status == "Qualified"
+  end
+
+  def bad_fit?
+    status == "Bad Fit"
+  end
+
+  def potential?
+    status == "Potential"
+  end
+
+  def screened?
+    status == "Screened"
   end
 end

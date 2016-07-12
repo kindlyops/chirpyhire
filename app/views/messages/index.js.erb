@@ -1,0 +1,2 @@
+$("<%= escape_javascript(render partial: 'messages/message', collection: messages) %>").prependTo(".chat");
+$('.load_more').replaceWith($("<%= escape_javascript(link_to_next_page @messages, 'Load more messages', class: 'load_more', remote: true) %>"));

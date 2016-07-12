@@ -11,6 +11,10 @@ class Message < ApplicationRecord
   has_one :notification
   delegate :organization, to: :user
 
+  def self.conversations
+    select("DISTINCT ON (messages.user_id) messages.user_id, messages.*").order(:user_id, updated_at: :desc)
+  end
+
   def media
     media_instances
   end

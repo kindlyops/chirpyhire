@@ -4,21 +4,14 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
 
-  resources :templates, only: :index do
-    get 'preview'
-  end
-
   resource :scenes, only: :show
-
-  resources :users, only: :show
-  resources :candidates, only: [:index, :update]
-  resources :referrers, only: :index
-  resource :inbox, only: :show
-  resources :rules, except: [:destroy], shallow: true
+  resources :candidates, only: [:index, :update] do
+    resource :map, only: :show
+  end
+  resources :conversations, only: :index
 
   resources :users, only: [] do
-    resources :activities, only: [:index, :update, :show], shallow: true
-    resources :messages, only: [:new, :create], shallow: true
+    resources :messages, only: [:index, :new, :create], shallow: true
   end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
