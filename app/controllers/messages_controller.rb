@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   decorates_assigned :message, :messages, :user
 
   def index
-    @messages = scoped_messages.page(params.fetch(:page, 1))
+    @messages = scoped_messages.order(created_at: :desc).page(params.fetch(:page, 1))
 
     respond_to do |format|
       format.html {}
