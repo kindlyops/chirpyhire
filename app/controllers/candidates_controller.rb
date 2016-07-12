@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_FILTER = "Potential"
+  DEFAULT_FILTER = "Screened"
 
   def show
     @candidate = authorized_candidate
