@@ -30,7 +30,7 @@ class MessageHandler
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction,
-      date_sent: external_message.date_sent,
+      sent_at: external_message.sent_at,
       user: sender
     )
   end
