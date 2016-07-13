@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.opencagedata.com/geocode/v1/json?key=e314288a9a878aa078550bce7e4a1309&language=en&q=3379%20Flat%20Shoals%20Road%20Decatur%20Ga%2030033
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 13 Jul 2016 18:35:14 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Ratelimit-Limit:
+      - '2500'
+      X-Ratelimit-Remaining:
+      - '2491'
+      X-Ratelimit-Reset:
+      - '1468454400'
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2491,"reset":1468454400},"results":[{"annotations":{"DMS":{"lat":"33\u00b0
+        48'' 44.28000'''' N","lng":"84\u00b0 16'' 54.84000'''' W"},"MGRS":"16SGC5159744666","Maidenhead":"EM73ut64ew","Mercator":{"x":-9382218.191,"y":3979849.679},"OSM":{"url":"https://www.openstreetmap.org/?mlat=33.81230&mlon=-84.28190#map=17/33.81230/-84.28190"},"callingcode":1,"geohash":"dnh0657fcms3ux0zjvmj","sun":{"rise":{"apparent":1468406160,"astronomical":1468400100,"civil":1468404480,"nautical":1468402380},"set":{"apparent":1468370880,"astronomical":1468376940,"civil":1468372560,"nautical":1468374660}},"timezone":{"name":"America/New_York","now_in_dst":1,"offset_sec":-14400,"offset_string":-400,"short_name":"EDT"},"what3words":{"words":"capsize.slang.crusts"}},"bounds":{"northeast":{"lat":33.845022,"lng":-84.25172},"southwest":{"lat":33.781258,"lng":-84.322462}},"components":{"_type":"county","country":"United
+        States","country_code":"us","county":"DeKalb County","postcode":"30033","state":"Georgia"},"confidence":7,"formatted":"GA
+        30033, United States of America","geometry":{"lat":33.8123,"lng":-84.2819}},{"annotations":{"DMS":{"lat":"33\u00b0
+        42'' 17.95680'''' N","lng":"84\u00b0 16'' 37.07760'''' W"},"MGRS":"16SGC5236932775","Maidenhead":"EM73uq69se","Mercator":{"x":-9381668.941,"y":3965547.618},"OSM":{"url":"https://www.openstreetmap.org/?mlat=33.70499&mlon=-84.27697#map=17/33.70499/-84.27697"},"callingcode":1,"geohash":"djupdpz3u35kyqg272zz","sun":{"rise":{"apparent":1468406160,"astronomical":1468400160,"civil":1468404480,"nautical":1468402380},"set":{"apparent":1468370880,"astronomical":1468376880,"civil":1468372560,"nautical":1468374660}},"timezone":{"name":"America/New_York","now_in_dst":1,"offset_sec":-14400,"offset_string":-400,"short_name":"EDT"},"what3words":{"words":"fingertips.nocturnal.mailings"}},"components":{"_type":"building","country":"United
+        States","country_code":"us","house_number":"3379","road":"Flat Shoals Rd","state":"GA","town":"Decatur"},"confidence":10,"formatted":"3379
+        Flat Shoals Rd, Decatur, GA, United States of America","geometry":{"lat":33.704988,"lng":-84.276966}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
+        using an OpenCage Data API","timestamp":{"created_http":"Wed, 13 Jul 2016
+        18:35:14 GMT","created_unix":1468434914},"total_results":2}'
+    http_version: 
+  recorded_at: Wed, 13 Jul 2016 18:28:27 GMT
+recorded_with: VCR 3.0.3

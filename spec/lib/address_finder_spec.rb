@@ -47,6 +47,14 @@ RSpec.describe "AddressFinder" do
         expect(finder.postal_code).to eq("90068")
       end
     end
+
+    context "with multiple results", vcr: { cassette_name: "AddressFinder-flat-shoals" }do
+      let(:address) { "3379 Flat Shoals Road Decatur Ga 30033" }
+      it "returns the result with the highest confidence" do
+        expect(finder.address).not_to eq("GA 30033, United States of America")
+        expect(finder.address).to eq("3379 Flat Shoals Rd, Decatur, GA, United States of America")
+      end
+    end
   end
 
   context "with invalid address" do
