@@ -12,6 +12,8 @@ class Address
     }
   end
 
+  delegate :id, to: :feature
+
   def initialize(feature)
     @feature = feature
   end
