@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AddressRefresher do
   let(:message) { create(:message) }
   let(:csv) { CSV.new("") }
-  let(:refresher) { AddressRefresher.new(message, csv) }
+  let(:refresher) { AddressRefresher.new(message, csv: csv) }
 
   describe "#call" do
     context "message has an address" do
