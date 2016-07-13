@@ -19,6 +19,14 @@ RSpec.describe AddressRefresher do
           expect(csv).to receive(:<<)
           refresher.call
         end
+
+        context "with an existing address" do
+          let!(:address_feature) { create(:candidate_feature, :address, candidate: candidate, id: 10293) }
+
+          it "returns an array of results with the feature id" do
+            expect(refresher.call).to include(address_feature.id, address_feature.properties['address'])
+          end
+        end
       end
 
       context "without a candidate" do

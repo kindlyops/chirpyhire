@@ -18,7 +18,7 @@ class AddressRefresher
       end
 
       new_address = message.address
-      row = [message.id, message.body, current_address.body, new_address.address, current_address.id, new_address.latitude, new_address.longitude, new_address.postal_code, new_address.country, new_address.city]
+      row = [message.id, message.body, current_address.formatted_address, new_address.address, current_address.id, new_address.latitude, new_address.longitude, new_address.postal_code, new_address.country, new_address.city]
 
       csv << row
       row
