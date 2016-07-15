@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.opencagedata.com/geocode/v1/json?key=e314288a9a878aa078550bce7e4a1309&language=en&q=4059%20Mt%20Lee%20Dr%2090068
+    uri: https://api.opencagedata.com/geocode/v1/json?countrycode=us&key=OPENCAGE_KEY&language=en&min_confidence=8&q=4059%20Mt%20Lee%20Dr%2090068
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 13 Jul 2016 17:54:53 GMT
+      - Fri, 15 Jul 2016 15:06:58 GMT
       Server:
       - Apache/2.4.7 (Ubuntu)
       Access-Control-Allow-Origin:
@@ -27,9 +27,9 @@ http_interactions:
       X-Ratelimit-Limit:
       - '2500'
       X-Ratelimit-Remaining:
-      - '2492'
+      - '2495'
       X-Ratelimit-Reset:
-      - '1468454400'
+      - '1468627200'
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -38,13 +38,14 @@ http_interactions:
       - max-age=31536000; includeSubDomains
     body:
       encoding: UTF-8
-      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2492,"reset":1468454400},"results":[{"annotations":{"DMS":{"lat":"34\u00b0
-        8'' 7.91844'''' N","lng":"118\u00b0 19'' 4.13040'''' W"},"MGRS":"11SLT7849277967","Maidenhead":"DM04ud12um","Mercator":{"x":-13171078.806,"y":4023038.574},"OSM":{"edit_url":"https://www.openstreetmap.org/edit?way=172081785#map=17/34.13553/-118.31781","url":"https://www.openstreetmap.org/?mlat=34.13553&mlon=-118.31781#map=17/34.13553/-118.31781"},"callingcode":1,"geohash":"9q5f5w5tghe3qf81h7xd","sun":{"rise":{"apparent":1468414260,"astronomical":1468408200,"civil":1468412580,"nautical":1468410480},"set":{"apparent":1468379040,"astronomical":1468385160,"civil":1468380780,"nautical":1468382880}},"timezone":{"name":"America/Los_Angeles","now_in_dst":1,"offset_sec":-25200,"offset_string":-700,"short_name":"PDT"},"what3words":{"words":"reward.duty.total"}},"bounds":{"northeast":{"lat":34.1357299,"lng":-118.314783},"southwest":{"lat":34.1332066,"lng":-118.3225169}},"components":{"_type":"road","country":"United
-        States of America","country_code":"us","county":"Los Angeles County","hamlet":"McNeil","postcode":"90068","road":"Mount
-        Lee Drive","state":"California","suburb":"Hollywood Hills"},"confidence":9,"formatted":"Mount
-        Lee Drive, McNeil, CA 90068, United States of America","geometry":{"lat":34.1355329,"lng":-118.317814}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
-        using an OpenCage Data API","timestamp":{"created_http":"Wed, 13 Jul 2016
-        17:54:53 GMT","created_unix":1468432493},"total_results":1}'
-    http_version: 
-  recorded_at: Wed, 13 Jul 2016 18:03:55 GMT
+      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2495,"reset":1468627200},"results":[{"annotations":{"DMS":{"lat":"34\u00b0
+        8'' 7.91844'''' N","lng":"118\u00b0 19'' 4.13040'''' W"},"MGRS":"11SLT7849277967","Maidenhead":"DM04ud12um","Mercator":{"x":-13171078.806,"y":4023038.574},"OSM":{"edit_url":"https://www.openstreetmap.org/edit?way=172081785#map=17/34.13553/-118.31781","url":"https://www.openstreetmap.org/?mlat=34.13553&mlon=-118.31781#map=17/34.13553/-118.31781"},"callingcode":1,"geohash":"9q5f5w5tghe3qf81h7xd","sun":{"rise":{"apparent":1468587120,"astronomical":1468581060,"civil":1468585440,"nautical":1468583340},"set":{"apparent":1468551780,"astronomical":1468557840,"civil":1468553520,"nautical":1468555620}},"timezone":{"name":"America/Los_Angeles","now_in_dst":1,"offset_sec":-25200,"offset_string":-700,"short_name":"PDT"},"what3words":{"words":"reward.duty.total"}},"bounds":{"northeast":{"lat":34.1357299,"lng":-118.314783},"southwest":{"lat":34.1332066,"lng":-118.3225169}},"components":{"_type":"road","city":"Los
+        Angeles","country":"United States of America","country_code":"us","county":"Los
+        Angeles County","postcode":"90068","road":"Mount Lee Drive","state":"California","suburb":"Hollywood
+        Hills"},"confidence":9,"formatted":"Mount Lee Drive, Los Angeles, CA 90068,
+        United States of America","geometry":{"lat":34.1355329,"lng":-118.317814}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
+        using an OpenCage Data API","timestamp":{"created_http":"Fri, 15 Jul 2016
+        15:06:58 GMT","created_unix":1468595218},"total_results":1}'
+    http_version:
+  recorded_at: Fri, 15 Jul 2016 15:07:00 GMT
 recorded_with: VCR 3.0.3

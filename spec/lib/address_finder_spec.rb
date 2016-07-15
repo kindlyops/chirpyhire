@@ -14,7 +14,7 @@ RSpec.describe "AddressFinder" do
 
     describe "#address" do
       it do
-        expect(finder.address).to eq("Mount Lee Drive, McNeil, CA 90068, United States of America")
+        expect(finder.address).to eq("Mount Lee Drive, Los Angeles, CA 90068, United States of America")
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe "AddressFinder" do
 
     describe "#city" do
       it do
-        expect(finder.city).to eq("McNeil")
+        expect(finder.city).to eq("Los Angeles")
       end
     end
 
@@ -48,11 +48,19 @@ RSpec.describe "AddressFinder" do
       end
     end
 
-    context "with multiple results", vcr: { cassette_name: "AddressFinder-flat-shoals" }do
+    context "with multiple results", vcr: { cassette_name: "AddressFinder-flat-shoals" } do
       let(:address) { "3379 Flat Shoals Road Decatur Ga 30033" }
       it "returns the result with the highest confidence" do
         expect(finder.address).not_to eq("GA 30033, United States of America")
         expect(finder.address).to eq("3379 Flat Shoals Rd, Decatur, GA, United States of America")
+      end
+
+      context "with results in other countries", vcr: { cassette_name: "AddressFinder-conyers" } do
+        let(:address) { "Conyers 30012" }
+        it "returns the US result with the highest confidence" do
+          expect(finder.address).not_to eq("Conyers, South Norfolk District NR18, United Kingdom")
+          expect(finder.address).to eq("Conyers, GA, United States of America")
+        end
       end
     end
   end
