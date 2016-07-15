@@ -75,7 +75,7 @@ RSpec.describe AddressRefresher do
             it "updates the existing candidate feature" do
               expect{
                 refresher.call
-              }.to change{address_feature.reload.properties['address']}.from("1000 East Market Street, Charlottesville, VA, USA").to("Mount Lee Drive, McNeil, CA 90068, United States of America")
+              }.to change{address_feature.reload.properties['address']}.from("1000 East Market Street, Charlottesville, VA, USA").to("Mount Lee Drive, Los Angeles, CA 90068, United States of America")
             end
           end
         end
