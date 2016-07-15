@@ -47,6 +47,16 @@ RSpec.describe SubscriptionsController, type: :controller do
               post :create, params: params
             }.to have_enqueued_job(AutomatonJob).with(user, "subscribe")
           end
+
+          context "when the AutomatonJob raises" do
+            it "doesn't set the subscribe flag" do
+              allow(AutomatonJob).to receive(:perform_later).and_raise(Redis::ConnectionError)
+              expect {
+                post :create, params: params
+              }.to raise_error(Redis::ConnectionError)
+              expect(candidate.reload.subscribed?).to eq(false)
+            end
+          end
         end
       end
 
