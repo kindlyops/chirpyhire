@@ -1,6 +1,7 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    return unless account.present?
+    return unless account.present? && record.user.subscribed?
+
     account.organization == record.organization
   end
 

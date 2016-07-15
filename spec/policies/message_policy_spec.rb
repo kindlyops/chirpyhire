@@ -41,7 +41,15 @@ RSpec.describe MessagePolicy do
       end
 
       it { should permit_mass_assignment_of(:body) }
-      it { should permit_new_and_create_actions }
+      it { should forbid_new_and_create_actions }
+
+      context "recipient is subscribed" do
+        before(:each) do
+          message.user.candidate.update(subscribed: true)
+        end
+
+        it { should permit_new_and_create_actions }
+      end
     end
   end
 end
