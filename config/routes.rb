@@ -39,9 +39,6 @@ Rails.application.routes.draw do
       resources :notifications
       resources :persona_features
       resources :referrals
-      resources :addresses
-      resources :choices
-      resources :documents
       resources :activities
 
       root to: "accounts#index"
