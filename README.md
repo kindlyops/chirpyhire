@@ -1,3 +1,5 @@
+[ ![Codeship Status for chirpyhire/biscayne](https://codeship.com/projects/52825350-2cfd-0134-4099-42d5f584ed48/status?branch=master)](https://codeship.com/projects/163559)
+
 ## README
 
 This README would normally document whatever steps are necessary to get the
