@@ -21,8 +21,6 @@ class Candidate < ApplicationRecord
   delegate :contact_first_name, to: :organization
   delegate :created_at, to: :last_referral, prefix: true
 
-  scope :subscribed, -> { where(subscribed: true) }
-
   def self.status(status)
     return self unless status.present?
     where(status: status)
@@ -44,10 +42,6 @@ class Candidate < ApplicationRecord
       return NullReferrer.new unless referrers.present?
       last_referral.referrer
     end
-  end
-
-  def unsubscribed?
-    !subscribed?
   end
 
   def address_feature

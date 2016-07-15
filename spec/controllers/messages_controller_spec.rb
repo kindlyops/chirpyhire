@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, organization: organization) }
   let(:admin) { create(:user, :with_account, organization: organization) }
 
   before(:each) do
@@ -19,9 +18,9 @@ RSpec.describe MessagesController, type: :controller do
       }
     end
 
-    context "with a candidate" do
+    context "with a user" do
       context "subscribed" do
-        let!(:candidate) { create(:candidate, subscribed: true, user: user) }
+        let(:user) { create(:user, subscribed: true, organization: organization) }
 
         it "provides a helpful message" do
           post :create, params: message_params
@@ -48,7 +47,7 @@ RSpec.describe MessagesController, type: :controller do
       end
 
       context "unsubscribed" do
-        let!(:candidate) { create(:candidate, subscribed: false, user: user) }
+        let(:user) { create(:user, subscribed: false, organization: organization) }
 
         it "provides a helpful alert message" do
           post :create, params: message_params
