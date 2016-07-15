@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :message do
     direction { "inbound" }
     sid { Faker::Number.number(10) }
-    user
+    association :user, :with_candidate
 
     trait :with_image do
       after(:create) do |message|
