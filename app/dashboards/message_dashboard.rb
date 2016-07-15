@@ -19,8 +19,6 @@ class MessageDashboard < Administrate::BaseDashboard
     sid: Field::String,
     body: Field::Text,
     direction: Field::String,
-    messageable_id: Field::Number,
-    messageable_type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -51,8 +49,6 @@ class MessageDashboard < Administrate::BaseDashboard
     :sid,
     :body,
     :direction,
-    :messageable_id,
-    :messageable_type,
     :created_at,
     :updated_at,
   ].freeze
@@ -71,8 +67,6 @@ class MessageDashboard < Administrate::BaseDashboard
     :sid,
     :body,
     :direction,
-    :messageable_id,
-    :messageable_type,
   ].freeze
 
   # Overwrite this method to customize how messages are displayed
