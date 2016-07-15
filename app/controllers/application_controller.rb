@@ -21,10 +21,6 @@ class ApplicationController < ActionController::Base
     @current_organization ||= current_user.organization
   end
 
-  def subscribed_candidates
-    @subscribed_candidates ||= current_organization.subscribed_candidates
-  end
-
   def current_user
     @current_user ||= current_account.user
   end

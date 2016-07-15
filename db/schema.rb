@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(version: 20160715193506) do
     t.integer  "organization_id",                 null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.boolean  "subscribed",      default: false, null: false
     t.index ["contact", "organization_id"], name: "index_users_on_contact_and_organization_id", unique: true, where: "(contact = true)", using: :btree
     t.index ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
     t.index ["organization_id"], name: "index_users_on_organization_id", using: :btree
