@@ -10,7 +10,7 @@ RSpec.describe ReferrerDecorator do
       let!(:last_referral) { create(:referral, referrer: model) }
 
       it "returns the last referral's created_at" do
-        expect(referrer.last_referral_created_at).to eq(last_referral.created_at)
+        expect(referrer.last_referral_created_at).to be_within(0.1).of(last_referral.created_at)
       end
     end
 

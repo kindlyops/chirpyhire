@@ -30,7 +30,7 @@ RSpec.describe Candidate, type: :model do
       let!(:last_referral) { create(:referral, candidate: candidate) }
 
       it "returns the last referral's created_at" do
-        expect(candidate.last_referral_created_at).to eq(last_referral.created_at)
+        expect(candidate.last_referral_created_at).to be_within(0.1).of(last_referral.created_at)
       end
     end
 
