@@ -3,10 +3,10 @@ class SubscriptionsController < SmsController
     if candidate.subscribed?
       sender.receive_message(body: already_subscribed)
     else
-      candidate.update(subscribed: true)
-      candidate.create_activity :subscribe, owner: sender
       AutomatonJob.perform_later(sender, "subscribe")
       sender.receive_message(body: subscription_notice)
+      candidate.update(subscribed: true)
+      candidate.create_activity :subscribe, owner: sender
     end
     head :ok
   end
