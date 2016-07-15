@@ -23,10 +23,6 @@ class Organization < ApplicationRecord
     users.find_by(contact: true)
   end
 
-  def subscribed_candidates
-    candidates.subscribed
-  end
-
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
 

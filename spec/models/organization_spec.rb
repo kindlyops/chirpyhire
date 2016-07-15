@@ -33,29 +33,4 @@ RSpec.describe Organization, type: :model do
       expect(organization.contact_first_name).to eq(contact.first_name)
     end
   end
-
-  describe "#subscribed_candidates" do
-    context "without candidates" do
-      it "is empty" do
-        expect(organization.subscribed_candidates).to be_empty
-      end
-    end
-
-    context "with candidates" do
-      let!(:users) { create_list(:user, 2, organization: organization) }
-
-      let!(:subscribed_candidates) do
-        [create(:candidate, :with_subscription, user: users.first),
-        create(:candidate, :with_subscription, user: users.last)]
-      end
-
-      let!(:unsubscribed_candidate) { create(:candidate, user: create(:user, organization: organization)) }
-
-      context "with some unsubscribed" do
-        it "is only the subscribed candidates" do
-          expect(organization.subscribed_candidates).to match_array(subscribed_candidates)
-        end
-      end
-    end
-  end
 end
