@@ -13,7 +13,9 @@ class User < ApplicationRecord
   has_many :chirps, through: :messages
 
   delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
+  delegate :subscribed?, to: :candidate
   delegate :contact_first_name, to: :organization
+
   accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
