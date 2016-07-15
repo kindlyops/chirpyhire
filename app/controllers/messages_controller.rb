@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   decorates_assigned :message, :messages, :user
+  rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
 
   def index
     @messages = scoped_messages.order(sent_at: :desc).page(params.fetch(:page, 1))
@@ -21,19 +22,19 @@ class MessagesController < ApplicationController
   end
 
   def create
-    if authorize created_message
-      @message = created_message
+    @message = scoped_messages.build
+
+    if authorize @message
+      @message = send_message!
       @message.create_activity key: 'message.create', owner: message_user
       redirect_to user_messages_url(message_user), notice: "Message sent!"
-    else
-      redirect_to user_messages_url(message_user), notice: "Unable to send message!"
     end
   end
 
   private
 
-  def created_message
-    @created_message ||= message_user.receive_message(body: params[:message][:body])
+  def send_message!
+    @sent_message ||= message_user.receive_message(body: params[:message][:body])
   end
 
   def scoped_messages
@@ -49,5 +50,10 @@ class MessagesController < ApplicationController
         raise Pundit::NotAuthorizedError
       end
     end
+  end
+
+  def message_not_authorized
+    redirect_to user_messages_url(message_user), alert: "Unfortunately they are "\
+    "unsubscribed! You can't text unsubscribed candidates using Chirpyhire."
   end
 end
