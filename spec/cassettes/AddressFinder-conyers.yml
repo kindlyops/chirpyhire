@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.opencagedata.com/geocode/v1/json?countrycode=us&key=OPENCAGE_KEY&language=en&min_confidence=8&q=Conyers%2030012
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 15 Jul 2016 15:13:54 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Ratelimit-Limit:
+      - '2500'
+      X-Ratelimit-Remaining:
+      - '2493'
+      X-Ratelimit-Reset:
+      - '1468627200'
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2493,"reset":1468627200},"results":[{"annotations":{"DMS":{"lat":"33\u00b0
+        43'' 9.04080'''' N","lng":"84\u00b0 0'' 7.41960'''' W"},"MGRS":"16SGC7780935056","Maidenhead":"EM73xr92so","Mercator":{"x":-9351066.656,"y":3967437.761},"OSM":{"url":"https://www.openstreetmap.org/?mlat=33.71918&mlon=-84.00206#map=17/33.71918/-84.00206"},"callingcode":1,"geohash":"djurb6rs6n77x5mnctfx","sun":{"rise":{"apparent":1468578960,"astronomical":1468572960,"civil":1468577280,"nautical":1468575240},"set":{"apparent":1468543560,"astronomical":1468549560,"civil":1468545240,"nautical":1468547280}},"timezone":{"name":"America/New_York","now_in_dst":1,"offset_sec":-14400,"offset_string":-400,"short_name":"EDT"},"what3words":{"words":"braving.commissions.dived"}},"components":{"_type":"city","country":"United
+        States","country_code":"us","state":"GA","town":"Conyers"},"confidence":10,"formatted":"Conyers,
+        GA, United States of America","geometry":{"lat":33.719178,"lng":-84.002061}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
+        using an OpenCage Data API","timestamp":{"created_http":"Fri, 15 Jul 2016
+        15:13:54 GMT","created_unix":1468595634},"total_results":1}'
+    http_version:
+  recorded_at: Fri, 15 Jul 2016 15:07:02 GMT
+recorded_with: VCR 3.0.3

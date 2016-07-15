@@ -20,7 +20,11 @@ class AddressFinder
   end
 
   def results
-    @results ||= Geocoder.search(text).sort {|r1, r2| r2.data["confidence"] <=> r1.data["confidence"] }
+    @results ||= Geocoder.search(text, params).sort {|r1, r2| r2.data["confidence"] <=> r1.data["confidence"] }
+  end
+
+  def params
+    { params: { countrycode: 'us', min_confidence: 8 } }
   end
 end
 
