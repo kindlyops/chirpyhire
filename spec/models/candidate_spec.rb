@@ -57,20 +57,4 @@ RSpec.describe Candidate, type: :model do
       end
     end
   end
-
-  describe "#unsubscribed?" do
-    context "with a subscription to the organization" do
-      it "is false" do
-        candidate.update(subscribed: true)
-        expect(candidate.unsubscribed?).to eq(false)
-      end
-    end
-
-    context "without a subscription to the organization" do
-      it "is true" do
-        candidate.update(subscribed: false)
-        expect(candidate.unsubscribed?).to eq(true)
-      end
-    end
-  end
 end

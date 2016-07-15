@@ -17,7 +17,6 @@ class CandidateDashboard < Administrate::BaseDashboard
     id: Field::Number,
     status: Field::String,
     screened: Field::Boolean,
-    subscribed: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -46,7 +45,6 @@ class CandidateDashboard < Administrate::BaseDashboard
     :id,
     :status,
     :screened,
-    :subscribed,
     :created_at,
     :updated_at,
   ].freeze
@@ -63,7 +61,6 @@ class CandidateDashboard < Administrate::BaseDashboard
     :referrers,
     :status,
     :screened,
-    :subscribed,
   ].freeze
 
   # Overwrite this method to customize how candidates are displayed

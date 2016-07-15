@@ -45,7 +45,7 @@ RSpec.describe MessagePolicy do
 
       context "recipient is subscribed" do
         before(:each) do
-          message.user.candidate.update(subscribed: true)
+          message.user.update(subscribed: true)
         end
 
         it { should permit_new_and_create_actions }
