@@ -25,7 +25,7 @@ class MessagesController < ApplicationController
     @message = scoped_messages.build
 
     if authorize @message
-      @message = send_message!
+      @message = send_message
       @message.create_activity key: 'message.create', owner: message_user
       redirect_to user_messages_url(message_user), notice: "Message sent!"
     end
@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
 
   private
 
-  def send_message!
+  def send_message
     @sent_message ||= message_user.receive_message(body: params[:message][:body])
   end
 
