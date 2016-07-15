@@ -67,9 +67,15 @@ RSpec.describe SubscriptionsController, type: :controller do
           }.to change{user.reload.candidate.present?}.from(false).to(true)
         end
 
-        it "sets the subscription flag to true" do
+        it "sets the candidate subscription flag to true" do
           post :create, params: params
           expect(user.candidate.subscribed?).to eq(true)
+        end
+
+        it "sets the user subscription flag to true" do
+          expect {
+            post :create, params: params
+          }.to change{user.reload.subscribed}.from(false).to(true)
         end
       end
     end
@@ -122,16 +128,26 @@ RSpec.describe SubscriptionsController, type: :controller do
       context "with an existing subscribed candidate" do
         let!(:candidate) { create(:candidate, user: user, subscribed: true) }
 
+        before(:each) do
+          user.update(subscribed: true)
+        end
+
         it "creates a message" do
           expect {
             post :create, params: params
           }.to change{user.messages.count}.by(1)
         end
 
-        it "sets the subscribed flag to false" do
+        it "sets the candidate subscribed flag to false" do
           expect{
             delete :destroy, params: params
           }.to change{candidate.reload.subscribed?}.from(true).to(false)
+        end
+
+        it "sets the user subscription flag to false" do
+          expect {
+            delete :destroy, params: params
+          }.to change{user.reload.subscribed}.from(true).to(false)
         end
 
         it "lets the user know they are unsubscribed now" do
