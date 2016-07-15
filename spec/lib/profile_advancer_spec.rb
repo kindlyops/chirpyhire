@@ -13,9 +13,9 @@ RSpec.describe ProfileAdvancer do
         create(:persona_feature, candidate_persona: candidate_persona)
       end
 
-      context "when the candidate is unsubscribed" do
+      context "when the user is unsubscribed" do
         before(:each) do
-          candidate.update(subscribed: false)
+          user.update(subscribed: false)
         end
 
         it "does not create an inquiry of the next candidate feature" do
@@ -31,9 +31,9 @@ RSpec.describe ProfileAdvancer do
         end
       end
 
-      context "when the candidate is subscribed" do
+      context "when the user is subscribed" do
         before(:each) do
-          candidate.update(subscribed: true)
+          user.update(subscribed: true)
         end
 
         it "creates an inquiry of the next candidate feature" do
