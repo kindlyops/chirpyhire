@@ -1,7 +1,6 @@
 class UserDecorator < Draper::Decorator
   delegate_all
   decorates_association :candidate
-  decorates_association :activities
 
   def name
     if first_name.present?

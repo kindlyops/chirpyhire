@@ -26,7 +26,6 @@ class MessagesController < ApplicationController
 
     if authorize @message
       @message = send_message
-      @message.create_activity key: 'message.create', owner: message_user
       redirect_to user_messages_url(message_user), notice: "Message sent!"
     end
   end

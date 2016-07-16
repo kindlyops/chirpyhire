@@ -6,7 +6,6 @@ class Organization < ApplicationRecord
   has_many :referrers, through: :users
   has_many :accounts, through: :users
   has_many :messages, through: :users
-  has_many :activities, through: :users
   has_many :templates
   has_many :rules
   has_one :candidate_persona
@@ -42,10 +41,6 @@ class Organization < ApplicationRecord
 
   def inbox
     Inbox.new(organization: self)
-  end
-
-  def outstanding_activities
-    activities.outstanding
   end
 
   def conversations

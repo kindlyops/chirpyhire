@@ -8,7 +8,6 @@ class MessageDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    activities: Field::HasMany,
     media_instances: Field::HasMany,
     user: Field::BelongsTo,
     inquiry: Field::HasOne,
@@ -28,7 +27,6 @@ class MessageDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :activities,
     :media_instances,
     :user,
   ].freeze
@@ -36,7 +34,6 @@ class MessageDashboard < Administrate::BaseDashboard
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :activities,
     :media_instances,
     :user,
     :inquiry,
@@ -54,7 +51,6 @@ class MessageDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :activities,
     :media_instances,
     :user,
     :inquiry,

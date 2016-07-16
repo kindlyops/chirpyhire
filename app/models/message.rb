@@ -1,7 +1,4 @@
 class Message < ApplicationRecord
-  include PublicActivity::Common
-  has_many :activities, as: :trackable
-
   has_many :media_instances
 
   belongs_to :user

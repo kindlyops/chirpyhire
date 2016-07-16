@@ -57,12 +57,6 @@ RSpec.describe ProfileAdvancer do
         }.to have_enqueued_job(AutomatonJob).with(user, "screen")
       end
 
-      it "creates an outstanding screen activity for the candidate's user" do
-        expect{
-          ProfileAdvancer.call(user.candidate)
-        }.to change{user.outstanding_activities.where(trackable: candidate).count}.by(1)
-      end
-
       it "changes the candidate's status to Screened" do
         expect{
           ProfileAdvancer.call(user.candidate)

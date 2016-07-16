@@ -5,7 +5,6 @@ class User < ApplicationRecord
   has_one :candidate
   has_one :referrer
   has_one :account
-  has_many :activities, as: :owner
   has_many :messages
   has_many :inquiries, through: :messages
   has_many :answers, through: :messages
@@ -17,10 +16,6 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :organization
 
   scope :with_phone_number, -> { where.not(phone_number: nil) }
-
-  def outstanding_activities
-    activities.outstanding
-  end
 
   def outstanding_inquiry
     inquiries.unanswered.first
