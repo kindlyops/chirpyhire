@@ -29,7 +29,7 @@ class PersonaFeature < ApplicationRecord
   def choice_template
     return "" unless properties['choice_options'].present?
     <<-template
-#{name}
+#{text}
 
 #{choice_options_list}
 
@@ -39,8 +39,8 @@ template
 
   def questions
     {
-      document: "Please send a photo of your #{name}",
-      address: "What is your street address and zipcode?",
+      document: text,
+      address: text,
       choice: choice_template
     }
   end

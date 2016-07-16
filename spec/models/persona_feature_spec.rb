@@ -23,16 +23,18 @@ RSpec.describe PersonaFeature, type: :model do
 
   describe "#question" do
     context "document" do
-      let(:document_persona_feature) { create(:persona_feature, candidate_persona: candidate_persona, format: :document) }
+      let(:text) { "Please send a photo of your TB Test" }
+      let(:document_persona_feature) { create(:persona_feature, text: text, candidate_persona: candidate_persona, format: :document) }
       it "returns a question for the format" do
-        expect(document_persona_feature.question).to eq("Please send a photo of your #{document_persona_feature.name}")
+        expect(document_persona_feature.question).to eq(text)
       end
     end
 
     context "address" do
-      let(:address_persona_feature) { create(:persona_feature, candidate_persona: candidate_persona, format: :address) }
+      let(:text) { "What is your street address and zipcode?" }
+      let(:address_persona_feature) { create(:persona_feature, text: text, candidate_persona: candidate_persona, format: :address) }
       it "returns a question for the format" do
-        expect(address_persona_feature.question).to eq("What is your street address and zipcode?")
+        expect(address_persona_feature.question).to eq(text)
       end
     end
 
