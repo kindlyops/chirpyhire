@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716163432) do
+ActiveRecord::Schema.define(version: 20160716163837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(version: 20160716163432) do
     t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
     t.integer  "category_id"
+    t.integer  "priority"
+    t.index ["candidate_persona_id", "priority"], name: "index_persona_features_on_candidate_persona_id_and_priority", unique: true, using: :btree
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["category_id"], name: "index_persona_features_on_category_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
