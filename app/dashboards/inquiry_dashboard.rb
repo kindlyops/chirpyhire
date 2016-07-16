@@ -9,11 +9,9 @@ class InquiryDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     message: Field::BelongsTo,
-    candidate_feature: Field::BelongsTo,
     persona_feature: Field::BelongsTo,
     answer: Field::HasOne,
     id: Field::Number,
-    user_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,20 +23,18 @@ class InquiryDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :message,
-    :candidate_feature,
     :persona_feature,
     :answer,
+    :id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :message,
-    :candidate_feature,
     :persona_feature,
     :answer,
     :id,
-    :user_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -48,10 +44,8 @@ class InquiryDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :message,
-    :candidate_feature,
     :persona_feature,
     :answer,
-    :user_id,
   ].freeze
 
   # Overwrite this method to customize how inquiries are displayed

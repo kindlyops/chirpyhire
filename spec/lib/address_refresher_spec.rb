@@ -51,10 +51,11 @@ RSpec.describe AddressRefresher do
       context "message has an address" do
         context "with a candidate", vcr: { cassette_name: "AddressFinder-valid-address" } do
           let!(:candidate) { create(:candidate, user: message.user) }
+          let(:candidate_persona) { candidate.organization.candidate_persona }
           let(:message) { create(:message, body: "4059 Mt Lee Dr 90068") }
 
           context "with an address persona feature" do
-            let!(:persona_feature) { create(:persona_feature, format: "address", candidate_persona: candidate.candidate_persona) }
+            let!(:persona_feature) { create(:persona_feature, format: "address", candidate_persona: candidate_persona) }
 
             it "creates a candidate feature" do
               expect {

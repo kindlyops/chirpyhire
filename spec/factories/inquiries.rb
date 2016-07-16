@@ -1,7 +1,12 @@
 FactoryGirl.define do
   factory :inquiry do
-    candidate_feature
     message
+
+    before(:create) do |inquiry|
+      unless inquiry.persona_feature.present?
+        inquiry.persona_feature = create(:persona_feature, candidate_persona: inquiry.organization.candidate_persona)
+      end
+    end
 
     trait :with_answer do
       after(:create) do |inquiry|

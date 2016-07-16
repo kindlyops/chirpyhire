@@ -9,13 +9,11 @@ class CandidateDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     user: Field::BelongsTo,
-    candidate_persona: Field::BelongsTo,
     candidate_features: Field::HasMany,
     referrals: Field::HasMany,
     referrers: Field::HasMany,
     id: Field::Number,
     status: Field::String,
-    screened: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -27,21 +25,20 @@ class CandidateDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :user,
-    :candidate_persona,
     :candidate_features,
+    :referrals,
+    :referrers,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :user,
-    :candidate_persona,
     :candidate_features,
     :referrals,
     :referrers,
     :id,
     :status,
-    :screened,
     :created_at,
     :updated_at,
   ].freeze
@@ -51,12 +48,10 @@ class CandidateDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :user,
-    :candidate_persona,
     :candidate_features,
     :referrals,
     :referrers,
     :status,
-    :screened,
   ].freeze
 
   # Overwrite this method to customize how candidates are displayed

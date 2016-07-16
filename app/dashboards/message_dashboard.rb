@@ -19,6 +19,7 @@ class MessageDashboard < Administrate::BaseDashboard
     direction: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    sent_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -29,6 +30,8 @@ class MessageDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :media_instances,
     :user,
+    :inquiry,
+    :answer,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -45,6 +48,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :direction,
     :created_at,
     :updated_at,
+    :sent_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -59,6 +63,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :sid,
     :body,
     :direction,
+    :sent_at,
   ].freeze
 
   # Overwrite this method to customize how messages are displayed

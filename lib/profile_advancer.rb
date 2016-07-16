@@ -9,8 +9,8 @@ class ProfileAdvancer
   end
 
   def call
-    if next_persona_feature.present? && user.subscribed?
-      next_candidate_feature.inquire
+    if next_unasked_question.present? && user.subscribed?
+      next_unasked_question.inquire(user)
     else
       candidate.update(status: "Screened")
       AutomatonJob.perform_later(user, "screen")
@@ -21,15 +21,15 @@ class ProfileAdvancer
 
   attr_reader :candidate
 
-  def next_persona_feature
-    @next_persona_feature ||= candidate.next_persona_feature
-  end
-
-  def next_candidate_feature
-    @next_candidate_feature ||= candidate.features.create(persona_feature: next_persona_feature)
-  end
-
   def user
     @user ||= candidate.user
+  end
+
+  def organization
+    user.organization
+  end
+
+  def next_unasked_question
+    @next_unasked_question ||= organization.next_unasked_question_for(user)
   end
 end

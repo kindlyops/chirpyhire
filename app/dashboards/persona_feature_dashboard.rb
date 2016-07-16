@@ -9,7 +9,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     candidate_persona: Field::BelongsTo,
-    candidate_features: Field::HasMany,
+    category: Field::BelongsTo,
     inquiries: Field::HasMany,
     id: Field::Number,
     format: Field::String,
@@ -18,6 +18,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     properties: Field::String.with_options(searchable: false),
     deleted_at: Field::DateTime,
+    priority: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,17 +28,16 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :candidate_persona,
-    :candidate_features,
+    :category,
     :inquiries,
     :id,
-    :format,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :candidate_persona,
-    :candidate_features,
+    :category,
     :inquiries,
     :id,
     :format,
@@ -46,6 +46,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
     :updated_at,
     :properties,
     :deleted_at,
+    :priority,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -53,12 +54,13 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :candidate_persona,
-    :candidate_features,
+    :category,
     :inquiries,
     :format,
     :name,
     :properties,
     :deleted_at,
+    :priority,
   ].freeze
 
   # Overwrite this method to customize how persona features are displayed

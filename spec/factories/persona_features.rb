@@ -3,6 +3,8 @@ FactoryGirl.define do
     candidate_persona
     format { "document" }
     name { ["TB Test", "CPR Exam", "CNA License"].sample }
+    category
+    sequence(:priority) { |p| p }
 
     trait :choice do
       format "choice"

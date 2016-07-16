@@ -1,17 +1,17 @@
 class PersonaFeature < ApplicationRecord
   belongs_to :candidate_persona
   belongs_to :category
-  has_many :candidate_features
   has_many :inquiries
 
   validates :format, inclusion: { in: %w(document address choice) }
 
-  def self.next_for(candidate)
-    where.not(id: candidate.features.pluck(:persona_feature_id)).where(deleted_at: nil).order(updated_at: :asc).first
-  end
-
   def question
     questions[format.to_sym]
+  end
+
+  def inquire(user)
+    message = user.receive_message(body: question)
+    inquiries.create(message: message)
   end
 
   private

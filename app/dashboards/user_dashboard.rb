@@ -23,6 +23,7 @@ class UserDashboard < Administrate::BaseDashboard
     contact: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    subscribed: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -55,6 +56,7 @@ class UserDashboard < Administrate::BaseDashboard
     :contact,
     :created_at,
     :updated_at,
+    :subscribed,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -73,6 +75,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_name,
     :phone_number,
     :contact,
+    :subscribed,
   ].freeze
 
   # Overwrite this method to customize how users are displayed

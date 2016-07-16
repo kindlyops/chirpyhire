@@ -2,10 +2,6 @@ FactoryGirl.define do
   factory :candidate do
     user
 
-    before(:create) do |candidate|
-      candidate.candidate_persona = candidate.organization.candidate_persona
-    end
-
     transient do
       inquiry_format :text
       organization nil

@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resources :notifications
       resources :persona_features
       resources :referrals
+      resources :categories
 
       root to: "accounts#index"
     end

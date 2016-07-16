@@ -7,8 +7,7 @@ class AnswerHandler
   def call
     if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
-      candidate_feature.update(properties: extracted_properties)
-      answer
+      update_or_create_candidate_feature
     else
       message.save
       message
@@ -23,26 +22,40 @@ class AnswerHandler
 
   private
 
+  def update_or_create_candidate_feature
+    feature = candidate.candidate_features.find_or_initialize_by(category: category)
+    feature.properties = extracted_properties
+    feature.save
+  end
+
   def extracted_properties
-    property_extractor.extract(message, candidate_feature.persona_feature)
+    property_extractor.extract(message, persona_feature)
+  end
+
+  def category
+    persona_feature.category
+  end
+
+  def persona_feature
+    @persona_feature ||= inquiry.persona_feature
   end
 
   def answer
     @answer ||= inquiry.create_answer(message: message)
   end
 
-  def candidate_feature
-    @candidate_feature ||= inquiry.candidate_feature
-  end
-
   attr_reader :inquiry, :sender, :message_sid
 
   def organization
-    @organization ||= sender.organization
+    sender.organization
+  end
+
+  def candidate
+    sender.candidate
   end
 
   def external_message
-    @external_message ||= organization.get_message(message_sid)
+    organization.get_message(message_sid)
   end
 
   def message

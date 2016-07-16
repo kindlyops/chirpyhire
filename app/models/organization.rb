@@ -20,6 +20,12 @@ class Organization < ApplicationRecord
     users.find_by(contact: true)
   end
 
+  def next_unasked_question_for(user)
+    questions = candidate_persona.persona_features
+    ids = user.inquiries.pluck(:persona_feature_id)
+    questions.where.not(id: ids).where(deleted_at: nil).order(priority: :asc).first
+  end
+
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
 
