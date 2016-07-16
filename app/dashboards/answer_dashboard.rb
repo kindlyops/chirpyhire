@@ -11,7 +11,6 @@ class AnswerDashboard < Administrate::BaseDashboard
     message: Field::BelongsTo,
     inquiry: Field::BelongsTo,
     id: Field::Number,
-    user_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -25,6 +24,7 @@ class AnswerDashboard < Administrate::BaseDashboard
     :message,
     :inquiry,
     :id,
+    :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -33,7 +33,6 @@ class AnswerDashboard < Administrate::BaseDashboard
     :message,
     :inquiry,
     :id,
-    :user_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -44,7 +43,6 @@ class AnswerDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :message,
     :inquiry,
-    :user_id,
   ].freeze
 
   # Overwrite this method to customize how answers are displayed

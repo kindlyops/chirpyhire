@@ -9,7 +9,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     candidate: Field::BelongsTo,
-    persona_feature: Field::BelongsTo,
+    category: Field::BelongsTo,
     inquiries: Field::HasMany,
     id: Field::Number,
     properties: Field::String.with_options(searchable: false),
@@ -24,7 +24,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :candidate,
-    :persona_feature,
+    :category,
     :inquiries,
     :id,
   ].freeze
@@ -33,7 +33,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :candidate,
-    :persona_feature,
+    :category,
     :inquiries,
     :id,
     :properties,
@@ -46,7 +46,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :candidate,
-    :persona_feature,
+    :category,
     :inquiries,
     :properties,
   ].freeze

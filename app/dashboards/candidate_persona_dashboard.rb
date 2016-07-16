@@ -10,7 +10,6 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
     persona_features: Field::HasMany,
-    rules: Field::HasOne,
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -24,8 +23,8 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :organization,
     :persona_features,
-    :rules,
     :id,
+    :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -33,7 +32,6 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
     :persona_features,
-    :rules,
     :id,
     :created_at,
     :updated_at,
@@ -45,7 +43,6 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :organization,
     :persona_features,
-    :rules,
   ].freeze
 
   # Overwrite this method to customize how candidate personas are displayed
