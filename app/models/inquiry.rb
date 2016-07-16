@@ -7,7 +7,7 @@ class Inquiry < ApplicationRecord
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
   def question_name
-    persona_feature.text
+    persona_feature.category.name
   end
 
   def unanswered?
