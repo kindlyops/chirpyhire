@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CandidatePolicy do
-  subject { CandidatePolicy.new(account, candidate) }
+  subject { CandidatePolicy.new(organization, candidate) }
 
   let(:candidate) { create(:candidate) }
 
-  let(:resolved_scope) { CandidatePolicy::Scope.new(account, Candidate.all).resolve }
+  let(:resolved_scope) { CandidatePolicy::Scope.new(organization, Candidate.all).resolve }
 
   context "being a visitor" do
-    let(:account) { nil }
+    let(:organization) { nil }
 
     it "raises a NotAuthorizedError" do
       expect {
@@ -17,9 +17,9 @@ RSpec.describe CandidatePolicy do
     end
   end
 
-  context "having an account" do
-    context "account is on a different organization" do
-      let(:account) { create(:account) }
+  context "having an organization" do
+    context "candidate does not belong to the organization" do
+      let(:organization) { create(:organization) }
 
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
@@ -31,9 +31,8 @@ RSpec.describe CandidatePolicy do
       end
     end
 
-    context "account is on the same organization as the candidate" do
-      let(:user) { create(:user, organization: candidate.organization) }
-      let(:account) { create(:account, user: user) }
+    context "candidate belongs to the organization" do
+      let(:organization) { candidate.organization }
 
       it { should forbid_new_and_create_actions }
       it { should permit_edit_and_update_actions }

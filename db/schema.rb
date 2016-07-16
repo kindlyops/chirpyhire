@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715204520) do
+ActiveRecord::Schema.define(version: 20160716150907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,23 +44,6 @@ ActiveRecord::Schema.define(version: 20160715204520) do
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
     t.index ["user_id"], name: "index_accounts_on_user_id", using: :btree
-  end
-
-  create_table "activities", force: :cascade do |t|
-    t.string   "trackable_type",                 null: false
-    t.integer  "trackable_id",                   null: false
-    t.string   "owner_type",                     null: false
-    t.integer  "owner_id",                       null: false
-    t.string   "key",                            null: false
-    t.text     "parameters"
-    t.string   "recipient_type"
-    t.integer  "recipient_id"
-    t.boolean  "outstanding",    default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
-    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end
 
   create_table "answers", force: :cascade do |t|
@@ -98,13 +81,6 @@ ActiveRecord::Schema.define(version: 20160715204520) do
     t.integer  "candidate_persona_id",                       null: false
     t.index ["candidate_persona_id"], name: "index_candidates_on_candidate_persona_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
-  end
-
-  create_table "chirps", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "message_id", null: false
-    t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
   end
 
   create_table "inquiries", force: :cascade do |t|
@@ -231,7 +207,6 @@ ActiveRecord::Schema.define(version: 20160715204520) do
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
-  add_foreign_key "chirps", "messages"
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "media_instances", "messages"

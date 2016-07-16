@@ -1,6 +1,4 @@
 class Candidate < ApplicationRecord
-  include PublicActivity::Common
-  has_many :activities, as: :trackable
   paginates_per 4
 
   belongs_to :user
@@ -18,30 +16,13 @@ class Candidate < ApplicationRecord
            :organization, :messages, :outstanding_inquiry,
            :receive_message, to: :user
 
-  delegate :contact_first_name, to: :organization
-  delegate :created_at, to: :last_referral, prefix: true
-
   def self.status(status)
     return self unless status.present?
     where(status: status)
   end
 
-  def last_referral
-    @last_referral ||= begin
-      return NullReferral.new unless referrals.present?
-      referrals.order(:created_at).last
-    end
-  end
-
   def next_persona_feature
     candidate_persona.features.next_for(self)
-  end
-
-  def last_referrer
-    @last_referrer ||= begin
-      return NullReferrer.new unless referrers.present?
-      last_referral.referrer
-    end
   end
 
   def address_feature

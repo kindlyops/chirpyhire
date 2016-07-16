@@ -11,22 +11,11 @@ class MessagesController < ApplicationController
     end
   end
 
-  def new
-    message = scoped_messages.build
-
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
   def create
     @message = scoped_messages.build
 
     if authorize @message
       @message = send_message
-      @message.create_activity key: 'message.create', owner: message_user
       redirect_to user_messages_url(message_user), notice: "Message sent!"
     end
   end
@@ -44,7 +33,7 @@ class MessagesController < ApplicationController
   def message_user
     @user ||= begin
       message_user = User.find(params[:user_id])
-      if UserPolicy.new(current_account, message_user).show?
+      if UserPolicy.new(current_organization, message_user).show?
         message_user
       else
         raise Pundit::NotAuthorizedError

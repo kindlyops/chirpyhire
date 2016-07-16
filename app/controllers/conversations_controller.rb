@@ -9,6 +9,6 @@ class ConversationsController < ApplicationController
   private
 
   def scoped_conversations
-    ConversationPolicy::Scope.new(current_account, Message).resolve
+    ConversationPolicy::Scope.new(current_organization, Message).resolve
   end
 end

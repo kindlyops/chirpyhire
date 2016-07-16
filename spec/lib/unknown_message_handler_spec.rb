@@ -14,11 +14,5 @@ RSpec.describe UnknownMessageHandler do
       expect(MessageHandler).to receive(:call).and_return(new_message)
       message_handler.call
     end
-
-    it "creates an outstanding activity for the user" do
-      expect {
-        message_handler.call
-      }.to change{organization.outstanding_activities.count}.by(1)
-    end
   end
 end

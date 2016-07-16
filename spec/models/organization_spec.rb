@@ -27,10 +27,4 @@ RSpec.describe Organization, type: :model do
       expect(organization.contact).to eq(contact)
     end
   end
-
-  describe "#contact_first_name" do
-    it "returns the contact's first name" do
-      expect(organization.contact_first_name).to eq(contact.first_name)
-    end
-  end
 end

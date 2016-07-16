@@ -1,10 +1,10 @@
 class ApplicationPolicy
-  attr_reader :account, :record
+  attr_reader :organization, :record
 
-  def initialize(account, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless account.present?
+  def initialize(organization, record)
+    raise Pundit::NotAuthorizedError, "must be logged in" unless organization.present?
 
-    @account = account
+    @organization = organization
     @record = record
   end
 
@@ -37,18 +37,18 @@ class ApplicationPolicy
   end
 
   def scope
-    Pundit.policy_scope!(account, record.class)
+    Pundit.policy_scope!(organization, record.class)
   end
 
   def user
-    account
+    organization
   end
 
   class Scope
-    attr_reader :account, :scope
+    attr_reader :organization, :scope
 
-    def initialize(account, scope)
-      @account = account
+    def initialize(organization, scope)
+      @organization = organization
       @scope = scope
     end
 

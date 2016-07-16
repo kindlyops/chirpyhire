@@ -6,7 +6,7 @@ class SubscriptionsController < SmsController
       AutomatonJob.perform_later(sender, "subscribe")
       sender.receive_message(body: subscription_notice)
       sender.update(subscribed: true)
-      candidate.create_activity :subscribe, owner: sender
+      ensure_candidate
     end
     head :ok
   end
@@ -16,7 +16,6 @@ class SubscriptionsController < SmsController
       sender.receive_message(body: not_subscribed)
     else
       sender.update(subscribed: false)
-      candidate.create_activity :unsubscribe, owner: sender
       sender.receive_message(body: unsubscribed_notice)
     end
     head :ok
@@ -40,7 +39,7 @@ class SubscriptionsController < SmsController
     "You were not subscribed to #{organization.name}. To subscribe reply with START."
   end
 
-  def candidate
-    @candidate ||= sender.candidate || sender.create_candidate(candidate_persona: organization.candidate_persona)
+  def ensure_candidate
+    sender.candidate || sender.create_candidate(candidate_persona: organization.candidate_persona)
   end
 end

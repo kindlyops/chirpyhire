@@ -1,2 +1,0 @@
-class UnknownChirpHandlerJob < UnknownMessageHandlerJob
-end

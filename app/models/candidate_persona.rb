@@ -1,7 +1,7 @@
 class CandidatePersona < ApplicationRecord
   belongs_to :organization
   has_many :persona_features
-  has_one :rules, as: :action
+  # TODO has_one :rules, as: :action
 
   alias :features :persona_features
 

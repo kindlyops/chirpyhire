@@ -6,12 +6,9 @@ class Organization < ApplicationRecord
   has_many :referrers, through: :users
   has_many :accounts, through: :users
   has_many :messages, through: :users
-  has_many :activities, through: :users
   has_many :templates
   has_many :rules
   has_one :candidate_persona
-
-  delegate :first_name, to: :contact, prefix: true
 
   after_create :create_candidate_persona
 
@@ -38,14 +35,6 @@ class Organization < ApplicationRecord
 
   def get_media(sid)
     messaging_client.media.get(sid)
-  end
-
-  def inbox
-    Inbox.new(organization: self)
-  end
-
-  def outstanding_activities
-    activities.outstanding
   end
 
   def conversations
