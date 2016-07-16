@@ -1,8 +1,8 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    return unless account.present? && record.user.subscribed?
+    return unless organization.present? && record.user.subscribed?
 
-    account.organization == record.organization
+    organization == record.organization
   end
 
   def new?
@@ -15,7 +15,7 @@ class MessagePolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(:user).where(users: { organization_id: account.organization.id })
+      organization.messages
     end
   end
 end

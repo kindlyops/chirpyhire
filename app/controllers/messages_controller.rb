@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
   def message_user
     @user ||= begin
       message_user = User.find(params[:user_id])
-      if UserPolicy.new(current_account, message_user).show?
+      if UserPolicy.new(current_organization, message_user).show?
         message_user
       else
         raise Pundit::NotAuthorizedError

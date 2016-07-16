@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy do
-  subject { UserPolicy.new(account, user) }
+  subject { UserPolicy.new(organization, user) }
 
   let!(:user) { create(:user) }
 
-  let(:resolved_scope) { UserPolicy::Scope.new(account, User.all).resolve }
+  let(:resolved_scope) { UserPolicy::Scope.new(organization, User.all).resolve }
 
   context "being a visitor" do
-    let(:account) { nil }
+    let(:organization) { nil }
 
     it "raises a NotAuthorizedError" do
       expect {
@@ -17,9 +17,9 @@ RSpec.describe UserPolicy do
     end
   end
 
-  context "having an account" do
-    context "account is on a different organization" do
-      let(:account) { create(:account) }
+  context "having an organization" do
+    context "user does not belong to the organization" do
+      let(:organization) { create(:organization) }
 
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
@@ -31,9 +31,8 @@ RSpec.describe UserPolicy do
       end
     end
 
-    context "account is on the same organization as the user" do
-      let(:account_user) { create(:user, organization: user.organization) }
-      let(:account) { create(:account, user: account_user) }
+    context "user belongs to organization" do
+      let(:organization) { user.organization }
 
       it { should forbid_new_and_create_actions }
       it { should forbid_edit_and_update_actions }
