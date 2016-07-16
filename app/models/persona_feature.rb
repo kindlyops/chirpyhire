@@ -39,8 +39,8 @@ template
 
   def questions
     {
-      document: "Please send a photo of your #{text}",
-      address: "What is your street address and zipcode?",
+      document: text,
+      address: text,
       choice: choice_template
     }
   end
