@@ -26,7 +26,7 @@ class ProfileAdvancer
   end
 
   def next_candidate_feature
-    @next_candidate_feature ||= candidate.features.create(persona_feature: next_persona_feature)
+    @next_candidate_feature ||= candidate.features.create(persona_feature: next_persona_feature, category: next_persona_feature.category)
   end
 
   def user

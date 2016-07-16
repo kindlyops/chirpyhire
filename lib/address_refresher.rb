@@ -25,7 +25,9 @@ class AddressRefresher
       address_feature.update(properties: Address.extract(message, {}))
       "Updated candidate feature #{address_feature.id}"
     else
-      address_feature = candidate.candidate_features.create(persona_feature: persona_feature, properties: Address.extract(message, {}))
+      address_feature = candidate.candidate_features.create(category: persona_feature.category,
+                                                            persona_feature: persona_feature,
+                                                            properties: Address.extract(message, {}))
       "Created candidate feature #{address_feature.id}"
     end
   end

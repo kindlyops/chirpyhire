@@ -3,6 +3,10 @@ FactoryGirl.define do
     candidate_feature
     message
 
+    before(:create) do |inquiry|
+      inquiry.persona_feature = inquiry.candidate_feature.persona_feature
+    end
+
     trait :with_answer do
       after(:create) do |inquiry|
         answer_message = create(:message, user: inquiry.message.user)

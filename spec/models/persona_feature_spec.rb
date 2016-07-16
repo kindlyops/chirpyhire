@@ -10,7 +10,7 @@ RSpec.describe PersonaFeature, type: :model do
       before(:each) do
 
         persona_features.each do |feature|
-          feature.candidate_features.create(candidate: candidate)
+          feature.candidate_features.create(candidate: candidate, category: feature.category)
         end
       end
 
@@ -22,7 +22,7 @@ RSpec.describe PersonaFeature, type: :model do
     context "without a candidate feature for one of the profile features" do
       before(:each) do
         feature = persona_features.first
-        feature.candidate_features.create(candidate: candidate)
+        feature.candidate_features.create(candidate: candidate, category: feature.category)
       end
 
       it "returns the profile feature" do
