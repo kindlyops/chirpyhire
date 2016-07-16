@@ -10,6 +10,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     candidate_persona: Field::BelongsTo,
     candidate_features: Field::HasMany,
+    inquiries: Field::HasMany,
     id: Field::Number,
     format: Field::String,
     name: Field::String,
@@ -27,6 +28,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :candidate_persona,
     :candidate_features,
+    :inquiries,
     :id,
     :format,
   ].freeze
@@ -36,6 +38,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :candidate_persona,
     :candidate_features,
+    :inquiries,
     :id,
     :format,
     :name,
@@ -51,6 +54,7 @@ class PersonaFeatureDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :candidate_persona,
     :candidate_features,
+    :inquiries,
     :format,
     :name,
     :properties,
