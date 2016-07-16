@@ -1,5 +1,6 @@
 class PersonaFeature < ApplicationRecord
   belongs_to :candidate_persona
+  belongs_to :category
   has_many :candidate_features
 
   validates :format, inclusion: { in: %w(document address choice) }

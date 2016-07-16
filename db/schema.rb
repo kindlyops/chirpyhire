@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716163202) do
+ActiveRecord::Schema.define(version: 20160716163432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,9 @@ ActiveRecord::Schema.define(version: 20160716163202) do
     t.jsonb    "properties",         default: "{}", null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "category_id"
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
+    t.index ["category_id"], name: "index_candidate_features_on_category_id", using: :btree
     t.index ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
@@ -148,7 +150,9 @@ ActiveRecord::Schema.define(version: 20160716163202) do
     t.datetime "updated_at",                          null: false
     t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
+    t.integer  "category_id"
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
+    t.index ["category_id"], name: "index_persona_features_on_category_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
   end
 
@@ -209,6 +213,7 @@ ActiveRecord::Schema.define(version: 20160716163202) do
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
+  add_foreign_key "candidate_features", "categories"
   add_foreign_key "candidate_features", "persona_features"
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
@@ -220,6 +225,7 @@ ActiveRecord::Schema.define(version: 20160716163202) do
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
+  add_foreign_key "persona_features", "categories"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
