@@ -2,7 +2,6 @@ class Candidate < ApplicationRecord
   paginates_per 4
 
   belongs_to :user
-  belongs_to :candidate_persona
   has_many :candidate_features
   has_many :referrals
   has_many :referrers, through: :referrals
@@ -19,10 +18,6 @@ class Candidate < ApplicationRecord
   def self.status(status)
     return self unless status.present?
     where(status: status)
-  end
-
-  def next_persona_feature
-    candidate_persona.features.next_for(self)
   end
 
   def address_feature

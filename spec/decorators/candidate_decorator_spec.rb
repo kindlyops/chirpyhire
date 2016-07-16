@@ -53,12 +53,12 @@ RSpec.describe CandidateDecorator do
       end
 
       before(:each) do
-        create(:candidate_feature, candidate: model, properties: choice_properties, persona_feature: persona_feature)
+        create(:candidate_feature, candidate: model, properties: choice_properties, category: persona_feature.category)
       end
 
       it "is an array of choices" do
         expect(candidate.choices.first.option).to eq(option)
-        expect(candidate.choices.first.category).to eq(persona_feature.name)
+        expect(candidate.choices.first.category).to eq(persona_feature.category.name)
       end
     end
 
@@ -81,12 +81,12 @@ RSpec.describe CandidateDecorator do
       end
 
       before(:each) do
-        create(:candidate_feature, candidate: model, properties: document_properties, persona_feature: persona_feature)
+        create(:candidate_feature, candidate: model, properties: document_properties, category: persona_feature.category)
       end
 
       it "is an array of documents" do
         expect(candidate.documents.first.first_page).to eq(url0)
-        expect(candidate.documents.first.category).to eq(persona_feature.name)
+        expect(candidate.documents.first.category).to eq(persona_feature.category.name)
       end
     end
 

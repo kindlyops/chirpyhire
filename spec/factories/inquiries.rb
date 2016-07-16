@@ -1,10 +1,9 @@
 FactoryGirl.define do
   factory :inquiry do
-    candidate_feature
     message
 
     before(:create) do |inquiry|
-      inquiry.persona_feature = inquiry.candidate_feature.persona_feature
+      inquiry.persona_feature = create(:persona_feature, candidate_persona: inquiry.organization.candidate_persona)
     end
 
     trait :with_answer do

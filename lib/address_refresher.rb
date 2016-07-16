@@ -26,7 +26,6 @@ class AddressRefresher
       "Updated candidate feature #{address_feature.id}"
     else
       address_feature = candidate.candidate_features.create(category: persona_feature.category,
-                                                            persona_feature: persona_feature,
                                                             properties: Address.extract(message, {}))
       "Created candidate feature #{address_feature.id}"
     end
@@ -72,7 +71,7 @@ class AddressRefresher
   end
 
   def candidate_persona
-    @candidate_persona ||= candidate.candidate_persona
+    @candidate_persona ||= candidate.organization.candidate_persona
   end
 end
 

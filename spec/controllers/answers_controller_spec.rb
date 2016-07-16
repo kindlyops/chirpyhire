@@ -23,10 +23,10 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
-    let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature) }
+    let(:candidate_feature) { create(:candidate_feature, category: persona_feature.category) }
 
     context "with an outstanding inquiry" do
-      let(:inquiry) { create(:inquiry, message: message, candidate_feature: candidate_feature) }
+      let(:inquiry) { create(:inquiry, message: message, persona_feature: persona_feature) }
 
       it "creates a AnswerHandlerJob" do
         expect {

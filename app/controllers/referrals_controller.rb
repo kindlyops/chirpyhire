@@ -40,7 +40,7 @@ to learn about opportunities."
   def candidate
     @candidate ||= begin
       return referred_user.candidate if referred_user.candidate.present?
-      referred_user.create_candidate(candidate_persona: organization.candidate_persona)
+      referred_user.create_candidate
     end
   end
 

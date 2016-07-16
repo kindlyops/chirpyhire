@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
+
   describe "#expected_format" do
     let(:messaging) { FakeMessaging.new("foo", "bar") }
     let(:from) { Faker::PhoneNumber.cell_phone }
@@ -10,9 +11,9 @@ RSpec.describe Answer, type: :model do
     let(:organization) { create(:organization, phone_number: to) }
     let(:candidate_persona) { organization.candidate_persona }
     let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
-    let(:candidate_feature) { create(:candidate_feature, persona_feature: persona_feature) }
-    let(:inquiry) { create(:inquiry, candidate_feature: candidate_feature) }
+    let(:inquiry) { create(:inquiry, persona_feature: persona_feature) }
     let(:answer) { build(:answer, inquiry: inquiry, message: create(:message, sid: message.sid)) }
+
     context "inquiry does not expect the answer's message format" do
       it "adds an inquiry error to the answer" do
         answer.valid?

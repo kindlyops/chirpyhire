@@ -6,10 +6,6 @@ class PersonaFeature < ApplicationRecord
 
   validates :format, inclusion: { in: %w(document address choice) }
 
-  def self.next_for(candidate)
-    where.not(id: candidate.features.pluck(:persona_feature_id)).where(deleted_at: nil).order(updated_at: :asc).first
-  end
-
   def question
     questions[format.to_sym]
   end

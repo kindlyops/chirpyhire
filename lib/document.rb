@@ -21,7 +21,7 @@ class Document
   end
 
   def category
-    feature.persona_feature.name
+    feature.category.name
   end
 
   def additional_uris
