@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160716150907) do
+ActiveRecord::Schema.define(version: 20160716165420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,9 @@ ActiveRecord::Schema.define(version: 20160716150907) do
     t.jsonb    "properties",         default: "{}", null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.integer  "category_id"
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
+    t.index ["category_id"], name: "index_candidate_features_on_category_id", using: :btree
     t.index ["persona_feature_id"], name: "index_candidate_features_on_persona_feature_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
@@ -83,13 +85,21 @@ ActiveRecord::Schema.define(version: 20160716150907) do
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "inquiries", force: :cascade do |t|
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "candidate_feature_id", null: false
     t.integer  "message_id",           null: false
+    t.integer  "persona_feature_id"
     t.index ["candidate_feature_id"], name: "index_inquiries_on_candidate_feature_id", using: :btree
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
+    t.index ["persona_feature_id"], name: "index_inquiries_on_persona_feature_id", using: :btree
   end
 
   create_table "media_instances", force: :cascade do |t|
@@ -142,7 +152,11 @@ ActiveRecord::Schema.define(version: 20160716150907) do
     t.datetime "updated_at",                          null: false
     t.jsonb    "properties",           default: "{}", null: false
     t.datetime "deleted_at"
+    t.integer  "category_id"
+    t.integer  "priority"
+    t.index ["candidate_persona_id", "priority"], name: "index_persona_features_on_candidate_persona_id_and_priority", unique: true, using: :btree
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
+    t.index ["category_id"], name: "index_persona_features_on_category_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
   end
 
@@ -203,17 +217,20 @@ ActiveRecord::Schema.define(version: 20160716150907) do
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
+  add_foreign_key "candidate_features", "categories"
   add_foreign_key "candidate_features", "persona_features"
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
+  add_foreign_key "inquiries", "persona_features"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
+  add_foreign_key "persona_features", "categories"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"

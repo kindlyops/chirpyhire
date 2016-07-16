@@ -1,6 +1,7 @@
 class CandidateFeature < ApplicationRecord
   belongs_to :candidate
   belongs_to :persona_feature
+  belongs_to :category
   has_many :inquiries
 
   delegate :name, to: :persona_feature, prefix: true

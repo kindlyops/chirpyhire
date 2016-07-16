@@ -10,6 +10,7 @@ class InquiryDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     message: Field::BelongsTo,
     candidate_feature: Field::BelongsTo,
+    persona_feature: Field::BelongsTo,
     answer: Field::HasOne,
     id: Field::Number,
     user_id: Field::Number,
@@ -25,6 +26,7 @@ class InquiryDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :message,
     :candidate_feature,
+    :persona_feature,
     :answer,
   ].freeze
 
@@ -33,6 +35,7 @@ class InquiryDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :message,
     :candidate_feature,
+    :persona_feature,
     :answer,
     :id,
     :user_id,
@@ -46,6 +49,7 @@ class InquiryDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :message,
     :candidate_feature,
+    :persona_feature,
     :answer,
     :user_id,
   ].freeze
