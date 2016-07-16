@@ -1,11 +1,7 @@
 class MessageDecorator < Draper::Decorator
   delegate_all
   decorates_association :user
-  delegate :name, :phone_number, to: :user, prefix: true
-
-  def subtitle
-    ""
-  end
+  delegate :phone_number, to: :user, prefix: true
 
   def contents
     return "image" if images.present?

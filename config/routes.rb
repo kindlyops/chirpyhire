@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :conversations, only: :index
 
   resources :users, only: [] do
-    resources :messages, only: [:index, :new, :create], shallow: true
+    resources :messages, only: [:index, :create], shallow: true
   end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new

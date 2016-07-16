@@ -11,16 +11,6 @@ class MessagesController < ApplicationController
     end
   end
 
-  def new
-    message = scoped_messages.build
-
-    @message = authorize message
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
-
   def create
     @message = scoped_messages.build
 

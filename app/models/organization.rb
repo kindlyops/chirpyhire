@@ -10,8 +10,6 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :candidate_persona
 
-  delegate :first_name, to: :contact, prefix: true
-
   after_create :create_candidate_persona
 
   def self.for(phone:)
@@ -37,10 +35,6 @@ class Organization < ApplicationRecord
 
   def get_media(sid)
     messaging_client.media.get(sid)
-  end
-
-  def inbox
-    Inbox.new(organization: self)
   end
 
   def conversations

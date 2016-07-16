@@ -11,11 +11,8 @@ class User < ApplicationRecord
   has_many :notifications, through: :messages
 
   delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
-  delegate :contact_first_name, to: :organization
 
   accepts_nested_attributes_for :organization
-
-  scope :with_phone_number, -> { where.not(phone_number: nil) }
 
   def outstanding_inquiry
     inquiries.unanswered.first

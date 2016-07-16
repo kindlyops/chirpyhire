@@ -5,7 +5,6 @@ class Inquiry < ApplicationRecord
   has_one :answer
   delegate :format, :persona_feature_name, to: :candidate_feature
 
-
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
   def question_name
