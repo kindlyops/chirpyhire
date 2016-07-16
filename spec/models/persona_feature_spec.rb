@@ -4,7 +4,22 @@ RSpec.describe PersonaFeature, type: :model do
 
   let(:candidate) { create(:candidate) }
   let(:candidate_persona) { candidate.organization.candidate_persona }
-  let(:persona_features) { create_list(:persona_feature, 2, candidate_persona: candidate_persona) }
+  let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
+
+  describe "#inquire" do
+    it "creates a message" do
+      expect{
+        persona_feature.inquire(candidate.user)
+      }.to change{Message.count}.by(1)
+    end
+
+    it "creates an inquiry" do
+      expect{
+        persona_feature.inquire(candidate.user)
+      }.to change{persona_feature.inquiries.count}.by(1)
+    end
+  end
+
 
   describe "#question" do
     context "document" do

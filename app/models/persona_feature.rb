@@ -9,6 +9,11 @@ class PersonaFeature < ApplicationRecord
     questions[format.to_sym]
   end
 
+  def inquire(user)
+    message = user.receive_message(body: question)
+    inquiries.create(message: message)
+  end
+
   private
 
   def choice_options_list
