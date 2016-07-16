@@ -10,7 +10,6 @@ class User < ApplicationRecord
   has_many :inquiries, through: :messages
   has_many :answers, through: :messages
   has_many :notifications, through: :messages
-  has_many :chirps, through: :messages
 
   delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
   delegate :contact_first_name, to: :organization

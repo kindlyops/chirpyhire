@@ -33,7 +33,6 @@ Rails.application.routes.draw do
       resources :users
       resources :candidate_features
       resources :answers
-      resources :chirps
       resources :inquiries
       resources :media_instances
       resources :notifications

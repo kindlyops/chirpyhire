@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715204520) do
+ActiveRecord::Schema.define(version: 20160716150451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,13 +98,6 @@ ActiveRecord::Schema.define(version: 20160715204520) do
     t.integer  "candidate_persona_id",                       null: false
     t.index ["candidate_persona_id"], name: "index_candidates_on_candidate_persona_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
-  end
-
-  create_table "chirps", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "message_id", null: false
-    t.index ["message_id"], name: "index_chirps_on_message_id", using: :btree
   end
 
   create_table "inquiries", force: :cascade do |t|
@@ -231,7 +224,6 @@ ActiveRecord::Schema.define(version: 20160715204520) do
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidates", "candidate_personas"
   add_foreign_key "candidates", "users"
-  add_foreign_key "chirps", "messages"
   add_foreign_key "inquiries", "candidate_features"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "media_instances", "messages"

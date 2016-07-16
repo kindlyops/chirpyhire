@@ -11,7 +11,6 @@ class MessageDashboard < Administrate::BaseDashboard
     activities: Field::HasMany,
     media_instances: Field::HasMany,
     user: Field::BelongsTo,
-    chirp: Field::HasOne,
     inquiry: Field::HasOne,
     answer: Field::HasOne,
     notification: Field::HasOne,
@@ -32,7 +31,6 @@ class MessageDashboard < Administrate::BaseDashboard
     :activities,
     :media_instances,
     :user,
-    :chirp,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -41,7 +39,6 @@ class MessageDashboard < Administrate::BaseDashboard
     :activities,
     :media_instances,
     :user,
-    :chirp,
     :inquiry,
     :answer,
     :notification,
@@ -60,7 +57,6 @@ class MessageDashboard < Administrate::BaseDashboard
     :activities,
     :media_instances,
     :user,
-    :chirp,
     :inquiry,
     :answer,
     :notification,

@@ -5,7 +5,6 @@ class Message < ApplicationRecord
   has_many :media_instances
 
   belongs_to :user
-  has_one :chirp
   has_one :inquiry
   has_one :answer
   has_one :notification
