@@ -25,7 +25,7 @@ RSpec.describe PersonaFeature, type: :model do
     context "document" do
       let(:document_persona_feature) { create(:persona_feature, candidate_persona: candidate_persona, format: :document) }
       it "returns a question for the format" do
-        expect(document_persona_feature.question).to eq("Please send a photo of your #{document_persona_feature.name}")
+        expect(document_persona_feature.question).to eq("Please send a photo of your #{document_persona_feature.text}")
       end
     end
 
