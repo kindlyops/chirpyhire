@@ -36,10 +36,10 @@ if Rails.env.development?
   Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
 
-  unless org.candidate_persona.features.present?
-    org.candidate_persona.features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", name: "Address and Zipcode")
-    org.candidate_persona.features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", name: "TB Test")
-    org.candidate_persona.features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", name: "CNA License")
+  unless org.candidate_persona.persona_features.present?
+    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode")
+    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", text: "TB Test")
+    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "CNA License")
     puts "Created Profile Features"
   end
 
