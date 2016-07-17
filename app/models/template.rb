@@ -1,7 +1,8 @@
 class Template < ApplicationRecord
   belongs_to :organization
-  has_one :rules, as: :action
   has_many :notifications
+  belongs_to :actionable
+  before_create :create_actionable
 
   def render(user)
     Renderer.call(self, user)
