@@ -7,8 +7,6 @@ FactoryGirl.define do
       format :text
     end
 
-    before(:create) do |rule, evaluator|
-      rule.action = create(:template, organization: rule.organization)
-    end
+    actionable
   end
 end
