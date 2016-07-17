@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Rule, type: :model do
   describe "#perform" do
     let(:template) { create(:template) }
-    let(:rule) { create(:rule, actionable: template.actionable) }
+    let(:actionable) { template.create_actionable }
+    let(:rule) { create(:rule, actionable: actionable) }
     let(:user) { create(:user) }
 
     it "performs the action" do
