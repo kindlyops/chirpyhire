@@ -1,12 +1,12 @@
 class Rule < ApplicationRecord
   TRIGGERS = %w(subscribe screen answer)
-  belongs_to :action, polymorphic: true
   belongs_to :organization
   belongs_to :actionable
 
-  delegate :perform, to: :action
+  def perform(user)
+    actionable.becomes(actionable.type.constantize).perform(user)
+  end
 
-  validates :organization, :action, presence: true
-  validates :action_type, inclusion: { in: %w(Template CandidatePersona) }
+  validates :organization, :actionable, presence: true
   validates :trigger, inclusion: { in: TRIGGERS }
 end
