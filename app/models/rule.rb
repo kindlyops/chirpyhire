@@ -4,7 +4,11 @@ class Rule < ApplicationRecord
   belongs_to :actionable
 
   def perform(user)
-    actionable.becomes(actionable.type.constantize).perform(user)
+    actionable.perform(user)
+  end
+
+  def actionable
+    super.becomes(super.type.constantize)
   end
 
   validates :organization, :actionable, presence: true
