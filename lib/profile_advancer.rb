@@ -1,29 +1,25 @@
 class ProfileAdvancer
 
-  def self.call(candidate)
-    new(candidate).call
+  def self.call(user)
+    new(user).call
   end
 
-  def initialize(candidate)
-    @candidate = candidate
+  def initialize(user)
+    @user = user
   end
 
   def call
     if next_unasked_question.present? && user.subscribed?
       next_unasked_question.inquire(user)
     else
-      candidate.update(status: "Screened")
+      user.candidate.update(status: "Screened")
       AutomatonJob.perform_later(user, "screen")
     end
   end
 
   private
 
-  attr_reader :candidate
-
-  def user
-    @user ||= candidate.user
-  end
+  attr_reader :user
 
   def organization
     user.organization

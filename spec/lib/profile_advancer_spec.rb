@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
-  let(:candidate) { create(:candidate) }
+  let(:user) { create(:user, :with_candidate) }
   let(:candidate_persona) { candidate.organization.candidate_persona }
-  let(:user) { candidate.user }
+  let(:candidate) { user.candidate }
 
   describe ".call" do
     context "with an undetermined or stale profile feature" do
@@ -20,13 +20,13 @@ RSpec.describe ProfileAdvancer do
 
         it "does not create an inquiry of the next candidate feature" do
           expect {
-            ProfileAdvancer.call(user.candidate)
+            ProfileAdvancer.call(user)
           }.not_to change{user.inquiries.count}
         end
 
         it "does not create a message" do
           expect {
-            ProfileAdvancer.call(user.candidate)
+            ProfileAdvancer.call(user)
           }.not_to change{Message.count}
         end
       end
@@ -38,13 +38,13 @@ RSpec.describe ProfileAdvancer do
 
         it "creates an inquiry of the next candidate feature" do
           expect {
-            ProfileAdvancer.call(user.candidate)
+            ProfileAdvancer.call(user)
           }.to change{user.inquiries.count}.by(1)
         end
 
         it "creates a message" do
           expect {
-            ProfileAdvancer.call(user.candidate)
+            ProfileAdvancer.call(user)
           }.to change{Message.count}.by(1)
         end
       end
@@ -53,13 +53,13 @@ RSpec.describe ProfileAdvancer do
     context "with all profile features present" do
       it "creates an AutomatonJob for the screen event" do
         expect{
-          ProfileAdvancer.call(user.candidate)
+          ProfileAdvancer.call(user)
         }.to have_enqueued_job(AutomatonJob).with(user, "screen")
       end
 
       it "changes the candidate's status to Screened" do
         expect{
-          ProfileAdvancer.call(user.candidate)
+          ProfileAdvancer.call(user)
         }.to change{candidate.status}.from("Potential").to("Screened")
       end
     end
