@@ -4,10 +4,10 @@ class SubscriptionsController < SmsController
       sender.receive_message(body: already_subscribed)
     else
       ApplicationRecord.transaction do
-        sender.receive_message(body: subscription_notice)
         sender.update(subscribed: true)
-        ensure_candidate
         AutomatonJob.perform_later(sender, "subscribe")
+        ensure_candidate
+        sender.receive_message(body: subscription_notice)
       end
     end
     head :ok
