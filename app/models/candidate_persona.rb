@@ -1,7 +1,7 @@
 class CandidatePersona < ApplicationRecord
   belongs_to :organization
-  belongs_to :actionable
   has_many :persona_features
+  belongs_to :actionable, class_name: "CandidatePersonaActionable", foreign_key: :actionable_id
   before_create :create_actionable
 
   def perform(user)
