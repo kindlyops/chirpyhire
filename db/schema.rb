@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717001258) do
+ActiveRecord::Schema.define(version: 20160717011503) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20160717001258) do
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "actionable_id"
+    t.integer  "actionable_id",   null: false
     t.index ["actionable_id"], name: "index_candidate_personas_on_actionable_id", using: :btree
     t.index ["organization_id"], name: "index_candidate_personas_on_organization_id", unique: true, using: :btree
   end
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20160717001258) do
     t.boolean  "enabled",         default: true, null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.integer  "actionable_id"
+    t.integer  "actionable_id",                  null: false
     t.index ["action_type", "action_id"], name: "index_rules_on_action_type_and_action_id", using: :btree
     t.index ["actionable_id"], name: "index_rules_on_actionable_id", using: :btree
     t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
@@ -200,7 +200,7 @@ ActiveRecord::Schema.define(version: 20160717001258) do
     t.integer  "organization_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "actionable_id"
+    t.integer  "actionable_id",   null: false
     t.index ["actionable_id"], name: "index_templates_on_actionable_id", using: :btree
     t.index ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
     t.index ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
