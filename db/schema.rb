@@ -160,12 +160,10 @@ ActiveRecord::Schema.define(version: 20160718181254) do
     t.datetime "deleted_at"
     t.integer  "category_id",                         null: false
     t.integer  "priority",                            null: false
-    t.integer  "template_id"
     t.index ["candidate_persona_id", "priority"], name: "index_persona_features_on_candidate_persona_id_and_priority", unique: true, using: :btree
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["category_id"], name: "index_persona_features_on_category_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
-    t.index ["template_id"], name: "index_persona_features_on_template_id", using: :btree
   end
 
   create_table "referrals", force: :cascade do |t|
@@ -239,7 +237,6 @@ ActiveRecord::Schema.define(version: 20160718181254) do
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "persona_features", "categories"
-  add_foreign_key "persona_features", "templates"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
