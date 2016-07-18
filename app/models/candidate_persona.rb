@@ -8,10 +8,6 @@ class CandidatePersona < ApplicationRecord
     ProfileAdvancer.call(user)
   end
 
-  def template
-    super || set_template
-  end
-
   private
 
   def set_template
