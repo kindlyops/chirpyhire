@@ -32,6 +32,7 @@ class Organization < ApplicationRecord
     Message.new(sid: sent_message.sid,
                 body: sent_message.body,
                 sent_at: sent_message.date_sent,
+                external_created_at: sent_message.date_created,
                 direction: sent_message.direction)
   end
 

@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
 
   def index
-    @messages = scoped_messages.order(sent_at: :desc).page(params.fetch(:page, 1))
+    @messages = scoped_messages.order(sent_at: :desc, external_created_at: :desc).page(params.fetch(:page, 1))
 
     respond_to do |format|
       format.html {}

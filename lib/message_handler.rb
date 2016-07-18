@@ -31,6 +31,7 @@ class MessageHandler
       body: external_message.body,
       direction: external_message.direction,
       sent_at: external_message.date_sent,
+      external_created_at: external_message.date_created,
       user: sender
     )
   end
