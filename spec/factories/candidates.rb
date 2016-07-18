@@ -17,6 +17,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_address do
+      after(:create) do |candidate|
+        create(:candidate_feature, :address, candidate: candidate)
+      end
+    end
+
     trait :with_referral do
       after(:create) do |candidate|
         referrer = create(:referrer)

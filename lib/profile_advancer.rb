@@ -36,7 +36,7 @@ class ProfileAdvancer
   end
 
   def answer_rejected?
-    AnswerRejector.new(candidate, last_persona_feature, last_answer).call
+    AnswerRejector.new(candidate, last_persona_feature).call
   end
 
   def last_persona_feature
