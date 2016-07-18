@@ -13,7 +13,7 @@ class ProfileAdvancer
 
     if answer_rejected?
       candidate.update(status: "Bad Fit")
-      send_unacceptable_notification
+      send_bad_fit_notification
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
@@ -47,7 +47,7 @@ class ProfileAdvancer
     @next_unasked_question ||= organization.next_unasked_question_for(user)
   end
 
-  def send_unacceptable_notification
+  def send_bad_fit_notification
     last_persona_feature.template.perform(user)
   end
 end

@@ -8,13 +8,6 @@ class CandidateDecorator < Draper::Decorator
     Candidate::STATUSES
   end
 
-  def address
-    @address ||= begin
-      return NullAddress.new unless address_feature.present?
-      Address.new(address_feature)
-    end
-  end
-
   def choices
     @choices ||= begin
       return [] unless choice_features.present?

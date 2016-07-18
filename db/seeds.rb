@@ -37,7 +37,7 @@ if Rails.env.development?
   puts "Created Referrer"
 
   unless org.candidate_persona.persona_features.present?
-    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode")
+    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
     org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", text: "TB Test")
     org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "CNA License")
     puts "Created Profile Features"

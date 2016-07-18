@@ -17,6 +17,6 @@ class CandidatePersona < ApplicationRecord
   def set_template
     create_template(organization: organization,
                     name: "Bad Fit Message - Default",
-                    body: "Thanks for your interest. Unfortunately, we don't have a good fit for you at this time but will reach out if anything changes.")
+                    body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
   end
 end
