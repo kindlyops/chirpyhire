@@ -13,17 +13,19 @@ $(document).on("turbolinks:load", function() {
     var newSearch, queryParamRegExp;
     var search = location.search;
     var queryParam = this.name + "=" + this.value;
+    newSearch = search.replace(/\?page=\d/, "?").replace(/&page=\d/, "");
 
-    if (!search) {
+    if (!newSearch) {
       Turbolinks.visit(location.pathname + "?" + queryParam);
     } else {
       queryParamRegExp = new RegExp("(" + this.name + "=[^\&]+)");
 
-      if (search.match(queryParamRegExp)) {
-        newSearch = search.replace(queryParamRegExp, queryParam);
+      if (newSearch.match(queryParamRegExp)) {
+        newSearch = newSearch.replace(queryParamRegExp, queryParam);
       } else {
-        newSearch = search + "&" + queryParam;
+        newSearch = newSearch + "&" + queryParam;
       }
+
       Turbolinks.visit(location.pathname + newSearch);
     }
   });
