@@ -36,17 +36,18 @@ if Rails.env.development?
   Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
 
-  unless org.candidate_persona.persona_features.present?
-    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
-    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", text: "TB Test")
-    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "CNA License")
-    puts "Created Profile Features"
-  end
-
   unless org.templates.present?
     welcome = org.templates.create!(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
     thank_you = org.templates.create!(name: "Thank You", body: "Thanks for your interest!")
     puts "Created Templates"
+  end
+
+  unless org.candidate_persona.persona_features.present?
+    org.candidate_persona.create_template(organization: org, name: "Bad Fit - Default", body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
+    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
+    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", text: "TB Test")
+    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "CNA License")
+    puts "Created Profile Features"
   end
 
   unless org.rules.present?
