@@ -1,6 +1,7 @@
 class PersonaFeature < ApplicationRecord
   belongs_to :candidate_persona
   belongs_to :category
+  belongs_to :template
   has_many :inquiries
 
   validates :format, inclusion: { in: %w(document address choice) }
@@ -12,6 +13,14 @@ class PersonaFeature < ApplicationRecord
   def inquire(user)
     message = user.receive_message(body: question)
     inquiries.create(message: message)
+  end
+
+  def rejects?(answer)
+    # TODO
+  end
+
+  def template
+    super || candidate_persona.template
   end
 
   private

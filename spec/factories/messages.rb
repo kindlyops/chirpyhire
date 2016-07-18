@@ -9,5 +9,9 @@ FactoryGirl.define do
         create(:media_instance, message: message)
       end
     end
+
+    trait :with_address do
+      body "4059 Mt Lee Dr 90068"
+    end
   end
 end

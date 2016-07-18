@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717011947) do
+ActiveRecord::Schema.define(version: 20160718181254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,8 +78,10 @@ ActiveRecord::Schema.define(version: 20160717011947) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "actionable_id"
+    t.integer  "template_id"
     t.index ["actionable_id"], name: "index_candidate_personas_on_actionable_id", using: :btree
     t.index ["organization_id"], name: "index_candidate_personas_on_organization_id", unique: true, using: :btree
+    t.index ["template_id"], name: "index_candidate_personas_on_template_id", using: :btree
   end
 
   create_table "candidates", force: :cascade do |t|
@@ -158,10 +160,12 @@ ActiveRecord::Schema.define(version: 20160717011947) do
     t.datetime "deleted_at"
     t.integer  "category_id",                         null: false
     t.integer  "priority",                            null: false
+    t.integer  "template_id"
     t.index ["candidate_persona_id", "priority"], name: "index_persona_features_on_candidate_persona_id_and_priority", unique: true, using: :btree
     t.index ["candidate_persona_id"], name: "index_persona_features_on_candidate_persona_id", using: :btree
     t.index ["category_id"], name: "index_persona_features_on_category_id", using: :btree
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
+    t.index ["template_id"], name: "index_persona_features_on_template_id", using: :btree
   end
 
   create_table "referrals", force: :cascade do |t|
@@ -225,6 +229,7 @@ ActiveRecord::Schema.define(version: 20160717011947) do
   add_foreign_key "candidate_features", "categories"
   add_foreign_key "candidate_personas", "actionables"
   add_foreign_key "candidate_personas", "organizations"
+  add_foreign_key "candidate_personas", "templates"
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "persona_features"
@@ -234,6 +239,7 @@ ActiveRecord::Schema.define(version: 20160717011947) do
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "persona_features", "categories"
+  add_foreign_key "persona_features", "templates"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
