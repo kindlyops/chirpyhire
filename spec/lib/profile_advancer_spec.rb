@@ -67,7 +67,7 @@ RSpec.describe ProfileAdvancer do
 
         context "and the last answer was unacceptable" do
           before(:each) do
-            allow_any_instance_of(PersonaFeature).to receive(:rejects?).and_return(true)
+            allow_any_instance_of(ProfileAdvancer).to receive(:answer_rejected?).and_return(true)
           end
 
           let(:message) { create(:message, :with_image, user: user) }

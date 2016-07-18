@@ -11,13 +11,13 @@ class ProfileAdvancer
   def call
     return unless user.subscribed?
 
-    if last_persona_feature.rejects?(last_answer)
-      user.candidate.update(status: "Bad Fit")
+    if answer_rejected?
+      candidate.update(status: "Bad Fit")
       send_unacceptable_notification
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      user.candidate.update(status: "Screened")
+      candidate.update(status: "Screened")
       AutomatonJob.perform_later(user, "screen")
     end
   end
@@ -29,6 +29,14 @@ class ProfileAdvancer
 
   def organization
     user.organization
+  end
+
+  def candidate
+    @candidate ||= user.candidate
+  end
+
+  def answer_rejected?
+    AnswerRejector.new(candidate, last_persona_feature, last_answer).call
   end
 
   def last_persona_feature

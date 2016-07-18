@@ -20,6 +20,11 @@ class Candidate < ApplicationRecord
     where(status: status)
   end
 
+  def address
+    return NullAddress.new unless address_feature.present?
+    Address.new(address_feature)
+  end
+
   def address_feature
     candidate_features.where("properties->>'child_class' = ?", "address").first
   end

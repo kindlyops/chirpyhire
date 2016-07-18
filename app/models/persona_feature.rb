@@ -15,12 +15,21 @@ class PersonaFeature < ApplicationRecord
     inquiries.create(message: message)
   end
 
-  def rejects?(answer)
-    # TODO
-  end
-
   def template
     super || candidate_persona.template
+  end
+
+  def has_geofence?
+    properties['distance'].present?
+  end
+
+  def distance_in_miles
+    properties['distance']
+  end
+
+  def coordinates
+    return [] unless properties['latitude'] && properties['longitude']
+    [properties['latitude'], properties['longitude']]
   end
 
   private
