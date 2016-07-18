@@ -1,6 +1,7 @@
 class Template < ApplicationRecord
   belongs_to :organization
   has_many :notifications
+  has_one :candidate_persona
   belongs_to :actionable, foreign_key: :actionable_id, class_name: "TemplateActionable", inverse_of: :template
 
   def render(user)

@@ -53,6 +53,7 @@ RSpec.describe ProfileAdvancer do
         before(:each) do
           create(:persona_feature, candidate_persona: candidate_persona)
         end
+
         it "creates an inquiry of the next candidate feature" do
           expect {
             ProfileAdvancer.call(user)
@@ -69,32 +70,41 @@ RSpec.describe ProfileAdvancer do
           before(:each) do
             allow_any_instance_of(ProfileAdvancer).to receive(:answer_rejected?).and_return(true)
           end
-
+          let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
+          let(:inquiry) { create(:inquiry, persona_feature: persona_feature) }
           let(:message) { create(:message, :with_image, user: user) }
-          let!(:answer) { create(:answer, message: message) }
+          let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
 
-          it "does not create an inquiry of the next candidate feature" do
-            expect {
-              ProfileAdvancer.call(user)
-            }.not_to change{user.inquiries.count}
-          end
+          context "with a template for the candidate persona" do
+            before(:each) do
+              candidate_persona.create_template(organization: candidate.organization,
+                    name: "Bad Fit Message - Default",
+                    body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
+            end
 
-          it "creates a notification" do
-            expect {
-              ProfileAdvancer.call(user)
-            }.to change{user.notifications.count}.by(1)
-          end
+            it "does not create an inquiry of the next candidate feature" do
+              expect {
+                ProfileAdvancer.call(user)
+              }.not_to change{user.inquiries.count}
+            end
 
-          it "creates a message" do
-            expect {
-              ProfileAdvancer.call(user)
-            }.to change{Message.count}.by(1)
-          end
+            it "creates a notification" do
+              expect {
+                ProfileAdvancer.call(user)
+              }.to change{user.notifications.count}.by(1)
+            end
 
-          it "changes the candidate's status to Bad Fit" do
-            expect{
-              ProfileAdvancer.call(user)
-            }.to change{candidate.status}.from("Potential").to("Bad Fit")
+            it "creates a message" do
+              expect {
+                ProfileAdvancer.call(user)
+              }.to change{Message.count}.by(1)
+            end
+
+            it "changes the candidate's status to Bad Fit" do
+              expect{
+                ProfileAdvancer.call(user)
+              }.to change{candidate.status}.from("Potential").to("Bad Fit")
+            end
           end
         end
       end
