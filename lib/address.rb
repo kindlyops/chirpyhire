@@ -18,6 +18,11 @@ class Address
     @feature = feature
   end
 
+  def coordinates
+    return [] unless latitude.present? && longitude.present?
+    [latitude, longitude]
+  end
+
   def latitude
     feature['properties']['latitude']
   end

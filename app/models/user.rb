@@ -18,6 +18,10 @@ class User < ApplicationRecord
     inquiries.unanswered.first
   end
 
+  def last_answer
+    answers.order(:created_at).last || NullAnswer.new
+  end
+
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
     message.user = self

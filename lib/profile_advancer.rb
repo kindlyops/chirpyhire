@@ -9,10 +9,15 @@ class ProfileAdvancer
   end
 
   def call
-    if next_unasked_question.present? && user.subscribed?
+    return unless user.subscribed?
+
+    if answer_rejected?
+      candidate.update(status: "Bad Fit")
+      send_bad_fit_notification
+    elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      user.candidate.update(status: "Screened")
+      candidate.update(status: "Screened")
       AutomatonJob.perform_later(user, "screen")
     end
   end
@@ -20,12 +25,29 @@ class ProfileAdvancer
   private
 
   attr_reader :user
+  delegate :last_answer, to: :user
 
   def organization
     user.organization
   end
 
+  def candidate
+    @candidate ||= user.candidate
+  end
+
+  def answer_rejected?
+    AnswerRejector.new(candidate, last_persona_feature).call
+  end
+
+  def last_persona_feature
+    @last_persona_feature ||= last_answer.persona_feature
+  end
+
   def next_unasked_question
     @next_unasked_question ||= organization.next_unasked_question_for(user)
+  end
+
+  def send_bad_fit_notification
+    last_persona_feature.template.perform(user)
   end
 end

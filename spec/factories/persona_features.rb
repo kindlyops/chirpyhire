@@ -11,5 +11,10 @@ FactoryGirl.define do
       text "What is your availability?"
       properties { { choice_options: { 'a' => 'Live-in', 'b' => 'Hourly', 'c' => 'Both' } } }
     end
+
+    trait :with_geofence do
+      format "address"
+      properties { { distance: 20, latitude: 38.028531, longitude: -78.473088 } }
+    end
   end
 end
