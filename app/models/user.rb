@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def last_answer
-    answers.order(:updated_at).last || NullAnswer.new
+    answers.order(:created_at).last || NullAnswer.new
   end
 
   def receive_message(body:)
