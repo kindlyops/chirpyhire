@@ -9,7 +9,9 @@ class ProfileAdvancer
   end
 
   def call
-    if next_unasked_question.present? && user.subscribed?
+    return unless user.subscribed?
+
+    if next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
       user.candidate.update(status: "Screened")

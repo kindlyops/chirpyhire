@@ -29,6 +29,18 @@ RSpec.describe ProfileAdvancer do
             ProfileAdvancer.call(user)
           }.not_to change{Message.count}
         end
+
+        it "does not create an AutomatonJob for the screen event" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to have_enqueued_job(AutomatonJob)
+        end
+
+        it "does not change the candidate's status to Screened" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to change{candidate.status}
+        end
       end
 
       context "when the user is subscribed" do
@@ -50,7 +62,11 @@ RSpec.describe ProfileAdvancer do
       end
     end
 
-    context "with all profile features present" do
+    context "with all profile features present and user is subscribed" do
+      before(:each) do
+        user.update(subscribed: true)
+      end
+
       it "creates an AutomatonJob for the screen event" do
         expect{
           ProfileAdvancer.call(user)
