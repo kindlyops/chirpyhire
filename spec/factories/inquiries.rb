@@ -4,7 +4,7 @@ FactoryGirl.define do
 
     before(:create) do |inquiry|
       unless inquiry.persona_feature.present?
-        inquiry.persona_feature = create(:persona_feature, candidate_persona: inquiry.organization.candidate_persona)
+        inquiry.persona_feature = create(:persona_feature, candidate_persona: inquiry.organization.create_candidate_persona)
       end
     end
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  let!(:organization) { create(:organization, :with_account) }
+  let!(:organization) { create(:organization, :with_account, :with_candidate_persona) }
 
   describe ".for" do
     let(:organization) { create(:organization) }

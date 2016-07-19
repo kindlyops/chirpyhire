@@ -9,7 +9,7 @@ RSpec.describe Answer, type: :model do
     let(:message) { messaging.create(from: from, to: to, body: "", format: :text) }
 
     let(:organization) { create(:organization, phone_number: to) }
-    let(:candidate_persona) { organization.candidate_persona }
+    let(:candidate_persona) { organization.create_candidate_persona }
     let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
     let(:inquiry) { create(:inquiry, persona_feature: persona_feature) }
     let(:answer) { build(:answer, inquiry: inquiry, message: create(:message, sid: message.sid)) }

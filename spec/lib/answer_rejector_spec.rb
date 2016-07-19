@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswerRejector do
   let(:candidate) { create(:candidate) }
-  let(:candidate_persona) { candidate.organization.candidate_persona }
+  let(:candidate_persona) { candidate.organization.create_candidate_persona }
   let(:answer_rejector) { AnswerRejector.new(candidate, persona_feature) }
 
   describe "#call" do
