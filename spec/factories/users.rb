@@ -13,10 +13,6 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_contact do
-      contact { true }
-    end
-
     trait :with_candidate do
       after(:create) do |user|
         create(:candidate, user: user)

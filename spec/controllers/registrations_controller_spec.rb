@@ -46,10 +46,5 @@ RSpec.describe RegistrationsController, type: :controller do
         post :create, params: account_params
       }.to change{User.count}.by(1)
     end
-
-    it "creates a contact user" do
-      post :create, params: account_params
-      expect(Account.find_by(email: email).user.contact?).to eq(true)
-    end
   end
 end

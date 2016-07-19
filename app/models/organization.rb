@@ -16,10 +16,6 @@ class Organization < ApplicationRecord
     find_by(phone_number: phone)
   end
 
-  def contact
-    users.find_by(contact: true)
-  end
-
   def next_unasked_question_for(user)
     questions = candidate_persona.persona_features
     ids = user.inquiries.pluck(:persona_feature_id)
