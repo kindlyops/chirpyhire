@@ -8,6 +8,7 @@ class AnswerFormatter
     return "document" if message.has_images?
     return "address" if message.has_address?
     return "choice" if message.has_choice?(choices)
+    "unknown format"
   end
 
   private
