@@ -15,6 +15,14 @@ class Message < ApplicationRecord
     media_instances
   end
 
+  def images
+    media_instances.images
+  end
+
+  def inbound?
+    direction == "inbound"
+  end
+
   def has_images?
     return media_instances.any?(&:image?) unless persisted?
     media_instances.images.present?
@@ -25,20 +33,12 @@ class Message < ApplicationRecord
     address.found?
   end
 
-  def has_choice?
-    return false unless body.present?
-    /\A([a-z]){1}\)?\z/ === body.strip.downcase
+  def has_choice?(choices)
+    return false unless body.present? && choices.present?
+    Regexp.new("\\A([#{choices}]){1}\\)?\\z") === body.strip.downcase
   end
 
   def address
     @address ||= AddressFinder.new(body)
-  end
-
-  def images
-    media_instances.images
-  end
-
-  def inbound?
-    direction == "inbound"
   end
 end

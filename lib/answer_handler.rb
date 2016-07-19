@@ -63,6 +63,6 @@ class AnswerHandler
   end
 
   def property_extractor
-    answer.format.titlecase.constantize
+    AnswerFormatter.new(answer, persona_feature).format.titlecase.constantize
   end
 end
