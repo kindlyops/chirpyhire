@@ -6,7 +6,7 @@ RSpec.describe CandidateDecorator do
 
   describe "#choices" do
     context "with choices" do
-      let(:persona_feature) { create(:persona_feature, :choice, candidate_persona: model.organization.candidate_persona) }
+      let(:persona_feature) { create(:persona_feature, :choice, candidate_persona: model.organization.create_candidate_persona) }
       let(:option) { "Live-in" }
       let(:choice_properties) do
         {
@@ -34,7 +34,7 @@ RSpec.describe CandidateDecorator do
 
   describe "#documents" do
     context "with documents" do
-      let(:persona_feature) { create(:persona_feature, candidate_persona: model.organization.candidate_persona) }
+      let(:persona_feature) { create(:persona_feature, candidate_persona: model.organization.create_candidate_persona) }
       let(:url0) { "http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" }
       let(:document_properties) do
         {

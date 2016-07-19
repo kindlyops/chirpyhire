@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PersonaFeature, type: :model do
 
   let(:candidate) { create(:candidate) }
-  let(:candidate_persona) { candidate.organization.candidate_persona }
+  let(:candidate_persona) { candidate.organization.create_candidate_persona }
   let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
 
   describe "#inquire" do

@@ -10,14 +10,8 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :candidate_persona
 
-  after_create :create_candidate_persona
-
   def self.for(phone:)
     find_by(phone_number: phone)
-  end
-
-  def contact
-    users.find_by(contact: true)
   end
 
   def next_unasked_question_for(user)

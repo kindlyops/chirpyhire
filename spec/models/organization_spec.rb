@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  let!(:organization) { create(:organization, :with_contact) }
-  let(:contact) { organization.users.find_by(contact: true) }
+  let!(:organization) { create(:organization, :with_account, :with_candidate_persona) }
 
   describe ".for" do
     let(:organization) { create(:organization) }
@@ -51,12 +50,6 @@ RSpec.describe Organization, type: :model do
       expect{
         organization.send_message(to: user.phone_number, body: "Test")
       }.to change{FakeMessaging.messages.count}.by(1)
-    end
-  end
-
-  describe "#contact" do
-    it "returns the contact user" do
-      expect(organization.contact).to eq(contact)
     end
   end
 end
