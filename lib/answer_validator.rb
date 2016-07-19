@@ -1,4 +1,4 @@
-class AnswerValidator < ActiveModel::Validator
+class AnswerValidator
 
   def initialize(answer)
     @answer = answer
