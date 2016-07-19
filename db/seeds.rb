@@ -44,9 +44,9 @@ if Rails.env.development?
 
   unless org.candidate_persona.persona_features.present?
     org.candidate_persona.create_template(organization: org, name: "Bad Fit - Default", body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
-    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "Address and Zipcode", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
-    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "TB Test"), format: "document", text: "TB Test")
-    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "CNA License")
+    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "What is your address and zipcode?", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
+    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "Availability"), format: "choice", text: "What is your availability?", properties: { choice_options: { a: "Live-in", b: "Hourly", c: "Both" }})
+    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 
@@ -58,86 +58,13 @@ if Rails.env.development?
     puts "Created Rules"
   end
 
-  # unless user.activities.present?
-  #   raw_messages = org.send(:messaging_client).messages.list.select do |message|
-  #     message.direction == "inbound"
-  #   end
-
-  #   bodies = ["Will my CNA license from Florida transfer?",
-  #             "Will you hire me if I just have my PCA?"]
-
-  #   NEEDED_SIDS = ["MMcb3589b5256ee750a86f05dc5e418e31", "SM3ca817b0df3d27e633d0eaa111d5561c", "SM141d3c61f986414fb8db473078e68b24"]
-
-  #   needed_messages = raw_messages.select{|m| NEEDED_SIDS.include?(m.sid) }
-  #   needed_messages.each do |message|
-  #     MessageHandler.call(user, Messaging::Message.new(message))
-  #   end
-
-  #   ok_messages = raw_messages.reject{|m| NEEDED_SIDS.include?(m.sid) }
-
-  #   2.times do |i|
-
-  #     message = MessageHandler.call(user, Messaging::Message.new(ok_messages[i]))
-  #     message.update!(body: bodies[i], created_at: rand(6.hours.ago..Time.now))
-
-  #     FactoryGirl.create!(:activity, user: user, trackable: message)
-  #   end
-
-  #   FactoryGirl.create!(:activity, user: user, trackable: user.candidate)
-  #   puts "Created Tasks"
-  # end
-
-  # unless user.inquiries.present?
-  #   candidate_persona = org.candidate_persona
-  #   inquiry = ProfileAdvancer.call(user.candidate)
-  #   sids = {
-  #     document: "MMcb3589b5256ee750a86f05dc5e418e31",
-  #     address: "SM3ca817b0df3d27e633d0eaa111d5561c"
-  #   }
-  #   first_answer_message = Message.find_by(sid: sids[inquiry.format.to_sym])
-  #   first_answer_message.update!(created_at: 4.hours.ago)
-  #   inquiry.message.update!(created_at: 4.hours.ago - 5.minutes)
-  #   inquiry.create_answer!(message: first_answer_message)
-  #   inquiry = ProfileAdvancer.call(user.candidate)
-  #   second_answer_message = Message.find_by(sid: sids[inquiry.format.to_sym])
-  #   second_answer_message.update!(created_at: 3.hours.ago)
-  #   inquiry.message.update!(created_at: 3.hours.ago - 5.minutes)
-  #   address_answer = inquiry.create_answer!(message: second_answer_message)
-
-  #   candidate.candidate_features.last.update!(properties: Address.extract(second_answer_message))
-
-  #   puts "Created Inquiries, Answers"
-  # end
-
-  # unless user.notifications.present?
-  #   thank_you = org.templates.find_by(body: "Thanks for your interest!")
-  #   thank_you_sid = "SM141d3c61f986414fb8db473078e68b24"
-
-  #   thank_you_message = Message.find_or_create_by!(user: user, sid: thank_you_sid, body: thank_you.body, direction: "outbound-api")
-  #   thank_you_message.update!(created_at: 2.hours.ago)
-  #   thank_you.notifications.create!(message: thank_you_message)
-
-  #   puts "Created Notification"
-  # end
+  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Bad Fit", organization: org)
+  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Qualified", organization: org)
+  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Potential", organization: org)
+  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Screened", organization: org)
 
   puts "Development specific seeding completed"
 end
 
 puts "Seed completed"
-
-
-### Pilot Seed ###
-
-# organization = Organization.find_by(name:)
-# organization.update(twilio_account_sid:,twilio_auth_token:,phone_number:)
-
-# welcome = organization.templates.create!(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-# thank_you = organization.templates.create!(name: "Thank You", body: "Thanks for your interest!")
-
-# subscribe_rule = organization.rules.create!(trigger: "subscribe", action: welcome)
-# subscribe_rule_2 = organization.rules.create!(trigger: "subscribe", action: organization.candidate_persona)
-# answer_rule = organization.rules.create!(trigger: "answer", action: organization.candidate_persona)
-# screen_rule = organization.rules.create!(trigger: "screen", action: thank_you)
-
-# organization.candidate_persona.features.create!(format:, name:)
 
