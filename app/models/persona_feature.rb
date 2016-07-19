@@ -28,6 +28,14 @@ class PersonaFeature < ApplicationRecord
     [properties['latitude'], properties['longitude']]
   end
 
+  def has_choices?
+    properties['choice_options'].present?
+  end
+
+  def choice_options_letters
+    properties['choice_options'].keys
+  end
+
   private
 
   def choice_options_list
@@ -36,8 +44,8 @@ class PersonaFeature < ApplicationRecord
     end
   end
 
-  def choice_options_letters
-    properties['choice_options'].keys.to_sentence(last_word_connector: ", or ", two_words_connector: " or ")
+  def choice_options_letters_sentence
+    choice_options_letters.to_sentence(last_word_connector: ", or ", two_words_connector: " or ")
   end
 
   def choice_template
@@ -47,7 +55,7 @@ class PersonaFeature < ApplicationRecord
 
 #{choice_options_list}
 
-Please reply with just the letter #{choice_options_letters}.
+Please reply with just the letter #{choice_options_letters_sentence}.
 template
   end
 

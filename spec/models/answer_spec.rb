@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
 
-  describe "#expected_format" do
+  describe "#validation" do
     let(:messaging) { FakeMessaging.new("foo", "bar") }
     let(:from) { Faker::PhoneNumber.cell_phone }
     let(:to) { Faker::PhoneNumber.cell_phone }
