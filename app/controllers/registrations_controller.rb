@@ -8,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super { |account| account.user.contact = true }
+    super { |account| Registrar.new(account).register }
   end
 
   private
