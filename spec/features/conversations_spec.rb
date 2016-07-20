@@ -29,6 +29,11 @@ RSpec.feature "Conversations", type: :feature, js: true do
 
       it "allows you to page to the next group of conversations" do
         visit conversations_path
+        users[8..15].each do |user|
+          expect(page).not_to have_text(user.phone_number.phony_formatted)
+          expect(page).not_to have_text(user.messages.last.body)
+        end
+
         click_link('2')
 
         users[8..15].each do |user|
