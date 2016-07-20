@@ -8,6 +8,46 @@ RSpec.feature "Candidates", type: :feature, js: true do
   end
 
   context "with candidates" do
+    context "qualified candidates" do
+      let!(:candidate) { create(:candidate, organization: account.organization, status: "Qualified") }
+
+      it "lets the account call the candidate" do
+        visit candidates_path << "?status=Qualified"
+        call_button = find_button("call-#{candidate.user_id}")
+        expect(call_button.present?).to eq(true)
+      end
+    end
+
+    context "viewing messages" do
+      let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+      it "lets the account view the user's messages" do
+        visit candidates_path
+
+        click_button("user-#{candidate.user_id}-messages")
+        expect(page).to have_text("Send")
+        expect(page).to have_text(candidate.phone_number.phony_formatted)
+      end
+    end
+
+    context "marking as bad fit" do
+      let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+      it "lets the account mark a candidate as bad fit" do
+        visit candidates_path
+
+        click_button("bad-fit")
+        expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Bad Fit")
+      end
+    end
+
+    context "marking as qualified" do
+      let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+      it "lets the account mark a candidate as qualified" do
+        visit candidates_path
+
+        click_button("qualified")
+        expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Qualified")
+      end
+    end
 
     context "filtering" do
       context "default" do
