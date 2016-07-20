@@ -24,8 +24,8 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       context "order" do
-        let!(:recent_candidate) { create(:candidate, organization: organization) }
-        let!(:old_candidate) { create(:candidate, organization: organization, created_at: 1.day.ago) }
+        let!(:old_candidate) { create(:candidate, id: 10, organization: organization) }
+        let!(:recent_candidate) { create(:candidate, id: 11, organization: organization) }
 
         it "returns the most recent candidates first" do
           get :index, params: { status: "Potential" }
