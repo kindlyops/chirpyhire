@@ -26,17 +26,6 @@ RSpec.describe ConversationsController, type: :controller do
         expect(assigns(:conversations)).to match_array([messages.last])
       end
 
-      context "order" do
-        let(:other_user) { create(:user, organization: organization) }
-        let!(:old_message) { create(:message, id: 10, user: admin) }
-        let!(:recent_message) { create(:message, id: 11, user: other_user) }
-
-        it "sorts by ID desc" do
-          get :index, params: params
-          expect(assigns(:conversations)).to eq([recent_message, old_message])
-        end
-      end
-
       context "with other users on the same organization" do
         let(:user) { create(:user, organization: organization) }
         let!(:other_messages) { create_list(:message, 2, user: user) }
