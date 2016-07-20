@@ -46,9 +46,9 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
             it "allows the account to visit a Google Map of the address" do
               visit candidates_path
-              click_link(address.formatted_address)
+              new_window = window_opened_by { click_link(address.formatted_address) }
 
-              page.within_window(page.driver.browser.window_handles.last) do
+              page.within_window(new_window) do
                 expect(current_url).to match(/google/)
               end
             end
