@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   skip_after_action :verify_policy_scoped, only: :index
 
   def index
-    @conversations = scoped_conversations.page(params.fetch(:page, 1)).sort_by(&:id).reverse
+    @conversations = scoped_conversations.page(params.fetch(:page, 1)).sort_by(&:created_at).reverse
   end
 
   private
