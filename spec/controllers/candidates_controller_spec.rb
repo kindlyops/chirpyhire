@@ -23,6 +23,16 @@ RSpec.describe CandidatesController, type: :controller do
         expect(assigns(:candidates)).to match_array(candidates)
       end
 
+      context "order" do
+        let!(:old_candidate) { create(:candidate, id: 10, organization: organization) }
+        let!(:recent_candidate) { create(:candidate, id: 11, organization: organization) }
+
+        it "returns the most recent candidates first" do
+          get :index, params: { status: "Potential" }
+          expect(assigns(:candidates)).to eq([recent_candidate, old_candidate])
+        end
+      end
+
       context "with other organizations" do
         let!(:other_candidates) { create_list(:candidate, 2) }
         it "does not return the other organization's candidates" do
