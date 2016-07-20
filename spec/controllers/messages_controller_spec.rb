@@ -8,6 +8,54 @@ RSpec.describe MessagesController, type: :controller do
     sign_in(admin.account)
   end
 
+  let(:params) do
+    { user_id: admin.id }
+  end
+
+  describe "#index" do
+    it "is OK" do
+      get :index, params: params
+      expect(response).to be_ok
+    end
+
+    context "with messages" do
+      it "returns the user's messages" do
+        messages = create_list(:message, 3, user: admin)
+
+        get :index, params: params
+        expect(assigns(:messages)).to match_array(messages)
+      end
+
+      context "order" do
+        let!(:old_message) { create(:message, id: 10, user: admin) }
+        let!(:recent_message) { create(:message, id: 11, user: admin) }
+
+        it "sorts by ID desc" do
+          get :index, params: params
+          expect(assigns(:messages)).to eq([recent_message, old_message])
+        end
+      end
+
+      context "with other users on the same organization" do
+        let(:user) { create(:user, organization: organization) }
+        let!(:other_messages) { create_list(:message, 2, user: user) }
+
+        it "does not return the other user's messages" do
+          get :index, params: params
+          expect(assigns(:messages)).not_to include(other_messages)
+        end
+      end
+
+      context "with other organizations" do
+        let!(:other_messages) { create_list(:message, 2) }
+        it "does not return the other organization's messages" do
+          get :index, params: params
+          expect(assigns(:messages)).not_to include(other_messages)
+        end
+      end
+    end
+  end
+
   describe "#create" do
     let(:message_params) do
       {
