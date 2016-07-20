@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Account Invitations" do
+RSpec.feature "Account Invitations", type: :feature, js: true do
   include Features::InvitationHelpers
   let(:organization) { create(:organization,  :with_account) }
   let(:account) { organization.accounts.first }

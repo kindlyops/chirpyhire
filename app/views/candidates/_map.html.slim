@@ -1,5 +1,5 @@
 .map
   - if address.latitude && address.longitude
-    img src="https://api.mapbox.com/v4/mapbox.emerald/pin-s-marker+000000(#{address.longitude},#{address.latitude})/#{address.longitude},#{address.latitude},11/300x400@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
+    img src==address.uri
   - else
     .empty No address found yet

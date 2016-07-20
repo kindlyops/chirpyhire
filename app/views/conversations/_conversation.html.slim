@@ -1,4 +1,4 @@
-= link_to user_messages_path(conversation.user) do
+= link_to user_messages_path(conversation.user), id: "conversation-#{conversation.id}" do
   .conversation
     .conversation-content
       p.conversation-detail
