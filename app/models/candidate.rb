@@ -20,6 +20,10 @@ class Candidate < ApplicationRecord
     where(status: status)
   end
 
+  def self.screened
+    where(status: "Screened")
+  end
+
   def address
     return NullAddress.new unless address_feature.present?
     Address.new(address_feature)
