@@ -405,7 +405,7 @@
 
                             <%= report.recipient_first_name %>,<br>
 <br>
-There <%= t('is', report.screened_candidate_count)%> <%= report.screened_candidate_count %> new screened <%= pluralize('candidate', report.screened_candidate_count)} %> waiting for your review. View them <%= link_to 'here', candidates_url, target: "_blank" %>.<br>
+There <%= 'is'.pluralize(report.screened_candidate_count) %> <%= report.screened_candidate_count %> new screened <%= pluralize('candidate', report.screened_candidate_count)} %> waiting for your review. View them <%= link_to 'here', candidates_url, target: "_blank" %>.<br>
 <br>
 Thanks,<br>
 <br>
