@@ -42,14 +42,6 @@ RSpec.describe Report::Daily do
         end
       end
 
-      context "created on a past date but marked screened on the date in question" do
-        it "counts the candidate" do
-          candidate = create(:candidate, status: "Potential", organization: organization, created_at: Date.yesterday)
-          candidate.update(status: "Screened")
-          expect(report.screened_candidate_count).to eq(1)
-        end
-      end
-
       context "some on other dates" do
         let(:count) { rand(1..10) }
         let!(:candidates) do
