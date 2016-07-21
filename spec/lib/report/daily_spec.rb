@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Report::Daily do
-  let(:recipient) { create(:user) }
+  let(:recipient) { create(:account) }
   let(:organization) { recipient.organization }
   let(:report) { Report::Daily.new(recipient) }
 
@@ -46,7 +46,7 @@ RSpec.describe Report::Daily do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: "Screened", organization: organization, created_at: rand(10.days).seconds.ago)
+            create(:candidate, status: "Screened", organization: organization, created_at: (rand(10.days).seconds + 1.day.seconds).ago)
           end
         end
 

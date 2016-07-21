@@ -14,6 +14,10 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :organization
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def outstanding_inquiry
     inquiries.unanswered.first
   end

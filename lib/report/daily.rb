@@ -16,6 +16,14 @@ class Report::Daily
     organization.candidates.screened.where(created_at: date.beginning_of_day..date.end_of_day).count
   end
 
+  def recipient_email
+    "#{recipient.name} <#{recipient.email}>"
+  end
+
+  def subject
+    "#{screened_candidate_count} Screened #{'Candidate'.pluralize(screened_candidate_count)} - Chirpyhire"
+  end
+
   private
 
   def organization
