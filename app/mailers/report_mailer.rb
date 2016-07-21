@@ -1,7 +1,8 @@
 class ReportMailer < ActionMailer::Base
-  default from: "harry@chirpyhire.com", bcc: "harry@chirpyhire.com"
+  default from: "Harry Whelchel <harry@chirpyhire.com>", bcc: "harry@chirpyhire.com"
 
   def daily(report)
+    @report = report
     mail(to: report.recipient_email, subject: report.subject)
   end
 

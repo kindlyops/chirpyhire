@@ -367,7 +367,7 @@
 
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
 
-                            <h1><%= report.organization_name %> Activity for <%= report.humanized_date %></h1>
+                            <h1><%= @report.organization_name %> Activity for <%= @report.humanized_date %></h1>
 
                         </td>
                     </tr>
@@ -403,9 +403,9 @@
 
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
 
-                            <%= report.recipient_first_name %>,<br>
+                            <%= @report.recipient_first_name %>,<br>
 <br>
-There <%= 'is'.pluralize(report.screened_candidate_count) %> <%= report.screened_candidate_count %> new screened <%= pluralize('candidate', report.screened_candidate_count)} %> waiting for your review. View them <%= link_to 'here', candidates_url, target: "_blank" %>.<br>
+There <%= 'is'.pluralize(@report.screened_candidate_count) %> <%= @report.screened_candidate_count %> new screened <%= 'candidate'.pluralize(@report.screened_candidate_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url, target: "_blank" %>.<br>
 <br>
 Thanks,<br>
 <br>
