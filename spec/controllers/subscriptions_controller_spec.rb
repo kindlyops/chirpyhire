@@ -137,10 +137,10 @@ RSpec.describe SubscriptionsController, type: :controller do
           }.to change{user.reload.subscribed?}.from(true).to(false)
         end
 
-        it "lets the user know they are unsubscribed now" do
-          delete :destroy, params: params
-
-          expect(FakeMessaging.messages.last.body).to include("You are unsubscribed. To subscribe reply with START.")
+        it "does not send a message" do
+          expect {
+            delete :destroy, params: params
+          }.not_to change{Message.count}
         end
       end
 
