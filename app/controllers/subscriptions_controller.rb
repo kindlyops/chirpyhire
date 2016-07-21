@@ -18,7 +18,6 @@ class SubscriptionsController < SmsController
       sender.receive_message(body: not_subscribed)
     else
       sender.update(subscribed: false)
-      sender.receive_message(body: unsubscribed_notice)
     end
     head :ok
   end
@@ -27,10 +26,6 @@ class SubscriptionsController < SmsController
 
   def subscription_notice
     "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
-  end
-
-  def unsubscribed_notice
-    "You are unsubscribed. To subscribe reply with START. Thanks for your interest in #{organization.name}."
   end
 
   def already_subscribed
