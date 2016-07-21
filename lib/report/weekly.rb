@@ -12,19 +12,19 @@ class Report::Weekly
     (date - 7).strftime("%B #{(date - 7).day.ordinalize}") << " - " << (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
   end
 
-  def screened_candidate_count
+  def screened_count
     organization.candidates.screened.where("candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1", date, date).count
   end
 
-  def qualified_candidate_count
+  def qualified_count
     organization.candidates.qualified.where("candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1", date, date).count
   end
 
-  def potential_candidate_count
+  def potential_count
     organization.candidates.potential.where("candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1", date, date).count
   end
 
-  def bad_fit_candidate_count
+  def bad_fit_count
     organization.candidates.bad_fit.where("candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1", date, date).count
   end
 

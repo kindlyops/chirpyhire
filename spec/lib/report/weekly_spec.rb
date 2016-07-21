@@ -26,10 +26,10 @@ RSpec.describe Report::Weekly do
     end
   end
 
-  describe "#screened_candidate_count" do
+  describe "#screened_count" do
     context "without candidates screened" do
       it "is zero" do
-        expect(report.screened_candidate_count).to eq(0)
+        expect(report.screened_count).to eq(0)
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, status: "Screened", organization: organization, created_at: 4.days.ago) }
         it "is the count of candidates" do
-          expect(report.screened_candidate_count).to eq(count)
+          expect(report.screened_count).to eq(count)
         end
       end
 
@@ -52,16 +52,16 @@ RSpec.describe Report::Weekly do
 
         it "is only the candidates screened in the past week" do
           create(:candidate, status: "Screened", organization: organization, created_at: Date.yesterday)
-          expect(report.screened_candidate_count).to eq(1)
+          expect(report.screened_count).to eq(1)
         end
       end
     end
   end
 
-  describe "#qualified_candidate_count" do
+  describe "#qualified_count" do
     context "without candidates qualified" do
       it "is zero" do
-        expect(report.qualified_candidate_count).to eq(0)
+        expect(report.qualified_count).to eq(0)
       end
     end
 
@@ -70,7 +70,7 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, status: "Qualified", organization: organization, created_at: 4.days.ago) }
         it "is the count of candidates" do
-          expect(report.qualified_candidate_count).to eq(count)
+          expect(report.qualified_count).to eq(count)
         end
       end
 
@@ -84,16 +84,16 @@ RSpec.describe Report::Weekly do
 
         it "is only the candidates qualified in the past week" do
           create(:candidate, status: "Qualified", organization: organization, created_at: Date.yesterday)
-          expect(report.qualified_candidate_count).to eq(1)
+          expect(report.qualified_count).to eq(1)
         end
       end
     end
   end
 
-  describe "#potential_candidate_count" do
+  describe "#potential_count" do
     context "without candidates potential" do
       it "is zero" do
-        expect(report.potential_candidate_count).to eq(0)
+        expect(report.potential_count).to eq(0)
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, status: "Potential", organization: organization, created_at: 4.days.ago) }
         it "is the count of candidates" do
-          expect(report.potential_candidate_count).to eq(count)
+          expect(report.potential_count).to eq(count)
         end
       end
 
@@ -116,16 +116,16 @@ RSpec.describe Report::Weekly do
 
         it "is only the candidates potential in the past week" do
           create(:candidate, status: "Potential", organization: organization, created_at: Date.yesterday)
-          expect(report.potential_candidate_count).to eq(1)
+          expect(report.potential_count).to eq(1)
         end
       end
     end
   end
 
-  describe "#bad_fit_candidate_count" do
+  describe "#bad_fit_count" do
     context "without candidates bad_fit" do
       it "is zero" do
-        expect(report.bad_fit_candidate_count).to eq(0)
+        expect(report.bad_fit_count).to eq(0)
       end
     end
 
@@ -134,7 +134,7 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, status: "Bad Fit", organization: organization, created_at: 4.days.ago) }
         it "is the count of candidates" do
-          expect(report.bad_fit_candidate_count).to eq(count)
+          expect(report.bad_fit_count).to eq(count)
         end
       end
 
@@ -148,7 +148,7 @@ RSpec.describe Report::Weekly do
 
         it "is only the candidates bad_fit in the past week" do
           create(:candidate, status: "Bad Fit", organization: organization, created_at: Date.yesterday)
-          expect(report.bad_fit_candidate_count).to eq(1)
+          expect(report.bad_fit_count).to eq(1)
         end
       end
     end

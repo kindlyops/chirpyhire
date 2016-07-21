@@ -26,10 +26,10 @@ RSpec.describe Report::Daily do
     end
   end
 
-  describe "#screened_candidate_count" do
+  describe "#screened_count" do
     context "without candidates screened" do
       it "is zero" do
-        expect(report.screened_candidate_count).to eq(0)
+        expect(report.screened_count).to eq(0)
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe Report::Daily do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, status: "Screened", organization: organization) }
         it "is the count of candidates" do
-          expect(report.screened_candidate_count).to eq(count)
+          expect(report.screened_count).to eq(count)
         end
       end
 
@@ -52,7 +52,7 @@ RSpec.describe Report::Daily do
 
         it "is only the candidates screened on the date" do
           create(:candidate, status: "Screened", organization: organization)
-          expect(report.screened_candidate_count).to eq(1)
+          expect(report.screened_count).to eq(1)
         end
       end
     end
