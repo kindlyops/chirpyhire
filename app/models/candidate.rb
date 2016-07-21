@@ -24,6 +24,18 @@ class Candidate < ApplicationRecord
     where(status: "Screened")
   end
 
+  def self.qualified
+    where(status: "Qualified")
+  end
+
+  def self.potential
+    where(status: "Potential")
+  end
+
+  def self.bad_fit
+    where(status: "Bad Fit")
+  end
+
   def address
     return NullAddress.new unless address_feature.present?
     Address.new(address_feature)
