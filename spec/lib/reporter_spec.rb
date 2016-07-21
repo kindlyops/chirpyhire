@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe DailyReporter do
+RSpec.describe Reporter do
   let(:count) { rand(1..5) }
   let!(:recipients) { create_list(:account, count) }
-  let(:reporter) { DailyReporter.new(Account) }
+  let(:reporter) { Reporter.new(Account, Report::Daily, :daily) }
 
   describe "report" do
     it "sends an email to each recipient" do

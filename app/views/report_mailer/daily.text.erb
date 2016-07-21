@@ -2,7 +2,7 @@
 
 <%= @report.recipient_first_name %>,
 
-There <%= 'is'.pluralize(@report.screened_candidate_count) %> <%= @report.screened_candidate_count %> new screened <%= 'candidate'.pluralize(@report.screened_candidate_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?status=Screened", target: "_blank" %>.
+There <%= 'is'.pluralize(@report.screened_count) %> <%= @report.screened_count %> new screened <%= 'candidate'.pluralize(@report.screened_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?status=Screened", target: "_blank" %>.
 
 Thanks,
 

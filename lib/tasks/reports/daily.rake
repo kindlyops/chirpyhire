@@ -1,6 +1,6 @@
 namespace :reports do
   desc "Sends daily summary report"
   task daily: :environment do |task|
-    DailyReporter.new(Account).report
+    Reporter.new(Account, Report::Daily, :daily).report
   end
 end

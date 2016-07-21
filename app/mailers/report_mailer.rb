@@ -6,4 +6,9 @@ class ReportMailer < ActionMailer::Base
     mail(to: report.recipient_email, subject: report.subject)
   end
 
+  def weekly(report)
+    @report = report
+    mail(to: report.recipient_email, subject: report.subject)
+  end
+
 end

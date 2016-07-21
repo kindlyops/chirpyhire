@@ -367,7 +367,7 @@
 
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
 
-                            <h1><%= @report.organization_name %> Activity for <%= @report.humanized_date %></h1>
+                            <h1><%= @report.organization_name %> Activity for <%= @report.humanized_week %></h1>
 
                         </td>
                     </tr>
@@ -405,7 +405,12 @@
 
                             <%= @report.recipient_first_name %>,<br>
 <br>
-There <%= 'is'.pluralize(@report.screened_count) %> <%= @report.screened_count %> new screened <%= 'candidate'.pluralize(@report.screened_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?status=Screened", target: "_blank" %>.<br>
+Here's what's been happening the past week.<br>
+<br>
+<%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %>. View them <%= link_to 'here', candidates_url << "?status=Qualified", target: "_blank" %>.<br>
+<%= @report.screened_count %> new screened <%= 'candidate'.pluralize(@report.screened_count) %>. View them <%= link_to 'here', candidates_url << "?status=Screened", target: "_blank" %>.<br>
+<%= @report.potential_count %> new potential <%= 'candidate'.pluralize(@report.potential_count) %>. View them <%= link_to 'here', candidates_url << "?status=Potential", target: "_blank" %>.<br>
+<%= @report.bad_fit_count %> new bad fit <%= 'candidate'.pluralize(@report.bad_fit_count) %>. View them <%= link_to 'here', candidates_url << "?status=Bad Fit", target: "_blank" %>.<br>
 <br>
 Thanks,<br>
 <br>

@@ -1,0 +1,14 @@
+<%= @report.organization_name %> for <%= @report.humanized_week %>
+
+<%= @report.recipient_first_name %>,
+
+Here's what's been happening the past week.
+
+<%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %>. View them <%= link_to 'here', candidates_url << "?status=Qualified", target: "_blank" %>.
+<%= @report.screened_count %> new screened <%= 'candidate'.pluralize(@report.screened_count) %>. View them <%= link_to 'here', candidates_url << "?status=Screened", target: "_blank" %>.
+<%= @report.potential_count %> new potential <%= 'candidate'.pluralize(@report.potential_count) %>. View them <%= link_to 'here', candidates_url << "?status=Potential", target: "_blank" %>.
+<%= @report.bad_fit_count %> new bad fit <%= 'candidate'.pluralize(@report.bad_fit_count) %>. View them <%= link_to 'here', candidates_url << "?status=Bad Fit", target: "_blank" %>.
+
+Thanks,
+
+Harry
