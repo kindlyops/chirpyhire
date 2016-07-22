@@ -23,7 +23,7 @@ class User < ApplicationRecord
   end
 
   def last_answer
-    answers.order(:created_at).last || NullAnswer.new
+    answers.by_recency.first || NullAnswer.new
   end
 
   def receive_message(body:)

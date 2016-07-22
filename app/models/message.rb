@@ -8,6 +8,10 @@ class Message < ApplicationRecord
   has_one :notification
   delegate :organization, to: :user
 
+  def self.by_recency
+    order(external_created_at: :desc, id: :desc)
+  end
+
   def self.conversations
     select("DISTINCT ON (messages.user_id) messages.user_id, messages.*").order(:user_id, id: :desc)
   end

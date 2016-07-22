@@ -15,6 +15,10 @@ class Candidate < ApplicationRecord
            :organization, :messages, :outstanding_inquiry,
            :receive_message, to: :user
 
+  def self.by_recency
+    order(created_at: :desc, id: :desc)
+  end
+
   def self.status(status)
     return self unless status.present?
     where(status: status)

@@ -7,7 +7,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    @candidates = scoped_candidates.order(id: :desc).status(status).page(params.fetch(:page, 1))
+    @candidates = scoped_candidates.by_recency.status(status).page(params.fetch(:page, 1))
   end
 
   def update
