@@ -16,15 +16,15 @@ RSpec.describe User, type: :model do
       }.to change{FakeMessaging.messages.count}.by(1)
     end
 
-    # context "with prior messages" do
-    #   let!(:message) { create(:message, user: user, created_at: Date.yesterday) }
-    #   let!(:most_recent_message) { create(:message, user: user) }
+    context "with prior messages" do
+      let!(:message) { create(:message, user: user, created_at: Date.yesterday) }
+      let!(:most_recent_message) { create(:message, user: user) }
 
-    #   it "sets the most recent message as the parent" do
-    #     user.receive_message(body: "Foo")
-    #     expect(user.messages.by_recency.first.parent).to eq(most_recent_message)
-    #   end
-    # end
+      it "sets the most recent message as the parent" do
+        user.receive_message(body: "Foo")
+        expect(user.messages.by_recency.first.parent).to eq(most_recent_message)
+      end
+    end
   end
 
   describe "#last_answer" do
