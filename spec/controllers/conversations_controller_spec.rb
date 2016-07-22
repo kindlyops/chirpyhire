@@ -19,21 +19,23 @@ RSpec.describe ConversationsController, type: :controller do
     end
 
     context "with messages" do
-      it "returns the user's last message" do
-        messages = create_list(:message, 3, user: admin)
+      let!(:oldest_message) { create(:message, user: admin) }
+      let!(:second_oldest_message) { create(:message, user: admin, parent: oldest_message) }
+      let!(:message) { create(:message, user: admin, parent: second_oldest_message) }
 
+      it "returns the user's last message" do
         get :index, params: params
-        expect(assigns(:conversations)).to match_array([messages.last])
+        expect(assigns(:conversations)).to match_array([message])
       end
 
       context "with other users on the same organization" do
         let(:user) { create(:user, organization: organization) }
-        let!(:other_messages) { create_list(:message, 2, user: user) }
+        let!(:other_old_message) { create(:message, user: user) }
+        let!(:other_message) { create(:message, user: user, parent: other_old_message) }
 
         it "includes the last message of the user" do
-          messages = create_list(:message, 3, user: admin)
           get :index, params: params
-          expect(assigns(:conversations)).to match_array([messages.last, other_messages.last])
+          expect(assigns(:conversations)).to match_array([message, other_message])
         end
       end
 
