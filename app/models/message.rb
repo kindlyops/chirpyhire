@@ -13,7 +13,7 @@ class Message < ApplicationRecord
   end
 
   def self.conversations
-    select("DISTINCT ON (messages.user_id) messages.user_id, messages.*").order(:user_id, id: :desc)
+    leaves
   end
 
   def media

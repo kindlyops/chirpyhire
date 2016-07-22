@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   skip_after_action :verify_policy_scoped, only: :index
 
   def index
-    @conversations = scoped_conversations.page(params.fetch(:page, 1))
+    @conversations = scoped_conversations.by_recency.page(params.fetch(:page, 1))
   end
 
   private
