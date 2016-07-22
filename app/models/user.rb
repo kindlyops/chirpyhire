@@ -23,12 +23,13 @@ class User < ApplicationRecord
   end
 
   def last_answer
-    answers.order(:created_at).last || NullAnswer.new
+    answers.by_recency.first || NullAnswer.new
   end
 
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
     message.user = self
+    # message.parent = messages.by_recency.first
     message.save
     message
   end

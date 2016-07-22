@@ -12,7 +12,12 @@ RSpec.describe Report::Weekly do
   end
 
   describe "#humanized_week" do
+
     context "by default" do
+      before(:each) do
+        Timecop.freeze(Date.new(2016,07,21))
+      end
+
       it "is today's date formatted" do
         expect(report.humanized_week).to eq("July 14th - July 20th")
       end
