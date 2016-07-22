@@ -10,6 +10,8 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :candidate_persona
 
+  delegate :conversations, to: :messages
+
   def self.for(phone:)
     find_by(phone_number: phone)
   end
@@ -36,10 +38,6 @@ class Organization < ApplicationRecord
 
   def get_media(sid)
     messaging_client.media.get(sid)
-  end
-
-  def conversations
-    messages.conversations
   end
 
   private

@@ -37,6 +37,18 @@ RSpec.describe ConversationsController, type: :controller do
           get :index, params: params
           expect(assigns(:conversations)).to match_array([message, other_message])
         end
+
+        context "order" do
+          before(:each) do
+            message.update(external_created_at: 4.days.ago)
+            other_message.update(external_created_at: 2.days.ago)
+          end
+
+          it "shows the most recent conversations first" do
+            get :index, params: params
+            expect(assigns(:conversations)).to eq([other_message, message])
+          end
+        end
       end
 
       context "with other organizations" do

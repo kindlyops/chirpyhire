@@ -20,23 +20,24 @@ RSpec.feature "Conversations", type: :feature, js: true do
     end
 
     context "more than one page of conversations" do
-      let(:users) { create_list(:user, 15, organization: account.organization) }
+      let(:users) { create_list(:user, 16, organization: account.organization) }
       let!(:conversations) do
         users.each_with_index do |user, index|
-          create(:message, body: "Conversation - #{index}", user: user)
+          create(:message, body: Faker::Lorem.sentence, user: user)
         end
       end
 
       it "allows you to page to the next group of conversations" do
         visit conversations_path
-        users[8..15].each do |user|
+
+        users[0..7].each do |user|
           expect(page).not_to have_text(user.phone_number.phony_formatted)
           expect(page).not_to have_text(user.messages.last.body)
         end
 
         click_link('2')
 
-        users[8..15].each do |user|
+        users[0..7].each do |user|
           expect(page).to have_text(user.phone_number.phony_formatted)
           expect(page).to have_text(user.messages.last.body)
         end
