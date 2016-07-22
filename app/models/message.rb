@@ -1,4 +1,5 @@
 class Message < ApplicationRecord
+  has_closure_tree order: 'id'
   has_many :media_instances
 
   belongs_to :user
