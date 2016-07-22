@@ -37,6 +37,7 @@ group :test do
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'poltergeist', '~> 1.10.0'
   gem 'rails-controller-testing'
+  gem 'timecop', '~> 0.8.1'
 end
 
 group :development do

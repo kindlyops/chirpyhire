@@ -13,6 +13,10 @@ RSpec.describe Report::Daily do
 
   describe "#humanized_date" do
     context "by default" do
+      before(:each) do
+        Timecop.freeze(Date.new(2016,07,21))
+      end
+
       it "is today's date formatted" do
         expect(report.humanized_date).to eq("July 21st")
       end
