@@ -15,6 +15,16 @@ RSpec.describe MessageHandler do
       expect(message).to be_a_new(Message)
     end
 
+    context "with prior messages" do
+      let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
+      let!(:most_recent_message) { create(:message, user: sender) }
+
+      it "sets the most recent message as the parent" do
+        message.save
+        expect(sender.messages.by_recency.first.parent).to eq(most_recent_message)
+      end
+    end
+
     context "with media" do
       let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
 
