@@ -34,8 +34,7 @@ class MessageHandler
       direction: external_message.direction,
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
-      user: sender,
-      parent: sender.messages.by_recency.first
+      user: sender
     )
   end
 end

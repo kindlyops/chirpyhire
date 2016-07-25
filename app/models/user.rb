@@ -29,7 +29,6 @@ class User < ApplicationRecord
   def receive_message(body:)
     message = organization.send_message(to: phone_number, body: body)
     message.user = self
-    message.parent = messages.by_recency.first
     message.save
     Threader.new(message).call
 

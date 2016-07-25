@@ -1,5 +1,4 @@
 class Message < ApplicationRecord
-  has_closure_tree
   has_many :media_instances
 
   belongs_to :user
@@ -14,7 +13,7 @@ class Message < ApplicationRecord
   end
 
   def self.conversations
-    leaves
+    where(child: nil)
   end
 
   def media
