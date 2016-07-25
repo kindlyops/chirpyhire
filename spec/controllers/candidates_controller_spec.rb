@@ -16,7 +16,7 @@ RSpec.describe CandidatesController, type: :controller do
     end
 
     context "with candidates" do
-      let!(:candidates) { create_list(:candidate, 3, status: "Screened", organization: organization) }
+      let!(:candidates) { create_list(:candidate, 3, status: "Qualified", organization: organization) }
 
       it "returns the organization's candidates" do
         get :index

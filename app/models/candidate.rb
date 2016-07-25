@@ -8,7 +8,7 @@ class Candidate < ApplicationRecord
 
   alias :features :candidate_features
 
-  STATUSES = ["Potential", "Qualified", "Screened", "Bad Fit"]
+  STATUSES = ["Potential", "Qualified", "Bad Fit", "Hired"]
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
@@ -24,8 +24,8 @@ class Candidate < ApplicationRecord
     where(status: status)
   end
 
-  def self.screened
-    where(status: "Screened")
+  def self.hired
+    where(status: "Hired")
   end
 
   def self.qualified
@@ -69,7 +69,7 @@ class Candidate < ApplicationRecord
     status == "Potential"
   end
 
-  def screened?
-    status == "Screened"
+  def hired?
+    status == "Hired"
   end
 end

@@ -116,10 +116,10 @@ RSpec.describe ProfileAdvancer do
           }.to have_enqueued_job(AutomatonJob).with(user, "screen")
         end
 
-        it "changes the candidate's status to Screened" do
+        it "changes the candidate's status to Qualified" do
           expect{
             ProfileAdvancer.call(user)
-          }.to change{candidate.status}.from("Potential").to("Screened")
+          }.to change{candidate.status}.from("Potential").to("Qualified")
         end
       end
     end

@@ -11,15 +11,14 @@ RSpec.feature "Candidates", type: :feature, js: true do
     context "qualified candidates" do
       let!(:candidate) { create(:candidate, organization: account.organization, status: "Qualified") }
 
-      it "lets the account call the candidate" do
-        visit candidates_path << "?status=Qualified"
-        call_button = find_button("call-#{candidate.user_id}")
-        expect(call_button.present?).to eq(true)
-      end
-    end
+      context "marking as hired" do
+        it "lets the account mark a candidate as hired" do
+          visit candidates_path
 
-    context "screened candidates" do
-      let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+          click_button("hired")
+          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Hired")
+        end
+      end
 
       context "with candidate features" do
         let(:candidate_persona) { account.organization.create_candidate_persona }
@@ -99,22 +98,23 @@ RSpec.feature "Candidates", type: :feature, js: true do
           expect(page).to have_text(candidate.phone_number.phony_formatted)
         end
       end
+    end
+
+    context "hired candidates" do
+      let!(:candidate) { create(:candidate, organization: account.organization, status: "Hired") }
+
+      it "lets the account call the candidate" do
+        visit candidates_path << "?status=Hired"
+        call_button = find_button("call-#{candidate.user_id}")
+        expect(call_button.present?).to eq(true)
+      end
 
       context "marking as bad fit" do
         it "lets the account mark a candidate as bad fit" do
-          visit candidates_path
+          visit candidates_path << "?status=Hired"
 
           click_button("bad-fit")
           expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Bad Fit")
-        end
-      end
-
-      context "marking as qualified" do
-        it "lets the account mark a candidate as qualified" do
-          visit candidates_path
-
-          click_button("qualified")
-          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Qualified")
         end
       end
     end
@@ -124,18 +124,19 @@ RSpec.feature "Candidates", type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ["Potential", "Bad Fit", "Qualified"][index], user: user)
+            create(:candidate, status: ["Potential", "Bad Fit", "Hired"][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+        let!(:candidate) { create(:candidate, organization: account.organization, status: "Qualified") }
 
-        it "only shows Screened candidates by default" do
+        it "only shows Qualified candidates by default" do
           visit candidates_path
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
           end
+
           expect(page).to have_text(candidate.phone_number.phony_formatted)
         end
       end
@@ -144,7 +145,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ["Potential", "Screened", "Qualified"][index], user: user)
+            create(:candidate, status: ["Potential", "Hired", "Qualified"][index], user: user)
           end
         end
 
@@ -158,9 +159,18 @@ RSpec.feature "Candidates", type: :feature, js: true do
           end
           expect(page).to have_text(candidate.phone_number.phony_formatted)
         end
+
+        context "marking as qualified" do
+          it "lets the account mark a candidate as qualified" do
+            visit candidates_path << "?status=Bad Fit"
+
+            click_button("qualified")
+            expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Qualified")
+          end
+        end
       end
 
-      context "Screened" do
+      context "Hired" do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
@@ -168,10 +178,10 @@ RSpec.feature "Candidates", type: :feature, js: true do
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: "Screened") }
+        let!(:candidate) { create(:candidate, organization: account.organization, status: "Hired") }
 
-        it "only shows Screened candidates" do
-          visit candidates_path << "?status=Screened"
+        it "only shows Hired candidates" do
+          visit candidates_path << "?status=Hired"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -184,7 +194,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ["Potential", "Screened", "Bad Fit"][index], user: user)
+            create(:candidate, status: ["Potential", "Hired", "Bad Fit"][index], user: user)
           end
         end
 
@@ -204,7 +214,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ["Bad Fit", "Screened", "Qualified"][index], user: user)
+            create(:candidate, status: ["Bad Fit", "Hired", "Qualified"][index], user: user)
           end
         end
 
@@ -225,7 +235,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
       let(:users) { create_list(:user, 7, organization: account.organization) }
       let!(:candidates) do
         users.each do |user|
-          create(:candidate, status: "Screened", user: user)
+          create(:candidate, status: "Qualified", user: user)
         end
       end
 
