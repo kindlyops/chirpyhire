@@ -18,6 +18,10 @@ class User < ApplicationRecord
     order(has_unread_messages: :desc)
   end
 
+  def self.has_unread_messages
+    where(has_unread_messages: true)
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

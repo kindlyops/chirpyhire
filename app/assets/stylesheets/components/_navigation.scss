@@ -43,6 +43,11 @@ header.navigation {
     }
   }
 
+  .users-unread-message-count {
+    color: $dark-gray;
+    font-weight: 700;
+  }
+
   // Mobile view
 
   .navigation-menu-button {
@@ -149,7 +154,6 @@ header.navigation {
   ul li.nav-link {
     display: flex;
     justify-content: center;
-
   }
 
   ul li.sub-nav-link {

@@ -40,6 +40,10 @@ class Organization < ApplicationRecord
     messaging_client.media.get(sid)
   end
 
+  def users_with_unread_messages_count
+    users.has_unread_messages.count
+  end
+
   private
 
   def messaging_client
