@@ -11,12 +11,6 @@ RSpec.feature "Candidates", type: :feature, js: true do
     context "qualified candidates" do
       let!(:candidate) { create(:candidate, organization: account.organization, status: "Qualified") }
 
-      it "lets the account call the candidate" do
-        visit candidates_path << "?status=Qualified"
-        call_button = find_button("call-#{candidate.user_id}")
-        expect(call_button.present?).to eq(true)
-      end
-
       context "marking as hired" do
         it "lets the account mark a candidate as hired" do
           visit candidates_path
@@ -108,6 +102,12 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
     context "hired candidates" do
       let!(:candidate) { create(:candidate, organization: account.organization, status: "Hired") }
+
+      it "lets the account call the candidate" do
+        visit candidates_path << "?status=Hired"
+        call_button = find_button("call-#{candidate.user_id}")
+        expect(call_button.present?).to eq(true)
+      end
 
       context "marking as bad fit" do
         it "lets the account mark a candidate as bad fit" do
