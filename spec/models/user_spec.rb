@@ -24,6 +24,11 @@ RSpec.describe User, type: :model do
         user.receive_message(body: "Foo")
         expect(user.messages.by_recency.first.parent).to eq(most_recent_message)
       end
+
+      it "sets the new message as the child on the most recent message" do
+        message = user.receive_message(body: "Foo")
+        expect(user.messages.by_recency.second.child).to eq(message)
+      end
     end
   end
 

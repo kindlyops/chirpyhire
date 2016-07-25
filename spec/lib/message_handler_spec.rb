@@ -22,8 +22,13 @@ RSpec.describe MessageHandler do
       let!(:most_recent_message) { create(:message, user: sender) }
 
       it "sets the most recent message as the parent" do
-        message.save
+        message
         expect(sender.messages.by_recency.first.parent).to eq(most_recent_message)
+      end
+
+      it "sets the new message as the child on the most recent message" do
+        message
+        expect(sender.messages.by_recency.second.child).to eq(message)
       end
     end
 
