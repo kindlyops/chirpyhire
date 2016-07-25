@@ -6,9 +6,9 @@ RSpec.describe Threader do
     let(:user) { create(:user) }
 
     context "with messages created after the message passed in" do
+      let!(:message) { create(:message, user: user, created_at: 5.days.ago) }
       let!(:next_message) { create(:message, user: user, created_at: 4.days.ago) }
       let!(:another_message) { create(:message, user: user, created_at: 3.days.ago) }
-      let!(:message) { create(:message, user: user, created_at: 5.days.ago) }
 
       it "sets the child on the passed in message" do
         expect{
@@ -35,6 +35,21 @@ RSpec.describe Threader do
         expect(second_oldest.reload.child).to eq(third_oldest)
         expect(third_oldest.reload.child).to eq(fourth_oldest)
         expect(fourth_oldest.reload.child).to eq(nil)
+      end
+
+      context "with messages created at the same time" do
+        let!(:second_oldest) { create(:message, user: user, created_at: oldest.created_at) }
+        let!(:third_oldest) { create(:message, user: user, created_at: oldest.created_at) }
+        let!(:fourth_oldest) { create(:message, user: user, created_at: oldest.created_at) }
+
+        it "threads appropriately" do
+          Threader.thread
+
+          expect(oldest.reload.child).to eq(second_oldest)
+          expect(second_oldest.reload.child).to eq(third_oldest)
+          expect(third_oldest.reload.child).to eq(fourth_oldest)
+          expect(fourth_oldest.reload.child).to eq(nil)
+        end
       end
     end
   end
