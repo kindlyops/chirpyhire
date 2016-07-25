@@ -9,8 +9,12 @@ class Threader
   end
 
   def self.thread
-    Message.find_each do |message|
-      new(message).call
+    User.find_each do |user|
+      messages = user.messages.by_recency.reverse
+
+      messages.each_with_index do |message, index|
+        message.update(child_id: messages[index + 1].try!(:id))
+      end
     end
   end
 
