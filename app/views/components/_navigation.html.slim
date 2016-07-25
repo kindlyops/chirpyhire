@@ -8,8 +8,16 @@ header.navigation role="banner"
               i.mobile.fa.fa-user.fa-2x
           li.nav-link
             a href="/conversations"
-              span.desktop Conversations
-              i.mobile.fa.fa-commenting.fa-2x
+              span.desktop
+                ' Conversations
+                - unless current_organization.users_with_unread_messages_count.zero?
+                  = "(#{current_organization.users_with_unread_messages_count})"
+              - if current_organization.users_with_unread_messages_count.zero?
+                i.mobile.fa.fa-commenting.fa-2x
+              - else
+                span.fa-stack
+                  i.mobile.fa.fa-comment.fa-stack-2x
+                  i.users-unread-message-count.fa-stack-1x = current_organization.users_with_unread_messages_count
           li.nav-link
             = link_to destroy_account_session_path, method: :delete do
                 span.desktop Sign out

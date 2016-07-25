@@ -18,6 +18,15 @@ RSpec.describe MessagesController, type: :controller do
       expect(response).to be_ok
     end
 
+    context "when user has unread messages" do
+      let(:user) { create(:user, organization: organization, has_unread_messages: true) }
+      it "marks the user as not having unread messages" do
+        expect {
+          get :index, params: { user_id: user.id }
+        }.to change{user.reload.has_unread_messages?}.from(true).to(false)
+      end
+    end
+
     context "with messages" do
       it "returns the user's messages" do
         messages = create_list(:message, 3, user: admin)

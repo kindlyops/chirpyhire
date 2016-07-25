@@ -12,6 +12,10 @@ class Message < ApplicationRecord
     order(external_created_at: :desc, id: :desc)
   end
 
+  def self.by_read_status
+    joins(:user).merge(User.by_having_unread_messages)
+  end
+
   def self.conversations
     where(child: nil)
   end

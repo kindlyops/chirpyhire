@@ -14,6 +14,14 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :organization
 
+  def self.by_having_unread_messages
+    order(has_unread_messages: :desc)
+  end
+
+  def self.has_unread_messages
+    where(has_unread_messages: true)
+  end
+
   def name
     "#{first_name} #{last_name}"
   end

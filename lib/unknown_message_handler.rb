@@ -10,6 +10,7 @@ class UnknownMessageHandler
 
   def call
     MessageHandler.call(sender, external_message)
+    sender.update(has_unread_messages: true)
   end
 
   private

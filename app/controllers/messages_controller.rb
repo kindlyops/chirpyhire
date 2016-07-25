@@ -5,6 +5,8 @@ class MessagesController < ApplicationController
   def index
     @messages = scoped_messages.by_recency.page(params.fetch(:page, 1))
 
+    message_user.update(has_unread_messages: false) if message_user.has_unread_messages?
+
     respond_to do |format|
       format.html {}
       format.js {}

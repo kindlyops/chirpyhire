@@ -1,5 +1,8 @@
 = link_to user_messages_path(conversation.user), id: "conversation-#{conversation.id}" do
   .conversation
+    - if conversation.user.has_unread_messages?
+      .conversation-status
+        i.fa.fa-circle
     .conversation-content
       p.conversation-detail
         = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
