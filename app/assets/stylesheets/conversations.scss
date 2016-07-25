@@ -53,6 +53,13 @@
       }
     }
 
+    .conversation-status {
+      padding: 0 0.75em 0 0.25em;
+      i {
+        color: $blue;
+      }
+    }
+
     .conversation-content {
       width: 100%;
 
