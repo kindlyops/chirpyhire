@@ -42,6 +42,24 @@ RSpec.feature "Conversations", type: :feature, js: true do
           expect(page).to have_text(user.messages.last.body)
         end
       end
+
+      context "with unread messages" do
+        before(:each) do
+          users.first.update(has_unread_messages: true)
+        end
+
+        it "allows you to page to the next group of conversations" do
+          visit conversations_path
+
+          expect(page).to have_text(users.first.phone_number.phony_formatted)
+          expect(page).to have_text(users.first.messages.last.body)
+
+          click_link('2')
+
+          expect(page).not_to have_text(users.first.phone_number.phony_formatted)
+          expect(page).not_to have_text(users.first.messages.last.body)
+        end
+      end
     end
   end
 end
