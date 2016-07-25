@@ -20,8 +20,13 @@ RSpec.describe ConversationsController, type: :controller do
 
     context "with messages" do
       let!(:oldest_message) { create(:message, user: admin) }
-      let!(:second_oldest_message) { create(:message, user: admin, parent: oldest_message) }
-      let!(:message) { create(:message, user: admin, parent: second_oldest_message) }
+      let!(:second_oldest_message) { create(:message, user: admin) }
+      let!(:message) { create(:message, user: admin) }
+
+      before(:each) do
+        oldest_message.update(child: second_oldest_message)
+        second_oldest_message.update(child: message)
+      end
 
       it "returns the user's last message" do
         get :index, params: params
@@ -31,7 +36,11 @@ RSpec.describe ConversationsController, type: :controller do
       context "with other users on the same organization" do
         let(:user) { create(:user, organization: organization) }
         let!(:other_old_message) { create(:message, user: user) }
-        let!(:other_message) { create(:message, user: user, parent: other_old_message) }
+        let!(:other_message) { create(:message, user: user) }
+
+        before(:each) do
+          other_old_message.update(child: other_message)
+        end
 
         it "includes the last message of the user" do
           get :index, params: params

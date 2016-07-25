@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725000208) do
+ActiveRecord::Schema.define(version: 20160725015654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,14 +118,6 @@ ActiveRecord::Schema.define(version: 20160725000208) do
     t.index ["message_id"], name: "index_media_instances_on_message_id", using: :btree
   end
 
-  create_table "message_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id",   null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations",   null: false
-    t.index ["ancestor_id", "descendant_id", "generations"], name: "message_anc_desc_idx", unique: true, using: :btree
-    t.index ["descendant_id"], name: "message_desc_idx", using: :btree
-  end
-
   create_table "messages", force: :cascade do |t|
     t.string   "sid",                 null: false
     t.text     "body"
@@ -135,7 +127,6 @@ ActiveRecord::Schema.define(version: 20160725000208) do
     t.integer  "user_id",             null: false
     t.datetime "sent_at"
     t.datetime "external_created_at"
-    t.integer  "parent_id"
     t.integer  "child_id"
     t.index ["child_id"], name: "index_messages_on_child_id", unique: true, using: :btree
     t.index ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
