@@ -13,6 +13,8 @@ class MessageHandler
       )
     end
 
+    message.save
+    Threader.new(message).call
     message
   end
 

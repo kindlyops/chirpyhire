@@ -6,6 +6,7 @@ class Message < ApplicationRecord
   has_one :inquiry
   has_one :answer
   has_one :notification
+  belongs_to :child, class_name: "Message"
   delegate :organization, to: :user
 
   def self.by_recency

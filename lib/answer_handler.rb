@@ -5,12 +5,11 @@ class AnswerHandler
   end
 
   def call
+    message
+
     if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
       update_or_create_candidate_feature
-    else
-      message.save
-      message
     end
   end
 

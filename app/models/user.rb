@@ -31,6 +31,8 @@ class User < ApplicationRecord
     message.user = self
     message.parent = messages.by_recency.first
     message.save
+    Threader.new(message).call
+
     message
   end
 

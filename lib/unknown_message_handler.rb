@@ -9,9 +9,7 @@ class UnknownMessageHandler
   end
 
   def call
-    message = MessageHandler.call(sender, external_message)
-    message.save
-    message
+    MessageHandler.call(sender, external_message)
   end
 
   private
