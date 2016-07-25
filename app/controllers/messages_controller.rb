@@ -3,8 +3,9 @@ class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
 
   def index
-    message_user.update(has_unread_messages: false)
     @messages = scoped_messages.by_recency.page(params.fetch(:page, 1))
+
+    message_user.update(has_unread_messages: false)
 
     respond_to do |format|
       format.html {}
