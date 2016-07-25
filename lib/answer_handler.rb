@@ -5,8 +5,7 @@ class AnswerHandler
   end
 
   def call
-    message.save
-    Threader.new(message).call
+    message
 
     if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
