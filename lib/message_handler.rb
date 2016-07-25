@@ -15,6 +15,7 @@ class MessageHandler
 
     message.save
     Threader.new(message).call
+    sender.update(has_unread_messages: true)
     message
   end
 

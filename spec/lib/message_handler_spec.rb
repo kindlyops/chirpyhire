@@ -17,6 +17,12 @@ RSpec.describe MessageHandler do
       }.to change{Message.count}.by(1)
     end
 
+    it "marks the user as having unread messages" do
+      expect{
+        message
+      }.to change{sender.has_unread_messages?}.from(false).to(true)
+    end
+
     context "with prior messages" do
       let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
       let!(:most_recent_message) { create(:message, user: sender) }
