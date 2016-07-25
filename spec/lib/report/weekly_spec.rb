@@ -31,19 +31,19 @@ RSpec.describe Report::Weekly do
     end
   end
 
-  describe "#screened_count" do
-    context "without candidates screened" do
+  describe "#hired_count" do
+    context "without candidates hired" do
       it "is zero" do
-        expect(report.screened_count).to eq(0)
+        expect(report.hired_count).to eq(0)
       end
     end
 
-    context "with candidates screened" do
+    context "with candidates hired" do
       context "in the past week" do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: "Screened", organization: organization, created_at: 4.days.ago) }
+        let!(:candidates) { create_list(:candidate, count, status: "Hired", organization: organization, created_at: 4.days.ago) }
         it "is the count of candidates" do
-          expect(report.screened_count).to eq(count)
+          expect(report.hired_count).to eq(count)
         end
       end
 
@@ -51,13 +51,13 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: "Screened", organization: organization, created_at: 14.days.ago)
+            create(:candidate, status: "Hired", organization: organization, created_at: 14.days.ago)
           end
         end
 
-        it "is only the candidates screened in the past week" do
-          create(:candidate, status: "Screened", organization: organization, created_at: Date.yesterday)
-          expect(report.screened_count).to eq(1)
+        it "is only the candidates hired in the past week" do
+          create(:candidate, status: "Hired", organization: organization, created_at: Date.yesterday)
+          expect(report.hired_count).to eq(1)
         end
       end
     end

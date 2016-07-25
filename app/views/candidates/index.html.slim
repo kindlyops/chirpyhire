@@ -2,7 +2,7 @@
 .candidates
   .dropdown
     select.status name="status"
-      = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Potential"))
+      = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
 
   .cards
     - candidates.each do |candidate|

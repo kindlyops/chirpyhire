@@ -17,7 +17,7 @@ class ProfileAdvancer
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      candidate.update(status: "Screened")
+      candidate.update(status: "Qualified")
       AutomatonJob.perform_later(user, "screen")
     end
   end

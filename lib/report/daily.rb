@@ -12,8 +12,8 @@ class Report::Daily
     date.strftime("%B #{date.day.ordinalize}")
   end
 
-  def screened_count
-    organization.candidates.screened.where(created_at: date.beginning_of_day..date.end_of_day).count
+  def qualified_count
+    organization.candidates.qualified.where(created_at: date.beginning_of_day..date.end_of_day).count
   end
 
   def recipient_email
@@ -21,7 +21,7 @@ class Report::Daily
   end
 
   def subject
-    "#{screened_count} Screened #{'Candidate'.pluralize(screened_count)} - Chirpyhire"
+    "#{qualified_count} Qualified #{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
   end
 
   private
