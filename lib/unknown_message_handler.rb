@@ -11,6 +11,7 @@ class UnknownMessageHandler
   def call
     message = MessageHandler.call(sender, external_message)
     message.save
+    Threader.new(message).call
     message
   end
 

@@ -5,12 +5,12 @@ class AnswerHandler
   end
 
   def call
+    message.save
+    Threader.new(message).call
+
     if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
       update_or_create_candidate_feature
-    else
-      message.save
-      message
     end
   end
 

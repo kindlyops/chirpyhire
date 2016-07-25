@@ -2,6 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Threader do
 
+  describe "#call" do
+    let(:user) { create(:user) }
+
+    context "with messages created after the message passed in" do
+      let!(:next_message) { create(:message, user: user, created_at: 4.days.ago) }
+      let!(:another_message) { create(:message, user: user, created_at: 3.days.ago) }
+      let!(:message) { create(:message, user: user, created_at: 5.days.ago) }
+
+      it "sets the child on the passed in message" do
+        expect{
+          Threader.new(message).call
+        }.to change{message.child}.from(nil).to(next_message)
+      end
+    end
+  end
+
   describe ".thread" do
     let(:user) { create(:user) }
     let(:messages) { user.messages.by_recency }
@@ -15,10 +31,10 @@ RSpec.describe Threader do
       it "threads appropriately" do
         Threader.thread
 
-        expect(oldest.reload.parent_id).to eq(nil)
-        expect(second_oldest.reload.parent_id).to eq(oldest.id)
-        expect(third_oldest.reload.parent_id).to eq(second_oldest.id)
-        expect(fourth_oldest.reload.parent_id).to eq(third_oldest.id)
+        expect(oldest.reload.child).to eq(second_oldest)
+        expect(second_oldest.reload.child).to eq(third_oldest)
+        expect(third_oldest.reload.child).to eq(fourth_oldest)
+        expect(fourth_oldest.reload.child).to eq(nil)
       end
     end
   end
