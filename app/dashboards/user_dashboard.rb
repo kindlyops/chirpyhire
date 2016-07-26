@@ -20,10 +20,10 @@ class UserDashboard < Administrate::BaseDashboard
     first_name: Field::String,
     last_name: Field::String,
     phone_number: Field::String,
-    contact: Field::Boolean,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     subscribed: Field::Boolean,
+    has_unread_messages: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -53,10 +53,10 @@ class UserDashboard < Administrate::BaseDashboard
     :first_name,
     :last_name,
     :phone_number,
-    :contact,
     :created_at,
     :updated_at,
     :subscribed,
+    :has_unread_messages,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -74,8 +74,8 @@ class UserDashboard < Administrate::BaseDashboard
     :first_name,
     :last_name,
     :phone_number,
-    :contact,
     :subscribed,
+    :has_unread_messages,
   ].freeze
 
   # Overwrite this method to customize how users are displayed

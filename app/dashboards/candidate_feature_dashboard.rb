@@ -10,7 +10,6 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     candidate: Field::BelongsTo,
     category: Field::BelongsTo,
-    inquiries: Field::HasMany,
     id: Field::Number,
     properties: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
@@ -25,8 +24,8 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :candidate,
     :category,
-    :inquiries,
     :id,
+    :properties,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -34,7 +33,6 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :candidate,
     :category,
-    :inquiries,
     :id,
     :properties,
     :created_at,
@@ -47,7 +45,6 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :candidate,
     :category,
-    :inquiries,
     :properties,
   ].freeze
 

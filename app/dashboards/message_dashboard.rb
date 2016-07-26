@@ -13,6 +13,7 @@ class MessageDashboard < Administrate::BaseDashboard
     inquiry: Field::HasOne,
     answer: Field::HasOne,
     notification: Field::HasOne,
+    child: Field::BelongsTo.with_options(class_name: "Message"),
     id: Field::Number,
     sid: Field::String,
     body: Field::Text,
@@ -20,6 +21,8 @@ class MessageDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     sent_at: Field::DateTime,
+    external_created_at: Field::DateTime,
+    child_id: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -42,6 +45,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :inquiry,
     :answer,
     :notification,
+    :child,
     :id,
     :sid,
     :body,
@@ -49,6 +53,8 @@ class MessageDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :sent_at,
+    :external_created_at,
+    :child_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -60,10 +66,13 @@ class MessageDashboard < Administrate::BaseDashboard
     :inquiry,
     :answer,
     :notification,
+    :child,
     :sid,
     :body,
     :direction,
     :sent_at,
+    :external_created_at,
+    :child_id,
   ].freeze
 
   # Overwrite this method to customize how messages are displayed

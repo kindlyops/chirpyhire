@@ -9,13 +9,15 @@ class TemplateDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
-    rules: Field::HasOne,
     notifications: Field::HasMany,
+    candidate_persona: Field::HasOne,
+    actionable: Field::BelongsTo.with_options(class_name: "TemplateActionable"),
     id: Field::Number,
     name: Field::String,
     body: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    actionable_id: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,22 +27,24 @@ class TemplateDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :organization,
-    :rules,
     :notifications,
-    :id,
+    :candidate_persona,
+    :actionable,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
-    :rules,
     :notifications,
+    :candidate_persona,
+    :actionable,
     :id,
     :name,
     :body,
     :created_at,
     :updated_at,
+    :actionable_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -48,10 +52,12 @@ class TemplateDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :organization,
-    :rules,
     :notifications,
+    :candidate_persona,
+    :actionable,
     :name,
     :body,
+    :actionable_id,
   ].freeze
 
   # Overwrite this method to customize how templates are displayed

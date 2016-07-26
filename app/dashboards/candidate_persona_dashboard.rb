@@ -10,9 +10,12 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
     persona_features: Field::HasMany,
+    actionable: Field::BelongsTo.with_options(class_name: "CandidatePersonaActionable"),
+    template: Field::BelongsTo,
     id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    actionable_id: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -23,8 +26,8 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :organization,
     :persona_features,
-    :id,
-    :created_at,
+    :actionable,
+    :template,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -32,9 +35,12 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
     :persona_features,
+    :actionable,
+    :template,
     :id,
     :created_at,
     :updated_at,
+    :actionable_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -43,6 +49,9 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :organization,
     :persona_features,
+    :actionable,
+    :template,
+    :actionable_id,
   ].freeze
 
   # Overwrite this method to customize how candidate personas are displayed
