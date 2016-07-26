@@ -64,6 +64,11 @@
   .write {
     border-top: 1px solid $light;
     width: 100%;
+    margin-bottom: 3em;
+
+    @include media ($horizontal-bar-mode) {
+      margin-bottom: 0;
+    }
 
     textarea {
       margin: 1em auto;
