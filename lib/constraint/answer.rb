@@ -23,7 +23,7 @@ module Constraint
     end
 
     def organization
-      Organization.for(phone: to)
+      Organization.find_by(phone_number: to)
     end
 
     def to

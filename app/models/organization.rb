@@ -12,9 +12,6 @@ class Organization < ApplicationRecord
 
   delegate :conversations, to: :messages
 
-  def self.for(phone:)
-    find_by(phone_number: phone)
-  end
 
   def next_unasked_question_for(user)
     questions = candidate_persona.persona_features

@@ -2,7 +2,6 @@ class SmsController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
-
   def unknown_message
     UnknownMessageHandlerJob.perform_later(sender, params["MessageSid"])
 
@@ -16,7 +15,7 @@ class SmsController < ActionController::Base
   end
 
   def organization
-    @organization ||= Organization.for(phone: params["To"])
+    @organization ||= Organization.find_by(phone_number: params["To"])
   end
 
   def set_header

@@ -3,13 +3,6 @@ require 'rails_helper'
 RSpec.describe Organization, type: :model do
   let!(:organization) { create(:organization, :with_account, :with_candidate_persona) }
 
-  describe ".for" do
-    let(:organization) { create(:organization) }
-    it "looks up an organization by phone number" do
-      expect(Organization.for(phone: organization.phone_number)).to eq(organization)
-    end
-  end
-
   describe "#next_unasked_question_for" do
     let(:user) { create(:user, organization: organization) }
 
