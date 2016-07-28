@@ -14,7 +14,7 @@ RSpec.describe "AddressFinder" do
 
     describe "#address" do
       it do
-        expect(finder.address).to eq("Mount Lee Drive, Los Angeles, CA 90068, United States of America")
+        expect(finder.address).to eq("Mount Lee Drive, McNeil, CA 90068, United States of America")
       end
     end
 
@@ -38,13 +38,22 @@ RSpec.describe "AddressFinder" do
 
     describe "#city" do
       it do
-        expect(finder.city).to eq("Los Angeles")
+        expect(finder.city).to eq("McNeil")
       end
     end
 
     describe "#postal_code" do
       it do
         expect(finder.postal_code).to eq("90068")
+      end
+    end
+
+    context "multiline address", vcr: { cassette_name: "AddressFinder-multiline" } do
+      let(:address) { "3527 boulder circle\n30294" }
+      describe "#found?" do
+        it "is true" do
+          expect(finder.found?).to eq(true)
+        end
       end
     end
 

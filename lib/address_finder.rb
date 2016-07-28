@@ -1,5 +1,5 @@
 class AddressFinder
-  NAIVE_ADDRESS_REGEXP = /.+\d{5,}.*/
+  NAIVE_ADDRESS_REGEXP = /.+\d{5,}.*/m
 
   def initialize(text)
     @text = text
@@ -24,7 +24,7 @@ class AddressFinder
   end
 
   def params
-    { params: { countrycode: 'us', min_confidence: 8 } }
+    { params: { countrycode: 'us', min_confidence: 8, no_annotations: 1 } }
   end
 end
 

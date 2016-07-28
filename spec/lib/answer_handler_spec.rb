@@ -10,25 +10,20 @@ RSpec.describe AnswerHandler do
   let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
 
   let!(:inquiry) { create(:inquiry, message: message, persona_feature: persona_feature) }
-  let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
+  let!(:message) { create(:message, :with_image, user: user) }
 
   describe ".call" do
     context "with an answer format that matches the feature format" do
-      it "creates a message" do
-        expect {
-          AnswerHandler.call(user, inquiry, inbound_message.sid)
-        }.to change{Message.count}.by(1)
-      end
 
       it "creates an answer" do
         expect {
-          AnswerHandler.call(user, inquiry, inbound_message.sid)
+          AnswerHandler.call(user, inquiry, message)
         }.to change{Answer.count}.by(1)
       end
 
       it "creates a AutomatonJob" do
         expect {
-          AnswerHandler.call(user, inquiry, inbound_message.sid)
+          AnswerHandler.call(user, inquiry, message)
         }.to have_enqueued_job(AutomatonJob).with(user, "answer")
       end
 
@@ -37,20 +32,14 @@ RSpec.describe AnswerHandler do
 
         it "does not create an answer" do
           expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
+            AnswerHandler.call(user, inquiry, message)
           }.not_to change{Answer.count}
         end
 
         it "does not create an AutomatonJob" do
           expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
+            AnswerHandler.call(user, inquiry, message)
           }.not_to have_enqueued_job(AutomatonJob)
-        end
-
-        it "creates a message" do
-          expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{Message.count}.by(1)
         end
       end
     end
@@ -58,17 +47,11 @@ RSpec.describe AnswerHandler do
     context "with an answer format that doesn't matches the feature format" do
       context "image mismatch", vcr: { cassette_name: "AnswerHandlerFormatMismatch" } do
         let(:body) { "a test body" }
-        let!(:inbound_message) { FakeMessaging.inbound_message(user, user.organization, body, format: :text) }
-
-        it "creates a message" do
-          expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
-          }.to change{Message.count}.by(1)
-        end
+        let!(:message) { create(:message, user: user, body: body) }
 
         it "does not create an answer" do
           expect {
-            AnswerHandler.call(user, inquiry, inbound_message.sid)
+            AnswerHandler.call(user, inquiry, message)
           }.not_to change{Answer.count}
         end
       end

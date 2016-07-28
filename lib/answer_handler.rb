@@ -1,22 +1,20 @@
 class AnswerHandler
 
-  def self.call(sender, inquiry, message_sid)
-    new(sender, inquiry, message_sid).call
+  def self.call(sender, inquiry, message)
+    new(sender, inquiry, message).call
   end
 
   def call
-    message
-
     if inquiry.unanswered? && answer.valid?
       AutomatonJob.perform_later(sender, "answer")
       update_or_create_candidate_feature
     end
   end
 
-  def initialize(sender, inquiry, message_sid)
+  def initialize(sender, inquiry, message)
     @sender = sender
     @inquiry = inquiry
-    @message_sid = message_sid
+    @message = message
   end
 
   private
@@ -43,22 +41,10 @@ class AnswerHandler
     @answer ||= inquiry.create_answer(message: message)
   end
 
-  attr_reader :inquiry, :sender, :message_sid
-
-  def organization
-    sender.organization
-  end
+  attr_reader :inquiry, :sender, :message
 
   def candidate
     sender.candidate
-  end
-
-  def external_message
-    organization.get_message(message_sid)
-  end
-
-  def message
-    @message ||= MessageHandler.call(sender, external_message)
   end
 
   def property_extractor
