@@ -8,7 +8,11 @@ class AddressFinder
   delegate :address, :latitude, :longitude, :country, :city, :postal_code, to: :result
 
   def found?
-    text.scan(NAIVE_ADDRESS_REGEXP).present? && result.present?
+    naive_match? && result.present?
+  end
+
+  def naive_match?
+    text.scan(NAIVE_ADDRESS_REGEXP).present?
   end
 
   private
