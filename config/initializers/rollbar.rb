@@ -7,6 +7,15 @@ Rollbar.configure do |config|
   # Here we'll disable in 'test':
   unless Rails.env.production?
     config.enabled = false
+
+    config.js_enabled = true
+    config.js_options = {
+      accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
+      captureUncaught: true,
+      payload: {
+        environment: "production"
+      }
+    }
   end
 
   # By default, Rollbar will try to call the `current_user` controller method
