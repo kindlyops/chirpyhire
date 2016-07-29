@@ -7,10 +7,11 @@ $(document).on("turbolinks:load", function() {
         center: $("#map").data("center"),
         zoom: $("#map").data("zoom")
     });
+
     map.on('load', function() {
       map.addSource("candidates", {
         type: "geojson",
-        data: "/candidates.geojson"
+        data: "/candidates.geojson" + location.search
       });
 
       map.addLayer({
