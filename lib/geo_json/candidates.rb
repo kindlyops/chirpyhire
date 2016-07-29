@@ -24,9 +24,7 @@ class GeoJson::Candidates
     {
       type: "Feature",
       properties: {
-        phone_number: phone_number(candidate),
-        address: address(candidate),
-        status: candidate.status
+        description: description(candidate)
       },
       geometry: {
         type: "Point",
@@ -49,5 +47,9 @@ class GeoJson::Candidates
 
   def latitude(candidate)
     candidate.address.latitude
+  end
+
+  def description(candidate)
+    "<h3>Phone: <a href='tel:#{candidate.phone_number}'>#{phone_number(candidate)}</a></h3><p>Address: #{address(candidate)}</p><p>Status: #{candidate.status}</p>"
   end
 end

@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", function() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGFycnl3IiwiYSI6ImNpb3lkYm1rdTAwYnd2Ym01c2tiZ3locjYifQ.LpY1AwiHQcBeOm9z-z5bNA';
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v9',
+        style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
         center: $("#map").data("center"),
         zoom: $("#map").data("zoom")
     });
@@ -19,11 +19,37 @@ $(document).on("turbolinks:load", function() {
         "type": "symbol",
         "source": "candidates",
         "layout": {
-          "icon-image": "marker-15"
+          "icon-image": "chirpyhire-marker-15"
         }
       });
     });
+
+    var popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+
+    map.on('mousemove', function(e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['candidates'] });
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+      if (!features.length) {
+          popup.remove();
+          return;
+      }
+
+      var feature = features[0];
+
+      // Populate the popup and set its coordinates
+      // based on the feature found.
+      popup.setLngLat(feature.geometry.coordinates)
+          .setHTML(feature.properties.description)
+          .addTo(map);
+    });
   }
+
+
 
   $(document).on("click", ".card-call-to-actions button", function(event) {
     var $button = $(this);

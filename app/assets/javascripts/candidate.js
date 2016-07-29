@@ -23,5 +23,29 @@ $(document).on("turbolinks:load", function() {
         }
       });
     });
+
+    var popup = new mapboxgl.Popup({
+      closeButton: false,
+      closeOnClick: false
+    });
+
+    map.on('mousemove', function(e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['candidate'] });
+      // Change the cursor style as a UI indicator.
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+      if (!features.length) {
+          popup.remove();
+          return;
+      }
+
+      var feature = features[0];
+
+      // Populate the popup and set its coordinates
+      // based on the feature found.
+      popup.setLngLat(feature.geometry.coordinates)
+          .setHTML(feature.properties.description)
+          .addTo(map);
+    });
   }
 });
