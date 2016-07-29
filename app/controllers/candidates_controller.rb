@@ -4,6 +4,14 @@ class CandidatesController < ApplicationController
 
   def show
     @candidate = authorized_candidate
+
+    respond_to do |format|
+      format.geojson do
+        render json: GeoJson::Candidates.new([@candidate]).call
+      end
+
+      format.html
+    end
   end
 
   def index

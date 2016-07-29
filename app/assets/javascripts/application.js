@@ -16,6 +16,7 @@
 //= require turbolinks
 //= require components/navigation
 //= require candidates
+//= require candidate
 //= require flash
 
 // require_tree .

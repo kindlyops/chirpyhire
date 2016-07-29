@@ -4,7 +4,7 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
 
-  resources :candidates, only: [:index, :update]
+  resources :candidates, only: [:index, :update, :show]
   resources :conversations, only: :index
 
   resources :users, only: [] do
@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   namespace :maps do
-    resources :candidates, only: [:index]
+    resources :candidates, only: [:index, :show]
   end
 
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
