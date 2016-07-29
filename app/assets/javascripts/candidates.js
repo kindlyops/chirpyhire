@@ -1,8 +1,28 @@
 $(document).on("turbolinks:load", function() {
-  $('iframe.address').each(function(i, el) {
-    var frame = $(el);
-    frame.attr('src', frame.attr('data-src'));
-  });
+  if($("#map").length) {
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaGFycnl3IiwiYSI6ImNpb3lkYm1rdTAwYnd2Ym01c2tiZ3locjYifQ.LpY1AwiHQcBeOm9z-z5bNA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v9',
+        center: $("#map").data("center"),
+        zoom: $("#map").data("zoom")
+    });
+    map.on('load', function() {
+      map.addSource("candidates", {
+        type: "geojson",
+        data: "/candidates.geojson"
+      });
+
+      map.addLayer({
+        "id": "candidates",
+        "type": "symbol",
+        "source": "candidates",
+        "layout": {
+          "icon-image": "marker-15"
+        }
+      });
+    });
+  }
 
   $(document).on("click", ".card-call-to-actions button", function(event) {
     var $button = $(this);
