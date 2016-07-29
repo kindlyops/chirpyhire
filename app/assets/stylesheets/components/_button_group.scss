@@ -39,8 +39,8 @@
       border-top: $button-group-border;
       width: auto;
 
-      &:focus,
-      &:hover {
+      &:focus:not([selected]),
+      &:hover:not([selected]) {
         background-color: darken($button-group-background, 3%);
       }
     }
