@@ -1,5 +1,4 @@
 class Candidate < ApplicationRecord
-  paginates_per 4
 
   belongs_to :user
   has_many :candidate_features
