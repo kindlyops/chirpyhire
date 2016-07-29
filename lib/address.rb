@@ -19,7 +19,7 @@ class Address
   end
 
   def uri
-    "#{URI_BASE}/v4/mapbox.emerald/pin-s-marker+000000(#{longitude},#{latitude})/#{longitude},#{latitude},11/300x400@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
+    "#{uri_base}/v4/mapbox.emerald/pin-s-marker+000000(#{longitude},#{latitude})/#{longitude},#{latitude},11/300x400@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
   end
 
   def coordinates
@@ -42,5 +42,13 @@ class Address
   private
 
   attr_reader :feature
+
+  def uri_base
+    if Rails.env.test?
+      "http://localhost"
+    else
+      ENV.fetch("ADDRESS_URI_BASE")
+    end
+  end
 
 end

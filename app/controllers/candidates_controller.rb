@@ -8,6 +8,13 @@ class CandidatesController < ApplicationController
 
   def index
     @candidates = scoped_candidates.by_recency.status(status).page(params.fetch(:page, 1))
+
+    respond_to do |format|
+      format.geojson {
+        render json: GeoJson::Candidates.new(@candidates).call
+      }
+      format.html
+    end
   end
 
   def update

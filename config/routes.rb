@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
+  namespace :maps do
+    resources :candidates, only: [:index]
+  end
+
   post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
   post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new

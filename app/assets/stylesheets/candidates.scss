@@ -9,8 +9,19 @@
   @include outer-container;
   padding: 1em 0;
 
-  .dropdown {
-    margin-left: 1em;
+  #map {
+    position: absolute;
+    width: 100%;
+    top: 11em;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .controls {
+    margin: 0 1em;
+    padding-bottom: 1em;
+    justify-content: space-between;
   }
 
   .card-call-to-actions {
@@ -59,7 +70,7 @@
     }
   }
 
-  .dropdown {
+  .controls {
     display: flex;
 
     .status {
