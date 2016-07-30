@@ -5,7 +5,7 @@ RSpec.describe RegistrationsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:account]
   end
 
-  describe "#create" do
+  describe "#create", vcr: { cassette_name: "RegistrationsController-create" } do
     let(:email) { "bob@someemail.com" }
     let(:account_params) do
       { account: {
@@ -16,7 +16,10 @@ RSpec.describe RegistrationsController, type: :controller do
           first_name: "Bob",
           last_name: "Bobson",
           organization_attributes: {
-            name: "Home Instead"
+            name: "Home Instead",
+            location_attributes: {
+              full_street_address: "1000 E. Market St. 22902"
+            }
           }
         }
       }}
