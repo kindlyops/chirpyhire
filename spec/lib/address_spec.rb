@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Address, type: :model do
+RSpec.describe Address do
   let(:address_candidate_feature) { create(:candidate_feature, :address) }
   let(:address) { Address.new(address_candidate_feature) }
   describe "#coordinates" do
