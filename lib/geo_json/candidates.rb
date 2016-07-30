@@ -6,7 +6,8 @@ class GeoJson::Candidates
 
   def call
     { type: "FeatureCollection",
-      features: features
+      features: features,
+      statuses: Candidate::STATUSES
     }
   end
 

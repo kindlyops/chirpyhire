@@ -8,14 +8,6 @@ $(document).on("turbolinks:load", function() {
         zoom: $("#map").data("zoom")
     });
 
-    function fetchStatuses(candidates) {
-      return _(candidates.features).uniqBy(function(feature) {
-        return feature.properties['status'];
-      }).map(function(feature) {
-        return feature.properties['status'];
-      }).value();
-    }
-
     function addLayers(map, statuses) {
       _.each(statuses, function(status) {
         map.addLayer({
@@ -31,12 +23,15 @@ $(document).on("turbolinks:load", function() {
       });
     }
 
-    function watchSelect(map, statuses) {
+    function watchSelect(map, statuses, popup) {
       $(document).on("change", ".maps-candidates .dropdown select", function(event) {
         var currentStatus = this.value;
         var unselectedStatuses = _.reject(statuses, function(status) {
           return status === currentStatus;
         });
+
+        popup.remove();
+
         _.each(unselectedStatuses, function(status) {
           map.setLayoutProperty(status, 'visibility', 'none');
         });
@@ -64,6 +59,8 @@ $(document).on("turbolinks:load", function() {
             .setHTML(feature.properties.description)
             .addTo(map);
       });
+
+      return popup;
     }
 
     function watchCardLink() {
@@ -74,7 +71,8 @@ $(document).on("turbolinks:load", function() {
     }
 
     function initMap(candidates) {
-      var statuses = fetchStatuses(candidates);
+      var statuses = candidates.statuses;
+      var popup = setUpPopup(map, statuses);
 
       if(map.loaded()) {
         map.addSource("candidates", {
@@ -83,7 +81,7 @@ $(document).on("turbolinks:load", function() {
         });
 
         addLayers(map, statuses);
-        watchSelect(map, statuses);
+        watchSelect(map, statuses, popup);
       } else {
         map.on('load', function() {
           map.addSource("candidates", {
@@ -92,11 +90,10 @@ $(document).on("turbolinks:load", function() {
           });
 
           addLayers(map, statuses);
-          watchSelect(map, statuses);
+          watchSelect(map, statuses, popup);
         });
       }
 
-      setUpPopup(map, statuses);
       watchCardLink();
     }
 
