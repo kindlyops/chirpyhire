@@ -16,11 +16,10 @@
 //= require turbolinks
 //= require lodash
 //= require init
-//= require map
 
 //= require components/navigation
 //= require candidates
 //= require maps/candidates
-//= require candidate
+//= require maps/candidate
 //= require flash
 
