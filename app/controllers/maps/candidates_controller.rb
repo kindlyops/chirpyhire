@@ -6,13 +6,13 @@ class Maps::CandidatesController < ApplicationController
   def show
     determine_status
 
-    @map = Map.new
+    @map = Map.new(current_organization)
   end
 
   def index
     determine_status
 
-    @map = Map.new
+    @map = Map.new(current_organization)
   end
 
   private
