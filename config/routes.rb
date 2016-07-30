@@ -27,22 +27,24 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
     namespace :admin do
       resources :accounts
+      resources :actionables
+      resources :answers
       resources :candidates
+      resources :candidate_features
       resources :candidate_personas
+      resources :categories
+      resources :inquiries
+      resources :locations
+      resources :media_instances
       resources :messages
+      resources :notifications
       resources :organizations
+      resources :persona_features
+      resources :referrals
       resources :referrers
       resources :rules
       resources :templates
       resources :users
-      resources :candidate_features
-      resources :answers
-      resources :inquiries
-      resources :media_instances
-      resources :notifications
-      resources :persona_features
-      resources :referrals
-      resources :categories
 
       root to: "accounts#index"
     end
