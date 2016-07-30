@@ -1,0 +1,14 @@
+.invitations {
+  @include outer-container;
+  padding: 1.25em;
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .action {
+      margin: 0.25em 0;
+    }
+  }
+}

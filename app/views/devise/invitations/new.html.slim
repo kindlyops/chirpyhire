@@ -1,10 +1,10 @@
 = title "Invitations | Chirpyhire"
-h3 Send Invitation
-= form_for resource, :as => resource_name, :url => invitation_path(resource_name), class: "p-t-15", :html => {:method => :post, role: "form"} do |f|
-  .row
-    .col-sm-12
-      .form-group.form-group-default
-        = f.label :email
-        = f.text_field :email, class: "form-control required"
-  = submit_tag "Invite", class: "btn btn-primary btn-cons m-t-10"
-  = link_to "Skip to dashboard", after_sign_in_path_for(current_account), class: "btn btn-cons m-t-10"
+.invitations
+  h3 Send Invitation
+  = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
+    .field
+      = f.label :email
+      = f.text_field :email, required: true
+    .actions
+      = submit_tag "Invite", class: "action"
+      = link_to "Skip to dashboard", after_sign_in_path_for(current_account), class: "action button"
