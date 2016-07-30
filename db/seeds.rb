@@ -16,6 +16,9 @@ if Rails.env.development?
   )
   puts "Created Organization"
 
+  FactoryGirl.create(:location, organization: org)
+  puts "Created Location"
+
   puts "Creating User"
   user = User.find_or_create_by!(
    first_name: "Harry",

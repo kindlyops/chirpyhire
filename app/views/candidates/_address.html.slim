@@ -1,6 +1,6 @@
 p
   | Address:
   '
-  a target="_blank" href="https://www.google.com/maps/place/#{address.formatted_address}"
-    strong = address.formatted_address
+  = link_to maps_candidate_path(candidate) do
+    strong = candidate.address.formatted_address
 

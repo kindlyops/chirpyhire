@@ -1,5 +1,4 @@
 class Candidate < ApplicationRecord
-  paginates_per 4
 
   belongs_to :user
   has_many :candidate_features
@@ -17,6 +16,10 @@ class Candidate < ApplicationRecord
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
+  end
+
+  def self.with_addresses
+    joins(:candidate_features).merge(CandidateFeature.address)
   end
 
   def self.status(status)

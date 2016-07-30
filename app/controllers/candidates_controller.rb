@@ -4,10 +4,29 @@ class CandidatesController < ApplicationController
 
   def show
     @candidate = authorized_candidate
+
+    respond_to do |format|
+      format.geojson do
+        render json: GeoJson::Candidates.new([@candidate]).call
+      end
+
+      format.html
+    end
   end
 
   def index
-    @candidates = scoped_candidates.by_recency.status(status).page(params.fetch(:page, 1))
+    filtered_candidates = scoped_candidates.by_recency
+
+    respond_to do |format|
+      format.geojson do
+        @candidates = filtered_candidates.with_addresses
+        render json: GeoJson::Candidates.new(@candidates).call
+      end
+
+      format.html do
+        @candidates = filtered_candidates.status(status).page(params.fetch(:page, 1))
+      end
+    end
   end
 
   def update

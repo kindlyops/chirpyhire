@@ -14,8 +14,11 @@
 //= require jquery2
 //= require jquery_ujs
 //= require turbolinks
+//= require lodash
+
 //= require components/navigation
 //= require candidates
+//= require maps/candidates
+//= require maps/candidate
 //= require flash
 
-// require_tree .

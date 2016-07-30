@@ -9,8 +9,15 @@
   @include outer-container;
   padding: 1em 0;
 
-  .dropdown {
-    margin-left: 1em;
+  .controls {
+    margin: 0 1em;
+    padding-bottom: 1em;
+    justify-content: space-between;
+    display: flex;
+
+    .status {
+      margin-right: 1em;
+    }
   }
 
   .card-call-to-actions {
@@ -40,30 +47,12 @@
     }
   }
 
-  .map {
-    .empty {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: $card-image-height;
-      background-color: #F8F2B4;
-    }
-  }
-
   .card-image {
     background-color: $medium-gray;
 
     iframe {
       width: 100%;
       height: $card-image-height;
-    }
-  }
-
-  .dropdown {
-    display: flex;
-
-    .status {
-      margin-right: 1em;
     }
   }
 }

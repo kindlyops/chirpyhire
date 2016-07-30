@@ -26,30 +26,12 @@ RSpec.feature "Candidates", type: :feature, js: true do
           let(:category) { create(:category, name: "Address Category") }
           let!(:persona_feature) { create(:persona_feature, :with_geofence, category: category, candidate_persona: candidate_persona) }
 
-          context "without address" do
-            it "has an empty state" do
-              visit candidates_path
-              expect(page).to have_text("No address found yet")
-            end
-          end
-
           context "with address" do
             let!(:address) { Address.new(create(:candidate_feature, :address, category: category, candidate: candidate)) }
 
-            it "has a map of the address" do
+            it "has a link to the address" do
               visit candidates_path
-              expect(page).not_to have_text("No address found yet")
               expect(page).to have_text(address.formatted_address)
-              expect(page).to have_selector(".map img")
-            end
-
-            it "allows the account to visit a Google Map of the address" do
-              visit candidates_path
-              new_window = window_opened_by { click_link(address.formatted_address) }
-
-              page.within_window(new_window) do
-                expect(current_url).to match(/google/)
-              end
             end
           end
         end
@@ -232,7 +214,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
     end
 
     context "more than one page of candidates" do
-      let(:users) { create_list(:user, 7, organization: account.organization) }
+      let(:users) { create_list(:user, 14, organization: account.organization) }
       let!(:candidates) do
         users.each do |user|
           create(:candidate, status: "Qualified", user: user)

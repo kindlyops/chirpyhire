@@ -11,9 +11,7 @@ class Organization < ApplicationRecord
   has_one :candidate_persona
   has_one :location
   accepts_nested_attributes_for :location
-
   delegate :conversations, to: :messages
-
 
   def next_unasked_question_for(user)
     questions = candidate_persona.persona_features

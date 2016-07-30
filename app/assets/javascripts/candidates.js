@@ -1,32 +1,29 @@
 $(document).on("turbolinks:load", function() {
-  $('iframe.address').each(function(i, el) {
-    var frame = $(el);
-    frame.attr('src', frame.attr('data-src'));
-  });
+  if($(".candidates").length) {
+    $(document).on("click", ".candidates .card-call-to-actions button", function(event) {
+      var $button = $(this);
+      Turbolinks.visit($button.find('a').attr('href'));
+    });
 
-  $(document).on("click", ".card-call-to-actions button", function(event) {
-    var $button = $(this);
-    Turbolinks.visit($button.find('a').attr('href'));
-  });
+    $(document).on("change", ".candidates .dropdown select", function(event) {
+      var newSearch, queryParamRegExp;
+      var search = location.search;
+      var queryParam = this.name + "=" + this.value;
+      newSearch = search.replace(/\?page=\d/, "?").replace(/&page=\d/, "");
 
-  $(document).on("change", ".dropdown select", function(event) {
-    var newSearch, queryParamRegExp;
-    var search = location.search;
-    var queryParam = this.name + "=" + this.value;
-    newSearch = search.replace(/\?page=\d/, "?").replace(/&page=\d/, "");
-
-    if (!newSearch) {
-      Turbolinks.visit(location.pathname + "?" + queryParam);
-    } else {
-      queryParamRegExp = new RegExp("(" + this.name + "=[^\&]+)");
-
-      if (newSearch.match(queryParamRegExp)) {
-        newSearch = newSearch.replace(queryParamRegExp, queryParam);
+      if (!newSearch) {
+        Turbolinks.visit(location.pathname + "?" + queryParam);
       } else {
-        newSearch = newSearch + "&" + queryParam;
-      }
+        queryParamRegExp = new RegExp("(" + this.name + "=[^\&]+)");
 
-      Turbolinks.visit(location.pathname + newSearch);
-    }
-  });
+        if (newSearch.match(queryParamRegExp)) {
+          newSearch = newSearch.replace(queryParamRegExp, queryParam);
+        } else {
+          newSearch = newSearch + "&" + queryParam;
+        }
+
+        Turbolinks.visit(location.pathname + newSearch);
+      }
+    });
+  }
 });

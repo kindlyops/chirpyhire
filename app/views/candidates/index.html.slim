@@ -1,27 +1,32 @@
 = title "Candidates | Chirpyhire"
-.candidates
-  .dropdown
-    select.status name="status"
-      = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
 
+.candidates
+  .controls
+    .dropdown
+      select.status name="status"
+        = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
+    .button-group
+      label
+        i.fa.fa-th-large.button-group-item selected=true
+      label
+        = link_to maps_candidates_path, class: "button-group-item" do
+          i.fa.fa-map-o
   .cards
     - candidates.each do |candidate|
       .card
         .card-header
-          = candidate.user_phone_number.phony_formatted
+          = link_to "#{candidate.user_phone_number.phony_formatted}", user_messages_path(candidate.user)
           .created_at
             i.fa.fa-clock-o
             '
             = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
-        .card-image
-          = render partial: "candidates/map", locals: { address: candidate.address }
         .card-copy
-          = render partial: "candidates/address", locals: { address: candidate.address }
+          = render partial: "candidates/address", locals: { candidate: candidate }
           = render partial: "candidates/choice", collection: candidate.choices
           = render partial: "candidates/document", collection: candidate.documents
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
               = render partial: "candidates/#{cta}", locals: { candidate: candidate }
   = paginate @candidates
-  a href='https://www.mapbox.com/map-feedback/' © Mapbox
-  a href='http://www.openstreetmap.org/copyright' © OpenStreetMap
+
+

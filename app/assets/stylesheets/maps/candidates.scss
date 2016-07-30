@@ -1,0 +1,31 @@
+.maps-candidates {
+  $base-font-color: $dark-gray !default;
+  $card-image-height: 263px;
+  $base-border-color: gainsboro !default;
+  $base-border-radius: 3px !default;
+  $dropdown-border: 1px solid silver;
+  $dropdown-padding: 1em;
+
+  @include outer-container;
+  padding: 1em 0;
+
+  #map {
+    position: absolute;
+    width: 100%;
+    top: 11em;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .controls {
+    display: flex;
+    margin: 0 1em;
+    padding-bottom: 1em;
+    justify-content: space-between;
+
+    .status {
+      margin-right: 1em;
+    }
+  }
+}
