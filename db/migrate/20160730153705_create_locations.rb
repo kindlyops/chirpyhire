@@ -1,6 +1,6 @@
-class CreateOrganizationAddresses < ActiveRecord::Migration[5.0]
+class CreateLocations < ActiveRecord::Migration[5.0]
   def change
-    create_table :organization_addresses do |t|
+    create_table :locations do |t|
       t.float :latitude
       t.float :longitude
       t.string :full_street_address

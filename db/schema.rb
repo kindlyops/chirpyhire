@@ -108,6 +108,22 @@ ActiveRecord::Schema.define(version: 20160730153705) do
     t.index ["persona_feature_id"], name: "index_inquiries_on_persona_feature_id", using: :btree
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "full_street_address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "state_code"
+    t.integer  "postal_code"
+    t.string   "country"
+    t.string   "country_code"
+    t.integer  "organization_id",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["organization_id"], name: "index_locations_on_organization_id", using: :btree
+  end
+
   create_table "media_instances", force: :cascade do |t|
     t.string   "sid",          null: false
     t.string   "content_type", null: false
@@ -140,22 +156,6 @@ ActiveRecord::Schema.define(version: 20160730153705) do
     t.integer  "message_id",  null: false
     t.index ["message_id"], name: "index_notifications_on_message_id", using: :btree
     t.index ["template_id"], name: "index_notifications_on_template_id", using: :btree
-  end
-
-  create_table "organization_addresses", force: :cascade do |t|
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "full_street_address"
-    t.string   "city"
-    t.string   "state"
-    t.string   "state_code"
-    t.integer  "postal_code"
-    t.string   "country"
-    t.string   "country_code"
-    t.integer  "organization_id",     null: false
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
-    t.index ["organization_id"], name: "index_organization_addresses_on_organization_id", using: :btree
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -249,11 +249,11 @@ ActiveRecord::Schema.define(version: 20160730153705) do
   add_foreign_key "candidates", "users"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "persona_features"
+  add_foreign_key "locations", "organizations"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
-  add_foreign_key "organization_addresses", "organizations"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "persona_features", "categories"
   add_foreign_key "referrals", "candidates"

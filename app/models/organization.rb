@@ -10,6 +10,7 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :candidate_persona
   delegate :conversations, to: :messages
+  has_one :location
 
   def next_unasked_question_for(user)
     questions = candidate_persona.persona_features
