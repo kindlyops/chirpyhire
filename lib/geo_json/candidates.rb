@@ -24,7 +24,8 @@ class GeoJson::Candidates
     {
       type: "Feature",
       properties: {
-        description: description(candidate)
+        description: description(candidate),
+        status: candidate.status
       },
       geometry: {
         type: "Point",

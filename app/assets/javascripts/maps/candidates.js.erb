@@ -1,0 +1,91 @@
+$(document).on("turbolinks:load", function() {
+  if($(".maps-candidates #map").length) {
+    mapboxgl.accessToken = mapboxgl.accessToken || '<%= ENV.fetch("MAPBOX_PUBLIC_KEY") %>';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
+        center: $("#map").data("center"),
+        zoom: $("#map").data("zoom")
+    });
+
+    function fetchStatuses(candidates) {
+      return _(candidates.features).uniqBy(function(feature) {
+        return feature.properties['status'];
+      }).map(function(feature) {
+        return feature.properties['status'];
+      }).value();
+    }
+
+    function addLayers(map, statuses) {
+      _.each(statuses, function(status) {
+        map.addLayer({
+          "id": status,
+          "type": "symbol",
+          "source": "candidates",
+          "layout": {
+            "icon-image": "chirpyhire-marker-15",
+            "visibility": $(".dropdown select").val() === status ? 'visible' : 'none'
+          },
+          "filter": ["==", "status", status]
+        })
+      });
+    }
+
+    function watchSelect(map, statuses) {
+      $(document).on("change", ".dropdown select", function(event) {
+        var currentStatus = this.value;
+        var unselectedStatuses = _.reject(statuses, function(status) {
+          return status === currentStatus;
+        });
+        _.each(unselectedStatuses, function(status) {
+          map.setLayoutProperty(status, 'visibility', 'none');
+        });
+        map.setLayoutProperty(currentStatus, 'visibility', 'visible');
+      });
+    }
+
+    function setUpPopup(map, statuses) {
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+
+      map.on('mousemove', function(e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: statuses });
+        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+        if (!features.length) {
+            popup.remove();
+            return;
+        }
+
+        var feature = features[0];
+        popup.setLngLat(feature.geometry.coordinates)
+            .setHTML(feature.properties.description)
+            .addTo(map);
+      });
+    }
+
+    function initMap(candidates) {
+      var statuses = fetchStatuses(candidates);
+
+      map.on('load', function() {
+        map.addSource("candidates", {
+          type: "geojson",
+          data: candidates
+        });
+
+        addLayers(map, statuses);
+        watchSelect(map, statuses);
+      });
+
+      setUpPopup(map, statuses);
+    }
+
+    $.get({
+      url: "/candidates.geojson",
+      dataType: "json",
+      success: initMap.bind(this)
+    });
+  }
+});

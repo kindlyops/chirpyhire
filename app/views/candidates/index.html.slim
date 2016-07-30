@@ -9,7 +9,7 @@
       label
         i.fa.fa-th-large.button-group-item selected=true
       label
-        = link_to maps_candidates_path(request.query_parameters), class: "button-group-item" do
+        = link_to maps_candidates_path, class: "button-group-item" do
           i.fa.fa-map-o
   .cards
     - candidates.each do |candidate|

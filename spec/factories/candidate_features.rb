@@ -8,8 +8,8 @@ FactoryGirl.define do
         { city: "Charlottesville",
           address: "1000 East Market Street, Charlottesville, VA, USA",
           country: "USA",
-          latitude: 38.028531,
-          longitude: -78.473088,
+          latitude: Faker::Address.latitude,
+          longitude: Faker::Address.longitude,
           postal_code: "22902",
           child_class: "address"
         }

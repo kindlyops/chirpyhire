@@ -15,7 +15,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    filtered_candidates = scoped_candidates.by_recency.status(status)
+    filtered_candidates = scoped_candidates.by_recency
 
     respond_to do |format|
       format.geojson do
@@ -24,7 +24,7 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
-        @candidates = filtered_candidates.page(params.fetch(:page, 1))
+        @candidates = filtered_candidates.status(status).page(params.fetch(:page, 1))
       end
     end
   end
