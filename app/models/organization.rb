@@ -9,6 +9,7 @@ class Organization < ApplicationRecord
   has_many :templates
   has_many :rules
   has_one :candidate_persona
+  has_one :location
 
   delegate :conversations, to: :messages
 
