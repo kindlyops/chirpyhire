@@ -76,7 +76,7 @@ $(document).on("turbolinks:load", function() {
     function initMap(candidates) {
       var statuses = fetchStatuses(candidates);
 
-      map.on('load', function() {
+      if(map.loaded()) {
         map.addSource("candidates", {
           type: "geojson",
           data: candidates
@@ -84,7 +84,17 @@ $(document).on("turbolinks:load", function() {
 
         addLayers(map, statuses);
         watchSelect(map, statuses);
-      });
+      } else {
+        map.on('load', function() {
+          map.addSource("candidates", {
+            type: "geojson",
+            data: candidates
+          });
+
+          addLayers(map, statuses);
+          watchSelect(map, statuses);
+        });
+      }
 
       setUpPopup(map, statuses);
       watchCardLink();

@@ -15,7 +15,7 @@
     - candidates.each do |candidate|
       .card
         .card-header
-          = candidate.user_phone_number.phony_formatted
+          = link_to "#{candidate.user_phone_number.phony_formatted}", user_messages_path(candidate.user)
           .created_at
             i.fa.fa-clock-o
             '

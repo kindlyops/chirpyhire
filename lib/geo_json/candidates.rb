@@ -51,6 +51,6 @@ class GeoJson::Candidates
   end
 
   def description(candidate)
-    "<h3>Phone: <a href='tel:#{candidate.phone_number}'>#{phone_number(candidate)}</a></h3><p>Address: #{address(candidate)}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
+    "<h3>Phone: <a href='/users/#{candidate.user_id}/messages'>#{phone_number(candidate)}</a></h3><p>Address: #{address(candidate)}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
   end
 end
