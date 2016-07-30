@@ -9,9 +9,7 @@ class Organization < ApplicationRecord
   has_many :templates
   has_many :rules
   has_one :candidate_persona
-
   delegate :conversations, to: :messages
-
 
   def next_unasked_question_for(user)
     questions = candidate_persona.persona_features
