@@ -7,7 +7,7 @@
         = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
     .button-group
       label
-        = link_to candidates_path(request.query_parameters) do
+        = link_to candidates_path, class: "candidates-cards" do
           i.fa.fa-th-large.button-group-item
       label
         i.fa.fa-map-o.button-group-item selected=true

@@ -24,7 +24,7 @@ $(document).on("turbolinks:load", function() {
           "source": "candidates",
           "layout": {
             "icon-image": "chirpyhire-marker-15",
-            "visibility": $(".dropdown select").val() === status ? 'visible' : 'none'
+            "visibility": $(".maps-candidates .dropdown select").val() === status ? 'visible' : 'none'
           },
           "filter": ["==", "status", status]
         })
@@ -32,7 +32,7 @@ $(document).on("turbolinks:load", function() {
     }
 
     function watchSelect(map, statuses) {
-      $(document).on("change", ".dropdown select", function(event) {
+      $(document).on("change", ".maps-candidates .dropdown select", function(event) {
         var currentStatus = this.value;
         var unselectedStatuses = _.reject(statuses, function(status) {
           return status === currentStatus;
@@ -66,6 +66,13 @@ $(document).on("turbolinks:load", function() {
       });
     }
 
+    function watchCardLink() {
+      $(document).on("click", ".maps-candidates .candidates-cards", function(event) {
+        event.preventDefault();
+        Turbolinks.visit($(this).attr("href") + "?status=" + $(".maps-candidates .dropdown select").val());
+      });
+    }
+
     function initMap(candidates) {
       var statuses = fetchStatuses(candidates);
 
@@ -80,6 +87,7 @@ $(document).on("turbolinks:load", function() {
       });
 
       setUpPopup(map, statuses);
+      watchCardLink();
     }
 
     $.get({
