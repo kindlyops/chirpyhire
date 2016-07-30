@@ -10,14 +10,9 @@
       .field
         = u.label :last_name
         = u.text_field :last_name, required: true
-      = u.fields_for :organization do |o|
-        .field
-          = o.label :name, "Organization"
-
-          = o.text_field :name, required: true, autocomplete: "off", placeholder: "Your Home Care Co"
     .field
       = f.label :email
-      = f.email_field :email, placeholder: "you@yourhomecare.com"
+      = f.email_field :email, required: true
     .field
       = f.label :password
       - if @minimum_password_length
@@ -29,6 +24,15 @@
     .field
       = f.label :password_confirmation
       = f.password_field :password_confirmation, autocomplete: "off"
+    = f.fields_for :user do |u|
+      = u.fields_for :organization do |o|
+        .field
+          = o.label :name, "Organization Name"
+          = o.text_field :name, required: true, autocomplete: "off"
+        = o.fields_for :location do |l|
+          .field
+            = l.label :full_street_address, "Organization Address"
+            = l.text_field :full_street_address, required: true, autocomplete: "off"
     .actions
       = f.submit "Sign up"
   = render "devise/shared/links"
