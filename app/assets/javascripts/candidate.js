@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function() {
-  if($("#map").length) {
+  if($(".candidate #map").length) {
     mapboxgl.accessToken = 'pk.eyJ1IjoiaGFycnl3IiwiYSI6ImNpb3lkYm1rdTAwYnd2Ym01c2tiZ3locjYifQ.LpY1AwiHQcBeOm9z-z5bNA';
     var map = new mapboxgl.Map({
         container: 'map',
