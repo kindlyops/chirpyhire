@@ -5,7 +5,8 @@ class AddressFinder
     @text = text
   end
 
-  delegate :address, :latitude, :longitude, :country, :city, :postal_code, to: :result
+  delegate :address, :latitude, :longitude, :country, :country_code,
+  :city, :state, :state_code, :postal_code, to: :result
 
   def found?
     naive_match? && result.present?
@@ -13,6 +14,16 @@ class AddressFinder
 
   def naive_match?
     text.scan(NAIVE_ADDRESS_REGEXP).present?
+  end
+
+  alias :full_street_address :address
+
+  def self.client=(client)
+    @client = client
+  end
+
+  def self.client
+    @client
   end
 
   private
@@ -23,8 +34,12 @@ class AddressFinder
     @result ||= results.first
   end
 
+  def client
+    self.class.client
+  end
+
   def results
-    @results ||= Geocoder.search(text, params).sort {|r1, r2| r2.data["confidence"] <=> r1.data["confidence"] }
+    @results ||= client.search(text, params).sort {|r1, r2| r2.data["confidence"] <=> r1.data["confidence"] }
   end
 
   def params

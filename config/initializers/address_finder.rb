@@ -1,0 +1,1 @@
+AddressFinder.client = Geocoder

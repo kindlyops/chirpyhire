@@ -10,7 +10,8 @@ RSpec.feature "Account Management", type: :feature, js: true do
 
         fill_in "First name", with: Faker::Name.first_name
         fill_in "Last name", with: Faker::Name.last_name
-        fill_in "Organization", with: Faker::Company.name
+        fill_in "Organization Name", with: Faker::Company.name
+        fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email
         fill_in "Password", with: password
         fill_in "Password confirmation", with: password
@@ -26,7 +27,8 @@ RSpec.feature "Account Management", type: :feature, js: true do
 
         fill_in "First name", with: Faker::Name.first_name
         fill_in "Last name", with: Faker::Name.last_name
-        fill_in "Organization", with: Faker::Company.name
+        fill_in "Organization Name", with: Faker::Company.name
+        fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email
         fill_in "Password", with: "password"
         fill_in "Password confirmation", with: "not the password"
