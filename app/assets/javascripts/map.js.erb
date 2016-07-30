@@ -1,6 +1,6 @@
 App.Map = function($mapEl, sourceName) {
   this.sourceName = sourceName;
-  mapboxgl.accessToken = mapboxgl.accessToken || 'pk.eyJ1IjoiaGFycnl3IiwiYSI6ImNpb3lkYm1rdTAwYnd2Ym01c2tiZ3locjYifQ.LpY1AwiHQcBeOm9z-z5bNA';
+  mapboxgl.accessToken = mapboxgl.accessToken || '<%= ENV.fetch("MAPBOX_PUBLIC_KEY") %>';
   this._map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
