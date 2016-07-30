@@ -15,7 +15,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require lodash
-//= require init
 
 //= require components/navigation
 //= require candidates
