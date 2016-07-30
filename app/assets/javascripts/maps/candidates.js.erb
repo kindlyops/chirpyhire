@@ -27,7 +27,7 @@ $(document).on("turbolinks:load", function() {
             "visibility": $(".maps-candidates .dropdown select").val() === status ? 'visible' : 'none'
           },
           "filter": ["==", "status", status]
-        })
+        });
       });
     }
 

@@ -19,7 +19,7 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       format.geojson do
-        @candidates = filtered_candidates
+        @candidates = filtered_candidates.with_addresses
         render json: GeoJson::Candidates.new(@candidates).call
       end
 
