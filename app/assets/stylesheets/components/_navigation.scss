@@ -60,10 +60,6 @@ header.navigation {
     text-decoration: none;
     text-transform: uppercase;
 
-    @include media ($horizontal-bar-mode) {
-      display: none;
-    }
-
     &:focus,
     &:hover {
       color: $navigation-color-hover;
@@ -240,7 +236,7 @@ header.navigation {
     @include media($horizontal-bar-mode) {
       left: -$navigation-submenu-padding;
       position: absolute;
-      top: 1.5em;
+      top: 3.7em;
     }
 
     .submenu.fly-out-right {
@@ -288,6 +284,7 @@ header.navigation {
         display: inline-block;
         text-align: right;
         width: 100%;
+        padding-right: 1em;
 
         @include media($horizontal-bar-mode) {
           background-color: $navigation-background;

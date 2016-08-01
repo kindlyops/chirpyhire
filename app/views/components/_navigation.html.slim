@@ -1,24 +1,29 @@
 header.navigation role="banner"
-    .navigation-wrapper
-      nav role="navigation"
-        ul.navigation-menu.show
-          li.nav-link
-            a href="/candidates"
-              span.desktop Candidates
-              i.mobile.fa.fa-user.fa-2x
-          li.nav-link
-            a href="/conversations"
-              span.desktop
-                ' Conversations
-                - unless current_organization.users_with_unread_messages_count.zero?
-                  = "(#{current_organization.users_with_unread_messages_count})"
-              - if current_organization.users_with_unread_messages_count.zero?
-                i.mobile.fa.fa-commenting.fa-2x
-              - else
-                span.fa-stack
-                  i.mobile.fa.fa-comment.fa-stack-2x
-                  i.users-unread-message-count.fa-stack-1x = current_organization.users_with_unread_messages_count
-          li.nav-link
-            = link_to destroy_account_session_path, method: :delete do
-                span.desktop Sign out
-                i.mobile.fa.fa-sign-out.fa-2x
+  .navigation-wrapper
+    nav role="navigation"
+      ul.navigation-menu.show
+        li.nav-link
+          a href="/candidates"
+            span.desktop Candidates
+            i.mobile.fa.fa-user.fa-2x
+        li.nav-link
+          a href="/conversations"
+            span.desktop
+              ' Conversations
+              - unless current_organization.users_with_unread_messages_count.zero?
+                = "(#{current_organization.users_with_unread_messages_count})"
+            - if current_organization.users_with_unread_messages_count.zero?
+              i.mobile.fa.fa-commenting.fa-2x
+            - else
+              span.fa-stack
+                i.mobile.fa.fa-comment.fa-stack-2x
+                i.users-unread-message-count.fa-stack-1x = current_organization.users_with_unread_messages_count
+        li.nav-link
+          a#js-mobile-menu.navigation-menu-button href="javascript:void(0)"
+            i.fa.fa-cog.fa-2x
+      ul#js-navigation-menu.navigation-menu.submenu
+        li.nav-link
+          a href="javascript:void(0)"  Caregiver Persona
+        li.nav-link
+          = link_to destroy_account_session_path, method: :delete do
+            span Sign out
