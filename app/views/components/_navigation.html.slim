@@ -1,6 +1,6 @@
 header.navigation role="banner"
   .navigation-wrapper
-    nav role="navigation"
+    nav.left role="navigation"
       ul.navigation-menu.show
         li.nav-link
           a href="/candidates"
@@ -18,12 +18,17 @@ header.navigation role="banner"
               span.fa-stack
                 i.mobile.fa.fa-comment.fa-stack-2x
                 i.users-unread-message-count.fa-stack-1x = current_organization.users_with_unread_messages_count
-        li.nav-link
+        li.nav-link.mobile
           a#js-mobile-menu.navigation-menu-button href="javascript:void(0)"
             i.fa.fa-cog.fa-2x
       ul#js-navigation-menu.navigation-menu.submenu
         li.nav-link
-          a href="javascript:void(0)"  Caregiver Persona
+          = link_to "Caregiver Persona", candidate_persona_path
         li.nav-link
-          = link_to destroy_account_session_path, method: :delete do
-            span Sign out
+          = link_to "Sign Out", destroy_account_session_path, method: :delete
+    nav.right.desktop role="navigation"
+      ul.navigation-menu.show
+        li.nav-link
+          a#js-mobile-menu.navigation-menu-button href="javascript:void(0)"
+            i.fa.fa-cog.fa-2x
+
