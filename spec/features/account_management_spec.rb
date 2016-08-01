@@ -108,6 +108,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
     scenario "it progresses to the sign in page" do
       visit "/"
 
+      find("#desktop-settings").trigger('click')
       click_link "Sign out"
       expect(page).to have_text("Sign in or sign up before continuing.")
     end

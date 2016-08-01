@@ -1,0 +1,8 @@
+p = persona_feature.text
+- if persona_feature.has_geofence?
+  p
+    ' Within
+    = persona_feature.distance_in_miles
+    '  miles of:
+  .map
+    img src==persona_feature.uri

@@ -1,0 +1,27 @@
+.candidate-persona {
+  @include outer-container;
+  padding: 1em 0;
+
+  .attribution {
+    padding: 0 1em;
+  }
+
+  .persona-feature {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      comment {
+        color: $medium-gray;
+      }
+    }
+
+    .choice-template {
+      white-space: pre-wrap;
+    }
+  }
+
+  h1, h3 {
+    margin: 0 1em 0.75em;
+  }
+}

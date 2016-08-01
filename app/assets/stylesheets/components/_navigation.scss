@@ -25,6 +25,20 @@ header.navigation {
   width: 100%;
   z-index: 999;
 
+  .desktop {
+    display: none;
+  }
+
+  @include media ($horizontal-bar-mode) {
+    li.nav-link.mobile {
+      display: none;
+    }
+
+    .desktop {
+      display: block;
+    }
+  }
+
   .navigation-wrapper {
     @include clearfix;
     position: relative;
@@ -60,10 +74,6 @@ header.navigation {
     text-decoration: none;
     text-transform: uppercase;
 
-    @include media ($horizontal-bar-mode) {
-      display: none;
-    }
-
     &:focus,
     &:hover {
       color: $navigation-color-hover;
@@ -77,12 +87,16 @@ header.navigation {
     min-height: $navigation-height;
     z-index: 9999999;
 
-    .desktop {
-      display: none;
-    }
-
     @include media ($horizontal-bar-mode) {
-      float: left;
+
+      &.left {
+        float: left;
+      }
+
+      &.right {
+        float: right;
+      }
+
       padding-right: 1em;
       .desktop {
         display: inline;
@@ -240,7 +254,7 @@ header.navigation {
     @include media($horizontal-bar-mode) {
       left: -$navigation-submenu-padding;
       position: absolute;
-      top: 1.5em;
+      top: 3.7em;
     }
 
     .submenu.fly-out-right {
@@ -288,6 +302,7 @@ header.navigation {
         display: inline-block;
         text-align: right;
         width: 100%;
+        padding-right: 1em;
 
         @include media($horizontal-bar-mode) {
           background-color: $navigation-background;
