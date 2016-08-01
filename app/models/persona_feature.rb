@@ -5,6 +5,7 @@ class PersonaFeature < ApplicationRecord
 
   validates :format, inclusion: { in: %w(document address choice) }
   delegate :template, to: :candidate_persona
+  delegate :name, to: :category, prefix: true
 
   def question
     questions[format.to_sym]
@@ -17,6 +18,10 @@ class PersonaFeature < ApplicationRecord
 
   def has_geofence?
     properties['distance'].present?
+  end
+
+  def uri
+    "#{ENV.fetch("ADDRESS_URI_BASE")}/v4/mapbox.emerald/pin-s-marker+000000(#{coordinates.last},#{coordinates.first})/#{coordinates.last},#{coordinates.first},10/300x400@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
   end
 
   def distance_in_miles
@@ -36,6 +41,17 @@ class PersonaFeature < ApplicationRecord
     properties['choice_options'].keys
   end
 
+  def choice_template
+    return "" unless properties['choice_options'].present?
+    <<-template
+#{text}
+
+#{choice_options_list}
+
+Please reply with just the letter #{choice_options_letters_sentence}.
+template
+  end
+
   private
 
   def choice_options_list
@@ -46,17 +62,6 @@ class PersonaFeature < ApplicationRecord
 
   def choice_options_letters_sentence
     choice_options_letters.to_sentence(last_word_connector: ", or ", two_words_connector: " or ")
-  end
-
-  def choice_template
-    return "" unless properties['choice_options'].present?
-    <<-template
-#{text}
-
-#{choice_options_list}
-
-Please reply with just the letter #{choice_options_letters_sentence}.
-template
   end
 
   def questions

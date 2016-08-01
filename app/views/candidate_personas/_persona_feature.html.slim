@@ -1,0 +1,4 @@
+.card.persona-feature
+  .card-header = persona_feature.category_name
+  .card-copy
+    = render partial: "persona_features/#{persona_feature.format}", locals: { persona_feature: persona_feature }
