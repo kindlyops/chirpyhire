@@ -18,6 +18,10 @@ class AnswerValidator
 
   attr_reader :answer
 
+  def message
+    @message ||= answer.message
+  end
+
   def format
     @format ||= AnswerFormatter.new(answer, persona_feature).format
   end
