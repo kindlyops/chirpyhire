@@ -21,7 +21,7 @@ class PersonaFeature < ApplicationRecord
   end
 
   def uri
-    "#{ENV.fetch("ADDRESS_URI_BASE")}/v4/mapbox.emerald/pin-s-marker+000000(#{coordinates.last},#{coordinates.first})/#{coordinates.last},#{coordinates.first},10/300x400@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
+    "#{ENV.fetch("ADDRESS_URI_BASE")}/v4/mapbox.emerald/pin-s-marker+000000(#{coordinates.last},#{coordinates.first})/#{coordinates.last},#{coordinates.first},10/300x300@2x.png?access_token=#{ENV.fetch('MAPBOX_ACCESS_TOKEN')}"
   end
 
   def distance_in_miles

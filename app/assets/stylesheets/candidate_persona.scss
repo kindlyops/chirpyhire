@@ -7,6 +7,15 @@
   }
 
   .persona-feature {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+
+      comment {
+        color: $medium-gray;
+      }
+    }
+
     .choice-template {
       white-space: pre-wrap;
     }

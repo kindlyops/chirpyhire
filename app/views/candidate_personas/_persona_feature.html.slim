@@ -1,4 +1,7 @@
 .card.persona-feature
-  .card-header = persona_feature.category_name
+  .card-header
+    = persona_feature.category_name
+    - if persona_feature.deleted_at?
+      comment title="Chirpyhire is currently not asking about #{persona_feature.category_name}" inactive
   .card-copy
     = render partial: "persona_features/#{persona_feature.format}", locals: { persona_feature: persona_feature }
