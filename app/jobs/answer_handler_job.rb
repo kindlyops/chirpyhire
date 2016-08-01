@@ -3,7 +3,7 @@ class AnswerHandlerJob < ApplicationJob
 
   def perform(sender, inquiry, message_sid)
     @sender = sender
-    message = MessageHandler.call(sender, organization.get_message(message_sid))
+    message = MessageHandler.call(sender, message_sid)
 
     AnswerHandler.call(sender, inquiry, message)
   end

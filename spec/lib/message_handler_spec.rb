@@ -6,8 +6,7 @@ RSpec.describe MessageHandler do
   let(:organization) { create(:organization) }
   let(:sender) { create(:user, organization: organization) }
   let(:fake_message) { FakeMessaging.inbound_message(sender, organization, "test body", format: :text) }
-  let(:external_message) { organization.get_message(fake_message.sid) }
-  let(:message_handler) { MessageHandler.new(sender, external_message) }
+  let(:message_handler) { MessageHandler.new(sender, fake_message.sid) }
 
   let(:message) { message_handler.call }
   describe "#call" do

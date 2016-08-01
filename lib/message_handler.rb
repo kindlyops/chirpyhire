@@ -1,10 +1,13 @@
 class MessageHandler
 
-  def self.call(sender, external_message)
-    new(sender, external_message).call
+  def self.call(sender, message_sid)
+    new(sender, message_sid).call
   end
 
   def call
+    existing_message = sender.messages.find_by(sid: message_sid)
+    return existing_message if existing_message.present?
+
     external_message.media.each do |media_instance|
       message.media_instances.new(
         content_type: media_instance.content_type,
@@ -18,14 +21,20 @@ class MessageHandler
     message
   end
 
-  def initialize(sender, external_message)
+  def initialize(sender, message_sid)
     @sender = sender
-    @external_message = external_message
+    @message_sid = message_sid
   end
 
   private
 
-  attr_reader :sender, :external_message
+  def external_message
+    organization.get_message(message_sid)
+  end
+
+  delegate :organization, to: :sender
+
+  attr_reader :sender, :message_sid
 
   def message
     @message ||= Message.new(
