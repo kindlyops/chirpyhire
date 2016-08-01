@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
+  resource :candidate_persona, path: "caregiver_persona", only: :show
+
   namespace :maps do
     resources :candidates, only: [:index, :show]
   end
