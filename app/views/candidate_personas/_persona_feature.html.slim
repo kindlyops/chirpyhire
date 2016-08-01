@@ -1,5 +1,6 @@
 .card.persona-feature
   .card-header
+    = "#{persona_feature_counter + 1}. "
     = persona_feature.category_name
     - if persona_feature.deleted_at?
       comment title="Chirpyhire is currently not asking about #{persona_feature.category_name}" inactive
