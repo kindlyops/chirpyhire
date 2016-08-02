@@ -11,7 +11,7 @@ class Question < ApplicationRecord
   validates_inclusion_of :type, in: TYPES
 
   def inquire(user)
-    message = user.receive_message(body: text)
+    message = user.receive_message(body: question)
     inquiries.create(message: message)
   end
 

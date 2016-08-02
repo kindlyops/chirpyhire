@@ -18,6 +18,33 @@ RSpec.describe Question, type: :model do
         question.inquire(candidate.user)
       }.to change{question.inquiries.count}.by(1)
     end
+
+    context "choice question" do
+      let(:question) { create(:choice_question, text: "What is your availability?", survey: survey) }
+      before(:each) do
+        question.choice_question_options.create(letter: "a", text: "Live-in")
+        question.choice_question_options.create(letter: "b", text: "Hourly")
+        question.choice_question_options.create(letter: "c", text: "Both")
+      end
+
+      let(:question_text) do
+        <<-question
+What is your availability?
+
+a) Live-in
+b) Hourly
+c) Both
+
+
+Please reply with just the letter a, b, or c.
+    question
+      end
+
+      it "has the right body" do
+        question.inquire(candidate.user)
+        expect(Message.last.body).to eq(question_text)
+      end
+    end
   end
 
   describe "#question" do
