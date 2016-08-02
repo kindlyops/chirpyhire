@@ -1,24 +1,24 @@
 class AnswerFormatter
-  def initialize(answer, persona_feature)
+  def initialize(answer, question)
     @answer = answer
-    @persona_feature = persona_feature
+    @question = question
   end
 
   def format
-    return "document" if message.has_images?
-    return "address" if message.has_address?
-    return "choice" if message.has_choice?(choices)
-    "unknown format"
+    return "DocumentQuestion" if message.has_images?
+    return "AddressQuestion" if message.has_address?
+    return "ChoiceQuestion" if message.has_choice?(choices)
+    "Unknown Format"
   end
 
   private
 
-  attr_reader :answer, :persona_feature
+  attr_reader :answer, :question
 
   def choices
-    return unless persona_feature.has_choices?
+    return unless question.has_choices?
 
-    persona_feature.choice_options_letters.join
+    question.choice_options_letters.join
   end
 
   def message

@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe AnswerRejector do
   let(:candidate) { create(:candidate) }
-  let(:candidate_persona) { candidate.organization.create_candidate_persona }
-  let(:answer_rejector) { AnswerRejector.new(candidate, persona_feature) }
+  let(:survey) { candidate.organization.create_survey }
+  let(:answer_rejector) { AnswerRejector.new(candidate, question) }
 
   describe "#call" do
     context "without geofence" do
-      let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
+      let(:question) { create(:question, survey: survey) }
 
       it "returns false" do
         expect(answer_rejector.call).to eq(false)
@@ -15,7 +15,7 @@ RSpec.describe AnswerRejector do
     end
 
     context "with geofence" do
-      let(:persona_feature) { create(:persona_feature, :with_geofence, candidate_persona: candidate_persona) }
+      let(:question) { create(:question, :with_geofence, survey: survey) }
       let(:candidate) { create(:candidate, :with_address) }
 
       context "and the candidates coordinates are within the geofence" do

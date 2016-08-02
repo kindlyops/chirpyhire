@@ -1,7 +1,7 @@
 NullAnswer = Naught.build do |config|
   config.mimic Answer
 
-  def persona_feature
-    NullPersonaFeature.new
+  def question
+    NullQuestion.new
   end
 end

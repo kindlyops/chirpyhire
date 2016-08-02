@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
-  resource :candidate_persona, path: "caregiver_persona", only: :show
+  resource :survey, only: :show
 
   namespace :maps do
     resources :candidates, only: [:index, :show]
@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       resources :answers
       resources :candidates
       resources :candidate_features
-      resources :candidate_personas
+      resources :surveys
       resources :categories
       resources :inquiries
       resources :locations
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       resources :messages
       resources :notifications
       resources :organizations
-      resources :persona_features
+      resources :questions
       resources :referrals
       resources :referrers
       resources :rules

@@ -1,34 +1,34 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  let!(:organization) { create(:organization, :with_account, :with_candidate_persona) }
+  let!(:organization) { create(:organization, :with_account, :with_survey) }
 
   describe "#next_unasked_question_for" do
     let(:user) { create(:user, organization: organization) }
 
-    context "with persona features" do
-      let!(:first_question) { create(:persona_feature, priority: 1, candidate_persona: organization.candidate_persona) }
-      let!(:second_question) { create(:persona_feature, priority: 2, candidate_persona: organization.candidate_persona) }
+    context "with questions" do
+      let!(:first_question) { create(:question, type: "AddressQuestion", priority: 1, survey: organization.survey) }
+      let!(:second_question) { create(:question, type: "DocumentQuestion", priority: 2, survey: organization.survey) }
 
       context "with no questions asked" do
-        it "is the persona feature with priority 1" do
-          expect(organization.next_unasked_question_for(user)).to eq(first_question)
+        it "is the question with priority 1" do
+          expect(organization.next_unasked_question_for(user)).to eq(AddressQuestion.find(first_question.id))
         end
       end
 
       context "with the first feature asked" do
         before(:each) do
           message = create(:message, user: user)
-          create(:inquiry, message: message, persona_feature: first_question)
+          create(:inquiry, message: message, question: first_question)
         end
 
-        it "is the persona feature with priority 2" do
-          expect(organization.next_unasked_question_for(user)).to eq(second_question)
+        it "is the question with priority 2" do
+          expect(organization.next_unasked_question_for(user)).to eq(DocumentQuestion.find(second_question.id))
         end
       end
     end
 
-    context "without persona features" do
+    context "without questions" do
       it "is nil" do
           expect(organization.next_unasked_question_for(user)).to eq(nil)
       end

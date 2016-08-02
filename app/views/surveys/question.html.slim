@@ -1,0 +1,8 @@
+.card.question
+  .card-header
+    = "#{question_counter + 1}. "
+    = question.category_name
+    - if question.inactive?
+      comment title="Chirpyhire is currently not asking about #{question.category_name}" inactive
+  .card-copy
+    = render partial: "questions/#{question.format}", locals: { question: question }

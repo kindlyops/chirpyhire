@@ -6,7 +6,7 @@ RSpec.describe CandidateDecorator do
 
   describe "#choices" do
     context "with choices" do
-      let(:persona_feature) { create(:persona_feature, :choice, candidate_persona: model.organization.create_candidate_persona) }
+      let(:question) { create(:question, :choice, survey: model.organization.create_survey) }
       let(:option) { "Live-in" }
       let(:choice_properties) do
         {
@@ -16,12 +16,12 @@ RSpec.describe CandidateDecorator do
       end
 
       before(:each) do
-        create(:candidate_feature, candidate: model, properties: choice_properties, category: persona_feature.category)
+        create(:candidate_feature, candidate: model, properties: choice_properties, category: question.category)
       end
 
       it "is an array of choices" do
         expect(candidate.choices.first.option).to eq(option)
-        expect(candidate.choices.first.category).to eq(persona_feature.category.name)
+        expect(candidate.choices.first.category).to eq(question.category.name)
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe CandidateDecorator do
 
   describe "#documents" do
     context "with documents" do
-      let(:persona_feature) { create(:persona_feature, candidate_persona: model.organization.create_candidate_persona) }
+      let(:question) { create(:question, survey: model.organization.create_survey) }
       let(:url0) { "http://www.freedigitalphotos.net/images/img/homepage/87357.jpg" }
       let(:document_properties) do
         {
@@ -44,12 +44,12 @@ RSpec.describe CandidateDecorator do
       end
 
       before(:each) do
-        create(:candidate_feature, candidate: model, properties: document_properties, category: persona_feature.category)
+        create(:candidate_feature, candidate: model, properties: document_properties, category: question.category)
       end
 
       it "is an array of documents" do
         expect(candidate.documents.first.first_page).to eq(url0)
-        expect(candidate.documents.first.category).to eq(persona_feature.category.name)
+        expect(candidate.documents.first.category).to eq(question.category.name)
       end
     end
 

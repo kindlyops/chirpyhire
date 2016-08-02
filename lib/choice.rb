@@ -1,11 +1,15 @@
 class Choice
-  def self.extract(message, persona_feature)
+  def self.extract(message, question)
     properties = {}
     properties[:child_class] = "choice"
 
     answer = message.body.strip.downcase
     choice_option = /\A([a-z]){1}\)?\z/.match(answer)[1]
-    properties[:choice_option] = persona_feature.properties['choice_options'][choice_option]
+
+    option = question.choice_question_options.find_by(letter: choice_option)
+    if option.present?
+      properties[:choice_option] = option.text
+    end
     properties
   end
 

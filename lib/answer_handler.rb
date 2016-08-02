@@ -26,15 +26,15 @@ class AnswerHandler
   end
 
   def extracted_properties
-    property_extractor.extract(message, persona_feature)
+    property_extractor.extract(message, question)
   end
 
   def category
-    persona_feature.category
+    question.category
   end
 
-  def persona_feature
-    @persona_feature ||= inquiry.persona_feature
+  def question
+    @question ||= inquiry.question
   end
 
   def answer
@@ -48,6 +48,6 @@ class AnswerHandler
   end
 
   def property_extractor
-    AnswerFormatter.new(answer, persona_feature).format.titlecase.constantize
+    AnswerFormatter.new(answer, question).format.titlecase.constantize
   end
 end

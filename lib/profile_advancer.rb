@@ -36,11 +36,11 @@ class ProfileAdvancer
   end
 
   def answer_rejected?
-    AnswerRejector.new(candidate, last_persona_feature).call
+    AnswerRejector.new(candidate, last_question).call
   end
 
-  def last_persona_feature
-    @last_persona_feature ||= last_answer.persona_feature
+  def last_question
+    @last_question ||= last_answer.question
   end
 
   def next_unasked_question
@@ -48,6 +48,6 @@ class ProfileAdvancer
   end
 
   def send_bad_fit_notification
-    last_persona_feature.template.perform(user)
+    last_question.template.perform(user)
   end
 end

@@ -8,16 +8,15 @@ class Organization < ApplicationRecord
   has_many :messages, through: :users
   has_many :templates
   has_many :rules
-  has_one :candidate_persona
   has_one :survey
   has_one :location
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
 
   def next_unasked_question_for(user)
-    questions = candidate_persona.persona_features
-    ids = user.inquiries.pluck(:persona_feature_id)
-    questions.where.not(id: ids).where(deleted_at: nil).order(:priority).first
+    questions = survey.questions
+    ids = user.inquiries.pluck(:question_id)
+    questions.where.not(id: ids).where(status: Question.statuses[:active]).order(:priority).first
   end
 
   def send_message(to:, body:, from: phone_number)

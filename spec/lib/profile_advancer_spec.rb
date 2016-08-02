@@ -4,7 +4,7 @@ RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
   let(:user) { create(:user, :with_candidate) }
-  let!(:candidate_persona) { candidate.organization.create_candidate_persona }
+  let!(:survey) { candidate.organization.create_survey }
   let(:candidate) { user.candidate }
 
   describe ".call" do
@@ -51,7 +51,7 @@ RSpec.describe ProfileAdvancer do
 
       context "with an undetermined or stale profile feature" do
         before(:each) do
-          create(:persona_feature, candidate_persona: candidate_persona)
+          create(:question, survey: survey)
         end
 
         it "creates an inquiry of the next candidate feature" do
@@ -70,14 +70,14 @@ RSpec.describe ProfileAdvancer do
           before(:each) do
             allow_any_instance_of(ProfileAdvancer).to receive(:answer_rejected?).and_return(true)
           end
-          let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
-          let(:inquiry) { create(:inquiry, persona_feature: persona_feature) }
+          let(:question) { create(:document_question, survey: survey) }
+          let(:inquiry) { create(:inquiry, question: question) }
           let(:message) { create(:message, :with_image, user: user) }
           let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
 
           context "with a template for the candidate persona" do
             before(:each) do
-              candidate_persona.create_template(organization: candidate.organization,
+              survey.create_template(organization: candidate.organization,
                     name: "Bad Fit Message - Default",
                     body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
             end

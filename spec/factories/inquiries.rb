@@ -3,9 +3,13 @@ FactoryGirl.define do
     message
 
     before(:create) do |inquiry|
-      unless inquiry.persona_feature.present?
-        inquiry.persona_feature = create(:persona_feature, candidate_persona: inquiry.organization.create_candidate_persona)
+      unless inquiry.question.present?
+        inquiry.question = create(:question, survey: inquiry.organization.create_survey)
       end
+    end
+
+    trait :document_question do
+      association :question, :document
     end
 
     trait :with_answer do
