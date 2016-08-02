@@ -1,6 +1,19 @@
 class AddressQuestion < Question
   has_one :address_question_option, foreign_key: :question_id, inverse_of: :question
 
+  def self.extract(message, question)
+    address = message.address
+    {
+      address: address.address,
+      latitude: address.latitude,
+      longitude: address.longitude,
+      postal_code: address.postal_code,
+      country: address.country,
+      city: address.city,
+      child_class: "address"
+    }
+  end
+
   def has_geofence?
     address_question_option.present?
   end

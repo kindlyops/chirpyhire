@@ -16,9 +16,8 @@ class AnswerFormatter
   attr_reader :answer, :question
 
   def choices
-    return unless question.has_choices?
-
-    question.choice_options_letters.join
+    return unless question.type == "ChoiceQuestion"
+    question.becomes(question.type.constantize).choice_options_letters.join
   end
 
   def message

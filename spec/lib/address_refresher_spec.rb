@@ -55,7 +55,7 @@ RSpec.describe AddressRefresher do
           let(:message) { create(:message, body: "4059 Mt Lee Dr 90068") }
 
           context "with an address persona feature" do
-            let!(:question) { create(:question, format: "address", survey: survey) }
+            let!(:question) { create(:address_question, survey: survey) }
 
             it "creates a candidate feature" do
               expect {

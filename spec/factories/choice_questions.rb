@@ -6,8 +6,10 @@ FactoryGirl.define do
     type "ChoiceQuestion"
     text { Faker::Lorem.sentence }
 
-    after(:create) do |question|
-      create(:choice_question_option, question: question)
+    trait :with_options do
+      after(:create) do |question|
+        create(:choice_question_option, question: question)
+      end
     end
   end
 end

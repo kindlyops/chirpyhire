@@ -7,7 +7,7 @@ RSpec.describe AnswerHandler do
   let!(:user) { candidate.user }
   let!(:message) { create(:message, user: user) }
   let(:survey) { candidate.organization.create_survey }
-  let(:question) { create(:question, survey: survey) }
+  let(:question) { create(:question, :document, survey: survey) }
 
   let!(:inquiry) { create(:inquiry, message: message, question: question) }
   let!(:message) { create(:message, :with_image, user: user) }

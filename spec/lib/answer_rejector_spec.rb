@@ -7,7 +7,7 @@ RSpec.describe AnswerRejector do
 
   describe "#call" do
     context "without geofence" do
-      let(:question) { create(:question, survey: survey) }
+      let(:question) { create(:address_question, survey: survey) }
 
       it "returns false" do
         expect(answer_rejector.call).to eq(false)
@@ -15,13 +15,16 @@ RSpec.describe AnswerRejector do
     end
 
     context "with geofence" do
-      let(:question) { create(:question, :with_geofence, survey: survey) }
+      let(:question) { create(:address_question, survey: survey) }
+      let(:latitude) { 12.345678 }
+      let(:longitude) { 87.654321 }
+      let!(:address_question_option) { create(:address_question_option, latitude: latitude, longitude: longitude, question: question) }
       let(:candidate) { create(:candidate, :with_address) }
 
       context "and the candidates coordinates are within the geofence" do
         before(:each) do
           existing_properties = candidate.address_feature.properties
-          candidate.address_feature.update(properties: existing_properties.merge(latitude: 38.030458, longitude: -78.481070))
+          candidate.address_feature.update(properties: existing_properties.merge(latitude: latitude, longitude: longitude))
         end
 
         it "returns false" do

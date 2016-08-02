@@ -67,7 +67,7 @@ class AddressRefresher
   end
 
   def question
-    @question ||= survey.questions.find_by(format: "address")
+    @question ||= survey.questions.find_by(type: "AddressQuestion")
   end
 
   def survey

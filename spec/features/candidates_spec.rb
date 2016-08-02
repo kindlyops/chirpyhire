@@ -24,7 +24,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
         let(:survey) { account.organization.create_survey }
         context "with address persona feature" do
           let(:category) { create(:category, name: "Address Category") }
-          let!(:question) { create(:question, :with_geofence, category: category, survey: survey) }
+          let!(:question) { create(:address_question, category: category, survey: survey) }
 
           context "with address" do
             let!(:address) { Address.new(create(:candidate_feature, :address, category: category, candidate: candidate)) }
