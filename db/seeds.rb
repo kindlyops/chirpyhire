@@ -55,9 +55,13 @@ if Rails.env.development?
   end
 
   unless org.survey.questions.present?
-    org.survey.questions.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "What is your address and zipcode?", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
-    org.survey.questions.create!(priority: 2, category: Category.create(name: "Availability"), format: "choice", text: "What is your availability?", properties: { choice_options: { a: "Live-in", b: "Hourly", c: "Both" }})
-    org.survey.questions.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "Please send us a photo of your CNA license.")
+    address_question = org.survey.questions.create!(priority: 1, category: Category.create(name: "Address"), type: "AddressQuestion", text: "What is your address and zipcode?")
+    address_question.create_address_question_option(distance: 20, latitude: 33.929966, longitude: -84.373931 )
+    choice_question = org.survey.questions.create!(priority: 2, category: Category.create(name: "Availability"), type: "ChoiceQuestion", text: "What is your availability?")
+    choice_question.choice_question_options.create(text: "Live-in", letter: "a")
+    choice_question.choice_question_options.create(text: "Hourly", letter: "b")
+    choice_question.choice_question_options.create(text: "Both", letter: "c")
+    org.survey.questions.create!(priority: 3, category: Category.create(name: "CNA License"), type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 
