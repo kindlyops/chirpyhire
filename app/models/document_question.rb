@@ -1,0 +1,2 @@
+class DocumentQuestion < Question
+end
