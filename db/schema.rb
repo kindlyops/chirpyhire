@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730172222) do
+ActiveRecord::Schema.define(version: 20160802141431) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,16 @@ ActiveRecord::Schema.define(version: 20160730172222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_actionables_on_type", using: :btree
+  end
+
+  create_table "address_question_options", force: :cascade do |t|
+    t.integer  "distance",    null: false
+    t.float    "latitude",    null: false
+    t.float    "longitude",   null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_address_question_options_on_question_id", using: :btree
   end
 
   create_table "answers", force: :cascade do |t|
@@ -99,13 +109,26 @@ ActiveRecord::Schema.define(version: 20160730172222) do
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
   end
 
+  create_table "choice_question_options", force: :cascade do |t|
+    t.string   "letter",      null: false
+    t.string   "text",        null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["letter", "question_id"], name: "index_choice_question_options_on_letter_and_question_id", unique: true, using: :btree
+    t.index ["question_id"], name: "index_choice_question_options_on_question_id", using: :btree
+    t.index ["text", "question_id"], name: "index_choice_question_options_on_text_and_question_id", unique: true, using: :btree
+  end
+
   create_table "inquiries", force: :cascade do |t|
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "message_id",         null: false
     t.integer  "persona_feature_id", null: false
+    t.integer  "questions_id"
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
     t.index ["persona_feature_id"], name: "index_inquiries_on_persona_feature_id", using: :btree
+    t.index ["questions_id"], name: "index_inquiries_on_questions_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -185,6 +208,19 @@ ActiveRecord::Schema.define(version: 20160730172222) do
     t.index ["deleted_at"], name: "index_persona_features_on_deleted_at", using: :btree
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.integer  "survey_id",               null: false
+    t.integer  "category_id",             null: false
+    t.string   "text",                    null: false
+    t.integer  "status",      default: 0, null: false
+    t.integer  "priority",                null: false
+    t.string   "type",                    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["category_id"], name: "index_questions_on_category_id", using: :btree
+    t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
+  end
+
   create_table "referrals", force: :cascade do |t|
     t.integer  "candidate_id", null: false
     t.integer  "referrer_id",  null: false
@@ -210,6 +246,17 @@ ActiveRecord::Schema.define(version: 20160730172222) do
     t.integer  "actionable_id",                  null: false
     t.index ["actionable_id"], name: "index_rules_on_actionable_id", using: :btree
     t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
+  end
+
+  create_table "surveys", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.integer  "actionable_id"
+    t.integer  "template_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["actionable_id"], name: "index_surveys_on_actionable_id", using: :btree
+    t.index ["organization_id"], name: "index_surveys_on_organization_id", unique: true, using: :btree
+    t.index ["template_id"], name: "index_surveys_on_template_id", using: :btree
   end
 
   create_table "templates", force: :cascade do |t|
@@ -239,6 +286,7 @@ ActiveRecord::Schema.define(version: 20160730172222) do
   end
 
   add_foreign_key "accounts", "users"
+  add_foreign_key "address_question_options", "questions"
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
@@ -247,8 +295,10 @@ ActiveRecord::Schema.define(version: 20160730172222) do
   add_foreign_key "candidate_personas", "organizations"
   add_foreign_key "candidate_personas", "templates"
   add_foreign_key "candidates", "users"
+  add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "persona_features"
+  add_foreign_key "inquiries", "questions", column: "questions_id"
   add_foreign_key "locations", "organizations"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
@@ -256,11 +306,16 @@ ActiveRecord::Schema.define(version: 20160730172222) do
   add_foreign_key "notifications", "templates"
   add_foreign_key "persona_features", "candidate_personas"
   add_foreign_key "persona_features", "categories"
+  add_foreign_key "questions", "categories"
+  add_foreign_key "questions", "surveys"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "actionables"
   add_foreign_key "rules", "organizations"
+  add_foreign_key "surveys", "actionables"
+  add_foreign_key "surveys", "organizations"
+  add_foreign_key "surveys", "templates"
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
