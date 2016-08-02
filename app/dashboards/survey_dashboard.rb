@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class InquiryDashboard < Administrate::BaseDashboard
+class SurveyDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,10 +8,12 @@ class InquiryDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    message: Field::BelongsTo,
-    question: Field::BelongsTo,
-    answer: Field::HasOne,
+    organization: Field::BelongsTo,
+    template: Field::BelongsTo,
+    actionable: Field::BelongsTo.with_options(class_name: "SurveyActionable"),
+    questions: Field::HasMany,
     id: Field::Number,
+    actionable_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -22,19 +24,21 @@ class InquiryDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :message,
-    :question,
-    :answer,
-    :id,
+    :organization,
+    :template,
+    :actionable,
+    :questions,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :message,
-    :question,
-    :answer,
+    :organization,
+    :template,
+    :actionable,
+    :questions,
     :id,
+    :actionable_id,
     :created_at,
     :updated_at,
   ].freeze
@@ -43,15 +47,17 @@ class InquiryDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :message,
-    :question,
-    :answer,
+    :organization,
+    :template,
+    :actionable,
+    :questions,
+    :actionable_id,
   ].freeze
 
-  # Overwrite this method to customize how inquiries are displayed
+  # Overwrite this method to customize how surveys are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(inquiry)
-  #   "Inquiry ##{inquiry.id}"
+  # def display_resource(survey)
+  #   "Survey ##{survey.id}"
   # end
 end
