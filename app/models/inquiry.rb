@@ -1,6 +1,7 @@
 class Inquiry < ApplicationRecord
   include Messageable
   belongs_to :persona_feature
+  belongs_to :question
   has_one :answer
   delegate :format, to: :persona_feature
 

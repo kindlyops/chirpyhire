@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802141431) do
+ActiveRecord::Schema.define(version: 20160802144917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,10 +125,10 @@ ActiveRecord::Schema.define(version: 20160802141431) do
     t.datetime "updated_at",         null: false
     t.integer  "message_id",         null: false
     t.integer  "persona_feature_id", null: false
-    t.integer  "questions_id"
+    t.integer  "question_id"
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
     t.index ["persona_feature_id"], name: "index_inquiries_on_persona_feature_id", using: :btree
-    t.index ["questions_id"], name: "index_inquiries_on_questions_id", using: :btree
+    t.index ["question_id"], name: "index_inquiries_on_question_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -298,7 +298,7 @@ ActiveRecord::Schema.define(version: 20160802141431) do
   add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "persona_features"
-  add_foreign_key "inquiries", "questions", column: "questions_id"
+  add_foreign_key "inquiries", "questions"
   add_foreign_key "locations", "organizations"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"
