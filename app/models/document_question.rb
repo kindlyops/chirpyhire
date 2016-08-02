@@ -1,3 +1,2 @@
-class DocumentQuestion < ApplicationRecord
-  belongs_to :question
+class DocumentQuestion < Question
 end
