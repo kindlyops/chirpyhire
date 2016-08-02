@@ -14,6 +14,16 @@ RSpec.describe AnswerRejector do
       end
     end
 
+    context "non address question" do
+      let(:question) { create(:document_question, survey: survey) }
+
+      it "doesn't raise an error" do
+        expect{
+          answer_rejector.call
+        }.not_to raise_error
+      end
+    end
+
     context "with geofence" do
       let(:question) { create(:address_question, survey: survey) }
       let(:latitude) { 12.345678 }
