@@ -7,8 +7,8 @@ class Registrar
   def register
     return unless organization.persisted?
 
-    candidate_persona = organization.create_candidate_persona
-    candidate_persona.create_template(
+    survey = organization.create_survey
+    survey.create_template(
       name: "Bad Fit - Default",
       organization: organization,
       body: "Thank you very much for your interest. Unfortunately, we don't "\

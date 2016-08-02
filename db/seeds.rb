@@ -45,26 +45,26 @@ if Rails.env.development?
     puts "Created Templates"
   end
 
-  unless org.candidate_persona.present?
-    candidate_persona = org.create_candidate_persona
-    candidate_persona.create_template(
+  unless org.survey.present?
+    survey = org.create_survey
+    survey.create_template(
       name: "Bad Fit - Default",
       organization: org,
       body: "Thank you very much for your interest. Unfortunately, we don't "\
       "have a good fit for you at this time. If anything changes we will let you know.")
   end
 
-  unless org.candidate_persona.persona_features.present?
-    org.candidate_persona.persona_features.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "What is your address and zipcode?", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
-    org.candidate_persona.persona_features.create!(priority: 2, category: Category.create(name: "Availability"), format: "choice", text: "What is your availability?", properties: { choice_options: { a: "Live-in", b: "Hourly", c: "Both" }})
-    org.candidate_persona.persona_features.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "Please send us a photo of your CNA license.")
+  unless org.survey.questions.present?
+    org.survey.questions.create!(priority: 1, category: Category.create(name: "Address"), format: "address", text: "What is your address and zipcode?", properties: { distance: 20, latitude: 33.929966, longitude: -84.373931 })
+    org.survey.questions.create!(priority: 2, category: Category.create(name: "Availability"), format: "choice", text: "What is your availability?", properties: { choice_options: { a: "Live-in", b: "Hourly", c: "Both" }})
+    org.survey.questions.create!(priority: 3, category: Category.create(name: "CNA License"), format: "document", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 
   unless org.rules.present?
     subscribe_rule = org.rules.create!(trigger: "subscribe", actionable: welcome.create_actionable)
-    subscribe_rule_2 = org.rules.create!(trigger: "subscribe", actionable: org.candidate_persona.create_actionable)
-    answer_rule = org.rules.create!(trigger: "answer", actionable: org.candidate_persona.actionable)
+    subscribe_rule_2 = org.rules.create!(trigger: "subscribe", actionable: org.survey.create_actionable)
+    answer_rule = org.rules.create!(trigger: "answer", actionable: org.survey.actionable)
     screen_rule = org.rules.create!(trigger: "screen", actionable: thank_you.create_actionable)
     puts "Created Rules"
   end

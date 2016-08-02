@@ -1,4 +1,4 @@
 class Actionable < ApplicationRecord
-  TYPES = %w(TemplateActionable CandidatePersonaActionable SurveyActionable)
+  TYPES = %w(TemplateActionable SurveyActionable)
   validates_inclusion_of :type, in: TYPES
 end

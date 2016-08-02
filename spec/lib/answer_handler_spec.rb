@@ -6,10 +6,10 @@ RSpec.describe AnswerHandler do
   let(:candidate) { create(:candidate) }
   let!(:user) { candidate.user }
   let!(:message) { create(:message, user: user) }
-  let(:candidate_persona) { candidate.organization.create_candidate_persona }
-  let(:persona_feature) { create(:persona_feature, candidate_persona: candidate_persona) }
+  let(:survey) { candidate.organization.create_survey }
+  let(:question) { create(:question, :document, survey: survey) }
 
-  let!(:inquiry) { create(:inquiry, message: message, persona_feature: persona_feature) }
+  let!(:inquiry) { create(:inquiry, message: message, question: question) }
   let!(:message) { create(:message, :with_image, user: user) }
 
   describe ".call" do
@@ -28,7 +28,7 @@ RSpec.describe AnswerHandler do
       end
 
       context "when the inquiry has already been answered" do
-        let!(:inquiry) { create(:inquiry, :with_answer, message: message, persona_feature: persona_feature) }
+        let!(:inquiry) { create(:inquiry, :with_answer, message: message, question: question) }
 
         it "does not create an answer" do
           expect {

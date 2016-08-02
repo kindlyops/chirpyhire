@@ -1,8 +1,8 @@
-.candidate-persona
-  h1 Caregiver Persona
+.survey
+  h1 Recruiting Survey
 
   .cards
-    = render partial: "candidate_personas/persona_feature", collection: @candidate_persona.persona_features
+    = render partial: "surveys/question", collection: @survey.questions
   .attribution
     a href='https://www.mapbox.com/map-feedback/' © Mapbox
     '

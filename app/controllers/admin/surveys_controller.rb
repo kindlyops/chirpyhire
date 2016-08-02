@@ -1,16 +1,16 @@
 module Admin
-  class PersonaFeaturesController < Admin::ApplicationController
+  class SurveysController < Admin::ApplicationController
     # To customize the behavior of this controller,
     # simply overwrite any of the RESTful actions. For example:
     #
     # def index
     #   super
-    #   @resources = PersonaFeature.all.paginate(10, params[:page])
+    #   @resources = Survey.all.paginate(10, params[:page])
     # end
 
     # Define a custom finder by overriding the `find_resource` method:
     # def find_resource(param)
-    #   PersonaFeature.find_by!(slug: param)
+    #   Survey.find_by!(slug: param)
     # end
 
     # See https://administrate-docs.herokuapp.com/customizing_controller_actions

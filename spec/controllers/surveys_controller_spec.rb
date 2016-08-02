@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CandidatePersonasController, type: :controller do
+RSpec.describe SurveysController, type: :controller do
   let(:user) { create(:user, :with_account) }
   let(:account) { user.account }
   let(:organization) { user.organization }

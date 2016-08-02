@@ -8,17 +8,17 @@ RSpec.describe Registrar do
     context "when the organization is persisted" do
       let(:account) { create(:account) }
 
-      it "creates a candidate_persona" do
+      it "creates a survey" do
         expect {
           registrar.register
-        }.to change{organization.candidate_persona.present?}.from(false).to(true)
+        }.to change{organization.survey.present?}.from(false).to(true)
       end
 
       it "creates a template for the candidate persona" do
         expect {
           registrar.register
         }.to change{organization.templates.count}.by(1)
-        expect(organization.candidate_persona.template.id).to eq(organization.templates.first.id)
+        expect(organization.survey.template.id).to eq(organization.templates.first.id)
       end
     end
 
@@ -27,10 +27,10 @@ RSpec.describe Registrar do
       let(:user) { build(:user, organization: organization) }
       let(:account) { build(:account, user: user) }
 
-      it "does not create a candidate_persona" do
+      it "does not create a survey" do
         expect {
           registrar.register
-        }.not_to change{organization.candidate_persona.present?}
+        }.not_to change{organization.survey.present?}
       end
 
       it "does not create a template for the candidate persona" do

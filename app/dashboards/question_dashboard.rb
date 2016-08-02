@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class CandidatePersonaDashboard < Administrate::BaseDashboard
+class QuestionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,14 +8,16 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    organization: Field::BelongsTo,
-    persona_features: Field::HasMany,
-    actionable: Field::BelongsTo.with_options(class_name: "CandidatePersonaActionable"),
-    template: Field::BelongsTo,
+    survey: Field::BelongsTo,
+    category: Field::BelongsTo,
+    inquiries: Field::HasMany,
     id: Field::Number,
+    text: Field::String,
+    status: Field::String.with_options(searchable: false),
+    priority: Field::Number,
+    type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    actionable_id: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -24,40 +26,44 @@ class CandidatePersonaDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :organization,
-    :persona_features,
-    :actionable,
-    :template,
+    :survey,
+    :category,
+    :inquiries,
+    :id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :organization,
-    :persona_features,
-    :actionable,
-    :template,
+    :survey,
+    :category,
+    :inquiries,
     :id,
+    :text,
+    :status,
+    :priority,
+    :type,
     :created_at,
     :updated_at,
-    :actionable_id,
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :organization,
-    :persona_features,
-    :actionable,
-    :template,
-    :actionable_id,
+    :survey,
+    :category,
+    :inquiries,
+    :text,
+    :status,
+    :priority,
+    :type,
   ].freeze
 
-  # Overwrite this method to customize how candidate personas are displayed
+  # Overwrite this method to customize how questions are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(candidate_persona)
-  #   "CandidatePersona ##{candidate_persona.id}"
+  # def display_resource(question)
+  #   "Question ##{question.id}"
   # end
 end

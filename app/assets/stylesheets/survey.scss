@@ -1,4 +1,4 @@
-.candidate-persona {
+.survey {
   @include outer-container;
   padding: 1em 0;
 
@@ -6,7 +6,7 @@
     padding: 0 1em;
   }
 
-  .persona-feature {
+  .question {
     .card-header {
       display: flex;
       justify-content: space-between;

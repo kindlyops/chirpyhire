@@ -30,9 +30,9 @@ RSpec.describe User, type: :model do
   describe "#last_answer" do
     context "with multiple answers" do
       let(:first_message) { create(:message, :with_image, user: user) }
-      let!(:first_answer) { create(:answer, message: first_message, created_at: 7.days.ago) }
+      let!(:first_answer) { create(:answer, :to_document_question, message: first_message, created_at: 7.days.ago) }
       let(:second_message) { create(:message, :with_image, user: user) }
-      let!(:second_answer) { create(:answer, message: second_message) }
+      let!(:second_answer) { create(:answer, :to_document_question, message: second_message) }
 
       it "is the most recently created answer" do
         expect(user.last_answer).to eq(second_answer)

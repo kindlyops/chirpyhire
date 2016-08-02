@@ -21,10 +21,10 @@ RSpec.feature "Candidates", type: :feature, js: true do
       end
 
       context "with candidate features" do
-        let(:candidate_persona) { account.organization.create_candidate_persona }
+        let(:survey) { account.organization.create_survey }
         context "with address persona feature" do
           let(:category) { create(:category, name: "Address Category") }
-          let!(:persona_feature) { create(:persona_feature, :with_geofence, category: category, candidate_persona: candidate_persona) }
+          let!(:question) { create(:address_question, category: category, survey: survey) }
 
           context "with address" do
             let!(:address) { Address.new(create(:candidate_feature, :address, category: category, candidate: candidate)) }
@@ -38,7 +38,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
         context "with document persona feature" do
           let(:category) { create(:category, name: "Document Category") }
-          let!(:persona_feature) { create(:persona_feature, category: category, candidate_persona: candidate_persona) }
+          let!(:question) { create(:question, category: category, survey: survey) }
 
           context "with document" do
             before(:each) do
@@ -55,7 +55,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
         context "with choice persona feature" do
           let(:category) { create(:category, name: "Choice Category") }
-          let!(:persona_feature) { create(:persona_feature, :choice, category: category, candidate_persona: candidate_persona) }
+          let!(:question) { create(:question, :choice, category: category, survey: survey) }
 
           context "with choice" do
             before(:each) do

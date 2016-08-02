@@ -9,10 +9,12 @@ class AddressFinder
   :city, :state, :state_code, :postal_code, to: :result
 
   def found?
+    return unless text.present?
     naive_match? && result.present?
   end
 
   def naive_match?
+    return unless text.present?
     text.scan(NAIVE_ADDRESS_REGEXP).present?
   end
 

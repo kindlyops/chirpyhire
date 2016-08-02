@@ -10,7 +10,7 @@ class TemplateDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
     notifications: Field::HasMany,
-    candidate_persona: Field::HasOne,
+    survey: Field::HasOne,
     actionable: Field::BelongsTo.with_options(class_name: "TemplateActionable"),
     id: Field::Number,
     name: Field::String,
@@ -28,7 +28,7 @@ class TemplateDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :organization,
     :notifications,
-    :candidate_persona,
+    :survey,
     :actionable,
   ].freeze
 
@@ -37,7 +37,7 @@ class TemplateDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
     :notifications,
-    :candidate_persona,
+    :survey,
     :actionable,
     :id,
     :name,
@@ -53,7 +53,7 @@ class TemplateDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :organization,
     :notifications,
-    :candidate_persona,
+    :survey,
     :actionable,
     :name,
     :body,

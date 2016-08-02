@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :answers, through: :messages
   has_many :notifications, through: :messages
 
-  delegate :name, :phone_number, :candidate_persona, to: :organization, prefix: true
+  delegate :name, :phone_number, :survey, to: :organization, prefix: true
 
   accepts_nested_attributes_for :organization
 
