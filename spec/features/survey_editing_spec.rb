@@ -9,6 +9,42 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
   let(:survey) { account.organization.create_survey }
 
+  context "Address Questions" do
+    let(:category) { create(:category, name: "Address") }
+    let!(:address_question) { create(:address_question, category: category, survey: survey) }
+
+    context "editing the text" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+        expect(page).to have_text(address_question.text)
+
+        fill_in "address_question_text", with: "New question text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("New question text")
+      end
+    end
+  end
+
+  context "Document Questions" do
+    let(:category) { create(:category, name: "CNA License") }
+    let!(:document_question) { create(:document_question, category: category, survey: survey) }
+    context "editing the text" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+        expect(page).to have_text(document_question.text)
+
+        fill_in "document_question_text", with: "New question text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("New question text")
+      end
+    end
+  end
+
+
   context "Choice Questions" do
     let(:category) { create(:category, name: "Availability") }
     let!(:choice_question) { create(:choice_question, category: category, survey: survey) }
@@ -43,19 +79,6 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")
         expect(page).not_to have_text(choice_text)
-      end
-    end
-
-    context "editing the text" do
-      it "works" do
-        visit survey_path
-        click_link("edit-question")
-        expect(page).to have_text(choice_question.text)
-
-        fill_in "choice_question_text", with: "New question text"
-        click_button("Save")
-        expect(page).to have_text("Nice! Question saved.")
-        expect(page).to have_text("New question text")
       end
     end
 

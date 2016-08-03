@@ -8,7 +8,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    []
+    [:text]
   end
 
   class Scope < ApplicationPolicy::Scope
