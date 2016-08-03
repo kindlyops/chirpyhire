@@ -15,9 +15,11 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require lodash
+//= require cocoon
 
 //= require components/navigation
 //= require candidates
+//= require choice_question_options
 //= require maps/candidates
 //= require maps/candidate
 //= require flash

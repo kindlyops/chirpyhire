@@ -1,0 +1,7 @@
+.nested-fields
+  = f.hidden_field :letter, class: "letter"
+  .field
+    = f.label :text, f.object.letter, class: "letter-label"
+    = f.text_field :text, required: true
+  = link_to_remove_association f do
+      | &times;

@@ -1,4 +1,6 @@
-- question.choice_options.each do |letter, option|
-  .field
-    = f.label :choice_option, letter
-    = f.text_field :choice_option, required: true
+#choice-question-options
+  = f.fields_for :choice_question_options do |option|
+    = render 'questions/choice_question_option_fields', f: option
+  .links
+    = link_to_add_association 'Add choice', f, :choice_question_options
+

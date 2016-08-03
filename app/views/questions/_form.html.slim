@@ -9,6 +9,6 @@
   .field
     = f.label :text, "Question Text"
     = f.text_field :text, required: true, autofocus: true
-  = render partial: "questions/form/#{question.type.underscore}", locals: { f: f, question: question }
+  = render partial: "questions/form/#{question.type.underscore}", locals: { f: f }
   .actions
     = f.submit "Save"

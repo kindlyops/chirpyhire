@@ -1,5 +1,6 @@
 class ChoiceQuestion < Question
   has_many :choice_question_options, foreign_key: :question_id, inverse_of: :question
+  accepts_nested_attributes_for :choice_question_options, reject_if: :all_blank, allow_destroy: true
 
   def self.extract(message, question)
     properties = {}
