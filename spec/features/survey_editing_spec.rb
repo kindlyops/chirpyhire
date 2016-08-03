@@ -17,12 +17,22 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       it "works" do
         visit survey_path
         click_link("edit-question")
-        expect(page).to have_text(address_question.text)
 
         fill_in "address_question_text", with: "New question text"
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")
         expect(page).to have_text("New question text")
+      end
+    end
+
+    context "changing the status" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+
+        find("#address_question_status", visible: :all).trigger('click')
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
       end
     end
   end
@@ -34,12 +44,23 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       it "works" do
         visit survey_path
         click_link("edit-question")
-        expect(page).to have_text(document_question.text)
 
         fill_in "document_question_text", with: "New question text"
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")
         expect(page).to have_text("New question text")
+      end
+    end
+
+
+    context "changing the status" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+
+        find("#document_question_status", visible: :all).trigger('click')
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
       end
     end
   end
@@ -79,6 +100,30 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")
         expect(page).not_to have_text(choice_text)
+      end
+    end
+
+    context "editing the text" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+
+        fill_in "choice_question_text", with: "New question text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("New question text")
+      end
+    end
+
+
+    context "changing the status" do
+      it "works" do
+        visit survey_path
+        click_link("edit-question")
+
+        find("#choice_question_status", visible: :all).trigger('click')
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
       end
     end
 
