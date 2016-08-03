@@ -1,0 +1,14 @@
+= form_for question do |f|
+  - if question.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(question.errors.count, "error")} prohibited this Persona Feature from being saved:"
+      ul
+        - question.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :text, "Question Text"
+    = f.text_field :text, required: true, autofocus: true
+  = render partial: "questions/form/#{question.format}", locals: { f: f, question: question }
+  .actions
+    = f.submit "Save"

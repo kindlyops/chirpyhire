@@ -1,0 +1,4 @@
+- question.choice_options.each do |letter, option|
+  .field
+    = f.label :choice_option, letter
+    = f.text_field :choice_option, required: true
