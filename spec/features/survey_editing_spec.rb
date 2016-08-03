@@ -24,9 +24,8 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         within(choice) do
           fill_in "b)", with: "Another Option"
         end
-
         click_button("Save")
-        save_and_open_page
+        expect(page).to have_text("Nice! Question saved.")
       end
     end
 

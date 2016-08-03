@@ -15,8 +15,8 @@ Rails.application.routes.draw do
 
   resources :address_questions, only: :show
   resources :document_questions, only: :show
-  resources :choice_questions, only: :show
-  resources :questions, only: [:edit, :show]
+  resources :choice_questions, only: [:show, :edit, :update]
+  resources :questions, only: :edit
 
   namespace :maps do
     resources :candidates, only: [:index, :show]

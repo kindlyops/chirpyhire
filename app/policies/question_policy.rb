@@ -3,6 +3,10 @@ class QuestionPolicy < ApplicationPolicy
     show?
   end
 
+  def update?
+    edit?
+  end
+
   def permitted_attributes
     []
   end
