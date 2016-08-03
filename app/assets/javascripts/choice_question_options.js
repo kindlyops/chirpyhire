@@ -5,10 +5,8 @@ $(document).on("turbolinks:load", function() {
       var lastLetter = lastOption.find('.letter').val();
       var nextLetter = String.fromCharCode(lastLetter.charCodeAt(0) + 1);
       option.find('.letter').val(nextLetter);
-      option.find('.letter-label').text(nextLetter);
+      option.find('.letter-label').text(nextLetter + ")");
     });
-
-
 
     $(document).on('cocoon:after-remove', '#choice-question-options', function(e, option) {
       option.attr("removed", true);
@@ -18,7 +16,7 @@ $(document).on("turbolinks:load", function() {
       _.each(remainingOptions, function(remainingOption, index) {
         $remainingOption = $(remainingOption);
         $remainingOption.find('.letter').val(alphabet[index]);
-        $remainingOption.find('.letter-label').text(alphabet[index]);
+        $remainingOption.find('.letter-label').text(alphabet[index] + ")");
       });
     });
   }

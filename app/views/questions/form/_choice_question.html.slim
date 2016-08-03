@@ -2,5 +2,5 @@
   = f.fields_for :choice_question_options do |option|
     = render 'questions/choice_question_option_fields', f: option
   .links
-    = link_to_add_association 'Add choice', f, :choice_question_options
+    = link_to_add_association 'Add choice', f, :choice_question_options, class: "button"
 
