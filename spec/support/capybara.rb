@@ -3,6 +3,10 @@ require 'capybara/rspec'
 require 'capybara/email/rspec'
 require 'capybara/poltergeist'
 
+Capybara.register_driver :poltergeist_debug do |app|
+  Capybara::Poltergeist::Driver.new(app, :inspector => true)
+end
+
 Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 3001
 Capybara.app_host = 'http://localhost:3001'
