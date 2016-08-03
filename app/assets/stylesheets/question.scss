@@ -1,4 +1,8 @@
 .question {
   @include outer-container;
   padding: 1em;
+
+  .question-status {
+    float: right;
+  }
 }

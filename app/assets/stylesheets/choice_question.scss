@@ -1,26 +1,38 @@
-#choice-question-options {
-  .links {
-    padding: 1em 0;
-  }
-  .nested-fields {
-    display: flex;
-    align-items: center;
+.question {
+  input[type="checkbox"] {
 
-    .field {
+    &:checked {
+      + .checkbox {
+        background: #76af93;
+      }
+    }
+  }
+
+  #choice-question-options {
+    .links {
+      padding: 1em 0;
+    }
+    .nested-fields {
       display: flex;
       align-items: center;
 
-      label {
-        margin-bottom: 0.75em;
-        padding-right: 1em;
-      }
+      .field {
+        display: flex;
+        align-items: center;
 
-    }
-    .remove_fields {
-      margin-bottom: 0.55em;
-      padding-left: 0.25em;
-      font-size: 2em;
-      color: darken(map-get($flashes, "error"), 30%);
+        label {
+          margin-bottom: 0.75em;
+          padding-right: 1em;
+        }
+
+      }
+      .remove_fields {
+        margin-bottom: 0.55em;
+        padding-left: 0.25em;
+        font-size: 2em;
+        color: darken(map-get($flashes, "error"), 30%);
+      }
     }
   }
 }
+
