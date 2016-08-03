@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
   resource :survey, only: :show
 
+  resources :address_questions, only: :show
+  resources :document_questions, only: :show
+  resources :choice_questions, only: :show
   resources :questions, only: [:edit, :show]
 
   namespace :maps do

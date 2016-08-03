@@ -1,0 +1,2 @@
+class ChoiceQuestionsController < QuestionsController
+end

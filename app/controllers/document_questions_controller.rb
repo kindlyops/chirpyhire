@@ -1,0 +1,2 @@
+class DocumentQuestionsController < QuestionsController
+end

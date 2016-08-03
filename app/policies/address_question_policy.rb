@@ -1,0 +1,2 @@
+class AddressQuestionPolicy < QuestionPolicy
+end
