@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resource :survey, only: :show
 
+  resources :persona_features, only: [:edit, :show]
+
   namespace :maps do
     resources :candidates, only: [:index, :show]
   end
