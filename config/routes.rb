@@ -11,8 +11,6 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
-  resources :dogs
-
   resource :survey, only: :show
 
   resources :address_questions, only: [:show, :edit, :update]
