@@ -1,0 +1,13 @@
+.nested-fields
+  = link_to_remove_association f do
+      | &times;
+  .field.distance-field
+    = f.label :distance, "Within", class: "preceding"
+    = f.text_field :distance, required: true
+    label.proceeding miles of
+  .field
+    = f.label :latitude
+    = f.text_field :latitude, required: true
+  .field
+    = f.label :longitude
+    = f.text_field :longitude, required: true

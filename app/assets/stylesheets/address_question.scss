@@ -1,0 +1,27 @@
+.question {
+
+  .remove_fields {
+    float: right;
+  }
+
+  #address-question-option {
+    .distance-field {
+      display: flex;
+      align-items: center;
+      input {
+        width: 2.5em;
+      }
+
+      label {
+        &.preceding {
+          padding-right: 1em;
+        }
+
+        &.proceeding {
+          padding-left: 1em;
+        }
+        margin-bottom: 0.75em;
+      }
+    }
+  }
+}

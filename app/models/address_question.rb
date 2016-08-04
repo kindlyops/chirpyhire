@@ -1,5 +1,6 @@
 class AddressQuestion < Question
   has_one :address_question_option, foreign_key: :question_id, inverse_of: :address_question
+  accepts_nested_attributes_for :address_question_option, reject_if: :all_blank, allow_destroy: true
 
   def self.extract(message, inquiry)
     question = inquiry.question
