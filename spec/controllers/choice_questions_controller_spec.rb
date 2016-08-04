@@ -11,14 +11,14 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     let!(:question) { create(:choice_question, survey: survey) }
 
     context "with existing choice options" do
-      let!(:old_choice_question_option) { create(:choice_question_option, choice_question: question) }
+      let!(:old_choice_question_option) { create(:choice_question_option, letter: "a", choice_question: question) }
       let!(:old_choice_question_options) do
         [
          old_choice_question_option
         ]
       end
 
-      context "and changing choice options" do
+      context "and only changing choice options" do
         let(:params) do
           {
             id: question.id,
@@ -31,11 +31,17 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
           }
         end
 
+        it "still changes the updated_at on the question" do
+          expect {
+            put :update, params
+          }.to change{question.reload.updated_at}
+        end
+
         with_versioning do
           it "tracks the prior association" do
             put :update, params: params
             old_question = question.versions.last.reify(has_many: true)
-            expect(old_question.choice_question_options.map(&:letter)).to match_array(old_choice_question_options.map(&:letter))
+            expect(old_question.choice_question_options.map(&:letter)).to match_array(["a"])
           end
         end
       end
