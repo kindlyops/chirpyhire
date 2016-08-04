@@ -1,5 +1,5 @@
 class AddressQuestion < Question
-  has_one :address_question_option, foreign_key: :question_id, inverse_of: :question
+  has_one :address_question_option, foreign_key: :question_id, inverse_of: :address_question
 
   def self.extract(message, question)
     address = message.address
