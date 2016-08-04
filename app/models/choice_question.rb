@@ -31,7 +31,11 @@ template
   end
 
   def choice_options_letters
-    choice_question_options.map(&:letter)
+    in_memory_sorted_options.map(&:letter)
+  end
+
+  def in_memory_sorted_options
+    choice_question_options.sort_by(&:letter)
   end
 
   private
@@ -41,7 +45,7 @@ template
   end
 
   def choice_options_list
-    choice_question_options.each_with_object("") do |option, result|
+    in_memory_sorted_options.each_with_object("") do |option, result|
       result << "#{option.letter}) #{option.text}\n"
     end
   end
