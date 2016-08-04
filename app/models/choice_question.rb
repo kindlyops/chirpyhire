@@ -34,10 +34,6 @@ template
     choice_question_options.map(&:letter)
   end
 
-  def choice_question_options
-    super.order(:letter)
-  end
-
   private
 
   def choice_options_letters_sentence

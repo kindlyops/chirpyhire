@@ -14,8 +14,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
       let!(:old_choice_question_option) { create(:choice_question_option, choice_question: question) }
       let!(:old_choice_question_options) do
         [
-         old_choice_question_option,
-         create(:choice_question_option, choice_question: question)
+         old_choice_question_option
         ]
       end
 
@@ -35,8 +34,8 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
         with_versioning do
           it "tracks the prior association" do
             put :update, params: params
-            old_version = question.versions.last.reify(has_many: true)
-            expect(old_version.choice_question_options.map(&:letter)).to match_array(old_choice_question_options.map(&:letter))
+            old_question = question.versions.last.reify(has_many: true)
+            expect(old_question.choice_question_options.map(&:letter)).to match_array(old_choice_question_options.map(&:letter))
           end
         end
       end
