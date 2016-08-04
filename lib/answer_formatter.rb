@@ -1,7 +1,7 @@
 class AnswerFormatter
-  def initialize(answer, question)
+  def initialize(answer, inquiry)
     @answer = answer
-    @question = question
+    @inquiry = inquiry
   end
 
   def format
@@ -13,11 +13,21 @@ class AnswerFormatter
 
   private
 
-  attr_reader :answer, :question
+  attr_reader :answer, :inquiry
+
+  def choice_question
+    @choice_question ||= begin
+      if inquiry.question_type == "ChoiceQuestion"
+        question = inquiry.question
+        choice_question = question.becomes(question.type.constantize)
+        choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)
+      end
+    end
+  end
 
   def choices
-    return unless question.type == "ChoiceQuestion"
-    question.becomes(question.type.constantize).choice_options_letters.join
+    return unless choice_question.present?
+    choice_question.choice_options_letters.join
   end
 
   def message
