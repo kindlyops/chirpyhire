@@ -9,6 +9,7 @@ class CreateVersions < ActiveRecord::Migration
       t.string   :event,     null: false
       t.string   :whodunnit
       t.jsonb    :object
+      t.jsonb    :object_changes
       t.integer  :transaction_id
 
       t.datetime :created_at

@@ -21,7 +21,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= current_account.user
+    @current_user ||= current_account.user || NullUser.new
+  end
+
+  def current_account
+    super || NullAccount.new
   end
 
   private
