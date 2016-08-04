@@ -23,15 +23,10 @@ class AnswerValidator
   end
 
   def format
-    @format ||= AnswerFormatter.new(answer, question).format
+    @format ||= AnswerFormatter.new(answer, inquiry).format
   end
 
   def inquiry
     @inquiry ||= answer.inquiry
   end
-
-  def question
-    @question ||= inquiry.question
-  end
-
 end

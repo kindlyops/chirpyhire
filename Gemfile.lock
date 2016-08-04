@@ -230,6 +230,10 @@ GEM
       pkg-config (~> 1.1.7)
     normalize-rails (4.1.1)
     orm_adapter (0.5.0)
+    paper_trail (5.2.0)
+      activerecord (>= 3.0, < 6.0)
+      activesupport (>= 3.0, < 6.0)
+      request_store (~> 1.1)
     pg (0.18.4)
     phony (2.15.26)
     phony_rails (0.14.2)
@@ -419,6 +423,7 @@ DEPENDENCIES
   naught (~> 1.1.0)
   neat
   normalize-rails (~> 4.1.1)
+  paper_trail (~> 5.2.0)
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)

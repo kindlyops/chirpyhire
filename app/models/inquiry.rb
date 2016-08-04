@@ -3,6 +3,7 @@ class Inquiry < ApplicationRecord
   belongs_to :question
   has_one :answer
   delegate :type, to: :question, prefix: true
+  delegate :category, to: :question
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 

@@ -26,16 +26,10 @@ class AnswerHandler
   end
 
   def extracted_properties
-    property_extractor.extract(message, question)
+    property_extractor.extract(message, inquiry)
   end
 
-  def category
-    question.category
-  end
-
-  def question
-    @question ||= inquiry.question
-  end
+  delegate :category, to: :inquiry
 
   def answer
     @answer ||= inquiry.create_answer(message: message)
@@ -48,6 +42,6 @@ class AnswerHandler
   end
 
   def property_extractor
-    AnswerFormatter.new(answer, question).format.constantize
+    AnswerFormatter.new(answer, inquiry).format.constantize
   end
 end

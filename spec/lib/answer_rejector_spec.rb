@@ -28,7 +28,7 @@ RSpec.describe AnswerRejector do
       let(:question) { create(:address_question, survey: survey) }
       let(:latitude) { 12.345678 }
       let(:longitude) { 87.654321 }
-      let!(:address_question_option) { create(:address_question_option, latitude: latitude, longitude: longitude, question: question) }
+      let!(:address_question_option) { create(:address_question_option, latitude: latitude, longitude: longitude, address_question: question) }
       let(:candidate) { create(:candidate, :with_address) }
 
       context "and the candidates coordinates are within the geofence" do

@@ -14,7 +14,7 @@ FactoryGirl.define do
       type "ChoiceQuestion"
 
       after(:create) do |question|
-        create(:choice_question_option, question: ChoiceQuestion.find(question.id))
+        create(:choice_question_option, choice_question: ChoiceQuestion.find(question.id))
       end
     end
   end

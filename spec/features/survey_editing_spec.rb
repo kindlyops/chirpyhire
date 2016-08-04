@@ -69,7 +69,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   context "Choice Questions" do
     let(:category) { create(:category, name: "Availability") }
     let!(:choice_question) { create(:choice_question, category: category, survey: survey) }
-    let!(:choice_question_option) { create(:choice_question_option, question: choice_question, letter: "a", text: "Live-in") }
+    let!(:choice_question_option) { create(:choice_question_option, choice_question: choice_question, letter: "a", text: "Live-in") }
 
     context "adding a Choice" do
       it "works" do
@@ -88,7 +88,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     end
 
     context "removing a Choice" do
-      let!(:choice_question_option_2) { create(:choice_question_option, question: choice_question, letter: "b", text: "Both") }
+      let!(:choice_question_option_2) { create(:choice_question_option, choice_question: choice_question, letter: "b", text: "Both") }
       it "works" do
         visit survey_path
         click_link("edit-question")
