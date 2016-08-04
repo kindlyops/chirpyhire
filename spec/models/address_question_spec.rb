@@ -32,7 +32,7 @@ RSpec.describe AddressQuestion, type: :model do
     end
 
     it "returns an address hash" do
-      expect(AddressQuestion.extract(message, double())).to eq(address_hash)
+      expect(AddressQuestion.extract(message, double(question: double()))).to eq(address_hash)
     end
   end
 

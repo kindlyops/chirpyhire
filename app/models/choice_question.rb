@@ -3,14 +3,18 @@ class ChoiceQuestion < Question
   has_many :choice_question_options, foreign_key: :question_id, inverse_of: :choice_question
   accepts_nested_attributes_for :choice_question_options, reject_if: :all_blank, allow_destroy: true
 
-  def self.extract(message, question)
+  def self.extract(message, inquiry)
+    question = inquiry.question
+    choice_question = question.becomes(question.type.constantize)
+    choice_question_at_inquiry_created_at = choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)
+
     properties = {}
     properties[:child_class] = "choice"
 
     answer = message.body.strip.downcase
     choice_option = /\A([a-z]){1}\)?\z/.match(answer)[1]
 
-    option = question.choice_question_options.find_by(letter: choice_option)
+    option = choice_question_at_inquiry_created_at.choice_question_options.find {|option| option.letter == choice_option }
     properties[:choice_option] = option.text
     properties
   end

@@ -1,42 +1,59 @@
 require 'rails_helper'
 
 RSpec.describe ChoiceQuestion, type: :model do
-  let!(:organization) { create(:organization) }
-  let!(:message) { create(:message, body: "A) ") }
-  let(:survey) { create(:survey) }
-
-  let(:choice_hash) do
-    {
-      choice_option: "Live-in",
-      child_class: "choice"
-    }
-  end
-
-  let!(:choice_question) { create(:choice_question, text: "What is your availability?", survey: survey) }
-  let!(:options) do
-    [
-      choice_question.choice_question_options.create(letter: "a", text: "Live-in"),
-      choice_question.choice_question_options.create(letter: "b", text: "Hourly"),
-      choice_question.choice_question_options.create(letter: "c", text: "Both")
-    ]
-  end
 
   describe ".extract" do
-    it "returns a choice hash" do
-      expect(ChoiceQuestion.extract(message, choice_question)).to eq(choice_hash)
+    let(:message) { create(:message, body: "B)") }
+    let(:question) { create(:choice_question) }
+    let!(:option_a) { create(:choice_question_option, choice_question: question, letter: "a") }
+    let!(:option_b) { create(:choice_question_option, choice_question: question, letter: "b", text: "original B") }
+    let!(:inquiry) { create(:inquiry, question: question) }
+
+    context "in which the option selected at the time the inquiry has been changed" do
+      let(:choice_hash) do
+        {
+          choice_option: "original B",
+          child_class: "choice"
+        }
+      end
+
+      it "returns a choice hash" do
+        expect(ChoiceQuestion.extract(message, inquiry)).to eq(choice_hash)
+      end
+
+      with_versioning do
+        it "can still lookup the old text value" do
+          question.update(text: "FooBar", choice_question_options_attributes: [{id: option_b.id, text: "new B"}])
+          result_hash = ChoiceQuestion.extract(message, inquiry)
+          expect(result_hash[:choice_option]).to eq("original B")
+        end
+      end
     end
   end
 
+  describe "instance methods" do
+    let!(:organization) { create(:organization) }
+    let!(:message) { create(:message, body: "A) ") }
+    let(:survey) { create(:survey) }
 
-  describe "#in_memory_sorted_options" do
-    it "sorts the options by letter" do
-      expect(choice_question.in_memory_sorted_options.map(&:letter)).to eq(%w(a b c))
+    let!(:choice_question) { create(:choice_question, text: "What is your availability?", survey: survey) }
+    let!(:options) do
+      [
+        choice_question.choice_question_options.create(letter: "a", text: "Live-in"),
+        choice_question.choice_question_options.create(letter: "b", text: "Hourly"),
+        choice_question.choice_question_options.create(letter: "c", text: "Both")
+      ]
     end
-  end
 
-  describe "#question" do
-    let(:question) do
-      <<-question
+    describe "#in_memory_sorted_options" do
+      it "sorts the options by letter" do
+        expect(choice_question.in_memory_sorted_options.map(&:letter)).to eq(%w(a b c))
+      end
+    end
+
+    describe "#question" do
+      let(:question) do
+        <<-question
 What is your availability?
 
 a) Live-in
@@ -45,11 +62,12 @@ c) Both
 
 
 Please reply with just the letter a, b, or c.
-  question
-    end
+    question
+      end
 
-    it "returns a question" do
-      expect(choice_question.question).to eq(question)
+      it "returns a question" do
+        expect(choice_question.question).to eq(question)
+      end
     end
   end
 end

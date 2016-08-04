@@ -18,7 +18,7 @@ RSpec.describe DocumentQuestion, type: :model do
     end
 
     it "returns an document hash" do
-      expect(DocumentQuestion.extract(message, double())).to eq(document_hash)
+      expect(DocumentQuestion.extract(message, double(question: double()))).to eq(document_hash)
     end
   end
 end

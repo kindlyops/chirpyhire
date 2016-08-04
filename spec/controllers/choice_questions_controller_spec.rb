@@ -33,7 +33,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
 
         it "still changes the updated_at on the question" do
           expect {
-            put :update, params
+            put :update, params: params
           }.to change{question.reload.updated_at}
         end
 
