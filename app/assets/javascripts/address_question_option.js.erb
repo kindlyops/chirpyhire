@@ -4,7 +4,6 @@ $(document).on("turbolinks:load", function() {
     var isDragging, isCursorOverPoint;
     var longitude = $("#address_question_address_question_option_attributes_longitude").val();
     var latitude = $("#address_question_address_question_option_attributes_latitude").val();
-    var coordinates = $("#coordinates").get(0);
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
@@ -23,6 +22,11 @@ $(document).on("turbolinks:load", function() {
           "coordinates": [longitude, latitude]
         }
       }]
+    }
+
+    function milesToPixelsAtMaxZoom(miles, latitude) {
+      var milesPerPixel = 0.00004660282;
+      return miles / milesPerPixel / Math.cos(latitude * Math.PI / 180);
     }
 
     function mouseDown() {
@@ -75,11 +79,8 @@ $(document).on("turbolinks:load", function() {
       if (!isDragging) return;
 
       var coords = geojson.features[0].geometry.coordinates;
-
-      // Print the coordinates of where the point had
-      // finished being dragged to on the map.
-      coordinates.style.display = 'block';
-      coordinates.innerHTML = 'Longitude: ' + coords[0] + '<br />Latitude: ' + coords[1];
+      $("#address_question_address_question_option_attributes_longitude").val(coords[0]);
+      $("#address_question_address_question_option_attributes_latitude").val(coords[1]);
       canvas.style.cursor = '';
       isDragging = false;
       map.off('touchmove', onMove);
@@ -89,11 +90,8 @@ $(document).on("turbolinks:load", function() {
       if (!isDragging) return;
 
       var coords = e.lngLat;
-
-      // Print the coordinates of where the point had
-      // finished being dragged to on the map.
-      coordinates.style.display = 'block';
-      coordinates.innerHTML = 'Longitude: ' + coords.lng + '<br />Latitude: ' + coords.lat;
+      $("#address_question_address_question_option_attributes_longitude").val(coords.lng);
+      $("#address_question_address_question_option_attributes_latitude").val(coords.lat);
       canvas.style.cursor = '';
       isDragging = false;
       map.off('mousemove', onMove);
@@ -112,7 +110,13 @@ $(document).on("turbolinks:load", function() {
         "type": "circle",
         "source": "point",
         "paint": {
-          "circle-radius": 10,
+          "circle-radius": {
+            "stops": [
+              [0, 0],
+              [20, milesToPixelsAtMaxZoom(10, latitude)]
+            ],
+            "base": 2
+          },
           "circle-color": "#3887be"
         }
       });

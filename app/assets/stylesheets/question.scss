@@ -18,6 +18,6 @@
     margin-bottom: 0.55em;
     padding-left: 0.25em;
     font-size: 2em;
-    color: darken(map-get($flashes, "error"), 30%);
+    color: $medium-gray;
   }
 }
