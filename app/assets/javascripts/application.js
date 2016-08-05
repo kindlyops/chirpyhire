@@ -24,5 +24,6 @@
 //= require address_question_option
 //= require maps/candidates
 //= require maps/candidate
+//= require survey
 //= require flash
 
