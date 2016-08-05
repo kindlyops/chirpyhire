@@ -5,9 +5,11 @@
     = f.label :distance, "Within", class: "preceding"
     = f.text_field :distance, required: true
     label.proceeding miles of
-  .field
+  #map
+  pre#coordinates.coordinates
+  .field.hidden-field
     = f.label :latitude
     = f.text_field :latitude, required: true
-  .field
+  .field.hidden-field
     = f.label :longitude
     = f.text_field :longitude, required: true
