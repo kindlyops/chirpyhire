@@ -2,9 +2,9 @@
   = link_to_remove_association f do
       | &times;
   .field.distance-field
-    = f.label :distance, "Within", class: "preceding"
+    = f.label :distance, "Limit:", class: "preceding"
     = f.text_field :distance, required: true
-    label.proceeding miles of
+    label.proceeding miles
   #map
   .field.hidden-field
     = f.label :latitude

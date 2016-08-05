@@ -110,6 +110,7 @@ $(document).on("turbolinks:load", function() {
         "type": "circle",
         "source": "point",
         "paint": {
+          "circle-opacity": 0.3,
           "circle-radius": {
             "stops": [
               [0, 0],
@@ -119,6 +120,16 @@ $(document).on("turbolinks:load", function() {
           },
           "circle-color": "#3887be"
         }
+      });
+
+      $(document).on("input", "#address_question_address_question_option_attributes_distance", function() {
+        map.setPaintProperty('point', 'circle-radius', {
+          "stops": [
+            [0, 0],
+            [20, milesToPixelsAtMaxZoom($(this).val(), latitude)]
+          ],
+          "base": 2
+        });
       });
 
       // If a feature is found on map movement,
