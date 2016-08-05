@@ -35,6 +35,84 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         expect(page).to have_text("Nice! Question saved.")
       end
     end
+
+    context "geofence limit" do
+      context "that exists" do
+        let!(:address_question_option) { create(:address_question_option, address_question: address_question) }
+
+        context "removing the limit" do
+          it "works" do
+            visit survey_path
+            click_link("edit-question")
+
+            address_option = find(".nested-fields", match: :first)
+            within(address_option) do
+              click_link("×")
+            end
+
+            click_button("Save")
+            expect(page).to have_text("Nice! Question saved.")
+            expect(page).not_to have_text("#{address_question_option.distance} miles")
+          end
+        end
+
+        context "editing the limit" do
+          let(:distance) { Faker::Number.number(2) }
+          let(:latitude) { Faker::Address.latitude }
+          let(:longitude) { Faker::Address.longitude }
+
+          it "works" do
+            visit survey_path
+            click_link("edit-question")
+            expect(page).to have_text("#{address_question_option.distance} miles")
+
+            address_option = find(".nested-fields", match: :first)
+            within(address_option) do
+              fill_in "address_question_address_question_option_attributes_distance", with: distance
+              fill_in "address_question_address_question_option_attributes_latitude", with: latitude
+              fill_in "address_question_address_question_option_attributes_longitude", with: longitude
+            end
+
+            click_button("Save")
+            expect(page).to have_text("Nice! Question saved.")
+            expect(page).to have_text("#{distance} miles")
+          end
+        end
+      end
+
+      context "adding the limit" do
+        let(:distance) { Faker::Number.number(2) }
+        let(:latitude) { Faker::Address.latitude }
+        let(:longitude) { Faker::Address.longitude }
+
+        it "works" do
+          visit survey_path
+          expect(page).not_to have_text("miles")
+          click_link("edit-question")
+
+          click_link("Add address options")
+          option = find(".nested-fields", match: :first)
+          within(option) do
+            fill_in "address_question_address_question_option_attributes_distance", with: distance
+            fill_in "address_question_address_question_option_attributes_latitude", with: latitude
+            fill_in "address_question_address_question_option_attributes_longitude", with: longitude
+          end
+
+          click_button("Save")
+          expect(page).to have_text("Nice! Question saved.")
+          expect(page).to have_text("#{distance} miles")
+        end
+
+        it "only allows adding one option" do
+          visit survey_path
+          expect(page).not_to have_text("miles")
+          click_link("edit-question")
+
+          click_link("Add address options")
+          expect(page).not_to have_text("Add address options")
+        end
+      end
+    end
   end
 
   context "Document Questions" do
@@ -52,7 +130,6 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       end
     end
 
-
     context "changing the status" do
       it "works" do
         visit survey_path
@@ -64,7 +141,6 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       end
     end
   end
-
 
   context "Choice Questions" do
     let(:category) { create(:category, name: "Availability") }
@@ -95,7 +171,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         choice = find(".nested-fields", match: :first)
         choice_text = choice.find('.field input').value
         within(choice) do
-          click_link("×")
+          find(".remove_fields", match: :first).trigger('click')
         end
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")

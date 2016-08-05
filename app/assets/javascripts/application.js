@@ -20,6 +20,7 @@
 //= require components/navigation
 //= require candidates
 //= require choice_question_options
+//= require address_question_option
 //= require maps/candidates
 //= require maps/candidate
 //= require flash
