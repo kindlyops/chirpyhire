@@ -12,6 +12,7 @@ class Organization < ApplicationRecord
   has_one :location
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
+  delegate :latitude, :longitude, to: :location
 
   def next_unasked_question_for(user)
     questions = survey.questions

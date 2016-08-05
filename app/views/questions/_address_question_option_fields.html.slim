@@ -5,7 +5,7 @@
     = f.label :distance, "Limit:", class: "preceding"
     = f.text_field :distance, required: true
     label.proceeding miles
-  #map
+  #map data-latitude==current_organization.latitude data-longitude==current_organization.longitude
   .field.hidden-field
     = f.label :latitude
     = f.text_field :latitude, required: true

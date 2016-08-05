@@ -1,10 +1,27 @@
 $(document).on("turbolinks:load", function() {
-  if($(".question #address-question-option").length) {
+  var map;
+  var defaultDistance = 10;
+
+  function initMap() {
     mapboxgl.accessToken = mapboxgl.accessToken || '<%= ENV.fetch("MAPBOX_PUBLIC_KEY") %>';
     var isDragging, isCursorOverPoint;
+
     var longitude = $("#address_question_address_question_option_attributes_longitude").val();
+    if(!longitude) {
+      longitude = $("#map").data("longitude");
+      $("#address_question_address_question_option_attributes_longitude").val(longitude);
+    }
+
     var latitude = $("#address_question_address_question_option_attributes_latitude").val();
-    var map = new mapboxgl.Map({
+    if(!latitude) {
+      latitude = $("#map").data("latitude");
+      $("#address_question_address_question_option_attributes_latitude").val(latitude);
+    }
+
+    var distance = $("#address_question_address_question_option_attributes_distance").val();
+    distance = distance || defaultDistance;
+
+    map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
       center: [longitude, latitude],
@@ -43,6 +60,7 @@ $(document).on("turbolinks:load", function() {
     }
 
     function touchStart(e) {
+      e.originalEvent.preventDefault();
       var features = map.queryRenderedFeatures(e.point, { layers: ['point'] });
 
       // Change point and cursor style as a UI indicator
@@ -83,6 +101,9 @@ $(document).on("turbolinks:load", function() {
       $("#address_question_address_question_option_attributes_latitude").val(coords[1]);
       canvas.style.cursor = '';
       isDragging = false;
+      map.setPaintProperty('point', 'circle-color', '#3887be');
+      isCursorOverPoint = false;
+      map.dragPan.enable();
       map.off('touchmove', onMove);
     }
 
@@ -114,7 +135,7 @@ $(document).on("turbolinks:load", function() {
           "circle-radius": {
             "stops": [
               [0, 0],
-              [20, milesToPixelsAtMaxZoom(10, latitude)]
+              [20, milesToPixelsAtMaxZoom(distance, latitude)]
             ],
             "base": 2
           },
@@ -136,7 +157,6 @@ $(document).on("turbolinks:load", function() {
       // set a flag to permit a mousedown events.
       map.on('mousemove', function (e) {
         var features = map.queryRenderedFeatures(e.point, { layers: ['point'] });
-
         // Change point and cursor style as a UI indicator
         // and set a flag to enable other mouse events.
         if (features.length) {
@@ -157,6 +177,16 @@ $(document).on("turbolinks:load", function() {
       map.on('mousedown', mouseDown, true);
       map.on('touchstart', touchStart, true);
     });
+  }
+
+  function tearDownMap() {
+    map.remove();
+  }
+
+  if($(".question #address-question-option").length) {
+    if($(".question #address-question-option #map").length) {
+      initMap();
+    }
 
     if($("#address-question-option .nested-fields").length) {
       $(".add_fields").hide();
@@ -164,6 +194,15 @@ $(document).on("turbolinks:load", function() {
 
     $(document).on('cocoon:before-insert', '#address-question-option', function(e, option) {
       $(".add_fields").hide();
+      option.find("#address_question_address_question_option_attributes_distance").val(defaultDistance);
+    });
+
+    $(document).on('cocoon:after-insert', '#address-question-option', function(e, option) {
+      initMap();
+    });
+
+    $(document).on('cocoon:before-remove', '#address-question-option', function(e, option) {
+      tearDownMap();
     });
 
     $(document).on('cocoon:after-remove', '#address-question-option', function(e, option) {

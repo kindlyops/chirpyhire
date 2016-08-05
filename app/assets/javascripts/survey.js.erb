@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function() {
   if($(".survey").length) {
-    if($(".survey-question #map")) {
+    if($(".survey-question #map").length) {
       mapboxgl.accessToken = mapboxgl.accessToken || '<%= ENV.fetch("MAPBOX_PUBLIC_KEY") %>';
       var isDragging, isCursorOverPoint;
       var longitude = $("#map").data("longitude");
