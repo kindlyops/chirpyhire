@@ -18,6 +18,8 @@
 //= require lodash
 //= require cocoon
 
+//= require init
+//= require map
 //= require components/navigation
 //= require candidates
 //= require choice_question_options

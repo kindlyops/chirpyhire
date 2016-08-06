@@ -1,0 +1,77 @@
+(function(){
+  mapboxgl.accessToken = mapboxgl.accessToken || '<%= ENV.fetch("MAPBOX_PUBLIC_KEY") %>';
+
+  App.Map = function(args) {
+    this.center = args.center;
+    this.zoom = args.zoom;
+    this.sources = args.sources;
+    this.layers = args.layers;
+    this.popupLayers = args.popupLayers || [];
+    this._init();
+  };
+
+  App.Map.prototype = {
+    _init: function() {
+      this._initMap();
+      if (this.popupLayers.length) {
+        this._initPopup();
+      }
+
+      if(this._map.loaded()) {
+        this._addSourcesAndLayers();
+      } else {
+        this._map.on('load', this._addSourcesAndLayers.bind(this))
+      }
+    },
+    _initMap: function() {
+      this._map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/harryw/cioz0jzv4000kavm7ndil75zx',
+        center: this.center,
+        zoom: this.zoom
+      });
+    },
+    _initPopup: function() {
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+
+      this._map.on('mousemove', function(e) {
+        var features = map.queryRenderedFeatures(e.point, { layers: this.popupLayers });
+        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+        if (!features.length) {
+          popup.remove();
+          return;
+        }
+
+        var feature = features[0];
+        popup.setLngLat(feature.geometry.coordinates)
+            .setHTML(feature.properties.description)
+            .addTo(map);
+      });
+
+      return popup;
+    },
+    _addSources: function() {
+      _.each(this.sources, _.bind(function(source) {
+        this.addSource(source.id, {
+          "type": source.type,
+          "data": source.data
+        });
+      }, this._map));
+    },
+    _addLayers: function() {
+      _.each(this.layers, _.bind(function(layer) {
+        this.addLayer(layer);
+      }, this._map));
+    },
+    _addSourcesAndLayers: function() {
+      this._addSources();
+      this._addLayers();
+    }
+  };
+
+  return App.Map;
+})()
