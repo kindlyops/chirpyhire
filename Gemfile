@@ -38,6 +38,7 @@ group :test do
   gem 'poltergeist', '~> 1.10.0'
   gem 'rails-controller-testing'
   gem 'timecop', '~> 0.8.1'
+  gem 'capybara-webkit', '~> 1.11.1'
 end
 
 group :development do
