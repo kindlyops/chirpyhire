@@ -20,8 +20,14 @@
     remove: function() {
       this._map.remove();
     },
+    loaded: function() {
+      return this._map.loaded();
+    },
     on: function(type, listener) {
       this._map.on(type, listener);
+    },
+    setLayoutProperty: function(layer, name, value) {
+      this._map.setLayoutProperty(layer, name, value);
     },
     setPaintProperty: function(layer, name, value, klass) {
       this._map.setPaintProperty(layer, name, value, klass);
@@ -47,27 +53,25 @@
       });
     },
     _initPopup: function() {
-      var popup = new mapboxgl.Popup({
+      this.popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false
       });
 
       this._map.on('mousemove', function(e) {
-        var features = map.queryRenderedFeatures(e.point, { layers: this.popupLayers });
-        map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+        var features = this._map.queryRenderedFeatures(e.point, { layers: this.popupLayers });
+        this._map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
         if (!features.length) {
-          popup.remove();
+          this.popup.remove();
           return;
         }
 
         var feature = features[0];
-        popup.setLngLat(feature.geometry.coordinates)
+        this.popup.setLngLat(feature.geometry.coordinates)
             .setHTML(feature.properties.description)
-            .addTo(map);
-      });
-
-      return popup;
+            .addTo(this._map);
+      }.bind(this));
     },
     _addSources: function() {
       _.each(this.sources, _.bind(function(source) {
