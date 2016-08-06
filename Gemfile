@@ -39,6 +39,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', '~> 1.11.1'
+  gem 'shoulda-matchers', '~> 2.8.0'
 end
 
 group :development do
