@@ -52,7 +52,7 @@ RSpec.feature "Messages", type: :feature, js: true do
 
       it "allows you to view the image" do
         visit user_messages_path(user)
-        expect(page).to have_selector("img[src^='#{Document::URI_BASE}']")
+        expect(page).to have_selector("img[src^='#{MediaInstance::URI_BASE}']")
       end
     end
 
