@@ -2,4 +2,4 @@
   = f.fields_for :address_question_option do |option|
     = render 'questions/address_question_option_fields', f: option
   .links
-    = link_to_add_association 'Add address options', f, :address_question_option, force_non_association_create: f.object.address_question_option.present?, class: "button"
+    = link_to_add_association 'Limit address range', f, :address_question_option, force_non_association_create: f.object.address_question_option.present?, class: "button"

@@ -6,7 +6,7 @@
   h1 = @question.category_name
   - if question.errors.any?
     #error_explanation
-      h2 = "#{pluralize(question.errors.count, "error")} prohibited this Persona Feature from being saved:"
+      h2 = "#{pluralize(question.errors.count, "error")} prohibited this Question from being saved:"
       ul
         - question.errors.full_messages.each do |message|
           li = message

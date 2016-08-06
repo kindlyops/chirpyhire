@@ -93,7 +93,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
           expect(page).not_to have_text("miles")
           find("#edit-question").trigger("click")
 
-          click_link("Add address options")
+          click_link("Limit address range")
           option = find(".nested-fields", match: :first)
           within(option) do
             fill_in "address_question_address_question_option_attributes_distance", with: distance
@@ -108,8 +108,8 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
           expect(page).not_to have_text("miles")
           find("#edit-question").trigger("click")
 
-          click_link("Add address options")
-          expect(page).not_to have_text("Add address options")
+          click_link("Limit address range")
+          expect(page).not_to have_text("Limit address range")
         end
       end
     end
