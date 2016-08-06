@@ -7,11 +7,6 @@ $(document).on("turbolinks:load", function() {
     var distance = $("#map").data("distance");
     var styleId = "point";
 
-    function milesToPixelsAtMaxZoom(miles, latitude) {
-      var milesPerPixel = 0.00004660282;
-      return miles / milesPerPixel / Math.cos(latitude * Math.PI / 180);
-    }
-
     var layers = [{
       "id": styleId,
       "type": "circle",
@@ -21,7 +16,7 @@ $(document).on("turbolinks:load", function() {
         "circle-radius": {
           "stops": [
             [0, 0],
-            [20, milesToPixelsAtMaxZoom(distance, latitude)]
+            [20, App.Map.milesToPixelsAtMaxZoom(distance, latitude)]
           ],
           "base": 2
         },
