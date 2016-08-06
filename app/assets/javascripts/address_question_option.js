@@ -1,22 +1,27 @@
 $(document).on("turbolinks:load", function() {
-  var map;
-  var defaultDistance = 10;
+  var distanceId, latitudeId, longitudeId, map, defaultDistance;
+
+  distanceId = "#address_question_address_question_option_attributes_distance";
+  latitudeId = "#address_question_address_question_option_attributes_latitude";
+  longitudeId = "#address_question_address_question_option_attributes_longitude";
+  map;
+  defaultDistance = 10;
 
   function initMap() {
     var zoom, longitude, latitude, center, styleId, geojson, sources, layers,
     distance, setCoordinatesInForm, setCoordinatesInFormByMouse, setCoordinatesInFormByTouch;
 
     zoom = 8;
-    longitude = $("#address_question_address_question_option_attributes_longitude").val();
+    longitude = $(longitudeId).val();
     if(!longitude) {
       longitude = $("#map").data("longitude");
-      $("#address_question_address_question_option_attributes_longitude").val(longitude);
+      $(longitudeId).val(longitude);
     }
 
-    latitude = $("#address_question_address_question_option_attributes_latitude").val();
+    latitude = $(latitudeId).val();
     if(!latitude) {
       latitude = $("#map").data("latitude");
-      $("#address_question_address_question_option_attributes_latitude").val(latitude);
+      $(latitudeId).val(latitude);
     }
     center = [longitude, latitude];
 
@@ -39,7 +44,7 @@ $(document).on("turbolinks:load", function() {
       data: geojson
     }];
 
-    distance = $("#address_question_address_question_option_attributes_distance").val();
+    distance = $(distanceId).val();
     distance = distance || defaultDistance;
 
     layers = [{
@@ -71,8 +76,8 @@ $(document).on("turbolinks:load", function() {
       return function(e) {
         if (!map.isDragging) return;
         var coords = coordsGenerator(e);
-        $("#address_question_address_question_option_attributes_longitude").val(coords.lng);
-        $("#address_question_address_question_option_attributes_latitude").val(coords.lat);
+        $(longitudeId).val(coords.lng);
+        $(latitudeId).val(coords.lat);
       }.bind(this);
     }
 
@@ -89,17 +94,16 @@ $(document).on("turbolinks:load", function() {
     map.on('mouseup', setCoordinatesInFormByMouse.bind(this));
     map.on('touchend', setCoordinatesInFormByTouch.bind(this));
 
-    map.on('load', function() {
-      $(document).on("input", "#address_question_address_question_option_attributes_distance", function() {
-        var currentLatitude = $("#address_question_address_question_option_attributes_latitude").val();
+    $(document).on("input", distanceId, function() {
+      var currentLatitude = $(latitudeId).val();
+      var currentDistance = $(distanceId).val();
 
-        map.setPaintProperty(styleId, 'circle-radius', {
-          "stops": [
-            [0, 0],
-            [20, App.Map.milesToPixelsAtMaxZoom($(this).val(), currentLatitude)]
-          ],
-          "base": 2
-        });
+      map.setPaintProperty(styleId, 'circle-radius', {
+        "stops": [
+          [0, 0],
+          [20, App.Map.milesToPixelsAtMaxZoom(currentDistance, currentLatitude)]
+        ],
+        "base": 2
       });
     });
   }
@@ -115,7 +119,7 @@ $(document).on("turbolinks:load", function() {
 
     $(document).on('cocoon:before-insert', '#address-question-option', function(e, option) {
       $(".add_fields").hide();
-      option.find("#address_question_address_question_option_attributes_distance").val(defaultDistance);
+      option.find(distanceId).val(defaultDistance);
     });
 
     $(document).on('cocoon:after-insert', '#address-question-option', function(e, option) {
