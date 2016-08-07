@@ -1,0 +1,2 @@
+class DocumentQuestionPolicy < QuestionPolicy
+end

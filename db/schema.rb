@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160802173018) do
+ActiveRecord::Schema.define(version: 20160806204201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 20160802173018) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.index ["category_id"], name: "index_questions_on_category_id", using: :btree
+    t.index ["survey_id", "priority"], name: "index_questions_on_survey_id_and_priority", unique: true, where: "(status = 0)", using: :btree
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
 
@@ -254,6 +255,27 @@ ActiveRecord::Schema.define(version: 20160802173018) do
     t.boolean  "has_unread_messages", default: false, null: false
     t.index ["organization_id", "phone_number"], name: "index_users_on_organization_id_and_phone_number", unique: true, using: :btree
     t.index ["organization_id"], name: "index_users_on_organization_id", using: :btree
+  end
+
+  create_table "version_associations", force: :cascade do |t|
+    t.integer "version_id"
+    t.string  "foreign_key_name", null: false
+    t.integer "foreign_key_id"
+    t.index ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key", using: :btree
+    t.index ["version_id"], name: "index_version_associations_on_version_id", using: :btree
+  end
+
+  create_table "versions", force: :cascade do |t|
+    t.string   "item_type",      null: false
+    t.integer  "item_id",        null: false
+    t.string   "event",          null: false
+    t.string   "whodunnit"
+    t.jsonb    "object"
+    t.integer  "transaction_id"
+    t.datetime "created_at"
+    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
+    t.index ["object"], name: "index_versions_on_object", using: :gin
+    t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
 
   add_foreign_key "accounts", "users"

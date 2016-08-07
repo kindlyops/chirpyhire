@@ -1,0 +1,19 @@
+= form_for question do |f|
+  .field.question-status
+    = f.label :status, class: "label-switch" do
+      = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
+      .checkbox
+  h1 = @question.category_name
+  - if question.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(question.errors.count, "error")} prohibited this Question from being saved:"
+      ul
+        - question.errors.full_messages.each do |message|
+          li = message
+  .field
+    = f.label :text, "Question Text"
+    = f.text_area :text, required: true, autofocus: true
+
+  = render partial: "questions/form/#{question.type.underscore}", locals: { f: f }
+  .actions
+    = f.submit "Save"

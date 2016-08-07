@@ -32,14 +32,14 @@ RSpec.describe AddressQuestion, type: :model do
     end
 
     it "returns an address hash" do
-      expect(AddressQuestion.extract(message, double())).to eq(address_hash)
+      expect(AddressQuestion.extract(message, double(question: double()))).to eq(address_hash)
     end
   end
 
   describe "#has_geofence?" do
     context "with geofence" do
       before(:each) do
-        create(:address_question_option, question: question)
+        create(:address_question_option, address_question: question)
       end
 
       it "is true" do
@@ -56,7 +56,7 @@ RSpec.describe AddressQuestion, type: :model do
 
   describe "#distance_in_miles" do
     context "with geofence" do
-      let!(:address_question_option) { create(:address_question_option, question: question) }
+      let!(:address_question_option) { create(:address_question_option, address_question: question) }
 
       it "is the distance" do
         expect(question.distance_in_miles).to eq(address_question_option.distance)
@@ -74,7 +74,7 @@ RSpec.describe AddressQuestion, type: :model do
     context "with geofence" do
       let(:latitude) { 12.345678 }
       let(:longitude) { 87.654321 }
-      let!(:address_question_option) { create(:address_question_option, latitude: latitude, longitude: longitude, question: question) }
+      let!(:address_question_option) { create(:address_question_option, latitude: latitude, longitude: longitude, address_question: question) }
 
       it "is an array of latitude and longitude" do
         expect(question.coordinates).to eq([latitude, longitude])

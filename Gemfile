@@ -38,6 +38,8 @@ group :test do
   gem 'poltergeist', '~> 1.10.0'
   gem 'rails-controller-testing'
   gem 'timecop', '~> 0.8.1'
+  gem 'capybara-webkit', '~> 1.11.1'
+  gem 'shoulda-matchers', '~> 2.8.0'
 end
 
 group :development do
@@ -88,3 +90,5 @@ gem 'dalli', '~> 2.7.6'
 gem 'administrate', github: 'hwhelchel/administrate', branch: 'rails5'
 gem 'kaminari', '~> 0.17'
 gem 'lodash-rails', '~> 4.14.1'
+gem 'cocoon', '~> 1.2.9'
+gem 'paper_trail', '~> 5.2.0'

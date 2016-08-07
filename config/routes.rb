@@ -13,6 +13,11 @@ Rails.application.routes.draw do
 
   resource :survey, only: :show
 
+  resources :address_questions, only: [:show, :edit, :update]
+  resources :document_questions, only: [:show, :edit, :update]
+  resources :choice_questions, only: [:show, :edit, :update]
+  resources :questions, only: :edit
+
   namespace :maps do
     resources :candidates, only: [:index, :show]
   end

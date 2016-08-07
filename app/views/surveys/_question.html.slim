@@ -1,8 +1,11 @@
-.card.question
+.card.survey-question
   .card-header
     = "#{question_counter + 1}. "
     = question.category_name
-    - if question.inactive?
-      comment title="Chirpyhire is currently not asking about #{question.category_name}" inactive
+    .submenu
+      - if question.inactive?
+        comment title="Chirpyhire is currently not asking about #{question.category_name}" inactive
+      = link_to edit_question_path(question), id: "edit-question" do
+          i.fa.fa-pencil
   .card-copy
     = render partial: "questions/#{question.type.underscore}", locals: { question: question }

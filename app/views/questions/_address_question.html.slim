@@ -1,8 +1,3 @@
 p = question.text
 - if question.has_geofence?
-  p
-    ' Within
-    = question.distance_in_miles
-    '  miles of:
-  .map
-    img src==question.uri
+  #map data-distance==question.distance data-latitude==question.latitude data-longitude==question.longitude

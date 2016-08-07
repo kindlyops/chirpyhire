@@ -6,14 +6,20 @@
     padding: 0 1em;
   }
 
-  .question {
+  .survey-question {
     .card-header {
       display: flex;
       justify-content: space-between;
 
       comment {
+        padding: 0 0.5em;
         color: $medium-gray;
       }
+    }
+
+    #map {
+      width: 100%;
+      height: 46vh;
     }
 
     .choice-template {

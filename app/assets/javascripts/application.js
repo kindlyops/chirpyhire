@@ -14,11 +14,18 @@
 //= require jquery2
 //= require jquery_ujs
 //= require turbolinks
+//= require mapbox-gl
 //= require lodash
+//= require cocoon
 
+//= require init
+//= require map
 //= require components/navigation
 //= require candidates
+//= require choice_question_options
+//= require address_question_option
 //= require maps/candidates
 //= require maps/candidate
+//= require survey
 //= require flash
 

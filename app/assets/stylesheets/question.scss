@@ -1,0 +1,23 @@
+.question {
+  @include outer-container;
+  padding: 1em;
+
+  .question-status {
+    float: right;
+  }
+
+  .links {
+    padding: 1em 0;
+  }
+
+  .hidden-field {
+    display: none;
+  }
+
+  .remove_fields {
+    margin-bottom: 0.55em;
+    padding-left: 0.25em;
+    font-size: 2em;
+    color: $medium-gray;
+  }
+}
