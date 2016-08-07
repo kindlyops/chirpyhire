@@ -4,7 +4,6 @@ $(document).on("turbolinks:load", function() {
   distanceId = "#address_question_address_question_option_attributes_distance";
   latitudeId = "#address_question_address_question_option_attributes_latitude";
   longitudeId = "#address_question_address_question_option_attributes_longitude";
-  map;
   defaultDistance = 10;
 
   function initMap() {
