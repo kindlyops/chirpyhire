@@ -1,4 +1,10 @@
 class ChoiceQuestionsController < QuestionsController
+  def new
+    @question = authorize(new_question)
+    @question.choice_question_options.build(letter: "a")
+    @question.choice_question_options.build(letter: "b")
+  end
+
   def update
     if authorized_question.update(permitted_attributes(ChoiceQuestion).merge(updated_at: Time.current))
       redirect_to survey_url, notice: "Nice! Question saved."
@@ -14,6 +20,6 @@ class ChoiceQuestionsController < QuestionsController
   end
 
   def new_question_params
-    super.merge(type: "AddressQuestion")
+    super.merge(type: "ChoiceQuestion")
   end
 end

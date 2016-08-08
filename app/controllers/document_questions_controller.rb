@@ -14,6 +14,6 @@ class DocumentQuestionsController < QuestionsController
   end
 
   def new_question_params
-    super.merge(type: "AddressQuestion")
+    super.merge(type: "DocumentQuestion")
   end
 end
