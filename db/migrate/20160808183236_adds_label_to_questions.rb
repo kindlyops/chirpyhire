@@ -1,5 +1,0 @@
-class AddsLabelToQuestions < ActiveRecord::Migration[5.0]
-  def change
-    add_column :questions, :label, :string
-  end
-end
