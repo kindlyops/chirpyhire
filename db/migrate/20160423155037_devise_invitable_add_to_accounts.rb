@@ -1,4 +1,4 @@
-class DeviseInvitableAddToAccounts < ActiveRecord::Migration[5.0]
+class DeviseInvitableAddToAccounts < ActiveRecord::Migration
   def up
     change_table :accounts do |t|
       t.string     :invitation_token
