@@ -12,4 +12,8 @@ class AddressQuestionsController < QuestionsController
   def authorized_question
     authorize AddressQuestion.find(params[:id])
   end
+
+  def new_question_params
+    super.merge(type: "AddressQuestion")
+  end
 end

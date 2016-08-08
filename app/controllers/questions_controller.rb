@@ -10,11 +10,11 @@ class QuestionsController < ApplicationController
   private
 
   def new_question
-    survey.questions.build(priority: new_priority)
+    survey.questions.build(new_question_params)
   end
 
-  def new_priority
-    survey.questions.active.order(:priority).last.priority + 1
+  def new_question_params
+    { priority: survey.questions.active.order(:priority).last.priority + 1 }
   end
 
   def survey
