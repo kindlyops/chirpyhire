@@ -9,6 +9,10 @@
   @include outer-container;
   padding: 1em 0;
 
+  .card {
+    cursor: default;
+  }
+
   .controls {
     margin: 0 1em;
     padding-bottom: 1em;
@@ -49,10 +53,5 @@
 
   .card-image {
     background-color: $medium-gray;
-
-    iframe {
-      width: 100%;
-      height: $card-image-height;
-    }
   }
 }

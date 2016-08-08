@@ -1,0 +1,27 @@
+.question
+  h1 New Question
+  .cards.question-types
+    .card
+      .card-image
+        i.fa.fa-map-marker
+      .card-header
+        ' Address
+      .card-copy
+        p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+        = link_to "Add Question", new_address_question_path, class: "button"
+    .card
+      .card-image
+        i.fa.fa-picture-o
+      .card-header
+        ' Image
+      .card-copy
+        p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
+        = link_to "Add Question", new_document_question_path, class: "button"
+    .card
+      .card-image
+        i.fa.fa-list
+      .card-header
+        ' Multiple Choice
+      .card-copy
+        p Ask candidates any question with multiple choices.
+        = link_to "Add Question", new_choice_question_path, class: "button"

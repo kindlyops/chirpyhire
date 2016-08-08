@@ -1,6 +1,7 @@
 .survey
-  h1 Recruiting Survey
-
+  .header
+    h1 Recruiting Survey
+    = link_to "Add Question", new_question_path
   .cards
     = render partial: "surveys/question", collection: @survey.questions
   .attribution

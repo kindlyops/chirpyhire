@@ -1,4 +1,8 @@
 class QuestionPolicy < ApplicationPolicy
+  def new?
+    true
+  end
+
   def edit?
     show?
   end

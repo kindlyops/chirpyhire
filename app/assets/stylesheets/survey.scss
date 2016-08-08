@@ -2,6 +2,12 @@
   @include outer-container;
   padding: 1em 0;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1em;
+  }
+
   .attribution {
     padding: 0 1em;
   }
@@ -25,9 +31,5 @@
     .choice-template {
       white-space: pre-wrap;
     }
-  }
-
-  h1, h3 {
-    margin: 0 1em 0.75em;
   }
 }
