@@ -6,6 +6,18 @@ RSpec.describe Reporter do
   let(:reporter) { Reporter.new(Account, Report::Daily, :daily) }
 
   describe "report" do
+    context "with an inactive account" do
+      before(:each) do
+        recipients.each {|r| r.update(invitation_token: Faker::Lorem.sentence) }
+      end
+
+      it "does not send an email to the inactive accounts" do
+        delivery = double
+        expect(delivery).not_to receive(:deliver_now)
+        reporter.report
+      end
+    end
+
     it "sends an email to each recipient" do
       delivery = double
       expect(delivery).to receive(:deliver_now).exactly(count).times
