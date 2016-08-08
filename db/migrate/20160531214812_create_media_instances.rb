@@ -1,4 +1,4 @@
-class CreateMediaInstances < ActiveRecord::Migration
+class CreateMediaInstances < ActiveRecord::Migration[5.0]
   def change
     create_table :media_instances do |t|
       t.string :sid, null: false

@@ -1,4 +1,4 @@
-class CreateCandidateFeatures < ActiveRecord::Migration
+class CreateCandidateFeatures < ActiveRecord::Migration[5.0]
   def change
     create_table :candidate_features do |t|
       t.belongs_to :candidate, null: false, index: true, foreign_key: true

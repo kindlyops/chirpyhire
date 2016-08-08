@@ -23,11 +23,11 @@ RSpec.feature "Candidates", type: :feature, js: true do
       context "with candidate features" do
         let(:survey) { account.organization.create_survey }
         context "with address persona feature" do
-          let(:category) { create(:category, name: "Address Category") }
-          let!(:question) { create(:address_question, category: category, survey: survey) }
+          let(:label) { "Address Category" }
+          let!(:question) { create(:address_question, label: label, survey: survey) }
 
           context "with address" do
-            let!(:address) { Address.new(create(:candidate_feature, :address, category: category, candidate: candidate)) }
+            let!(:address) { Address.new(create(:candidate_feature, :address, label: label, candidate: candidate)) }
 
             it "has a link to the address" do
               visit candidates_path
@@ -37,12 +37,12 @@ RSpec.feature "Candidates", type: :feature, js: true do
         end
 
         context "with document persona feature" do
-          let(:category) { create(:category, name: "Document Category") }
-          let!(:question) { create(:question, category: category, survey: survey) }
+          let(:label) { "Document Category" }
+          let!(:question) { create(:question, label: label, survey: survey) }
 
           context "with document" do
             before(:each) do
-              create(:candidate_feature, category: category, candidate: candidate, properties: { url0: "/path/to/image", child_class: "document" })
+              create(:candidate_feature, label: label, candidate: candidate, properties: { url0: "/path/to/image", child_class: "document" })
             end
 
             it "has a link to the document" do
@@ -54,12 +54,12 @@ RSpec.feature "Candidates", type: :feature, js: true do
         end
 
         context "with choice persona feature" do
-          let(:category) { create(:category, name: "Choice Category") }
-          let!(:question) { create(:question, :choice, category: category, survey: survey) }
+          let(:label) { "Choice Category" }
+          let!(:question) { create(:question, :choice, label: label, survey: survey) }
 
           context "with choice" do
             before(:each) do
-              create(:candidate_feature, category: category, candidate: candidate, properties: { choice_option: "Live-in", child_class: "choice" })
+              create(:candidate_feature, label: label, candidate: candidate, properties: { choice_option: "Live-in", child_class: "choice" })
             end
 
             it "shows the choice" do

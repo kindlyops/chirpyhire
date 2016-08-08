@@ -1,4 +1,4 @@
-class CreateReferrals < ActiveRecord::Migration
+class CreateReferrals < ActiveRecord::Migration[5.0]
   def change
     create_table :referrals do |t|
       t.belongs_to :candidate, null: false, index: true, foreign_key: true

@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     let(:question) { create(:question, survey: survey) }
-    let(:candidate_feature) { create(:candidate_feature, category: question.category) }
+    let(:candidate_feature) { create(:candidate_feature, label: question.label) }
 
     context "with an outstanding inquiry" do
       let(:inquiry) { create(:inquiry, message: message, question: question) }

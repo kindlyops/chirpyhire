@@ -3,7 +3,7 @@
     = f.label :status, class: "label-switch" do
       = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
       .checkbox
-  h1 = @question.category_name
+  h1 = @question.label
   - if question.errors.any?
     #error_explanation
       h2 = "#{pluralize(question.errors.count, "error")} prohibited this Question from being saved:"
