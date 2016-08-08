@@ -7,7 +7,7 @@ class Reporter
   end
 
   def report
-    recipients.find_each do |recipient|
+    recipients.active.find_each do |recipient|
       ReportMailer.send(period, report_for(recipient)).deliver_now
     end
   end

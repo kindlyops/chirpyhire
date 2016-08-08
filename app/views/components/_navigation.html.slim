@@ -25,6 +25,8 @@ header.navigation role="banner"
         li.nav-link
           = link_to "Recruiting Survey", survey_path
         li.nav-link
+          = link_to "Invite an Admin", new_account_invitation_path
+        li.nav-link
           = link_to "Sign out", destroy_account_session_path, method: :delete
     nav.right.desktop role="navigation"
       ul.navigation-menu.show

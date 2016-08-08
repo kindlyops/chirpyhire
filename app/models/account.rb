@@ -9,6 +9,10 @@ class Account < ApplicationRecord
   delegate :first_name, :last_name, :name, :organization, to: :user
   accepts_nested_attributes_for :user
 
+  def self.active
+    where(invitation_token: nil)
+  end
+
   def send_reset_password_instructions
     super if invitation_token.nil?
   end
