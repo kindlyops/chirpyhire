@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
-  resource :survey, only: :show
+  resource :survey, only: [:show, :edit, :update]
 
   resources :address_questions, except: :destroy
   resources :document_questions, except: :destroy

@@ -1,13 +1,26 @@
 .survey {
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
   @include outer-container;
-  padding: 1em 0;
+  padding: 1em;
 
   .header {
     display: flex;
     justify-content: space-between;
-    margin: 0 1em;
+    margin: 0 1em 0.5em 1em;
   }
 
+  .settings {
+    a {
+      flex-direction: column;
+      display: flex;
+      padding: 0 0.25em;
+
+      @include media ($horizontal-bar-mode) {
+        display: inline;
+      }
+    }
+  }
   .attribution {
     padding: 0 1em;
   }

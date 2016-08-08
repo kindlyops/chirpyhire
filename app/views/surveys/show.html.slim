@@ -1,9 +1,11 @@
 .survey
   .header
     h1 Recruiting Survey
-    = link_to "Add Question", new_question_path
+    .settings
+      = link_to "Add Question", new_question_path
+      = link_to "Change Order", edit_survey_path
   .cards
-    = render partial: "surveys/question", collection: @survey.questions
+    = render partial: "surveys/question", collection: @survey.questions.by_priority
   .attribution
     a href='https://www.mapbox.com/map-feedback/' © Mapbox
     '

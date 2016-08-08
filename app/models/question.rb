@@ -8,6 +8,10 @@ class Question < ApplicationRecord
   TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion)
   validates_inclusion_of :type, in: TYPES
 
+  def self.by_priority
+    order(:priority)
+  end
+
   def inquire(user)
     message = user.receive_message(body: question)
     inquiries.create(message: message)

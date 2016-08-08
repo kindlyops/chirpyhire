@@ -1,8 +1,19 @@
 class SurveysController < ApplicationController
-  skip_after_action :verify_authorized, only: :show
   decorates_assigned :survey
 
+  def update
+    if authorize(current_organization.survey).update(permitted_attributes(Survey))
+      redirect_to survey_url, notice: "Nice! Order saved."
+    else
+      render :edit
+    end
+  end
+
+  def edit
+    @survey = authorize(current_organization.survey)
+  end
+
   def show
-    @survey = current_organization.survey
+    @survey = authorize(current_organization.survey)
   end
 end
