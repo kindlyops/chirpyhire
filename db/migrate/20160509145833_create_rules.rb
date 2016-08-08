@@ -1,4 +1,4 @@
-class CreateRules < ActiveRecord::Migration
+class CreateRules < ActiveRecord::Migration[5.0]
   def change
     create_table :rules do |t|
       t.belongs_to :organization, null: false, index: true, foreign_key: true

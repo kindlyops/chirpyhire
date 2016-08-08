@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808184309) do
+ActiveRecord::Schema.define(version: 20160808193457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20160808184309) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160808184309) do
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true, using: :btree
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count", using: :btree
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id", using: :btree
+    t.index ["invited_by_type", "invited_by_id"], name: "index_accounts_on_invited_by_type_and_invited_by_id", using: :btree
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
     t.index ["user_id"], name: "index_accounts_on_user_id", using: :btree
   end
@@ -77,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160808184309) do
     t.jsonb    "properties",   default: "{}", null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "label"
+    t.string   "label",                       null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
@@ -179,7 +180,7 @@ ActiveRecord::Schema.define(version: 20160808184309) do
     t.string   "type",                   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "label"
+    t.string   "label",                  null: false
     t.index ["survey_id", "priority"], name: "index_questions_on_survey_id_and_priority", unique: true, where: "(status = 0)", using: :btree
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end

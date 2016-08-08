@@ -1,4 +1,4 @@
-class CreatePersonaFeatures < ActiveRecord::Migration
+class CreatePersonaFeatures < ActiveRecord::Migration[5.0]
   def change
     create_table :persona_features do |t|
       t.belongs_to :candidate_persona, null: false, index: true, foreign_key: true

@@ -1,4 +1,4 @@
-class AddsUniquenessConstraints < ActiveRecord::Migration
+class AddsUniquenessConstraints < ActiveRecord::Migration[5.0]
   def change
     remove_index :accounts, :email
     add_index :accounts, :email, unique: true
