@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory :question do
     survey
-    category
     sequence(:priority)
     sequence(:label) { |n| "label#{n}" }
     type { %w(AddressQuestion ChoiceQuestion DocumentQuestion).sample }

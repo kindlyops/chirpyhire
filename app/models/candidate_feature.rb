@@ -1,6 +1,5 @@
 class CandidateFeature < ApplicationRecord
   belongs_to :candidate
-  belongs_to :category
 
   delegate :user, to: :candidate
 

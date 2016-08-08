@@ -1,5 +1,5 @@
 class Address
-  delegate :id, to: :feature
+  delegate :id, :label, to: :feature
 
   def initialize(feature)
     @feature = feature

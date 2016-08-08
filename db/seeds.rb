@@ -55,13 +55,13 @@ if Rails.env.development?
   end
 
   unless org.survey.questions.present?
-    address_question = org.survey.questions.create!(priority: 1, category: Category.create(name: "Address"), type: "AddressQuestion", text: "What is your address and zipcode?")
+    address_question = org.survey.questions.create!(priority: 1, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
     address_question.create_address_question_option(distance: 20, latitude: 33.929966, longitude: -84.373931 )
-    choice_question = org.survey.questions.create!(priority: 2, category: Category.create(name: "Availability"), type: "ChoiceQuestion", text: "What is your availability?")
+    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?")
     choice_question.choice_question_options.create(text: "Live-in", letter: "a")
     choice_question.choice_question_options.create(text: "Hourly", letter: "b")
     choice_question.choice_question_options.create(text: "Both", letter: "c")
-    org.survey.questions.create!(priority: 3, category: Category.create(name: "CNA License"), type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
+    org.survey.questions.create!(priority: 3, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 

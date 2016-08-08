@@ -29,7 +29,7 @@ class AnswerHandler
     property_extractor.extract(message, inquiry)
   end
 
-  delegate :category, to: :inquiry
+  delegate :label, to: :inquiry
 
   def answer
     @answer ||= inquiry.create_answer(message: message)

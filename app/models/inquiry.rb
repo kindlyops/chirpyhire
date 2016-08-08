@@ -3,12 +3,12 @@ class Inquiry < ApplicationRecord
   belongs_to :question
   has_one :answer
   delegate :type, to: :question, prefix: true
-  delegate :category, to: :question
+  delegate :label, to: :question
 
   scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
 
   def question_name
-    question.category_name
+    question.label
   end
 
   def unanswered?
