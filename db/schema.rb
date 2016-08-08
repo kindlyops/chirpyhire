@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160806204201) do
+ActiveRecord::Schema.define(version: 20160808190429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20160806204201) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.integer  "category_id",                 null: false
+    t.string   "label"
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["category_id"], name: "index_candidate_features_on_category_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
@@ -188,6 +189,7 @@ ActiveRecord::Schema.define(version: 20160806204201) do
     t.string   "type",                    null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "label"
     t.index ["category_id"], name: "index_questions_on_category_id", using: :btree
     t.index ["survey_id", "priority"], name: "index_questions_on_survey_id_and_priority", unique: true, where: "(status = 0)", using: :btree
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
