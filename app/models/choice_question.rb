@@ -2,6 +2,7 @@ class ChoiceQuestion < Question
   has_paper_trail
   has_many :choice_question_options, foreign_key: :question_id, inverse_of: :choice_question
   accepts_nested_attributes_for :choice_question_options, reject_if: :all_blank, allow_destroy: true
+  validates_presence_of :choice_question_options
 
   def self.extract(message, inquiry)
     question = inquiry.question

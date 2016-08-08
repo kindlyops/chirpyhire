@@ -46,6 +46,22 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         Capybara.current_driver = :poltergeist
       end
 
+      context "adding a question" do
+        it "works" do
+          visit survey_path
+          click_link("Add Question")
+          within(find("#address-type")) do
+            click_link("Add Question")
+          end
+          fill_in "address_question_label", with: "Fancy Address Label"
+          fill_in "address_question_text", with: "Fancy Address Text"
+          click_button("Save")
+          expect(page).to have_text("Nice! Question saved.")
+          expect(page).to have_text("Fancy Address Text")
+          expect(page).to have_text("Fancy Address Label")
+        end
+      end
+
       context "that exists" do
         let!(:address_question_option) { create(:address_question_option, address_question: address_question) }
 
@@ -118,6 +134,23 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   context "Document Questions" do
     let(:label) { "CNA License" }
     let!(:document_question) { create(:document_question, label: label, survey: survey) }
+
+    context "adding a question" do
+      it "works" do
+        visit survey_path
+        click_link("Add Question")
+        within(find("#image-type")) do
+          click_link("Add Question")
+        end
+        fill_in "document_question_label", with: "Fancy Document Label"
+        fill_in "document_question_text", with: "Fancy Document Text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("Fancy Document Text")
+        expect(page).to have_text("Fancy Document Label")
+      end
+    end
+
     context "editing the text" do
       it "works" do
         visit survey_path
@@ -144,8 +177,31 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
   context "Choice Questions" do
     let(:label) { "Availability" }
-    let!(:choice_question) { create(:choice_question, label: label, survey: survey) }
-    let!(:choice_question_option) { create(:choice_question_option, choice_question: choice_question, letter: "a", text: "Live-in") }
+    let!(:choice_question) { create(:choice_question, label: label, survey: survey, choice_question_options_attributes: [
+        {letter: "a", text: "Live-in"}
+      ]) }
+    let!(:choice_question_option) { choice_question.choice_question_options.first }
+
+    context "adding a question" do
+      it "works" do
+        visit survey_path
+        click_link("Add Question")
+        within(find("#choice-type")) do
+          click_link("Add Question")
+        end
+        fill_in "choice_question_label", with: "Fancy Choice Label"
+        fill_in "choice_question_text", with: "Fancy Choice Text"
+        fill_in "choice_question_choice_question_options_attributes_0_text", with: "Choice A"
+        fill_in "choice_question_choice_question_options_attributes_1_text", with: "Choice B"
+
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("Fancy Choice Text")
+        expect(page).to have_text("Fancy Choice Label")
+        expect(page).to have_text("Choice A")
+        expect(page).to have_text("Choice B")
+      end
+    end
 
     context "adding a Choice" do
       it "works" do

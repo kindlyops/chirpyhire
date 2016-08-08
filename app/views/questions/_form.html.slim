@@ -1,4 +1,6 @@
 = form_for question do |f|
+  = f.hidden_field :priority, required: true
+  = f.hidden_field :type, required: true
   .field.question-status
     = f.label :status, class: "label-switch" do
       = f.check_box :status, { checked: f.object.active? }, "active", "inactive"

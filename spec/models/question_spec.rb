@@ -20,9 +20,9 @@ RSpec.describe Question, type: :model do
     end
 
     context "choice question" do
-      let(:question) { create(:choice_question, text: "What is your availability?", survey: survey) }
+      let(:question) { create(:choice_question, text: "What is your availability?", survey: survey,
+        choice_question_options_attributes: [{letter: "a", text: "Live-in"}]) }
       before(:each) do
-        question.choice_question_options.create(letter: "a", text: "Live-in")
         question.choice_question_options.create(letter: "b", text: "Hourly")
         question.choice_question_options.create(letter: "c", text: "Both")
       end

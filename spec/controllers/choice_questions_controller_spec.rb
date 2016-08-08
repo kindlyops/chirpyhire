@@ -8,15 +8,12 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
   end
 
   describe "#update" do
-    let!(:question) { create(:choice_question, survey: survey) }
+    let!(:question) { create(:choice_question, survey: survey, choice_question_options_attributes: [
+        { letter: "a", text: "original A"}
+      ]) }
 
     context "with existing choice options" do
-      let!(:old_choice_question_option) { create(:choice_question_option, letter: "a", choice_question: question) }
-      let!(:old_choice_question_options) do
-        [
-         old_choice_question_option
-        ]
-      end
+      let!(:old_choice_question_option) { question.choice_question_options.first }
 
       context "and only changing choice options" do
         let(:params) do

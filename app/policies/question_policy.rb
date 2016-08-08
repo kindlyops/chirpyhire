@@ -3,6 +3,10 @@ class QuestionPolicy < ApplicationPolicy
     true
   end
 
+  def create?
+    new?
+  end
+
   def edit?
     show?
   end
@@ -12,7 +16,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:text, :status]
+    [:text, :type, :status, :priority, :label]
   end
 
   class Scope < ApplicationPolicy::Scope

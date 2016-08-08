@@ -9,7 +9,7 @@
   hr
 
   .cards.question-types
-    .card
+    #address-type.card
       .card-image
         i.fa.fa-map-marker
       .card-header
@@ -17,7 +17,7 @@
       .card-copy
         p Ask candidates for their address. Optionally filter candidates that live outside your service area.
         = link_to "Add Question", new_address_question_path, class: "button"
-    .card
+    #image-type.card
       .card-image
         i.fa.fa-picture-o
       .card-header
@@ -25,7 +25,7 @@
       .card-copy
         p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
         = link_to "Add Question", new_document_question_path, class: "button"
-    .card
+    #choice-type.card
       .card-image
         i.fa.fa-list
       .card-header
