@@ -8,12 +8,14 @@ RSpec.describe Reporter do
   describe "report" do
     context "with an inactive account" do
       before(:each) do
-        recipients.each {|r| r.update(invitation_token: Faker::Lorem.sentence) }
+        recipients.sample.update(invitation_token: Faker::Lorem.sentence)
       end
 
       it "does not send an email to the inactive accounts" do
         delivery = double
-        expect(delivery).not_to receive(:deliver_now)
+        expect(delivery).to receive(:deliver_now).exactly(count-1).times
+        allow(ReportMailer).to receive(:daily).and_return(delivery).exactly(count-1).times
+
         reporter.report
       end
     end
