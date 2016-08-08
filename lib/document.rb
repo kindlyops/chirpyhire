@@ -1,4 +1,6 @@
 class Document
+  delegate :label, to: :feature
+
   def initialize(feature)
     @feature = feature
   end
@@ -9,10 +11,6 @@ class Document
 
   def uris
     feature.properties.select {|k,_| k["url"] }.values
-  end
-
-  def category
-    feature.category.name
   end
 
   def additional_uris

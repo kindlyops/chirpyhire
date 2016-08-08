@@ -11,8 +11,8 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   let(:survey) { account.organization.create_survey }
 
   context "Address Questions" do
-    let(:category) { create(:category, name: "Address") }
-    let!(:address_question) { create(:address_question, category: category, survey: survey) }
+    let(:label) { "Address" }
+    let!(:address_question) { create(:address_question, label: label, survey: survey) }
 
     context "editing the text" do
       it "works" do
@@ -116,8 +116,8 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   end
 
   context "Document Questions" do
-    let(:category) { create(:category, name: "CNA License") }
-    let!(:document_question) { create(:document_question, category: category, survey: survey) }
+    let(:label) { "CNA License" }
+    let!(:document_question) { create(:document_question, label: label, survey: survey) }
     context "editing the text" do
       it "works" do
         visit survey_path
@@ -143,8 +143,8 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   end
 
   context "Choice Questions" do
-    let(:category) { create(:category, name: "Availability") }
-    let!(:choice_question) { create(:choice_question, category: category, survey: survey) }
+    let(:label) { "Availability" }
+    let!(:choice_question) { create(:choice_question, label: label, survey: survey) }
     let!(:choice_question_option) { create(:choice_question_option, choice_question: choice_question, letter: "a", text: "Live-in") }
 
     context "adding a Choice" do

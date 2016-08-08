@@ -39,7 +39,6 @@ Rails.application.routes.draw do
       resources :candidates
       resources :candidate_features
       resources :surveys
-      resources :categories
       resources :inquiries
       resources :locations
       resources :media_instances

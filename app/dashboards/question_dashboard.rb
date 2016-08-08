@@ -9,7 +9,6 @@ class QuestionDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     survey: Field::BelongsTo,
-    category: Field::BelongsTo,
     inquiries: Field::HasMany,
     id: Field::Number,
     text: Field::String,
@@ -18,6 +17,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    label: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,16 +27,15 @@ class QuestionDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :survey,
-    :category,
     :inquiries,
     :id,
+    :text,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :survey,
-    :category,
     :inquiries,
     :id,
     :text,
@@ -45,6 +44,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :type,
     :created_at,
     :updated_at,
+    :label,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -52,12 +52,12 @@ class QuestionDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :survey,
-    :category,
     :inquiries,
     :text,
     :status,
     :priority,
     :type,
+    :label,
   ].freeze
 
   # Overwrite this method to customize how questions are displayed

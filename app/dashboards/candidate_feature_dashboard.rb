@@ -9,11 +9,11 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     candidate: Field::BelongsTo,
-    category: Field::BelongsTo,
     id: Field::Number,
     properties: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    label: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -23,20 +23,20 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :candidate,
-    :category,
     :id,
     :properties,
+    :created_at,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :candidate,
-    :category,
     :id,
     :properties,
     :created_at,
     :updated_at,
+    :label,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -44,8 +44,8 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :candidate,
-    :category,
     :properties,
+    :label,
   ].freeze
 
   # Overwrite this method to customize how candidate features are displayed

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :candidate_feature do
     candidate
-    category
+    sequence(:label) { |n| "label#{n}" }
 
     trait :address do
       properties {
