@@ -1,4 +1,9 @@
 class AddressQuestionsController < QuestionsController
+
+  def new
+    @question = authorize(new_question)
+  end
+
   def update
     if authorized_question.update(permitted_attributes(AddressQuestion))
       redirect_to survey_url, notice: "Nice! Question saved."
@@ -14,6 +19,6 @@ class AddressQuestionsController < QuestionsController
   end
 
   def new_question_params
-    super.merge(type: "AddressQuestion")
+    super.merge(type: "AddressQuestion", address_question_option_attributes: { distance: 10, latitude: current_organization.latitude, longitude: current_organization.longitude })
   end
 end

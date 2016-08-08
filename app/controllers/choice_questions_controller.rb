@@ -1,8 +1,6 @@
 class ChoiceQuestionsController < QuestionsController
   def new
     @question = authorize(new_question)
-    @question.choice_question_options.build(letter: "a")
-    @question.choice_question_options.build(letter: "b")
   end
 
   def update
@@ -20,6 +18,8 @@ class ChoiceQuestionsController < QuestionsController
   end
 
   def new_question_params
-    super.merge(type: "ChoiceQuestion")
+    super.merge(type: "ChoiceQuestion", choice_question_options_attributes: [
+      {letter: "a"}, {letter: "b"}
+    ])
   end
 end
