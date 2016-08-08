@@ -78,10 +78,8 @@ ActiveRecord::Schema.define(version: 20160808192243) do
     t.jsonb    "properties",   default: "{}", null: false
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.integer  "category_id",                 null: false
     t.string   "label"
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
-    t.index ["category_id"], name: "index_candidate_features_on_category_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
 
@@ -91,13 +89,6 @@ ActiveRecord::Schema.define(version: 20160808192243) do
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
   end
 
   create_table "choice_question_options", force: :cascade do |t|
@@ -182,16 +173,14 @@ ActiveRecord::Schema.define(version: 20160808192243) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.integer  "survey_id",               null: false
-    t.integer  "category_id",             null: false
-    t.string   "text",                    null: false
-    t.integer  "status",      default: 0, null: false
-    t.integer  "priority",                null: false
-    t.string   "type",                    null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "survey_id",              null: false
+    t.string   "text",                   null: false
+    t.integer  "status",     default: 0, null: false
+    t.integer  "priority",               null: false
+    t.string   "type",                   null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "label"
-    t.index ["category_id"], name: "index_questions_on_category_id", using: :btree
     t.index ["survey_id", "priority"], name: "index_questions_on_survey_id_and_priority", unique: true, where: "(status = 0)", using: :btree
     t.index ["survey_id"], name: "index_questions_on_survey_id", using: :btree
   end
@@ -286,7 +275,6 @@ ActiveRecord::Schema.define(version: 20160808192243) do
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
-  add_foreign_key "candidate_features", "categories"
   add_foreign_key "candidates", "users"
   add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
@@ -296,7 +284,6 @@ ActiveRecord::Schema.define(version: 20160808192243) do
   add_foreign_key "messages", "users"
   add_foreign_key "notifications", "messages"
   add_foreign_key "notifications", "templates"
-  add_foreign_key "questions", "categories"
   add_foreign_key "questions", "surveys"
   add_foreign_key "referrals", "candidates"
   add_foreign_key "referrals", "referrers"
