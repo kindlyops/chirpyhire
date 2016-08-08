@@ -20,7 +20,7 @@ class AnswerHandler
   private
 
   def update_or_create_candidate_feature
-    feature = candidate.candidate_features.find_or_initialize_by(category: category)
+    feature = candidate.candidate_features.find_or_initialize_by(label: label)
     feature.properties = extracted_properties
     feature.save
   end

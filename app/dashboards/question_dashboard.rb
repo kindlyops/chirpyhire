@@ -18,6 +18,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
+    label: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -45,6 +46,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :type,
     :created_at,
     :updated_at,
+    :label,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -58,6 +60,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :status,
     :priority,
     :type,
+    :label,
   ].freeze
 
   # Overwrite this method to customize how questions are displayed
