@@ -1,4 +1,4 @@
-class CreateNotifications < ActiveRecord::Migration
+class CreateNotifications < ActiveRecord::Migration[5.0]
   def change
     create_table :notifications do |t|
       t.belongs_to :template, null: false, index: true, foreign_key: true
