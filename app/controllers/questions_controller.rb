@@ -19,7 +19,9 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if authorized_question.update(permitted_question_attributes)
+    @question = authorized_question
+
+    if @question.update(permitted_question_attributes)
       redirect_to survey_url, notice: "Nice! Question saved."
     else
       render :edit
@@ -37,7 +39,13 @@ class QuestionsController < ApplicationController
   end
 
   def built_question_params
-    { priority: survey.questions.active.order(:priority).last.priority + 1 }
+    { priority: new_priority }
+  end
+
+  def new_priority
+    highest_priority_question = survey.questions.active.order(:priority).last
+    return 1 unless highest_priority_question.present?
+    highest_priority_question.priority + 1
   end
 
   def survey
