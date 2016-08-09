@@ -48,6 +48,6 @@ class ProfileAdvancer
   end
 
   def send_bad_fit_notification
-    last_question.template.perform(user)
+    last_question.bad_fit.perform(user)
   end
 end
