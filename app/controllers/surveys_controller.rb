@@ -2,7 +2,9 @@ class SurveysController < ApplicationController
   decorates_assigned :survey
 
   def update
-    if authorize(current_organization.survey).update(permitted_attributes(Survey))
+    @survey = authorize(current_organization.survey)
+
+    if @survey.update(permitted_attributes(Survey))
       redirect_to survey_url, notice: "Nice! Order saved."
     else
       render :edit
