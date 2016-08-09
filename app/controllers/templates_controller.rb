@@ -1,6 +1,4 @@
 class TemplatesController < ApplicationController
-  decorates_assigned :template
-
   def update
     @template = authorized_template
 
