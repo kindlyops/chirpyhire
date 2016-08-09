@@ -61,7 +61,6 @@ if Rails.env.development?
   end
 
   unless org.rules.present?
-    subscribe_rule = org.rules.create!(trigger: "subscribe", actionable: welcome.create_actionable)
     subscribe_rule_2 = org.rules.create!(trigger: "subscribe", actionable: org.survey.create_actionable)
     answer_rule = org.rules.create!(trigger: "answer", actionable: org.survey.actionable)
     screen_rule = org.rules.create!(trigger: "screen", actionable: thank_you.create_actionable)

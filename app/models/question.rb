@@ -13,12 +13,12 @@ class Question < ApplicationRecord
     order(:priority)
   end
 
-  def inquire(user)
-    message = user.receive_message(body: question)
+  def inquire(user, message_text: formatted_text)
+    message = user.receive_message(body: message_text)
     inquiries.create(message: message)
   end
 
-  def question
+  def formatted_text
     text
   end
 end

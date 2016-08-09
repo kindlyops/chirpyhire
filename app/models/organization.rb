@@ -14,12 +14,6 @@ class Organization < ApplicationRecord
   delegate :conversations, to: :messages
   delegate :latitude, :longitude, to: :location
 
-  def next_unasked_question_for(user)
-    questions = survey.questions
-    ids = user.inquiries.pluck(:question_id)
-    questions.where.not(id: ids).where(status: Question.statuses[:active]).order(:priority).first
-  end
-
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
 
