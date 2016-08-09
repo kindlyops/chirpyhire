@@ -26,12 +26,11 @@ class ChoiceQuestion < Question
 #{text}
 
 #{choice_options_list}
-
 Please reply with just the letter #{choice_options_letters_sentence}.
 template
   end
 
-  def question
+  def formatted_text
     choice_template
   end
 

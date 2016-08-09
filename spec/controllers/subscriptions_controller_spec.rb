@@ -16,12 +16,6 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "with an existing user" do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
-      it "creates a message" do
-        expect {
-          post :create, params: params
-        }.to change{user.messages.count}.by(1)
-      end
-
       context "with an active subscription" do
         before(:each) do
           user.update(subscribed: true)
@@ -86,12 +80,6 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect {
           post :create, params: params
         }.to change{User.where(phone_number: phone_number).count}.by(1)
-      end
-
-      it "creates a message" do
-        expect {
-          post :create, params: params
-        }.to change{Message.count}.by(1)
       end
 
       it "creates a candidate for the user" do

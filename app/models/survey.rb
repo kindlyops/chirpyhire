@@ -16,6 +16,11 @@ class Survey < ApplicationRecord
     ProfileAdvancer.call(user)
   end
 
+  def next_unasked_question_for(user)
+    ids = user.inquiries.pluck(:question_id)
+    questions.where.not(id: ids).where(status: Question.statuses[:active]).order(:priority).first
+  end
+
   SurveyValidator = Struct.new(:survey) do
     def validate
       active_questions = survey.questions.select { |q| q.active? }

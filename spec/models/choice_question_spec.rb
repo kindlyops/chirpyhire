@@ -54,7 +54,7 @@ RSpec.describe ChoiceQuestion, type: :model do
       end
     end
 
-    describe "#question" do
+    describe "#formatted_text" do
       let(:question) do
         <<-question
 What is your availability?
@@ -63,13 +63,12 @@ a) Live-in
 b) Hourly
 c) Both
 
-
 Please reply with just the letter a, b, or c.
     question
       end
 
       it "returns a question" do
-        expect(choice_question.question).to eq(question)
+        expect(choice_question.formatted_text).to eq(question)
       end
     end
   end
