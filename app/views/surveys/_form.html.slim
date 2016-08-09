@@ -8,11 +8,15 @@ hr
       ul
         - survey.errors.full_messages.each do |message|
           li = message
-  = f.fields_for :questions, survey.questions.by_priority do |q|
-    = q.hidden_field :id
-    .field
-      = q.label :priority, q.object.label
-      = q.text_field :priority, required: true
+  ul.survey--questions
+    = f.fields_for :questions, survey.questions.by_priority do |q|
+      li.survey--question
+        = q.hidden_field :id
+        .field
+          = q.label :priority do
+            span.survey--question-priority = "#{q.object.priority})"
+            span.survey--question-label = "#{q.object.label}"
+          = q.hidden_field :priority, required: true
   .actions
     = f.submit "Save"
 

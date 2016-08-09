@@ -10,6 +10,31 @@
     margin: 0 1em 0.5em 1em;
   }
 
+  .survey--questions {
+    padding-bottom: 0.5em;
+  }
+
+  .survey--question {
+    padding: 2em 0;
+  }
+
+  .survey--question-label, .survey--question-priority {
+    font-size: 1.25em;
+  }
+
+  .survey--question-label {
+    border: 1px solid $light-gray;
+    padding: 1.5em;
+    margin-left: 1em;
+    box-shadow: 1px 1px $light-gray;
+    cursor: move;
+    border-radius: 3px;
+
+    &:hover, &:focus {
+      background-color: #f3f3f3;
+    }
+  }
+
   .settings {
     a {
       flex-direction: column;

@@ -3,7 +3,7 @@
     h1 Recruiting Survey
     .settings
       = link_to "Add Question", new_question_path
-      = link_to "Change Order", edit_survey_path
+      = link_to "Edit Order", edit_survey_path
   .cards
     = render partial: "surveys/question", collection: @survey.questions.by_priority
   .attribution
