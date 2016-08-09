@@ -11,6 +11,7 @@
 // about supported directives.
 //
 
+//= require Sortable.min
 //= require jquery2
 //= require jquery_ujs
 //= require turbolinks
