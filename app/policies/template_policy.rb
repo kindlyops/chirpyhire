@@ -4,7 +4,7 @@ class TemplatePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:body, :name]
+    [:body]
   end
 
   class Scope < ApplicationPolicy::Scope

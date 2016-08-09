@@ -7,4 +7,4 @@
       = link_to edit_template_path(template), id: "edit-template" do
           i.fa.fa-pencil
   .card-copy
-    p = template.body
+    p = template.body(with_postlude: true)

@@ -6,7 +6,6 @@ class SubscriptionsController < SmsController
       ApplicationRecord.transaction do
         sender.update(subscribed: true)
         ensure_candidate
-        sender.receive_message(body: subscription_notice)
         AutomatonJob.perform_later(sender, "subscribe")
       end
     end
@@ -23,10 +22,6 @@ class SubscriptionsController < SmsController
   end
 
   private
-
-  def subscription_notice
-    "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
-  end
 
   def already_subscribed
     "You are already subscribed. Thanks for your interest in #{organization.name}."
