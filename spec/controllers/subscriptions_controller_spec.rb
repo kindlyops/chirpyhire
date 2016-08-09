@@ -21,6 +21,12 @@ RSpec.describe SubscriptionsController, type: :controller do
           user.update(subscribed: true)
         end
 
+        it "creates a message" do
+          expect {
+            post :create, params: params
+          }.to change{user.messages.count}.by(1)
+        end
+
         it "lets the user know they were already subscribed" do
           post :create, params: params
           expect(FakeMessaging.messages.last.body).to include("You are already subscribed.")
@@ -80,6 +86,12 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect {
           post :create, params: params
         }.to change{User.where(phone_number: phone_number).count}.by(1)
+      end
+
+      it "creates a message" do
+        expect {
+          post :create, params: params
+        }.to change{Message.count}.by(1)
       end
 
       it "creates a candidate for the user" do
