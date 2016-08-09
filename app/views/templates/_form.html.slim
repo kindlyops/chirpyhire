@@ -1,0 +1,18 @@
+h1
+  ' Edit
+  = template.name.titlecase
+p = template.info
+hr
+= form_for template.object do |f|
+  - if template.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(template.errors.count, "error")} prohibited this Template from being saved:"
+      ul
+        - template.errors.full_messages.each do |message|
+          li = message
+  .field
+    = f.label :body, "Message"
+    = f.text_area :body, required: true, autofocus: true, rows: 5
+  .actions
+    = f.submit "Save"
+

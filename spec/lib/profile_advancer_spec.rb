@@ -4,7 +4,7 @@ RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
   let(:user) { create(:user, :with_candidate) }
-  let!(:survey) { create(:survey, organization: candidate.organization) }
+  let!(:survey) { create(:survey, organization: user.organization) }
   let(:candidate) { user.candidate }
 
   describe ".call" do

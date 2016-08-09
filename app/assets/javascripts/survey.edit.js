@@ -9,7 +9,7 @@ $(document).on("turbolinks:load", function() {
         var $questions = $(e.to);
         _.each($questions.find('.survey--question'), function(question, index) {
           var $question = $(question);
-          $question.find(".survey--question-priority").text(index + 1 + ")");
+          $question.find(".survey--question-priority").text(index + 1 + ".");
           $question.find(".survey--question-hidden-priority").val(index + 1);
         });
       }

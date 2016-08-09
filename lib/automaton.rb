@@ -18,7 +18,7 @@ class Automaton
   attr_reader :user, :trigger
 
   def rules
-    organization.rules.where(trigger: trigger)
+    organization.rules.where(trigger: trigger).order(:created_at)
   end
 
   def organization

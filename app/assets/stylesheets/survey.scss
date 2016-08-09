@@ -10,22 +10,19 @@
     margin: 0 0 0.5em 0;
 
     @include media ($horizontal-bar-mode) {
-      margin: 0 0 1em 0;
+      margin: 0 1em 1em 1em;
     }
   }
 
   .card {
+    .card-copy {
+      white-space: pre-wrap;
+    }
+
     margin: 0 0 1.5em 0;
     cursor: default;
     @include media ($horizontal-bar-mode) {
       margin: 0 1em 1.5em 1em;
-
-      &:first-child {
-        margin: 0 1em 1.5em 0;
-      }
-      &:last-child {
-        margin: 0 0 1.5em 1em;
-      }
     }
   }
 
@@ -80,10 +77,6 @@
     #map {
       width: 100%;
       height: 46vh;
-    }
-
-    .choice-template {
-      white-space: pre-wrap;
     }
   }
 }
