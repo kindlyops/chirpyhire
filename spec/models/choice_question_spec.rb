@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ChoiceQuestion, type: :model do
+  it { should validate_presence_of(:choice_question_options) }
 
   describe ".extract" do
     let(:message) { create(:message, body: "B)") }
     let(:question) { create(:choice_question) }
-    let!(:option_a) { create(:choice_question_option, choice_question: question, letter: "a") }
-    let!(:option_b) { create(:choice_question_option, choice_question: question, letter: "b", text: "original B") }
+    let!(:option_a) { question.choice_question_options.find_or_create_by(letter: "a", text: "original A") }
+    let!(:option_b) { question.choice_question_options.find_or_create_by(letter: "b", text: "original B") }
     let!(:inquiry) { create(:inquiry, question: question) }
 
     context "in which the option selected at the time the inquiry has been changed" do
@@ -36,10 +37,12 @@ RSpec.describe ChoiceQuestion, type: :model do
     let!(:message) { create(:message, body: "A) ") }
     let(:survey) { create(:survey) }
 
-    let!(:choice_question) { create(:choice_question, text: "What is your availability?", survey: survey) }
-    let!(:options) do
+    let!(:choice_question) { create(:choice_question, text: "What is your availability?", survey: survey,
+      choice_question_options_attributes: [
+         {letter: "a", text: "Live-in"}
+        ]) }
+    let!(:additional_options) do
       [
-        choice_question.choice_question_options.create(letter: "a", text: "Live-in"),
         choice_question.choice_question_options.create(letter: "b", text: "Hourly"),
         choice_question.choice_question_options.create(letter: "c", text: "Both")
       ]
@@ -47,7 +50,7 @@ RSpec.describe ChoiceQuestion, type: :model do
 
     describe "#in_memory_sorted_options" do
       it "sorts the options by letter" do
-        expect(choice_question.in_memory_sorted_options.map(&:letter)).to eq(%w(a b c))
+        expect(choice_question.in_memory_sorted_options.map(&:letter)).to eq(["a", "b", "c"])
       end
     end
 

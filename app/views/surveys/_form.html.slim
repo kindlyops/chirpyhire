@@ -1,0 +1,22 @@
+h1 Edit Survey
+p Change the order questions are asked.
+hr
+= form_for survey do |f|
+  - if survey.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(survey.errors.count, "error")} prohibited this Survey from being saved:"
+      ul
+        - survey.errors.full_messages.each do |message|
+          li = message
+  ul.survey--questions
+    = f.fields_for :questions, survey.questions.by_priority do |q|
+      li.survey--question
+        = q.hidden_field :id
+        .field
+          = q.label :priority do
+            span.survey--question-priority = "#{q.object.priority})"
+            span.survey--question-label = "#{q.object.label}"
+          = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
+  .actions
+    = f.submit "Save"
+

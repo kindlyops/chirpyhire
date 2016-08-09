@@ -1,6 +1,45 @@
 .question {
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
   @include outer-container;
   padding: 1em;
+
+  .question-types {
+    .card {
+      margin: 0 0 1.5em 0;
+      cursor: default;
+      @include media ($horizontal-bar-mode) {
+        margin: 0 1em 1.5em 1em;
+
+        &:first-child {
+          margin: 0 1em 1.5em 0;
+        }
+        &:last-child {
+          margin: 0 0 1.5em 1em;
+        }
+      }
+    }
+
+    .card-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .card-copy {
+      display: flex;
+      flex-direction: column;
+
+      a {
+        text-align: center;
+      }
+    }
+
+    i {
+      font-size: 10em;
+    }
+  }
 
   .question-status {
     float: right;

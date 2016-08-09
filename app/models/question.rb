@@ -4,9 +4,14 @@ class Question < ApplicationRecord
   enum status: [:active, :inactive]
 
   delegate :template, to: :survey
+  validates_presence_of :text, :label, :status, :priority
 
   TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion)
   validates_inclusion_of :type, in: TYPES
+
+  def self.by_priority
+    order(:priority)
+  end
 
   def inquire(user)
     message = user.receive_message(body: question)

@@ -1,7 +1,67 @@
 .survey {
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
   @include outer-container;
-  padding: 1em 0;
+  padding: 1em;
 
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 0.5em 0;
+
+    @include media ($horizontal-bar-mode) {
+      margin: 0 0 1em 0;
+    }
+  }
+
+  .card {
+    margin: 0 0 1.5em 0;
+    cursor: default;
+    @include media ($horizontal-bar-mode) {
+      margin: 0 1em 1.5em 1em;
+
+      &:first-child {
+        margin: 0 1em 1.5em 0;
+      }
+      &:last-child {
+        margin: 0 0 1.5em 1em;
+      }
+    }
+  }
+
+  .survey--questions {
+    padding-bottom: 0.5em;
+  }
+
+  .survey--question {
+    padding: 2em 0;
+  }
+
+  .survey--question-label, .survey--question-priority {
+    font-size: 1.25em;
+  }
+
+  .survey--question-label {
+    border: 1px solid $light-gray;
+    padding: 1.5em;
+    margin-left: 1em;
+    box-shadow: 1px 1px $light-gray;
+    cursor: move;
+    border-radius: 3px;
+
+    &:hover, &:focus {
+      background-color: #f3f3f3;
+    }
+  }
+
+  .settings {
+    float: right;
+    a {
+      font-size: 1.5em;
+      padding: 0.65em 0.85em;
+      margin: 0 0.1em;
+    }
+  }
   .attribution {
     padding: 0 1em;
   }
@@ -25,9 +85,5 @@
     .choice-template {
       white-space: pre-wrap;
     }
-  }
-
-  h1, h3 {
-    margin: 0 1em 0.75em;
   }
 }
