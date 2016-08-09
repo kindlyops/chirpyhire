@@ -2,8 +2,10 @@
   .header
     h1 Recruiting Survey
     .settings
-      = link_to "Add Question", new_question_path
-      = link_to "Edit Order", edit_survey_path
+      = link_to edit_survey_path, title: "Change Question Order", class: "button", id: "edit-survey" do
+        i.fa.fa-sort
+      = link_to new_question_path, title: "Add Question", class: "button", id: "add-question" do
+        i.fa.fa-plus
   .cards
     = render partial: "surveys/question", collection: @survey.questions.by_priority
   .attribution

@@ -8,6 +8,10 @@
     display: flex;
     justify-content: space-between;
     margin: 0 0 0.5em 0;
+
+    @include media ($horizontal-bar-mode) {
+      margin: 0 0 1em 0;
+    }
   }
 
   .card {
@@ -51,14 +55,11 @@
   }
 
   .settings {
+    float: right;
     a {
-      flex-direction: column;
-      display: flex;
-      padding: 0 0.25em;
-
-      @include media ($horizontal-bar-mode) {
-        display: inline;
-      }
+      font-size: 1.5em;
+      padding: 0.65em 0.85em;
+      margin: 0 0.1em;
     }
   }
   .attribution {

@@ -49,7 +49,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       context "adding a question" do
         it "works" do
           visit survey_path
-          click_link("Add Question")
+          find("#add-question", match: :first).trigger('click')
           within(find("#address-type")) do
             click_link("Add Question")
           end
@@ -138,7 +138,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "adding a question" do
       it "works" do
         visit survey_path
-        click_link("Add Question")
+        find("#add-question", match: :first).trigger('click')
         within(find("#image-type")) do
           click_link("Add Question")
         end
@@ -185,7 +185,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "adding a question" do
       it "works" do
         visit survey_path
-        click_link("Add Question")
+        find("#add-question", match: :first).trigger('click')
         within(find("#choice-type")) do
           click_link("Add Question")
         end
