@@ -10,7 +10,7 @@
     = render partial: "surveys/template", locals: { id: "welcome", number: 1, template: @survey.welcome }
     = render partial: "surveys/question", collection: @survey.questions.by_priority
     = render partial: "surveys/template", locals: { id: "thank-you", number: @survey.questions.count + 2, template: @survey.thank_you }
-    = render partial: "surveys/template", locals: { id: "bad-fit", number: @survey.questions.count + 3, template: @survey.bad_fit }
+    = render partial: "surveys/template", locals: { id: "bad-fit", number: nil, template: @survey.bad_fit }
   .attribution
     a href='https://www.mapbox.com/map-feedback/' © Mapbox
     '
