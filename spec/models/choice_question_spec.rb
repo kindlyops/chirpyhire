@@ -5,8 +5,8 @@ RSpec.describe ChoiceQuestion, type: :model do
 
   describe ".extract" do
     let(:message) { create(:message, body: "B)") }
-    let(:question) { create(:choice_question) }
-    let!(:option_a) { question.choice_question_options.find_or_create_by(letter: "a", text: "original A") }
+    let(:question) { create(:choice_question, choice_question_options_attributes: [{letter: "a", text: "original A"}]) }
+    let!(:option_a) { question.choice_question_options.first }
     let!(:option_b) { question.choice_question_options.find_or_create_by(letter: "b", text: "original B") }
     let!(:inquiry) { create(:inquiry, question: question) }
 

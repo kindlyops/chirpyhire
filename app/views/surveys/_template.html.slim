@@ -1,6 +1,7 @@
 .card.survey-question id==id
   .card-header
-    = "#{number}. "
+    - if number.present?
+      = "#{number}. "
     = template.name
     .submenu
       = link_to edit_template_path(template), id: "edit-template" do
