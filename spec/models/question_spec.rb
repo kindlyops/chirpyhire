@@ -35,7 +35,6 @@ a) Live-in
 b) Hourly
 c) Both
 
-
 Please reply with just the letter a, b, or c.
     question
       end
@@ -52,7 +51,7 @@ Please reply with just the letter a, b, or c.
       let(:text) { "Please send a photo of your TB Test" }
       let(:question) { create(:question, text: text, survey: survey) }
       it "is the text of the question" do
-        expect(question.question).to eq(text)
+        expect(question.formatted_text).to eq(text)
       end
     end
   end

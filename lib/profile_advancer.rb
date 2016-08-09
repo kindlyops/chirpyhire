@@ -31,7 +31,7 @@ class ProfileAdvancer
   delegate :survey, to: :organization
 
   def initial_question?
-    user.inquiries.count.zero?
+    survey.questions.present? && user.inquiries.count.zero?
   end
 
   def answer_rejected?
