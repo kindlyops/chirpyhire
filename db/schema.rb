@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808211012) do
+ActiveRecord::Schema.define(version: 20160809172321) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,9 @@ ActiveRecord::Schema.define(version: 20160808211012) do
     t.integer  "template_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "welcome_id"
+    t.integer  "thank_you_id"
+    t.integer  "bad_fit_id"
     t.index ["actionable_id"], name: "index_surveys_on_actionable_id", using: :btree
     t.index ["organization_id"], name: "index_surveys_on_organization_id", unique: true, using: :btree
     t.index ["template_id"], name: "index_surveys_on_template_id", using: :btree
