@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:message) { create(:message, user: user) }
-  let(:survey) { user.organization.create_survey }
+  let(:survey) { create(:survey, organization: user.organization) }
   let(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
   describe "#create" do

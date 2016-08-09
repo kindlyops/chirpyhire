@@ -14,11 +14,10 @@ RSpec.describe Registrar do
         }.to change{organization.survey.present?}.from(false).to(true)
       end
 
-      it "creates a template for the candidate persona" do
+      it "creates a welcome, bad fit, thank you template for the survey" do
         expect {
           registrar.register
-        }.to change{organization.templates.count}.by(1)
-        expect(organization.survey.template.id).to eq(organization.templates.first.id)
+        }.to change{Template.count}.by(3)
       end
     end
 
@@ -33,10 +32,10 @@ RSpec.describe Registrar do
         }.not_to change{organization.survey.present?}
       end
 
-      it "does not create a template for the candidate persona" do
+      it "does not create a welcome, bad fit, thank you template for the survey" do
         expect {
           registrar.register
-        }.not_to change{organization.templates.count}
+        }.not_to change{Template.count}
       end
     end
   end

@@ -10,7 +10,7 @@ RSpec.describe SurveysController, type: :controller do
   end
 
   let(:valid_attributes) {
-    attributes_for(:survey).merge(organization: organization)
+    attributes_for(:survey).merge(organization: organization, bad_fit: create(:template), welcome: create(:template), thank_you: create(:template))
   }
   let!(:survey) { Survey.create! valid_attributes }
 

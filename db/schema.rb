@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160809172321) do
+ActiveRecord::Schema.define(version: 20160809173848) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,15 +214,16 @@ ActiveRecord::Schema.define(version: 20160809172321) do
   create_table "surveys", force: :cascade do |t|
     t.integer  "organization_id", null: false
     t.integer  "actionable_id"
-    t.integer  "template_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "welcome_id"
-    t.integer  "thank_you_id"
-    t.integer  "bad_fit_id"
+    t.integer  "welcome_id",      null: false
+    t.integer  "thank_you_id",    null: false
+    t.integer  "bad_fit_id",      null: false
     t.index ["actionable_id"], name: "index_surveys_on_actionable_id", using: :btree
+    t.index ["bad_fit_id"], name: "index_surveys_on_bad_fit_id", using: :btree
     t.index ["organization_id"], name: "index_surveys_on_organization_id", unique: true, using: :btree
-    t.index ["template_id"], name: "index_surveys_on_template_id", using: :btree
+    t.index ["thank_you_id"], name: "index_surveys_on_thank_you_id", using: :btree
+    t.index ["welcome_id"], name: "index_surveys_on_welcome_id", using: :btree
   end
 
   create_table "templates", force: :cascade do |t|
@@ -294,7 +295,9 @@ ActiveRecord::Schema.define(version: 20160809172321) do
   add_foreign_key "rules", "organizations"
   add_foreign_key "surveys", "actionables"
   add_foreign_key "surveys", "organizations"
-  add_foreign_key "surveys", "templates"
+  add_foreign_key "surveys", "templates", column: "bad_fit_id"
+  add_foreign_key "surveys", "templates", column: "thank_you_id"
+  add_foreign_key "surveys", "templates", column: "welcome_id"
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"

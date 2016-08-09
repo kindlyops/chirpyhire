@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ChoiceQuestionsController, type: :controller do
   let(:account) { create(:account) }
-  let!(:survey) { account.organization.create_survey }
+  let!(:survey) { create(:survey, organization: account.organization) }
 
   before(:each) do
     sign_in(account)
