@@ -4,7 +4,7 @@ FactoryGirl.define do
 
     before(:create) do |inquiry|
       unless inquiry.question.present?
-        inquiry.question = create(:question, survey: inquiry.organization.create_survey)
+        inquiry.question = create(:question, survey: create(:survey, organization: inquiry.organization))
       end
     end
 

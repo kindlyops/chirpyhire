@@ -8,7 +8,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     login_as(account, scope: :account)
   end
 
-  let(:survey) { account.organization.create_survey }
+  let(:survey) { create(:survey, organization: account.organization) }
 
   context "Address Questions" do
     let(:label) { "Address" }

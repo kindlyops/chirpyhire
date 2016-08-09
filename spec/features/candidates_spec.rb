@@ -21,7 +21,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
       end
 
       context "with candidate features" do
-        let(:survey) { account.organization.create_survey }
+        let(:survey) { create(:survey, organization: account.organization) }
         context "with address persona feature" do
           let(:label) { "Address Category" }
           let!(:question) { create(:address_question, label: label, survey: survey) }

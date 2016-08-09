@@ -3,7 +3,7 @@ class Question < ApplicationRecord
   has_many :inquiries
   enum status: [:active, :inactive]
 
-  delegate :template, to: :survey
+  delegate :bad_fit, to: :survey
   validates_presence_of :text, :label, :status, :priority
 
   TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion)

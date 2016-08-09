@@ -39,26 +39,21 @@ if Rails.env.development?
   Referrer.find_or_create_by(user: user)
   puts "Created Referrer"
 
-  unless org.templates.present?
-    welcome = org.templates.create!(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-    thank_you = org.templates.create!(name: "Thank You", body: "Thanks for your interest!")
-    puts "Created Templates"
-  end
-
   unless org.survey.present?
-    survey = org.create_survey
-    survey.create_template(
-      name: "Bad Fit - Default",
-      organization: org,
-      body: "Thank you very much for your interest. Unfortunately, we don't "\
+    bad_fit = Template.create(name: "Bad Fit", body: "Thank you very much for your interest. Unfortunately, we don't "\
       "have a good fit for you at this time. If anything changes we will let you know.")
+    welcome = Template.create(name: "Welcome", body: "Hello this is {{organization.name}}. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+    thank_you = Template.create(name: "Thank You", body: "Thanks for your interest!")
+    survey = org.create_survey(bad_fit: bad_fit, welcome: welcome, thank_you: thank_you)
   end
 
   unless org.survey.questions.present?
     address_question = org.survey.questions.create!(priority: 1, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
     address_question.create_address_question_option(distance: 20, latitude: 33.929966, longitude: -84.373931 )
-    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?")
-    choice_question.choice_question_options.create(text: "Live-in", letter: "a")
+    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?",
+      choice_question_options_attributes: [
+        {text: "Live-in", letter: "a"}
+        ])
     choice_question.choice_question_options.create(text: "Hourly", letter: "b")
     choice_question.choice_question_options.create(text: "Both", letter: "c")
     org.survey.questions.create!(priority: 3, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")

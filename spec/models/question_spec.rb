@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Question, type: :model do
 
   let(:candidate) { create(:candidate) }
-  let(:survey) { candidate.organization.create_survey }
+  let(:survey) { create(:survey, organization: candidate.organization) }
   let(:question) { create(:question, survey: survey) }
 
   describe "#inquire" do

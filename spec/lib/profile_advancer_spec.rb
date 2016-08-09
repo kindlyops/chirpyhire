@@ -4,7 +4,7 @@ RSpec.describe ProfileAdvancer do
   include RSpec::Rails::Matchers
 
   let(:user) { create(:user, :with_candidate) }
-  let!(:survey) { candidate.organization.create_survey }
+  let!(:survey) { create(:survey, organization: user.organization) }
   let(:candidate) { user.candidate }
 
   describe ".call" do
@@ -76,12 +76,6 @@ RSpec.describe ProfileAdvancer do
           let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
 
           context "with a template for the candidate persona" do
-            before(:each) do
-              survey.create_template(organization: candidate.organization,
-                    name: "Bad Fit Message - Default",
-                    body: "Thank you very much for your interest. Unfortunately, we don't have a good fit for you at this time. If anything changes we will let you know.")
-            end
-
             it "does not create an inquiry of the next candidate feature" do
               expect {
                 ProfileAdvancer.call(user)
