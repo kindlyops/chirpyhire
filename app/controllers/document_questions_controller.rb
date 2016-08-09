@@ -1,5 +1,4 @@
 class DocumentQuestionsController < QuestionsController
-
   private
 
   def permitted_question_attributes

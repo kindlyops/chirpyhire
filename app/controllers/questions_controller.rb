@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  decorates_assigned :question
+
   def new
     @question = authorize(built_question)
   end
