@@ -16,7 +16,7 @@ hr
           = q.label :priority do
             span.survey--question-priority = "#{q.object.priority})"
             span.survey--question-label = "#{q.object.label}"
-          = q.hidden_field :priority, required: true
+          = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
   .actions
     = f.submit "Save"
 
