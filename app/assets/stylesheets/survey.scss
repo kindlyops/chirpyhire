@@ -7,7 +7,22 @@
   .header {
     display: flex;
     justify-content: space-between;
-    margin: 0 1em 0.5em 1em;
+    margin: 0 0 0.5em 0;
+  }
+
+  .card {
+    margin: 0 0 1.5em 0;
+    cursor: default;
+    @include media ($horizontal-bar-mode) {
+      margin: 0 1em 1.5em 1em;
+
+      &:first-child {
+        margin: 0 1em 1.5em 0;
+      }
+      &:last-child {
+        margin: 0 0 1.5em 1em;
+      }
+    }
   }
 
   .survey--questions {
