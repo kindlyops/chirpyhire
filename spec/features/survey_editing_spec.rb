@@ -6,9 +6,48 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
   before(:each) do
     login_as(account, scope: :account)
+    Registrar.new(account).register
   end
 
-  let(:survey) { create(:survey, organization: account.organization) }
+  let!(:survey) { account.organization.survey }
+
+  context "Templates" do
+    context "editing the Welcome template" do
+      it "works" do
+        visit survey_path
+        find("#welcome #edit-template", match: :first).trigger('click')
+
+        fill_in "template_body", with: "New welcome body"
+        click_button("Save")
+        expect(page).to have_text("Nice! Template saved.")
+        expect(page).to have_text("New welcome body")
+      end
+    end
+
+    context "editing the Bad Fit template" do
+      it "works" do
+        visit survey_path
+        find("#bad-fit #edit-template", match: :first).trigger('click')
+
+        fill_in "template_body", with: "New bad fit body"
+        click_button("Save")
+        expect(page).to have_text("Nice! Template saved.")
+        expect(page).to have_text("New bad fit body")
+      end
+    end
+
+    context "editing the Thank You template" do
+      it "works" do
+        visit survey_path
+        find("#thank-you #edit-template", match: :first).trigger('click')
+
+        fill_in "template_body", with: "New thank you body"
+        click_button("Save")
+        expect(page).to have_text("Nice! Template saved.")
+        expect(page).to have_text("New thank you body")
+      end
+    end
+  end
 
   context "Address Questions" do
     let(:label) { "Address" }
@@ -17,7 +56,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "editing the text" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         fill_in "address_question_text", with: "New question text"
         click_button("Save")
@@ -29,7 +68,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "changing the status" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         find("#address_question_status", visible: :all).trigger('click')
         click_button("Save")
@@ -154,7 +193,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "editing the text" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         fill_in "document_question_text", with: "New question text"
         click_button("Save")
@@ -166,7 +205,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "changing the status" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         find("#document_question_status", visible: :all).trigger('click')
         click_button("Save")
@@ -206,7 +245,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "adding a Choice" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
         click_link("Add choice")
         choice = all('.nested-fields').last
 
@@ -223,7 +262,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
       let!(:choice_question_option_2) { create(:choice_question_option, choice_question: choice_question, letter: "b", text: "Both") }
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
         choice = find(".nested-fields", match: :first)
         choice_text = choice.find('.field input').value
         within(choice) do
@@ -238,7 +277,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "editing the text" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         fill_in "choice_question_text", with: "New question text"
         click_button("Save")
@@ -251,7 +290,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "changing the status" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
 
         find("#choice_question_status", visible: :all).trigger('click')
         click_button("Save")
@@ -262,7 +301,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "editing a Choice" do
       it "works" do
         visit survey_path
-        click_link("edit-question")
+        find("#edit-question", match: :first).trigger('click')
         choice = find(".nested-fields", match: :first)
         within(choice) do
           fill_in "a)", with: "New Choice"

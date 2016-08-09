@@ -224,12 +224,16 @@ ActiveRecord::Schema.define(version: 20160809160727) do
   end
 
   create_table "templates", force: :cascade do |t|
-    t.string   "name",          null: false
-    t.string   "body",          null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "name",            null: false
+    t.string   "body",            null: false
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "actionable_id"
     t.index ["actionable_id"], name: "index_templates_on_actionable_id", using: :btree
+    t.index ["body", "organization_id"], name: "index_templates_on_body_and_organization_id", unique: true, using: :btree
+    t.index ["name", "organization_id"], name: "index_templates_on_name_and_organization_id", unique: true, using: :btree
+    t.index ["organization_id"], name: "index_templates_on_organization_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -289,5 +293,6 @@ ActiveRecord::Schema.define(version: 20160809160727) do
   add_foreign_key "surveys", "actionables"
   add_foreign_key "surveys", "organizations"
   add_foreign_key "templates", "actionables"
+  add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
 end
