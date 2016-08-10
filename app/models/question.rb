@@ -13,6 +13,10 @@ class Question < ApplicationRecord
     order(:priority)
   end
 
+  def rejects?(candidate)
+    false
+  end
+
   def inquire(user, message_text: formatted_text)
     message = user.receive_message(body: message_text)
     inquiries.create(message: message)

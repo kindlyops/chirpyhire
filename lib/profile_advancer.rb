@@ -13,7 +13,7 @@ class ProfileAdvancer
 
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)
-    elsif answer_rejected?
+    elsif last_question.rejects?(candidate)
       candidate.update(status: "Bad Fit")
       send_bad_fit_notification
     elsif next_unasked_question.present?
@@ -32,10 +32,6 @@ class ProfileAdvancer
 
   def initial_question?
     survey.questions.present? && user.inquiries.count.zero?
-  end
-
-  def answer_rejected?
-    AnswerRejector.new(candidate, last_question).call
   end
 
   def last_question

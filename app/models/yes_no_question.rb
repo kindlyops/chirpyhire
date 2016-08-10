@@ -9,8 +9,20 @@ class YesNoQuestion < Question
     answer = message.body.strip.downcase
     yes_no_option = /\A(yes|no|y|n)\z/.match(answer)[1]
 
-    properties[:yes_no_option] = yes_no_option
+    options = {
+      y: "Yes",
+      yes: "Yes",
+      no: "No",
+      n: "No"
+    }
+
+    properties[:yes_no_option] = options[yes_no_option.to_sym]
     properties
+  end
+
+  def rejects?(candidate)
+    feature = candidate.candidate_features.find_by(label: label)
+    feature[:properties][:yes_no_option] == "No"
   end
 
   def formatted_text
