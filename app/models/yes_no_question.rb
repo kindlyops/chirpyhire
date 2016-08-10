@@ -1,4 +1,5 @@
 class YesNoQuestion < Question
+  REGEXP = /\A(yes|no|y|n)\z/
   def self.extract(message, inquiry)
     question = inquiry.question
 
@@ -6,7 +7,7 @@ class YesNoQuestion < Question
     properties[:child_class] = "yes_no"
 
     answer = message.body.strip.downcase
-    yes_no_option = /\A(yes|no|y|n)\z/.match(answer)[1]
+    yes_no_option = YesNoQuestion::REGEXP.match(answer)[1]
 
     options = {
       y: "Yes",

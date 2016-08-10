@@ -44,7 +44,7 @@ class Message < ApplicationRecord
 
   def has_yes_or_no?
     return false unless body.present?
-    /\A(yes|no|y|n)\z/ === body.strip.downcase
+    YesNoQuestion::REGEXP === body.strip.downcase
   end
 
   def has_choice?(choices)
