@@ -49,6 +49,27 @@ RSpec.describe ProfileAdvancer do
         user.update(subscribed: true)
       end
 
+      context "initial question" do
+        let!(:question) { create(:question, survey: survey) }
+        let!(:welcome) { survey.welcome }
+        let(:organization) { user.organization }
+
+        let(:formatted_text) { question.becomes(question.type.constantize).formatted_text }
+
+        let(:subscription_notice) do
+          "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
+        end
+
+        let(:initial_message) do
+          "#{welcome.body}\n\n#{subscription_notice}\n\n#{formatted_text}"
+        end
+
+        it "appends the welcome, unsubscribed notification, and the question together" do
+          ProfileAdvancer.call(user)
+          expect(user.messages.last.body).to eq(initial_message)
+        end
+      end
+
       context "with an undetermined or stale profile feature" do
         before(:each) do
           create(:question, survey: survey)
@@ -67,15 +88,18 @@ RSpec.describe ProfileAdvancer do
         end
 
         context "and the last answer was unacceptable" do
-          before(:each) do
-            allow_any_instance_of(ProfileAdvancer).to receive(:answer_rejected?).and_return(true)
-          end
+          let!(:prior_question) { create(:document_question, survey: survey) }
+          let!(:prior_inquiry) { create(:inquiry, question: prior_question, message: create(:message, user: user)) }
           let(:question) { create(:document_question, survey: survey) }
           let(:inquiry) { create(:inquiry, question: question) }
           let(:message) { create(:message, :with_image, user: user) }
           let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
 
-          context "with a template for the candidate persona" do
+          before(:each) do
+            allow_any_instance_of(Question).to receive(:rejects?).and_return(true)
+          end
+
+          context "with a template for the survey" do
             it "does not create an inquiry of the next candidate feature" do
               expect {
                 ProfileAdvancer.call(user)

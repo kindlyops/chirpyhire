@@ -17,6 +17,11 @@ class AddressQuestion < Question
     }
   end
 
+  def rejects?(candidate)
+    return false unless has_geofence?
+    Geocoder::Calculations.distance_between(candidate.address.coordinates, coordinates) > distance
+  end
+
   def has_geofence?
     address_question_option.present?
   end

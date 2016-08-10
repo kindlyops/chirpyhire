@@ -214,6 +214,50 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     end
   end
 
+  context "Yes No Questions" do
+    let(:label) { "CNA License" }
+    let!(:yes_no_question) { create(:yes_no_question, label: label, survey: survey) }
+
+    context "adding a question" do
+      it "works" do
+        visit survey_path
+        find("#add-question", match: :first).trigger('click')
+        within(find("#yes-no-type")) do
+          click_link("Add Question")
+        end
+        fill_in "yes_no_question_label", with: "Fancy Yes No Label"
+        fill_in "yes_no_question_text", with: "Fancy Yes No Text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("Fancy Yes No Text")
+        expect(page).to have_text("Fancy Yes No Label")
+      end
+    end
+
+    context "editing the text" do
+      it "works" do
+        visit survey_path
+        find("#edit-question", match: :first).trigger('click')
+
+        fill_in "yes_no_question_text", with: "New question text"
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+        expect(page).to have_text("New question text")
+      end
+    end
+
+    context "changing the status" do
+      it "works" do
+        visit survey_path
+        find("#edit-question", match: :first).trigger('click')
+
+        find("#yes_no_question_status", visible: :all).trigger('click')
+        click_button("Save")
+        expect(page).to have_text("Nice! Question saved.")
+      end
+    end
+  end
+
   context "Choice Questions" do
     let(:label) { "Availability" }
     let!(:choice_question) { create(:choice_question, label: label, survey: survey, choice_question_options_attributes: [

@@ -3,7 +3,7 @@ FactoryGirl.define do
     survey
     sequence(:priority)
     sequence(:label) { |n| "label#{n}" }
-    type { %w(AddressQuestion ChoiceQuestion DocumentQuestion).sample }
+    type { %w(AddressQuestion ChoiceQuestion DocumentQuestion YesNoQuestion).sample }
     text { Faker::Lorem.sentence }
 
     trait :document do

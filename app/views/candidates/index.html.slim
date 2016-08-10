@@ -22,6 +22,7 @@
             = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
         .card-copy
           = render partial: "candidates/address", locals: { candidate: candidate }
+          = render partial: "candidates/yes_no", collection: candidate.yes_nos
           = render partial: "candidates/choice", collection: candidate.choices
           = render partial: "candidates/document", collection: candidate.documents
           .card-call-to-actions
