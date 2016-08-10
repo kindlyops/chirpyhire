@@ -1,7 +1,6 @@
 class YesNoQuestion < Question
   def self.extract(message, inquiry)
     question = inquiry.question
-    yes_no_question = question.becomes(question.type.constantize)
 
     properties = {}
     properties[:child_class] = "yes_no"
