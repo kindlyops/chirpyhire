@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resource :survey, only: [:show, :edit, :update]
 
+  resources :yes_no_questions, except: :destroy
   resources :address_questions, except: :destroy
   resources :document_questions, except: :destroy
   resources :choice_questions, except: :destroy

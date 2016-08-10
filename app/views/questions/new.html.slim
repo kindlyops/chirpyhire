@@ -17,14 +17,13 @@
       .card-copy
         p Ask candidates for their address. Optionally filter candidates that live outside your service area.
         = link_to "Add Question", new_address_question_path, class: "button"
-    #image-type.card
+    #yes-no-type.card
       .card-image
-        i.fa.fa-picture-o
-      .card-header
-        ' Image
+        i.fa.fa-share-alt
+      .card-header Yes / No Question
       .card-copy
-        p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
-        = link_to "Add Question", new_document_question_path, class: "button"
+        p Ask a simple yes no question. Filters candidates that answer no.
+        = link_to "Add Question", new_yes_no_question_path, class: "button"
     #choice-type.card
       .card-image
         i.fa.fa-list
@@ -33,3 +32,11 @@
       .card-copy
         p Ask candidates any question with multiple choices.
         = link_to "Add Question", new_choice_question_path, class: "button"
+    #image-type.card
+      .card-image
+        i.fa.fa-picture-o
+      .card-header
+        ' Image
+      .card-copy
+        p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
+        = link_to "Add Question", new_document_question_path, class: "button"

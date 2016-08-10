@@ -42,6 +42,11 @@ class Message < ApplicationRecord
     address.found?
   end
 
+  def has_yes_or_no?
+    return false unless body.present?
+    /\A(yes|no|y|n)\z/ === body.strip.downcase
+  end
+
   def has_choice?(choices)
     return false unless body.present? && choices.present?
     Regexp.new("\\A([#{choices}]){1}\\)?\\z") === body.strip.downcase

@@ -7,6 +7,7 @@ class AnswerFormatter
   def format
     return "DocumentQuestion" if message.has_images?
     return "AddressQuestion" if message.has_address?
+    return "YesNoQuestion" if message.has_yes_or_no?
     return "ChoiceQuestion" if message.has_choice?(choices)
     "Unknown Format"
   end

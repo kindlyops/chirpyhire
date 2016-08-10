@@ -6,7 +6,7 @@ class Question < ApplicationRecord
   delegate :bad_fit, to: :survey
   validates_presence_of :text, :label, :status, :priority
 
-  TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion)
+  TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion YesNoQuestion)
   validates_inclusion_of :type, in: TYPES
 
   def self.by_priority
