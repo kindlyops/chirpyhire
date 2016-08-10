@@ -7,9 +7,9 @@ header.navigation role="banner"
             span.desktop Candidates
             i.mobile.fa.fa-user.fa-2x
         li.nav-link
-          a href="/conversations"
+          a href="/messages"
             span.desktop
-              ' Conversations
+              ' Messages
               - unless current_organization.users_with_unread_messages_count.zero?
                 = "(#{current_organization.users_with_unread_messages_count})"
             - if current_organization.users_with_unread_messages_count.zero?

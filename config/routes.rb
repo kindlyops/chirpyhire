@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resource :health, only: :show
 
   resources :candidates, only: [:index, :update, :show]
-  resources :conversations, only: :index
+  get "messages" => "conversations#index"
 
   resources :users, only: [] do
     resources :messages, only: [:index, :create], shallow: true
@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   resources :choice_questions, except: :destroy
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
-
 
   namespace :maps do
     resources :candidates, only: [:index, :show]

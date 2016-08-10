@@ -12,7 +12,7 @@ RSpec.feature "Conversations", type: :feature, js: true do
     let!(:conversation) { create(:message, body: "Conversation Test Body", user: user) }
 
     it "allows you to view a specific conversation" do
-      visit conversations_path
+      visit messages_path
       click_link("conversation-#{conversation.id}")
       expect(page).to have_text("Send")
       expect(page).to have_text(user.phone_number.phony_formatted)
@@ -28,7 +28,7 @@ RSpec.feature "Conversations", type: :feature, js: true do
       end
 
       it "allows you to page to the next group of conversations" do
-        visit conversations_path
+        visit messages_path
 
         users[0..7].each do |user|
           expect(page).not_to have_text(user.phone_number.phony_formatted)
@@ -49,7 +49,7 @@ RSpec.feature "Conversations", type: :feature, js: true do
         end
 
         it "allows you to page to the next group of conversations" do
-          visit conversations_path
+          visit messages_path
 
           expect(page).to have_text(users.first.phone_number.phony_formatted)
           expect(page).to have_text(users.first.messages.last.body)
