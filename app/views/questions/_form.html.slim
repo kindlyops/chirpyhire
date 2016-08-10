@@ -18,6 +18,6 @@
     = f.label :text, "Question Text"
     = f.text_area :text, required: true, placeholder: question.text_placeholder
 
-  = render partial: "questions/form/#{question.type.underscore}", locals: { f: f }
+  = render partial: "#{question.type.pluralize.underscore}/form", locals: { f: f }
   .actions
     = f.submit "Save"

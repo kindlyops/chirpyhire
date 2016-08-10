@@ -2,10 +2,10 @@ class ChoiceQuestionDecorator < Draper::Decorator
   delegate_all
 
   def label_placeholder
-    "Transportation"
+    "Availability"
   end
 
   def text_placeholder
-    "Can you drive?"
+    "What is your availability?"
   end
 end

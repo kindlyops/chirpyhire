@@ -20,7 +20,7 @@ class ChoiceQuestion < Question
     properties
   end
 
-  def choice_template
+  def formatted_text
     return "" unless choice_question_options.present?
     <<-template
 #{text}
@@ -28,10 +28,6 @@ class ChoiceQuestion < Question
 #{choice_options_list}
 Please reply with just the letter #{choice_options_letters_sentence}.
 template
-  end
-
-  def formatted_text
-    choice_template
   end
 
   def choice_options_letters
