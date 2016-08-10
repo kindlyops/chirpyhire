@@ -60,7 +60,7 @@ if Rails.env.development?
     choice_question.choice_question_options.create(text: "Hourly", letter: "b")
     choice_question.choice_question_options.create(text: "Both", letter: "c")
     yes_no_question = org.survey.questions.create(priority: 1, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
-    org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
+    cna_question = org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 
@@ -79,6 +79,26 @@ if Rails.env.development?
   25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Qualified", organization: org, created_at: rand(1.month).seconds.ago) }
   25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Potential", organization: org, created_at: rand(1.month).seconds.ago) }
   25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Hired", organization: org, created_at: rand(1.month).seconds.ago) }
+
+  Candidate.find_each do |candidate|
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "#{welcome.body}\n\nIf you ever wish to stop receiving text messages from #{org.name} just reply STOP.\n\n#{address_question.formatted_text}")
+    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: Faker::Address.street_address)
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: choice_question.formatted_text)
+    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: %w(a b c).sample)
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: yes_no_question.formatted_text)
+  end
+
+  Candidate.where(status: "Bad Fit").find_each do |candidate|
+    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "No")
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: bad_fit.body)
+  end
+
+  Candidate.where(status: ["Hired", "Qualified"]).find_each do |candidate|
+    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "Yes")
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: cna_question.formatted_text)
+    FactoryGirl.create(:message, :with_image, user: candidate.user, direction: "inbound")
+    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: thank_you.body)
+  end
 
   puts "Development specific seeding completed"
 end
