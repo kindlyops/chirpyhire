@@ -6,8 +6,8 @@
 #   cities = City.create!([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create!(name: 'Emanuel', city: cities.first)
 
-longitude = ENV.fetch("longitude", -84.373931)
-latitude = ENV.fetch("latitude", 33.929966)
+longitude = ENV.fetch("longitude", -84.373931).to_f
+latitude = ENV.fetch("latitude", 33.929966).to_f
 
 if Rails.env.development?
   puts "Creating Organization"
