@@ -20,8 +20,8 @@ class YesNoQuestion < Question
   end
 
   def rejects?(candidate)
-    feature = candidate.candidate_features.find_by(label: label)
-    feature[:properties][:yes_no_option] == "No"
+    feature = candidate.candidate_features.where(label: label).where("properties->>'child_class' = 'yes_no'").first
+    feature["properties"]["yes_no_option"] == "No"
   end
 
   def formatted_text
