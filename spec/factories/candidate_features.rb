@@ -5,12 +5,12 @@ FactoryGirl.define do
 
     trait :address do
       properties {
-        { city: "Charlottesville",
-          address: "1000 East Market Street, Charlottesville, VA, USA",
+        { city: "Atlanta",
+          address: Faker::Address.street_address,
           country: "USA",
-          latitude: Faker::Address.latitude,
-          longitude: Faker::Address.longitude,
-          postal_code: "22902",
+          latitude:  rand(33.624972..34.109784),
+          longitude:  rand(-84.633424..-84.144741),
+          postal_code: Faker::Address.zip_code,
           child_class: "address"
         }
       }
@@ -18,11 +18,18 @@ FactoryGirl.define do
 
     transient do
       user nil
+      latitude nil
+      longitude nil
     end
 
     before(:create) do |candidate_feature, evaluator|
       if evaluator.user
         candidate_feature.candidate = create(:candidate, user: evaluator.user)
+      end
+
+      if evaluator.latitude && evaluator.longitude
+        candidate_feature["properties"]["latitude"] = evaluator.latitude
+        candidate_feature["properties"]["longitude"] = evaluator.longitude
       end
     end
   end

@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :location do
-    latitude 38.028531
-    longitude -78.473088
-    full_street_address "1000 East Market Street, Charlottesville, VA, USA"
-    city "Charlottesville"
-    state "Virginia"
-    state_code "Virginia"
-    postal_code "22902"
+    latitude 33.929966
+    longitude { -84.373931 }
+    full_street_address Faker::Address.street_address
+    city Faker::Address.city
+    state Faker::Address.state
+    state_code Faker::Address.state_abbr
+    postal_code Faker::Address.zip_code
     country "United States of America"
     country_code "us"
   end

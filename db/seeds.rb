@@ -6,6 +6,9 @@
 #   cities = City.create!([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create!(name: 'Emanuel', city: cities.first)
 
+longitude = ENV.fetch("longitude", -84.373931)
+latitude = ENV.fetch("latitude", 33.929966)
+
 if Rails.env.development?
   puts "Creating Organization"
   org = Organization.find_or_create_by!(
@@ -16,7 +19,7 @@ if Rails.env.development?
   )
   puts "Created Organization"
 
-  FactoryGirl.create(:location, organization: org)
+  FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
   puts "Created Location"
 
   puts "Creating User"
@@ -48,15 +51,15 @@ if Rails.env.development?
   end
 
   unless org.survey.questions.present?
-    yes_no_question = org.survey.questions.create(priority: 1, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
     address_question = org.survey.questions.create!(priority: 2, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
-    address_question.create_address_question_option(distance: 20, latitude: 33.929966, longitude: -84.373931 )
+    address_question.create_address_question_option(distance: 20, latitude: latitude, longitude: longitude )
     choice_question = org.survey.questions.create!(priority: 3, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?",
       choice_question_options_attributes: [
         {text: "Live-in", letter: "a"}
         ])
     choice_question.choice_question_options.create(text: "Hourly", letter: "b")
     choice_question.choice_question_options.create(text: "Both", letter: "c")
+    yes_no_question = org.survey.questions.create(priority: 1, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
     org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
@@ -68,10 +71,14 @@ if Rails.env.development?
     puts "Created Rules"
   end
 
-  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Bad Fit", organization: org)
-  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Qualified", organization: org)
-  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Potential", organization: org)
-  FactoryGirl.create_list(:candidate, 5, :with_address, status: "Hired", organization: org)
+  def random_coordinate(seed_coordinate)
+    rand((seed_coordinate - 0.3)..(seed_coordinate + 0.3))
+  end
+
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Bad Fit", organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Qualified", organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Potential", organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Hired", organization: org, created_at: rand(1.month).seconds.ago) }
 
   puts "Development specific seeding completed"
 end

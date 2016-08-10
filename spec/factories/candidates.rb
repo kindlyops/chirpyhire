@@ -5,6 +5,8 @@ FactoryGirl.define do
     transient do
       inquiry_format :text
       organization nil
+      latitude nil
+      longitude nil
     end
 
     trait :with_subscription do
@@ -18,8 +20,12 @@ FactoryGirl.define do
     end
 
     trait :with_address do
-      after(:create) do |candidate|
-        create(:candidate_feature, :address, candidate: candidate)
+      after(:create) do |candidate, evaluator|
+        if evaluator.latitude && evaluator.longitude
+          create(:candidate_feature, :address, candidate: candidate, latitude: evaluator.latitude, longitude: evaluator.longitude)
+        else
+          create(:candidate_feature, :address, candidate: candidate)
+        end
       end
     end
 
