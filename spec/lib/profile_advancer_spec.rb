@@ -67,13 +67,14 @@ RSpec.describe ProfileAdvancer do
         end
 
         context "and the last answer was unacceptable" do
-          before(:each) do
-            allow_any_instance_of(ProfileAdvancer).to receive(:answer_rejected?).and_return(true)
-          end
           let(:question) { create(:document_question, survey: survey) }
           let(:inquiry) { create(:inquiry, question: question) }
           let(:message) { create(:message, :with_image, user: user) }
           let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
+
+          before(:each) do
+            allow_any_instance_of(Question).to receive(:rejects?).and_return(true)
+          end
 
           context "with a template for the candidate persona" do
             it "does not create an inquiry of the next candidate feature" do
