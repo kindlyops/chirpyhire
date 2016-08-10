@@ -60,6 +60,10 @@ class Candidate < ApplicationRecord
     candidate_features.where("properties->>'child_class' = ?", "document")
   end
 
+  def yes_no_features
+    candidate_features.where("properties->>'child_class' = ?", "yes_no")
+  end
+
   def qualified?
     status == "Qualified"
   end

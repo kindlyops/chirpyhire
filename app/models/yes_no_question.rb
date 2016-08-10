@@ -21,7 +21,7 @@ class YesNoQuestion < Question
   end
 
   def rejects?(candidate)
-    feature = candidate.candidate_features.where(label: label).where("properties->>'child_class' = 'yes_no'").first
+    feature = candidate.candidate_features.where(label: label).where("properties->>'child_class' = ?", "yes_no").first
     feature["properties"]["yes_no_option"] == "No"
   end
 
