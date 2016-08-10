@@ -47,7 +47,7 @@ class ProfileAdvancer
   end
 
   def initial_message
-    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n#{next_unasked_question.text}"
+    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n#{next_unasked_question.formatted_text}"
   end
 
   def subscription_notice

@@ -8,9 +8,7 @@ class Survey < ApplicationRecord
   has_many :questions
   accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: false
 
-  validate do |survey|
-    SurveyValidator.new(survey).validate
-  end
+  validate :unique_priorities, on: :update
 
   def perform(user)
     ProfileAdvancer.call(user)
@@ -21,13 +19,13 @@ class Survey < ApplicationRecord
     questions.where.not(id: ids).where(status: Question.statuses[:active]).order(:priority).first
   end
 
-  SurveyValidator = Struct.new(:survey) do
-    def validate
-      active_questions = survey.questions.select { |q| q.active? }
-      unique_priorities = active_questions.map(&:priority).uniq
-      unless unique_priorities.count == active_questions.count
-        survey.errors[:question_priorities] << "Each question priority must be unique."
-      end
+  private
+
+  def unique_priorities
+    active_questions = self.questions.select { |q| q.active? }
+    unique_priorities = active_questions.map(&:priority).uniq
+    unless unique_priorities.count == active_questions.count
+      self.errors[:question_priorities] << "Each question priority must be unique."
     end
   end
 end
