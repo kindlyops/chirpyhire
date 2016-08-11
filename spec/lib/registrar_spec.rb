@@ -8,13 +8,13 @@ RSpec.describe Registrar do
     context "when the organization is persisted" do
       let(:account) { create(:account) }
 
-      it "creates three rules" do
+      it "creates three rules for the organization" do
         expect {
           registrar.register
         }.to change{organization.rules.count}.by(3)
       end
 
-      it "creates three actionables" do
+      it "creates two actionables" do
         expect {
           registrar.register
         }.to change{Actionable.count}.by(2)
