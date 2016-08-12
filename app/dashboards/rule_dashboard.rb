@@ -9,7 +9,6 @@ class RuleDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
-    actionable: Field::BelongsTo,
     id: Field::Number,
     trigger: Field::String,
     enabled: Field::Boolean,
@@ -24,7 +23,6 @@ class RuleDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :organization,
-    :actionable,
     :id,
     :trigger,
   ].freeze
@@ -33,7 +31,6 @@ class RuleDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
-    :actionable,
     :id,
     :trigger,
     :enabled,
@@ -46,7 +43,6 @@ class RuleDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :organization,
-    :actionable,
     :trigger,
     :enabled,
   ].freeze

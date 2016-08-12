@@ -10,13 +10,11 @@ class TemplateDashboard < Administrate::BaseDashboard
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
     notifications: Field::HasMany,
-    actionable: Field::BelongsTo.with_options(class_name: "TemplateActionable"),
     id: Field::Number,
     name: Field::String,
     body: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
-    actionable_id: Field::Number,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +25,6 @@ class TemplateDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :organization,
     :notifications,
-    :actionable,
     :id,
   ].freeze
 
@@ -36,13 +33,11 @@ class TemplateDashboard < Administrate::BaseDashboard
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
     :notifications,
-    :actionable,
     :id,
     :name,
     :body,
     :created_at,
-    :updated_at,
-    :actionable_id,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -51,10 +46,8 @@ class TemplateDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :organization,
     :notifications,
-    :actionable,
     :name,
-    :body,
-    :actionable_id,
+    :body
   ].freeze
 
   # Overwrite this method to customize how templates are displayed
