@@ -42,6 +42,8 @@ Rails.application.routes.draw do
       resources :address_questions
       resources :document_questions
       resources :choice_questions
+      resources :choice_question_options
+      resources :address_question_options
       resources :yes_no_questions
       resources :answers
       resources :candidates
