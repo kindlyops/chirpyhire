@@ -19,6 +19,14 @@ RSpec.feature "Conversations", type: :feature, js: true do
       expect(page).to have_text(conversation.body)
     end
 
+    context "with an image message as the conversation" do
+      let!(:conversation) { create(:message, :with_image, user: user) }
+      it "shows Image message in lieu of a picture" do
+        visit messages_path
+        expect(page).to have_text("Image message")
+      end
+    end
+
     context "more than one page of conversations" do
       let(:users) { create_list(:user, 16, organization: account.organization) }
       let!(:conversations) do
