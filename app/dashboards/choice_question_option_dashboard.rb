@@ -1,6 +1,6 @@
 require "administrate/base_dashboard"
 
-class ChoiceQuestionDashboard < Administrate::BaseDashboard
+class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
   # a hash that describes the type of each of the model's fields.
   #
@@ -8,17 +8,13 @@ class ChoiceQuestionDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    survey: Field::BelongsTo,
-    inquiries: Field::HasMany,
-    choice_question_options: Field::HasMany,
+    choice_question: Field::BelongsTo,
     id: Field::Number,
+    letter: Field::String,
     text: Field::String,
-    status: Field::String.with_options(searchable: false),
-    priority: Field::Number,
-    type: Field::String,
+    question_id: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    label: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,45 +23,37 @@ class ChoiceQuestionDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
-    :survey,
-    :inquiries,
-    :choice_question_options,
+    :choice_question,
+    :id,
+    :letter,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
-    :survey,
-    :inquiries,
-    :choice_question_options,
+    :choice_question,
     :id,
+    :letter,
     :text,
-    :status,
-    :priority,
-    :type,
+    :question_id,
     :created_at,
     :updated_at,
-    :label,
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :survey,
-    :inquiries,
-    :choice_question_options,
+    :choice_question,
+    :letter,
     :text,
-    :status,
-    :priority,
-    :type,
-    :label,
+    :question_id,
   ].freeze
 
-  # Overwrite this method to customize how choice questions are displayed
+  # Overwrite this method to customize how choice question options are displayed
   # across all pages of the admin dashboard.
   #
-  # def display_resource(choice_question)
-  #   "ChoiceQuestion ##{choice_question.id}"
+  # def display_resource(choice_question_option)
+  #   "ChoiceQuestionOption ##{choice_question_option.id}"
   # end
 end
