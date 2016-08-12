@@ -9,10 +9,10 @@ class SurveyDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     organization: Field::BelongsTo,
+    actionable: Field::BelongsTo.with_options(class_name: "SurveyActionable"),
     welcome: Field::BelongsTo.with_options(class_name: "Template"),
     thank_you: Field::BelongsTo.with_options(class_name: "Template"),
     bad_fit: Field::BelongsTo.with_options(class_name: "Template"),
-    actionable: Field::BelongsTo.with_options(class_name: "SurveyActionable"),
     questions: Field::HasMany,
     id: Field::Number,
     actionable_id: Field::Number,
@@ -30,19 +30,19 @@ class SurveyDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
     :organization,
+    :actionable,
     :welcome,
     :thank_you,
-    :bad_fit,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = [
     :organization,
+    :actionable,
     :welcome,
     :thank_you,
     :bad_fit,
-    :actionable,
     :questions,
     :id,
     :actionable_id,
@@ -58,10 +58,10 @@ class SurveyDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :organization,
+    :actionable,
     :welcome,
     :thank_you,
     :bad_fit,
-    :actionable,
     :questions,
     :actionable_id,
     :welcome_id,
