@@ -13,8 +13,8 @@ class OrganizationDashboard < Administrate::BaseDashboard
     referrers: Field::HasMany,
     accounts: Field::HasMany,
     messages: Field::HasMany,
-    rules: Field::HasMany,
     templates: Field::HasMany,
+    rules: Field::HasMany,
     survey: Field::HasOne,
     location: Field::HasOne,
     id: Field::Number,
@@ -25,6 +25,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     time_zone: Field::String,
+    onboarding_status: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -47,8 +48,8 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :referrers,
     :accounts,
     :messages,
-    :rules,
     :templates,
+    :rules,
     :survey,
     :location,
     :id,
@@ -59,6 +60,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :time_zone,
+    :onboarding_status,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -70,8 +72,8 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :referrers,
     :accounts,
     :messages,
-    :rules,
     :templates,
+    :rules,
     :survey,
     :location,
     :name,
@@ -79,6 +81,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :twilio_auth_token,
     :phone_number,
     :time_zone,
+    :onboarding_status,
   ].freeze
 
   # Overwrite this method to customize how organizations are displayed
