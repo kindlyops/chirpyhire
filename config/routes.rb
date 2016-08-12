@@ -37,6 +37,12 @@ Rails.application.routes.draw do
     namespace :admin do
       resources :accounts
       resources :actionables
+      resources :template_actionables
+      resources :survey_actionables
+      resources :address_questions
+      resources :document_questions
+      resources :choice_questions
+      resources :yes_no_questions
       resources :answers
       resources :candidates
       resources :candidate_features
