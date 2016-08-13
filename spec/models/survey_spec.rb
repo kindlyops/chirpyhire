@@ -37,7 +37,7 @@ RSpec.describe Survey, type: :model do
   end
 
   describe "validation" do
-    let(:survey) { build(:survey) }
+    let(:survey) { build(:survey, :with_templates) }
 
     context "with multiple active questions" do
       context "each having a different priority" do

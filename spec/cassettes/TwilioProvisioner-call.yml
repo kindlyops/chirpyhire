@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://AC207d54ae9c08379e9e356faa6fb96f41:TWILIO_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts.json
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts.json
     body:
       encoding: US-ASCII
       string: FriendlyName=Orn%2C+Beer+and+Schaden
@@ -54,7 +54,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"sid": "AC247f06db42231ee110eae4fb6657af30", "owner_account_sid":
-        "AC207d54ae9c08379e9e356faa6fb96f41", "friendly_name": "Orn, Beer and Schaden",
+        "TWILIO_TEST_ACCOUNT_SID", "friendly_name": "Orn, Beer and Schaden",
         "status": "active", "date_created": "Sat, 13 Aug 2016 18:31:01 +0000", "date_updated":
         "Sat, 13 Aug 2016 18:31:01 +0000", "auth_token": "11737a02443bdc9e5a757e72cfa561e9",
         "type": "Full", "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30.json",
@@ -80,7 +80,7 @@ http_interactions:
   recorded_at: Sat, 13 Aug 2016 18:31:01 GMT
 - request:
     method: get
-    uri: https://AC207d54ae9c08379e9e356faa6fb96f41:TWILIO_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InPostalCode=30342
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InPostalCode=30342
     body:
       encoding: US-ASCII
       string: ''
@@ -254,7 +254,7 @@ http_interactions:
   recorded_at: Sat, 13 Aug 2016 18:31:02 GMT
 - request:
     method: post
-    uri: https://AC207d54ae9c08379e9e356faa6fb96f41:TWILIO_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers.json
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers.json
     body:
       encoding: US-ASCII
       string: PhoneNumber=%2B14044955125
