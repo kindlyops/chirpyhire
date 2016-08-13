@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Registrar do
   let(:registrar) { Registrar.new(account) }
   let(:organization) { account.organization }
+  let!(:location) { create(:location, organization: organization) }
 
   describe "#register" do
     context "when the organization is persisted" do
@@ -26,6 +27,12 @@ RSpec.describe Registrar do
         }.to change{organization.survey.present?}.from(false).to(true)
       end
 
+      it "creates three questions" do
+        expect {
+          registrar.register
+        }.to change{Question.count}.by(3)
+      end
+
       it "creates a welcome, bad fit, thank you template for the survey" do
         expect {
           registrar.register
@@ -37,6 +44,7 @@ RSpec.describe Registrar do
       let(:organization) { build(:organization) }
       let(:user) { build(:user, organization: organization) }
       let(:account) { build(:account, user: user) }
+      let!(:location) { build(:location, organization: organization) }
 
       it "does not create a survey" do
         expect {
