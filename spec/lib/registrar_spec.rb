@@ -27,6 +27,12 @@ RSpec.describe Registrar do
         }.to change{organization.survey.present?}.from(false).to(true)
       end
 
+      it "enqueues a TwilioProvisioner job" do
+        expect {
+          registrar.register
+        }.to have_enqueued_job(TwilioProvisionerJob)
+      end
+
       it "creates three questions" do
         expect {
           registrar.register
