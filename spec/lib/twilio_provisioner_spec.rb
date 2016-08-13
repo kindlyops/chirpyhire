@@ -6,7 +6,15 @@ RSpec.describe TwilioProvisioner do
 
   describe "#call" do
     context "when the organization has a phone number" do
-      xit "does nothing"
+      before(:each) do
+        organization.update(phone_number: Faker::PhoneNumber.cell_phone)
+      end
+
+      it "does not update the organization" do
+        expect {
+          TwilioProvisioner.new(organization).call
+        }.not_to change{organization.phone_number}
+      end
     end
 
     context "when the organization does not have a phone number", vcr: { cassette_name: "TwilioProvisioner-call" } do
