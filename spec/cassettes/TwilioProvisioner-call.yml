@@ -76,7 +76,7 @@ http_interactions:
         "sms_messages": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/SMS/Messages.json",
         "transcriptions": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Transcriptions.json",
         "usage": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Usage.json"}}'
-    http_version: 
+    http_version:
   recorded_at: Sat, 13 Aug 2016 18:31:01 GMT
 - request:
     method: get
@@ -250,7 +250,7 @@ http_interactions:
         "longitude": "-84.370000", "region": "GA", "postal_code": "30342", "iso_country":
         "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
         true, "SMS": true, "MMS": true}}], "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InPostalCode=30342"}'
-    http_version: 
+    http_version:
   recorded_at: Sat, 13 Aug 2016 18:31:02 GMT
 - request:
     method: post
@@ -310,12 +310,12 @@ http_interactions:
         null, "voice_method": "POST", "voice_fallback_url": null, "voice_fallback_method":
         "POST", "voice_caller_id_lookup": false, "date_created": "Sat, 13 Aug 2016
         18:31:02 +0000", "date_updated": "Sat, 13 Aug 2016 18:31:02 +0000", "sms_url":
-        "", "sms_method": "POST", "sms_fallback_url": "", "sms_fallback_method": "POST",
-        "address_requirements": "none", "beta": false, "capabilities": {"voice": true,
-        "sms": true, "mms": true}, "status_callback": "", "status_callback_method":
-        "POST", "api_version": "2010-04-01", "voice_application_sid": null, "sms_application_sid":
-        "", "trunk_sid": null, "emergency_status": "Inactive", "emergency_address_sid":
+        "https://app.chirpyhire.com/twilio/text", "sms_method": "POST", "sms_fallback_url": "",
+        "sms_fallback_method": "POST", "address_requirements": "none", "beta": false,
+        "capabilities": {"voice": false, "sms": true, "mms": true}, "status_callback": "",
+        "status_callback_method": "POST", "api_version": "2010-04-01", "voice_application_sid": null,
+        "sms_application_sid": "", "trunk_sid": null, "emergency_status": "Inactive", "emergency_address_sid":
         null, "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers/PN7528bc768bb53f5f74cce9a39432f318.json"}'
-    http_version: 
+    http_version:
   recorded_at: Sat, 13 Aug 2016 18:31:03 GMT
 recorded_with: VCR 3.0.3

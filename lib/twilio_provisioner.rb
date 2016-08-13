@@ -11,7 +11,15 @@ class TwilioProvisioner
   def call
     return if organization.phone_number.present?
 
-    sub_account.incoming_phone_numbers.create(phone_number: available_local_phone_number)
+    sub_account.incoming_phone_numbers.create(
+      phone_number: available_local_phone_number,
+      voice_url: nil,
+      sms_url: "https://app.chirpyhire.com/twilio/text",
+      capabilities: {
+        voice: false,
+        sms: true,
+        mms: true
+    })
     organization.update(
       phone_number: available_local_phone_number,
       twilio_account_sid: sub_account.sid,
