@@ -12,6 +12,7 @@ RSpec.describe RegistrationsController, type: :controller do
         email: email,
         password: "password",
         password_confirmation: "password",
+        agreed_to_terms: true,
         user_attributes: {
           first_name: "Bob",
           last_name: "Bobson",
@@ -36,6 +37,11 @@ RSpec.describe RegistrationsController, type: :controller do
       expect {
         post :create, params: account_params
       }.to change{Account.count}.by(1)
+    end
+
+    it "agrees to the terms" do
+      post :create, params: account_params
+      expect(Account.last.agreed_to_terms?).to eq(true)
     end
 
     it "creates an organization" do
