@@ -20,17 +20,19 @@ class TwilioProvisioner
         sms: true,
         mms: true
     })
-    organization.update(
-      phone_number: available_local_phone_number,
-      twilio_account_sid: sub_account.sid,
-      twilio_auth_token: sub_account.auth_token
-    )
+    organization.update(update_params)
   end
 
   private
 
   def sub_account
-    @sub_account ||= $twilio.accounts.create(friendly_name: organization.name)
+    @sub_account ||= begin
+      if organization.twilio_account_sid.present?
+        $twilio.accounts.get(organization.twilio_account_sid)
+      else
+        $twilio.accounts.create(friendly_name: organization.name)
+      end
+    end
   end
 
   def available_local_phone_numbers
@@ -39,6 +41,13 @@ class TwilioProvisioner
 
   def available_local_phone_number
     @available_local_phone_number ||= available_local_phone_numbers[0].phone_number
+  end
+
+  def update_params
+    params = { phone_number: available_local_phone_number }
+    return params if organization.twilio_account_sid.present?
+
+    params.merge(twilio_account_sid: sub_account.sid, twilio_auth_token: sub_account.auth_token)
   end
 
   attr_reader :organization
