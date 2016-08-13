@@ -1,9 +1,12 @@
 FactoryGirl.define do
   factory :survey do
     organization
-    association :welcome, factory: :template
-    association :bad_fit, factory: :template
-    association :thank_you, factory: :template
+
+    before(:create) do |survey|
+      survey.welcome = create(:template, organization: survey.organization)
+      survey.bad_fit = create(:template, organization: survey.organization)
+      survey.thank_you = create(:template, organization: survey.organization)
+    end
 
     trait :with_questions do
       after(:create) do |survey|

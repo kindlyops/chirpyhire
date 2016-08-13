@@ -2,21 +2,19 @@ require 'rails_helper'
 
 RSpec.feature "SurveyEditing", type: :feature, js: true do
   let(:account) { create(:account) }
-  let!(:location) { create(:location, organization: account.organization) }
+  let(:organization) { account.organization }
+  let!(:location) { create(:location, organization: organization) }
+  let!(:survey) { create(:survey, organization: organization) }
 
   before(:each) do
     login_as(account, scope: :account)
-    Registrar.new(account).register
   end
-
-  let!(:survey) { account.organization.survey }
 
   context "Templates" do
     context "editing the Welcome template" do
       it "works" do
         visit survey_path
         find("#welcome #edit-template", match: :first).trigger('click')
-
         fill_in "template_body", with: "New welcome body"
         click_button("Save")
         expect(page).to have_text("Nice! Template saved.")
