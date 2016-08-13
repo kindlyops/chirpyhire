@@ -2,6 +2,7 @@
   h2
     | Sign up
   = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = f.hidden_field :agreed_to_terms, value: true
     = devise_error_messages!
     = f.fields_for :user do |u|
       .field
@@ -28,11 +29,16 @@
       = u.fields_for :organization do |o|
         .field
           = o.label :name, "Organization Name"
-          = o.text_field :name, required: true, autocomplete: "off"
+          = o.text_field :name, required: true
         = o.fields_for :location do |l|
           .field
             = l.label :full_street_address, "Organization Address"
-            = l.text_field :full_street_address, required: true, autocomplete: "off"
+            = l.text_field :full_street_address, required: true
+    p
+      ' By clicking Sign up, you agree to our
+      a href="https://chirpyhire.com/terms-of-service" Terms
+      '  and that you have read our
+      a href="https://chirpyhire.com/privacy-policy" Privacy Policy.
     .actions
       = f.submit "Sign up"
   = render "devise/shared/links"
