@@ -2,7 +2,6 @@ require 'sidekiq/web'
 Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 
 Rails.application.routes.draw do
-  mount Payola::Engine => '/payola', as: :payola
   resource :health, only: :show
 
   resources :candidates, only: [:index, :update, :show]

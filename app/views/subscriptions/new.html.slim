@@ -1,6 +1,6 @@
 .subscription
   / Put in head tag or the bottom of body
-  = render 'payola/transactions/stripe_header'
+  / = render 'payola/transactions/stripe_header'
 
   = form_for(@subscription, html: { class: 'payola-onestep-subscription-form' }, data: {'payola-base-path': '/payola', 'payola-plan-type': SubscriptionPlan.first.plan_class, 'payola-plan-id': SubscriptionPlan.first.id }) do |f|
     .service-tier

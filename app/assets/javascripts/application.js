@@ -19,7 +19,6 @@
 //= require lodash
 //= require cocoon
 //= require jquery.card
-//= require payola
 
 //= require init
 //= require map
