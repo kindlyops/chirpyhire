@@ -25,11 +25,11 @@ Rails.application.routes.draw do
     resources :candidates, only: [:index, :show]
   end
 
-  post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
-  post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms#unknown_message'
+  post 'twilio/text', to: 'sms/referrals#create', constraints: Constraint::Vcard.new
+  post 'twilio/text', to: 'sms/subscriptions#create', constraints: Constraint::OptIn.new
+  post 'twilio/text', to: 'sms/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
+  post 'twilio/text' => 'sms/base#unknown_message'
 
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 
