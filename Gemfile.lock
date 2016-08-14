@@ -71,6 +71,18 @@ GIT
     pundit (1.1.0)
       activesupport (>= 3.0.0)
 
+GIT
+  remote: https://github.com/peterkeen/payola.git
+  revision: c6ad165f3c940acc06ab0c71bdea611a2603710b
+  ref: c6ad165
+  specs:
+    payola-payments (1.4.0)
+      aasm (>= 4.0.7)
+      jquery-rails
+      rails (>= 4.1)
+      stripe (= 1.20.1)
+      stripe_event (>= 1.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -248,12 +260,6 @@ GEM
       activerecord (>= 3.0, < 6.0)
       activesupport (>= 3.0, < 6.0)
       request_store (~> 1.1)
-    payola-payments (1.4.0)
-      aasm (>= 4.0.7)
-      jquery-rails
-      rails (>= 4.1)
-      stripe (= 1.20.1)
-      stripe_event (>= 1.3.0)
     pg (0.18.4)
     phony (2.15.28)
     phony_rails (0.14.2)
@@ -459,7 +465,7 @@ DEPENDENCIES
   neat
   normalize-rails (~> 4.1.1)
   paper_trail (~> 5.2.0)
-  payola-payments (~> 1.4.0)
+  payola-payments!
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
