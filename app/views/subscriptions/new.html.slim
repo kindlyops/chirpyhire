@@ -12,7 +12,7 @@
               h3 = number_with_delimiter(SubscriptionPlan::DEFAULT_QUANTITY * SubscriptionPlan::MESSAGES_PER_QUANTITY)
               p messages / mo
         .card-header
-          = f.range_field :quantity, class: "service-tier-range", value: SubscriptionPlan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
+          = f.range_field :quantity, class: "service-tier-range", value: SubscriptionPlan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1, data: { payola: :quantity }
         .card-copy
           p Lorem ipsum bla bla bla
     span.payola-payment-error
