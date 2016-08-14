@@ -2,7 +2,7 @@
   / Put in head tag or the bottom of body
   = render 'payola/transactions/stripe_header'
 
-  = form_for(@subscription, class: 'payola-onestep-subscription-form', data: {'payola-base-path': '/payola', 'payola-plan-type': SubscriptionPlan.first.plan_class, 'payola-plan-id': SubscriptionPlan.first.id }) do |f|
+  = form_for(@subscription, html: { class: 'payola-onestep-subscription-form' }, data: {'payola-base-path': '/payola', 'payola-plan-type': SubscriptionPlan.first.plan_class, 'payola-plan-id': SubscriptionPlan.first.id }) do |f|
     .service-tier
       .card
         .card-image
@@ -19,7 +19,7 @@
     .credit-card-form
       .credit-card-wrapper
       .credit-card-fields
-        = f.hidden_field :email, name: "stripeEmail", data: { payola: :email }
+        = f.hidden_field :email, name: "stripeEmail", value: current_account.email, data: { payola: :email }
         = text_field_tag "number", nil, name: nil, placeholder: "Card Number", type: :text, autofocus: true, data: { stripe: :number }
         = text_field_tag "name", nil, name: nil, placeholder: "Full Name", type: :text, data: { stripe: :name }
         = text_field_tag "address_zip", nil, name: nil, placeholder: "Zip Code", type: :text, data: { stripe: :address_zip }

@@ -72,9 +72,9 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: https://github.com/peterkeen/payola.git
-  revision: c6ad165f3c940acc06ab0c71bdea611a2603710b
-  ref: c6ad165
+  remote: https://github.com/hwhelchel/payola.git
+  revision: a8a9b05a71c162cd59915f9cbb2e02fc9aeabf23
+  branch: turbolinks-5
   specs:
     payola-payments (1.4.0)
       aasm (>= 4.0.7)
