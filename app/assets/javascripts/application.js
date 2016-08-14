@@ -18,6 +18,7 @@
 //= require mapbox-gl
 //= require lodash
 //= require cocoon
+//= require jquery.card
 
 //= require init
 //= require map
