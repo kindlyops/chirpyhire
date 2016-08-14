@@ -10,6 +10,8 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :survey
   has_one :location
+  has_one :subscription, class_name: "Payola::Subscription", as: :owner, inverse_of: :owner
+
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
   delegate :latitude, :longitude, to: :location

@@ -10,6 +10,10 @@ longitude = ENV.fetch("longitude", -84.373931).to_f
 latitude = ENV.fetch("latitude", 33.929966).to_f
 
 if Rails.env.development?
+  unless SubscriptionPlan.count > 0
+    SubscriptionPlan.create(amount: 5_000, interval: 'month', stripe_id: 1, name: 'Basic')
+  end
+
   puts "Creating Organization"
   org = Organization.find_or_create_by!(
     name: "Happy Home Care",
