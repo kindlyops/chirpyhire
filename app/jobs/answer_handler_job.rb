@@ -1,6 +1,4 @@
 class AnswerHandlerJob < ApplicationJob
-  queue_as :default
-
   def perform(sender, inquiry, message_sid)
     @sender = sender
     message = MessageHandler.call(sender, message_sid)

@@ -30,6 +30,7 @@
 //= require maps/candidate
 //= require survey
 //= require survey.edit
+//= require payment
 //= require subscription
 //= require flash
 

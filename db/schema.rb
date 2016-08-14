@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814000830) do
+ActiveRecord::Schema.define(version: 20160814182048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,7 +169,20 @@ ActiveRecord::Schema.define(version: 20160814000830) do
     t.datetime "created_at",                                                null: false
     t.datetime "updated_at",                                                null: false
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
+    t.string   "stripe_customer_id"
+    t.string   "stripe_token"
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.integer  "amount",            null: false
+    t.string   "interval",          null: false
+    t.string   "name",              null: false
+    t.string   "stripe_id",         null: false
+    t.integer  "interval_count"
+    t.integer  "trial_period_days"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "questions", force: :cascade do |t|
@@ -211,13 +224,28 @@ ActiveRecord::Schema.define(version: 20160814000830) do
     t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
   end
 
-  create_table "subscription_plans", force: :cascade do |t|
-    t.integer  "amount"
-    t.string   "interval"
+  create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.float    "application_fee_percent"
+    t.boolean  "cancel_at_period_end"
+    t.datetime "canceled_at"
+    t.datetime "stripe_created_at"
+    t.datetime "current_period_end"
+    t.datetime "current_period_start"
+    t.string   "stripe_customer_id"
+    t.datetime "ended_at"
+    t.integer  "quantity"
+    t.datetime "start"
+    t.string   "status"
+    t.float    "tax_percent"
+    t.datetime "trial_end"
+    t.datetime "trial_start"
+    t.integer  "plan_id",                 null: false
+    t.integer  "organization_id",         null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["organization_id"], name: "index_subscriptions_on_organization_id", using: :btree
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
   end
 
   create_table "surveys", force: :cascade do |t|
@@ -302,6 +330,8 @@ ActiveRecord::Schema.define(version: 20160814000830) do
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "actionables"
   add_foreign_key "rules", "organizations"
+  add_foreign_key "subscriptions", "organizations"
+  add_foreign_key "subscriptions", "plans"
   add_foreign_key "surveys", "actionables"
   add_foreign_key "surveys", "organizations"
   add_foreign_key "surveys", "templates", column: "bad_fit_id"
