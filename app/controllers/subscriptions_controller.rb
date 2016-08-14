@@ -1,9 +1,12 @@
-class SubscriptionsController < ApplicationController
-  # bring in the `render_payola_status` helper.
+class SubscriptionsController < Payola::SubscriptionsController
   include Payola::StatusBehavior
+  layout "application"
 
   def new
-    @plan = authorize SubscriptionPlan.first
+    @subscription = authorize current_organization.build_subscription
+  end
+
+  def edit
   end
 
   def create

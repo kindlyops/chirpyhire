@@ -24,7 +24,7 @@ header.navigation role="banner"
       ul#js-navigation-menu.navigation-menu.submenu
         li.nav-link
           = link_to "Recruiting Survey", survey_path
-        - if current_organization.subscription.present?
+        - if current_organization.subscription.persisted?
           li.nav-link
             = link_to "Upgrade", edit_subscription_path(current_organization.subscription)
         - else
