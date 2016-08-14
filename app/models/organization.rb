@@ -26,6 +26,10 @@ class Organization < ApplicationRecord
                 direction: sent_message.direction)
   end
 
+  def subscription
+    super || NullSubscription.new
+  end
+
   def get_message(sid)
     messaging_client.messages.get(sid)
   end
