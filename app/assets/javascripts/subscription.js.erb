@@ -1,0 +1,25 @@
+$(document).on("turbolinks:load", function() {
+  if($(".subscription").length) {
+    $("#new_subscription").card({
+      container: '.credit-card-wrapper',
+      formSelectors: {
+          numberInput: '.credit-card-fields input#number',
+          expiryInput: '.credit-card-fields input#expiry',
+          cvcInput: '.credit-card-fields input#cvc',
+          nameInput: '.credit-card-fields input#name'
+      }
+    });
+
+    $(".service-tier-range").on("change", function(e) {
+      var $tier = $(this);
+      var quantity = parseInt($tier.val());
+      var newHeaderAmount = quantity * <%= SubscriptionPlan::MESSAGES_PER_QUANTITY %>;
+      var quantityHeader = $(".messages-per-month h3");
+      quantityHeader.text(newHeaderAmount.toLocaleString());
+
+      var newPriceAmount = quantity * <%= SubscriptionPlan::DEFAULT_PRICE_IN_DOLLARS %>;
+      var priceHeader = $(".price-per-month h1");
+      priceHeader.text("$" + newPriceAmount.toLocaleString());
+    });
+  };
+});

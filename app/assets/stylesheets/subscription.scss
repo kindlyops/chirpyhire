@@ -1,4 +1,103 @@
 .subscription {
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
   @include outer-container;
   padding: 1.25em;
+
+  .credit-card-form {
+    @include media ($horizontal-bar-mode) {
+      padding: 2em;
+      max-width: 33%;
+      height: 24em;
+    }
+    margin: 0 auto;
+    background: #EEE;
+
+    .credit-card-wrapper {
+      transform: scale(0.7);
+      margin: 0;
+      width: 100%;
+
+      @include media ($horizontal-bar-mode) {
+        transform: scale(1);
+        margin: 0.2em auto;
+      }
+    }
+
+    .credit-card-fields {
+      padding: 1em;
+      .submit {
+        width: 100%;
+      }
+
+      @include media($horizontal-bar-mode) {
+        padding: 1em 0;
+
+        #number, #name, .submit {
+          @include span-columns(6);
+        }
+
+        #name, .submit {
+          @include omega();
+        }
+
+        #expiry, #cvc {
+          @include span-columns(3);
+        }
+      }
+    }
+  }
+
+  .service-tier {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    @include media ($horizontal-bar-mode) {
+      max-width: 33%;
+    }
+    margin: 0 0 1.5em 0;
+    cursor: default;
+  }
+
+  .service-tier-range {
+    min-width: 100%;
+    cursor: pointer;
+  }
+
+  .card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: 6em;
+      margin: 0 0 0.1em 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .messages-per-month {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      h3 {
+        padding-right: 0.25em;
+        margin: 0;
+        font-size: 2em;
+      }
+    }
+
+    .price-per-month {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
 }
