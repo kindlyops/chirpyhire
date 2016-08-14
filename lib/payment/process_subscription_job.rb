@@ -1,7 +1,7 @@
 module Payment
   class ProcessSubscriptionJob < ApplicationJob
     def perform(subscription)
-      Payment::Subscriptions::Process.call(subscription)
+      subscription.process!
     end
   end
 end

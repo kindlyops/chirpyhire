@@ -12,15 +12,14 @@ class SubscriptionsController < ApplicationController
   def show
     @subscription = authorize Subscription.find(params[:id])
 
-    respond_to do |format|
-      format.js { render_payment_status(@subscription) }
-    end
+    render_payment_status(@subscription)
   end
 
   def create
     @subscription = authorize(new_subscription)
 
     Payment::Subscriptions::Create.call(@subscription, params[:stripe_token])
+
     render_payment_status(@subscription)
   end
 
@@ -39,11 +38,11 @@ class SubscriptionsController < ApplicationController
   def render_payment_status(subscription)
     head :not_found and return unless subscription
 
-    errors = ([subscription.error.presence] + subscription.errors.full_messages).compact.to_sentence
+    errors = subscription.errors.full_messages.to_sentence
 
     render json: {
       id:   subscription.id,
-      status: subscription.state,
+      state: subscription.state,
       error:  errors.presence
     }, status: errors.blank? ? 200 : 400
   end

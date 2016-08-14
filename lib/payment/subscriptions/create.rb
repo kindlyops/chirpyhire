@@ -10,9 +10,10 @@ class Payment::Subscriptions::Create
 
   def call
     organization.update(stripe_token: stripe_token)
-    subscription.save
 
-    Payment::ProcessSubscriptionJob.perform_later(subscription)
+    if subscription.save
+      Payment::ProcessSubscriptionJob.perform_later(subscription)
+    end
 
     subscription
   end

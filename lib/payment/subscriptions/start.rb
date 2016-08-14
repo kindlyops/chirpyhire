@@ -1,4 +1,4 @@
-class Payment::Subscriptions::Process
+class Payment::Subscriptions::Start
 
   def self.call(subscription)
     new(subscription).call
@@ -34,6 +34,13 @@ class Payment::Subscriptions::Process
       trial_end:               stripe_subscription.trial_end,
       trial_start:             stripe_subscription.trial_start
     )
+
+    subscription.activate!
+  rescue Stripe::StripeError => e
+    subscription.update(error: e.message)
+    subscription.fail!
+  ensure
+    subscription
   end
 
   private

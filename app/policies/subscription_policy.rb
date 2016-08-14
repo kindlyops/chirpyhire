@@ -8,7 +8,7 @@ class SubscriptionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:stripe_token, :plan_id, :quantity]
+    [:plan_id, :quantity]
   end
 
   class Scope < ApplicationPolicy::Scope

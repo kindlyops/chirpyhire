@@ -74,6 +74,7 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (4.11.0)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
       nio4r (~> 1.2)
@@ -398,6 +399,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm (~> 4.11.0)
   activemodel-serializers-xml!
   administrate!
   autoprefixer-rails (~> 6.4.0)

@@ -36,7 +36,7 @@ App.Payment = {
       App.Payment.showError(form, "This seems to be taking too long. Please contact support and give them transaction ID: " + id);
     }
     var handler = function(data) {
-      if (data.status === "active") {
+      if (data.state === "active") {
         window.location = '/subscriptions/' + id + '/edit';
       } else {
         setTimeout(function() { App.Payment.poll(form, num_retries_left - 1, id); }, 500);

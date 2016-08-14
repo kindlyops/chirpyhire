@@ -240,10 +240,11 @@ ActiveRecord::Schema.define(version: 20160814182048) do
     t.float    "tax_percent"
     t.datetime "trial_end"
     t.datetime "trial_start"
-    t.integer  "plan_id",                 null: false
-    t.integer  "organization_id",         null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "plan_id",                             null: false
+    t.integer  "organization_id",                     null: false
+    t.integer  "state",                   default: 0, null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id", using: :btree
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
   end
