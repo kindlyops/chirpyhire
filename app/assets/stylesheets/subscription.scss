@@ -8,7 +8,7 @@
     @include media ($horizontal-bar-mode) {
       padding: 2em;
       max-width: 33%;
-      height: 24em;
+      height: 27em;
     }
     margin: 0 auto;
     background: #EEE;
@@ -33,11 +33,11 @@
       @include media($horizontal-bar-mode) {
         padding: 1em 0;
 
-        #number, #name, .submit {
+        #name, #address_zip, .submit {
           @include span-columns(6);
         }
 
-        #name, .submit {
+        #address_zip, .submit {
           @include omega();
         }
 

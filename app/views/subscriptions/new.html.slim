@@ -22,6 +22,7 @@
         = f.hidden_field :email, name: "stripeEmail", data: { payola: :email }
         = text_field_tag "number", nil, name: nil, placeholder: "Card Number", type: :text, autofocus: true, data: { stripe: :number }
         = text_field_tag "name", nil, name: nil, placeholder: "Full Name", type: :text, data: { stripe: :name }
-        = text_field_tag "expiry", nil, name: nil, placeholder: "MM/YY", type: :text, data: {stripe: :expiry}
+        = text_field_tag "address_zip", nil, name: nil, placeholder: "Zip Code", type: :text, data: { stripe: :address_zip }
+        = text_field_tag "expiry", nil, name: nil, placeholder: "MM/YY", type: :text, data: {stripe: :exp}
         = text_field_tag "cvc", nil, name: nil, placeholder: "CVC", type: :text, data: { stripe: :cvc }
         = f.submit "Submit", class: "submit"
