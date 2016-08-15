@@ -3,12 +3,12 @@ class ChargesMailer < ActionMailer::Base
 
   def succeeded(charge)
     @charge = charge
-    mail(to: "team@chirpyhire.com", subject: "Dolla dolla bills y'all.")
+    mail(to: "harry@chirpyhire.com", subject: "Dolla dolla bills y'all.")
   end
 
   def failed(charge)
     @charge = charge
-    mail(to: "team@chirpyhire.com", subject: "Ahh hell nah. Charge failed.")
+    mail(to: "harry@chirpyhire.com", subject: "Ahh hell nah. Charge failed.")
   end
 
 end
