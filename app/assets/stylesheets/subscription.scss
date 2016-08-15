@@ -4,13 +4,18 @@
   @include outer-container;
   padding: 1.25em;
 
-  .edit_subscription {
+  .edit_subscription, .cancel_subscription {
     @include span-columns(4);
     @include shift(4);
 
     .actions .submit {
       width: 100%;
     }
+  }
+
+  .cancel_subscription {
+    padding: 1em 0;
+    color: $medium-gray;
   }
 
   .credit-card-form {

@@ -44,4 +44,19 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
       expect(page).to have_text("Nice! Subscription changed.")
     end
   end
+
+  describe "canceling a subscription", stripe: { customer: :new, plan: "test", card: :visa, subscription: "test" } do
+    let!(:organization) { create(:organization, :with_account, stripe_customer_id: stripe_customer.id) }
+    let!(:account) { organization.accounts.first }
+    let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
+    let!(:subscription) { create(:subscription, state: "active", plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }
+
+    it "works" do
+      visit edit_subscription_path(subscription)
+
+      click_on "Cancel Subscription"
+      expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_text("Sorry to see you go.")
+    end
+  end
 end

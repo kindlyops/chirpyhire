@@ -1,4 +1,4 @@
-class Payment::Subscriptions::Update
+class Payment::Subscriptions::Cancel
   def self.call(subscription)
     new(subscription).call
   end
@@ -8,8 +8,7 @@ class Payment::Subscriptions::Update
   end
 
   def call
-    stripe_subscription.quantity = subscription.quantity
-    stripe_subscription.save
+    stripe_subscription.delete(at_period_end: true)
 
     subscription.refresh(stripe_subscription: stripe_subscription)
   end

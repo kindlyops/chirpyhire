@@ -17,23 +17,7 @@ class Payment::Subscriptions::Process
       stripe_subscription = create_stripe_subscription(stripe_customer)
     end
 
-    subscription.update(
-      stripe_id:               stripe_subscription.id,
-      application_fee_percent: stripe_subscription.application_fee_percent,
-      cancel_at_period_end:    stripe_subscription.cancel_at_period_end,
-      canceled_at:             stripe_subscription.canceled_at,
-      stripe_created_at:       stripe_subscription.created,
-      current_period_end:      stripe_subscription.current_period_end,
-      current_period_start:    stripe_subscription.current_period_start,
-      stripe_customer_id:      stripe_subscription.customer,
-      ended_at:                stripe_subscription.ended_at,
-      quantity:                stripe_subscription.quantity,
-      start:                   stripe_subscription.start,
-      status:                  stripe_subscription.status,
-      tax_percent:             stripe_subscription.tax_percent,
-      trial_end:               stripe_subscription.trial_end,
-      trial_start:             stripe_subscription.trial_start
-    )
+    subscription.refresh(stripe_subscription: stripe_subscription)
 
     subscription.activate!
   rescue Stripe::StripeError => e

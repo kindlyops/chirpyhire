@@ -33,6 +33,16 @@ class SubscriptionsController < ApplicationController
     end
   end
 
+  def destroy
+    @subscription = authorize Subscription.find(params[:id])
+    if @subscription.cancel!
+      Payment::CancelSubscriptionJob.perform_later(@subscription)
+      redirect_to edit_subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled and will be unaccessible at the end of the billing period."
+    else
+      render :edit
+    end
+  end
+
   private
 
   def new_subscription

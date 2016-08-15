@@ -7,7 +7,7 @@ class SubscriptionPolicy < ApplicationPolicy
     true
   end
 
-  def status?
+  def destroy?
     show?
   end
 
