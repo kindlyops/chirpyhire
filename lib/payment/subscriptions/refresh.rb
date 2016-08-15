@@ -22,7 +22,7 @@ class Payment::Subscriptions::Refresh
     @stripe_subscription ||= Stripe::Subscription.retrieve(subscription.stripe_id)
   end
 
-  attr_reader :subscription, :stripe_subscription
+  attr_reader :subscription
 
   delegate :organization, to: :subscription
 end

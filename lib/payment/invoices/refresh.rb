@@ -22,7 +22,7 @@ class Payment::Invoices::Refresh
     @stripe_invoice ||= Stripe::Invoice.retrieve(invoice.stripe_id)
   end
 
-  attr_reader :invoice, :stripe_invoice
+  attr_reader :invoice
 
   delegate :organization, to: :invoice
 end

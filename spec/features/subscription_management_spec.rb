@@ -21,7 +21,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
       end
 
       click_on "submit-button"
-      expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_current_path(/\/subscriptions\/\d+/)
       expect(page).to have_text("Nice! Subscription created.")
     end
   end
@@ -40,7 +40,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
       end
 
       click_on "Change Subscription"
-      expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_current_path(/\/subscriptions\/\d+/)
       expect(page).to have_text("Nice! Subscription changed.")
     end
   end
@@ -49,13 +49,13 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
     let!(:organization) { create(:organization, :with_account, stripe_customer_id: stripe_customer.id) }
     let!(:account) { organization.accounts.first }
     let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-    let!(:subscription) { create(:subscription, state: "active", plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }
+    let!(:subscription) { create(:subscription, state: "active", plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id, current_period_end: Time.at(stripe_subscription.current_period_end).utc.to_datetime) }
 
     it "works" do
       visit edit_subscription_path(subscription)
 
       click_on "Cancel Subscription"
-      expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_current_path(/\/subscriptions\/\d+/)
       expect(page).to have_text("Sorry to see you go.")
     end
   end

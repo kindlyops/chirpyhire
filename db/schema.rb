@@ -112,8 +112,8 @@ ActiveRecord::Schema.define(version: 20160815142428) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.string   "stripe_id"
-    t.string   "stripe_subscription_id"
+    t.string   "stripe_id",                          null: false
+    t.string   "stripe_subscription_id",             null: false
     t.string   "stripe_charge_id"
     t.string   "stripe_customer_id"
     t.integer  "amount_due"
@@ -266,13 +266,13 @@ ActiveRecord::Schema.define(version: 20160815142428) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
+    t.string   "stripe_customer_id"
     t.float    "application_fee_percent"
     t.boolean  "cancel_at_period_end"
     t.datetime "canceled_at"
     t.datetime "stripe_created_at"
     t.datetime "current_period_end"
     t.datetime "current_period_start"
-    t.string   "stripe_customer_id"
     t.datetime "ended_at"
     t.integer  "quantity"
     t.datetime "start"
