@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_subscription
-    @current_subscription ||= current_organization.subscription || NullSubscription.new
+    @current_subscription ||= current_organization.subscription
   end
 
   private
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   def block_canceled_subscriptions
-    if current_subscription.canceled?
+    if current_subscription.present? && current_subscription.canceled?
       redirect_to(edit_subscription_path(current_subscription))
     end
   end
