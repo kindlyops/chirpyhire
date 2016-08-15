@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReferralsController, vcr: { cassette_name: "ReferralsController" }, type: :controller do
+RSpec.describe Sms::ReferralsController, vcr: { cassette_name: "ReferralsController" }, type: :controller do
 
   let(:organization) { create(:organization) }
   let(:sender_phone_number) { "+15555555555" }
