@@ -1,5 +1,4 @@
 class SubscriptionsController < ApplicationController
-  before_action :ensure_no_subscription, only: :new
 
   def new
     @subscription = authorize current_organization.build_subscription(plan: Plan.first)
@@ -24,12 +23,6 @@ class SubscriptionsController < ApplicationController
   end
 
   private
-
-  def ensure_no_subscription
-    if current_organization.subscription.persisted?
-      redirect_to edit_subscription_path(current_organization.subscription)
-    end
-  end
 
   def new_subscription
     current_organization.build_subscription(permitted_attributes(Subscription))

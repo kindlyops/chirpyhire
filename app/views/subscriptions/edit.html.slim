@@ -1,2 +1,16 @@
 .subscription
-  h1 Edit!
+  = form_for(@subscription) do |f|
+    = f.hidden_field :plan_id
+    .service-tier
+      .card
+        .card-image
+          .price-per-month
+            h1 = number_to_currency(Plan::DEFAULT_QUANTITY * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+            .messages-per-month
+              h3 = number_with_delimiter(Plan::DEFAULT_QUANTITY * Plan::MESSAGES_PER_QUANTITY)
+              p messages / mo
+        .card-header
+          = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
+        .card-copy
+          p Lorem ipsum bla bla bla
+      = f.submit "Submit", class: "submit"

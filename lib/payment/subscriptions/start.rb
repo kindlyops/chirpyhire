@@ -9,7 +9,7 @@ class Payment::Subscriptions::Start
   end
 
   def call
-    if customer.stripe_customer_id.blank?
+    if organization.stripe_customer_id.blank?
       stripe_customer = create_stripe_customer_with_subscription
       stripe_subscription = stripe_customer.subscriptions.first
     else
@@ -53,11 +53,11 @@ class Payment::Subscriptions::Start
 
   def create_stripe_customer_with_subscription
     stripe_customer = Stripe::Customer.create(
-      source:   customer.stripe_token,
+      source:   organization.stripe_token,
       plan:     subscription.plan_stripe_id,
       quantity: subscription.quantity
     )
-    customer.update(stripe_customer_id: stripe_customer.id)
+    organization.update(stripe_customer_id: stripe_customer.id)
     stripe_customer
   end
 
@@ -69,7 +69,7 @@ class Payment::Subscriptions::Start
     )
   end
 
-  def customer
-    @customer ||= subscription.organization
+  def organization
+    @organization ||= subscription.organization
   end
 end
