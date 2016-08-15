@@ -1,4 +1,5 @@
 class Subscription < ApplicationRecord
+  INACTIVE_STATUSES = %w(past_due canceled unpaid)
   belongs_to :plan
   belongs_to :organization
 
@@ -44,7 +45,7 @@ class Subscription < ApplicationRecord
   end
 
   def inactive?
-    !active?
+    canceled? || INACTIVE_STATUSES.include?(status)
   end
 
   private
