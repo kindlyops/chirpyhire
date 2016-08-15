@@ -26,8 +26,8 @@ class Organization < ApplicationRecord
                 direction: sent_message.direction)
   end
 
-  def subscription
-    super || NullSubscription.new
+  def subscribed?
+    subscription.present? && subscription.active?
   end
 
   def get_message(sid)
