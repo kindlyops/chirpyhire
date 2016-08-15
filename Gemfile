@@ -40,7 +40,6 @@ group :test do
   gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'shoulda-matchers', '~> 2.8.0'
-  gem 'rspec-stripe', git: "https://github.com/hwhelchel/rspec-stripe.git", branch: "sources"
 end
 
 group :development do

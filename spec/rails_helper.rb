@@ -7,7 +7,6 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'pundit/matchers'
 require 'paper_trail/frameworks/rspec'
-require 'rspec-stripe'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

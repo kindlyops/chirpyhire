@@ -15,6 +15,9 @@ VCR.configure do |c|
   c.filter_sensitive_data('DEV_EMAIL') { ENV['DEV_EMAIL'] }
   c.filter_sensitive_data('TEST_ORG_PHONE') { ENV['TEST_ORG_PHONE'] }
   c.filter_sensitive_data('SMARTY_STREETS_AUTH_TOKEN') { ENV['SMARTY_STREETS_AUTH_TOKEN'] }
+  c.filter_sensitive_data('STRIPE_SECRET_KEY') { ENV['STRIPE_SECRET_KEY'] }
+  c.filter_sensitive_data('STRIPE_WEBHOOK_SECRET') { ENV['STRIPE_WEBHOOK_SECRET'] }
+  c.filter_sensitive_data('STRIPE_PUBLISHABLE_KEY') { ENV['STRIPE_PUBLISHABLE_KEY'] }
 end
 
 RSpec.configure do |config|
@@ -23,12 +26,6 @@ RSpec.configure do |config|
       c.ignore_request do |request|
         URI(request.uri).port == Capybara.server_port
       end
-    end
-  end
-
-  VCR.configure do |c|
-    c.ignore_request do |request|
-      URI(request.uri).host == "api.stripe.com"
     end
   end
 end
