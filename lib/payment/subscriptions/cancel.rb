@@ -8,7 +8,7 @@ class Payment::Subscriptions::Cancel
   end
 
   def call
-    stripe_subscription.delete(at_period_end: true)
+    stripe_subscription.delete
   end
 
   private

@@ -32,7 +32,7 @@ RSpec.describe Payment::Subscriptions::Cancel, vcr: { cassette_name: "Payment::S
 
       it "sends cancel message to stripe" do
         allow(Stripe::Subscription).to receive(:retrieve) { stripe_subscription }
-        expect(stripe_subscription).to receive(:delete).with(at_period_end: true)
+        expect(stripe_subscription).to receive(:delete)
         subject.call
       end
     end

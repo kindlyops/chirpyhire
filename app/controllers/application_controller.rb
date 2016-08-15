@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 
   before_action :authenticate_account!
-  before_action :block_inactive_subscriptions, unless: :devise_controller?
+  before_action :block_canceled_subscriptions, unless: :devise_controller?
 
   include Pundit
   after_action :verify_authorized, except: :index, unless: :devise_controller?
@@ -38,8 +38,8 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referrer || root_path)
   end
 
-  def block_inactive_subscriptions
-    if current_subscription.inactive?
+  def block_canceled_subscriptions
+    if current_subscription.canceled?
       redirect_to(edit_subscription_path(current_subscription))
     end
   end

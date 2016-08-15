@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  skip_before_action :block_inactive_subscriptions, only: [:edit, :update]
+  skip_before_action :block_canceled_subscriptions, only: [:edit, :update]
 
   def new
     @subscription = authorize current_organization.build_subscription(plan: Plan.first)
@@ -42,7 +42,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
     if @subscription.cancel!
       Payment::Job::CancelSubscription.perform_later(@subscription)
-      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled and will be unaccessible at the end of the billing period."
+      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
     else
       render :edit
     end
