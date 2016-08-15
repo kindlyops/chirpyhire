@@ -63,7 +63,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "redirects to edit route" do
         post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
 
-        expect(response).to redirect_to(edit_subscription_path(subscription))
+        expect(response).to redirect_to(edit_subscription_path(assigns(:subscription)))
       end
     end
 
@@ -88,9 +88,9 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it "updates the requested subscription" do
         subscription = organization.create_subscription valid_attributes
-        put :update, params: {id: subscription.to_param, subscription: new_attributes}
-        subscription.reload
-        skip("Add assertions for updated state")
+        expect {
+          put :update, params: {id: subscription.to_param, subscription: new_attributes}
+        }.to change{subscription.reload.quantity}.from(1).to(new_attributes[:quantity])
       end
 
       it "assigns the requested subscription as @subscription" do
@@ -102,23 +102,30 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "redirects to the subscription" do
         subscription = organization.create_subscription valid_attributes
         put :update, params: {id: subscription.to_param, subscription: valid_attributes}
-        expect(response).to redirect_to(subscription)
+        expect(response).to redirect_to(edit_subscription_path(subscription))
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested subscription" do
-      subscription = organization.create_subscription valid_attributes
+    it "cancels the requested subscription" do
+      subscription = organization.create_subscription valid_attributes.merge(state: "active")
       expect {
         delete :destroy, params: {id: subscription.to_param}
-      }.to change(Subscription, :count).by(-1)
+      }.to change{subscription.reload.state}.from("active").to("canceled")
     end
 
-    it "redirects to the subscriptions list" do
-      subscription = organization.create_subscription valid_attributes
+    it "cancels the requested subscription" do
+      subscription = organization.create_subscription valid_attributes.merge(state: "active")
+      expect {
+        delete :destroy, params: {id: subscription.to_param}
+      }.to have_enqueued_job(Payment::CancelSubscriptionJob).with(subscription)
+    end
+
+    it "redirects to the subscriptions edit subscription" do
+      subscription = organization.create_subscription valid_attributes.merge(state: "active")
       delete :destroy, params: {id: subscription.to_param}
-      expect(response).to redirect_to(subscriptions_url)
+      expect(response).to redirect_to(edit_subscription_path(subscription))
     end
   end
 

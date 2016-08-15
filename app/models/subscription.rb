@@ -30,7 +30,7 @@ class Subscription < ApplicationRecord
     end
 
     event :fail do
-      transitions from: Subscription.states, to: :errored
+      transitions from: Subscription.states.keys, to: :errored
     end
   end
 

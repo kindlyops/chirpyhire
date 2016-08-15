@@ -17,6 +17,7 @@ class Payment::Subscriptions::Process
       stripe_subscription = create_stripe_subscription(stripe_customer)
     end
 
+    subscription.update(stripe_id: stripe_customer.id)
     subscription.activate!
   rescue Stripe::StripeError => e
     subscription.update(error: e.message)

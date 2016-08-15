@@ -18,13 +18,6 @@ RSpec.describe Payment::Subscriptions::Process do
         }.to change{organization.reload.stripe_customer_id}.from(nil)
       end
 
-      it "creates a subscription through the customer" do
-        expect {
-          subject.call
-        }.to change{subscription.reload.stripe_customer_id}.from(nil)
-        expect(organization.subscription.stripe_customer_id).to eq(organization.reload.stripe_customer_id)
-      end
-
       it "updates the local subscription" do
         expect{
           subject.call
@@ -47,13 +40,6 @@ RSpec.describe Payment::Subscriptions::Process do
         expect{
           subject.call
         }.not_to change{organization.reload.stripe_customer_id}
-      end
-
-      it "creates a subscription through the customer" do
-        expect {
-          subject.call
-        }.to change{subscription.reload.stripe_customer_id}.from(nil)
-        expect(organization.subscription.stripe_customer_id).to eq(organization.reload.stripe_customer_id)
       end
 
       it "updates the local subscription" do
