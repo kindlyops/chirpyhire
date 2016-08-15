@@ -1,4 +1,4 @@
-class SubscriptionsController < SmsController
+class Sms::SubscriptionsController < Sms::BaseController
   def create
     if sender.subscribed?
       sender.receive_message(body: already_subscribed)

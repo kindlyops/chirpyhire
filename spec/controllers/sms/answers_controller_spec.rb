@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AnswersController, type: :controller do
+RSpec.describe Sms::AnswersController, type: :controller do
   let(:user) { create(:user) }
   let(:message) { create(:message, user: user) }
   let(:survey) { create(:survey, organization: user.organization) }

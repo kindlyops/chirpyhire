@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SmsController, type: :controller do
+RSpec.describe Sms::BaseController, type: :controller do
   let(:organization) { create(:organization) }
   let(:phone_number) { organization.phone_number }
 

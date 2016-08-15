@@ -1,4 +1,4 @@
-class ReferralsController < SmsController
+class Sms::ReferralsController < Sms::BaseController
 
   def create
     if referrer.present?
