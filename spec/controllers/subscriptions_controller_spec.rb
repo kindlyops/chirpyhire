@@ -17,14 +17,6 @@ RSpec.describe SubscriptionsController, type: :controller do
     { plan_id: plan.id }
   }
 
-  describe "GET #show" do
-    it "assigns the requested subscription as @subscription" do
-      subscription = organization.create_subscription valid_attributes
-      get :show, params: {id: subscription.to_param}
-      expect(assigns(:subscription)).to eq(subscription)
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new subscription as @subscription" do
       get :new, params: {}
@@ -47,13 +39,13 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "sets the stripe token on the organization" do
         expect {
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to change{organization.stripe_token}.from(nil).to(stripe_token)
+        }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
       end
 
       it "kicks off a job to process the subscription" do
         expect{
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to have_enqueued_job(Payment::ProcessSubscriptionJob).with(subscription)
+        }.to have_enqueued_job(Payment::ProcessSubscriptionJob)
       end
 
       it "creates a new Subscription" do
@@ -68,10 +60,10 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect(assigns(:subscription)).to be_persisted
       end
 
-      it "renders a json of the created subscription" do
+      it "redirects to edit route" do
         post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        expect(response_json["id"]).to eq(Subscription.last.id)
-        expect(response_json["state"]).to eq(Subscription.last.state)
+
+        expect(response).to redirect_to(edit_subscription_path(subscription))
       end
     end
 
@@ -81,10 +73,9 @@ RSpec.describe SubscriptionsController, type: :controller do
         expect(assigns(:subscription)).to be_a_new(Subscription)
       end
 
-      it "renders json of the error" do
+      it "renders the new template" do
         post :create, params: {subscription: invalid_attributes}
-        expect(response_json["error"]).to eq("Quantity can't be blank")
-        expect(response_json["id"]).to eq(nil)
+        expect(response).to render_template("new")
       end
     end
   end
@@ -92,7 +83,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { quantity: 2 }
       }
 
       it "updates the requested subscription" do
@@ -112,20 +103,6 @@ RSpec.describe SubscriptionsController, type: :controller do
         subscription = organization.create_subscription valid_attributes
         put :update, params: {id: subscription.to_param, subscription: valid_attributes}
         expect(response).to redirect_to(subscription)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the subscription as @subscription" do
-        subscription = organization.create_subscription valid_attributes
-        put :update, params: {id: subscription.to_param, subscription: invalid_attributes}
-        expect(assigns(:subscription)).to eq(subscription)
-      end
-
-      it "re-renders the 'edit' template" do
-        subscription = organization.create_subscription valid_attributes
-        put :update, params: {id: subscription.to_param, subscription: invalid_attributes}
-        expect(response).to render_template("edit")
       end
     end
   end

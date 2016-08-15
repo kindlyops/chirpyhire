@@ -27,9 +27,10 @@ class SubscriptionsController < ApplicationController
 
     if @subscription.save
       Payment::ProcessSubscriptionJob.perform_later(@subscription)
+      redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription created."
+    else
+      render :new
     end
-
-    redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription created."
   end
 
   private
