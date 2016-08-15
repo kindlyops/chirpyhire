@@ -31,6 +31,8 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'sms/base#unknown_message'
 
+  mount StripeEvent::Engine, at: '/stripe/events'
+
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 
   authenticate :account, lambda { |a| a.super_admin? } do
