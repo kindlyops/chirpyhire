@@ -28,6 +28,15 @@ GIT
       selectize-rails (~> 0.6)
 
 GIT
+  remote: git://github.com/integrallis/stripe_event.git
+  revision: 1da7ed881af66db8b970539271a996a51b592c3a
+  ref: 1da7ed8
+  specs:
+    stripe_event (1.5.0)
+      activesupport (>= 3.1)
+      stripe (~> 1.6)
+
+GIT
   remote: git://github.com/rails/activemodel-serializers-xml.git
   revision: 570ee7ed33d60e44ca1f3ccbec3d1fbf61d52cbf
   specs:
@@ -373,9 +382,6 @@ GEM
       sprockets (>= 3.0.0)
     stripe (1.49.0)
       rest-client (>= 1.4, < 3.0)
-    stripe_event (1.5.0)
-      activesupport (>= 3.1)
-      stripe (~> 1.6)
     temple (0.7.7)
     thor (0.19.1)
     thread_safe (0.3.5)
@@ -477,7 +483,7 @@ DEPENDENCIES
   slim-rails (~> 3.1.0)
   spring
   stripe (~> 1.49.0)
-  stripe_event (~> 1.5.0)
+  stripe_event!
   timecop (~> 0.8.1)
   turbolinks (~> 5.0.0)
   twilio-ruby (~> 4.11.0)
