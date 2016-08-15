@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
     if @subscription.update(permitted_attributes(Subscription))
       Payment::UpdateSubscriptionJob.perform_later(@subscription)
 
-      redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription changed."
+      redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
     else
       render :edit
     end
@@ -32,7 +32,7 @@ class SubscriptionsController < ApplicationController
 
     if @subscription.save
       Payment::ProcessSubscriptionJob.perform_later(@subscription)
-      redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription created."
+      redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
     else
       render :new
     end
@@ -42,7 +42,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
     if @subscription.cancel!
       Payment::CancelSubscriptionJob.perform_later(@subscription)
-      redirect_to edit_subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled and will be unaccessible at the end of the billing period."
+      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled and will be unaccessible at the end of the billing period."
     else
       render :edit
     end

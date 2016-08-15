@@ -13,6 +13,14 @@
           = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
         .card-copy
           p Select a subscription tier that best meets your needs. Questions? Send us a message via chat.
+          p
+            strong
+              ' This month's messages:
+            = number_with_delimiter(current_organization.current_month_message_count)
+          p
+            strong
+              ' Last month's messages:
+            = number_with_delimiter(current_organization.last_month_message_count)
     .credit-card-form
       .credit-card-wrapper
       .credit-card-fields

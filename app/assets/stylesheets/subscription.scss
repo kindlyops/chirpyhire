@@ -31,7 +31,6 @@
   .credit-card-form {
     @include media ($horizontal-bar-mode) {
       padding: 2em;
-      max-width: 33%;
       height: 27em;
     }
     margin: 0 auto;

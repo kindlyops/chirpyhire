@@ -63,7 +63,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "redirects to edit route" do
         post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
 
-        expect(response).to redirect_to(edit_subscription_path(assigns(:subscription)))
+        expect(response).to redirect_to(subscription_path(assigns(:subscription)))
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "redirects to the subscription" do
         subscription = organization.create_subscription valid_attributes
         put :update, params: {id: subscription.to_param, subscription: valid_attributes}
-        expect(response).to redirect_to(edit_subscription_path(subscription))
+        expect(response).to redirect_to(subscription_path(subscription))
       end
     end
   end
@@ -125,7 +125,7 @@ RSpec.describe SubscriptionsController, type: :controller do
     it "redirects to the subscriptions edit subscription" do
       subscription = organization.create_subscription valid_attributes.merge(state: "active")
       delete :destroy, params: {id: subscription.to_param}
-      expect(response).to redirect_to(edit_subscription_path(subscription))
+      expect(response).to redirect_to(subscription_path(subscription))
     end
   end
 
