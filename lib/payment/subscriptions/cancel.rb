@@ -9,8 +9,11 @@ class Payment::Subscriptions::Cancel
 
   def call
     stripe_subscription.delete(at_period_end: true)
-
-    subscription.refresh(stripe_subscription: stripe_subscription)
+  rescue Stripe::StripeError => e
+    subscription.update(error: e.message)
+    subscription.fail!
+  ensure
+    subscription
   end
 
   private

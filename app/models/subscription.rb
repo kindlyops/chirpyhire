@@ -30,11 +30,7 @@ class Subscription < ApplicationRecord
     end
 
     event :fail do
-      transitions from: [:pending, :processing], to: :errored
-    end
-
-    event :refund do
-      transitions from: :finished, to: :refunded
+      transitions from: Subscription.states, to: :errored
     end
   end
 
