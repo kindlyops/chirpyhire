@@ -49,7 +49,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
     let!(:organization) { create(:organization, :with_account, stripe_customer_id: stripe_customer.id) }
     let!(:account) { organization.accounts.first }
     let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-    let!(:subscription) { create(:subscription, state: "active", plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id, current_period_end: Time.at(stripe_subscription.current_period_end).utc.to_datetime) }
+    let!(:subscription) { create(:subscription, state: "active", plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }
 
     it "works" do
       visit edit_subscription_path(subscription)

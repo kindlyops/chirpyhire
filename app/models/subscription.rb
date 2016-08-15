@@ -8,29 +8,19 @@ class Subscription < ApplicationRecord
 
   include AASM
 
-  enum state: [:pending, :processing, :active, :canceled, :errored]
+  enum state: [:trialing, :active, :canceled]
 
   aasm column: :state, enum: true do
-    state :pending, initial: true
-    state :processing
+    state :trialing, initial: true
     state :active
     state :canceled
-    state :errored
-
-    event :process, after: :process_subscription do
-      transitions from: :pending, to: :processing
-    end
 
     event :activate do
-      transitions from: :processing, to: :active
+      transitions from: :trialing, to: :active
     end
 
     event :cancel do
       transitions from: :active, to: :canceled
-    end
-
-    event :fail do
-      transitions from: Subscription.states.keys, to: :errored
     end
   end
 
@@ -53,11 +43,11 @@ class Subscription < ApplicationRecord
     )
   end
 
-  private
-
-  def process_subscription
-    Payment::Subscriptions::Process.call(self)
+  def inactive?
+    !active?
   end
+
+  private
 
   def stripe_timestamp(unix_timestamp)
     return unless unix_timestamp.present?

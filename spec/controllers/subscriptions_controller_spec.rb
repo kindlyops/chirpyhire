@@ -108,22 +108,26 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe "DELETE #destroy" do
+    let(:valid_attributes) {
+      { plan_id: plan.id, quantity: 1, state: "active" }
+    }
+
     it "cancels the requested subscription" do
-      subscription = organization.create_subscription valid_attributes.merge(state: "active")
+      subscription = organization.create_subscription valid_attributes
       expect {
         delete :destroy, params: {id: subscription.to_param}
       }.to change{subscription.reload.state}.from("active").to("canceled")
     end
 
     it "cancels the requested subscription" do
-      subscription = organization.create_subscription valid_attributes.merge(state: "active")
+      subscription = organization.create_subscription valid_attributes
       expect {
         delete :destroy, params: {id: subscription.to_param}
       }.to have_enqueued_job(Payment::Job::CancelSubscription).with(subscription)
     end
 
     it "redirects to the subscriptions edit subscription" do
-      subscription = organization.create_subscription valid_attributes.merge(state: "active")
+      subscription = organization.create_subscription valid_attributes
       delete :destroy, params: {id: subscription.to_param}
       expect(response).to redirect_to(subscription_path(subscription))
     end

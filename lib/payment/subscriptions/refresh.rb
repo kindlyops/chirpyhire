@@ -9,11 +9,6 @@ class Payment::Subscriptions::Refresh
 
   def call
     subscription.refresh(stripe_subscription: stripe_subscription)
-  rescue Stripe::StripeError => e
-    subscription.update(error: e.message)
-    subscription.fail!
-  ensure
-    subscription
   end
 
   private

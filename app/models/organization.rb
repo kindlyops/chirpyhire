@@ -26,8 +26,12 @@ class Organization < ApplicationRecord
                 direction: sent_message.direction)
   end
 
-  def subscribed?
+  def has_persisted_subscription?
     subscription.present? && subscription.persisted?
+  end
+
+  def has_new_subscription?
+    subscription.present? && subscription.new_record?
   end
 
   def current_month_message_count

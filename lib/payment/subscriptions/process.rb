@@ -19,11 +19,6 @@ class Payment::Subscriptions::Process
 
     subscription.update(stripe_id: stripe_subscription.id)
     subscription.activate!
-  rescue Stripe::StripeError => e
-    subscription.update(error: e.message)
-    subscription.fail!
-  ensure
-    subscription
   end
 
   private

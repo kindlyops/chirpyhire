@@ -10,11 +10,6 @@ class Payment::Subscriptions::Update
   def call
     stripe_subscription.quantity = subscription.quantity
     stripe_subscription.save
-  rescue Stripe::StripeError => e
-    subscription.update(error: e.message)
-    subscription.fail!
-  ensure
-    subscription
   end
 
   private
