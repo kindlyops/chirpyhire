@@ -1,4 +1,5 @@
 class SubscriptionsController < ApplicationController
+  skip_before_action :block_expired_canceled_organizations, only: [:edit, :update]
 
   def new
     @subscription = authorize current_organization.build_subscription(plan: Plan.first)
