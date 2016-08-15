@@ -3,10 +3,28 @@ require 'rails_helper'
 RSpec.describe Payment::Subscriptions::Process do
   subject { Payment::Subscriptions::Process.new(subscription) }
 
+  let(:card) do
+    {
+      number: "4242424242424242",
+      exp_month: "8",
+      exp_year: 1.year.from_now.year,
+      cvc: "123"
+    }
+  end
+
+  let!(:stripe_token) { Stripe::Token.create(card: card) }
+  let!(:stripe_plan) { Stripe::Plan.create(id: "test", amount: 5_000, currency: "usd", interval: "month", name: "test") }
+
+  let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
+  let!(:subscription) { create(:subscription, plan: plan, organization: organization, state: "trialing") }
+
+  after(:each) do
+    stripe_plan.delete
+  end
+
   describe "#call" do
-    context "without an existing stripe customer", stripe: { token: :visa } do
+    context "without an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer" } do
       let(:organization) { create(:organization, stripe_token: stripe_token.id) }
-      let(:subscription) { create(:subscription, organization: organization, state: "trialing") }
 
       before(:each) do
         organization.update(stripe_customer_id: nil)
@@ -31,10 +49,14 @@ RSpec.describe Payment::Subscriptions::Process do
       end
     end
 
-    context "with an existing stripe customer", stripe: { customer: :new, plan: "test", card: :visa } do
+    context "with an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-with-stripe-customer" } do
+      let(:stripe_customer) { Stripe::Customer.create }
+      let!(:stripe_card) { stripe_customer.sources.create(source: stripe_token.id) }
       let!(:organization) { create(:organization, stripe_customer_id: stripe_customer.id) }
-      let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-      let!(:subscription) { create(:subscription, plan: plan, organization: organization, state: "trialing") }
+
+      after(:each) do
+        stripe_customer.delete
+      end
 
       it "does not create a new stripe customer" do
         expect{
