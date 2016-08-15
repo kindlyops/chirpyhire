@@ -1,5 +1,14 @@
 .subscription
   = form_for(@subscription) do |f|
+    h1 Change Subscription
+    p
+      strong
+        ' Monthly:
+      = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+    p
+      strong
+        ' Status:
+      = @subscription.state.humanize
     = f.hidden_field :plan_id
     .service-tier
       .card
@@ -13,4 +22,6 @@
           = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
         .card-copy
           p Lorem ipsum bla bla bla
-      = f.submit "Submit", class: "submit"
+    .actions
+      = f.submit "Change Subscription", class: "submit"
+

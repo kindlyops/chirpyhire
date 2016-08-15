@@ -15,7 +15,7 @@ Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 3001
 Capybara.app_host = 'http://localhost:3001'
 Capybara.save_path = Dir.pwd
-Capybara.default_max_wait_time = 3
+Capybara.default_max_wait_time = 5
 
 RSpec.configure do |config|
   config.include Warden::Test::Helpers, type: :feature

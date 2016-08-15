@@ -22,6 +22,24 @@ RSpec.feature "Subscription Management", type: :feature, js: true, stripe: { pla
 
       click_on "submit"
       expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_text("Nice! Subscription created.")
+    end
+  end
+
+  describe "upgrading a subscription", stripe: { customer: :new, plan: "test", card: :visa, subscription: "test" } do
+    let!(:organization) { create(:organization, stripe_customer_id: stripe_customer.id) }
+    let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
+    let!(:subscription) { create(:subscription, plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }
+
+    it "works" do
+      visit edit_subscription_path(subscription)
+      within(find(".edit_subscription", match: :first)) do
+        fill_in "quantity", with: "2"
+      end
+
+      click_on "submit"
+      expect(page).to have_current_path(/\/subscriptions\/\d+\/edit/)
+      expect(page).to have_text("Nice! Subscription changed.")
     end
   end
 end

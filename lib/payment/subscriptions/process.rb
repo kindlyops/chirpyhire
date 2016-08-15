@@ -1,4 +1,4 @@
-class Payment::Subscriptions::Start
+class Payment::Subscriptions::Process
 
   def self.call(subscription)
     new(subscription).call

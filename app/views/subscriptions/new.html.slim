@@ -1,5 +1,4 @@
 .subscription
-
   = form_for(@subscription) do |f|
     = f.hidden_field :plan_id
     .service-tier
@@ -14,13 +13,13 @@
           = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
         .card-copy
           p Lorem ipsum bla bla bla
-    span.payment-error
     .credit-card-form
       .credit-card-wrapper
       .credit-card-fields
+        .payment-errors
         = text_field_tag "number", nil, name: nil, placeholder: "Card Number", type: :text, autofocus: true, data: { stripe: :number }
         = text_field_tag "name", nil, name: nil, placeholder: "Full Name", type: :text, data: { stripe: :name }
         = text_field_tag "address_zip", nil, name: nil, placeholder: "Zip Code", type: :text, data: { stripe: :address_zip }
         = text_field_tag "expiry", nil, name: nil, placeholder: "MM/YY", type: :text, data: {stripe: :exp}
         = text_field_tag "cvc", nil, name: nil, placeholder: "CVC", type: :text, data: { stripe: :cvc }
-        = f.submit "Submit", id: "submit", class: "submit"
+        = button_tag "Submit", id: "submit-button", class: "submit"

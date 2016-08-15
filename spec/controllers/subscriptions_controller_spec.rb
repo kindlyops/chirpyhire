@@ -42,20 +42,34 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      let(:stripe_token) { "token" }
+
+      it "sets the stripe token on the organization" do
+        expect {
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.to change{organization.stripe_token}.from(nil).to(stripe_token)
+      end
+
+      it "kicks off a job to process the subscription" do
+        expect{
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.to have_enqueued_job(Payment::ProcessSubscriptionJob).with(subscription)
+      end
+
       it "creates a new Subscription" do
         expect {
-          post :create, params: {subscription: valid_attributes}
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
         }.to change(Subscription, :count).by(1)
       end
 
       it "assigns a newly created subscription as @subscription" do
-        post :create, params: {subscription: valid_attributes}
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
         expect(assigns(:subscription)).to be_a(Subscription)
         expect(assigns(:subscription)).to be_persisted
       end
 
       it "renders a json of the created subscription" do
-        post :create, params: {subscription: valid_attributes}
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
         expect(response_json["id"]).to eq(Subscription.last.id)
         expect(response_json["state"]).to eq(Subscription.last.state)
       end

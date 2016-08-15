@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Payment::Subscriptions::Start do
-  subject { Payment::Subscriptions::Start.new(subscription) }
+RSpec.describe Payment::Subscriptions::Process do
+  subject { Payment::Subscriptions::Process.new(subscription) }
 
   describe "#call" do
     context "without an existing stripe customer", stripe: { token: :visa } do

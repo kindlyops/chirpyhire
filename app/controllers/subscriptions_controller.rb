@@ -8,39 +8,33 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
   end
 
-  def status
+  def update
     @subscription = authorize Subscription.find(params[:id])
 
-    render_payment_status(@subscription)
+    if @subscription.update(permitted_attributes(Subscription))
+      Payment::UpdateSubscriptionJob.perform_later(@subscription)
+
+      redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription changed."
+    else
+      render :edit
+    end
   end
 
   def create
     @subscription = authorize(new_subscription)
 
-    Payment::Subscriptions::Create.call(@subscription, params[:stripe_token])
+    current_organization.update(stripe_token: params[:stripe_token])
 
-    render_payment_status(@subscription)
+    if @subscription.save
+      Payment::ProcessSubscriptionJob.perform_later(@subscription)
+    end
+
+    redirect_to edit_subscription_path(@subscription), notice: "Nice! Subscription created."
   end
 
   private
 
   def new_subscription
     current_organization.build_subscription(permitted_attributes(Subscription))
-  end
-
-  def render_payment_status(subscription)
-    head :not_found and return unless subscription
-
-    errors = subscription.errors.full_messages.to_sentence
-
-    subscription_response = {
-      id:   subscription.id,
-      state: subscription.state,
-      error:  errors.presence
-    }
-
-    subscription_response_status = errors.blank? ? 200 : 400
-
-    render json: subscription_response, status: subscription_response_status
   end
 end

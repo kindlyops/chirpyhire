@@ -17,7 +17,7 @@ class Subscription < ApplicationRecord
     state :canceled
     state :errored
 
-    event :process, after: :start_subscription do
+    event :process, after: :process_subscription do
       transitions from: :pending, to: :processing
     end
 
@@ -40,7 +40,7 @@ class Subscription < ApplicationRecord
 
   private
 
-  def start_subscription
-    Payment::Subscriptions::Start.call(self)
+  def process_subscription
+    Payment::Subscriptions::Process.call(self)
   end
 end

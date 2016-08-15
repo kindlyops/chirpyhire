@@ -4,6 +4,15 @@
   @include outer-container;
   padding: 1.25em;
 
+  .edit_subscription {
+    @include span-columns(4);
+    @include shift(4);
+
+    .actions .submit {
+      width: 100%;
+    }
+  }
+
   .credit-card-form {
     @include media ($horizontal-bar-mode) {
       padding: 2em;
@@ -48,16 +57,7 @@
     }
   }
 
-  .service-tier {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .card {
-    @include media ($horizontal-bar-mode) {
-      max-width: 33%;
-    }
     margin: 0 0 1.5em 0;
     cursor: default;
   }

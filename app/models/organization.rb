@@ -27,7 +27,7 @@ class Organization < ApplicationRecord
   end
 
   def subscribed?
-    subscription.present? && !subscription.pending?
+    subscription.present? && subscription.persisted?
   end
 
   def get_message(sid)

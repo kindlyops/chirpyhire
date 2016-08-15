@@ -1,78 +1,31 @@
 App.Payment = {
   initialize: function() {
-    $('#new_subscription').on('submit', function() {
-      return App.Payment.handleSubmit($(this));
-    });
+    var $form = $('#new_subscription');
+    $form.submit(App.Payment.handleSubmit);
   },
 
-  handleSubmit: function(form) {
-    $(form).find(':submit').prop('disabled', true);
-    $('.payment-spinner').show();
-    Stripe.card.createToken(form, function(status, response) {
-      App.Payment.stripeResponseHandler(form, status, response);
-    });
+  handleSubmit: function() {
+    var $form = $('#new_subscription');
+    $form.find('.submit').prop('disabled', true);
+
+    Stripe.card.createToken($form, App.Payment.stripeResponseHandler);
+
     return false;
   },
 
-  stripeResponseHandler: function(form, status, response) {
+  stripeResponseHandler: function(status, response) {
+    var $form = $('#new_subscription');
+
     if (response.error) {
-      App.Payment.showError(form, response.error.message);
+      $form.find('.payment-errors').text(response.error.message);
+      $form.find('.submit').prop('disabled', false);
     } else {
-      var action = $(form).attr('action');
-      form.append($('<input type="hidden" name="stripe_token">').val(response.id));
-      form.append(App.Payment.authenticityTokenInput());
-      $.ajax({
-        type: "POST",
-        url: action,
-        data: form.serialize(),
-        success: function(data) { App.Payment.poll(form, 60, data.id); },
-        error: function(data) { App.Payment.showError(form, jQuery.parseJSON(data.responseText).error); }
-      });
+      var token = response.id;
+
+      $form.append($('<input type="hidden" name="stripe_token">').val(token));
+      $form.get(0).submit();
+      $form.find(".submit").html("<i class='fa fa-circle-o-notch fa-spin'></i>");
     }
-  },
-
-  poll: function(form, num_retries_left, id) {
-    if (num_retries_left === 0) {
-      App.Payment.showError(form, "This seems to be taking too long. Please contact support and give them transaction ID: " + id);
-    }
-    var handler = function(data) {
-      if (data.state === "active") {
-        window.location = '/subscriptions/' + id + '/edit';
-      } else {
-        setTimeout(function() { App.Payment.poll(form, num_retries_left - 1, id); }, 500);
-      }
-    };
-    var errorHandler = function(jqXHR){
-      App.Payment.showError(form, jQuery.parseJSON(jqXHR.responseText).error);
-    };
-
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: '/subscriptions/' + id + '/status',
-      success: handler,
-      error: errorHandler
-    });
-  },
-
-  showError: function(form, message) {
-    $('.payment-spinner').hide();
-    $(form).find(':submit')
-    .prop('disabled', false)
-    .trigger('error', message);
-
-    var error_selector = form.data('payment-error-selector');
-    if (error_selector) {
-      $(error_selector).text(message);
-      $(error_selector).show();
-    } else {
-      form.find('.payment-error').text(message);
-      form.find('.payment-error').show();
-    }
-  },
-
-  authenticityTokenInput: function() {
-    return $('<input type="hidden" name="authenticity_token"></input>').val($('meta[name="csrf-token"]').attr("content"));
   }
 };
 

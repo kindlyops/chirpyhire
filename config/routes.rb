@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   end
 
   resources :subscriptions
-  get "/subscriptions/:id/status" => "subscriptions#status"
 
   resource :survey, only: [:show, :edit, :update]
   resources :yes_no_questions, except: :destroy
