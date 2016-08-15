@@ -4,6 +4,8 @@ class Subscription < ApplicationRecord
 
   validates_presence_of :plan, :quantity, :organization, on: :create
 
+  delegate :stripe_id, to: :plan, prefix: true
+
   include AASM
 
   enum state: [:pending, :processing, :active, :canceled, :errored]

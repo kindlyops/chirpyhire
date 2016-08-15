@@ -40,6 +40,7 @@ group :test do
   gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'rspec-stripe', git: "https://github.com/hwhelchel/rspec-stripe.git", branch: "sources"
 end
 
 group :development do
@@ -94,3 +95,4 @@ gem 'lodash-rails', '~> 4.14.1'
 gem 'cocoon', '~> 1.2.9'
 gem 'paper_trail', '~> 5.2.0'
 gem 'aasm', '~> 4.11.0'
+gem 'stripe', '~> 1.49.0'

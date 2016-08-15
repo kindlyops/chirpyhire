@@ -14,7 +14,7 @@ class Payment::Subscriptions::Start
       stripe_subscription = stripe_customer.subscriptions.first
     else
       stripe_customer = find_stripe_customer
-      stripe_subscription = create_stripe_subscription
+      stripe_subscription = create_stripe_subscription(stripe_customer)
     end
 
     subscription.update(
@@ -22,7 +22,7 @@ class Payment::Subscriptions::Start
       application_fee_percent: stripe_subscription.application_fee_percent,
       cancel_at_period_end:    stripe_subscription.cancel_at_period_end,
       canceled_at:             stripe_subscription.canceled_at,
-      stripe_created_at:       stripe_subscription.created_at,
+      stripe_created_at:       stripe_subscription.created,
       current_period_end:      stripe_subscription.current_period_end,
       current_period_start:    stripe_subscription.current_period_start,
       stripe_customer_id:      stripe_subscription.customer,
@@ -53,7 +53,6 @@ class Payment::Subscriptions::Start
 
   def create_stripe_customer_with_subscription
     stripe_customer = Stripe::Customer.create(
-      email:    customer.email,
       source:   customer.stripe_token,
       plan:     subscription.plan_stripe_id,
       quantity: subscription.quantity
@@ -62,7 +61,7 @@ class Payment::Subscriptions::Start
     stripe_customer
   end
 
-  def create_stripe_subscription
+  def create_stripe_subscription(stripe_customer)
     Stripe::Subscription.create(
       customer: stripe_customer.id,
       plan:     subscription.plan_stripe_id,
@@ -71,6 +70,6 @@ class Payment::Subscriptions::Start
   end
 
   def customer
-    @customer ||= subscription.customer
+    @customer ||= subscription.organization
   end
 end

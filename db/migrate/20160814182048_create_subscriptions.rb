@@ -19,6 +19,7 @@ class CreateSubscriptions < ActiveRecord::Migration[5.0]
       t.references :plan, index: true, foreign_key: true, null: false
       t.references :organization, index: true, foreign_key: true, null: false
       t.integer :state, null: false, default: 0
+      t.string :error, null: true
 
       t.timestamps
     end

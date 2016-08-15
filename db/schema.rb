@@ -243,6 +243,7 @@ ActiveRecord::Schema.define(version: 20160814182048) do
     t.integer  "plan_id",                             null: false
     t.integer  "organization_id",                     null: false
     t.integer  "state",                   default: 0, null: false
+    t.string   "error"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id", using: :btree
