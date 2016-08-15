@@ -48,7 +48,7 @@ class Payment::Subscriptions::Start
   attr_reader :subscription
 
   def find_stripe_customer
-    Stripe::Customer.retrieve(customer.stripe_customer_id)
+    Stripe::Customer.retrieve(organization.stripe_customer_id)
   end
 
   def create_stripe_customer_with_subscription
