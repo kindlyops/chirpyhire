@@ -30,6 +30,14 @@ class Organization < ApplicationRecord
     subscription.present? && subscription.persisted?
   end
 
+  def current_month_message_count
+    messages.current_month.count
+  end
+
+  def last_month_message_count
+    messages.last_month.count
+  end
+
   def get_message(sid)
     messaging_client.messages.get(sid)
   end

@@ -9,6 +9,10 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
   end
 
+  def show
+    @subscription = authorize Subscription.find(params[:id])
+  end
+
   def update
     @subscription = authorize Subscription.find(params[:id])
 
