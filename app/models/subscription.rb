@@ -1,7 +1,6 @@
 class Subscription < ApplicationRecord
   belongs_to :plan
   belongs_to :organization
-  has_many :invoices
 
   validates_presence_of :plan, :quantity, :organization, on: :create
 
