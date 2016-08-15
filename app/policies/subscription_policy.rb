@@ -7,6 +7,10 @@ class SubscriptionPolicy < ApplicationPolicy
     true
   end
 
+  def status?
+    show?
+  end
+
   def permitted_attributes
     [:plan_id, :quantity]
   end

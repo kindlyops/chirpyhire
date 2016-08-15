@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
   end
 
-  def show
+  def status
     @subscription = authorize Subscription.find(params[:id])
 
     render_payment_status(@subscription)
@@ -33,10 +33,14 @@ class SubscriptionsController < ApplicationController
 
     errors = subscription.errors.full_messages.to_sentence
 
-    render json: {
+    subscription_response = {
       id:   subscription.id,
       state: subscription.state,
       error:  errors.presence
-    }, status: errors.blank? ? 200 : 400
+    }
+
+    subscription_response_status = errors.blank? ? 200 : 400
+
+    render json: subscription_response, status: subscription_response_status
   end
 end

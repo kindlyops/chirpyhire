@@ -49,7 +49,7 @@ App.Payment = {
     $.ajax({
       type: 'GET',
       dataType: 'json',
-      url: '/subscriptions/' + id,
+      url: '/subscriptions/' + id + '/status',
       success: handler,
       error: errorHandler
     });

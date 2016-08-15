@@ -25,4 +25,10 @@ RSpec.configure do |config|
       end
     end
   end
+
+  VCR.configure do |c|
+    c.ignore_request do |request|
+      URI(request.uri).host == "api.stripe.com"
+    end
+  end
 end
