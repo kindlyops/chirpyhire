@@ -1,4 +1,4 @@
-class SubscriptonsMailer < ActionMailer::Base
+class Payment::Mailer::Subscriptions < ActionMailer::Base
   default from: "Harry Whelchel <harry@chirpyhire.com>", bcc: "harry@chirpyhire.com"
 
   def deleted(subscription)

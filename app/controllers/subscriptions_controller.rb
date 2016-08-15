@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorize Subscription.find(params[:id])
 
     if @subscription.update(permitted_attributes(Subscription))
-      Payment::UpdateSubscriptionJob.perform_later(@subscription)
+      Payment::Job::UpdateSubscription.perform_later(@subscription)
 
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
     else
@@ -31,7 +31,7 @@ class SubscriptionsController < ApplicationController
     current_organization.update(stripe_token: params[:stripe_token])
 
     if @subscription.save
-      Payment::ProcessSubscriptionJob.perform_later(@subscription)
+      Payment::Job::ProcessSubscription.perform_later(@subscription)
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
     else
       render :new
@@ -41,7 +41,7 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription = authorize Subscription.find(params[:id])
     if @subscription.cancel!
-      Payment::CancelSubscriptionJob.perform_later(@subscription)
+      Payment::Job::CancelSubscription.perform_later(@subscription)
       redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled and will be unaccessible at the end of the billing period."
     else
       render :edit

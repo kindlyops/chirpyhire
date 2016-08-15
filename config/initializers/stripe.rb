@@ -8,31 +8,26 @@ end
 
 StripeEvent.configure do |events|
   events.subscribe 'customer.subscription.' do |event|
-    subscription = Subscription.find_by(stripe_id: event.data.object.id)
-    RefreshSubscriptionJob.perform_later(subscription)
-  end
-
-  events.subscribe 'charge.failed' do |event|
-    ChargesMailer.failed(event.data.object).deliver_later
+    Payment::Job::RefreshSubscription.perform_later(event.data.object.id)
   end
 
   events.subscribe 'customer.subscription.deleted' do |event|
-    SubscriptionsMailer.deleted(event.data.object).deliver_later
+    subscription = { id: event.data.object.id }
+    Payment::Mailer::Subscriptions.deleted(subscription).deliver_later
+  end
+
+  events.subscribe 'charge.failed' do |event|
+    charge = {
+      customer: event.data.object.customer,
+      amount: event.data.object.amount,
+      failure_code: event.data.object.failure_code,
+      failure_message: event.data.object.failure_message
+    }
+    Payment::Mailer::Charges.failed(charge).deliver_later
   end
 
   events.subscribe 'charge.succeeded' do |event|
-    ChargesMailer.succeeded(event.data.object).deliver_later
-  end
-
-  events.subscribe 'invoice.' do |event|
-    subscription = Subscription.find_by(stripe_id: event.data.object.subscription)
-
-    invoice = Invoice.find_or_create_by(
-      stripe_id: event.data.object.id,
-      subscription: subscription,
-      stripe_subscription_id: event.data.object.subscription
-    )
-
-    RefreshInvoiceJob.perform_later(invoice)
+    charge = { customer: event.data.object.customer, amount: event.data.object.amount }
+    Payment::Mailer::Charges.succeeded(charge).deliver_later
   end
 end

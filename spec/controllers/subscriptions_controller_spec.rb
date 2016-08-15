@@ -45,7 +45,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "kicks off a job to process the subscription" do
         expect{
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to have_enqueued_job(Payment::ProcessSubscriptionJob)
+        }.to have_enqueued_job(Payment::Job::ProcessSubscription)
       end
 
       it "creates a new Subscription" do
@@ -119,7 +119,7 @@ RSpec.describe SubscriptionsController, type: :controller do
       subscription = organization.create_subscription valid_attributes.merge(state: "active")
       expect {
         delete :destroy, params: {id: subscription.to_param}
-      }.to have_enqueued_job(Payment::CancelSubscriptionJob).with(subscription)
+      }.to have_enqueued_job(Payment::Job::CancelSubscription).with(subscription)
     end
 
     it "redirects to the subscriptions edit subscription" do
