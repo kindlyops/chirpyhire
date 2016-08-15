@@ -1,6 +1,7 @@
 class Subscription < ApplicationRecord
   belongs_to :plan
   belongs_to :organization
+  has_many :invoices
 
   validates_presence_of :plan, :quantity, :organization, on: :create
 
@@ -36,7 +37,6 @@ class Subscription < ApplicationRecord
 
   def refresh(stripe_subscription:)
     update(
-      stripe_id:               stripe_subscription.id,
       application_fee_percent: stripe_subscription.application_fee_percent,
       cancel_at_period_end:    stripe_subscription.cancel_at_period_end,
       canceled_at:             stripe_timestamp(stripe_subscription.canceled_at),

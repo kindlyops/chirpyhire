@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814182048) do
+ActiveRecord::Schema.define(version: 20160815142428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,45 @@ ActiveRecord::Schema.define(version: 20160814182048) do
     t.index ["question_id"], name: "index_inquiries_on_question_id", using: :btree
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.string   "stripe_id"
+    t.string   "stripe_subscription_id"
+    t.string   "stripe_charge_id"
+    t.string   "stripe_customer_id"
+    t.integer  "amount_due"
+    t.integer  "application_fee"
+    t.integer  "attempt_count",          default: 0
+    t.boolean  "attempted"
+    t.boolean  "closed"
+    t.string   "currency"
+    t.datetime "date"
+    t.string   "description"
+    t.jsonb    "discount"
+    t.integer  "ending_balance"
+    t.boolean  "forgiven"
+    t.jsonb    "lines"
+    t.boolean  "livemode"
+    t.datetime "next_payment_attempt"
+    t.boolean  "paid"
+    t.datetime "period_end"
+    t.datetime "period_start"
+    t.string   "receipt_number"
+    t.integer  "starting_balance"
+    t.string   "statement_descriptor"
+    t.integer  "subtotal"
+    t.integer  "tax"
+    t.float    "tax_percent"
+    t.integer  "total"
+    t.datetime "webhooks_delivered_at"
+    t.integer  "subscription_id",                    null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["discount"], name: "index_invoices_on_discount", using: :gin
+    t.index ["lines"], name: "index_invoices_on_lines", using: :gin
+    t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true, using: :btree
+    t.index ["subscription_id"], name: "index_invoices_on_subscription_id", using: :btree
+  end
+
   create_table "locations", force: :cascade do |t|
     t.float    "latitude",            null: false
     t.float    "longitude",           null: false
@@ -183,6 +222,7 @@ ActiveRecord::Schema.define(version: 20160814182048) do
     t.integer  "trial_period_days"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true, using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -248,6 +288,7 @@ ActiveRecord::Schema.define(version: 20160814182048) do
     t.datetime "updated_at",                          null: false
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id", using: :btree
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
+    t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, using: :btree
   end
 
   create_table "surveys", force: :cascade do |t|
@@ -321,6 +362,7 @@ ActiveRecord::Schema.define(version: 20160814182048) do
   add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
   add_foreign_key "inquiries", "questions"
+  add_foreign_key "invoices", "subscriptions"
   add_foreign_key "locations", "organizations"
   add_foreign_key "media_instances", "messages"
   add_foreign_key "messages", "users"

@@ -23,4 +23,16 @@ StripeEvent.configure do |events|
   events.subscribe 'charge.succeeded' do |event|
     ChargesMailer.succeeded(event.data.object).deliver_later
   end
+
+  events.subscribe 'invoice.' do |event|
+    subscription = Subscription.find_by(stripe_id: event.data.object.subscription)
+
+    invoice = Invoice.find_or_create_by(
+      stripe_id: event.data.object.id,
+      subscription: subscription,
+      stripe_subscription_id: event.data.object.subscription
+    )
+
+    RefreshInvoiceJob.perform_later(invoice)
+  end
 end

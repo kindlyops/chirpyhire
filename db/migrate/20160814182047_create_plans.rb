@@ -10,5 +10,7 @@ class CreatePlans < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :plans, :stripe_id, unique: true
   end
 end
