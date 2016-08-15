@@ -56,7 +56,6 @@ end
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
   gem 'skylight', '~> 0.10.4'
-  gem 'coffee-rails', '~> 4.2.1'
 end
 
 gem 'rollbar', '~> 2.11.5'
@@ -82,9 +81,6 @@ gem 'rack-protection', github: 'sinatra/rack-protection'
 gem 'puma', '~> 3.4.0'
 gem 'puma-heroku', '~> 1.0.0'
 gem 'font-awesome-rails', '~> 4.6.0'
-gem 'bootstrap-sass', '~> 3.3.6'
-gem 'jquery-datatables-rails', '~> 3.4.0'
-gem 'indefinite_article', '~> 0.2.4'
 gem 'draper', github: 'drapergem/draper', branch: 'rails-5'
 gem 'geocoder', '~> 1.3.6'
 gem 'dalli', '~> 2.7.6'
