@@ -52,6 +52,11 @@ class Subscription < ApplicationRecord
     trialing? && organization.messages_count >= trial_message_limit
   end
 
+  def trial_remaining_messages_count
+    count = trial_message_limit - organization.messages_count
+    count.negative? ? 0 : count
+  end
+
   private
 
   def stripe_timestamp(unix_timestamp)

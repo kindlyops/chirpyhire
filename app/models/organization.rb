@@ -35,11 +35,11 @@ class Organization < ApplicationRecord
     subscription.present? && subscription.new_record?
   end
 
-  def current_month_message_count
+  def current_month_messages_count
     messages.current_month.count
   end
 
-  def last_month_message_count
+  def last_month_messages_count
     messages.last_month.count
   end
 

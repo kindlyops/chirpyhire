@@ -28,7 +28,7 @@ if Rails.env.development?
   )
   puts "Created Organization"
 
-  org.create_subscription(plan: plan, stripe_id: ENV.fetch("TEST_STRIPE_SUBSCRIPTION_ID", "sub_90xv30thDQEqcW"), state: "active", quantity: Plan::DEFAULT_QUANTITY)
+  org.create_subscription(plan: plan, state: "trialing", trial_message_limit: 5)
   puts "Created Subscription"
 
   FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
