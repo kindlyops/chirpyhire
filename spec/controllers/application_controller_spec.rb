@@ -23,9 +23,7 @@ RSpec.describe ApplicationController, type: :controller do
       sign_in(account)
     end
 
-    context "canceled subscription" do
-      let!(:subscription) { create(:subscription, organization: account.organization, state: "canceled") }
-
+    context "subscription gates" do
       controller do
         skip_after_action :verify_policy_scoped
 
@@ -34,10 +32,48 @@ RSpec.describe ApplicationController, type: :controller do
         end
       end
 
-      it "redirects to show_subscription page" do
-        get :index
-        expect(response).to redirect_to(subscription)
+      context "trialing subscription" do
+        let!(:subscription) { create(:subscription, organization: account.organization, state: "trialing", trial_message_limit: 1) }
+
+        context "under the trial message limit" do
+          it "is ok" do
+            get :index
+            expect(response).to be_ok
+          end
+        end
+
+        context "at the trial message limit" do
+          before(:each) do
+            create(:message, user: account.user)
+          end
+
+          it "redirects to show_subscription page" do
+            get :index
+            expect(response).to redirect_to(subscription)
+          end
+        end
+
+        context "above the trial message limit" do
+          before(:each) do
+            create_list(:message, 2, user: account.user)
+          end
+
+          it "redirects to show_subscription page" do
+            get :index
+            expect(response).to redirect_to(subscription)
+          end
+        end
+      end
+
+      context "canceled subscription" do
+        let!(:subscription) { create(:subscription, organization: account.organization, state: "canceled") }
+
+        it "redirects to show_subscription page" do
+          get :index
+          expect(response).to redirect_to(subscription)
+        end
       end
     end
+
   end
 end

@@ -14,6 +14,7 @@ class Organization < ApplicationRecord
 
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
+  delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
 
   def send_message(to:, body:, from: phone_number)

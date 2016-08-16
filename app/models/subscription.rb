@@ -48,6 +48,10 @@ class Subscription < ApplicationRecord
     canceled? || INACTIVE_STATUSES.include?(status)
   end
 
+  def finished_trial?
+    trialing? && organization.messages_count >= trial_message_limit
+  end
+
   private
 
   def stripe_timestamp(unix_timestamp)
