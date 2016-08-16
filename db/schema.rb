@@ -61,13 +61,14 @@ ActiveRecord::Schema.define(version: 20160816222756) do
     t.string   "owner_type"
     t.integer  "owner_id"
     t.string   "key"
-    t.jsonb    "parameters"
+    t.text     "parameters"
     t.string   "recipient_type"
     t.integer  "recipient_id"
+    t.jsonb    "properties"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
-    t.index ["parameters"], name: "index_activities_on_parameters", using: :gin
+    t.index ["properties"], name: "index_activities_on_properties", using: :gin
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   end

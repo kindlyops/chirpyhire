@@ -9,7 +9,7 @@ RSpec.describe Candidate, type: :model do
         expect {
           candidate
         }.to change{PublicActivity::Activity.count}.by(1)
-        expect(candidate.activities.last.parameters[:status]).to eq("Potential")
+        expect(candidate.activities.last.properties["status"]).to eq("Potential")
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Candidate, type: :model do
           expect {
             candidate.update(status: "Qualified")
           }.to change{PublicActivity::Activity.count}.by(1)
-          expect(candidate.activities.last.parameters[:status]).to eq("Qualified")
+          expect(candidate.activities.last.properties["status"]).to eq("Qualified")
         end
       end
 

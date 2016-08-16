@@ -13,7 +13,7 @@ class Report::Daily
   end
 
   def qualified_count
-    organization.candidates.qualified.where(created_at: date.beginning_of_day..date.end_of_day).count
+    organization.candidate_activities.qualified.where(created_at: date.beginning_of_day..date.end_of_day).count
   end
 
   def recipient_email

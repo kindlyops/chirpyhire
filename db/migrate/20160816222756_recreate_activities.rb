@@ -6,14 +6,15 @@ class RecreateActivities < ActiveRecord::Migration
       t.belongs_to :trackable, :polymorphic => true
       t.belongs_to :owner, :polymorphic => true
       t.string     :key
-      t.jsonb      :parameters
+      t.text       :parameters
       t.belongs_to :recipient, :polymorphic => true
+      t.jsonb      :properties
 
       t.timestamps
     end
 
     add_index :activities, [:trackable_id, :trackable_type]
-    add_index :activities, :parameters, using: :gin
+    add_index :activities, :properties, using: :gin
     add_index :activities, [:owner_id, :owner_type]
     add_index :activities, [:recipient_id, :recipient_type]
   end
