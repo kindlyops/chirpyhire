@@ -1,16 +1,22 @@
 .subscription
   = form_for(@subscription) do |f|
+    - if @subscription.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@subscription.errors.count, "error")} prohibited this subscription from being saved:"
+        ul
+          - @subscription.errors.full_messages.each do |message|
+            li = message
     = f.hidden_field :plan_id
     .service-tier
       .card
         .card-image
           .price-per-month
-            h1 = number_to_currency(Plan::DEFAULT_QUANTITY * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+            h1 = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
             .messages-per-month
-              h3 = number_with_delimiter(Plan::DEFAULT_QUANTITY * Plan::MESSAGES_PER_QUANTITY)
+              h3 = number_with_delimiter(@subscription.quantity * Plan::MESSAGES_PER_QUANTITY)
               p messages / mo
         .card-header
-          = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
+          = f.range_field :quantity, class: "service-tier-range", min: 1, max: 5, step: 1
         .card-copy
           p Select a subscription tier that best meets your needs. Questions? Send us a message via chat.
           p

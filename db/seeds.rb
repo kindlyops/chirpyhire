@@ -13,7 +13,7 @@ if Rails.env.development?
   if Plan.count > 0
     plan = Plan.first
   else
-    plan = Plan.create(amount: Plan::DEFAULT_PRICE_IN_DOLLARS * 100, interval: 'month', stripe_id: "1", name: 'Basic')
+    plan = Plan.create(amount: Plan::DEFAULT_PRICE_IN_DOLLARS * 100, interval: 'month', stripe_id: ENV.fetch("TEST_STRIPE_PLAN_ID", "1"), name: 'Basic')
   end
 
   puts "Created Plan"

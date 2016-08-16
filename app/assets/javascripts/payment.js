@@ -7,6 +7,7 @@ App.Payment = {
   handleSubmit: function() {
     var $form = $('#new_subscription');
     $form.find('.submit').prop('disabled', true);
+    $form.find(".submit").html("<i class='fa fa-circle-o-notch fa-spin'></i>");
 
     Stripe.card.createToken($form, App.Payment.stripeResponseHandler);
 
@@ -24,7 +25,6 @@ App.Payment = {
 
       $form.append($('<input type="hidden" name="stripe_token">').val(token));
       $form.get(0).submit();
-      $form.find(".submit").html("<i class='fa fa-circle-o-notch fa-spin'></i>");
     }
   }
 };
