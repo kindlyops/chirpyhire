@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
   helper_method :current_organization
-  helper_method :current_subscription
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
@@ -26,10 +25,6 @@ class ApplicationController < ActionController::Base
     @current_user ||= current_account.user
   end
 
-  def current_subscription
-    @current_subscription ||= current_organization.subscription
-  end
-
   private
 
   def user_not_authorized(exception)
@@ -40,8 +35,8 @@ class ApplicationController < ActionController::Base
   end
 
   def block_invalid_subscriptions
-    if current_subscription.inactive? || current_subscription.finished_trial? || current_subscription.reached_limit?
-      redirect_to(subscription_path(current_subscription))
+    if current_organization.inactive? || current_organization.finished_trial? || current_organization.reached_limit?
+      redirect_to(subscription_path(current_organization.subscription))
     end
   end
 
