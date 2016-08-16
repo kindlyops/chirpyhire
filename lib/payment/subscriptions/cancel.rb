@@ -18,6 +18,4 @@ class Payment::Subscriptions::Cancel
   end
 
   attr_reader :subscription
-
-  delegate :organization, to: :subscription
 end

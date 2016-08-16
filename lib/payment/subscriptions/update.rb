@@ -19,6 +19,4 @@ class Payment::Subscriptions::Update
   end
 
   attr_reader :subscription
-
-  delegate :organization, to: :subscription
 end
