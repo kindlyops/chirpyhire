@@ -1,9 +1,14 @@
 class Candidate < ApplicationRecord
+  include PublicActivity::Model
+  tracked only: [:create, :update], on: {
+    update: ->(model,_) { model.changes.include?("status") }
+  }, properties: ->(_, model) { { status: model.status } }
 
   belongs_to :user
   has_many :candidate_features
   has_many :referrals
   has_many :referrers, through: :referrals
+  has_many :activities, as: :trackable
 
   alias :features :candidate_features
 

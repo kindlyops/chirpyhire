@@ -3,6 +3,7 @@ class Organization < ApplicationRecord
 
   has_many :users
   has_many :candidates, through: :users
+  has_many :candidate_activities, through: :candidates, source: :activities
   has_many :referrers, through: :users
   has_many :accounts, through: :users
   has_many :messages, through: :users

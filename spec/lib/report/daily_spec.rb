@@ -50,7 +50,9 @@ RSpec.describe Report::Daily do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: "Qualified", organization: organization, created_at: (rand(10.days).seconds + 1.day.seconds).ago)
+            date = (rand(10.days).seconds + 1.day.seconds).ago
+            candidate = create(:candidate, status: "Qualified", organization: organization, created_at: date)
+            candidate.activities.update(created_at: date)
           end
         end
 
