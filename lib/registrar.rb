@@ -17,7 +17,7 @@ class Registrar
     organization.rules.create!(trigger: "answer", actionable: survey.actionable)
     organization.rules.create!(trigger: "screen", actionable: thank_you.create_actionable)
 
-    organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: 500)
+    organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
   end
 
   private

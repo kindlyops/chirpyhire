@@ -32,7 +32,7 @@ RSpec.describe Registrar do
         }.to change{organization.reload.subscription.present?}.from(false).to(true)
         expect(organization.subscription.trialing?).to eq(true)
         expect(organization.subscription.plan).to eq(plan)
-        expect(organization.subscription.trial_message_limit).to eq(500)
+        expect(organization.subscription.trial_message_limit).to eq(250)
       end
 
       it "creates a welcome, bad fit, thank you template for the survey" do
