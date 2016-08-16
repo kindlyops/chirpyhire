@@ -1,11 +1,12 @@
 class Payment::Subscriptions::Process
 
-  def self.call(subscription)
-    new(subscription).call
+  def self.call(subscription, email)
+    new(subscription, email).call
   end
 
-  def initialize(subscription)
+  def initialize(subscription, email)
     @subscription = subscription
+    @email = email
   end
 
   def call
@@ -23,7 +24,7 @@ class Payment::Subscriptions::Process
 
   private
 
-  attr_reader :subscription
+  attr_reader :subscription, :email
 
   def find_stripe_customer
     Stripe::Customer.retrieve(organization.stripe_customer_id)
@@ -33,7 +34,9 @@ class Payment::Subscriptions::Process
     stripe_customer = Stripe::Customer.create(
       source:   organization.stripe_token,
       plan:     subscription.plan_stripe_id,
-      quantity: subscription.quantity
+      quantity: subscription.quantity,
+      description: organization.name,
+      email: email
     )
     organization.update(stripe_customer_id: stripe_customer.id)
     stripe_customer

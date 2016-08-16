@@ -31,7 +31,7 @@ class SubscriptionsController < ApplicationController
     current_organization.update(stripe_token: params[:stripe_token])
 
     if @subscription.save
-      Payment::Job::ProcessSubscription.perform_later(@subscription)
+      Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
     else
       render :new

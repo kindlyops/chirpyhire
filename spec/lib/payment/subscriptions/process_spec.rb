@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Payment::Subscriptions::Process do
-  subject { Payment::Subscriptions::Process.new(subscription) }
+  subject { Payment::Subscriptions::Process.new(subscription, email) }
 
   let(:card) do
     {
@@ -22,9 +22,11 @@ RSpec.describe Payment::Subscriptions::Process do
     stripe_plan.delete
   end
 
+  let(:email) { "frank.paucek@heathcote.com" }
+
   describe "#call" do
     context "without an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer" } do
-      let(:organization) { create(:organization, stripe_token: stripe_token.id) }
+      let(:organization) { create(:organization, name: "Little-Abshire", stripe_token: stripe_token.id) }
 
       before(:each) do
         organization.update(stripe_customer_id: nil)
@@ -40,6 +42,13 @@ RSpec.describe Payment::Subscriptions::Process do
         expect{
           subject.call
         }.to change{subscription.reload.stripe_id}.from(nil)
+      end
+
+      it "sets the description and email on the stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer-desc-email" } do
+        subject.call
+        stripe_customer = Stripe::Customer.retrieve(organization.reload.stripe_customer_id)
+        expect(stripe_customer.description).to eq(organization.name)
+        expect(stripe_customer.email).to eq(email)
       end
 
       it "activates the subscription" do

@@ -1,6 +1,6 @@
 class Payment::Job::ProcessSubscription < ApplicationJob
-  def perform(subscription)
-    Payment::Subscriptions::Process.call(subscription)
+  def perform(subscription, email)
+    Payment::Subscriptions::Process.call(subscription, email)
   end
 end
 
