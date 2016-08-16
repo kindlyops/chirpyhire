@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
-  let(:model) { create(:user) }
+  let(:model) { create(:user, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name) }
   let(:user) { UserDecorator.new(model) }
 
   describe "#name" do

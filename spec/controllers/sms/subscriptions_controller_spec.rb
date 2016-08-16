@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sms::SubscriptionsController, type: :controller do
-  let(:organization) { create(:organization, :with_account) }
+  let(:organization) { create(:organization, :with_account, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:phone_number) { "+15555555555" }
   describe "#create" do
     let(:params) do

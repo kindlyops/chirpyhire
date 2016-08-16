@@ -7,7 +7,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true do
     stripe_plan.delete
   end
 
-  let(:organization) { create(:organization, :with_subscription, :with_account)}
+  let(:organization) { create(:organization, :with_subscription, :with_account, phone_number: Faker::PhoneNumber.cell_phone)}
   let(:account) { organization.accounts.first }
   let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
 
@@ -51,7 +51,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true do
       stripe_customer.delete
     end
 
-    let!(:organization) { create(:organization, :with_account, stripe_customer_id: stripe_customer.id) }
+    let!(:organization) { create(:organization, :with_account, phone_number: Faker::PhoneNumber.cell_phone, stripe_customer_id: stripe_customer.id) }
     let!(:account) { organization.accounts.first }
     let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
     let!(:subscription) { create(:subscription, plan: plan, state: "active", organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }

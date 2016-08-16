@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sms::BaseController, type: :controller do
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:phone_number) { organization.phone_number }
 
   describe "#unknown_message" do

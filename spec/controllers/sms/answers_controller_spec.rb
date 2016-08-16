@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Sms::AnswersController, type: :controller do
-  let(:user) { create(:user) }
+  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+  let(:user) { create(:user, organization: organization) }
   let(:message) { create(:message, user: user) }
-  let(:survey) { create(:survey, organization: user.organization) }
+  let(:survey) { create(:survey, organization: organization) }
   let(:inbound_message) { FakeMessaging.inbound_message(user, user.organization) }
 
   describe "#create" do

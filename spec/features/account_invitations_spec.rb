@@ -23,7 +23,7 @@ RSpec.feature "Account Invitations", type: :feature, js: true do
       logout(:account)
     end
 
-    let(:invited) { build(:account, user: create(:user, organization: organization)) }
+    let(:invited) { build(:account, user: create(:user, organization: organization, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)) }
 
     scenario "accepting the invitation takes the new account to the dashboard" do
       open_email(email)
