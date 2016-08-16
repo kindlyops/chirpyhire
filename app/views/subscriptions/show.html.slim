@@ -21,7 +21,7 @@
         = link_to "Upgrade Now", edit_subscription_path(@subscription)
     p
       ' Phone Number:
-      strong = current_organization.phone_number.phony_formatted
+      strong = current_organization.decorate.phone_number.phony_formatted
     p
       ' You've used
       strong = number_with_delimiter(current_organization.current_month_messages_count)

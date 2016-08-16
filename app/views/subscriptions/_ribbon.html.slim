@@ -1,5 +1,5 @@
 - if current_organization.trialing? && controller_name != "subscriptions"
-  .notice
+  .notice.ribbon
     ' Trial:
     = number_with_delimiter(current_organization.trial_remaining_messages_count)
     '  messages left.

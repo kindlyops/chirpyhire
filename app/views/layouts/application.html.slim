@@ -29,6 +29,7 @@ html
         // End Rollbar Snippet
     body
         = render "components/navigation" if current_account.present?
+        = render partial: "subscriptions/ribbon" if current_account.present?
         - if notice.present?
             p.flash-notice = notice
         - if alert.present?
