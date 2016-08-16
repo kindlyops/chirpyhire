@@ -2,18 +2,11 @@ class CandidateDecorator < Draper::Decorator
   delegate_all
 
   decorates_association :user
-  delegate :phone_number, :name, to: :user, prefix: true
+  delegate :phone_number, to: :user, prefix: true
+  delegate :handle, to: :user
 
   def statuses
     Candidate::STATUSES
-  end
-
-  def handle
-    if user_name.present?
-      user_name
-    else
-      user_phone_number.phony_formatted
-    end
   end
 
   def choices

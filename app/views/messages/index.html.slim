@@ -3,13 +3,13 @@
     span
       | To:
       '
-      span.name = user.phone_number.phony_formatted
+      span.name = user.handle
   = link_to_next_page @messages, 'Load more messages', class: 'load_more', remote: true
   .chat
     = render partial: "messages/message", collection: messages.reverse
   .write
     = form_for [user, user.messages.build] do |f|
       = f.text_area(:body)
-      button type="submit"
+      button type="submit" disabled==user.phone_number.blank?
         ' Send
         i.fa.fa-paper-plane
