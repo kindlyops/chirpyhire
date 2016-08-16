@@ -1,5 +1,5 @@
 class Payment::Mailer::Charges < ActionMailer::Base
-  default from: "Harry Whelchel <harry@chirpyhire.com>", bcc: "harry@chirpyhire.com"
+  default from: "Harry Whelchel <harry@chirpyhire.com>"
 
   def succeeded(charge)
     @charge = charge
