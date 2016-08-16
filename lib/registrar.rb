@@ -51,7 +51,6 @@ class Registrar
   end
 
   def create_dummy_candidate_and_features
-    user.update(phone_number: organization.phone_number)
     candidate = user.create_candidate(status: "Qualified")
 
     candidate.candidate_features.create(label: "Address", properties: {
