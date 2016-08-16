@@ -7,15 +7,15 @@ class Registrar
   def register
     return unless organization.persisted?
 
-    create_templates
-    create_survey
-    create_questions
-    create_rules
-    create_dummy_candidate_and_features
-
-    organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
-
-    TwilioProvisionerJob.perform_later(organization)
+    Organization.transaction do
+      create_templates
+      create_survey
+      create_questions
+      create_rules
+      create_dummy_candidate_and_features
+      organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
+      TwilioProvisionerJob.perform_later(organization)
+    end
   end
 
   private
