@@ -57,7 +57,7 @@ class Subscription < ApplicationRecord
     count.negative? ? 0 : count
   end
 
-  def reached_limit?
+  def reached_monthly_message_limit?
     return unless active?
     message_limit = quantity * Plan.messages_per_quantity
     organization.current_month_messages_count >= message_limit
