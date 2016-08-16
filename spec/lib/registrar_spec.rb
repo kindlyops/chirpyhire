@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Registrar do
   let(:registrar) { Registrar.new(account) }
   let(:organization) { account.organization }
-
+  let!(:plan) { create(:plan) }
   describe "#register" do
     context "when the organization is persisted" do
       let(:account) { create(:account) }
@@ -24,6 +24,15 @@ RSpec.describe Registrar do
         expect {
           registrar.register
         }.to change{organization.survey.present?}.from(false).to(true)
+      end
+
+      it "creates a trial subscription" do
+        expect {
+          registrar.register
+        }.to change{organization.reload.subscription.present?}.from(false).to(true)
+        expect(organization.subscription.trialing?).to eq(true)
+        expect(organization.subscription.plan).to eq(plan)
+        expect(organization.subscription.trial_message_limit).to eq(500)
       end
 
       it "creates a welcome, bad fit, thank you template for the survey" do

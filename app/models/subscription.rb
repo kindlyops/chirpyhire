@@ -3,7 +3,7 @@ class Subscription < ApplicationRecord
   belongs_to :plan
   belongs_to :organization
 
-  validates_presence_of :plan, :quantity, :organization, on: :create
+  validates_presence_of :plan, :trial_message_limit, :organization, :state, on: :create
 
   delegate :stripe_id, to: :plan, prefix: true
 
