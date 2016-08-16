@@ -42,7 +42,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
 
   feature "sign in" do
     context "with an account" do
-      let(:organization) { create(:organization,  :with_account) }
+      let(:organization) { create(:organization,  :with_account, :with_subscription) }
       let(:account) { organization.accounts.first }
 
       scenario "it progresses to the dashboard" do
@@ -71,7 +71,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
 
   feature "forgot password" do
     context "with an account" do
-      let(:organization) { create(:organization,  :with_account) }
+      let(:organization) { create(:organization,  :with_account, :with_subscription) }
       let(:account) { organization.accounts.first }
 
       scenario "it sends an email with a password reset link that can reset the password" do
@@ -98,7 +98,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
   end
 
   feature "sign out" do
-    let(:organization) { create(:organization,  :with_account)}
+    let(:organization) { create(:organization, :with_subscription, :with_account)}
     let(:account) { organization.accounts.first }
 
     background(:each) do

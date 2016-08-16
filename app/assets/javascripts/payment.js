@@ -1,11 +1,11 @@
 App.Payment = {
   initialize: function() {
-    var $form = $('.subscription.new form.edit_subscription');
+    var $form = $('#new_subscription');
     $form.submit(App.Payment.handleSubmit);
   },
 
   handleSubmit: function() {
-    var $form = $('.subscription.new form.edit_subscription');
+    var $form = $('#new_subscription');
     $form.find('.submit').prop('disabled', true);
     $form.find(".submit").html("<i class='fa fa-circle-o-notch fa-spin'></i>");
 
@@ -15,7 +15,7 @@ App.Payment = {
   },
 
   stripeResponseHandler: function(status, response) {
-    var $form = $('.subscription.new form.edit_subscription');
+    var $form = $('#new_subscription');
 
     if (response.error) {
       $form.find('.payment-errors').text(response.error.message);

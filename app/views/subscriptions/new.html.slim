@@ -1,5 +1,5 @@
 .subscription.new
-  = form_for(@subscription) do |f|
+  = form_for(@subscription, method: :post, url: subscriptions_path, html: { id: "new_subscription"}) do |f|
     h1 Subscription
     - if @subscription.errors.any?
       #error_explanation

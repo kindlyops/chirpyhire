@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "SurveyEditing", type: :feature, js: true do
+  let!(:plan) { create(:plan) }
   let(:account) { create(:account) }
   let!(:location) { create(:location, organization: account.organization) }
 

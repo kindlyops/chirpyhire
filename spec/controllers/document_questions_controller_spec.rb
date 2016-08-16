@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe DocumentQuestionsController, type: :controller do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :with_subscription) }
   let!(:survey) { create(:survey, organization: account.organization) }
 
   before(:each) do

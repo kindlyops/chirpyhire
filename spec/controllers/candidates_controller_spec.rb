@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe CandidatesController, type: :controller do
-  let(:user) { create(:user, :with_account) }
-  let(:account) { user.account }
-  let(:organization) { user.organization }
+  let(:organization) { create(:organization, :with_subscription, :with_account) }
+  let(:account) { organization.accounts.first }
+  let(:user) { account.user }
 
   before(:each) do
     sign_in(account)

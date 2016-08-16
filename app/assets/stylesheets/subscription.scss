@@ -57,7 +57,27 @@
     }
   }
 
+  .show_subscription {
+    .menu {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
   .edit_subscription {
+    .submit-edit {
+      width: 100%;
+      margin-top: 1em;
+    }
+    .cancel_subscription {
+      padding-top: 1em;
+      display: block;
+      color: $medium-gray;
+
+      &:hover, &:focus {
+        color: $dark-gray;
+      }
+    }
     .quantity {
       padding: 1em;
       margin-top: 1em;

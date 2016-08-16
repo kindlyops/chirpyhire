@@ -19,7 +19,6 @@ class Payment::Subscriptions::Process
     end
 
     subscription.update(stripe_id: stripe_subscription.id)
-    subscription.activate!
   end
 
   private

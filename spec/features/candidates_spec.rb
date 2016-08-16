@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Candidates", type: :feature, js: true do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :with_subscription) }
 
   before(:each) do
     login_as(account, scope: :account)

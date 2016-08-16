@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
-  let(:organization) { create(:organization) }
-  let(:admin) { create(:user, :with_account, organization: organization) }
+  let(:organization) { create(:organization, :with_subscription, :with_account) }
+  let(:account) { organization.accounts.first }
+  let(:user) { account.user }
 
   before(:each) do
-    sign_in(admin.account)
+    sign_in(account)
   end
 
   let(:params) do
-    { user_id: admin.id }
+    { user_id: user.id }
   end
 
   describe "#index" do
@@ -29,15 +30,15 @@ RSpec.describe MessagesController, type: :controller do
 
     context "with messages" do
       it "returns the user's messages" do
-        messages = create_list(:message, 3, user: admin)
+        messages = create_list(:message, 3, user: user)
 
         get :index, params: params
         expect(assigns(:messages)).to match_array(messages)
       end
 
       context "order" do
-        let!(:old_message) { create(:message, id: 10, user: admin) }
-        let!(:recent_message) { create(:message, id: 11, user: admin) }
+        let!(:old_message) { create(:message, id: 10, user: user) }
+        let!(:recent_message) { create(:message, id: 11, user: user) }
 
         it "sorts by ID desc" do
           get :index, params: params
