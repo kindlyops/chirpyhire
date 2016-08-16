@@ -10,6 +10,9 @@
     = f.hidden_field :plan_id
     p Select a limit that meets your needs. Upgrade or downgrade at any time.
     p
+      ' Phone Number:
+      strong = current_organization.phone_number.phony_formatted
+    p
       ' You've used
       strong = number_with_delimiter(current_organization.current_month_messages_count)
       '  messages this month and
