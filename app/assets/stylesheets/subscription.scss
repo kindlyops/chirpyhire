@@ -41,9 +41,9 @@
     }
 
     .fancy-rule {
-      border:none;
-      overflow:hidden;
-      height:20px;
+      border: none;
+      overflow: hidden;
+      height: 20px;
       text-align: center;
       color: $dark-gray;
     }
@@ -52,8 +52,8 @@
       color: rgba(0,0,0,0.15);
     }
     .fancy-rule.asterism:before {
-      content:"o————|| ⧖ ||————o";
-      letter-spacing:-1px;
+      content: "o————|| ⧖ ||————o";
+      letter-spacing: -1px;
     }
   }
 
