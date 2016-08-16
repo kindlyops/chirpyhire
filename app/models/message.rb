@@ -12,6 +12,14 @@ class Message < ApplicationRecord
     order(external_created_at: :desc, id: :desc)
   end
 
+  def self.current_month
+    where(created_at: DateTime.current.beginning_of_month..DateTime.current.end_of_month)
+  end
+
+  def self.last_month
+    where(created_at: 1.month.ago.beginning_of_month..1.month.ago.end_of_month)
+  end
+
   def self.by_read_status
     joins(:user).merge(User.by_having_unread_messages)
   end

@@ -1,0 +1,117 @@
+.subscription {
+  $large-screen: 53.75em !default;
+  $horizontal-bar-mode: $large-screen;
+  @include outer-container;
+  padding: 1.25em;
+
+  .show_subscription {
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .new_subscription, .show_subscription, .edit_subscription, .cancel_subscription {
+    @include media ($horizontal-bar-mode) {
+      @include span-columns(4);
+      @include shift(4);
+    }
+
+    .actions .submit {
+      width: 100%;
+    }
+  }
+
+  .cancel_subscription {
+    padding: 0.5em 0;
+    display: inline-block;
+    color: $medium-gray;
+  }
+
+  .credit-card-form {
+    @include media ($horizontal-bar-mode) {
+      padding: 2em;
+      height: 27em;
+    }
+    margin: 0 auto;
+    background: #EEE;
+
+    .credit-card-wrapper {
+      transform: scale(0.7);
+      margin: 0;
+      width: 100%;
+
+      @include media ($horizontal-bar-mode) {
+        transform: scale(1);
+        margin: 0.2em auto;
+      }
+    }
+
+    .credit-card-fields {
+      padding: 1em;
+      .submit {
+        width: 100%;
+      }
+
+      @include media($horizontal-bar-mode) {
+        padding: 1em 0;
+
+        #name, #address_zip, .submit {
+          @include span-columns(6);
+        }
+
+        #address_zip, .submit {
+          @include omega();
+        }
+
+        #expiry, #cvc {
+          @include span-columns(3);
+        }
+      }
+    }
+  }
+
+  .card {
+    margin: 0 0 1.5em 0;
+    cursor: default;
+  }
+
+  .service-tier-range {
+    min-width: 100%;
+    cursor: pointer;
+  }
+
+  .card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-size: 6em;
+      margin: 0 0 0.1em 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .messages-per-month {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      h3 {
+        padding-right: 0.25em;
+        margin: 0;
+        font-size: 2em;
+      }
+    }
+
+    .price-per-month {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+}

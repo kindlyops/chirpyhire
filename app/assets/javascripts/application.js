@@ -18,6 +18,7 @@
 //= require mapbox-gl
 //= require lodash
 //= require cocoon
+//= require jquery.card
 
 //= require init
 //= require map
@@ -29,5 +30,7 @@
 //= require maps/candidate
 //= require survey
 //= require survey.edit
+//= require payment
+//= require subscription
 //= require flash
 

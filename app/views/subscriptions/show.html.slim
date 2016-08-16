@@ -1,0 +1,29 @@
+.subscription
+  .show_subscription
+    .card
+      .card-header
+        ' Subscription
+        .submenu
+          = link_to edit_subscription_path(@subscription), id: "edit-subscription" do
+              i.fa.fa-pencil
+      .card-copy
+        p
+          strong
+            ' Message Limit:
+          = number_with_delimiter(@subscription.quantity * Plan::MESSAGES_PER_QUANTITY)
+        p
+          strong
+            ' This month's messages:
+          = number_with_delimiter(current_organization.current_month_message_count)
+        p
+          strong
+            ' Last month's messages:
+          = number_with_delimiter(current_organization.last_month_message_count)
+        p
+          strong
+            ' Monthly:
+          = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+        p
+          strong
+            ' Status:
+          = @subscription.state.humanize

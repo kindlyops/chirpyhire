@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create], shallow: true
   end
 
-  resource :survey, only: [:show, :edit, :update]
+  resources :subscriptions
 
+  resource :survey, only: [:show, :edit, :update]
   resources :yes_no_questions, except: :destroy
   resources :address_questions, except: :destroy
   resources :document_questions, except: :destroy
@@ -24,11 +25,13 @@ Rails.application.routes.draw do
     resources :candidates, only: [:index, :show]
   end
 
-  post 'twilio/text', to: 'referrals#create', constraints: Constraint::Vcard.new
-  post 'twilio/text', to: 'subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms#unknown_message'
+  post 'twilio/text', to: 'sms/referrals#create', constraints: Constraint::Vcard.new
+  post 'twilio/text', to: 'sms/subscriptions#create', constraints: Constraint::OptIn.new
+  post 'twilio/text', to: 'sms/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
+  post 'twilio/text' => 'sms/base#unknown_message'
+
+  mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
 

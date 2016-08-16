@@ -1,0 +1,4 @@
+A charge succeeded.
+
+Customer: <%= Organization.find_by(stripe_customer_id: @charge[:customer]).name %>
+Amount: <%= number_to_currency(@charge[:amount] / 100, precision: 0) %>

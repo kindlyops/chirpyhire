@@ -1,10 +1,6 @@
 class QuestionPolicy < ApplicationPolicy
-  def new?
-    true
-  end
-
   def create?
-    new?
+    true
   end
 
   def edit?

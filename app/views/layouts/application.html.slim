@@ -11,6 +11,9 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = favicon_link_tag 'favicon.ico'
+    script type="text/javascript" src="https://js.stripe.com/v2/"
+    javascript:
+      Stripe.setPublishableKey("#{ENV.fetch('STRIPE_PUBLISHABLE_KEY')}");
     - if Rails.env.production?
       javascript:
         var _rollbarConfig = {

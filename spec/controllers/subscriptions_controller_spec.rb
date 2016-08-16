@@ -1,170 +1,136 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let(:organization) { create(:organization, :with_account) }
-  let(:phone_number) { "+15555555555" }
-  describe "#create" do
-    let(:params) do
-      {
-        "To" => organization.phone_number,
-        "From" => phone_number,
-        "Body" => "START",
-        "MessageSid" => "123"
-      }
+  let(:account) { create(:account) }
+  let(:organization) { account.organization }
+  let(:plan) { create(:plan) }
+
+  before(:each) do
+    sign_in(account)
+  end
+
+  let(:valid_attributes) {
+    { plan_id: plan.id, quantity: 1 }
+  }
+
+  let(:invalid_attributes) {
+    { plan_id: plan.id }
+  }
+
+  describe "GET #new" do
+    it "assigns a new subscription as @subscription" do
+      get :new, params: {}
+      expect(assigns(:subscription)).to be_a_new(Subscription)
     end
+  end
 
-    context "with an existing user" do
-      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
+  describe "GET #edit" do
+    it "assigns the requested subscription as @subscription" do
+      subscription = organization.create_subscription valid_attributes
+      get :edit, params: {id: subscription.to_param}
+      expect(assigns(:subscription)).to eq(subscription)
+    end
+  end
 
-      context "with an active subscription" do
-        before(:each) do
-          user.update(subscribed: true)
-        end
+  describe "POST #create" do
+    context "with valid params" do
+      let(:stripe_token) { "token" }
 
-        it "lets the user know they were already subscribed" do
-          post :create, params: params
-          expect(FakeMessaging.messages.last.body).to include("You are already subscribed.")
-        end
+      it "sets the stripe token on the organization" do
+        expect {
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
       end
 
-      context "without an active subscription" do
-        it "sets the subscription flag to true" do
-          post :create, params: params
-          expect(user.reload.subscribed?).to eq(true)
-        end
-
-        it "creates a subscribe Automaton Job" do
-          expect {
-            post :create, params: params
-          }.to have_enqueued_job(AutomatonJob).with(user, "subscribe")
-        end
-
-        context "when the AutomatonJob raises" do
-          it "doesn't set the subscribe flag" do
-            allow(AutomatonJob).to receive(:perform_later).and_raise(Redis::ConnectionError)
-            expect {
-              post :create, params: params
-            }.to raise_error(Redis::ConnectionError)
-            expect(user.reload.subscribed?).to eq(false)
-          end
-        end
+      it "kicks off a job to process the subscription" do
+        expect{
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.to have_enqueued_job(Payment::Job::ProcessSubscription)
       end
 
-      context "with an existing candidate" do
-        let!(:candidate) { create(:candidate, user: user) }
-
-        it "does not create a candidate for the user" do
-          expect {
-            post :create, params: params
-          }.not_to change{user.reload.candidate.present?}
-        end
+      it "creates a new Subscription" do
+        expect {
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.to change(Subscription, :count).by(1)
       end
 
-      context "without an existing candidate" do
-        it "creates a candidate for the user" do
-          expect {
-            post :create, params: params
-          }.to change{user.reload.candidate.present?}.from(false).to(true)
-        end
+      it "assigns a newly created subscription as @subscription" do
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        expect(assigns(:subscription)).to be_a(Subscription)
+        expect(assigns(:subscription)).to be_persisted
+      end
 
-        it "sets the user subscription flag to true" do
-          expect {
-            post :create, params: params
-          }.to change{user.reload.subscribed?}.from(false).to(true)
-        end
+      it "redirects to edit route" do
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+
+        expect(response).to redirect_to(subscription_path(assigns(:subscription)))
       end
     end
 
-    context "without an existing user" do
-      it "creates a user using the phone number" do
-        expect {
-          post :create, params: params
-        }.to change{User.where(phone_number: phone_number).count}.by(1)
+    context "with invalid params" do
+      it "assigns a newly created but unsaved subscription as @subscription" do
+        post :create, params: {subscription: invalid_attributes}
+        expect(assigns(:subscription)).to be_a_new(Subscription)
       end
 
-      it "creates a candidate for the user" do
-        expect {
-          post :create, params: params
-        }.to change{organization.candidates.count}.by(1)
-      end
-
-      it "sets the subscription flag to true" do
-        post :create, params: params
-        expect(User.find_by(phone_number: phone_number).subscribed?).to eq(true)
+      it "renders the new template" do
+        post :create, params: {subscription: invalid_attributes}
+        expect(response).to render_template("new")
       end
     end
   end
 
-  describe "#destroy" do
-    let(:params) do
-      {
-        "To" => organization.phone_number,
-        "From" => phone_number,
-        "Body" => "STOP",
-        "MessageSid" => "123"
+  describe "PUT #update" do
+    context "with valid params" do
+      let(:new_attributes) {
+        { quantity: 2 }
       }
-    end
 
-    context "with a user" do
-      let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
-
-      it "creates a message" do
+      it "updates the requested subscription" do
+        subscription = organization.create_subscription valid_attributes
         expect {
-          delete :destroy, params: params
-        }.to change{user.messages.count}.by(1)
+          put :update, params: {id: subscription.to_param, subscription: new_attributes}
+        }.to change{subscription.reload.quantity}.from(1).to(new_attributes[:quantity])
       end
 
-      context "that is subscribed" do
-        before(:each) do
-          user.update(subscribed: true)
-        end
-
-        it "sets the user subscription flag to false" do
-          expect {
-            delete :destroy, params: params
-          }.to change{user.reload.subscribed?}.from(true).to(false)
-        end
-
-        it "does not send a message" do
-          expect {
-            delete :destroy, params: params
-          }.not_to change{Message.count}
-        end
+      it "assigns the requested subscription as @subscription" do
+        subscription = organization.create_subscription valid_attributes
+        put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+        expect(assigns(:subscription)).to eq(subscription)
       end
 
-      context "without an existing subscription" do
-        it "lets the user know they were not subscribed" do
-          delete :destroy, params: params
-
-          expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
-        end
-      end
-    end
-
-    context "without an existing user" do
-      it "creates a user" do
-        expect {
-          delete :destroy, params: params
-        }.to change{organization.users.count}.by(1)
-      end
-
-      it "creates a message" do
-        expect {
-          delete :destroy, params: params
-        }.to change{Message.count}.by(1)
-      end
-
-      it "does not create a candidate" do
-        expect {
-          delete :destroy, params: params
-        }.not_to change{organization.candidates.count}
-      end
-
-      it "lets the user know they aren't subscribed" do
-        delete :destroy, params: params
-
-        expect(FakeMessaging.messages.last.body).to include("To subscribe reply with START.")
+      it "redirects to the subscription" do
+        subscription = organization.create_subscription valid_attributes
+        put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+        expect(response).to redirect_to(subscription_path(subscription))
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    let(:valid_attributes) {
+      { plan_id: plan.id, quantity: 1, state: "active" }
+    }
+
+    it "cancels the requested subscription" do
+      subscription = organization.create_subscription valid_attributes
+      expect {
+        delete :destroy, params: {id: subscription.to_param}
+      }.to change{subscription.reload.state}.from("active").to("canceled")
+    end
+
+    it "cancels the requested subscription" do
+      subscription = organization.create_subscription valid_attributes
+      expect {
+        delete :destroy, params: {id: subscription.to_param}
+      }.to have_enqueued_job(Payment::Job::CancelSubscription).with(subscription)
+    end
+
+    it "redirects to the subscriptions edit subscription" do
+      subscription = organization.create_subscription valid_attributes
+      delete :destroy, params: {id: subscription.to_param}
+      expect(response).to redirect_to(subscription_path(subscription))
+    end
+  end
+
 end

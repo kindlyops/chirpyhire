@@ -1,4 +1,4 @@
-class AnswersController < SmsController
+class Sms::AnswersController < Sms::BaseController
 
   def create
     if outstanding_inquiry.present?

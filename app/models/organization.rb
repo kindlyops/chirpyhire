@@ -10,6 +10,8 @@ class Organization < ApplicationRecord
   has_many :rules
   has_one :survey
   has_one :location
+  has_one :subscription
+
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
   delegate :latitude, :longitude, to: :location
@@ -22,6 +24,22 @@ class Organization < ApplicationRecord
                 sent_at: sent_message.date_sent,
                 external_created_at: sent_message.date_created,
                 direction: sent_message.direction)
+  end
+
+  def has_persisted_subscription?
+    subscription.present? && subscription.persisted?
+  end
+
+  def has_new_subscription?
+    subscription.present? && subscription.new_record?
+  end
+
+  def current_month_message_count
+    messages.current_month.count
+  end
+
+  def last_month_message_count
+    messages.last_month.count
   end
 
   def get_message(sid)

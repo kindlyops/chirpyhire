@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 
   before_action :authenticate_account!
+  before_action :block_inactive_subscriptions, unless: :devise_controller?
 
   include Pundit
   after_action :verify_authorized, except: :index, unless: :devise_controller?
@@ -24,6 +25,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= current_account.user
   end
 
+  def current_subscription
+    @current_subscription ||= current_organization.subscription
+  end
+
   private
 
   def user_not_authorized(exception)
@@ -31,6 +36,12 @@ class ApplicationController < ActionController::Base
 
     flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
     redirect_to(request.referrer || root_path)
+  end
+
+  def block_inactive_subscriptions
+    if current_subscription.present? && current_subscription.inactive?
+      redirect_to(subscription_path(current_subscription))
+    end
   end
 
   def user_for_paper_trail

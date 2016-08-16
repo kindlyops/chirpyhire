@@ -10,14 +10,26 @@ longitude = ENV.fetch("longitude", -84.373931).to_f
 latitude = ENV.fetch("latitude", 33.929966).to_f
 
 if Rails.env.development?
+  if Plan.count > 0
+    plan = Plan.first
+  else
+    plan = Plan.create(amount: Plan::DEFAULT_PRICE_IN_DOLLARS * 100, interval: 'month', stripe_id: ENV.fetch("TEST_STRIPE_PLAN_ID", "1"), name: 'Basic')
+  end
+
+  puts "Created Plan"
+
   puts "Creating Organization"
   org = Organization.find_or_create_by!(
     name: "Happy Home Care",
     twilio_account_sid: ENV.fetch("TWILIO_ACCOUNT_SID"),
     twilio_auth_token: ENV.fetch("TWILIO_AUTH_TOKEN"),
-    phone_number: ENV.fetch("TEST_ORG_PHONE")
+    phone_number: ENV.fetch("TEST_ORG_PHONE"),
+    stripe_customer_id: ENV.fetch("TEST_STRIPE_CUSTOMER_ID", "cus_90xvMZp8CMvOE9")
   )
   puts "Created Organization"
+
+  org.create_subscription(plan: plan, stripe_id: ENV.fetch("TEST_STRIPE_SUBSCRIPTION_ID", "sub_90xv30thDQEqcW"), state: "active", quantity: Plan::DEFAULT_QUANTITY)
+  puts "Created Subscription"
 
   FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
   puts "Created Location"
@@ -104,4 +116,3 @@ if Rails.env.development?
 end
 
 puts "Seed completed"
-
