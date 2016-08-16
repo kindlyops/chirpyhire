@@ -3,6 +3,48 @@ require 'rails_helper'
 RSpec.describe Candidate, type: :model do
   let(:candidate) { create(:candidate) }
 
+  describe "#activity tracking" do
+    describe "create" do
+      it "creates an activity" do
+        expect {
+          candidate
+        }.to change{PublicActivity::Activity.count}.by(1)
+        expect(PublicActivity::Activity.last.parameters[:status]).to eq("Potential")
+      end
+    end
+
+    describe "update" do
+      let!(:candidate) { create(:candidate) }
+
+      context "changing the status" do
+        it "creates an activity" do
+          expect {
+            candidate.update(status: "Qualified")
+          }.to change{PublicActivity::Activity.count}.by(1)
+          expect(PublicActivity::Activity.last.parameters[:status]).to eq("Qualified")
+        end
+      end
+
+      context "not changing the status" do
+        it "does not create an activity" do
+          expect {
+            candidate.touch
+          }.not_to change{PublicActivity::Activity.count}
+        end
+      end
+    end
+
+    describe "destroy" do
+      let!(:candidate) { create(:candidate) }
+
+      it "does not create an activity" do
+        expect {
+          candidate.destroy
+        }.not_to change{PublicActivity::Activity.count}
+      end
+    end
+  end
+
   describe "#address" do
     context "with an address candidate feature" do
       let(:latitude) { "12.123456" }

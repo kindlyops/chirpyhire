@@ -1,4 +1,8 @@
 class Candidate < ApplicationRecord
+  include PublicActivity::Model
+  tracked only: [:create, :update], on: {
+    update: ->(model,_) { model.changes.include?("status") }
+  }, params: { status: :status }
 
   belongs_to :user
   has_many :candidate_features
