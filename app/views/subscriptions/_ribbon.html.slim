@@ -1,10 +1,6 @@
-- if current_subscription.finished_trial?
-  .success
-    ' Nice! You've finished the trial. To regain access
-    = link_to "Upgrade Now", edit_subscription_path(current_subscription)
-- elsif current_subscription.trialing?
+- if current_subscription.trialing? && !controller_name == "SubscriptionsController"
   .notice
     ' Trial:
     = number_with_delimiter(current_subscription.trial_remaining_messages_count)
     '  messages left.
-    = link_to "Upgrade Now", edit_subscription_path(current_subscription)
+    = link_to "Upgrade Now", new_subscription_path

@@ -1,6 +1,16 @@
 .subscription
   .show_subscription
     h1 Subscription
+    - if @subscription.finished_trial?
+      .success
+        ' Nice! You've finished the trial. To regain access
+        = link_to "Upgrade Now", new_subscription_path
+    - elsif @subscription.trialing?
+      .notice
+        ' Trial:
+        = number_with_delimiter(@subscription.trial_remaining_messages_count)
+        '  messages left.
+        = link_to "Upgrade Now", new_subscription_path
     hr
     ul.leaders
       li

@@ -1,20 +1,21 @@
 class SubscriptionsController < ApplicationController
-  skip_before_action :block_invalid_subscriptions, only: [:edit, :update, :show]
+  skip_before_action :block_invalid_subscriptions
+  before_action :ensure_new_subscription, only: [:new, :create]
 
   def new
-    @subscription = authorize current_organization.build_subscription(plan: Plan.first)
+    @subscription = authorized_subscription
   end
 
   def edit
-    @subscription = authorize Subscription.find(params[:id])
+    @subscription = authorized_subscription
   end
 
   def show
-    @subscription = authorize Subscription.find(params[:id])
+    @subscription = authorized_subscription
   end
 
   def update
-    @subscription = authorize Subscription.find(params[:id])
+    @subscription = authorized_subscription
 
     if @subscription.update(permitted_attributes(Subscription))
       Payment::Job::UpdateSubscription.perform_later(@subscription)
@@ -26,11 +27,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription = authorize(new_subscription)
+    @subscription = authorized_subscription
 
     current_organization.update(stripe_token: params[:stripe_token])
 
-    if @subscription.save
+    if @subscription.update(permitted_attributes(Subscription))
       Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
     else
@@ -39,7 +40,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = authorize Subscription.find(params[:id])
+    @subscription = authorized_subscription
     if @subscription.cancel!
       Payment::Job::CancelSubscription.perform_later(@subscription)
       redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
@@ -50,7 +51,13 @@ class SubscriptionsController < ApplicationController
 
   private
 
-  def new_subscription
-    current_organization.build_subscription(permitted_attributes(Subscription))
+  def authorized_subscription
+    @authorized_subscription ||= authorize current_organization.subscription
+  end
+
+  def ensure_new_subscription
+    unless authorized_subscription.trialing? && authorized_subscription.stripe_id.blank?
+      redirect_to edit_subscription_path(authorized_subscription)
+    end
   end
 end
