@@ -1,6 +1,6 @@
 $(document).on("turbolinks:load", function() {
   if($(".subscription").length) {
-    $(".subscription.new .edit_subscription").card({
+    $("#new_subscription").card({
       container: '.credit-card-wrapper',
       formSelectors: {
           numberInput: '.credit-card-fields input#number',
