@@ -14,7 +14,7 @@ class TwilioProvisioner
     sub_account.incoming_phone_numbers.create(
       phone_number: available_local_phone_number,
       voice_url: nil,
-      sms_url: "#{ENV.fetch("APP_BASE")}/twilio/text",
+      sms_url: "#{ENV.fetch("TWILIO_WEBHOOK_BASE")}/twilio/text",
       capabilities: {
         voice: false,
         sms: true,
