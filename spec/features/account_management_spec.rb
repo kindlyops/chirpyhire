@@ -5,7 +5,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
     context "with valid credentials" do
       let(:password) { Faker::Internet.password }
 
-      scenario "User progresses to invitation screen" do
+      scenario "User progresses to invitation screen", vcr: { cassette_name: "TwilioProvisioner-call" }  do
         visit "/accounts/sign_up"
 
         fill_in "First name", with: Faker::Name.first_name

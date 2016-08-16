@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TwilioProvisioner do
   let(:organization) { create(:organization, twilio_account_sid: nil, twilio_auth_token: nil, phone_number: nil) }
-  let!(:location) { create(:location, organization: organization, postal_code: 30342) }
+  let!(:location) { create(:location, organization: organization, postal_code: 22902) }
 
   describe "#call" do
     context "when the organization has a phone number" do
