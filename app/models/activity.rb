@@ -1,6 +1,4 @@
 class Activity < PublicActivity::Activity
-  belongs_to :trackable, polymorphic: true
-
   def self.qualified
     where("properties->>'status' = ?", "Qualified")
   end
