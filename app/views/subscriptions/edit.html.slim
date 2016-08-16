@@ -25,7 +25,7 @@
         span
           strong
             ' Message Limit
-        span.monthly-message-limit = number_with_delimiter(@subscription.quantity * Plan::MESSAGES_PER_QUANTITY)
+        span.monthly-message-limit = number_with_delimiter(@subscription.quantity * Plan.messages_per_quantity)
       li
         span
           strong

@@ -4,3 +4,9 @@
     = number_with_delimiter(current_subscription.trial_remaining_messages_count)
     '  messages left.
     = link_to "Upgrade Now", new_subscription_path
+- if current_subscription.reached_limit?
+  .notice
+    ' You've reached your monthly message limit.
+    = link_to "Upgrade Now", edit_subscription_path(current_subscription)
+    '  to regain access.
+

@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def block_invalid_subscriptions
-    if current_subscription.inactive? || current_subscription.finished_trial?
+    if current_subscription.inactive? || current_subscription.finished_trial? || current_subscription.reached_limit?
       redirect_to(subscription_path(current_subscription))
     end
   end

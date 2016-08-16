@@ -40,6 +40,6 @@
         li
           span
             strong Message Limit
-          span = number_with_delimiter(@subscription.quantity * Plan::MESSAGES_PER_QUANTITY)
+          span = number_with_delimiter(@subscription.quantity * Plan.messages_per_quantity)
 
     hr.fancy-rule.asterism

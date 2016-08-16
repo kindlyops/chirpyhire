@@ -13,7 +13,7 @@ $(document).on("turbolinks:load", function() {
     $(".quantity input[type='range']").on("change", function(e) {
       var $tier = $(this);
       var quantity = parseInt($tier.val());
-      var newQuantityAmount = quantity * <%= Plan::MESSAGES_PER_QUANTITY %>;
+      var newQuantityAmount = quantity * <%= Plan.messages_per_quantity %>;
       var quantityLineItem = $(".monthly-message-limit");
       quantityLineItem.text(newQuantityAmount.toLocaleString());
 

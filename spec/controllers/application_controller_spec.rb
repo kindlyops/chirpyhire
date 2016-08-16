@@ -32,6 +32,41 @@ RSpec.describe ApplicationController, type: :controller do
         end
       end
 
+      context "active subscription" do
+        let!(:subscription) { create(:subscription, organization: account.organization, state: "active", quantity: 1) }
+
+        context "under the monthly message limit" do
+          it "is ok" do
+            get :index
+            expect(response).to be_ok
+          end
+        end
+
+        context "at the monthly message limit" do
+          before(:each) do
+            Plan.messages_per_quantity = 1
+            create(:message, user: account.user)
+          end
+
+          it "redirects to show_subscription page" do
+            get :index
+            expect(response).to redirect_to(subscription)
+          end
+        end
+
+        context "above the monthly message limit" do
+          before(:each) do
+            Plan.messages_per_quantity = 1
+            create_list(:message, 2, user: account.user)
+          end
+
+          it "redirects to show_subscription page" do
+            get :index
+            expect(response).to redirect_to(subscription)
+          end
+        end
+      end
+
       context "trialing subscription" do
         let!(:subscription) { create(:subscription, organization: account.organization, state: "trialing", trial_message_limit: 1) }
 
