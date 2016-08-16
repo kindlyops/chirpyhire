@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  skip_before_action :block_inactive_subscriptions, only: [:edit, :update]
+  skip_before_action :block_inactive_subscriptions, only: [:edit, :update, :show]
 
   def new
     @subscription = authorize current_organization.build_subscription(plan: Plan.first)
