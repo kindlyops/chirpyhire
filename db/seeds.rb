@@ -28,7 +28,7 @@ if Rails.env.development?
   )
   puts "Created Organization"
 
-  org.create_subscription(plan: plan, state: "trialing", trial_message_limit: 5)
+  org.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
   puts "Created Subscription"
 
   FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)

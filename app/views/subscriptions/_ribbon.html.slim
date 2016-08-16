@@ -1,4 +1,4 @@
-- if current_subscription.trialing? && !controller_name == "SubscriptionsController"
+- if current_subscription.trialing? && controller_name != "subscriptions"
   .notice
     ' Trial:
     = number_with_delimiter(current_subscription.trial_remaining_messages_count)
