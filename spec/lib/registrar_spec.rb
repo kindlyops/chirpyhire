@@ -51,6 +51,13 @@ RSpec.describe Registrar do
         expect(candidate.yes_no_features.first.present?).to eq(true)
       end
 
+      it "sets the users phone number to the org's phone number" do
+        user = organization.users.first
+        expect {
+          registrar.register
+        }.to change{user.reload.phone_number}.to(organization.phone_number)
+      end
+
       it "creates a trial subscription" do
         expect {
           registrar.register
