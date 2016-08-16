@@ -29,9 +29,8 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = authorized_subscription
 
-    current_organization.update(stripe_token: params[:stripe_token])
-
     if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
+      current_organization.update(stripe_token: params[:stripe_token])
       @subscription.activate!
       Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."

@@ -104,6 +104,18 @@ RSpec.describe SubscriptionsController, type: :controller do
             post :create, params: {subscription: invalid_attributes}
           }.not_to change{subscription.reload.state}
         end
+
+        it "does not set the stripe token on the organization" do
+          expect {
+            post :create, params: {subscription: invalid_attributes}
+          }.not_to change{organization.reload.stripe_token}
+        end
+
+        it "does not kick off a job to process the subscription" do
+          expect{
+            post :create, params: {subscription: invalid_attributes}
+          }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
+        end
       end
     end
 
@@ -115,6 +127,18 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
 
         expect(response).to redirect_to(edit_subscription_path(subscription))
+      end
+
+      it "does not set the stripe token on the organization" do
+        expect {
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.not_to change{organization.reload.stripe_token}
+      end
+
+      it "does not kick off a job to process the subscription" do
+        expect{
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
       end
     end
   end
