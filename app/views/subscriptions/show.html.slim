@@ -15,6 +15,10 @@
         = number_with_delimiter(@subscription.trial_remaining_messages_count)
         '  messages left.
         = link_to "Upgrade Now", new_subscription_path
+    - elsif @subscription.reached_limit?
+      .notice
+        ' You've reached your monthly limit.
+        = link_to "Upgrade Now", edit_subscription_path(@subscription)
     p
       ' Phone Number:
       strong = current_organization.phone_number.phony_formatted
