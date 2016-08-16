@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def block_inactive_subscriptions
     if current_subscription.present? && current_subscription.inactive?
-      redirect_to(edit_subscription_path(current_subscription))
+      redirect_to(subscription_path(current_subscription))
     end
   end
 
