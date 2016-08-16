@@ -45,5 +45,11 @@
           span
             strong Message Limit
           span = number_with_delimiter(@subscription.quantity * Plan.messages_per_quantity)
+        li
+          span
+            strong
+              ' Fee
+            ' (monthly)
+          span.monthly-fee = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
 
     hr.fancy-rule.asterism
