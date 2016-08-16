@@ -40,10 +40,22 @@ RSpec.describe Registrar do
         }.to change{Question.count}.by(3)
       end
 
+      it "creates a dummy candidate with candidate features" do
+        expect {
+          registrar.register
+        }.to change{organization.candidates.count}.by(1)
+        candidate = organization.candidates.first
+
+        expect(candidate.address_feature.present?).to eq(true)
+        expect(candidate.choice_features.first.present?).to eq(true)
+        expect(candidate.yes_no_features.first.present?).to eq(true)
+      end
+
       it "creates a trial subscription" do
         expect {
           registrar.register
         }.to change{organization.reload.subscription.present?}.from(false).to(true)
+
         expect(organization.subscription.trialing?).to eq(true)
         expect(organization.subscription.plan).to eq(plan)
         expect(organization.subscription.trial_message_limit).to eq(250)
