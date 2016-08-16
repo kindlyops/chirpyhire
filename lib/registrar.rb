@@ -27,6 +27,7 @@ class Registrar
     rules.create!(trigger: "answer", actionable: survey.actionable)
     rules.create!(trigger: "screen", actionable: thank_you.create_actionable)
 
+    organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
     TwilioProvisionerJob.perform_later(organization)
   end
 

@@ -1,29 +1,55 @@
 .subscription
   .show_subscription
-    .card
-      .card-header
-        ' Subscription
-        .submenu
-          = link_to edit_subscription_path(@subscription), id: "edit-subscription" do
-              i.fa.fa-pencil
-      .card-copy
-        p
-          strong
-            ' Message Limit:
-          = number_with_delimiter(@subscription.quantity * Plan::MESSAGES_PER_QUANTITY)
-        p
-          strong
-            ' This month's messages:
-          = number_with_delimiter(current_organization.current_month_message_count)
-        p
-          strong
-            ' Last month's messages:
-          = number_with_delimiter(current_organization.last_month_message_count)
-        p
-          strong
-            ' Monthly:
-          = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
-        p
-          strong
-            ' Status:
-          = @subscription.state.humanize
+    .menu
+      h1 Subscription
+      - unless @subscription.canceled?
+        = link_to edit_subscription_path(@subscription) do
+            i.fa.fa-pencil
+    - if @subscription.finished_trial?
+      .success
+        ' Nice! You've finished the trial. To regain access
+        = link_to "Upgrade Now", new_subscription_path
+    - elsif @subscription.trialing?
+      .notice
+        ' Trial:
+        = number_with_delimiter(@subscription.trial_remaining_messages_count)
+        '  messages left.
+        = link_to "Upgrade Now", new_subscription_path
+    - elsif @subscription.reached_monthly_message_limit?
+      .notice
+        ' You've reached your monthly limit.
+        = link_to "Upgrade Now", edit_subscription_path(@subscription)
+    p
+      ' Phone Number:
+      strong = current_organization.phone_number.phony_formatted
+    p
+      ' You've used
+      strong = number_with_delimiter(current_organization.current_month_messages_count)
+      '  messages this month and
+      strong = number_with_delimiter(current_organization.last_month_messages_count)
+      '  messages last month.
+    p Questions? Send us a message via chat.
+    hr
+    ul.leaders
+      li
+        span
+          strong Status
+        span = @subscription.state.humanize
+      - if @subscription.trialing?
+        li
+          span
+            strong Trial Message Limit
+          span = number_with_delimiter(@subscription.trial_message_limit)
+      - else
+        li
+          span
+            strong Message Limit
+          span = number_with_delimiter(@subscription.quantity * Plan.messages_per_quantity)
+        li
+          span
+            strong
+              ' Fee
+            ' (monthly)
+          span.monthly-fee = number_to_currency(@subscription.quantity * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+
+    hr.fancy-rule.asterism

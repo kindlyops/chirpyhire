@@ -14,7 +14,10 @@ class Organization < ApplicationRecord
 
   accepts_nested_attributes_for :location
   delegate :conversations, to: :messages
+  delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
+  delegate :trial_remaining_messages_count, :reached_monthly_message_limit?,
+           :inactive?, :finished_trial?, :trialing?, to: :subscription
 
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
@@ -34,11 +37,11 @@ class Organization < ApplicationRecord
     subscription.present? && subscription.new_record?
   end
 
-  def current_month_message_count
+  def current_month_messages_count
     messages.current_month.count
   end
 
-  def last_month_message_count
+  def last_month_messages_count
     messages.last_month.count
   end
 

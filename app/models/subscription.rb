@@ -3,7 +3,7 @@ class Subscription < ApplicationRecord
   belongs_to :plan
   belongs_to :organization
 
-  validates_presence_of :plan, :quantity, :organization, on: :create
+  validates_presence_of :plan, :trial_message_limit, :organization, :state, on: :create
 
   delegate :stripe_id, to: :plan, prefix: true
 
@@ -46,6 +46,21 @@ class Subscription < ApplicationRecord
 
   def inactive?
     canceled? || INACTIVE_STATUSES.include?(status)
+  end
+
+  def finished_trial?
+    trialing? && organization.messages_count >= trial_message_limit
+  end
+
+  def trial_remaining_messages_count
+    count = trial_message_limit - organization.messages_count
+    count.negative? ? 0 : count
+  end
+
+  def reached_monthly_message_limit?
+    return unless active?
+    message_limit = quantity * Plan.messages_per_quantity
+    organization.current_month_messages_count >= message_limit
   end
 
   private

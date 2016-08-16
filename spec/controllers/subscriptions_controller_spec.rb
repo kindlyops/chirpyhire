@@ -18,9 +18,22 @@ RSpec.describe SubscriptionsController, type: :controller do
   }
 
   describe "GET #new" do
-    it "assigns a new subscription as @subscription" do
-      get :new, params: {}
-      expect(assigns(:subscription)).to be_a_new(Subscription)
+    let!(:subscription) { create(:subscription, organization: organization, plan: plan) }
+
+    context "with new trialing subscription" do
+      it "assigns the trialing subscription as @subscription" do
+        get :new, params: {}
+        expect(assigns(:subscription)).to eq(subscription)
+      end
+    end
+
+    context "with existing subscription tied to stripe" do
+      let!(:subscription) { create(:subscription, organization: organization, plan: plan, stripe_id: "sub_123") }
+
+      it "redirects to edit" do
+        get :new, params: {}
+        expect(response).to redirect_to(edit_subscription_path(subscription))
+      end
     end
   end
 
@@ -33,49 +46,99 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with valid params" do
-      let(:stripe_token) { "token" }
+    context "with new trialing subscription" do
+      let!(:subscription) { create(:subscription, organization: organization, plan: plan) }
 
-      it "sets the stripe token on the organization" do
-        expect {
+      context "with valid params" do
+        let(:stripe_token) { "token" }
+
+        it "sets the stripe token on the organization" do
+          expect {
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+          }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
+        end
+
+        it "kicks off a job to process the subscription" do
+          expect{
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+          }.to have_enqueued_job(Payment::Job::ProcessSubscription)
+        end
+
+        it "does not create a new subscription" do
+          expect {
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+          }.not_to change(Subscription, :count)
+        end
+
+        it "assigns the trialing subscription as @subscription" do
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
-      end
+          expect(assigns(:subscription)).to eq(subscription)
+        end
 
-      it "kicks off a job to process the subscription" do
-        expect{
+        it "redirects to show route" do
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to have_enqueued_job(Payment::Job::ProcessSubscription)
+
+          expect(response).to redirect_to(subscription_path(subscription))
+        end
+
+        it "activates the subscription" do
+          expect {
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+          }.to change{subscription.reload.state}.from("trialing").to("active")
+        end
       end
 
-      it "creates a new Subscription" do
-        expect {
-          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.to change(Subscription, :count).by(1)
-      end
+      context "with invalid params" do
+        it "assigns the trialing subscription as @subscription" do
+          post :create, params: {subscription: invalid_attributes}
+          expect(assigns(:subscription)).to eq(subscription)
+        end
 
-      it "assigns a newly created subscription as @subscription" do
-        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        expect(assigns(:subscription)).to be_a(Subscription)
-        expect(assigns(:subscription)).to be_persisted
-      end
+        it "renders the new template" do
+          post :create, params: {subscription: invalid_attributes}
+          expect(response).to render_template("new")
+        end
 
-      it "redirects to edit route" do
-        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        it "does not activate the subscription" do
+          expect {
+            post :create, params: {subscription: invalid_attributes}
+          }.not_to change{subscription.reload.state}
+        end
 
-        expect(response).to redirect_to(subscription_path(assigns(:subscription)))
+        it "does not set the stripe token on the organization" do
+          expect {
+            post :create, params: {subscription: invalid_attributes}
+          }.not_to change{organization.reload.stripe_token}
+        end
+
+        it "does not kick off a job to process the subscription" do
+          expect{
+            post :create, params: {subscription: invalid_attributes}
+          }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
+        end
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved subscription as @subscription" do
-        post :create, params: {subscription: invalid_attributes}
-        expect(assigns(:subscription)).to be_a_new(Subscription)
+    context "with existing subscription tied to stripe" do
+      let!(:subscription) { create(:subscription, organization: organization, plan: plan, stripe_id: "sub_123") }
+      let(:stripe_token) { "token" }
+
+      it "redirects to edit" do
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+
+        expect(response).to redirect_to(edit_subscription_path(subscription))
       end
 
-      it "renders the new template" do
-        post :create, params: {subscription: invalid_attributes}
-        expect(response).to render_template("new")
+      it "does not set the stripe token on the organization" do
+        expect {
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.not_to change{organization.reload.stripe_token}
+      end
+
+      it "does not kick off a job to process the subscription" do
+        expect{
+          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+        }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
       end
     end
   end

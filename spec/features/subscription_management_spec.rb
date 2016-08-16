@@ -7,7 +7,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true do
     stripe_plan.delete
   end
 
-  let(:organization) { create(:organization,  :with_account)}
+  let(:organization) { create(:organization, :with_subscription, :with_account)}
   let(:account) { organization.accounts.first }
   let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
 
@@ -64,7 +64,7 @@ RSpec.feature "Subscription Management", type: :feature, js: true do
           fill_in "subscription_quantity", with: "2"
         end
 
-        click_on "Change Subscription"
+        click_on "Update Subscription"
         expect(page).to have_current_path(/\/subscriptions\/\d+/)
         expect(page).to have_text("Nice! Subscription changed.")
       end

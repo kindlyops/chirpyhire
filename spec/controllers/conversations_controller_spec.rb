@@ -1,15 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe ConversationsController, type: :controller do
-  let(:organization) { create(:organization) }
-  let(:admin) { create(:user, :with_account, organization: organization) }
+  let(:organization) { create(:organization, :with_subscription, :with_account) }
+  let(:account) { organization.accounts.first }
+  let(:user) { account.user }
 
   before(:each) do
-    sign_in(admin.account)
+    sign_in(account)
   end
 
   let(:params) do
-    { user_id: admin.id }
+    { user_id: user.id }
   end
 
   describe "#index" do
@@ -19,9 +20,9 @@ RSpec.describe ConversationsController, type: :controller do
     end
 
     context "with messages" do
-      let!(:oldest_message) { create(:message, user: admin) }
-      let!(:second_oldest_message) { create(:message, user: admin) }
-      let!(:message) { create(:message, user: admin) }
+      let!(:oldest_message) { create(:message, user: user) }
+      let!(:second_oldest_message) { create(:message, user: user) }
+      let!(:message) { create(:message, user: user) }
 
       before(:each) do
         oldest_message.update(child: second_oldest_message)

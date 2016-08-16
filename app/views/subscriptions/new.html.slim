@@ -1,5 +1,6 @@
-.subscription
-  = form_for(@subscription) do |f|
+.subscription.new
+  = form_for(@subscription, method: :post, url: subscriptions_path, html: { id: "new_subscription"}) do |f|
+    h1 Subscription
     - if @subscription.errors.any?
       #error_explanation
         h2 = "#{pluralize(@subscription.errors.count, "error")} prohibited this subscription from being saved:"
@@ -7,26 +8,34 @@
           - @subscription.errors.full_messages.each do |message|
             li = message
     = f.hidden_field :plan_id
-    .service-tier
-      .card
-        .card-image
-          .price-per-month
-            h1 = number_to_currency(Plan::DEFAULT_QUANTITY * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
-            .messages-per-month
-              h3 = number_with_delimiter(Plan::DEFAULT_QUANTITY * Plan::MESSAGES_PER_QUANTITY)
-              p messages / mo
-        .card-header
-          = f.range_field :quantity, class: "service-tier-range", value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
-        .card-copy
-          p Select a subscription tier that best meets your needs. Questions? Send us a message via chat.
-          p
-            strong
-              ' This month's messages:
-            = number_with_delimiter(current_organization.current_month_message_count)
-          p
-            strong
-              ' Last month's messages:
-            = number_with_delimiter(current_organization.last_month_message_count)
+    p Select a limit that meets your needs. Upgrade or downgrade at any time.
+    p
+      ' Phone Number:
+      strong = current_organization.phone_number.phony_formatted
+    p
+      ' You've used
+      strong = number_with_delimiter(current_organization.current_month_messages_count)
+      '  messages this month and
+      strong = number_with_delimiter(current_organization.last_month_messages_count)
+      '  messages last month.
+    p Questions? Send us a message via chat.
+    hr
+    ul.leaders
+      li
+        span
+          strong
+            ' Message Limit
+        span.monthly-message-limit = number_with_delimiter(Plan::DEFAULT_QUANTITY * Plan.messages_per_quantity)
+      li
+        span
+          strong
+            ' Fee
+          ' (monthly)
+        span.monthly-fee = number_to_currency(Plan::DEFAULT_QUANTITY * Plan::DEFAULT_PRICE_IN_DOLLARS, precision: 0)
+    .field.quantity
+      = f.range_field :quantity, value: Plan::DEFAULT_QUANTITY, min: 1, max: 5, step: 1
+
+    hr.fancy-rule.asterism
     .credit-card-form
       .credit-card-wrapper
       .credit-card-fields

@@ -3,6 +3,6 @@ FactoryGirl.define do
     amount 5_000
     interval 'monthly'
     name 'Basic'
-    stripe_id '1'
+    sequence(:stripe_id)
   end
 end

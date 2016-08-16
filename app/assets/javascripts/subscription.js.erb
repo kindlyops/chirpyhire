@@ -10,16 +10,16 @@ $(document).on("turbolinks:load", function() {
       }
     });
 
-    $(".service-tier-range").on("change", function(e) {
+    $(".quantity input[type='range']").on("change", function(e) {
       var $tier = $(this);
       var quantity = parseInt($tier.val());
-      var newHeaderAmount = quantity * <%= Plan::MESSAGES_PER_QUANTITY %>;
-      var quantityHeader = $(".messages-per-month h3");
-      quantityHeader.text(newHeaderAmount.toLocaleString());
+      var newQuantityAmount = quantity * <%= Plan.messages_per_quantity %>;
+      var quantityLineItem = $(".monthly-message-limit");
+      quantityLineItem.text(newQuantityAmount.toLocaleString());
 
-      var newPriceAmount = quantity * <%= Plan::DEFAULT_PRICE_IN_DOLLARS %>;
-      var priceHeader = $(".price-per-month h1");
-      priceHeader.text("$" + newPriceAmount.toLocaleString());
+      var newFeeAmount = quantity * <%= Plan::DEFAULT_PRICE_IN_DOLLARS %>;
+      var feeLineItem = $(".monthly-fee");
+      feeLineItem.text("$" + newFeeAmount.toLocaleString());
     });
   };
 });

@@ -4,113 +4,134 @@
   @include outer-container;
   padding: 1.25em;
 
+  .show_subscription, .edit_subscription {
+    @include media ($horizontal-bar-mode) {
+      @include span-columns(6);
+      @include shift(3);
+    }
+
+    ul.leaders {
+      padding: 0;
+      overflow-x: hidden;
+      list-style: none;
+
+      li:before {
+        float: left;
+        width: 0;
+        white-space: nowrap;
+        color: $medium-gray;
+        content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .";
+      }
+
+      span:first-child {
+        letter-spacing: 2px;
+        padding-right: 0.33em;
+        background: $base-background-color;
+      }
+
+      span + span {
+        float: right;
+        padding-left: 0.33em;
+        background: $base-background-color;
+      }
+
+      span + span:before {
+        padding-right: 0.15em;
+      }
+    }
+
+    .fancy-rule {
+      border: none;
+      overflow: hidden;
+      height: 20px;
+      text-align: center;
+      color: $dark-gray;
+    }
+
+    .rgba {
+      color: rgba(0,0,0,0.15);
+    }
+    .fancy-rule.asterism:before {
+      content: "o————|| ⧖ ||————o";
+      letter-spacing: -1px;
+    }
+  }
+
   .show_subscription {
-    .card-header {
+    .menu {
       display: flex;
       justify-content: space-between;
     }
   }
 
-  .new_subscription, .show_subscription, .edit_subscription, .cancel_subscription {
-    @include media ($horizontal-bar-mode) {
-      @include span-columns(4);
-      @include shift(4);
-    }
-
-    .actions .submit {
+  .edit_subscription {
+    .submit-edit {
       width: 100%;
+      margin-top: 1em;
     }
-  }
+    .cancel_subscription {
+      padding-top: 1em;
+      display: block;
+      color: $medium-gray;
 
-  .cancel_subscription {
-    padding: 0.5em 0;
-    display: inline-block;
-    color: $medium-gray;
-  }
-
-  .credit-card-form {
-    @include media ($horizontal-bar-mode) {
-      padding: 2em;
-      height: 27em;
-    }
-    margin: 0 auto;
-    background: #EEE;
-
-    .credit-card-wrapper {
-      transform: scale(0.7);
-      margin: 0;
-      width: 100%;
-
-      @include media ($horizontal-bar-mode) {
-        transform: scale(1);
-        margin: 0.2em auto;
+      &:hover, &:focus {
+        color: $dark-gray;
       }
     }
-
-    .credit-card-fields {
+    .quantity {
       padding: 1em;
-      .submit {
-        width: 100%;
-      }
+      margin-top: 1em;
+      background: #EEE;
+      border: 1px solid $medium-gray;
 
-      @include media($horizontal-bar-mode) {
-        padding: 1em 0;
-
-        #name, #address_zip, .submit {
-          @include span-columns(6);
-        }
-
-        #address_zip, .submit {
-          @include omega();
-        }
-
-        #expiry, #cvc {
-          @include span-columns(3);
-        }
+      input[type="range"] {
+        min-width: 100%;
+        cursor: pointer;
       }
     }
-  }
 
-  .card {
-    margin: 0 0 1.5em 0;
-    cursor: default;
-  }
+    .credit-card-form {
+      @include media ($horizontal-bar-mode) {
+        padding: 2em;
+        height: 27em;
+      }
+      border: 1px solid $medium-gray;
+      margin: 0 auto;
+      background: #EEE;
 
-  .service-tier-range {
-    min-width: 100%;
-    cursor: pointer;
-  }
-
-  .card-image {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    h1 {
-      font-size: 6em;
-      margin: 0 0 0.1em 0;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .messages-per-month {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      h3 {
-        padding-right: 0.25em;
+      .credit-card-wrapper {
+        transform: scale(0.7);
         margin: 0;
-        font-size: 2em;
-      }
-    }
+        width: 100%;
 
-    .price-per-month {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        @include media ($horizontal-bar-mode) {
+          transform: scale(1);
+          margin: 0.2em auto;
+        }
+      }
+
+      .credit-card-fields {
+        padding: 1em;
+        .submit {
+          width: 100%;
+        }
+
+        @include media($horizontal-bar-mode) {
+          padding: 1em 0;
+
+          #name, #address_zip, .submit {
+            @include span-columns(6);
+          }
+
+          #address_zip, .submit {
+            @include omega();
+          }
+
+          #expiry, #cvc {
+            @include span-columns(3);
+          }
+        }
+      }
     }
   }
 

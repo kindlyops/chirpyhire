@@ -16,7 +16,7 @@ RSpec.describe Payment::Subscriptions::Process do
   let!(:stripe_plan) { Stripe::Plan.create(id: "test", amount: 5_000, currency: "usd", interval: "month", name: "test") }
 
   let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-  let!(:subscription) { create(:subscription, plan: plan, organization: organization, state: "trialing") }
+  let!(:subscription) { create(:subscription, plan: plan, organization: organization, state: "active") }
 
   after(:each) do
     stripe_plan.delete
@@ -50,12 +50,6 @@ RSpec.describe Payment::Subscriptions::Process do
         expect(stripe_customer.description).to eq(organization.name)
         expect(stripe_customer.email).to eq(email)
       end
-
-      it "activates the subscription" do
-        expect {
-          subject.call
-        }.to change{subscription.reload.state}.from("trialing").to("active")
-      end
     end
 
     context "with an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-with-stripe-customer" } do
@@ -77,12 +71,6 @@ RSpec.describe Payment::Subscriptions::Process do
         expect{
           subject.call
         }.to change{subscription.reload.stripe_id}.from(nil)
-      end
-
-      it "activates the subscription" do
-        expect {
-          subject.call
-        }.to change{subscription.reload.state}.from("trialing").to("active")
       end
     end
   end

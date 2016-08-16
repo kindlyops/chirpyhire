@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Maps::CandidatesController, type: :controller do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :with_subscription) }
   before(:each) do
     sign_in(account)
   end
