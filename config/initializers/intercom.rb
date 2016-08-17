@@ -78,7 +78,11 @@ IntercomRails.config do |config|
     candidates_count: Proc.new { |company| company.candidates.count },
     qualified_candidates_count: Proc.new { |company| company.candidates.qualified.count },
     hired_candidates_count: Proc.new { |company| company.candidates.hired.count },
+    bad_fit_candidates_count: Proc.new { |company| company.candidates.bad_fit.count },
     trial_percentage_remaining: Proc.new { |company| company.trial_percentage_remaining },
+    trial_remaining_messages_count: Proc.new {|company| company.trial_remaining_messages_count },
+    base_paid_plan_price: Proc.new { |_| Plan::DEFAULT_PRICE_IN_DOLLARS },
+    base_paid_plan_message_limit: Proc.new {|_| Plan.messages_per_quantity },
     subscription_state: Proc.new { |company| company.subscription_state }
   }
 
