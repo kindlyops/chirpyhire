@@ -36,11 +36,11 @@ class Report::Weekly
     "Weekly Activity Report - Chirpyhire"
   end
 
-  private
-
   def organization
     @organization ||= recipient.organization
   end
+
+  private
 
   attr_reader :recipient, :date
 end
