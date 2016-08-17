@@ -76,7 +76,8 @@ IntercomRails.config do |config|
   config.company.custom_data = {
     phone_number: Proc.new { |company| company.decorate.phone_number },
     candidates_count: Proc.new { |company| company.candidates.count },
-    qualified_candidates_count: Proc.new { |company| company.candidates.qualified.count }
+    qualified_candidates_count: Proc.new { |company| company.candidates.qualified.count },
+    hired_candidates_count: Proc.new { |company| company.candidates.hired.count }
   }
 
   # == Company Plan name
