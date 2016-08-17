@@ -73,10 +73,9 @@ IntercomRails.config do |config|
   # A hash of additional data you wish to send about a company.
   # This works the same as User custom data above.
   #
-  # config.company.custom_data = {
-  #   :number_of_messages => Proc.new { |app| app.messages.count },
-  #   :is_interesting => :is_interesting?
-  # }
+  config.company.custom_data = {
+    phone_number: Proc.new { |company| company.decorate.phone_number },
+  }
 
   # == Company Plan name
   # This is the name of the plan a company is currently paying (or not paying) for.
