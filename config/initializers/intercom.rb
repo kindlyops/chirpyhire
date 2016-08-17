@@ -78,7 +78,8 @@ IntercomRails.config do |config|
     candidates_count: Proc.new { |company| company.candidates.count },
     qualified_candidates_count: Proc.new { |company| company.candidates.qualified.count },
     hired_candidates_count: Proc.new { |company| company.candidates.hired.count },
-    trial_percentage_remaining: Proc.new { |company| company.trial_percentage_remaining }
+    trial_percentage_remaining: Proc.new { |company| company.trial_percentage_remaining },
+    subscription_state: Proc.new { |company| company.subscription_state }
   }
 
   # == Company Plan name
