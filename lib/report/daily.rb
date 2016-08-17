@@ -24,11 +24,11 @@ class Report::Daily
     "#{qualified_count} Qualified #{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
   end
 
-  private
-
   def organization
     @organization ||= recipient.organization
   end
+
+  private
 
   attr_reader :recipient, :date
 end
