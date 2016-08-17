@@ -57,6 +57,11 @@ class Subscription < ApplicationRecord
     count.negative? ? 0 : count
   end
 
+  def trial_percentage_remaining
+    return 0 unless trial_message_limit.present?
+    trial_remaining_messages_count / trial_message_limit.to_f
+  end
+
   def reached_monthly_message_limit?
     return unless active?
     message_limit = quantity * Plan.messages_per_quantity
