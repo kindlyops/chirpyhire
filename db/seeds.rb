@@ -31,7 +31,7 @@ if Rails.env.development?
   org.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
   puts "Created Subscription"
 
-  FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
+  location = FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
   puts "Created Location"
 
   puts "Creating User"
@@ -95,19 +95,44 @@ if Rails.env.development?
   Candidate.find_each do |candidate|
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "#{welcome.body}\n\nIf you ever wish to stop receiving text messages from #{org.name} just reply STOP.\n\n#{address_question.formatted_text}")
     FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: Faker::Address.street_address)
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Address", properties: {
+      child_class: "address",
+      address: location.full_street_address,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      postal_code: location.postal_code,
+      country: location.country,
+      city: location.city
+    })
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: choice_question.formatted_text)
     FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: %w(a b c).sample)
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Availability", properties: {
+      child_class: "choice",
+      choice_option: "Hourly"
+    })
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: yes_no_question.formatted_text)
   end
 
   Candidate.where(status: "Bad Fit").find_each do |candidate|
     FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "No")
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Transportation", properties: {
+      child_class: "yes_no",
+      yes_no_option: "No"
+    })
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: bad_fit.body)
   end
 
   Candidate.where(status: ["Hired", "Qualified"]).find_each do |candidate|
     FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "Yes")
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Transportation", properties: {
+      child_class: "yes_no",
+      yes_no_option: "Yes"
+    })
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: cna_question.formatted_text)
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "CNA License", properties: {
+      child_class: "document",
+      url0: "http://www.rejuven8bykelly.com/yahoo_site_admin/assets/images/CNAlic2012.20143437_std.jpg"
+    })
     FactoryGirl.create(:message, :with_image, user: candidate.user, direction: "inbound")
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: thank_you.body)
   end
