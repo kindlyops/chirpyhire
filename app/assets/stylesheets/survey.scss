@@ -14,6 +14,10 @@
     }
   }
 
+  .cards {
+    justify-content: flex-start;
+  }
+
   .card {
     .card-copy {
       white-space: pre-wrap;
@@ -23,6 +27,7 @@
     cursor: default;
     @include media ($horizontal-bar-mode) {
       margin: 0 1em 1.5em 1em;
+      max-width: 22%;
     }
   }
 
@@ -77,6 +82,7 @@
     #map {
       width: 100%;
       height: 46vh;
+      max-height: 250px;
     }
   }
 }
