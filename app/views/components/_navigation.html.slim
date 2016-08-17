@@ -1,7 +1,9 @@
 header.navigation role="banner"
   .navigation-wrapper
     nav.left role="navigation"
-      ul.navigation-menu.show
+      = link_to root_path, class: "app-title desktop" do
+          h1 Chirpyhire
+      ul.navigation-menu.show.left
         li.nav-link
           a href="/candidates"
             span.desktop Candidates
