@@ -7,6 +7,7 @@ class Account < ApplicationRecord
   belongs_to :user
 
   delegate :first_name, :last_name, :name, :organization, to: :user
+  delegate :survey, to: :organization
   accepts_nested_attributes_for :user
 
   def self.active
