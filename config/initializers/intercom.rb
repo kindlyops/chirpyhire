@@ -21,8 +21,8 @@ IntercomRails.config do |config|
   # The method/variable that contains the logged in user in your controllers.
   # If it is `current_user` or `@user`, then you can ignore this
   #
-  # config.user.current = Proc.new { current_user }
-  # config.user.current = [Proc.new { current_user }]
+  config.user.current = Proc.new { current_account }
+  config.user.current = [Proc.new { current_account }]
 
   # == Include for logged out Users
   # If set to true, include the Intercom messenger on all pages, regardless of whether
@@ -62,7 +62,7 @@ IntercomRails.config do |config|
   # in your controllers. 'Companies' are generic groupings of users, so this
   # could be a company, app or group.
   #
-  # config.company.current = Proc.new { current_company }
+  config.company.current = Proc.new { current_organization }
   #
   # Or if you are using devise you can just use the following config
   #
@@ -82,13 +82,13 @@ IntercomRails.config do |config|
   # This is the name of the plan a company is currently paying (or not paying) for.
   # e.g. Messaging, Free, Pro, etc.
   #
-  # config.company.plan = Proc.new { |current_company| current_company.plan.name }
+  config.company.plan = Proc.new { |current_company| current_company.plan_name }
 
   # == Company Monthly Spend
   # This is the amount the company spends each month on your app. If your company
   # has a plan, it will set the 'total value' of that plan appropriately.
   #
-  # config.company.monthly_spend = Proc.new { |current_company| current_company.plan.price }
+  config.company.monthly_spend = Proc.new { |current_company| current_company.subscription_price }
   # config.company.monthly_spend = Proc.new { |current_company| (current_company.plan.price - current_company.subscription.discount) }
 
   # == Custom Style

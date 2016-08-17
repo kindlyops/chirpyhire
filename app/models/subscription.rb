@@ -5,7 +5,7 @@ class Subscription < ApplicationRecord
 
   validates_presence_of :plan, :trial_message_limit, :organization, :state, on: :create
 
-  delegate :stripe_id, to: :plan, prefix: true
+  delegate :stripe_id, :name, :price, to: :plan, prefix: true
 
   include AASM
 
@@ -61,6 +61,11 @@ class Subscription < ApplicationRecord
     return unless active?
     message_limit = quantity * Plan.messages_per_quantity
     organization.current_month_messages_count >= message_limit
+  end
+
+  def price
+    return 0 unless quantity.present?
+    quantity * Plan::DEFAULT_PRICE_IN_DOLLARS
   end
 
   private
