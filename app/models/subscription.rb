@@ -59,7 +59,7 @@ class Subscription < ApplicationRecord
 
   def trial_percentage_remaining
     return 0 unless trial_message_limit.present?
-    trial_remaining_messages_count / trial_message_limit.to_f
+    ((trial_remaining_messages_count / trial_message_limit.to_f) * 100).floor
   end
 
   def reached_monthly_message_limit?
