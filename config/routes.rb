@@ -33,7 +33,7 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/stripe/events'
 
-  devise_for :accounts, controllers: {registrations: 'registrations', invitations: 'invitations'}
+  devise_for :accounts, controllers: {sessions: 'sessions', registrations: 'registrations', invitations: 'invitations'}
 
   authenticate :account, lambda { |a| a.super_admin? } do
     mount Sidekiq::Web => '/sidekiq'
