@@ -12,7 +12,7 @@
       = f.password_field :password, autocomplete: "off"
     - if devise_mapping.rememberable?
       .field
-        = f.label :remember_me
+        = f.label :remember_me, class: "remember-me"
         = f.check_box :remember_me
     .actions
       = f.submit "Sign in"
