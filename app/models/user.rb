@@ -14,6 +14,20 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :organization
 
+  def handle
+    if name.present?
+      name
+    else
+      phone_number.phony_formatted
+    end
+  end
+
+  def name
+    if first_name.present?
+      "#{first_name} #{last_name}".squish
+    end
+  end
+
   def self.by_having_unread_messages
     order(has_unread_messages: :desc)
   end
