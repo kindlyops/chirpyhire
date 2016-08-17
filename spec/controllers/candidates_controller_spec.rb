@@ -15,8 +15,20 @@ RSpec.describe CandidatesController, type: :controller do
       expect(response).to be_ok
     end
 
+
     context "with candidates" do
       let!(:candidates) { create_list(:candidate, 3, status: "Qualified", organization: organization) }
+
+      context "geojson" do
+        context "with candidates with addresses without phone numbers" do
+          let!(:candidates) { create_list(:candidate, 3, :with_address, status: "Qualified", organization: organization) }
+
+          it "is OK" do
+            get :index, format: :geojson
+            expect(response).to be_ok
+          end
+        end
+      end
 
       it "returns the organization's candidates" do
         get :index

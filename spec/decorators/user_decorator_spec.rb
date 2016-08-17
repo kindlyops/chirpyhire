@@ -20,7 +20,7 @@ RSpec.describe UserDecorator do
     end
 
     it "is the phone number" do
-      expect(user.phone_number).to eq(model.phone_number)
+      expect(user.phone_number).to eq(model.phone_number.phony_formatted)
     end
   end
 end

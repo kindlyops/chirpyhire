@@ -35,10 +35,6 @@ class GeoJson::Candidates
     }
   end
 
-  def phone_number(candidate)
-    candidate.phone_number.phony_formatted
-  end
-
   def address(candidate)
     candidate.address.formatted_address
   end
@@ -52,6 +48,6 @@ class GeoJson::Candidates
   end
 
   def description(candidate)
-    "<h3>Phone: <a href='/users/#{candidate.user_id}/messages'>#{phone_number(candidate)}</a></h3><p>Address: #{address(candidate)}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
+    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>#{candidate.handle}</a></h3><p>Address: #{address(candidate)}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
   end
 end
