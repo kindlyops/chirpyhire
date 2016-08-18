@@ -1,7 +1,7 @@
 = title "Invitations | Chirpyhire"
 .invitations
-  h3 Send Invitation
   = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
+    h3 Send Invitation
     .field
       = f.label :email
       = f.text_field :email, required: true
