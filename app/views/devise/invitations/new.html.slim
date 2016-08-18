@@ -7,4 +7,5 @@
       = f.text_field :email, required: true
     .actions
       = submit_tag "Invite", class: "action"
-      = link_to "Skip to Campaign", campaign_path(current_account.survey), class: "action button"
+      - if current_organization.created_at > 60.seconds.ago
+        = link_to "Skip to Campaign", campaign_path(current_account.survey), class: "action button"
