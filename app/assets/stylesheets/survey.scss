@@ -4,6 +4,13 @@
   @include outer-container;
   padding: 1em;
 
+  .edit_survey {
+    @include media ($horizontal-bar-mode) {
+      @include span-columns(6);
+      @include shift(3);
+    }
+  }
+
   .header {
     display: flex;
     justify-content: space-between;

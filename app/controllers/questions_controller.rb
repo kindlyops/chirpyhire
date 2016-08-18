@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
   def create
     @question = authorize(new_question)
     if @question.save
-      redirect_to campaign_url, notice: "Nice! Question saved."
+      redirect_to survey_url, notice: "Nice! Question saved."
     else
       render :new
     end
@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
     @question = authorized_question
 
     if @question.update(permitted_question_attributes)
-      redirect_to campaign_url, notice: "Nice! Question saved."
+      redirect_to survey_url, notice: "Nice! Question saved."
     else
       render :edit
     end

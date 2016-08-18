@@ -5,7 +5,7 @@ class TemplatesController < ApplicationController
     @template = authorized_template
 
     if @template.update(permitted_attributes(Template))
-      redirect_to campaign_path, notice: "Nice! Template saved."
+      redirect_to survey_path, notice: "Nice! Template saved."
     else
       render :edit
     end

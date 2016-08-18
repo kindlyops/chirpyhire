@@ -8,4 +8,4 @@
     .actions
       = submit_tag "Invite", class: "action"
       - if current_organization.created_at > 60.seconds.ago
-        = link_to "Skip to Campaign", campaign_path(current_account.survey), class: "action button"
+        = link_to "Skip to Recruiting Survey", survey_path(current_account.survey), class: "action button"

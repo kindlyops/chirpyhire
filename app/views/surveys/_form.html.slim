@@ -1,10 +1,10 @@
-h1 Edit Campaign
-p Change the order questions are asked.
-hr
-= form_for survey, url: campaign_path do |f|
+= form_for survey do |f|
+  h1 Edit Survey
+  p Change the order questions are asked.
+  hr
   - if survey.errors.any?
     #error_explanation
-      h2 = "#{pluralize(survey.errors.count, "error")} prohibited this Campaign from being saved:"
+      h2 = "#{pluralize(survey.errors.count, "error")} prohibited this Survey from being saved:"
       ul
         - survey.errors.full_messages.each do |message|
           li = message

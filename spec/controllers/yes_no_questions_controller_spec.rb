@@ -47,7 +47,7 @@ RSpec.describe YesNoQuestionsController, type: :controller do
 
       it "redirects to the survey" do
         post :create, params: {yes_no_question: valid_attributes}
-        expect(response).to redirect_to(campaign_path)
+        expect(response).to redirect_to(survey_path)
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe YesNoQuestionsController, type: :controller do
       it "redirects to the survey" do
         yes_no_question = survey.questions.create! valid_attributes
         put :update, params: {id: yes_no_question.to_param, yes_no_question: new_attributes}
-        expect(response).to redirect_to(campaign_path)
+        expect(response).to redirect_to(survey_path)
       end
     end
 
