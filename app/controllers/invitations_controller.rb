@@ -18,6 +18,10 @@ class InvitationsController < Devise::InvitationsController
     super.merge(user_attributes: { organization: organization })
   end
 
+  def after_invite_path_for(inviter)
+    survey_path(inviter.survey)
+  end
+
   def organization
     current_inviter.organization
   end
