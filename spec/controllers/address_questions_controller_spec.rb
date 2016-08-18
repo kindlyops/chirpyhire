@@ -48,7 +48,7 @@ RSpec.describe AddressQuestionsController, type: :controller do
 
       it "redirects to the survey" do
         post :create, params: {address_question: valid_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
 
       context "with address question option" do
@@ -126,7 +126,7 @@ RSpec.describe AddressQuestionsController, type: :controller do
       it "redirects to the survey" do
         address_question = survey.questions.create! valid_attributes
         put :update, params: {id: address_question.to_param, address_question: new_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 

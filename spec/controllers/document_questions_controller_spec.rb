@@ -47,7 +47,7 @@ RSpec.describe DocumentQuestionsController, type: :controller do
 
       it "redirects to the survey" do
         post :create, params: {document_question: valid_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 
@@ -87,7 +87,7 @@ RSpec.describe DocumentQuestionsController, type: :controller do
       it "redirects to the survey" do
         document_question = survey.questions.create! valid_attributes
         put :update, params: {id: document_question.to_param, document_question: new_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 

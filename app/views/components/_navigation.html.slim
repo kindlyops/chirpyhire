@@ -25,7 +25,7 @@ header.navigation role="banner"
             i.fa.fa-cog.fa-2x
       ul#js-navigation-menu.navigation-menu.submenu
         li.nav-link
-          = link_to "Recruiting Survey", survey_path
+          = link_to "Campaign", campaign_path
         - if current_organization.has_persisted_subscription?
           li.nav-link
             = link_to "Subscription", subscription_path(current_organization.subscription)

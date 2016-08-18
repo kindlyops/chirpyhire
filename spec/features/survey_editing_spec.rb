@@ -14,7 +14,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
   context "Templates" do
     context "editing the Welcome template" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#welcome #edit-template", match: :first).trigger('click')
         fill_in "template_body", with: "New welcome body"
         click_button("Save")
@@ -25,7 +25,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the Bad Fit template" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#bad-fit #edit-template", match: :first).trigger('click')
 
         fill_in "template_body", with: "New bad fit body"
@@ -37,7 +37,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the Thank You template" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#thank-you #edit-template", match: :first).trigger('click')
 
         fill_in "template_body", with: "New thank you body"
@@ -54,7 +54,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the text" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         fill_in "address_question_text", with: "New question text"
@@ -66,7 +66,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "changing the status" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         find("#address_question_status", visible: :all).trigger('click')
@@ -86,7 +86,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
       context "adding a question" do
         it "works" do
-          visit survey_path
+          visit campaign_path
           find("#add-question", match: :first).trigger('click')
           within(find("#address-type")) do
             click_link("Add Question")
@@ -105,7 +105,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
         context "removing the limit" do
           it "works" do
-            visit survey_path
+            visit campaign_path
             find("#edit-question").trigger("click")
 
             address_option = find(".nested-fields", match: :first)
@@ -123,7 +123,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
           let(:distance) { Faker::Number.number(2) }
 
           it "works" do
-            visit survey_path
+            visit campaign_path
             find("#edit-question").trigger("click")
 
             address_option = find(".nested-fields", match: :first)
@@ -143,7 +143,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         let(:longitude) { Faker::Address.longitude }
 
         it "works" do
-          visit survey_path
+          visit campaign_path
           expect(page).not_to have_text("miles")
           find("#edit-question").trigger("click")
 
@@ -158,7 +158,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         end
 
         it "only allows adding one option" do
-          visit survey_path
+          visit campaign_path
           expect(page).not_to have_text("miles")
           find("#edit-question").trigger("click")
 
@@ -175,7 +175,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "adding a question" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#add-question", match: :first).trigger('click')
         within(find("#image-type")) do
           click_link("Add Question")
@@ -191,7 +191,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the text" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         fill_in "document_question_text", with: "New question text"
@@ -203,7 +203,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "changing the status" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         find("#document_question_status", visible: :all).trigger('click')
@@ -219,7 +219,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "adding a question" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#add-question", match: :first).trigger('click')
         within(find("#yes-no-type")) do
           click_link("Add Question")
@@ -235,7 +235,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the text" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         fill_in "yes_no_question_text", with: "New question text"
@@ -247,7 +247,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "changing the status" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         find("#yes_no_question_status", visible: :all).trigger('click')
@@ -266,7 +266,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "adding a question" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#add-question", match: :first).trigger('click')
         within(find("#choice-type")) do
           click_link("Add Question")
@@ -287,7 +287,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "adding a Choice" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
         click_link("Add choice")
         choice = all('.nested-fields').last
@@ -304,7 +304,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
     context "removing a Choice" do
       let!(:choice_question_option_2) { create(:choice_question_option, choice_question: choice_question, letter: "b", text: "Both") }
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
         choice = find(".nested-fields", match: :first)
         choice_text = choice.find('.field input').value
@@ -319,7 +319,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing the text" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         fill_in "choice_question_text", with: "New question text"
@@ -332,7 +332,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "changing the status" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
 
         find("#choice_question_status", visible: :all).trigger('click')
@@ -343,7 +343,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
 
     context "editing a Choice" do
       it "works" do
-        visit survey_path
+        visit campaign_path
         find("#edit-question", match: :first).trigger('click')
         choice = find(".nested-fields", match: :first)
         within(choice) do

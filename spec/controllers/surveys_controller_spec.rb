@@ -52,7 +52,7 @@ RSpec.describe SurveysController, type: :controller do
 
       it "redirects to the survey path" do
         put :update, params: {id: survey.to_param, survey: valid_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 

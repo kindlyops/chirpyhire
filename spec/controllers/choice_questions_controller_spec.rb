@@ -47,7 +47,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
 
       it "redirects to the survey" do
         post :create, params: {choice_question: valid_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 
@@ -163,7 +163,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
       it "redirects to the survey" do
         choice_question = survey.questions.create! valid_attributes
         put :update, params: {id: choice_question.to_param, choice_question: new_attributes}
-        expect(response).to redirect_to(survey_path)
+        expect(response).to redirect_to(campaign_path)
       end
     end
 
