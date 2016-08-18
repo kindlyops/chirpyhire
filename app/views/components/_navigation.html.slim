@@ -20,12 +20,14 @@ header.navigation role="banner"
               span.fa-stack
                 i.mobile.fa.fa-comment.fa-stack-2x
                 i.users-unread-message-count.fa-stack-1x = current_organization.users_with_unread_messages_count
+        li.nav-link
+          = link_to campaign_path do
+            span.desktop Campaign
+            i.mobile.fa.fa-bolt.fa-2x
         li.nav-link.mobile
           a.js-mobile-menu.navigation-menu-button href="javascript:void(0)"
             i.fa.fa-cog.fa-2x
       ul#js-navigation-menu.navigation-menu.submenu
-        li.nav-link
-          = link_to "Campaign", campaign_path
         - if current_organization.has_persisted_subscription?
           li.nav-link
             = link_to "Subscription", subscription_path(current_organization.subscription)

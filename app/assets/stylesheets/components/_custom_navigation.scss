@@ -4,15 +4,14 @@ header.navigation {
   $large-screen: 53.75em !default;
   $horizontal-bar-mode: $large-screen;
 
-  nav.left {
-    display: flex;
-
     @include media ($horizontal-bar-mode) {
-      ul.navigation-menu.left {
-        padding: 0 2em;
+      nav.left {
+        display: flex;
+        ul.navigation-menu.left {
+          padding: 0 2em;
+        }
       }
     }
-  }
 
   .app-title {
     padding: 1.05em 0 0 1.5em;
