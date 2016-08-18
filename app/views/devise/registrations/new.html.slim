@@ -22,7 +22,7 @@
         = o.fields_for :location do |l|
           .field
             = l.label :full_street_address, "Organization Address"
-            = l.text_field :full_street_address, required: true
+            = l.text_field :full_street_address, required: true, placeholder: "Street and zipcode"
     p.tos-links
       ' By clicking Sign up, you agree to our
       a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
