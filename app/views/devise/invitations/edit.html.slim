@@ -9,11 +9,8 @@
     = f.hidden_field :invitation_token
     = f.fields_for :user do |user_form|
       .field
-        = user_form.label :first_name
-        = user_form.text_field :first_name, required: true, autofocus: true
-      .field
-        = user_form.label :last_name
-        = user_form.text_field :last_name, required: true
+        = user_form.label :name
+        = user_form.text_field :name, required: true
     - if f.object.class.require_password_on_accepting
       .field
         = f.label :password

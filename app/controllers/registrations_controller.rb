@@ -22,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     allow = [:email, :password, :password_confirmation, :agreed_to_terms,
-      [user_attributes: [:phone_number, :first_name, :last_name,
+      [user_attributes: [:phone_number, :name,
        organization_attributes: [:name,
        location_attributes: [:full_street_address, :latitude, :longitude, :city, :state, :state_code, :postal_code, :country, :country_code
        ]]]]

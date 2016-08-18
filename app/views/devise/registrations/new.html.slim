@@ -6,11 +6,8 @@
     = devise_error_messages!
     = f.fields_for :user do |u|
       .field
-        = u.label :first_name
-        = u.text_field :first_name, required: true, autofocus: true
-      .field
-        = u.label :last_name
-        = u.text_field :last_name, required: true
+        = u.label :name
+        = u.text_field :name, required: true, autofocus: true
     .field
       = f.label :email
       = f.email_field :email, required: true

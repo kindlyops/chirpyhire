@@ -2,14 +2,15 @@ require 'rails_helper'
 
 RSpec.feature "Account Management", type: :feature, js: true do
   feature "sign up" do
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
     context "with valid credentials" do
       let(:password) { Faker::Internet.password }
 
       scenario "User progresses to invitation screen", vcr: { cassette_name: "TwilioProvisioner-call" }  do
         visit "/accounts/sign_up"
 
-        fill_in "First name", with: Faker::Name.first_name
-        fill_in "Last name", with: Faker::Name.last_name
+        fill_in "Name", with: "#{first_name} #{last_name}"
         fill_in "Organization Name", with: Faker::Company.name
         fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email
@@ -17,6 +18,8 @@ RSpec.feature "Account Management", type: :feature, js: true do
 
         click_button "Sign up"
         expect(page).to have_text("Send Invitation")
+        expect(User.last.first_name).to eq(first_name)
+        expect(User.last.last_name).to eq(last_name)
       end
     end
 
@@ -24,8 +27,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
       scenario "account creation fails" do
         visit "/accounts/sign_up"
 
-        fill_in "First name", with: Faker::Name.first_name
-        fill_in "Last name", with: Faker::Name.last_name
+        fill_in "Name", with: "#{first_name} #{last_name}"
         fill_in "Organization Name", with: Faker::Company.name
         fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email

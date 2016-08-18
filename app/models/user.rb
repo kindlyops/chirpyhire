@@ -14,6 +14,12 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :organization
 
+  def name=(name)
+    first, last = name.split(" ", 2)
+    self.first_name = first
+    self.last_name = last
+  end
+
   def handle
     if name.present?
       name

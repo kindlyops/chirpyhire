@@ -23,19 +23,20 @@ RSpec.feature "Account Invitations", type: :feature, js: true do
       logout(:account)
     end
 
-    let(:invited) { build(:account, user: create(:user, organization: organization, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)) }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
 
     scenario "accepting the invitation takes the new account to the dashboard" do
       open_email(email)
       current_email.click_link("Accept invitation")
 
-      fill_in "First name", with: invited.first_name
-      fill_in "Last name", with: invited.last_name
-
-      fill_in "Password", with: invited.password
+      fill_in "Name", with: "#{first_name} #{last_name}"
+      fill_in "Password", with: "password"
 
       click_button "Sign up"
       expect(page).to have_text("Candidates")
+      expect(User.last.first_name).to eq(first_name)
+      expect(User.last.last_name).to eq(last_name)
     end
   end
 end
