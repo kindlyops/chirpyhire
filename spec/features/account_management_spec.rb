@@ -14,7 +14,6 @@ RSpec.feature "Account Management", type: :feature, js: true do
         fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email
         fill_in "Password", with: password
-        fill_in "Password confirmation", with: password
 
         click_button "Sign up"
         expect(page).to have_text("Send Invitation")
@@ -30,12 +29,11 @@ RSpec.feature "Account Management", type: :feature, js: true do
         fill_in "Organization Name", with: Faker::Company.name
         fill_in "Organization Address", with: "1000 E. Market St. 22902"
         fill_in "Email", with: Faker::Internet.email
-        fill_in "Password", with: "password"
-        fill_in "Password confirmation", with: "not the password"
+        fill_in "Password", with: "short"
 
         click_button "Sign up"
         expect(page).not_to have_text("Send Invitation")
-        expect(page).to have_text("Password confirmation doesn't match Password")
+        expect(page).to have_text("Password is too short (minimum is 8 characters)")
       end
     end
   end

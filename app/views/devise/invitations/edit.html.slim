@@ -17,14 +17,11 @@
     - if f.object.class.require_password_on_accepting
       .field
         = f.label :password
-        = f.password_field :password, required: true, autocomplete: "off"
-      .field
-        = f.label :password_confirmation
-        = f.password_field :password_confirmation, required: true, autocomplete: "off"
+        = f.password_field :password, required: true, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum"
     p
       ' By clicking Sign up, you agree to our
       a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
-      '  and that you have read our
+      '  and accept our
       a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
     .actions
       = f.submit "Sign up"

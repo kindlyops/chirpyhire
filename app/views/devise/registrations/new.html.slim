@@ -16,15 +16,7 @@
       = f.email_field :email, required: true
     .field
       = f.label :password
-      - if @minimum_password_length
-        em
-          | (
-          = @minimum_password_length
-          |  characters minimum)
-      = f.password_field :password, autocomplete: "off"
-    .field
-      = f.label :password_confirmation
-      = f.password_field :password_confirmation, autocomplete: "off"
+      = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum"
     = f.fields_for :user do |u|
       = u.fields_for :organization do |o|
         .field
@@ -37,7 +29,7 @@
     p
       ' By clicking Sign up, you agree to our
       a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
-      '  and that you have read our
+      '  and accept our
       a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
     .actions
       = f.submit "Sign up"
