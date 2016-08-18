@@ -58,21 +58,21 @@ if Rails.env.development?
     bad_fit = Template.create(organization: org, name: "Bad Fit", body: "Thank you very much for your interest. Unfortunately, we don't "\
       "have a good fit for you at this time. If anything changes we will let you know.")
     welcome = Template.create(organization: org, name: "Welcome", body: "Hello this is Chirpyhire. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
-    thank_you = Template.create(organization: org, name: "Thank You", body: "Thanks for your interest!")
+    thank_you = Template.create(organization: org, name: "Thank You", body: "Thanks for your interest! Please give us a call at 404-867-5309 during the week between 9am - 5pm for next steps.")
     survey = org.create_survey(bad_fit: bad_fit, welcome: welcome, thank_you: thank_you)
   end
 
   unless org.survey.questions.present?
-    address_question = org.survey.questions.create!(priority: 2, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
+    address_question = org.survey.questions.create!(priority: 1, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
     address_question.create_address_question_option(distance: 20, latitude: latitude, longitude: longitude )
-    choice_question = org.survey.questions.create!(priority: 3, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?",
+    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?",
       choice_question_options_attributes: [
         {text: "Live-in", letter: "a"}
         ])
     choice_question.choice_question_options.create(text: "Hourly", letter: "b")
     choice_question.choice_question_options.create(text: "Both", letter: "c")
-    yes_no_question = org.survey.questions.create(priority: 1, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
-    cna_question = org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
+    yes_no_question = org.survey.questions.create(priority: 3, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
+    # cna_question = org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
     puts "Created Profile Features"
   end
 
@@ -128,7 +128,7 @@ if Rails.env.development?
       child_class: "yes_no",
       yes_no_option: "Yes"
     })
-    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: cna_question.formatted_text)
+    # FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: cna_question.formatted_text)
     FactoryGirl.create(:candidate_feature, candidate: candidate, label: "CNA License", properties: {
       child_class: "document",
       url0: "http://www.rejuven8bykelly.com/yahoo_site_admin/assets/images/CNAlic2012.20143437_std.jpg"
