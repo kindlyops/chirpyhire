@@ -167,6 +167,13 @@ RSpec.describe SubscriptionsController, type: :controller do
         put :update, params: {id: subscription.to_param, subscription: valid_attributes}
         expect(response).to redirect_to(subscription_path(subscription))
       end
+
+      it "enqueues an update job" do
+        subscription = organization.create_subscription valid_attributes
+        expect{
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+        }.to have_enqueued_job(Payment::Job::UpdateSubscription)
+      end
     end
   end
 
