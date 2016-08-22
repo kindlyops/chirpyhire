@@ -11,7 +11,7 @@ class Survey < ApplicationRecord
   validate :unique_priorities, on: :update
 
   def perform(user)
-    ProfileAdvancer.call(user)
+    CandidateAdvancer.call(user)
   end
 
   def next_unasked_question_for(user)

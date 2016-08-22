@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProfileAdvancer do
+RSpec.describe CandidateAdvancer do
   include RSpec::Rails::Matchers
 
   let(:user) { create(:user, :with_candidate) }
@@ -16,31 +16,31 @@ RSpec.describe ProfileAdvancer do
 
       it "does not create an inquiry of the next candidate feature" do
         expect {
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
         }.not_to change{user.inquiries.count}
       end
 
       it "does not create a notification" do
         expect {
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
         }.not_to change{user.notifications.count}
       end
 
       it "does not create a message" do
         expect {
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
         }.not_to change{Message.count}
       end
 
       it "does not create an AutomatonJob for the screen event" do
         expect{
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
         }.not_to have_enqueued_job(AutomatonJob)
       end
 
       it "does not change the candidate's status" do
         expect{
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
         }.not_to change{candidate.status}
       end
     end
@@ -58,31 +58,31 @@ RSpec.describe ProfileAdvancer do
 
         it "does not create an inquiry of the next candidate feature" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{user.inquiries.count}
         end
 
         it "does not create a notification" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{user.notifications.count}
         end
 
         it "does not create a message" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{Message.count}
         end
 
         it "does not create an AutomatonJob for the screen event" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{candidate.status}
         end
       end
@@ -96,31 +96,31 @@ RSpec.describe ProfileAdvancer do
 
         it "does not create an inquiry of the next candidate feature" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{user.inquiries.count}
         end
 
         it "does not create a notification" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{user.notifications.count}
         end
 
         it "does not create a message" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{Message.count}
         end
 
         it "does not create an AutomatonJob for the screen event" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.not_to change{candidate.status}
         end
       end
@@ -141,7 +141,7 @@ RSpec.describe ProfileAdvancer do
         end
 
         it "appends the welcome, unsubscribed notification, and the question together" do
-          ProfileAdvancer.call(user)
+          CandidateAdvancer.call(user)
           expect(user.messages.last.body).to eq(initial_message)
         end
       end
@@ -153,13 +153,13 @@ RSpec.describe ProfileAdvancer do
 
         it "creates an inquiry of the next candidate feature" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.to change{user.inquiries.count}.by(1)
         end
 
         it "creates a message" do
           expect {
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.to change{Message.count}.by(1)
         end
 
@@ -178,25 +178,25 @@ RSpec.describe ProfileAdvancer do
           context "with a template for the survey" do
             it "does not create an inquiry of the next candidate feature" do
               expect {
-                ProfileAdvancer.call(user)
+                CandidateAdvancer.call(user)
               }.not_to change{user.inquiries.count}
             end
 
             it "creates a notification" do
               expect {
-                ProfileAdvancer.call(user)
+                CandidateAdvancer.call(user)
               }.to change{user.notifications.count}.by(1)
             end
 
             it "creates a message" do
               expect {
-                ProfileAdvancer.call(user)
+                CandidateAdvancer.call(user)
               }.to change{Message.count}.by(1)
             end
 
             it "changes the candidate's status to Bad Fit" do
               expect{
-                ProfileAdvancer.call(user)
+                CandidateAdvancer.call(user)
               }.to change{candidate.status}.from("Potential").to("Bad Fit")
             end
           end
@@ -206,13 +206,13 @@ RSpec.describe ProfileAdvancer do
       context "with all profile features present" do
         it "creates an AutomatonJob for the screen event" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.to have_enqueued_job(AutomatonJob).with(user, "screen")
         end
 
         it "changes the candidate's status to Qualified" do
           expect{
-            ProfileAdvancer.call(user)
+            CandidateAdvancer.call(user)
           }.to change{candidate.status}.from("Potential").to("Qualified")
         end
       end

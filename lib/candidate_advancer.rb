@@ -1,4 +1,4 @@
-class ProfileAdvancer
+class CandidateAdvancer
 
   def self.call(user)
     new(user).call
