@@ -9,7 +9,7 @@ class ProfileAdvancer
   end
 
   def call
-    return unless user.subscribed?
+    return if organization.finished_trial? || user.unsubscribed?
 
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)

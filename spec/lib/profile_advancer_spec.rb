@@ -5,6 +5,7 @@ RSpec.describe ProfileAdvancer do
 
   let(:user) { create(:user, :with_candidate) }
   let!(:survey) { create(:survey, organization: user.organization) }
+  let!(:subscription) { create(:subscription, organization: user.organization) }
   let(:candidate) { user.candidate }
 
   describe ".call" do
@@ -47,6 +48,43 @@ RSpec.describe ProfileAdvancer do
     context "when the user is subscribed" do
       before(:each) do
         user.update(subscribed: true)
+      end
+
+      context "when the organization's trial is finished" do
+        before(:each) do
+          subscription.update(state: "trialing", trial_message_limit: 1)
+          create_list(:message, 2, user: user)
+        end
+
+        it "does not create an inquiry of the next candidate feature" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{user.inquiries.count}
+        end
+
+        it "does not create a notification" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{user.notifications.count}
+        end
+
+        it "does not create a message" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{Message.count}
+        end
+
+        it "does not create an AutomatonJob for the screen event" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to have_enqueued_job(AutomatonJob)
+        end
+
+        it "does not change the candidate's status" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to change{candidate.status}
+        end
       end
 
       context "initial question" do
