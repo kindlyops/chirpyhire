@@ -48,9 +48,9 @@ RSpec.describe ApplicationController, type: :controller do
             create(:message, user: account.user)
           end
 
-          it "redirects to show_subscription page" do
+          it "is ok" do
             get :index
-            expect(response).to redirect_to(subscription)
+            expect(response).to be_ok
           end
         end
 
@@ -60,9 +60,9 @@ RSpec.describe ApplicationController, type: :controller do
             create_list(:message, 2, user: account.user)
           end
 
-          it "redirects to show_subscription page" do
+          it "is ok" do
             get :index
-            expect(response).to redirect_to(subscription)
+            expect(response).to be_ok
           end
         end
       end
@@ -82,9 +82,9 @@ RSpec.describe ApplicationController, type: :controller do
             create(:message, user: account.user)
           end
 
-          it "redirects to show_subscription page" do
+          it "is ok" do
             get :index
-            expect(response).to redirect_to(subscription)
+            expect(response).to be_ok
           end
         end
 
@@ -93,9 +93,9 @@ RSpec.describe ApplicationController, type: :controller do
             create_list(:message, 2, user: account.user)
           end
 
-          it "redirects to show_subscription page" do
+          it "is ok" do
             get :index
-            expect(response).to redirect_to(subscription)
+            expect(response).to be_ok
           end
         end
       end

@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def block_invalid_subscriptions
-    if current_organization.inactive? || current_organization.finished_trial? || current_organization.reached_monthly_message_limit?
+    if current_organization.inactive?
       redirect_to(subscription_path(current_organization.subscription))
     end
   end
