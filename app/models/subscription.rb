@@ -44,7 +44,7 @@ class Subscription < ApplicationRecord
     )
   end
 
-  def in_bad_standing?
+  def over_message_limit?
     finished_trial? || reached_monthly_message_limit?
   end
 

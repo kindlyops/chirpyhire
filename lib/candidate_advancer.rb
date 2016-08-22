@@ -9,7 +9,7 @@ class CandidateAdvancer
   end
 
   def call
-    return if organization.in_bad_standing? || user.unsubscribed?
+    return if organization.over_message_limit? || user.unsubscribed?
 
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)

@@ -15,7 +15,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :organization
 
   def cannot_receive_messages?
-    organization.in_bad_standing? || phone_number.blank?
+    organization.over_message_limit? || phone_number.blank?
   end
 
   def name=(name)
