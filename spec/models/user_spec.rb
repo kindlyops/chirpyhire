@@ -23,6 +23,18 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context "when the monthly message limit is reached" do
+      before(:each) do
+        subscription.update(state: "active", quantity: 1)
+        Plan.messages_per_quantity = 1
+        create(:message, user: user)
+      end
+
+      it "is true" do
+        expect(user.cannot_receive_messages?).to eq(true)
+      end
+    end
+
     context "when the phone number is blank" do
       before(:each) do
         user.update(phone_number: nil)

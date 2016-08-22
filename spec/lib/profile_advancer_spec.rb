@@ -87,6 +87,44 @@ RSpec.describe ProfileAdvancer do
         end
       end
 
+      context "when the organization's monthly limit is reached" do
+        before(:each) do
+          subscription.update(state: "active", quantity: 1)
+          Plan.messages_per_quantity = 1
+          create(:message, user: user)
+        end
+
+        it "does not create an inquiry of the next candidate feature" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{user.inquiries.count}
+        end
+
+        it "does not create a notification" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{user.notifications.count}
+        end
+
+        it "does not create a message" do
+          expect {
+            ProfileAdvancer.call(user)
+          }.not_to change{Message.count}
+        end
+
+        it "does not create an AutomatonJob for the screen event" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to have_enqueued_job(AutomatonJob)
+        end
+
+        it "does not change the candidate's status" do
+          expect{
+            ProfileAdvancer.call(user)
+          }.not_to change{candidate.status}
+        end
+      end
+
       context "initial question" do
         let!(:question) { create(:question, survey: survey) }
         let!(:welcome) { survey.welcome }
