@@ -14,6 +14,10 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :organization
 
+  def cannot_receive_messages?
+    organization.finished_trial? || phone_number.blank?
+  end
+
   def name=(name)
     first, last = name.split(" ", 2)
     self.first_name = first

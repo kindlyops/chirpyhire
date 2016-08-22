@@ -3,6 +3,37 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
 
+  describe "#cannot_receive_messages?" do
+    let!(:organization) { user.organization }
+    let!(:subscription) { create(:subscription, organization: organization) }
+
+    it "is false" do
+      expect(user.cannot_receive_messages?).to eq(false)
+    end
+
+    context "when the trial is finished" do
+      before(:each) do
+        subscription.update(state: "trialing")
+        subscription.update(trial_message_limit: 1)
+        create_list(:message, 2, user: user)
+      end
+
+      it "is true" do
+        expect(user.cannot_receive_messages?).to eq(true)
+      end
+    end
+
+    context "when the phone number is blank" do
+      before(:each) do
+        user.update(phone_number: nil)
+      end
+
+      it "is true" do
+        expect(user.cannot_receive_messages?).to eq(true)
+      end
+    end
+  end
+
   describe "#receive_message" do
     it "creates a message for the user" do
       expect {
