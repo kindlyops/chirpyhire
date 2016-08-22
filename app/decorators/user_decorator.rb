@@ -9,4 +9,10 @@ class UserDecorator < Draper::Decorator
       ""
     end
   end
+
+  def send_message_title
+    return unless user.cannot_receive_messages?
+
+    "You've reached your message limit. Please upgrade to send more messages."
+  end
 end
