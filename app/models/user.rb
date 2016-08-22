@@ -50,6 +50,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def has_outstanding_inquiry?
+    outstanding_inquiry.present?
+  end
+
   def outstanding_inquiry
     inquiries.unanswered.first
   end

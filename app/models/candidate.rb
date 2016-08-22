@@ -17,7 +17,7 @@ class Candidate < ApplicationRecord
 
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
-           :receive_message, :handle, to: :user
+           :receive_message, :handle, :has_outstanding_inquiry?, to: :user
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
