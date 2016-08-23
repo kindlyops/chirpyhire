@@ -2,7 +2,7 @@
   .show_subscription
     .menu
       h1 Subscription
-      - unless @subscription.canceled?
+      - unless @subscription.canceled? || @subscription.trialing?
         = link_to edit_subscription_path(@subscription) do
             i.fa.fa-pencil
     - if @subscription.finished_trial?
