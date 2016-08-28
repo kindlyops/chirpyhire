@@ -1,27 +1,42 @@
-[ ![Codeship Status for chirpyhire/biscayne](https://codeship.com/projects/52825350-2cfd-0134-4099-42d5f584ed48/status?branch=master)](https://codeship.com/projects/163559)
-
 ## README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Zero to Green
 
-Things you may want to cover:
+0. Install [rbenv](https://github.com/rbenv/rbenv#homebrew-on-mac-os-x) and [ruby-build](https://github.com/rbenv/ruby-build#installing-with-homebrew-for-os-x-users) to manage ruby versions.
 
-*   Ruby version
+1. Get `.env` file from a developer.
+2. Install native dependencies if necessary.
+```bash
+brew install postgres
+brew install redis
+rbenv install 2.3.1
+```
+3. Download libraries, migrate database, run tests.
+```ruby
+bundle install
+rails db:create
+rails db:migrate
+rspec
+```
 
-*   System dependencies
+### Twilio Development
 
-*   Configuration
+Use ngrok tunnel For Twilio Webhook:  
+`ngrok http 3000`  
+Login to Twilio and set SMS Webhook URL to the Dynamic ngrok URL. [More info](https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html)  
 
-*   Database creation
+### Stripe Development
 
-*   Database initialization
+Use test keys and test environment.
 
-*   How to run the test suite
+### Demoing App
 
-*   Services (job queues, cache servers, search engines, etc.)
-
-*   Deployment instructions
-
-*   ...
-
+Ensure you have a clean install:  
+`rails db:drop && rails db:create && rails db:migrate`  
+Localizes seed data to prospects area. Makes it easier for them to "Get it".  
+`rails db:seed latitude=$latitude longitude=$longitude`  
+Start Local Server:  
+`foreman s`  
+Tunnel For Twilio Webhook:  
+`ngrok http 3000`  
+Login to the app before the demo begins. They trust logging in works.
