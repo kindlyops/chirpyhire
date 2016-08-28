@@ -39,4 +39,3 @@ Start Local Server:
 `foreman s`  
 Tunnel For Twilio Webhook:  
 `ngrok http 3000`  
-Login to the app before the demo begins. They trust logging in works.
