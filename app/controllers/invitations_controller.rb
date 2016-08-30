@@ -19,7 +19,7 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def after_invite_path_for(inviter)
-    survey_path(inviter.survey)
+    survey_path
   end
 
   def organization
