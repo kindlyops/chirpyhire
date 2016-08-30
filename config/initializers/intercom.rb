@@ -1,3 +1,5 @@
+$intercom = Intercom::Client.new(app_id: ENV.fetch("INTERCOM_APP_ID", "ys27hogk"), api_key: ENV.fetch("INTERCOM_API_KEY"))
+
 IntercomRails.config do |config|
   # == Intercom app_id
   #
@@ -75,15 +77,8 @@ IntercomRails.config do |config|
   #
   config.company.custom_data = {
     phone_number: Proc.new { |company| company.decorate.phone_number },
-    candidates_count: Proc.new { |company| company.candidates.count },
-    qualified_candidates_count: Proc.new { |company| company.candidates.qualified.count },
-    hired_candidates_count: Proc.new { |company| company.candidates.hired.count },
-    bad_fit_candidates_count: Proc.new { |company| company.candidates.bad_fit.count },
-    trial_percentage_remaining: Proc.new { |company| company.trial_percentage_remaining },
-    trial_remaining_messages_count: Proc.new {|company| company.trial_remaining_messages_count },
     base_paid_plan_price: Proc.new { |_| Plan::DEFAULT_PRICE_IN_DOLLARS },
-    base_paid_plan_message_limit: Proc.new {|_| Plan.messages_per_quantity },
-    subscription_state: Proc.new { |company| company.subscription_state }
+    base_paid_plan_message_limit: Proc.new {|_| Plan.messages_per_quantity }
   }
 
   # == Company Plan name
