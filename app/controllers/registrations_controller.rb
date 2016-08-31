@@ -43,9 +43,13 @@ class RegistrationsController < Devise::RegistrationsController
         location_params[field] = finder.send(field)
       end
     else
-      flash[:alert] = finder.error_message
+      flash[:alert] = "We couldn't find that address. Please provide the city, state, and zipcode if you haven't yet."
       render :new
     end
+  rescue Geocoder::OverQueryLimitError
+    Rollbar.debug($!.message)
+    flash[:alert] = "Sorry but we're a little overloaded right now and can't find addresses. Please try again in a few minutes."
+    render :new
   end
 
   def location_params

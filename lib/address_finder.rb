@@ -10,16 +10,7 @@ class AddressFinder
   :city, :postal_code, to: :result
 
   def found?
-    if naive_match? && result.present?
-      true
-    else
-      self.error_message = "We couldn't find that address. Please provide the city, state, and zipcode if you haven't yet."
-      false
-    end
-  rescue Geocoder::OverQueryLimitError
-    self.error_message = "Sorry but we're a little overloaded right now and can't find addresses. Please try again in a few minutes."
-    Rollbar.debug($!.message)
-    false
+    naive_match? && result.present?
   end
 
   def naive_match?
