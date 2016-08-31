@@ -1,5 +1,5 @@
 require 'sidekiq'
 
 Sidekiq.configure_client do |config|
-  config.redis = { :size => 1, namespace: "biscayne" }
+  config.redis = { :size => 1 }
 end
