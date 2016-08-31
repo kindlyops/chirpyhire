@@ -47,10 +47,10 @@ class FakeGeocoder
           "hamlet"=>"Vinegar Hill",
           "postcode"=>"22902",
           "road"=>"Market Street",
-          "state"=>"Virginia"},
+          "state"=>"CA"},
         "confidence"=>10,
         "formatted"=>"Market Street, Charlottesville, VA 22902, United States of America",
-        "geometry"=>{"lat"=>38.0317403, "lng"=>-78.4819013}})]
+        "geometry"=>{"lat"=>37.870842, "lng"=>-122.501366}})]
   end
 end
 

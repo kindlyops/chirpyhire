@@ -36,7 +36,7 @@ class TwilioProvisioner
   end
 
   def available_local_phone_numbers
-    @available_local_phone_numbers ||= sub_account.available_phone_numbers.get('US').local.list(in_postal_code: location.postal_code)
+    @available_local_phone_numbers ||= sub_account.available_phone_numbers.get('US').local.list(near_lat_long: "#{location.latitude},#{location.longitude}", in_region: "#{location.state}")
   end
 
   def available_local_phone_number

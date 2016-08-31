@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.feature "Account Management", type: :feature, js: true do
   feature "sign up" do
+    let!(:plan) { create(:plan) }
     let(:first_name) { Faker::Name.first_name }
     let(:last_name) { Faker::Name.last_name }
     context "with valid credentials" do
       let(:password) { Faker::Internet.password }
+
+      before(:each) do
+        allow(IntercomSyncerJob).to receive(:perform_later).once
+      end
 
       scenario "User progresses to invitation screen", vcr: { cassette_name: "TwilioProvisioner-call" }  do
         visit "/accounts/sign_up"
