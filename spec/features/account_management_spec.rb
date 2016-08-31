@@ -27,7 +27,7 @@ RSpec.feature "Account Management", type: :feature, js: true do
         expect(User.last.last_name).to eq(last_name)
       end
 
-      context "but the Geocoder API is down" do
+      context "but the Geocoder API limit is reached" do
         before(:each) do
           allow(FakeGeocoder).to receive(:search).and_raise(Geocoder::OverQueryLimitError.new)
         end
