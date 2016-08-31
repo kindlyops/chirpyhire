@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RegistrationsController, type: :controller do
+  let!(:plan) { create(:plan) }
   before(:each) do
     @request.env["devise.mapping"] = Devise.mappings[:account]
   end
@@ -48,6 +49,13 @@ RSpec.describe RegistrationsController, type: :controller do
       expect {
         post :create, params: account_params
       }.to change{Organization.count}.by(1)
+    end
+
+    it "creates a location with a postal code" do
+      expect {
+        post :create, params: account_params
+      }.to change{Location.count}.by(1)
+      expect(Location.last.postal_code).to eq("22902")
     end
 
     it "creates a user" do

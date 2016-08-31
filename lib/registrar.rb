@@ -13,7 +13,7 @@ class Registrar
       create_questions
       create_rules
       create_dummy_candidate_and_features
-      organization.create_subscription(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
+      organization.create_subscription!(plan: Plan.first, state: "trialing", trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT)
       TwilioProvisionerJob.perform_later(organization)
       IntercomSyncerJob.perform_later(organization)
     end

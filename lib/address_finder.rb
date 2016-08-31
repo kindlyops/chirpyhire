@@ -6,7 +6,7 @@ class AddressFinder
   end
 
   delegate :address, :latitude, :longitude, :country, :country_code,
-  :city, :state, :state_code, :postal_code, to: :result
+  :city, :postal_code, to: :result
 
   def found?
     return unless text.present?
@@ -28,6 +28,12 @@ class AddressFinder
     @client
   end
 
+  def state
+    STATE_MAPPING[result.state.downcase] || result.state
+  end
+
+  alias :state_code :state
+
   private
 
   attr_reader :text
@@ -47,5 +53,57 @@ class AddressFinder
   def params
     { params: { countrycode: 'us', min_confidence: 8, no_annotations: 1 } }
   end
+
+  STATE_MAPPING = {
+    "alabama" => "AL",
+    "alaska" => "AK",
+    "arkansas" => "AR",
+    "california" => "CA",
+    "colorado" => "CO",
+    "connecticut" => "CT",
+    "delaware" => "DE",
+    "florida" => "FL",
+    "georgia" => "GA",
+    "hawaii" => "HI",
+    "idaho" => "ID",
+    "illinois" => "IL",
+    "indiana" => "IN",
+    "iowa" => "IA",
+    "kansas" => "KS",
+    "kentucky" => "KY",
+    "louisiana" => "LA",
+    "maine" => "ME",
+    "maryland" => "MD",
+    "massachusetts" => "MA",
+    "michigan" => "MI",
+    "minnesota" => "MN",
+    "mississippi" => "MS",
+    "missouri" => "MO",
+    "montana" => "MT",
+    "nebraska" => "NE",
+    "nevada" => "NV",
+    "new hampshire" => "NH",
+    "new jersey" => "NJ",
+    "new mexico" => "NM",
+    "new york" => "NY",
+    "north carolina" => "NC",
+    "north dakota" => "ND",
+    "ohio" => "OH",
+    "oklahoma" => "OK",
+    "oregon" => "OR",
+    "pennsylvania" => "PA",
+    "rhode island" => "RI",
+    "south carolina" => "SC",
+    "south dakota" => "SD",
+    "tennessee" => "TN",
+    "texas" => "TX",
+    "utah" => "UT",
+    "vermont" => "VT",
+    "virginia" => "VA",
+    "washington" => "WA",
+    "west virginia" => "WV",
+    "wisconsin" => "WI",
+    "wyoming" => "WY"
+  }
 end
 

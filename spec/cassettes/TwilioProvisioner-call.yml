@@ -80,7 +80,7 @@ http_interactions:
   recorded_at: Sat, 13 Aug 2016 18:31:01 GMT
 - request:
     method: get
-    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InPostalCode=22902
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InRegion=CA&NearLatLong=37.870842,-122.501366
     body:
       encoding: US-ASCII
       string: ''
@@ -249,7 +249,7 @@ http_interactions:
         "+14344953772", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
         "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
         "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
-        true, "SMS": true, "MMS": true}}], "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InPostalCode=22902"}'
+        true, "SMS": true, "MMS": true}}], "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InRegion=CA&NearLatLong=37.870842,-122.501366"}'
     http_version:
   recorded_at: Sat, 13 Aug 2016 18:31:02 GMT
 - request:
