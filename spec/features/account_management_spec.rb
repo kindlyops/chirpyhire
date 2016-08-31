@@ -26,6 +26,26 @@ RSpec.feature "Account Management", type: :feature, js: true do
         expect(User.last.first_name).to eq(first_name)
         expect(User.last.last_name).to eq(last_name)
       end
+
+      context "but the Geocoder API is down" do
+        before(:each) do
+          allow(FakeGeocoder).to receive(:search).and_raise(Geocoder::OverQueryLimitError.new)
+        end
+
+        scenario "account creation fails" do
+          visit "/accounts/sign_up"
+
+          fill_in "Name", with: "#{first_name} #{last_name}"
+          fill_in "Organization Name", with: Faker::Company.name
+          fill_in "Organization Address", with: "1000 E. Market St. 22902"
+          fill_in "Email", with: Faker::Internet.email
+          fill_in "Password", with: password
+
+          click_button "Sign up"
+          expect(page).not_to have_text("Send Invitation")
+          expect(page).to have_text("Sorry but we're a little overloaded right now and can't find addresses.")
+        end
+      end
     end
 
     context "with invalid credentials" do
