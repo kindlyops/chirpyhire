@@ -3,14 +3,23 @@ class AddressFinder
 
   def initialize(text)
     @text = text
+    @error_message = nil
   end
 
   delegate :address, :latitude, :longitude, :country, :country_code,
   :city, :postal_code, to: :result
 
   def found?
-    return unless text.present?
-    naive_match? && result.present?
+    if naive_match? && result.present?
+      true
+    else
+      error_message = "We couldn't find that address. Please provide the city, state, and zipcode if you haven't yet."
+      false
+    end
+  rescue Geocoder::OverQueryLimitError
+    error_message = "Sorry but we're a little overloaded right now and can't find addresses. Please try again in a few minutes."
+    Rollbar.debug($!.message)
+    false
   end
 
   def naive_match?
@@ -34,9 +43,13 @@ class AddressFinder
 
   alias :state_code :state
 
+  def error_message=(error_message)
+    @error_message = error_message
+  end
+
   private
 
-  attr_reader :text
+  attr_reader :text, :error_message
 
   def result
     @result ||= results.first

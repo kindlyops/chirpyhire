@@ -43,7 +43,7 @@ class RegistrationsController < Devise::RegistrationsController
         location_params[field] = finder.send(field)
       end
     else
-      flash[:alert] = "We couldn't find that address. Please provide the city, state, and zipcode if you haven't yet."
+      flash[:alert] = finder.error_message
       render :new
     end
   end
