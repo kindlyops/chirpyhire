@@ -13,6 +13,12 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
       }
     end
 
+    it "creates a MessageHandlerJob to log the START message" do
+      expect {
+        post :create, params: params
+      }.to have_enqueued_job(MessageHandlerJob)
+    end
+
     context "with an existing user" do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
@@ -103,6 +109,12 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
         "Body" => "STOP",
         "MessageSid" => "123"
       }
+    end
+
+    it "creates a MessageHandlerJob to log the STOP message" do
+      expect {
+        post :create, params: params
+      }.to have_enqueued_job(MessageHandlerJob)
     end
 
     context "with a user" do
