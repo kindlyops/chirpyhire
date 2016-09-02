@@ -1,5 +1,8 @@
 class Sms::SubscriptionsController < Sms::BaseController
+
   def create
+    handle_incoming_message
+
     if sender.subscribed?
       sender.receive_message(body: already_subscribed)
     else
@@ -13,6 +16,8 @@ class Sms::SubscriptionsController < Sms::BaseController
   end
 
   def destroy
+    handle_incoming_message
+
     if sender.unsubscribed?
       sender.receive_message(body: not_subscribed)
     else
@@ -22,6 +27,10 @@ class Sms::SubscriptionsController < Sms::BaseController
   end
 
   private
+
+  def handle_incoming_message
+    MessageHandlerJob.perform_later(sender, params["MessageSid"])
+  end
 
   def already_subscribed
     "You are already subscribed. Thanks for your interest in #{organization.name}."
