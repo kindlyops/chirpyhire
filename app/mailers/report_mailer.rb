@@ -1,5 +1,5 @@
 class ReportMailer < ActionMailer::Base
-  default from: "Harry Whelchel <harry@chirpyhire.com>", bcc: "harry@chirpyhire.com"
+  default from: "Harry Whelchel <harry@chirpyhire.com>", bcc: "team@chirpyhire.com"
 
   def daily(report)
     return unless report.qualified_count.positive? && report.organization.active?
