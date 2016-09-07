@@ -13,4 +13,8 @@ RSpec.describe Organization, type: :model do
       }.to change{FakeMessaging.messages.count}.by(1)
     end
   end
+
+  it "#before_create has stages" do 
+    expect(organization.stages).not_to be_empty
+  end
 end

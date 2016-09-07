@@ -61,6 +61,12 @@ class Organization < ApplicationRecord
     users.has_unread_messages.count
   end
 
+  def before_create(organization)
+    unless organization.stages.present?
+      organization.stages = Stages.default
+    end
+  end
+
   private
 
   def messaging_client
