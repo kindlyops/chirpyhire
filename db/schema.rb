@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160816222756) do
+ActiveRecord::Schema.define(version: 20160907091711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,16 @@ ActiveRecord::Schema.define(version: 20160816222756) do
     t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.integer  "organization_id"
+    t.string   "name"
+    t.integer  "order"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id", "order"], name: "index_stages_on_organization_id_and_order", unique: true, using: :btree
+    t.index ["organization_id"], name: "index_stages_on_organization_id", using: :btree
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
     t.string   "stripe_customer_id"
@@ -353,6 +363,7 @@ ActiveRecord::Schema.define(version: 20160816222756) do
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "actionables"
   add_foreign_key "rules", "organizations"
+  add_foreign_key "stages", "organizations"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "surveys", "actionables"
