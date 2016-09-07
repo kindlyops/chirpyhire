@@ -9,6 +9,7 @@ class Organization < ApplicationRecord
   has_many :messages, through: :users
   has_many :templates
   has_many :rules
+  has_many :stages
   has_one :survey
   has_one :location
   has_one :subscription
