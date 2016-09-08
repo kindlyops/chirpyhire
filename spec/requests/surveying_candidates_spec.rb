@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Surveying Candidates", type: :request do
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let!(:location) { create(:location, latitude: 38.145, longitude: -122.255, organization: organization)}
   let(:user) { create(:user, organization: organization) }
   let(:account) { create(:account, user: user) }
@@ -12,9 +12,8 @@ RSpec.feature "Surveying Candidates", type: :request do
   end
 
   let!(:registrar) { Registrar.new(account).register }
-  let(:survey) { organization.survey }
-  let(:erica) { create(:candidate, organization: organization) }
-  let(:start_message) { FakeMessaging.new("foo", "bar").create(from: erica.phone_number, to: organization.phone_number, body: "START", direction: "inbound", format: :text) }
+  let(:alice) { create(:candidate, organization: organization) }
+  let(:start_message) { FakeMessaging.new("foo", "bar").create(from: alice.phone_number, to: organization.phone_number, body: "START", direction: "inbound", format: :text) }
   let(:start_message_params) do
     {
       "To" => start_message.to,
@@ -30,7 +29,7 @@ RSpec.feature "Surveying Candidates", type: :request do
     end
 
     context "and has submitted an address answer to the first address question" do
-      let(:address_message) { FakeMessaging.new("foo", "bar").create(from: erica.phone_number, to: organization.phone_number, body: body, direction: "inbound", format: :text) }
+      let(:address_message) { FakeMessaging.new("foo", "bar").create(from: alice.phone_number, to: organization.phone_number, body: body, direction: "inbound", format: :text) }
       let(:address_message_params) do
         {
           "To" => address_message.to,

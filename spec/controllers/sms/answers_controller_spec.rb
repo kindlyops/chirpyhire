@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Sms::AnswersController, type: :controller do
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:user) { create(:user, organization: organization) }
   let(:message) { create(:message, user: user) }
   let(:survey) { create(:survey, organization: organization) }
@@ -33,14 +33,6 @@ RSpec.describe Sms::AnswersController, type: :controller do
         expect {
           post :create, params: params
         }.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
-      end
-
-    end
-
-    context "debugging tifaney - erica" do
-      let(:mess) { create(:message, body: "2712 Marina Blvd San Leandro CA 94477")}
-      let(:iq) { create(:inquiry, message: message, question: question)}
-      it "receives and responds to erica's message" do
       end
     end
 
