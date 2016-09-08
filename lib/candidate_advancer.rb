@@ -9,6 +9,7 @@ class CandidateAdvancer
   end
 
   def call
+    binding.pry
     return if organization.over_message_limit? || user.unsubscribed?
 
     if initial_question?
