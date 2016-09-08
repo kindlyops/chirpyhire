@@ -64,7 +64,7 @@ RSpec.feature "Surveying Candidates", type: :request do
 
       context "that is unrecognized as an address, but is a naive match", vcr: {cassette_name: "surveying-candidates-only-naive-match"} do
         let(:body) { "This isn't real drive 34029"}
-        it "does nothing" do
+        it "does not ask the next question" do
           last_message = organization.messages.by_recency.first
           expect(last_message.inquiry.present?).to be(false)
           expect(last_message.inbound?).to be(true)
@@ -73,7 +73,7 @@ RSpec.feature "Surveying Candidates", type: :request do
 
       context "that is unrecognized as an address at all" do
         let(:body) { "adfasdjfadlsk;fsdkf"}
-        it "does nothing" do
+        it "does not ask the next question" do
           last_message = organization.messages.by_recency.first
           expect(last_message.inquiry.present?).to be(false)
           expect(last_message.inbound?).to be(true)
