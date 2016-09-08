@@ -9,7 +9,6 @@ class SurveyAdvancer
   end
 
   def call
-    binding.pry
     potential_candidates.find_each do |candidate|
       CandidateAdvancerJob.perform_later(candidate.user) unless candidate.has_outstanding_inquiry?
     end

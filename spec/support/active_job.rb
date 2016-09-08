@@ -6,4 +6,8 @@ RSpec.configure do |config|
   config.before(type: :feature) do
     ActiveJob::Base.queue_adapter = :inline
   end
+
+  config.before(type: :request) do
+    ActiveJob::Base.queue_adapter = :inline
+  end
 end

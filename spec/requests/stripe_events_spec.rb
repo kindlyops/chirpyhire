@@ -1,14 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe "Stripe Events" do
+  old_adapter = nil
   def stub_event(fixture_id, status = 200)
     stub_request(:get, "https://api.stripe.com/v1/events/#{fixture_id}").
       to_return(status: status, body: File.read("spec/support/fixtures/#{fixture_id}.json"))
   end
 
   before(:each) do |example|
+    old_adapter = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :test
     stub_event(example.description)
     http_login("stripe", StripeEvent.authentication_secret)
+  end
+
+  after(:each) do |example|
+    ActiveJob::Base.queue_adapter = old_adapter
   end
 
   describe "enqueuing jobs" do

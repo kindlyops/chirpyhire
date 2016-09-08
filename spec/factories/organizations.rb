@@ -3,13 +3,15 @@ FactoryGirl.define do
     name { Faker::Company.name }
     phone_number { Faker::PhoneNumber.cell_phone }
 
-    after(:create) do |organization|
-      create(:location, organization: organization)
-    end
-
     trait :with_subscription do
       after(:create) do |organization|
         create(:subscription, organization: organization)
+      end
+    end
+
+    trait :with_location do
+      after(:create) do |organization|
+        create(:location, organization: organization)
       end
     end
 

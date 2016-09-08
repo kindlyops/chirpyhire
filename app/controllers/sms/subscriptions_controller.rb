@@ -9,7 +9,6 @@ class Sms::SubscriptionsController < Sms::BaseController
       ApplicationRecord.transaction do
         sender.update(subscribed: true)
         ensure_candidate
-        binding.pry
         AutomatonJob.perform_later(sender, "subscribe")
       end
     end

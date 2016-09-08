@@ -2,7 +2,6 @@ module Constraint
   class Answer
     def matches?(request)
       @request = request
-
       user.present? && candidate.present? && outstanding_inquiry.present?
     end
 
@@ -19,7 +18,7 @@ module Constraint
     end
 
     def user
-      @user ||= organization.users.find_by(phone_number: from)
+      organization.users.find_by(phone_number: from)
     end
 
     def organization

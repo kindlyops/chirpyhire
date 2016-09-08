@@ -18,7 +18,6 @@ class Automaton
   attr_reader :user, :trigger
 
   def rules
-    binding.pry
     organization.rules.where(trigger: trigger).order(:created_at)
   end
 
