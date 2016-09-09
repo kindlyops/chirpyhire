@@ -24,6 +24,7 @@
           = render partial: "candidates/address", locals: { candidate: candidate }
           = render partial: "candidates/yes_no", collection: candidate.yes_nos
           = render partial: "candidates/choice", collection: candidate.choices
+          = render partial: "candidates/document", collection: candidate.documents
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
               = render partial: "candidates/#{cta}", locals: { candidate: candidate }
