@@ -3,6 +3,6 @@ class Payment::Mailer::Subscriptions < ActionMailer::Base
 
   def deleted(subscription)
     @subscription = subscription
-    mail(to: "harry@chirpyhire.com", subject: "Bumskis. Subscription canceled.")
+    mail(to: "team@chirpyhire.com", subject: "Bumskis. Subscription canceled.")
   end
 end

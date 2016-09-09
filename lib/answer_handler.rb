@@ -6,8 +6,8 @@ class AnswerHandler
 
   def call
     if inquiry.unanswered? && answer.valid?
-      AutomatonJob.perform_later(sender, "answer")
       update_or_create_candidate_feature
+      AutomatonJob.perform_later(sender, "answer")
     end
   end
 
