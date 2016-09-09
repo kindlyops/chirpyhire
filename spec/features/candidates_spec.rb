@@ -47,10 +47,10 @@ RSpec.feature "Candidates", type: :feature, js: true do
               create(:candidate_feature, label: label, candidate: candidate, properties: { url0: "/path/to/image", child_class: "document" })
             end
 
-            it "does not have a link to the document" do
+            it "has a link to the document" do
               visit candidates_path
-              expect(page).not_to have_selector("a[href='/path/to/image']")
-              expect(page).not_to have_text("Document Category")
+              expect(page).to have_selector("a[href='/path/to/image']")
+              expect(page).to have_text("Document Category")
             end
           end
         end
