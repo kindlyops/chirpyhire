@@ -5,6 +5,7 @@ class Candidate < ApplicationRecord
   }, properties: ->(_, model) { { status: model.status } }
 
   belongs_to :user
+  belongs_to :stage
   has_many :candidate_features
   has_many :referrals
   has_many :referrers, through: :referrals

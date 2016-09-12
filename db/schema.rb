@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912155243) do
+ActiveRecord::Schema.define(version: 20160912161910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20160912155243) do
     t.string   "status",     default: "Potential", null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "stage_id"
+    t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
   end
 
@@ -349,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160912155243) do
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
+  add_foreign_key "candidates", "stages"
   add_foreign_key "candidates", "users"
   add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
