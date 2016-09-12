@@ -2,6 +2,8 @@ class Maps::CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped
   skip_after_action :verify_authorized
 
+  DEFAULT_FILTER = "Qualified"
+
   def show
     determine_status
 
