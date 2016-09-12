@@ -61,9 +61,9 @@ class Organization < ApplicationRecord
     users.has_unread_messages.count
   end
 
-  def before_create(organization)
+  before_create do |organization|
     unless organization.stages.present?
-      organization.stages = Stages.default
+      organization.stages = Stage.defaults
     end
   end
 
