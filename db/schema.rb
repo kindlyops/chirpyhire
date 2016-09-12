@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160907091711) do
+ActiveRecord::Schema.define(version: 20160912155243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,8 +248,9 @@ ActiveRecord::Schema.define(version: 20160907091711) do
     t.integer  "organization_id"
     t.string   "name"
     t.integer  "order"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "default_stage_mapping"
     t.index ["organization_id", "order"], name: "index_stages_on_organization_id_and_order", unique: true, using: :btree
     t.index ["organization_id"], name: "index_stages_on_organization_id", using: :btree
   end
