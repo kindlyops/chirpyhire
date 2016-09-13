@@ -2,13 +2,13 @@ class GeoJson::Candidates
   include ActionView::Helpers::DateHelper
   def initialize(candidates)
     @candidates = candidates
-    @stage_ids = candidates.first.organization.stages.map(&:id)
+    @stage_infos = candidates.first.organization.stages.map { |st| { id: st.id, name: st.name } }
   end
 
   def call
     { type: "FeatureCollection",
       features: build_features,
-      stage_ids: @stage_ids
+      stage_infos: @stage_infos
     }
   end
 
@@ -26,6 +26,7 @@ class GeoJson::Candidates
       properties: {
         description: description(candidate),
         stage_id: candidate.stage_id,
+        stage_name: candidate.stage.name
       },
       geometry: {
         type: "Point",

@@ -3,7 +3,7 @@
 .candidates
   .controls
     .dropdown
-      select.stage name="stage"
+      select.stage name="stage_id"
         = options_for_select(@organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
       label
