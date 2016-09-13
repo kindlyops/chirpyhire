@@ -4,11 +4,7 @@ class CandidateDecorator < Draper::Decorator
   decorates_association :user
   delegate :phone_number, to: :user, prefix: true
   delegate :handle, to: :user
-
-  def statuses
-    Candidate::STATUSES
-  end
-
+  
   def choices
     @choices ||= begin
       return [] unless choice_features.present?

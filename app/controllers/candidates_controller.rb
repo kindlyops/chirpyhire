@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_FILTER = "Qualified"
+  DEFAULT_FILTER = Stage::QUALIFIED
 
   def show
     @candidate = authorized_candidate
@@ -16,7 +16,7 @@ class CandidatesController < ApplicationController
 
   def index
     filtered_candidates = scoped_candidates.by_recency
-
+    @organization = current_organization
     respond_to do |format|
       format.geojson do
         @candidates = filtered_candidates.with_addresses.decorate
@@ -24,7 +24,7 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
-        @candidates = filtered_candidates.status(status).page(params.fetch(:page, 1))
+        @candidates = filtered_candidates.by_default_stage(stage).page(params.fetch(:page, 1))
       end
     end
   end
@@ -47,16 +47,17 @@ class CandidatesController < ApplicationController
     policy_scope(Candidate)
   end
 
-  def status
-    status = params[:status]
+  # TODO JLW Where does this get set?
+  def stage
+    stage = params[:stage]
 
-    if status.present?
-      cookies[:candidate_status_filter] = { value: status }
-      status
-    elsif cookies[:candidate_status_filter].present? && cookies[:candidate_status_filter] != "Screened"
-      cookies[:candidate_status_filter]
+    if stage.present?
+      cookies[:candidate_stage_filter] = { value: stage }
+      stage
+    elsif cookies[:candidate_stage_filter].present?
+      cookies[:candidate_stage_filter]
     else
-      cookies[:candidate_status_filter] = { value: DEFAULT_FILTER }
+      cookies[:candidate_stage_filter] = { value: DEFAULT_FILTER }
       return DEFAULT_FILTER
     end
   end

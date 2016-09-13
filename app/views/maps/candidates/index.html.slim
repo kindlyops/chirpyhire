@@ -3,8 +3,8 @@
 .maps-candidates
   .controls
     .dropdown
-      select.status name="status"
-        = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
+      select.stage name="stage"
+        = options_for_select(@map.organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
       label
         = link_to candidates_path, class: "candidates-cards" do
@@ -12,4 +12,6 @@
       label
         i.fa.fa-map-o.button-group-item selected=true
   #map data-center==@map.center data-zoom==@map.zoom
+
+.dumb = cookies[:candidate_stage_filter]
 

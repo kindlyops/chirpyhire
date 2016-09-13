@@ -1,34 +1,35 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidates #map").length) {
-    function watchSelect(map, statuses) {
-      $(document).on("change", ".maps-candidates .dropdown select", function(event) {
-        var currentStatus = this.value;
-        var unselectedStatuses = _.reject(statuses, function(status) {
-          return status === currentStatus;
+    var dropdownStageSelector = ".maps-candidates .dropdown select";
+    function watchSelect(map, stages) {
+      $(document).on("change", dropdownStageSelector, function(event) {
+        var currentStage = this.value;
+        var unselectedStages = _.reject(stages, function(stage) {
+          return stage === currentStage;
         });
 
         map.popup.remove();
 
-        _.each(unselectedStatuses, function(status) {
-          map.setLayoutProperty(status, 'visibility', 'none');
+        _.each(unselectedStages, function(stage) {
+          map.setLayoutProperty(stage, 'visibility', 'none');
         });
-        map.setLayoutProperty(currentStatus, 'visibility', 'visible');
+        map.setLayoutProperty(currentStage, 'visibility', 'visible');
       });
     }
 
     function watchCardLink() {
       $(document).on("click", ".maps-candidates .candidates-cards", function(event) {
         event.preventDefault();
-        Turbolinks.visit($(this).attr("href") + "?status=" + $(".maps-candidates .dropdown select").val());
+        Turbolinks.visit($(this).attr("href") + "?stage=" + $(dropdownStageSelector).val());
       });
     }
 
     function initMap(candidates) {
-      var styleId, center, zoom, layers, sources, statuses;
+      var styleId, center, zoom, layers, sources, stages;
       styleId = "candidates";
       center = $("#map").data("center");
       zoom = $("#map").data("zoom");
-      statuses = candidates.statuses;
+      stages = candidates.stages;
 
       sources = [{
         id: styleId,
@@ -36,16 +37,16 @@ $(document).on("turbolinks:load", function() {
         data: candidates
       }];
 
-      layers = _.map(statuses, _.bind(function(status) {
+      layers = _.map(stages, _.bind(function(stage) {
         return {
-          "id": status,
+          "id": stage,
           "type": "symbol",
           "source": styleId,
           "layout": {
             "icon-image": "chirpyhire-marker-15",
-            "visibility": $(".maps-candidates .dropdown select").val() === status ? 'visible' : 'none'
+            "visibility": $(dropdownStageSelector).val() === stage ? 'visible' : 'none'
           },
-          "filter": ["==", "status", status]
+          "filter": ["==", "stage", stage]
         };
       }, this));
 
@@ -54,14 +55,14 @@ $(document).on("turbolinks:load", function() {
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: statuses
+        popupLayers: stages
       });
 
       if(map.loaded()) {
-        watchSelect(map, statuses);
+        watchSelect(map, stages);
       } else {
         map.on('load', function() {
-          watchSelect(map, statuses);
+          watchSelect(map, stages);
         });
       }
 

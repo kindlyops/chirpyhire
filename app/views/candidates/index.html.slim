@@ -3,8 +3,8 @@
 .candidates
   .controls
     .dropdown
-      select.status name="status"
-        = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
+      select.stage name="stage"
+        = options_for_select(@organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
       label
         i.fa.fa-th-large.button-group-item selected=true

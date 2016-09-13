@@ -1,8 +1,9 @@
 class Candidate < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create, :update], on: {
-    update: ->(model,_) { model.changes.include?("status") }
-  }, properties: ->(_, model) { { status: model.status } }
+    update: ->(model,_) { model.changes.include?("stage") }
+  }, # TODO JLW what is properties?
+  properties: ->(_, model) { { status: model.status } }
 
   belongs_to :user
   belongs_to :stage
@@ -13,12 +14,11 @@ class Candidate < ApplicationRecord
 
   alias :features :candidate_features
 
-  STATUSES = ["Potential", "Qualified", "Bad Fit", "Hired"]
-  validates :status, inclusion: { in: STATUSES }
-
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
            :receive_message, :handle, :has_outstanding_inquiry?, to: :user
+
+  delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -28,25 +28,25 @@ class Candidate < ApplicationRecord
     joins(:candidate_features).merge(CandidateFeature.address)
   end
 
-  def self.status(status)
-    return self unless status.present?
-    where(status: status)
+  def self.by_default_stage(stage)
+    return self unless stage.present?
+    joins(:stage).where(stages: {default_stage_mapping: stage})
   end
 
   def self.hired
-    where(status: "Hired")
+    self.by_default_stage(Stage::HIRED)
   end
 
   def self.qualified
-    where(status: "Qualified")
+    self.by_default_stage(Stage::QUALIFIED)
   end
 
   def self.potential
-    where(status: "Potential")
+    self.by_default_stage(Stage::POTENTIAL)
   end
 
   def self.bad_fit
-    where(status: "Bad Fit")
+    self.by_default_stage(Stage::BAD_FIT)
   end
 
   def address
@@ -68,21 +68,5 @@ class Candidate < ApplicationRecord
 
   def yes_no_features
     candidate_features.where("properties->>'child_class' = ?", "yes_no")
-  end
-
-  def qualified?
-    status == "Qualified"
-  end
-
-  def bad_fit?
-    status == "Bad Fit"
-  end
-
-  def potential?
-    status == "Potential"
-  end
-
-  def hired?
-    status == "Hired"
   end
 end

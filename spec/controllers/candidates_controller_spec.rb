@@ -17,11 +17,12 @@ RSpec.describe CandidatesController, type: :controller do
 
 
     context "with candidates" do
-      let!(:candidates) { create_list(:candidate, 3, status: "Qualified", organization: organization) }
+      let(:qualified_stage) { organization.stages.default_qualified.first }
+      let!(:candidates) { create_list(:candidate, 3, stage: qualified_stage, organization: organization) }
 
       context "geojson" do
         context "with candidates with addresses without phone numbers" do
-          let!(:candidates) { create_list(:candidate, 3, :with_address, status: "Qualified", organization: organization) }
+          let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
 
           it "is OK" do
             get :index, format: :geojson
@@ -36,11 +37,12 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       context "order" do
-        let!(:old_candidate) { create(:candidate, id: 10, organization: organization) }
-        let!(:recent_candidate) { create(:candidate, id: 11, organization: organization) }
+        let(:potential_stage) { organization.stages.default_potential.first }
+        let!(:old_candidate) { create(:candidate, id: 10, stage: potential_stage, organization: organization) }
+        let!(:recent_candidate) { create(:candidate, id: 11, stage: potential_stage, organization: organization) }
 
         it "returns the most recent candidates first" do
-          get :index, params: { status: "Potential" }
+          get :index, params: { stage: Stage::POTENTIAL }
           expect(assigns(:candidates)).to eq([recent_candidate, old_candidate])
         end
       end
