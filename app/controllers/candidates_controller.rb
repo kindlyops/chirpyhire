@@ -15,16 +15,16 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    filtered_candidates = scoped_candidates.by_recency
+    unfiltered_candidates = scoped_candidates.by_recency
 
     respond_to do |format|
       format.geojson do
-        @candidates = filtered_candidates.with_addresses.decorate
+        @candidates = unfiltered_candidates.with_addresses.decorate
         render json: GeoJson::Candidates.new(@candidates).call
       end
 
       format.html do
-        @candidates = filtered_candidates.status(status).page(params.fetch(:page, 1))
+        @candidates = unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
       end
     end
   end
@@ -45,6 +45,10 @@ class CandidatesController < ApplicationController
 
   def scoped_candidates
     policy_scope(Candidate)
+  end
+
+  def filtering_params
+    params.slice(:status, :created_in)
   end
 
   def status
