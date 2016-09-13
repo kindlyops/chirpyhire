@@ -13,8 +13,8 @@ RSpec.describe AddressSetter do
           let!(:candidate) { create(:candidate, user: message.user) }
           let(:message) { create(:message, body: "4059 Mt Lee Dr 90068") }
 
-          it "returns an array of results" do
-            expect(setter.call).to include(message.id, message.body)
+          it "returns Address created" do
+            expect(setter.call).to eq("Address created")
           end
 
           it "appends a row to the csv object" do
@@ -31,6 +31,10 @@ RSpec.describe AddressSetter do
           end
 
           context "message does not have an address" do
+            before(:each) do
+              candidate.messages.update(body: "Foo")
+            end
+
             it "returns no address found" do
               expect(setter.call).to eq("No address found")
             end
@@ -48,7 +52,7 @@ RSpec.describe AddressSetter do
           let(:survey) { create(:survey, organization: candidate.organization) }
           let(:message) { create(:message, body: "4059 Mt Lee Dr 90068") }
 
-          context "with an address persona feature" do
+          context "with an address question" do
             let!(:question) { create(:address_question, survey: survey) }
 
             it "creates a candidate feature" do
@@ -56,11 +60,15 @@ RSpec.describe AddressSetter do
                 setter.call
               }.to change{candidate.candidate_features.count}.by(1)
             end
-          end
 
-          context "message does not have an address" do
-            it "returns no address found" do
-              expect(setter.call).to eq("No address found")
+            context "message does not have an address" do
+              before(:each) do
+                message.update(body: "Foo")
+              end
+
+              it "returns no address found" do
+                expect(setter.call).to eq("No address found")
+              end
             end
           end
 
