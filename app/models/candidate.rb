@@ -39,6 +39,7 @@ class Candidate < ApplicationRecord
       "Past Month" => 1.month.ago,
       "All Time" => DateTime.new(2016, 02, 01)
     }[created_in]
+    return self unless period.present?
 
     where("candidates.created_at > ?", period)
   end
