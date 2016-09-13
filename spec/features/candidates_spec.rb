@@ -86,7 +86,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
     end
 
     context "hired candidates" do
-      let(:hired_stage) { account.organization.stages.default_hired.first }
+      let(:hired_stage) { account.organization.hired_stage }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: hired_stage) }
 
       it "lets the account call the candidate" do
@@ -106,11 +106,10 @@ RSpec.feature "Candidates", type: :feature, js: true do
     end
 
     context "filtering" do
-      let(:stages) { account.organization.stages }
-      let(:qualified_stage) { stages.default_qualified.first }
-      let(:potential_stage) { stages.default_potential.first }
-      let(:bad_fit_stage) { stages.default_bad_fit.first }
-      let(:hired_stage) { stages.default_hired.first }
+      let(:qualified_stage) { account.organization.qualified_stage }
+      let(:potential_stage) { account.organization.potential_stage }
+      let(:bad_fit_stage) { account.organization.bad_fit_stage }
+      let(:hired_stage) { account.organization.hired_stage }
       context "default" do
 
         let(:users) { create_list(:user, 3, organization: account.organization) }
@@ -224,7 +223,7 @@ RSpec.feature "Candidates", type: :feature, js: true do
     end
 
     context "more than one page of candidates" do
-      let(:qualified_stage) { account.organization.stages.default_qualified.first }
+      let(:qualified_stage) { account.organization.qualified_stage }
       let(:users) { create_list(:user, 14, organization: account.organization) }
       let!(:candidates) do
         users.each do |user|
