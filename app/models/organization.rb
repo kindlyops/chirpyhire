@@ -67,6 +67,22 @@ class Organization < ApplicationRecord
     end
   end
 
+  def bad_fit_stage
+    stages.default_bad_fit.first
+  end
+  
+  def potential_stage
+    stages.default_potential.first
+  end
+
+  def qualified_stage
+    stages.default_qualified.first
+  end
+
+  def hired_stage
+    stages.default_hired.first
+  end
+
   private
 
   def messaging_client

@@ -10,12 +10,6 @@ class Stage < ApplicationRecord
   @@default_stage_mapping = { potential: Stage::POTENTIAL, qualified: Stage::QUALIFIED, bad_fit: Stage::BAD_FIT, hired: Stage::HIRED}
   enum default_stage_mapping: @@default_stage_mapping
 
-
-  def self.default_stage_mapping
-    @@default_stage_mapping
-  end
-
-# Filter methods
   def self.by_default(stage)
     where(default_stage_mapping: stage)
   end
@@ -36,7 +30,6 @@ class Stage < ApplicationRecord
     self.by_default(Stage::HIRED)
   end
 
-# Default stages
   def self.defaults(organization_id = nil)
     [
       Stage.new(organization_id: organization_id, name: "Potential", order: 1, default_stage_mapping: @@default_stage_mapping[:potential] ),

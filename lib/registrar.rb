@@ -52,7 +52,7 @@ class Registrar
   end
 
   def create_dummy_candidate_and_features
-    candidate = user.create_candidate(status: "Qualified")
+    candidate = user.create_candidate(stage: organization.qualified_stage)
 
     candidate.candidate_features.create(label: "Address", properties: {
       child_class: "address",

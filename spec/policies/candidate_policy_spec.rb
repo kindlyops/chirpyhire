@@ -39,7 +39,7 @@ RSpec.describe CandidatePolicy do
       it { should forbid_action(:destroy) }
       it { should permit_action(:show) }
 
-      it { should permit_mass_assignment_of(:status) }
+      it { should permit_mass_assignment_of(:stage) }
 
       it 'includes candidate in resolved scope' do
         expect(resolved_scope).to include(candidate)

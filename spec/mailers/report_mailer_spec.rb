@@ -19,7 +19,7 @@ RSpec.describe ReportMailer do
 
       describe "with activity" do
         before(:each) do
-          create(:candidate, status: "Qualified", user: create(:user, organization: recipient.organization))
+          create(:candidate, stage: recipient.organization.qualified_stage, user: create(:user, organization: recipient.organization))
         end
 
         it "does send an email" do

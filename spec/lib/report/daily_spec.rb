@@ -40,7 +40,7 @@ RSpec.describe Report::Daily do
     context "with candidates qualified" do
       context "on the date passed" do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: "Qualified", organization: organization) }
+        let!(:candidates) { create_list(:candidate, count, stage: organization.qualified_stage, organization: organization) }
         it "is the count of candidates" do
           expect(report.qualified_count).to eq(count)
         end
@@ -51,13 +51,13 @@ RSpec.describe Report::Daily do
         let!(:candidates) do
           count.times do
             date = (rand(10.days).seconds + 1.day.seconds).ago
-            candidate = create(:candidate, status: "Qualified", organization: organization, created_at: date)
+            candidate = create(:candidate, stage: organization.qualified_stage, organization: organization, created_at: date)
             candidate.activities.update(created_at: date)
           end
         end
 
         it "is only the candidates qualified on the date" do
-          create(:candidate, status: "Qualified", organization: organization)
+          create(:candidate, stage: organization.qualified_stage, organization: organization)
           expect(report.qualified_count).to eq(1)
         end
       end

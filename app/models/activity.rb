@@ -1,3 +1,4 @@
+#TODO JLW not entirely sure what to do here
 class Activity < PublicActivity::Activity
   def self.qualified
     where("properties->>'status' = ?", "Qualified")

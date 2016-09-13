@@ -30,6 +30,7 @@ class CandidatesController < ApplicationController
   end
 
   def update
+    # TODO JLW How does this work? What's being updated?
     if authorized_candidate.update(permitted_attributes(Candidate))
       redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.status}"
     else
@@ -47,8 +48,8 @@ class CandidatesController < ApplicationController
     policy_scope(Candidate)
   end
 
-  # TODO JLW Where does this get set?
   def stage
+    # TODO JLW Where does this get set? Also convert this to differentiate between default_stage_id and actual stage_id
     stage = params[:stage]
 
     if stage.present?

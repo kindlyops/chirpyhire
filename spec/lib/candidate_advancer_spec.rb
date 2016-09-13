@@ -38,10 +38,10 @@ RSpec.describe CandidateAdvancer do
         }.not_to have_enqueued_job(AutomatonJob)
       end
 
-      it "does not change the candidate's status" do
+      it "does not change the candidate's stage" do
         expect{
           CandidateAdvancer.call(user)
-        }.not_to change{candidate.status}
+        }.not_to change{candidate.stage}
       end
     end
 
@@ -80,10 +80,10 @@ RSpec.describe CandidateAdvancer do
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
-        it "does not change the candidate's status" do
+        it "does not change the candidate's stage" do
           expect{
             CandidateAdvancer.call(user)
-          }.not_to change{candidate.status}
+          }.not_to change{candidate.stage}
         end
       end
 
@@ -118,10 +118,10 @@ RSpec.describe CandidateAdvancer do
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
-        it "does not change the candidate's status" do
+        it "does not change the candidate's stage" do
           expect{
             CandidateAdvancer.call(user)
-          }.not_to change{candidate.status}
+          }.not_to change{candidate.stage}
         end
       end
 
@@ -194,10 +194,10 @@ RSpec.describe CandidateAdvancer do
               }.to change{Message.count}.by(1)
             end
 
-            it "changes the candidate's status to Bad Fit" do
+            it "changes the candidate's stage to Bad Fit" do
               expect{
                 CandidateAdvancer.call(user)
-              }.to change{candidate.status}.from("Potential").to("Bad Fit")
+              }.to change{candidate.stage}.from(user.organization.potential_stage).to(user.organization.bad_fit_stage)
             end
           end
         end
@@ -210,10 +210,10 @@ RSpec.describe CandidateAdvancer do
           }.to have_enqueued_job(AutomatonJob).with(user, "screen")
         end
 
-        it "changes the candidate's status to Qualified" do
+        it "changes the candidate's stage to Qualified" do
           expect{
             CandidateAdvancer.call(user)
-          }.to change{candidate.status}.from("Potential").to("Qualified")
+          }.to change{candidate.stage}.from(user.organization.potential_stage).to(user.organization.qualified)
         end
       end
     end

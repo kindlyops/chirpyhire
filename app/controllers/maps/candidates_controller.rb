@@ -18,6 +18,7 @@ class Maps::CandidatesController < ApplicationController
 
   private
 
+  # Convert this to differentiate between default_stage_id and actual stage_id
   def set_stage_filter_cookie
     stage = params[:stage]
 

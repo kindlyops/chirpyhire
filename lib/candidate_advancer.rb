@@ -14,12 +14,12 @@ class CandidateAdvancer
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)
     elsif last_question.rejects?(candidate)
-      candidate.update(status: "Bad Fit")
+      candidate.update(stage: candidate.organization.bad_fit_stage)
       send_bad_fit_notification
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      candidate.update(status: "Qualified")
+      candidate.update(stage: candidate.organization.qualified_stage)
       AutomatonJob.perform_later(user, "screen")
     end
   end

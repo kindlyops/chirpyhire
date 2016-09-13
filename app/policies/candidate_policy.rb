@@ -7,8 +7,9 @@ class CandidatePolicy < ApplicationPolicy
     show?
   end
 
+  #TODO JLW not sure if this works
   def permitted_attributes
-    [:status]
+    [:stage]
   end
 
   class Scope < ApplicationPolicy::Scope

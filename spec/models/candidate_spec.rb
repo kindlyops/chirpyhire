@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+# TODO JLW
 RSpec.describe Candidate, type: :model do
   let(:candidate) { create(:candidate) }
 
@@ -19,7 +19,7 @@ RSpec.describe Candidate, type: :model do
       context "changing the status" do
         it "creates an activity" do
           expect {
-            candidate.update(status: "Qualified")
+            candidate.update(stage: candidate.organization.qualified_stage)
           }.to change{PublicActivity::Activity.count}.by(1)
           expect(candidate.activities.last.properties["status"]).to eq("Qualified")
         end
