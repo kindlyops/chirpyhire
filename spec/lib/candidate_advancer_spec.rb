@@ -213,7 +213,7 @@ RSpec.describe CandidateAdvancer do
         it "changes the candidate's stage to Qualified" do
           expect{
             CandidateAdvancer.call(user)
-          }.to change{candidate.stage}.from(user.organization.potential_stage).to(user.organization.qualified)
+          }.to change{candidate.stage}.from(user.organization.potential_stage).to(user.organization.qualified_stage)
         end
       end
     end

@@ -1,9 +1,9 @@
 class Candidate < ApplicationRecord
   include PublicActivity::Model
   tracked only: [:create, :update], on: {
-    update: ->(model,_) { model.changes.include?("stage") }
-  }, # TODO JLW what is properties?
-  properties: ->(_, model) { { status: model.status } }
+    update: ->(model,_) { model.changes.include?("stage_id") }
+  },
+  properties: ->(_, model) { { stage_id: model.stage_id } }
 
   belongs_to :user
   belongs_to :stage
@@ -26,11 +26,6 @@ class Candidate < ApplicationRecord
 
   def self.with_addresses
     joins(:candidate_features).merge(CandidateFeature.address)
-  end
-
-  def self.by_default_stage(stage)
-    return self unless stage.present?
-    joins(:stage).where(stages: {default_stage_mapping: stage})
   end
 
   def self.hired
@@ -68,5 +63,19 @@ class Candidate < ApplicationRecord
 
   def yes_no_features
     candidate_features.where("properties->>'child_class' = ?", "yes_no")
+  end
+
+
+  before_create do |cand|
+    unless cand.stage.present?
+      cand.stage_id = organization.potential_stage.id
+    end
+  end
+
+
+  private 
+
+  def self.by_default_stage(stage)
+    joins(:stage).where(stages: { default_stage_mapping: stage })
   end
 end

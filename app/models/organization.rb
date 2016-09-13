@@ -61,12 +61,8 @@ class Organization < ApplicationRecord
     users.has_unread_messages.count
   end
 
-  before_create do |organization|
-    unless organization.stages.present?
-      organization.stages = Stage.defaults
-    end
-  end
-
+# There should only ever be one of each default type for 
+# and organization
   def bad_fit_stage
     stages.default_bad_fit.first
   end
@@ -81,6 +77,30 @@ class Organization < ApplicationRecord
 
   def hired_stage
     stages.default_hired.first
+  end
+
+
+  def bad_fit_candidate_activities
+    candidate_activities.for_stage_id(self.bad_fit_stage.id)
+  end
+
+  def potential_candidate_activities
+    candidate_activities.for_stage_id(self.potential_stage.id)
+  end
+
+  def qualified_candidate_activities
+    candidate_activities.for_stage_id(self.qualified_stage.id)
+  end
+
+  def hired_candidate_activities
+    candidate_activities.for_stage_id(self.hired_stage.id)
+  end
+
+
+  before_create do |organization|
+    unless organization.stages.present?
+      organization.stages = Stage.defaults
+    end
   end
 
   private

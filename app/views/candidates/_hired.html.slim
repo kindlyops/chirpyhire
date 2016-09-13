@@ -1,2 +1,2 @@
-= button_to(candidate, method: :put, title: "Mark Hired", id: "hired", params: { "candidate[stage]" => Stage::HIRED }) do
+= button_to(candidate, method: :put, title: "Mark Hired", id: "hired", params: { "candidate[stage_id]" => organization.hired_stage.id }) do
  i.fa.fa-trophy

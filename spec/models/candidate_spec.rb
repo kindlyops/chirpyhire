@@ -1,5 +1,4 @@
 require 'rails_helper'
-# TODO JLW
 RSpec.describe Candidate, type: :model do
   let(:candidate) { create(:candidate) }
 
@@ -9,23 +8,23 @@ RSpec.describe Candidate, type: :model do
         expect {
           candidate
         }.to change{PublicActivity::Activity.count}.by(1)
-        expect(candidate.activities.last.properties["status"]).to eq("Potential")
+        expect(candidate.activities.last.properties["stage_id"]).to eq(candidate.organization.potential_stage.id)
       end
     end
 
     describe "update" do
       let!(:candidate) { create(:candidate) }
 
-      context "changing the status" do
+      context "changing the stage" do
         it "creates an activity" do
           expect {
             candidate.update(stage: candidate.organization.qualified_stage)
           }.to change{PublicActivity::Activity.count}.by(1)
-          expect(candidate.activities.last.properties["status"]).to eq("Qualified")
+          expect(candidate.activities.last.properties["stage_id"]).to eq(candidate.organization.qualified_stage.id)
         end
       end
 
-      context "not changing the status" do
+      context "not changing the stage" do
         it "does not create an activity" do
           expect {
             candidate.touch

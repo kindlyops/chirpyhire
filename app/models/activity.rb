@@ -1,18 +1,5 @@
-#TODO JLW not entirely sure what to do here
 class Activity < PublicActivity::Activity
-  def self.qualified
-    where("properties->>'status' = ?", "Qualified")
-  end
-
-  def self.hired
-    where("properties->>'status' = ?", "Hired")
-  end
-
-  def self.bad_fit
-    where("properties->>'status' = ?", "Bad Fit")
-  end
-
-  def self.potential
-    where("properties->>'status' = ?", "Potential")
+  def self.for_stage_id(stage_id)
+    where("properties->'stage_id' = ?", stage_id.to_s)
   end
 end

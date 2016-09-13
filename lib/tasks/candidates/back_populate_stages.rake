@@ -3,13 +3,13 @@ namespace :candidates do
   task :back_populate_stages => :environment do 
     Candidate.find_each do |cand|
       if cand.potential? && !(cand.stage.present? && cand.stage.potential?)
-        cand.stage = Stage.find_by(organization_id: cand.organization.id, default_stage_mapping: Stage::POTENTIAL)
+        cand.stage = cand.organization.potential_stage
         cand.save
       elsif cand.bad_fit? && !(cand.stage.present? && cand.stage.bad_fit?) 
-        cand.stage = Stage.find_by(organization_id: cand.organization.id, default_stage_mapping: Stage::BAD_FIT)
+        cand.stage = cand.organization.bad_fit_stage
         cand.save
       elsif cand.qualified? && !(cand.stage.present? && cand.stage.qualified?) 
-        cand.stage = Stage.find_by(organization_id: cand.organization.id, default_stage_mapping: Stage::QUALIFIED)
+        cand.stage = cand.organization.qualifieda_stage
         cand.save
       end
     end

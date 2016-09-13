@@ -26,7 +26,7 @@
           = render partial: "candidates/choice", collection: candidate.choices
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
-              = render partial: "candidates/#{cta}", locals: { candidate: candidate }
+              = render partial: "candidates/#{cta}", locals: { candidate: candidate, organization: @organization }
   = paginate @candidates
 
 

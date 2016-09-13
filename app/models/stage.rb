@@ -32,7 +32,7 @@ class Stage < ApplicationRecord
 
   def self.defaults(organization_id = nil)
     [
-      Stage.new(organization_id: organization_id, name: "Potential", order: 1, default_stage_mapping: @@default_stage_mapping[:potential] ),
+      Stage.new(organization_id: organization_id, name: "Potential", order: 1, default_stage_mapping: @@default_stage_mapping[:potential]),
       Stage.new(organization_id: organization_id, name: "Qualified", order: 2, default_stage_mapping: @@default_stage_mapping[:qualified]),
       Stage.new(organization_id: organization_id, name: "Bad Fit", order: 3, default_stage_mapping: @@default_stage_mapping[:bad_fit]),
       Stage.new(organization_id: organization_id, name: "Hired", order: 4, default_stage_mapping: @@default_stage_mapping[:hired])

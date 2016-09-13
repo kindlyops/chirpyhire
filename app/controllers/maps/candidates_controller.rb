@@ -2,10 +2,6 @@ class Maps::CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped
   skip_after_action :verify_authorized
 
-  DEFAULT_FILTER = Stage::QUALIFIED
-
-  # TODO Is there a difference between these two methods? Can 
-  # I get rid of one?
   def show
     set_stage_filter_cookie
     @map = Map.new(current_organization)
@@ -18,14 +14,13 @@ class Maps::CandidatesController < ApplicationController
 
   private
 
-  # Convert this to differentiate between default_stage_id and actual stage_id
   def set_stage_filter_cookie
-    stage = params[:stage]
+    stage_id = params[:stage_id]
 
-    if stage.present?
-      cookies[:candidate_stage_filter] = { value: stage }
+    if stage_id.present?
+      cookies[:candidate_stage_filter] = { value: stage_id }
     elsif !cookies[:candidate_stage_filter].present?
-      cookies[:candidate_stage_filter] = { value: Stage.find_by(organization_id: current_organization.id, default_stage_mapping: DEFAULT_FILTER).id }
+      cookies[:candidate_stage_filter] = { value: current_organization.qualified_stage.id }
     end
   end
 end

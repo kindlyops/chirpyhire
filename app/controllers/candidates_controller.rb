@@ -1,6 +1,5 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_FILTER = Stage::QUALIFIED
 
   def show
     @candidate = authorized_candidate
@@ -24,15 +23,14 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
-        @candidates = filtered_candidates.by_default_stage(stage).page(params.fetch(:page, 1))
+        @candidates = filtered_candidates.where(stage_id: stage_id).page(params.fetch(:page, 1))
       end
     end
   end
 
   def update
-    # TODO JLW How does this work? What's being updated?
     if authorized_candidate.update(permitted_attributes(Candidate))
-      redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.status}"
+      redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.stage.name}"
     else
       redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's status"
     end
@@ -48,18 +46,18 @@ class CandidatesController < ApplicationController
     policy_scope(Candidate)
   end
 
-  def stage
-    # TODO JLW Where does this get set? Also convert this to differentiate between default_stage_id and actual stage_id
-    stage = params[:stage]
+  def stage_id
+    stage_id = params[:stage_id]
 
-    if stage.present?
-      cookies[:candidate_stage_filter] = { value: stage }
-      stage
+    if stage_id.present?
+      cookies[:candidate_stage_filter] = { value: stage_id }
+      stage_id
     elsif cookies[:candidate_stage_filter].present?
       cookies[:candidate_stage_filter]
     else
-      cookies[:candidate_stage_filter] = { value: DEFAULT_FILTER }
-      return DEFAULT_FILTER
+      default_stage_id = current_organization.qualified_stage.id
+      cookies[:candidate_stage_filter] = { value: default_stage_id }
+      return default_stage_id
     end
   end
 end
