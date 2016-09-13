@@ -1,6 +1,7 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_FILTER = "Qualified"
+  DEFAULT_STATUS_FILTER = "Qualified"
+  DEFAULT_CREATED_IN_FILTER = "Past Week"
 
   def show
     @candidate = authorized_candidate
@@ -48,7 +49,21 @@ class CandidatesController < ApplicationController
   end
 
   def filtering_params
-    params.slice(:status, :created_in)
+    { status: status, created_in: created_in }
+  end
+
+  def created_in
+    created_in = params[:created_in]
+
+    if created_in.present?
+      cookies[:candidate_created_in_filter] = { value: created_in }
+      created_in
+    elsif cookies[:candidate_created_in_filter].present?
+      cookies[:candidate_created_in_filter]
+    else
+      cookies[:candidate_created_in_filter] = { value: DEFAULT_CREATED_IN_FILTER }
+      return DEFAULT_CREATED_IN_FILTER
+    end
   end
 
   def status
@@ -57,11 +72,11 @@ class CandidatesController < ApplicationController
     if status.present?
       cookies[:candidate_status_filter] = { value: status }
       status
-    elsif cookies[:candidate_status_filter].present? && cookies[:candidate_status_filter] != "Screened"
+    elsif cookies[:candidate_status_filter].present?
       cookies[:candidate_status_filter]
     else
-      cookies[:candidate_status_filter] = { value: DEFAULT_FILTER }
-      return DEFAULT_FILTER
+      cookies[:candidate_status_filter] = { value: DEFAULT_STATUS_FILTER }
+      return DEFAULT_STATUS_FILTER
     end
   end
 end
