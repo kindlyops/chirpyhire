@@ -26,10 +26,13 @@
 
     .dropdown {
       display: flex;
+      width: 70%;
+    }
+    #created_in {
       width: 50%;
     }
-
     .status {
+      margin-right: 0.25em;
       @include media ($horizontal-bar-mode) {
         margin-right: 1em;
       }
