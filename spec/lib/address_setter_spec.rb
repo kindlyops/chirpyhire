@@ -13,8 +13,8 @@ RSpec.describe AddressSetter do
           let!(:candidate) { create(:candidate, user: message.user) }
           let(:message) { create(:message, body: "4059 Mt Lee Dr 90068") }
 
-          it "returns Address created" do
-            expect(setter.call).to eq("Address created")
+          it "returns Address found" do
+            expect(setter.call).to eq("Address found")
           end
 
           it "appends a row to the csv object" do

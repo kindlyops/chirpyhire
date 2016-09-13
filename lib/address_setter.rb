@@ -7,25 +7,25 @@ class AddressSetter
 
   def call
     return "Address present" if candidate.address_feature.present?
-    address_created = false
+    address_found = false
 
     messages.map do |message|
       next unless message.has_address?
 
       if csv.present?
-        address_created = true
+        address_found = true
         row = fetch_row(message)
         csv << row
         row
       else
-        address_created = true
+        address_found = true
         create_address(message)
         break
       end
     end
 
-    if address_created
-      "Address created"
+    if address_found
+      "Address found"
     else
       "No address found"
     end
