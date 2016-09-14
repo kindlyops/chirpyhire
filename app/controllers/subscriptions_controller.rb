@@ -25,6 +25,9 @@ class SubscriptionsController < ApplicationController
     else
       render :edit
     end
+  rescue Stripe::CardError => e
+    flash[:alert] = stripe_error_message(e)
+    render :edit
   end
 
   def create
@@ -32,27 +35,36 @@ class SubscriptionsController < ApplicationController
 
     if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
       current_organization.update(stripe_token: params[:stripe_token])
-      @subscription.activate!
       Payment::Subscriptions::Process.call(@subscription, current_account.email)
+      @subscription.activate!
       SurveyAdvancer.call(current_organization)
 
       redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
     else
       render :new
     end
+  rescue Stripe::CardError => e
+    flash[:alert] = stripe_error_message(e)
+    render :new
   end
 
   def destroy
     @subscription = authorized_subscription
-    if @subscription.cancel!
-      Payment::Subscriptions::Cancel.call(@subscription)
-      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
-    else
-      render :edit
-    end
+    Payment::Subscriptions::Cancel.call(@subscription)
+    @subscription.cancel!
+    redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
+  rescue Stripe::CardError => e
+    flash[:alert] = stripe_error_message(e)
+    render :edit
   end
 
   private
+
+  def stripe_error_message(error)
+    <<-ERROR
+#{error.message} Need Help? <a href='javascript:void(0)' onclick="Intercom('showNewMessage')">Message Us</a>
+    ERROR
+  end
 
   def authorized_subscription
     @authorized_subscription ||= authorize current_organization.subscription
