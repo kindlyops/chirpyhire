@@ -12,7 +12,7 @@
         = link_to maps_candidates_path, class: "button-group-item" do
           i.fa.fa-map-o
   .cards
-    - stages = candidates.first.organization.stages
+    - stages = if candidates.first.present? then candidates.first.organization.stages else [] end
     - candidates.each do |candidate|
       .card
         .card-header
@@ -29,7 +29,12 @@
             .card-stages-drawer
               ul.stage-list
                 - stages.each do |stage|
-                  li.stage = stage.name
+                  li.stage
+                    - if candidate.stage_id != stage.id
+                      a.stage-name href="candidates/stage/#{candidate.id}/#{stage.id}"
+                        strong = stage.name
+                    - else
+                      strong = stage.name
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
               = render partial: "candidates/#{cta}", locals: { candidate: candidate, organization: @organization }

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :health, only: :show
 
   resources :candidates, only: [:index, :update, :show]
+  get 'candidates/stage/:id/:stage_id' => 'candidates#update_stage'
   get "messages" => "conversations#index"
 
   resources :users, only: [] do

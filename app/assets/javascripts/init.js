@@ -1,7 +1,7 @@
 window.App = window.App || {};
 
 $(window).load(function() {
-	var delay = 50, 
+	var delay = 400, 
 		className= "tipsy-font",
 		options = {className: className, delayIn: delay, delayOut: delay, fade: true}; 
 	$(".tipsy-needed").tipsy(options);

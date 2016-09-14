@@ -3,7 +3,7 @@ class StageDecorator < Draper::Decorator
   
   def list_item
     delete_button_disabled_class = if candidates.any? then 'disabled' else '' end
-    delete_button_tipsy_class = if candidates.any? then 'tipsy-needed-w' else '' end
+    delete_button_tipsy_class = if candidates.any? || default_stage_mapping.present? then 'tipsy-needed-w' else '' end
 
     delete_button_title = 
       if default_stage_mapping.present? 
