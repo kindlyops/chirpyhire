@@ -13,7 +13,7 @@ class StageDecorator < Draper::Decorator
       else 'Delete Stage' 
       end
 
-    "<span class=order>#{order}.</span> #{name}\
+    "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order'>#{order}.</span> #{name}</div></div>\
      <button class='delete-stage #{delete_button_tipsy_class} #{delete_button_disabled_class}' title='#{delete_button_title}' data-id='#{id}'>\
        <i class='fa fa-trash-o'></i>\
      </button>".html_safe

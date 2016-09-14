@@ -1,8 +1,14 @@
 window.App = window.App || {};
 
 $(window).load(function() {
-	$(".tipsy-needed").tipsy();
-	$(".tipsy-needed-w").tipsy({gravity: 'w'});
-	$(".tipsy-needed-e").tipsy({gravity: 'e'});
-	$(".tipsy-needed-s").tipsy({gravity: 's'});
+	var delay = 50, 
+		className= "tipsy-font",
+		options = {className: className, delayIn: delay, delayOut: delay, fade: true}; 
+	$(".tipsy-needed").tipsy(options);
+	options.gravity = 'w'
+	$(".tipsy-needed-w").tipsy(options);
+	options.gravity = 'e'
+	$(".tipsy-needed-e").tipsy(options);
+	options.gravity = 's'
+	$(".tipsy-needed-s").tipsy(options);
 })

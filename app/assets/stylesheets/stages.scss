@@ -1,4 +1,75 @@
 .stages-wrapper {
+	@include outer-container;
+	@include span-columns(6);
+	@include shift(3);
+
+	$stage-item-max-width: 400px;
+
+	.header {
+		display: flex;
+		margin: 15px 0;
+		justify-content: space-between;
+	}
+
+	.stages {
+		justify-content: flex-start;
+
+		li.stage {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			//max-width: $stage-item-max-width;
+			margin: 5px 0;
+			.stage-item-text {
+				display: flex;
+				justify-content: center;
+				align-content: center;
+				flex-direction: column;
+				padding-left: 0.5em;
+			}
+			.stage-item-text, .stage-item-text-wrapper, .order {
+				cursor: move;
+			}
+
+			// Some copied from survey, can refactor
+			border: 1px solid $light-gray;
+			box-shadow: 1px 1px $light-gray;
+			cursor: move;
+			border-radius: 3px;
+
+			&:hover, &:focus {
+			  background-color: #f3f3f3;
+			}
+		}
+	}
+
+	.save-order-button {
+		margin: 15px 0;
+	}
+
+	.new-stage-wrapper {
+		width: 100%;
+		//max-width: $stage-item-max-width;
+
+		// Some copied from survey, can refactor
+		border: 1px solid $light-gray;
+		box-shadow: 1px 1px $light-gray;
+		cursor: move;
+		border-radius: 3px;
+
+		#new_stage {
+			width: 75%;
+			display: inline-block;
+			margin: 0;
+		}
+		button {
+			float:right;
+			display: inline-block;
+			padding-bottom: 0.85em;
+		}
+	}
+
+	// Sortable styling
 	.sortable-chosen .order {
 		visibility: hidden;
 	}
