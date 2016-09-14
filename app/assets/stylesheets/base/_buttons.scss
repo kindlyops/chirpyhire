@@ -24,8 +24,11 @@
     color: #fff;
   }
 
-  &:disabled {
-    cursor: not-allowed;
+  &:disabled, &.disabled {
+    &:focus {
+      outline: none;
+    }
+    cursor: default;
     opacity: 0.5;
 
     &:hover {

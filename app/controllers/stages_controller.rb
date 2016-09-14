@@ -12,7 +12,7 @@ class StagesController < ApplicationController
     elsif create_new_stage(new_stage_name)
       redirect_to stages_url, notice: "Nice! Stage created."
     else
-       Rollbar.error(stage.errors)
+      Rollbar.error(stage.errors)
       redirect_to stages_url, alert: "Oops! We were unable to create your stage."
     end
   end
@@ -28,6 +28,11 @@ class StagesController < ApplicationController
   end
 
   def destroy
+    if authorize(Stage.find(params[:id])).destroy
+      redirect_to stages_url, turbolinks: true, notice: "Nice! Stage deleted."
+    else
+      redirect_to stages_url, turbolinks: true, alert: "Oops! We were unable to delete your stage."
+    end
   end
 
   private

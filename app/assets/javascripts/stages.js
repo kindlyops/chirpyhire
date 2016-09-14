@@ -16,6 +16,15 @@ $(document).on("turbolinks:load", function() {
 					contentType: "application/json; charset=utf-8"
 				});
 			});
+			wrapper.find(".delete-stage").on("click", function(e) {
+				var stage = $(this);
+				if(!stage.hasClass("disabled")) {
+					$.ajax({
+						url: "/stages/" + stage.attr("data-id"),
+						type: "DELETE"
+					})
+				}
+			});
 		},
 		setupSorting = function() {
 			if(wrapper.find(".stage").length) {

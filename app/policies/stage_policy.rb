@@ -3,6 +3,10 @@ class StagePolicy < ApplicationPolicy
     true
   end
 
+  def destroy?
+    show?
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       organization.stages

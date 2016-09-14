@@ -19,6 +19,7 @@
 //= require lodash
 //= require cocoon
 //= require jquery.card
+//= require jquery.tipsy
 
 //= require init
 //= require map
