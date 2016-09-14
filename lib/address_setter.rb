@@ -9,19 +9,19 @@ class AddressSetter
     return "Address present" if candidate.address_feature.present?
     address_found = false
 
-    messages.map do |message|
+    messages.each do |message|
       next unless message.has_address?
 
       if csv.present?
         address_found = true
         row = fetch_row(message)
         csv << row
-        row
       else
         address_found = true
         create_address(message)
-        break
       end
+
+      break
     end
 
     if address_found
