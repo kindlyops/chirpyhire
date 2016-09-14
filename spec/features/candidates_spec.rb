@@ -14,15 +14,6 @@ RSpec.feature "Candidates", type: :feature, js: true do
       let(:qualified_stage) { account.organization.stages.default_qualified.first }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
-      context "marking as hired" do
-        it "lets the account mark a candidate as hired" do
-          visit candidates_path
-
-          click_button("hired")
-          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Hired")
-        end
-      end
-
       context "with candidate features" do
         let(:survey) { create(:survey, organization: account.organization) }
         context "with address persona feature" do
@@ -85,26 +76,6 @@ RSpec.feature "Candidates", type: :feature, js: true do
       end
     end
 
-    context "hired candidates" do
-      let(:hired_stage) { account.organization.hired_stage }
-      let!(:candidate) { create(:candidate, organization: account.organization, stage: hired_stage) }
-
-      it "lets the account call the candidate" do
-        visit candidates_path << "?stage_id=#{hired_stage.id}"
-        call_button = find_button("call-#{candidate.user_id}")
-        expect(call_button.present?).to eq(true)
-      end
-
-      context "marking as bad fit" do
-        it "lets the account mark a candidate as bad fit" do
-          visit candidates_path << "?stage_id=#{hired_stage.id}"
-
-          click_button("bad-fit")
-          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Bad Fit")
-        end
-      end
-    end
-
     context "filtering" do
       let(:qualified_stage) { account.organization.qualified_stage }
       let(:potential_stage) { account.organization.potential_stage }
@@ -149,15 +120,6 @@ RSpec.feature "Candidates", type: :feature, js: true do
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
           end
           expect(page).to have_text(candidate.phone_number.phony_formatted)
-        end
-
-        context "marking as qualified" do
-          it "lets the account mark a candidate as qualified" do
-            visit candidates_path << "?stage_id=#{bad_fit_stage.id}"
-
-            click_button("qualified")
-            expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Qualified")
-          end
         end
       end
 
