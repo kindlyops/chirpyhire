@@ -13,14 +13,13 @@ class AddressSetter
       next unless message.has_address?
 
       if csv.present?
-        address_found = true
         row = fetch_row(message)
         csv << row
       else
-        address_found = true
         create_address(message)
       end
 
+      address_found = true
       break
     end
 
