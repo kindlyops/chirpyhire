@@ -8,7 +8,8 @@ $(document).on("turbolinks:load", function() {
     // Toggle to ensure zero height div at start, and then make visible
     $(".card-stages-drawer").slideToggle(0, function() { $(".card-stages-drawer").css("visibility", "visible") });
     $("button.change-candidate-stage").on("click", function(e) {
-      $(this).closest(".card").find(".card-stages-drawer").slideToggle(400)
+      var parentCard = $(this).closest(".card");
+      parentCard.find(".card-stages-drawer").slideToggle(400)
     })
   }
 
