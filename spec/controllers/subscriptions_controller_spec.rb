@@ -92,6 +92,26 @@ RSpec.describe SubscriptionsController, type: :controller do
           end
         end
 
+        context "when there is a Payment Card Error" do
+          let(:error_message) { "Your card was declined." }
+
+          before(:each) do
+            stripe_error = Struct.new(:message).new(error_message)
+            allow(Payment::Subscriptions::Process).to receive(:call).and_raise(Payment::CardError.new(stripe_error))
+          end
+
+          it "renders new" do
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+            expect(response).to render_template("new")
+          end
+
+          it "displays the error to the user and asks if they need help" do
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+            expect(flash[:alert]).to match("Need Help?")
+            expect(flash[:alert]).to match(error_message)
+          end
+        end
+
         it "calls Process Service" do
           expect(Payment::Subscriptions::Process).to receive(:call)
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
@@ -186,6 +206,26 @@ RSpec.describe SubscriptionsController, type: :controller do
         end
       end
 
+      context "when there is a Payment Card Error" do
+        let(:error_message) { "Your card was declined." }
+
+        before(:each) do
+          stripe_error = Struct.new(:message).new(error_message)
+          allow(Payment::Subscriptions::Update).to receive(:call).and_raise(Payment::CardError.new(stripe_error))
+        end
+
+        it "renders edit" do
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+          expect(response).to render_template("edit")
+        end
+
+        it "displays the error to the user and asks if they need help" do
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+          expect(flash[:alert]).to match("Need Help?")
+          expect(flash[:alert]).to match(error_message)
+        end
+      end
+
       it "calls Update Service" do
         expect(Payment::Subscriptions::Update).to receive(:call).with(subscription)
         put :update, params: {id: subscription.to_param, subscription: valid_attributes}
@@ -214,6 +254,26 @@ RSpec.describe SubscriptionsController, type: :controller do
       it "redirects to the subscriptions edit subscription" do
         delete :destroy, params: {id: subscription.to_param}
         expect(response).to redirect_to(subscription_path(subscription))
+      end
+    end
+
+    context "when there is a Payment Card Error" do
+      let(:error_message) { "Your card was declined." }
+
+      before(:each) do
+        stripe_error = Struct.new(:message).new(error_message)
+        allow(Payment::Subscriptions::Cancel).to receive(:call).and_raise(Payment::CardError.new(stripe_error))
+      end
+
+      it "renders edit" do
+        delete :destroy, params: {id: subscription.to_param}
+        expect(response).to render_template("edit")
+      end
+
+      it "displays the error to the user and asks if they need help" do
+        delete :destroy, params: {id: subscription.to_param}
+        expect(flash[:alert]).to match("Need Help?")
+        expect(flash[:alert]).to match(error_message)
       end
     end
 

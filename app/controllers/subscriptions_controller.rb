@@ -25,8 +25,8 @@ class SubscriptionsController < ApplicationController
     else
       render :edit
     end
-  rescue Stripe::CardError => e
-    flash[:alert] = stripe_error_message(e)
+  rescue Payment::CardError => e
+    flash[:alert] = payment_error_message(e)
     render :edit
   end
 
@@ -43,8 +43,8 @@ class SubscriptionsController < ApplicationController
     else
       render :new
     end
-  rescue Stripe::CardError => e
-    flash[:alert] = stripe_error_message(e)
+  rescue Payment::CardError => e
+    flash[:alert] = payment_error_message(e)
     render :new
   end
 
@@ -53,14 +53,14 @@ class SubscriptionsController < ApplicationController
     Payment::Subscriptions::Cancel.call(@subscription)
     @subscription.cancel!
     redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
-  rescue Stripe::CardError => e
-    flash[:alert] = stripe_error_message(e)
+  rescue Payment::CardError => e
+    flash[:alert] = payment_error_message(e)
     render :edit
   end
 
   private
 
-  def stripe_error_message(error)
+  def payment_error_message(error)
     <<-ERROR
 #{error.message} Need Help? <a href='javascript:void(0)' onclick="Intercom('showNewMessage')">Message Us</a>
     ERROR

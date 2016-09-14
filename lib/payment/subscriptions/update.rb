@@ -10,6 +10,8 @@ class Payment::Subscriptions::Update
   def call
     stripe_subscription.quantity = subscription.quantity
     stripe_subscription.save
+  rescue Stripe::CardError => e
+    raise Payment::CardError.new(e)
   end
 
   private

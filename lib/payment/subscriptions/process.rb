@@ -19,6 +19,8 @@ class Payment::Subscriptions::Process
     end
 
     subscription.update(stripe_id: stripe_subscription.id)
+  rescue Stripe::CardError => e
+    raise Payment::CardError.new(e)
   end
 
   private
