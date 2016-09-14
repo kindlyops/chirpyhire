@@ -1,6 +1,6 @@
 class StagesController < ApplicationController
   def index
-    @stages = scoped_stages.ordered.decorate
+    @stages = scoped_stages.decorate
   end
 
   def create

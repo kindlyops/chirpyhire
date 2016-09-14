@@ -61,8 +61,13 @@ class Organization < ApplicationRecord
     users.has_unread_messages.count
   end
 
-# There should only ever be one of each default type for 
-# and organization
+  alias_method :active_record_stages, :stages
+  def stages
+    ordered_stages ||= self.active_record_stages.ordered
+  end
+
+  # There should only ever be one of each default type for 
+  # and organization
   def bad_fit_stage
     stages.default_bad_fit.first
   end
