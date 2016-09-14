@@ -96,6 +96,21 @@ class Organization < ApplicationRecord
     candidate_activities.for_stage_id(self.hired_stage.id)
   end
 
+  def reorder_stages(stage_order_info)
+    Organization.transaction do
+      # To avoid Unique Key errors when updating sequentially
+      # we set all values to their negative in a transaction
+      stages.find_each do |stage|
+        stage.order *= -1
+        stage.save!
+      end
+      stage_order_info.each do |info|
+        stage = Stage.find(info[:id])
+        stage.order = info[:order]
+        stage.save!
+      end
+    end
+  end
 
   before_create do |organization|
     unless organization.stages.present?

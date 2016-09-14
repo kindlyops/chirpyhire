@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'sms/base#unknown_message'
 
+  post 'stages/reorder' => 'stages#reorder'
+
   mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: {sessions: 'sessions', registrations: 'registrations', invitations: 'invitations'}
