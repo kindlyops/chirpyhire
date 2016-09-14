@@ -24,9 +24,6 @@ class StagesController < ApplicationController
     redirect_to stages_url, turbolinks: true, notice: "Nice! Stage order saved."
   end
 
-  def update
-  end
-
   def destroy
     if authorize(Stage.find(params[:id])).destroy
       redirect_to stages_url, turbolinks: true, notice: "Nice! Stage deleted."

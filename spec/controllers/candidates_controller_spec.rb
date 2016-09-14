@@ -36,10 +36,16 @@ RSpec.describe CandidatesController, type: :controller do
         expect(assigns(:candidates)).to match_array(candidates)
       end
 
+      it "can change a candidates stage" do
+        get :update_stage, params: { id: organization.candidates.first.id, stage_id: organization.bad_fit_stage.id }
+        expect(qualified_stage.candidates.count).to eq(2)
+        expect(organization.bad_fit_stage.candidates.count).to eq(1)
+      end
+
       context "order" do
         let(:potential_stage) { organization.potential_stage }
-        let!(:old_candidate) { create(:candidate, id: 10, stage: potential_stage, organization: organization) }
-        let!(:recent_candidate) { create(:candidate, id: 11, stage: potential_stage, organization: organization) }
+        let!(:old_candidate) { create(:candidate, id: 15, stage: potential_stage, organization: organization) }
+        let!(:recent_candidate) { create(:candidate, id: 16, stage: potential_stage, organization: organization) }
 
         it "returns the most recent candidates first" do
           get :index, params: { stage_id: potential_stage.id }

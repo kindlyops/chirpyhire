@@ -49,7 +49,6 @@ class Stage < ApplicationRecord
     reset_orders(stage.organization_id)
   end
 
-  # TODO JLW Add test
   def reset_orders(organization_id) 
     stages = Organization.find(organization_id).stages.ordered
     Stage.transaction do

@@ -11,8 +11,25 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
   context "with candidates" do
     context "qualified candidates" do
-      let(:qualified_stage) { account.organization.stages.default_qualified.first }
+      let(:qualified_stage) { account.organization.qualified_stage }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
+
+      context "with other stages" do
+        it "has stage drawer window hidden initially" do 
+          visit candidates_path
+          expect(first('li.stage > a')).to eq(nil)
+        end
+        it "can not move from qualified to qualified" do
+          visit candidates_path
+          first(".change-stage-button").click
+
+          qualified_link_that_doesnt_exist = all("li.stage")[1].first("a")
+          potential_link_that_does_exist = all("li.stage")[0].first("a")
+          
+          expect(qualified_link_that_doesnt_exist).to eq(nil)
+          expect(potential_link_that_does_exist).not_to eq(nil)
+        end
+      end
 
       context "with candidate features" do
         let(:survey) { create(:survey, organization: account.organization) }
