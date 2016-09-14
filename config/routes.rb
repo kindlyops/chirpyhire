@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :choice_questions, except: :destroy
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
+  resources :stages, only: [:index, :create, :destroy, :update]
 
   namespace :maps do
     resources :candidates, only: [:index, :show]

@@ -1,0 +1,11 @@
+.stages-wrapper
+  .header
+    h1 Candidate Stages
+    ul.stages
+      - @stages.each do |stage|
+        li.stage = stage.list_item
+    = form_tag("/stages", method: "post") do
+      = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
+      button title="Add Stage" id="add-stage"
+        i.fa.fa-plus
+
