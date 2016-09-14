@@ -28,6 +28,7 @@
 //= require address_question_option
 //= require maps/candidates
 //= require maps/candidate
+//= require stages
 //= require survey
 //= require survey.edit
 //= require payment
