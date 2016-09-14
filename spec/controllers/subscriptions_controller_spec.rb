@@ -52,39 +52,49 @@ RSpec.describe SubscriptionsController, type: :controller do
       context "with valid params" do
         let(:stripe_token) { "token" }
 
-        it "sets the stripe token on the organization" do
-          expect {
+        context "not testing the Process Service" do
+          before(:each) do
+            allow(Payment::Subscriptions::Process).to receive(:call)
+          end
+
+          it "sets the stripe token on the organization" do
+            expect {
+              post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+            }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
+          end
+
+          it "does not create a new subscription" do
+            expect {
+              post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+            }.not_to change(Subscription, :count)
+          end
+
+          it "assigns the trialing subscription as @subscription" do
             post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-          }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
+            expect(assigns(:subscription)).to eq(subscription)
+          end
+
+          it "redirects to show route" do
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+
+            expect(response).to redirect_to(subscription_path(subscription))
+          end
+
+          it "activates the subscription" do
+            expect {
+              post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+            }.to change{subscription.reload.state}.from("trialing").to("active")
+          end
+
+          it "calls the SurveyAdvancer service" do
+            expect(SurveyAdvancer).to receive(:call).with(organization)
+            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
+          end
         end
 
-        it "kicks off a job to process the subscription" do
-          expect{
-            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-          }.to have_enqueued_job(Payment::Job::ProcessSubscription)
-        end
-
-        it "does not create a new subscription" do
-          expect {
-            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-          }.not_to change(Subscription, :count)
-        end
-
-        it "assigns the trialing subscription as @subscription" do
+        it "calls Process Service" do
+          expect(Payment::Subscriptions::Process).to receive(:call)
           post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-          expect(assigns(:subscription)).to eq(subscription)
-        end
-
-        it "redirects to show route" do
-          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-
-          expect(response).to redirect_to(subscription_path(subscription))
-        end
-
-        it "activates the subscription" do
-          expect {
-            post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-          }.to change{subscription.reload.state}.from("trialing").to("active")
         end
       end
 
@@ -111,10 +121,9 @@ RSpec.describe SubscriptionsController, type: :controller do
           }.not_to change{organization.reload.stripe_token}
         end
 
-        it "does not kick off a job to process the subscription" do
-          expect{
-            post :create, params: {subscription: invalid_attributes}
-          }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
+        it "does not call the Process Service" do
+          expect(Payment::Subscriptions::Process).not_to receive(:call)
+          post :create, params: {subscription: invalid_attributes}
         end
       end
     end
@@ -135,10 +144,9 @@ RSpec.describe SubscriptionsController, type: :controller do
         }.not_to change{organization.reload.stripe_token}
       end
 
-      it "does not kick off a job to process the subscription" do
-        expect{
-          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.not_to have_enqueued_job(Payment::Job::ProcessSubscription)
+      it "does not call the Process Service" do
+        expect(Payment::Subscriptions::Process).not_to receive(:call)
+        post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
       end
     end
   end
@@ -149,30 +157,38 @@ RSpec.describe SubscriptionsController, type: :controller do
         { quantity: 2 }
       }
 
-      it "updates the requested subscription" do
-        subscription = organization.create_subscription valid_attributes
-        expect {
-          put :update, params: {id: subscription.to_param, subscription: new_attributes}
-        }.to change{subscription.reload.quantity}.from(1).to(new_attributes[:quantity])
-      end
+      let!(:subscription) { organization.create_subscription valid_attributes }
 
-      it "assigns the requested subscription as @subscription" do
-        subscription = organization.create_subscription valid_attributes
-        put :update, params: {id: subscription.to_param, subscription: valid_attributes}
-        expect(assigns(:subscription)).to eq(subscription)
-      end
+      context "not testing the Update Service" do
+        before(:each) do
+          allow(Payment::Subscriptions::Update).to receive(:call).with(subscription)
+        end
 
-      it "redirects to the subscription" do
-        subscription = organization.create_subscription valid_attributes
-        put :update, params: {id: subscription.to_param, subscription: valid_attributes}
-        expect(response).to redirect_to(subscription_path(subscription))
-      end
+        it "updates the requested subscription" do
+          expect {
+            put :update, params: {id: subscription.to_param, subscription: new_attributes}
+          }.to change{subscription.reload.quantity}.from(1).to(new_attributes[:quantity])
+        end
 
-      it "enqueues an update job" do
-        subscription = organization.create_subscription valid_attributes
-        expect{
+        it "assigns the requested subscription as @subscription" do
           put :update, params: {id: subscription.to_param, subscription: valid_attributes}
-        }.to have_enqueued_job(Payment::Job::UpdateSubscription)
+          expect(assigns(:subscription)).to eq(subscription)
+        end
+
+        it "redirects to the subscription" do
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+          expect(response).to redirect_to(subscription_path(subscription))
+        end
+
+        it "calls the SurveyAdvancer service" do
+          expect(SurveyAdvancer).to receive(:call).with(subscription.organization)
+          put :update, params: {id: subscription.to_param, subscription: valid_attributes}
+        end
+      end
+
+      it "calls Update Service" do
+        expect(Payment::Subscriptions::Update).to receive(:call).with(subscription)
+        put :update, params: {id: subscription.to_param, subscription: valid_attributes}
       end
     end
   end
@@ -182,24 +198,28 @@ RSpec.describe SubscriptionsController, type: :controller do
       { plan_id: plan.id, quantity: 1, state: "active" }
     }
 
-    it "cancels the requested subscription" do
-      subscription = organization.create_subscription valid_attributes
-      expect {
+    let!(:subscription) { organization.create_subscription valid_attributes }
+
+    context "not testing the Cancel Service" do
+      before(:each) do
+        allow(Payment::Subscriptions::Cancel).to receive(:call).with(subscription)
+      end
+
+      it "cancels the requested subscription" do
+        expect {
+          delete :destroy, params: {id: subscription.to_param}
+        }.to change{subscription.reload.state}.from("active").to("canceled")
+      end
+
+      it "redirects to the subscriptions edit subscription" do
         delete :destroy, params: {id: subscription.to_param}
-      }.to change{subscription.reload.state}.from("active").to("canceled")
+        expect(response).to redirect_to(subscription_path(subscription))
+      end
     end
 
-    it "cancels the requested subscription" do
-      subscription = organization.create_subscription valid_attributes
-      expect {
-        delete :destroy, params: {id: subscription.to_param}
-      }.to have_enqueued_job(Payment::Job::CancelSubscription).with(subscription)
-    end
-
-    it "redirects to the subscriptions edit subscription" do
-      subscription = organization.create_subscription valid_attributes
+    it "calls the Cancel Service" do
+      expect(Payment::Subscriptions::Cancel).to receive(:call).with(subscription)
       delete :destroy, params: {id: subscription.to_param}
-      expect(response).to redirect_to(subscription_path(subscription))
     end
   end
 
