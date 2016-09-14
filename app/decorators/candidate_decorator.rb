@@ -27,9 +27,6 @@ class CandidateDecorator < Draper::Decorator
   end
 
   def call_to_actions
-    return ["bad_fit", "qualified", "message"] if potential?
-    return ["call", "qualified", "message"] if bad_fit?
-    return ["bad_fit", "hired", "message"] if qualified?
-    return ["call", "bad_fit", "message"] if hired?
+    return ["change_stages", "message"]
   end
 end

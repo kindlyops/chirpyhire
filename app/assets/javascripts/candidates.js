@@ -1,9 +1,19 @@
 $(document).on("turbolinks:load", function() {
-  if($(".candidates").length) {
-    $(document).on("click", ".candidates .card-call-to-actions button", function(event) {
+
+  var bindUI = function() {
+    $(".candidates .card-call-to-actions button").on("click", function(event) {
       var $button = $(this);
       Turbolinks.visit($button.find('a').attr('href'));
     });
+    // Toggle to start to hide.
+    $(".card-stages-drawer").slideToggle();
+    $("button.change-candidate-stage").on("click", function(e) {
+      $(this).closest(".card").find(".card-stages-drawer").slideToggle(400)
+    })
+  }
+
+  if($(".candidates").length) {
+    bindUI();
 
     $(document).on("change", ".candidates .dropdown select", function(event) {
       var newSearch, queryParamRegExp;
