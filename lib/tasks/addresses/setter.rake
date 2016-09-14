@@ -14,10 +14,10 @@ namespace :addresses do
       puts "starting in 1 seconds"
       sleep(1)
 
-      Message.find_each.with_index do |message, index|
-        puts "#{index} - Message: #{message.id} starting"
-        output = AddressSetter.new(message).call
-        puts "#{index} - Message: #{message.id} #{output}"
+      Candidate.find_each.with_index do |candidate, index|
+        puts "#{index} - Candidate: #{candidate.id} starting"
+        output = AddressSetter.new(candidate).call
+        puts "#{index} - Candidate: #{candidate.id} #{output}"
         puts "sleeping 1"
         sleep(1)
       end
@@ -37,10 +37,10 @@ namespace :addresses do
       result = CSV.generate do |csv|
         csv << ["message_id", "message_body", "current_address", "new_address", "candidate_feature_id", "latitude", "longitude", "postal_code", "country", "city"]
 
-        Message.find_each.with_index do |message, index|
-          puts "#{index} - Message: #{message.id} starting"
-          output = AddressSetter.new(message, csv: csv).call
-          puts "#{index} - Message: #{message.id} #{output}"
+        Candidate.find_each.with_index do |candidate, index|
+          puts "#{index} - Candidate: #{candidate.id} starting"
+          output = AddressSetter.new(candidate, csv: csv).call
+          puts "#{index} - Candidate: #{candidate.id} #{output}"
           puts "sleeping 1"
           sleep(1)
         end

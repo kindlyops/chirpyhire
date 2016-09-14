@@ -1,27 +1,44 @@
 class AddressSetter
 
-  def initialize(message, csv: nil)
-    @message = message
+  def initialize(candidate, csv: nil)
+    @candidate = candidate
     @csv = csv
   end
 
   def call
     return "Address present" if candidate.address_feature.present?
-    return "No address found" unless message.has_address? && candidate.present?
+    address_found = false
 
-    if csv.present?
-      csv << row
-      row
+    messages.each do |message|
+      next unless message.has_address?
+
+      if csv.present?
+        row = fetch_row(message)
+        csv << row
+      else
+        create_address(message)
+      end
+
+      address_found = true
+      break
+    end
+
+    if address_found
+      "Address found"
     else
-      create_address
+      "No address found"
     end
   end
 
   private
 
-  attr_reader :message, :csv
+  attr_reader :candidate, :csv
 
-  def create_address
+  def messages
+    @messages ||= candidate.messages
+  end
+
+  def create_address(message)
     fake_inquiry = Struct.new(:question).new({})
 
     address_feature = candidate.candidate_features.create(label: question.label,
@@ -29,21 +46,19 @@ class AddressSetter
     "Created candidate feature #{address_feature.id}"
   end
 
-  def row
-    @row ||= [message.id,
-              message.body,
-              current_address.formatted_address,
-              new_address.address,
-              current_address.id,
-              new_address.latitude,
-              new_address.longitude,
-              new_address.postal_code,
-              new_address.country,
-              new_address.city]
-  end
+  def fetch_row(message)
+    new_address = message.address
 
-  def candidate
-    @candidate ||= message.user.candidate
+    [message.id,
+    message.body,
+    current_address.formatted_address,
+    new_address.address,
+    current_address.id,
+    new_address.latitude,
+    new_address.longitude,
+    new_address.postal_code,
+    new_address.country,
+    new_address.city]
   end
 
   def address_feature
@@ -58,10 +73,6 @@ class AddressSetter
         NullAddress.new
       end
     end
-  end
-
-  def new_address
-    @new_address ||= message.address
   end
 
   def question
