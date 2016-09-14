@@ -38,6 +38,8 @@ header.navigation role="banner"
           li.nav-link
             = link_to "Subscription", new_subscription_path(current_organization.build_subscription)
         li.nav-link
+          = link_to "Candidate Stages", stages_path
+        li.nav-link
           = link_to "Invite an Admin", new_account_invitation_path
         li.nav-link
           = link_to "Sign out", destroy_account_session_path, method: :delete
