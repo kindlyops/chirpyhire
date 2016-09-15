@@ -28,9 +28,6 @@
       display: flex;
       width: 70%;
     }
-    #created_in {
-      width: 50%;
-    }
     .status {
       margin-right: 0.5em;
       @include media ($horizontal-bar-mode) {
