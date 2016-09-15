@@ -2,7 +2,7 @@ class StageDecorator < Draper::Decorator
   delegate_all
   
   def list_item
-    delete_button_class = if candidates.any? then 'disabled' else '' end
+    delete_button_class = if not_deletable then 'disabled' else '' end
     delete_button_tipsy_class = if tipsy_needed then 'tipsy-needed-w' else '' end
 
     "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order'>#{order}.</span> #{name}</div></div>\
@@ -15,6 +15,10 @@ class StageDecorator < Draper::Decorator
   end
 
   private
+
+  def not_deletable
+    default_stage_mapping.present? || candidates.any?
+  end
 
   def button_title
     if default_stage_mapping.present? 
