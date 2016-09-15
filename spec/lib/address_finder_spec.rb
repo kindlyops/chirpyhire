@@ -1,5 +1,13 @@
 require 'rails_helper'
 
+def it_wont_be_found
+  describe "#found?" do
+    it "is false" do
+      expect(finder.found?).to eq(false)
+    end
+  end
+end
+
 RSpec.describe "AddressFinder" do
   let(:finder) { AddressFinder.new(address) }
 
@@ -74,25 +82,20 @@ RSpec.describe "AddressFinder" do
     end
   end
 
+  context "with valid address but wrong zipcode", vcr: { cassette_name: "AddressFinder-wrong-zipcode" } do
+    let(:address) { "2 civic center drive 94913" }
+    it_wont_be_found
+  end
+
   context "with invalid address" do
     context "no zipcode" do
       let(:address) { "4059 Mt Lee Dr" }
-
-      describe "#found?" do
-        it "is false" do
-          expect(finder.found?).to eq(false)
-        end
-      end
+      it_wont_be_found
     end
 
     context "no street address" do
       let(:address) { "90068" }
-
-      describe "#found?" do
-        it "is false" do
-          expect(finder.found?).to eq(false)
-        end
-      end
+      it_wont_be_found
     end
   end
 end
