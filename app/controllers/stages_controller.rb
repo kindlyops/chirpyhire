@@ -19,8 +19,8 @@ class StagesController < ApplicationController
 
   def reorder
     skip_authorization
-    stage_order_info = params[:stages]
-    current_organization.reorder_stages(stage_order_info)
+    stages_with_order = params[:stages_with_order]
+    current_organization.reorder_stages(stages_with_order)
     redirect_to stages_url, turbolinks: true, notice: "Nice! Stage order saved."
   end
 

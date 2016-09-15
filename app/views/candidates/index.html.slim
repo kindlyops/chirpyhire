@@ -4,7 +4,7 @@
   .controls
     .dropdown
       select.stage name="stage_id"
-        = options_for_select(@organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
+        = options_for_select(current_organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
       label
         i.fa.fa-th-large.button-group-item selected=true
@@ -38,7 +38,7 @@
                       strong = stage.name
           .card-call-to-actions
             - candidate.call_to_actions.each do |cta|
-              = render partial: "candidates/#{cta}", locals: { candidate: candidate, organization: @organization }
+              = render partial: "candidates/#{cta}", locals: { candidate: candidate }
   = paginate @candidates
 
 

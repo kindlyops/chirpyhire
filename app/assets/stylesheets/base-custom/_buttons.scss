@@ -1,0 +1,14 @@
+#{$all-buttons}, .button {
+
+	&:disabled, &.disabled {
+		&:focus {
+			outline: none;
+		}
+		cursor: default;
+		opacity: 0.5;
+
+		&:hover {
+			background-color: $action-color;
+		}
+	}
+}

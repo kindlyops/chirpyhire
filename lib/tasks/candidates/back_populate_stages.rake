@@ -9,7 +9,7 @@ namespace :candidates do
         cand.stage = cand.organization.bad_fit_stage
         cand.save
       elsif cand.qualified? && !(cand.stage.present? && cand.stage.qualified?) 
-        cand.stage = cand.organization.qualifieda_stage
+        cand.stage = cand.organization.qualified_stage
         cand.save
       end
     end

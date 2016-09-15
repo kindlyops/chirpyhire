@@ -15,7 +15,6 @@ class CandidatesController < ApplicationController
 
   def index
     filtered_candidates = scoped_candidates.by_recency
-    @organization = current_organization
     respond_to do |format|
       format.geojson do
         @candidates = filtered_candidates.with_addresses.decorate
@@ -60,7 +59,7 @@ class CandidatesController < ApplicationController
     elsif cookies[:candidate_stage_filter].present?
       cookies[:candidate_stage_filter]
     else
-      default_stage_id = current_organization.qualified_stage.id
+      default_stage_id = current_organization.default_display_stage.id
       cookies[:candidate_stage_filter] = { value: default_stage_id }
       return default_stage_id
     end

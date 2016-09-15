@@ -1,16 +1,16 @@
 $(document).on("turbolinks:load", function() {
 
   var bindUI = function() {
-    $(".candidates .card-call-to-actions button").on("click", function(event) {
+    $(document).on("click", ".candidates .card-call-to-actions button", function() {
       var $button = $(this);
       Turbolinks.visit($button.find('a').attr('href'));
     });
     // Toggle to ensure zero height div at start, and then make visible
     $(".card-stages-drawer").slideToggle(0, function() { $(".card-stages-drawer").css("visibility", "visible") });
-    $("button.change-candidate-stage").on("click", function(e) {
+    $(document).on("click", "button.change-candidate-stage", function() {
       var parentCard = $(this).closest(".card");
-      parentCard.find(".card-stages-drawer").slideToggle(400)
-    })
+      parentCard.find(".card-stages-drawer").slideToggle(400);
+    });
   }
 
   if($(".candidates").length) {

@@ -68,7 +68,7 @@ class Candidate < ApplicationRecord
 
   before_create do |cand|
     unless cand.stage.present?
-      cand.stage_id = organization.potential_stage.id
+      cand.stage = organization.potential_stage
     end
   end
 
@@ -76,6 +76,6 @@ class Candidate < ApplicationRecord
   private 
 
   def self.by_default_stage(stage)
-    joins(:stage).where(stages: { default_stage_mapping: stage })
+    joins(:stage).merge(Stage.where(default_stage_mapping: stage))
   end
 end

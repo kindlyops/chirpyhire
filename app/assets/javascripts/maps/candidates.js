@@ -4,17 +4,19 @@ $(document).on("turbolinks:load", function() {
 
     function watchSelect(map, stage_infos) {
       $(document).on("change", dropdownStageSelector, function(event) {
-        var currentStageId = this.value;
-        var unselectedStageInfos = _.reject(stage_infos, function(info) {
-          return info.id.toString() === currentStageId;
-        });
+        var currentStageId = this.value,
+          isCurrentStage = function(stage_info) {
+            return stage_info.id.toString() === currentStageId
+          },
+          currentStageName = stage_infos.filter(isCurrentStage)[0].name,
+          unselectedStageInfos = _.reject(stage_infos, isCurrentStage);
 
         map.popup.remove();
 
         _.each(unselectedStageInfos, function(info) {
           map.setLayoutProperty(info.name, 'visibility', 'none');
         });
-        map.setLayoutProperty(stage_infos.filter(function(info) { return info.id.toString() === currentStageId })[0].name, 'visibility', 'visible');
+        map.setLayoutProperty(currentStageName, 'visibility', 'visible');
       });
     }
 
@@ -56,7 +58,7 @@ $(document).on("turbolinks:load", function() {
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: stage_infos.map(function(info) { return info.name })
+        popupLayers: _.map(stage_infos, 'name')
       });
 
       if(map.loaded()) {
