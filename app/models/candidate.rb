@@ -66,14 +66,16 @@ class Candidate < ApplicationRecord
   end
 
 
-  before_create do |cand|
+  before_create :ensure_candidate_has_stage
+
+
+  private 
+
+  def ensure_candidate_has_stage(cand)
     unless cand.stage.present?
       cand.stage = organization.potential_stage
     end
   end
-
-
-  private 
 
   def self.by_default_stage(stage)
     joins(:stage).merge(Stage.where(default_stage_mapping: stage))
