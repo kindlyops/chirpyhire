@@ -13,7 +13,7 @@ $(document).on("turbolinks:load", function() {
 				$.post({
 					url: "/stages/reorder",
 					data: JSON.stringify(getOrderData()),
-					contentType: "application/text; charset=utf-8"
+					contentType: "application/json"
 				});
 			});
 		},
