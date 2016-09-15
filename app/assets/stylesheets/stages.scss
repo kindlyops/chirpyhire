@@ -32,12 +32,6 @@
 				cursor: move;
 			}
 
-			// Some copied from survey, can refactor
-			border: 1px solid $light-gray;
-			box-shadow: 1px 1px $light-gray;
-			cursor: move;
-			border-radius: 3px;
-
 			&:hover, &:focus {
 			  background-color: #f3f3f3;
 			}
@@ -50,12 +44,6 @@
 
 	.new-stage-wrapper {
 		width: 100%;
-
-		// Some copied from survey, can refactor
-		border: 1px solid $light-gray;
-		box-shadow: 1px 1px $light-gray;
-		cursor: move;
-		border-radius: 3px;
 
 		#new_stage {
 			width: 75%;
