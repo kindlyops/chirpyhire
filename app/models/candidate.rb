@@ -1,5 +1,6 @@
 class Candidate < ApplicationRecord
   include PublicActivity::Model
+  include Filterable
   tracked only: [:create, :update], on: {
     update: ->(model,_) { model.changes.include?("status") }
   }, properties: ->(_, model) { { status: model.status } }
@@ -28,8 +29,19 @@ class Candidate < ApplicationRecord
   end
 
   def self.status(status)
-    return self unless status.present?
     where(status: status)
+  end
+
+  def self.created_in(created_in)
+    period = {
+      "Past 24 Hours" => 24.hours.ago,
+      "Past Week" => 1.week.ago,
+      "Past Month" => 1.month.ago,
+      "All Time" => DateTime.new(2016, 02, 01)
+    }[created_in]
+    return self unless period.present?
+
+    where("candidates.created_at > ?", period)
   end
 
   def self.hired

@@ -5,6 +5,7 @@
     .dropdown
       select.status name="status"
         = options_for_select(Candidate::STATUSES, cookies.fetch(:candidate_status_filter, "Qualified"))
+      = select_tag "created_in", options_for_select(["Past 24 Hours", "Past Week", "Past Month", "All Time"], cookies.fetch(:candidate_created_in_filter, "Past Week"))
     .button-group
       label
         i.fa.fa-th-large.button-group-item selected=true

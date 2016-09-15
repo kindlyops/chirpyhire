@@ -123,6 +123,16 @@ RSpec.feature "Candidates", type: :feature, js: true do
 
           expect(page).to have_text(candidate.phone_number.phony_formatted)
         end
+
+        context "with a qualified candidate created a month ago" do
+          let!(:old_qualified_candidate) { create(:candidate, organization: account.organization, status: "Qualified", created_at: 1.month.ago) }
+
+          it "only shows candidates from the past week by default" do
+            visit candidates_path
+
+            expect(page).not_to have_text(old_qualified_candidate.phone_number.phony_formatted)
+          end
+        end
       end
 
       context "Bad Fit" do
