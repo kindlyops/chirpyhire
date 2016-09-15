@@ -13,17 +13,8 @@ $(document).on("turbolinks:load", function() {
 				$.post({
 					url: "/stages/reorder",
 					data: JSON.stringify(getOrderData()),
-					contentType: "application/json; charset=utf-8"
+					contentType: "application/text; charset=utf-8"
 				});
-			});
-			wrapper.find(".delete-stage").on("click", function(e) {
-				var stage = $(this);
-				if(!stage.hasClass("disabled")) {
-					$.ajax({
-						url: "/stages/" + stage.attr("data-id"),
-						type: "DELETE"
-					})
-				}
 			});
 		},
 		setupSorting = function() {
@@ -40,16 +31,11 @@ $(document).on("turbolinks:load", function() {
 							draggedNumber = draggedDiv.textContent;
 						draggedDiv.textContent = relatedDiv.textContent;
 						relatedDiv.textContent = draggedNumber;
-					},
-					onUpdate: function(e) {
-						var $questions = $(e.to);
-						// TODO JLW POST
-						console.log(e);
 					}
 				});
 			};
 		};
 
-	bindUI()
-	setupSorting()
+	bindUI();
+	setupSorting();
 });

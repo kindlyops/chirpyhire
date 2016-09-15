@@ -26,9 +26,9 @@ class StagesController < ApplicationController
 
   def destroy
     if authorize(Stage.find(params[:id])).destroy
-      redirect_to stages_url, turbolinks: true, notice: "Nice! Stage deleted."
+      redirect_to stages_url, notice: "Nice! Stage deleted."
     else
-      redirect_to stages_url, turbolinks: true, alert: "Oops! We were unable to delete your stage."
+      redirect_to stages_url, alert: "Oops! We were unable to delete your stage."
     end
   end
 

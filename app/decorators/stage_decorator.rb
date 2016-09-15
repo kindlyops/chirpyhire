@@ -14,8 +14,11 @@ class StageDecorator < Draper::Decorator
       end
 
     "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order'>#{order}.</span> #{name}</div></div>\
-     <button class='delete-stage #{delete_button_tipsy_class} #{delete_button_disabled_class}' title='#{delete_button_title}' data-id='#{id}'>\
+     <a class='delete-stage button #{delete_button_tipsy_class} #{delete_button_disabled_class}' \
+        href='stages/delete/#{id}' \
+        data-turbolinks='false' \
+        title='#{delete_button_title}'>\
        <i class='fa fa-trash-o'></i>\
-     </button>".html_safe
+     </a>".html_safe
   end
 end
