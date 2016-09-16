@@ -15,50 +15,54 @@ class SubscriptionsController < ApplicationController
   end
 
   def update
-    @subscription = authorized_subscription
+    with_payment_error_handling(:edit) do
+      @subscription = authorized_subscription
 
-    if @subscription.update(permitted_attributes(Subscription))
-      Payment::Subscriptions::Update.call(@subscription)
-      SurveyAdvancer.call(current_organization)
+      if @subscription.update(permitted_attributes(Subscription))
+        Payment::Subscriptions::Update.call(@subscription)
+        SurveyAdvancer.call(current_organization)
 
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
-    else
-      render :edit
+        redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
+      else
+        render :edit
+      end
     end
-  rescue Payment::CardError => e
-    flash[:alert] = payment_error_message(e)
-    render :edit
   end
 
   def create
-    @subscription = authorized_subscription
+    with_payment_error_handling(:new) do
+      @subscription = authorized_subscription
 
-    if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
-      current_organization.update(stripe_token: params[:stripe_token])
-      Payment::Subscriptions::Process.call(@subscription, current_account.email)
-      @subscription.activate!
-      SurveyAdvancer.call(current_organization)
+      if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
+        current_organization.update(stripe_token: params[:stripe_token])
+        Payment::Subscriptions::Process.call(@subscription, current_account.email)
+        @subscription.activate!
+        SurveyAdvancer.call(current_organization)
 
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
-    else
-      render :new
+        redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
+      else
+        render :new
+      end
     end
-  rescue Payment::CardError => e
-    flash[:alert] = payment_error_message(e)
-    render :new
   end
 
   def destroy
-    @subscription = authorized_subscription
-    Payment::Subscriptions::Cancel.call(@subscription)
-    @subscription.cancel!
-    redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
-  rescue Payment::CardError => e
-    flash[:alert] = payment_error_message(e)
-    render :edit
+    with_payment_error_handling(:edit) do
+      @subscription = authorized_subscription
+      Payment::Subscriptions::Cancel.call(@subscription)
+      @subscription.cancel!
+      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
+    end
   end
 
   private
+
+  def with_payment_error_handling(action)
+    yield
+  rescue Payment::CardError => e
+    flash[:alert] = error.message
+    render action
+  end
 
   def payment_error_message(error)
     <<-ERROR
