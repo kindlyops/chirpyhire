@@ -7,7 +7,6 @@ RSpec.describe AnswerHandlerJob do
   let(:fake_message) { FakeMessaging.inbound_message(sender, sender.organization, "test body", format: :text) }
   let(:message_sid) { fake_message.sid }
   let(:message) { create(:message, user: sender, sid: message_sid) }
-  let(:mock_message_handler) { double("message_handler") }
 
   describe "#perform" do
     before(:each) do 
