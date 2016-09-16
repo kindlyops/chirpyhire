@@ -23,7 +23,7 @@ class MessageHandler
       message
     rescue Twilio::REST::RequestError => e
       Rollbar.log(e, "Twilio message not found", { organization_id: @sender.organization_id })
-      MessageHandlerJob.perform_in(30.seconds, @sender, @message_sid)
+      MessageHandlerJob.perform_later(@sender, @message_sid)
     end
   end
 

@@ -31,10 +31,24 @@ class FakeMessaging
     end
   end
 
+  NonExistentMessage = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid) do
+    def num_media
+      raise Twilio::REST::RequestError, "I don't exist."
+    end
+
+    def media_urls
+      raise Twilio::REST::RequestError, "I don't exist."
+    end
+
+    def address
+      raise Twilio::REST::RequestError, "I don't exist."
+    end
+  end
+
   cattr_accessor :messages
   self.messages = []
 
-  def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
+  def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image, exists: true)
     body = format == :text ? body : ""
 
     new("foo", "bar").create(
@@ -42,7 +56,8 @@ class FakeMessaging
       to: organization.phone_number,
       body: body,
       direction: "inbound",
-      format: format
+      format: format,
+      exists: exists
     )
   end
 
@@ -61,14 +76,18 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, direction: "outbound-api", format: :image)
+  def create(from:, to:, body:, direction: "outbound-api", format: :image, exists:)
     if format == :text
       media = Media.new([])
     elsif format == :image
       media = Media.new([MediaInstance.new("image/jpeg", "/example/path/to/image.png")])
     end
 
-    message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
+    if exists
+      message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
+    else
+      message = NonExistentMessage.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
+    end
     self.class.messages << message
     message
   end
