@@ -1,7 +1,8 @@
 class MessageHandler
 
-  def self.call(sender, message_sid)
-    new(sender, message_sid).call
+  def initialize(sender, message_sid)
+    @sender = sender
+    @message_sid = message_sid
   end
 
   def call
@@ -24,11 +25,6 @@ class MessageHandler
       Rollbar.log(e, "Twilio message not found", { organization_id: @sender.organization_id })
       MessageHandlerJob.perform_in(30.seconds, @sender, @message_sid)
     end
-  end
-
-  def initialize(sender, message_sid)
-    @sender = sender
-    @message_sid = message_sid
   end
 
   private
