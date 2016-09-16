@@ -15,30 +15,26 @@ class SubscriptionsController < ApplicationController
   end
 
   def update
-    with_payment_error_handling(:edit) do
-      @subscription = authorized_subscription
+    @subscription = authorized_subscription
 
-      if Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
-        SurveyAdvancer.call(current_organization)
+    if successfully_updated_subscription?
+      SurveyAdvancer.call(current_organization)
 
-        redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
-      else
-        render :edit
-      end
+      redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
+    else
+      render :edit
     end
   end
 
   def create
-    with_payment_error_handling(:new) do
-      @subscription = authorized_subscription
+    @subscription = authorized_subscription
 
-      if Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
-        SurveyAdvancer.call(current_organization)
+    if successfully_created_subscription?
+      SurveyAdvancer.call(current_organization)
 
-        redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
-      else
-        render :new
-      end
+      redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
+    else
+      render :new
     end
   end
 
@@ -50,11 +46,18 @@ class SubscriptionsController < ApplicationController
 
   private
 
-  def with_payment_error_handling(action)
-    yield
+  def successfully_updated_subscription?
+    Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
   rescue Payment::CardError => e
     flash[:alert] = e.message
-    render action
+    render :edit
+  end
+
+  def successfully_created_subscription?
+    Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
+  rescue Payment::CardError => e
+    flash[:alert] = e.message
+    render :new
   end
 
   def payment_error_message(error)
