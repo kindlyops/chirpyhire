@@ -50,14 +50,14 @@ class SubscriptionsController < ApplicationController
     Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
   rescue Payment::CardError => e
     flash[:alert] = e.message
-    render :edit
+    false
   end
 
   def successfully_created_subscription?
     Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
   rescue Payment::CardError => e
     flash[:alert] = e.message
-    render :new
+    false
   end
 
   def payment_error_message(error)
