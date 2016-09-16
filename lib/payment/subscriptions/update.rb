@@ -9,7 +9,7 @@ class Payment::Subscriptions::Update
   end
 
   def call
-    stripe_subscription.quantity = attributes["quantity"]
+    stripe_subscription.quantity = attributes[:quantity]
     stripe_subscription.save
     subscription.update!(attributes)
   rescue Stripe::CardError => e

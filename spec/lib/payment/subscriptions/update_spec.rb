@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Payment::Subscriptions::Update do
-  subject { Payment::Subscriptions::Update.new(subscription, "quantity" => 2) }
+  subject { Payment::Subscriptions::Update.new(subscription, quantity: 2) }
 
   let!(:stripe_plan) { Stripe::Plan.create(id: "test", amount: 5_000, currency: "usd", interval: "month", name: "test") }
 
