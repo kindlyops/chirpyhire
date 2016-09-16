@@ -76,7 +76,7 @@ class FakeMessaging
     self.class.messages.find {|message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, direction: "outbound-api", format: :image, exists:)
+  def create(from:, to:, body:, direction: "outbound-api", format: :image, exists: true)
     if format == :text
       media = Media.new([])
     elsif format == :image

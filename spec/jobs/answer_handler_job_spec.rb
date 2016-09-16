@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'mock_helper'
 
 RSpec.describe AnswerHandlerJob do
   let(:sender) { create(:user) }
@@ -6,16 +7,18 @@ RSpec.describe AnswerHandlerJob do
   let(:fake_message) { FakeMessaging.inbound_message(sender, sender.organization, "test body", format: :text) }
   let(:message_sid) { fake_message.sid }
   let(:message) { create(:message, user: sender, sid: message_sid) }
+  let(:mock_message_handler) { double("message_handler") }
 
   describe "#perform" do
+    before(:each) do 
+      Mock.message_handler(sender, message)
+    end
+
     it "handles the message" do
-      expect(MessageHandler).to receive(:call).with(sender, message_sid).and_return(message)
       AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
 
     it "handles the answer" do
-      allow(MessageHandler).to receive(:call).with(sender, message_sid).and_return(message)
-
       expect(AnswerHandler).to receive(:call).with(sender, inquiry, message)
       AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
@@ -30,3 +33,4 @@ RSpec.describe AnswerHandlerJob do
     end
   end
 end
+
