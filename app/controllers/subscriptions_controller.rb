@@ -32,10 +32,7 @@ class SubscriptionsController < ApplicationController
     with_payment_error_handling(:new) do
       @subscription = authorized_subscription
 
-      if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
-        current_organization.update(stripe_token: params[:stripe_token])
-        Payment::Subscriptions::Process.call(@subscription, current_account.email)
-        @subscription.activate!
+      if Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
         SurveyAdvancer.call(current_organization)
 
         redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
@@ -48,7 +45,6 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription = authorized_subscription
     Payment::Subscriptions::Cancel.call(@subscription)
-    @subscription.cancel!
     redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
   end
 

@@ -54,13 +54,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
         context "not testing the Process Service" do
           before(:each) do
-            allow(Payment::Subscriptions::Process).to receive(:call)
-          end
-
-          it "sets the stripe token on the organization" do
-            expect {
-              post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-            }.to change{organization.reload.stripe_token}.from(nil).to(stripe_token)
+            allow(Payment::Subscriptions::Process).to receive(:call).and_return(true)
           end
 
           it "does not create a new subscription" do
@@ -78,12 +72,6 @@ RSpec.describe SubscriptionsController, type: :controller do
             post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
 
             expect(response).to redirect_to(subscription_path(subscription))
-          end
-
-          it "activates the subscription" do
-            expect {
-              post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-            }.to change{subscription.reload.state}.from("trialing").to("active")
           end
 
           it "calls the SurveyAdvancer service" do
@@ -133,17 +121,6 @@ RSpec.describe SubscriptionsController, type: :controller do
             post :create, params: {subscription: invalid_attributes}
           }.not_to change{subscription.reload.state}
         end
-
-        it "does not set the stripe token on the organization" do
-          expect {
-            post :create, params: {subscription: invalid_attributes}
-          }.not_to change{organization.reload.stripe_token}
-        end
-
-        it "does not call the Process Service" do
-          expect(Payment::Subscriptions::Process).not_to receive(:call)
-          post :create, params: {subscription: invalid_attributes}
-        end
       end
     end
 
@@ -155,12 +132,6 @@ RSpec.describe SubscriptionsController, type: :controller do
         post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
 
         expect(response).to redirect_to(edit_subscription_path(subscription))
-      end
-
-      it "does not set the stripe token on the organization" do
-        expect {
-          post :create, params: {stripe_token: stripe_token, subscription: valid_attributes}
-        }.not_to change{organization.reload.stripe_token}
       end
 
       it "does not call the Process Service" do
@@ -235,12 +206,6 @@ RSpec.describe SubscriptionsController, type: :controller do
     context "not testing the Cancel Service" do
       before(:each) do
         allow(Payment::Subscriptions::Cancel).to receive(:call).with(subscription)
-      end
-
-      it "cancels the requested subscription" do
-        expect {
-          delete :destroy, params: {id: subscription.to_param}
-        }.to change{subscription.reload.state}.from("active").to("canceled")
       end
 
       it "redirects to the subscriptions edit subscription" do
