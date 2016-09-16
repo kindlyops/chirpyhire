@@ -69,39 +69,43 @@ class Organization < ApplicationRecord
   # There should only ever be one of each default type for 
   # and organization
   def bad_fit_stage
-    stages.default_bad_fit.first
+    stages.bad_fit.first
   end
   
   def potential_stage
-    stages.default_potential.first
+    stages.potential.first
   end
 
   def qualified_stage
-    stages.default_qualified.first
+    stages.qualified.first
   end
 
   def hired_stage
-    stages.default_hired.first
+    stages.hired.first
   end
 
 
   def bad_fit_candidate_activities
-    candidate_activities.for_stage_id(self.bad_fit_stage.id)
+    candidate_activities.for_stage(self.bad_fit_stage)
   end
 
   def potential_candidate_activities
-    candidate_activities.for_stage_id(self.potential_stage.id)
+    candidate_activities.for_stage(self.potential_stage)
   end
 
   def qualified_candidate_activities
-    candidate_activities.for_stage_id(self.qualified_stage.id)
+    candidate_activities.for_stage(self.qualified_stage)
   end
 
   def hired_candidate_activities
-    candidate_activities.for_stage_id(self.hired_stage.id)
+    candidate_activities.for_stage(self.hired_stage)
   end
 
-  def reorder_stages(stage_order_info)
+  def default_display_stage
+    qualified_stage
+  end
+
+  def reorder_stages(stages_with_order)
     Organization.transaction do
       # To avoid Unique Key errors when updating sequentially
       # we set all values to their negative in a transaction
@@ -109,7 +113,7 @@ class Organization < ApplicationRecord
         stage.order *= -1
         stage.save!
       end
-      stage_order_info.each do |info|
+      stages_with_order.each do |info|
         stage = Stage.find(info[:id])
         stage.order = info[:order]
         stage.save!

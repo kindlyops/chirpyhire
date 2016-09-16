@@ -51,12 +51,8 @@
   }
 
   .survey--question-label {
-    border: 1px solid $light-gray;
     padding: 1.5em;
     margin-left: 1em;
-    box-shadow: 1px 1px $light-gray;
-    cursor: move;
-    border-radius: 3px;
 
     &:hover, &:focus {
       background-color: #f3f3f3;

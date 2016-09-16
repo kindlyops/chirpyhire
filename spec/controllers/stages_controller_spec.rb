@@ -20,21 +20,27 @@ RSpec.describe StagesController, type: :controller do
     let!(:delete_me_stage) { create(:stage, organization: organization, name: "delete_me", order: 5)}
 
     it "can create a stage" do
-      get :create, params: { new_stage: "Test stage" }
-      expect(organization.stages.count).to eq(6)
+      expect {
+        get :create, params: { new_stage: "Test stage" }
+      }.to change{organization.stages.count}.from(5).to(6)
       expect(organization.stages.last.name).to eq("Test stage")
     end
 
     it "can not create a stage with the same name" do
-      get :create, params: { new_stage: "Potential" }
-      expect(organization.stages.count).to eq(5)
-      expect(response.request.env["rack.session"]["flash"]["flashes"]["alert"]).to have_text("Oops")
+      expect {
+        get :create, params: { new_stage: "Potential" }
+      }.not_to change{organization.stages.count}
+    end
+
+    it "notifies the user if a stage has the same name" do
+        get :create, params: { new_stage: "Potential" }
+        expect(flash[:alert]).to have_text("Oops")
     end
 
     it "can delete stage" do
-      expect(organization.stages.count).to eq(5)
-      get :destroy, params: {id: delete_me_stage.id}
-      expect(organization.stages.count).to eq(4)
+      expect {
+        get :destroy, params: {id: delete_me_stage.id}
+      }.to change{organization.stages.count}.by(-1)
     end
   end
 end

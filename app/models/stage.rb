@@ -14,26 +14,6 @@ class Stage < ApplicationRecord
     order(:order)
   end
 
-  def self.by_default(stage)
-    where(default_stage_mapping: stage)
-  end
-
-  def self.default_potential
-    self.by_default(Stage::POTENTIAL)
-  end
-
-  def self.default_qualified
-    self.by_default(Stage::QUALIFIED)
-  end
-
-  def self.default_bad_fit
-    self.by_default(Stage::BAD_FIT)
-  end
-
-  def self.default_hired
-    self.by_default(Stage::HIRED)
-  end
-
   def self.defaults(organization_id = nil)
     [
       Stage.new(organization_id: organization_id, name: "Potential", order: 1, default_stage_mapping: @@default_stage_mapping[:potential]),
@@ -46,16 +26,6 @@ class Stage < ApplicationRecord
   private
   
   after_destroy do |stage|
-    reset_orders(stage.organization_id)
-  end
-
-  def reset_orders(organization_id) 
-    stages = Organization.find(organization_id).stages.ordered
-    Stage.transaction do
-      stages.each_with_index do |stage, index|
-        stage.order = index + 1
-        stage.save!
-      end
-    end
+    StageHelper.reset_orders(stage.organization_id)
   end
 end

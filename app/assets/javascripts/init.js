@@ -5,10 +5,10 @@ $(window).load(function() {
 		className= "tipsy-font",
 		options = {className: className, delayIn: delay, delayOut: delay, fade: true}; 
 	$(".tipsy-needed").tipsy(options);
-	options.gravity = 'w'
+	options.gravity = 'w';
 	$(".tipsy-needed-w").tipsy(options);
-	options.gravity = 'e'
+	options.gravity = 'e';
 	$(".tipsy-needed-e").tipsy(options);
-	options.gravity = 's'
+	options.gravity = 's';
 	$(".tipsy-needed-s").tipsy(options);
-})
+});

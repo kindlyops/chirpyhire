@@ -1,11 +1,11 @@
 $(document).on("turbolinks:load", function() {
 	var wrapper = $(".stages-wrapper"),
 		getOrderData = function() {
-			var mapped_stages = wrapper.find(".stage").map(function(i) {
+			var stagesWithOrder = wrapper.find(".stage").map(function(i) {
 				return { id: $(this).attr("data-id"), order: i + 1}
 			}).toArray();
 			return { 
-				stages: mapped_stages
+				stages_with_order: stagesWithOrder
 			};
 		},
 		bindUI = function() {

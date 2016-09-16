@@ -1,10 +1,11 @@
 class StagePolicy < ApplicationPolicy
+
   def create?
     true
   end
 
   def destroy?
-    show?
+    @record.default_stage_mapping.nil? && @record.candidates.empty?
   end
 
   class Scope < ApplicationPolicy::Scope
