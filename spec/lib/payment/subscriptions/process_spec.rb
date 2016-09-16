@@ -50,6 +50,40 @@ RSpec.describe Payment::Subscriptions::Process do
         expect(stripe_customer.description).to eq(organization.name)
         expect(stripe_customer.email).to eq(email)
       end
+
+      context "with an invalid credit card", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer-desc-email-invalid-card" } do
+
+        let(:card) do
+          {
+            number: "4000000000000002",
+            exp_month: "8",
+            exp_year: 1.year.from_now.year,
+            cvc: "123"
+          }
+        end
+
+        it "raises the Payment::CardError" do
+          expect{
+            subject.call
+          }.to raise_error(Payment::CardError)
+        end
+
+        it "does not set the stripe customer id on the organization" do
+          expect{
+            expect{
+              subject.call
+            }.to raise_error(Payment::CardError)
+          }.not_to change{organization.reload.stripe_customer_id}
+        end
+
+        it "does not set the stripe id on the subscription" do
+          expect{
+            expect{
+              subject.call
+            }.to raise_error(Payment::CardError)
+          }.not_to change{subscription.reload.stripe_id}
+        end
+      end
     end
 
     context "with an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-with-stripe-customer" } do

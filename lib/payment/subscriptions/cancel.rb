@@ -9,8 +9,6 @@ class Payment::Subscriptions::Cancel
 
   def call
     stripe_subscription.delete
-  rescue Stripe::CardError => e
-    raise Payment::CardError.new(e)
   end
 
   private

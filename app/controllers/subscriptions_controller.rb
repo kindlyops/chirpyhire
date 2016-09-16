@@ -18,8 +18,7 @@ class SubscriptionsController < ApplicationController
     with_payment_error_handling(:edit) do
       @subscription = authorized_subscription
 
-      if @subscription.update(permitted_attributes(Subscription))
-        Payment::Subscriptions::Update.call(@subscription)
+      if Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
         SurveyAdvancer.call(current_organization)
 
         redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
@@ -47,12 +46,10 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    with_payment_error_handling(:edit) do
-      @subscription = authorized_subscription
-      Payment::Subscriptions::Cancel.call(@subscription)
-      @subscription.cancel!
-      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
-    end
+    @subscription = authorized_subscription
+    Payment::Subscriptions::Cancel.call(@subscription)
+    @subscription.cancel!
+    redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
   end
 
   private
@@ -60,7 +57,7 @@ class SubscriptionsController < ApplicationController
   def with_payment_error_handling(action)
     yield
   rescue Payment::CardError => e
-    flash[:alert] = error.message
+    flash[:alert] = e.message
     render action
   end
 
