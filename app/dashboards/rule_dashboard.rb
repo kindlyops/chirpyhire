@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class RuleDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -14,7 +15,7 @@ class RuleDashboard < Administrate::BaseDashboard
     trigger: Field::String,
     enabled: Field::Boolean,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,7 +27,7 @@ class RuleDashboard < Administrate::BaseDashboard
     :organization,
     :actionable,
     :id,
-    :trigger,
+    :trigger
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -38,7 +39,7 @@ class RuleDashboard < Administrate::BaseDashboard
     :trigger,
     :enabled,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -48,7 +49,7 @@ class RuleDashboard < Administrate::BaseDashboard
     :organization,
     :actionable,
     :trigger,
-    :enabled,
+    :enabled
   ].freeze
 
   # Overwrite this method to customize how rules are displayed

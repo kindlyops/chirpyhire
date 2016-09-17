@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe SubscriptionPolicy do
-  subject { SubscriptionPolicy.new(organization, subscription) }
+  subject { described_class.new(organization, subscription) }
 
   let(:subscription) { create(:subscription) }
   let(:organization) { subscription.organization }
@@ -20,7 +21,7 @@ RSpec.describe SubscriptionPolicy do
   it { should permit_action(:destroy) }
   it { should permit_action(:show) }
 
-  context "subscription does not belong to the organization" do
+  context 'subscription does not belong to the organization' do
     let(:organization) { create(:organization) }
 
     it 'excludes subscription in resolved scope' do

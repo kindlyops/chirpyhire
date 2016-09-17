@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :address_question_option do
     distance { Faker::Number.number(2) }

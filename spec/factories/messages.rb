@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :message do
-    direction { "inbound" }
+    direction { 'inbound' }
     sid { Faker::Number.number(10) }
     association :user, :with_candidate
 
@@ -11,7 +12,7 @@ FactoryGirl.define do
     end
 
     trait :with_address do
-      body "4059 Mt Lee Dr 90068"
+      body '4059 Mt Lee Dr 90068'
     end
 
     after(:create) do |message|

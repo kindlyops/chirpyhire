@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RemovesMessageableColumns < ActiveRecord::Migration[5.0]
   def up
     remove_column :messages, :messageable_type, :string

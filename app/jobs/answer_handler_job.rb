@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AnswerHandlerJob < ApplicationJob
   def perform(sender, inquiry, message_sid)
     @sender = sender

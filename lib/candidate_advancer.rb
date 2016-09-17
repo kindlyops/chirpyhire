@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class CandidateAdvancer
-
   def self.call(user)
     new(user).call
   end
@@ -14,13 +14,13 @@ class CandidateAdvancer
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)
     elsif last_question.rejects?(candidate)
-      candidate.update(status: "Bad Fit")
+      candidate.update(status: 'Bad Fit')
       send_bad_fit_notification
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      candidate.update(status: "Qualified")
-      AutomatonJob.perform_later(user, "screen")
+      candidate.update(status: 'Qualified')
+      AutomatonJob.perform_later(user, 'screen')
     end
   end
 

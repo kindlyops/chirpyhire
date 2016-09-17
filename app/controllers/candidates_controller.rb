@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_STATUS_FILTER = "Qualified"
-  DEFAULT_CREATED_IN_FILTER = "Past Week"
+  DEFAULT_STATUS_FILTER = 'Qualified'
+  DEFAULT_CREATED_IN_FILTER = 'Past Week'
 
   def show
     @candidate = authorized_candidate

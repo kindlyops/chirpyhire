@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Sms::ReferralsController < Sms::BaseController
-
   def create
     if referrer.present?
       referrer.refer(candidate)
@@ -14,7 +14,7 @@ class Sms::ReferralsController < Sms::BaseController
   private
 
   def vcard
-    @vcard ||= Vcard.new(url: params["MediaUrl0"])
+    @vcard ||= Vcard.new(url: params['MediaUrl0'])
   end
 
   def thanks

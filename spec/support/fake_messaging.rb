@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 class FakeMessaging
   MediaInstance = Struct.new(:content_type, :uri) do
-    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)
+    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze
 
     def image?
       IMAGE_TYPES.include?(content_type)
@@ -35,13 +36,13 @@ class FakeMessaging
   self.messages = []
 
   def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
-    body = format == :text ? body : ""
+    body = format == :text ? body : ''
 
-    new("foo", "bar").create(
+    new('foo', 'bar').create(
       from: sender.phone_number,
       to: organization.phone_number,
       body: body,
-      direction: "inbound",
+      direction: 'inbound',
       format: format
     )
   end
@@ -58,14 +59,14 @@ class FakeMessaging
   end
 
   def get(sid)
-    self.class.messages.find {|message| message.sid == sid }
+    self.class.messages.find { |message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, direction: "outbound-api", format: :image)
+  def create(from:, to:, body:, direction: 'outbound-api', format: :image)
     if format == :text
       media = Media.new([])
     elsif format == :image
-      media = Media.new([MediaInstance.new("image/jpeg", "/example/path/to/image.png")])
+      media = Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
     end
 
     message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))

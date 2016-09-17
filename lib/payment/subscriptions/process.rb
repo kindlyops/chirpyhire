@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Payment::Subscriptions::Process
-
   def self.call(subscription, email)
     new(subscription, email).call
   end

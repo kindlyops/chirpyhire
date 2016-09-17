@@ -1,4 +1,5 @@
+# frozen_string_literal: true
 class Actionable < ApplicationRecord
-  TYPES = %w(TemplateActionable SurveyActionable)
-  validates_inclusion_of :type, in: TYPES
+  TYPES = %w(TemplateActionable SurveyActionable).freeze
+  validates :type, inclusion: { in: TYPES }
 end

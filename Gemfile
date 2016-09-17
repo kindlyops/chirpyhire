@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 
 ruby '2.3.1'
@@ -33,13 +34,15 @@ group :test do
   gem 'capybara', '~> 2.7.0'
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'capybara-email', git: "git@github.com:DockYard/capybara-email.git", ref: "c30c5f0"
+  gem 'capybara-email', git: 'git@github.com:DockYard/capybara-email.git', ref: 'c30c5f0'
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'poltergeist', '~> 1.10.0'
   gem 'rails-controller-testing'
   gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'rubocop', '~> 0.42.0'
+  gem 'rubocop-rspec'
 end
 
 group :development do

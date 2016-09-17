@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class AddressQuestionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -18,7 +19,7 @@ class AddressQuestionDashboard < Administrate::BaseDashboard
     type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    label: Field::String,
+    label: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -30,7 +31,7 @@ class AddressQuestionDashboard < Administrate::BaseDashboard
     :survey,
     :inquiries,
     :address_question_option,
-    :id,
+    :id
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -46,7 +47,7 @@ class AddressQuestionDashboard < Administrate::BaseDashboard
     :type,
     :created_at,
     :updated_at,
-    :label,
+    :label
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -60,7 +61,7 @@ class AddressQuestionDashboard < Administrate::BaseDashboard
     :status,
     :priority,
     :type,
-    :label,
+    :label
   ].freeze
 
   # Overwrite this method to customize how address questions are displayed

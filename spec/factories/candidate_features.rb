@@ -1,19 +1,19 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :candidate_feature do
     candidate
     sequence(:label) { |n| "label#{n}" }
 
     trait :address do
-      properties {
-        { city: "Atlanta",
+      properties do
+        { city: 'Atlanta',
           address: Faker::Address.street_address,
-          country: "USA",
+          country: 'USA',
           latitude:  rand(33.624972..34.109784),
           longitude:  rand(-84.633424..-84.144741),
           postal_code: Faker::Address.zip_code,
-          child_class: "address"
-        }
-      }
+          child_class: 'address' }
+      end
     end
 
     transient do
@@ -28,8 +28,8 @@ FactoryGirl.define do
       end
 
       if evaluator.latitude && evaluator.longitude
-        candidate_feature["properties"]["latitude"] = evaluator.latitude
-        candidate_feature["properties"]["longitude"] = evaluator.longitude
+        candidate_feature['properties']['latitude'] = evaluator.latitude
+        candidate_feature['properties']['longitude'] = evaluator.longitude
       end
     end
   end

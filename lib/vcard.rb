@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Vcard
-
   def initialize(url:)
     @url = url
   end

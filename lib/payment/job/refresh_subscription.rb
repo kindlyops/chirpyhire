@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Payment::Job::RefreshSubscription < ApplicationJob
   def perform(stripe_id)
     subscription = Subscription.find_by!(stripe_id: stripe_id)

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SessionsController < Devise::SessionsController
   after_action :prepare_intercom_shutdown, only: [:destroy]
   before_action :intercom_shutdown, only: [:new]

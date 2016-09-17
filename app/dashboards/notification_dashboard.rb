@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class NotificationDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -12,7 +13,7 @@ class NotificationDashboard < Administrate::BaseDashboard
     template: Field::BelongsTo,
     id: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -24,7 +25,7 @@ class NotificationDashboard < Administrate::BaseDashboard
     :message,
     :template,
     :id,
-    :created_at,
+    :created_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -34,7 +35,7 @@ class NotificationDashboard < Administrate::BaseDashboard
     :template,
     :id,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -42,7 +43,7 @@ class NotificationDashboard < Administrate::BaseDashboard
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
     :message,
-    :template,
+    :template
   ].freeze
 
   # Overwrite this method to customize how notifications are displayed

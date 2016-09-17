@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RemovesPolymorphicAction < ActiveRecord::Migration[5.0]
   def change
     remove_column :rules, :action_type, :string

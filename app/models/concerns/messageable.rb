@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Messageable
   extend ActiveSupport::Concern
 
@@ -15,9 +16,9 @@ module Messageable
 
   def sender
     @sender ||= begin
-      if direction == "outbound-api"
+      if direction == 'outbound-api'
         organization
-      elsif direction == "inbound"
+      elsif direction == 'inbound'
         user
       end
     end
@@ -25,9 +26,9 @@ module Messageable
 
   def recipient
     @recipient ||= begin
-      if direction == "outbound-api"
+      if direction == 'outbound-api'
         user
-      elsif direction == "inbound"
+      elsif direction == 'inbound'
         organization
       end
     end

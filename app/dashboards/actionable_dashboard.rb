@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class ActionableDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -11,7 +12,7 @@ class ActionableDashboard < Administrate::BaseDashboard
     id: Field::Number,
     type: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -23,7 +24,7 @@ class ActionableDashboard < Administrate::BaseDashboard
     :id,
     :type,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -32,14 +33,14 @@ class ActionableDashboard < Administrate::BaseDashboard
     :id,
     :type,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = [
-    :type,
+    :type
   ].freeze
 
   # Overwrite this method to customize how actionables are displayed

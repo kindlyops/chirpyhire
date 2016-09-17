@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class MediaInstanceDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -14,7 +15,7 @@ class MediaInstanceDashboard < Administrate::BaseDashboard
     content_type: Field::String,
     uri: Field::Text,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -26,7 +27,7 @@ class MediaInstanceDashboard < Administrate::BaseDashboard
     :message,
     :id,
     :sid,
-    :content_type,
+    :content_type
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -38,7 +39,7 @@ class MediaInstanceDashboard < Administrate::BaseDashboard
     :content_type,
     :uri,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -48,7 +49,7 @@ class MediaInstanceDashboard < Administrate::BaseDashboard
     :message,
     :sid,
     :content_type,
-    :uri,
+    :uri
   ].freeze
 
   # Overwrite this method to customize how media instances are displayed

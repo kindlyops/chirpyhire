@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class PaperTrail::VersionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -15,7 +16,7 @@ class PaperTrail::VersionDashboard < Administrate::BaseDashboard
     whodunnit: Field::String,
     object: Field::String.with_options(searchable: false),
     transaction_id: Field::Number,
-    created_at: Field::DateTime,
+    created_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +28,7 @@ class PaperTrail::VersionDashboard < Administrate::BaseDashboard
     :item,
     :version_associations,
     :id,
-    :event,
+    :event
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,7 +41,7 @@ class PaperTrail::VersionDashboard < Administrate::BaseDashboard
     :whodunnit,
     :object,
     :transaction_id,
-    :created_at,
+    :created_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -52,7 +53,7 @@ class PaperTrail::VersionDashboard < Administrate::BaseDashboard
     :event,
     :whodunnit,
     :object,
-    :transaction_id,
+    :transaction_id
   ].freeze
 
   # Overwrite this method to customize how versions are displayed

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :question do
     survey
@@ -7,11 +8,11 @@ FactoryGirl.define do
     text { Faker::Lorem.sentence }
 
     trait :document do
-      type "DocumentQuestion"
+      type 'DocumentQuestion'
     end
 
     trait :choice do
-      type "ChoiceQuestion"
+      type 'ChoiceQuestion'
 
       after(:create) do |question|
         create(:choice_question_option, choice_question: ChoiceQuestion.find(question.id))

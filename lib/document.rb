@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Document
   delegate :label, to: :feature
 
@@ -6,11 +7,11 @@ class Document
   end
 
   def first_page
-    feature.properties["url0"]
+    feature.properties['url0']
   end
 
   def uris
-    feature.properties.select {|k,_| k["url"] }.values
+    feature.properties.select { |k, _| k['url'] }.values
   end
 
   def additional_uris

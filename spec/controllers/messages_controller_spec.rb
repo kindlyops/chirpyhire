@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
@@ -5,7 +6,7 @@ RSpec.describe MessagesController, type: :controller do
   let(:account) { organization.accounts.first }
   let(:user) { account.user }
 
-  before(:each) do
+  before do
     sign_in(account)
   end
 
@@ -13,22 +14,22 @@ RSpec.describe MessagesController, type: :controller do
     { user_id: user.id }
   end
 
-  describe "#index" do
-    it "is OK" do
+  describe '#index' do
+    it 'is OK' do
       get :index, params: params
       expect(response).to be_ok
     end
 
-    context "when user has unread messages" do
+    context 'when user has unread messages' do
       let(:user) { create(:user, organization: organization, has_unread_messages: true) }
-      it "marks the user as not having unread messages" do
-        expect {
+      it 'marks the user as not having unread messages' do
+        expect do
           get :index, params: { user_id: user.id }
-        }.to change{user.reload.has_unread_messages?}.from(true).to(false)
+        end.to change { user.reload.has_unread_messages? }.from(true).to(false)
       end
     end
 
-    context "with messages" do
+    context 'with messages' do
       it "returns the user's messages" do
         messages = create_list(:message, 3, user: user)
 
@@ -36,17 +37,17 @@ RSpec.describe MessagesController, type: :controller do
         expect(assigns(:messages)).to match_array(messages)
       end
 
-      context "order" do
+      context 'order' do
         let!(:old_message) { create(:message, id: 10, user: user) }
         let!(:recent_message) { create(:message, id: 11, user: user) }
 
-        it "sorts by ID desc" do
+        it 'sorts by ID desc' do
           get :index, params: params
           expect(assigns(:messages)).to eq([recent_message, old_message])
         end
       end
 
-      context "with other users on the same organization" do
+      context 'with other users on the same organization' do
         let(:user) { create(:user, organization: organization) }
         let!(:other_messages) { create_list(:message, 2, user: user) }
 
@@ -56,7 +57,7 @@ RSpec.describe MessagesController, type: :controller do
         end
       end
 
-      context "with other organizations" do
+      context 'with other organizations' do
         let!(:other_messages) { create_list(:message, 2) }
         it "does not return the other organization's messages" do
           get :index, params: params
@@ -66,7 +67,7 @@ RSpec.describe MessagesController, type: :controller do
     end
   end
 
-  describe "#create" do
+  describe '#create' do
     let(:message_params) do
       {
         user_id: user.id,
@@ -76,46 +77,46 @@ RSpec.describe MessagesController, type: :controller do
       }
     end
 
-    context "with a user" do
-      context "subscribed" do
+    context 'with a user' do
+      context 'subscribed' do
         let(:user) { create(:user, subscribed: true, organization: organization) }
 
-        it "provides a helpful message" do
+        it 'provides a helpful message' do
           post :create, params: message_params
-          expect(flash[:notice]).to eq("Message sent!")
+          expect(flash[:notice]).to eq('Message sent!')
         end
 
-        it "creates a new message" do
-          expect {
+        it 'creates a new message' do
+          expect do
             post :create, params: message_params
-          }.to change{user.messages.count}.by(1)
+          end.to change { user.messages.count }.by(1)
         end
 
-        it "sends the message" do
-          expect {
+        it 'sends the message' do
+          expect do
             post :create, params: message_params
-          }.to change{FakeMessaging.messages.count}.by(1)
+          end.to change { FakeMessaging.messages.count }.by(1)
         end
       end
 
-      context "unsubscribed" do
+      context 'unsubscribed' do
         let(:user) { create(:user, subscribed: false, organization: organization) }
 
-        it "provides a helpful alert message" do
+        it 'provides a helpful alert message' do
           post :create, params: message_params
           expect(flash[:alert]).to eq("Unfortunately they are unsubscribed! You can't text unsubscribed candidates using Chirpyhire.")
         end
 
-        it "does not create a new message" do
-          expect {
+        it 'does not create a new message' do
+          expect do
             post :create, params: message_params
-          }.not_to change{user.messages.count}
+          end.not_to change { user.messages.count }
         end
 
-        it "does not send the message" do
-          expect {
+        it 'does not send the message' do
+          expect do
             post :create, params: message_params
-          }.not_to change{FakeMessaging.messages.count}
+          end.not_to change { FakeMessaging.messages.count }
         end
       end
     end

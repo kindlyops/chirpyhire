@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddressQuestion < Question
   has_one :address_question_option, foreign_key: :question_id, inverse_of: :address_question
   accepts_nested_attributes_for :address_question_option, reject_if: :all_blank, allow_destroy: true
@@ -13,7 +14,7 @@ class AddressQuestion < Question
       postal_code: address.postal_code,
       country: address.country,
       city: address.city,
-      child_class: "address"
+      child_class: 'address'
     }
   end
 

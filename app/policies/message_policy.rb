@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MessagePolicy < ApplicationPolicy
   def create?
     return unless organization.present? && record.user.subscribed?

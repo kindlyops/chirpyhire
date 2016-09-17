@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class AnswerValidator
-
   def initialize(answer)
     @answer = answer
   end
@@ -8,8 +8,8 @@ class AnswerValidator
     unless inquiry.question_type == format
       answer.errors.add(:inquiry, "expected #{inquiry.question_type} but received #{format}")
 
-      if inquiry.question_type == "AddressQuestion" && AddressFinder.new(message.body).naive_match?
-        Rollbar.debug("Unable to find naive address", id: message.id, body: message.body)
+      if inquiry.question_type == 'AddressQuestion' && AddressFinder.new(message.body).naive_match?
+        Rollbar.debug('Unable to find naive address', id: message.id, body: message.body)
       end
     end
   end

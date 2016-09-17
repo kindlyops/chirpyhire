@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Payment::Subscriptions::Refresh
   def self.call(subscription)
     new(subscription).call

@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Automaton
-
   def self.call(user, trigger)
     new(user, trigger).call
   end

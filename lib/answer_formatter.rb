@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AnswerFormatter
   def initialize(answer, inquiry)
     @answer = answer
@@ -5,11 +6,11 @@ class AnswerFormatter
   end
 
   def format
-    return "DocumentQuestion" if message.has_images?
-    return "AddressQuestion" if message.has_address?
-    return "YesNoQuestion" if message.has_yes_or_no?
-    return "ChoiceQuestion" if message.has_choice?(choices)
-    "Unknown Format"
+    return 'DocumentQuestion' if message.has_images?
+    return 'AddressQuestion' if message.has_address?
+    return 'YesNoQuestion' if message.has_yes_or_no?
+    return 'ChoiceQuestion' if message.has_choice?(choices)
+    'Unknown Format'
   end
 
   private
@@ -18,7 +19,7 @@ class AnswerFormatter
 
   def choice_question
     @choice_question ||= begin
-      if inquiry.question_type == "ChoiceQuestion"
+      if inquiry.question_type == 'ChoiceQuestion'
         question = inquiry.question
         choice_question = question.becomes(question.type.constantize)
         choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)

@@ -1,24 +1,25 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe UserPolicy do
-  subject { UserPolicy.new(organization, user) }
+  subject { described_class.new(organization, user) }
 
   let!(:user) { create(:user) }
 
   let(:resolved_scope) { UserPolicy::Scope.new(organization, User.all).resolve }
 
-  context "being a visitor" do
+  context 'being a visitor' do
     let(:organization) { nil }
 
-    it "raises a NotAuthorizedError" do
-      expect {
+    it 'raises a NotAuthorizedError' do
+      expect do
         subject
-      }.to raise_error(Pundit::NotAuthorizedError)
+      end.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
-  context "having an organization" do
-    context "user does not belong to the organization" do
+  context 'having an organization' do
+    context 'user does not belong to the organization' do
       let(:organization) { create(:organization) }
 
       it { should forbid_new_and_create_actions }
@@ -31,7 +32,7 @@ RSpec.describe UserPolicy do
       end
     end
 
-    context "user belongs to organization" do
+    context 'user belongs to organization' do
       let(:organization) { user.organization }
 
       it { should forbid_new_and_create_actions }

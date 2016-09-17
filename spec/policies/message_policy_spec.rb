@@ -1,27 +1,28 @@
+# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe MessagePolicy do
-  subject { MessagePolicy.new(organization, message) }
+  subject { described_class.new(organization, message) }
 
   let(:message) { create(:message) }
 
   let(:resolved_scope) { MessagePolicy::Scope.new(organization, Message.all).resolve }
 
-  context "being a visitor" do
+  context 'being a visitor' do
     let(:organization) { nil }
 
-    it "raises a NotAuthorizedError" do
-      expect {
+    it 'raises a NotAuthorizedError' do
+      expect do
         subject
-      }.to raise_error(Pundit::NotAuthorizedError)
+      end.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
-  context "having an organization" do
+  context 'having an organization' do
     let(:organization) { create(:organization) }
     let(:recipient) { message.user }
 
-    context "message does not belong to the organization" do
+    context 'message does not belong to the organization' do
       it 'excludes message in resolved scope' do
         expect(resolved_scope).not_to include(message)
       end
@@ -32,7 +33,7 @@ RSpec.describe MessagePolicy do
       it { should forbid_action(:show) }
     end
 
-    context "message belongs to the organization" do
+    context 'message belongs to the organization' do
       let(:organization) { message.organization }
 
       it 'includes message in resolved scope' do
@@ -42,8 +43,8 @@ RSpec.describe MessagePolicy do
       it { should permit_mass_assignment_of(:body) }
       it { should forbid_new_and_create_actions }
 
-      context "recipient is subscribed" do
-        before(:each) do
+      context 'recipient is subscribed' do
+        before do
           message.user.update(subscribed: true)
         end
 

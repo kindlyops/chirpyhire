@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class GeoJson::Candidates
   include ActionView::Helpers::DateHelper
   def initialize(candidates)
@@ -5,10 +6,9 @@ class GeoJson::Candidates
   end
 
   def call
-    { type: "FeatureCollection",
+    { type: 'FeatureCollection',
       features: features,
-      statuses: Candidate::STATUSES
-    }
+      statuses: Candidate::STATUSES }
   end
 
   private
@@ -23,13 +23,13 @@ class GeoJson::Candidates
     return unless candidate.address.present?
 
     {
-      type: "Feature",
+      type: 'Feature',
       properties: {
         description: description(candidate),
         status: candidate.status
       },
       geometry: {
-        type: "Point",
+        type: 'Point',
         coordinates: [longitude(candidate), latitude(candidate)]
       }
     }

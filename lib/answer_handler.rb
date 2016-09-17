@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class AnswerHandler
-
   def self.call(sender, inquiry, message)
     new(sender, inquiry, message).call
   end
@@ -7,7 +7,7 @@ class AnswerHandler
   def call
     if inquiry.unanswered? && answer.valid?
       update_or_create_candidate_feature
-      AutomatonJob.perform_later(sender, "answer")
+      AutomatonJob.perform_later(sender, 'answer')
     end
   end
 

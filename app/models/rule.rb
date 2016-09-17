@@ -1,11 +1,10 @@
+# frozen_string_literal: true
 class Rule < ApplicationRecord
-  TRIGGERS = %w(subscribe screen answer)
+  TRIGGERS = %w(subscribe screen answer).freeze
   belongs_to :organization
   belongs_to :actionable
 
-  def perform(user)
-    actionable.perform(user)
-  end
+  delegate :perform, to: :actionable
 
   def actionable
     super.becomes(super.type.constantize)

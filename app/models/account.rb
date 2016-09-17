@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Account < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,7 +19,7 @@ class Account < ApplicationRecord
     super if invitation_token.nil?
   end
 
-  def self.accept_invitation!(attributes={})
+  def self.accept_invitation!(attributes = {})
     original_token = attributes.delete(:invitation_token)
     invitable = find_by_invitation_token(original_token, false)
     if invitable.errors.empty?

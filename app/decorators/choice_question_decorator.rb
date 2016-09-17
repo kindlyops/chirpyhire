@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 class ChoiceQuestionDecorator < Draper::Decorator
   delegate_all
 
   def label_placeholder
-    "Availability"
+    'Availability'
   end
 
   def text_placeholder
-    "What is your availability?"
+    'What is your availability?'
   end
 end

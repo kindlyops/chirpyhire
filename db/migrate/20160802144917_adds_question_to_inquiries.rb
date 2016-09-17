@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class AddsQuestionToInquiries < ActiveRecord::Migration[5.0]
   def change
     remove_reference :inquiries, :questions

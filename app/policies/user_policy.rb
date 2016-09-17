@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UserPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve

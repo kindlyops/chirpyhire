@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TemplatePolicy < ApplicationPolicy
   def update?
     show?

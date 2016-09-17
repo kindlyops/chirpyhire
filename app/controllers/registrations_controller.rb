@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RegistrationsController < Devise::RegistrationsController
   before_action :fetch_address, only: :create
 
@@ -7,7 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
     organization.build_location
     set_minimum_password_length
     yield resource if block_given?
-    respond_with self.resource
+    respond_with resource
   end
 
   def create
@@ -17,16 +18,14 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def user
-    self.resource.build_user
+    resource.build_user
   end
 
   def sign_up_params
     allow = [:email, :password, :password_confirmation, :agreed_to_terms,
-      [user_attributes: [:phone_number, :name,
-       organization_attributes: [:name,
-       location_attributes: [:full_street_address, :latitude, :longitude, :city, :state, :state_code, :postal_code, :country, :country_code
-       ]]]]
-    ]
+             [user_attributes: [:phone_number, :name,
+                                organization_attributes: [:name,
+                                                          location_attributes: [:full_street_address, :latitude, :longitude, :city, :state, :state_code, :postal_code, :country, :country_code]]]]]
     params.require(resource_name).permit(allow)
   end
 
@@ -47,7 +46,7 @@ class RegistrationsController < Devise::RegistrationsController
       render :new
     end
   rescue Geocoder::OverQueryLimitError
-    Rollbar.debug($!.message)
+    Rollbar.debug($ERROR_INFO.message)
     flash[:alert] = "Sorry but we're a little overloaded right now and can't find addresses. Please try again in a few minutes."
     render :new
   end

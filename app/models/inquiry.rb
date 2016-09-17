@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Inquiry < ApplicationRecord
   include Messageable
   belongs_to :question
@@ -15,4 +16,3 @@ class Inquiry < ApplicationRecord
     answer.blank?
   end
 end
-

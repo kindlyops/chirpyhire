@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UserDecorator < Draper::Decorator
   delegate_all
   decorates_association :candidate
@@ -6,7 +7,7 @@ class UserDecorator < Draper::Decorator
     if object.phone_number
       object.phone_number.phony_formatted
     else
-      ""
+      ''
     end
   end
 

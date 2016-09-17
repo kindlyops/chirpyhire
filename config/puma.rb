@@ -1,1 +1,2 @@
-plugin "heroku"
+# frozen_string_literal: true
+plugin 'heroku'

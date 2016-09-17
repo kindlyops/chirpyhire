@@ -1,15 +1,14 @@
+# frozen_string_literal: true
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/email/rspec'
 require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(app, :inspector => true)
+  Capybara::Poltergeist::Driver.new(app, inspector: true)
 end
 
-Capybara::Webkit.configure do |config|
-  config.allow_unknown_urls
-end
+Capybara::Webkit.configure(&:allow_unknown_urls)
 
 Capybara.javascript_driver = :poltergeist
 Capybara.server_port = 3001

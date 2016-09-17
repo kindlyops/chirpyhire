@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
@@ -30,8 +31,8 @@ class ApplicationController < ActionController::Base
   def user_not_authorized(exception)
     policy_name = exception.policy.class.to_s.underscore
 
-    flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
-    redirect_to(request.referrer || root_path)
+    flash[:error] = t "#{policy_name}.#{exception.query}", scope: 'pundit', default: :default
+    redirect_to(request.referer || root_path)
   end
 
   def block_invalid_subscriptions

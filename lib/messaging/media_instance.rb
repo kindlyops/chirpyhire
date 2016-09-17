@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 module Messaging
   class MediaInstance
-    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)
+    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze
 
     def initialize(media_instance)
       @media_instance = media_instance

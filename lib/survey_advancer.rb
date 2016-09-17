@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class SurveyAdvancer
-
   def self.call(organization)
     new(organization).call
   end
@@ -19,6 +19,6 @@ class SurveyAdvancer
   attr_reader :organization
 
   def potential_candidates
-    @potential_candidates ||= organization.candidates.where(status: "Potential")
+    @potential_candidates ||= organization.candidates.where(status: 'Potential')
   end
 end

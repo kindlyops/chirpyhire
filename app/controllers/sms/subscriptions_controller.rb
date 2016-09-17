@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Sms::SubscriptionsController < Sms::BaseController
-
   def create
     handle_incoming_message
 
@@ -9,7 +9,7 @@ class Sms::SubscriptionsController < Sms::BaseController
       ApplicationRecord.transaction do
         sender.update(subscribed: true)
         ensure_candidate
-        AutomatonJob.perform_later(sender, "subscribe")
+        AutomatonJob.perform_later(sender, 'subscribe')
       end
     end
     head :ok
@@ -29,7 +29,7 @@ class Sms::SubscriptionsController < Sms::BaseController
   private
 
   def handle_incoming_message
-    MessageHandlerJob.perform_later(sender, params["MessageSid"])
+    MessageHandlerJob.perform_later(sender, params['MessageSid'])
   end
 
   def already_subscribed

@@ -1,17 +1,18 @@
+# frozen_string_literal: true
 namespace :subscriptions do
-  desc "Migrates subscription flag status from candidates to users."
-  task :migrate, [:update] => [:environment] do |task, args|
+  desc 'Migrates subscription flag status from candidates to users.'
+  task :migrate, [:update] => [:environment] do |_task, args|
     if args.update
-      puts "update=true passed"
-      puts "starting in 5 seconds"
+      puts 'update=true passed'
+      puts 'starting in 5 seconds'
       sleep(1)
-      puts "starting in 4 seconds"
+      puts 'starting in 4 seconds'
       sleep(1)
-      puts "starting in 3 seconds"
+      puts 'starting in 3 seconds'
       sleep(1)
-      puts "starting in 2 seconds"
+      puts 'starting in 2 seconds'
       sleep(1)
-      puts "starting in 1 seconds"
+      puts 'starting in 1 seconds'
       sleep(1)
 
       changes = 0
@@ -29,16 +30,16 @@ namespace :subscriptions do
 
       puts "Made #{changes} changes to user subscription statuses"
     else
-      puts "update=false dry run"
-      puts "starting in 5 seconds"
+      puts 'update=false dry run'
+      puts 'starting in 5 seconds'
       sleep(1)
-      puts "starting in 4 seconds"
+      puts 'starting in 4 seconds'
       sleep(1)
-      puts "starting in 3 seconds"
+      puts 'starting in 3 seconds'
       sleep(1)
-      puts "starting in 2 seconds"
+      puts 'starting in 2 seconds'
       sleep(1)
-      puts "starting in 1 seconds"
+      puts 'starting in 1 seconds'
       sleep(1)
 
       changes = 0

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class UnknownMessageHandler
   def self.call(sender, message_sid)
     new(sender, message_sid).call

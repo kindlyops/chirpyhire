@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class InvitationsController < Devise::InvitationsController
   before_action :add_user_params, only: :update
 
@@ -18,7 +19,7 @@ class InvitationsController < Devise::InvitationsController
     super.merge(user_attributes: { organization: organization })
   end
 
-  def after_invite_path_for(inviter)
+  def after_invite_path_for(_inviter)
     survey_path
   end
 

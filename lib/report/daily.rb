@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class Report::Daily
-
   def initialize(recipient, date: Date.current)
     @recipient = recipient
     @date = date

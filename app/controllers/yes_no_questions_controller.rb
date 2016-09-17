@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class YesNoQuestionsController < QuestionsController
   private
 
@@ -10,6 +11,6 @@ class YesNoQuestionsController < QuestionsController
   end
 
   def built_question_params
-    super.merge(type: "YesNoQuestion")
+    super.merge(type: 'YesNoQuestion')
   end
 end

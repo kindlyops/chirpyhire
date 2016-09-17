@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class CandidateFeatureDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +14,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
     properties: Field::String.with_options(searchable: false),
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    label: Field::String,
+    label: Field::String
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +26,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
     :candidate,
     :id,
     :properties,
-    :created_at,
+    :created_at
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +37,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
     :properties,
     :created_at,
     :updated_at,
-    :label,
+    :label
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -45,7 +46,7 @@ class CandidateFeatureDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :candidate,
     :properties,
-    :label,
+    :label
   ].freeze
 
   # Overwrite this method to customize how candidate features are displayed

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Constraint
   class Answer
     def matches?(request)
@@ -26,11 +27,11 @@ module Constraint
     end
 
     def to
-      request.request_parameters["To"]
+      request.request_parameters['To']
     end
 
     def from
-      request.request_parameters["From"]
+      request.request_parameters['From']
     end
   end
 end

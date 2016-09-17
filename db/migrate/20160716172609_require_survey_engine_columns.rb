@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class RequireSurveyEngineColumns < ActiveRecord::Migration[5.0]
   def change
     change_column :candidate_features, :category_id, :integer, null: false

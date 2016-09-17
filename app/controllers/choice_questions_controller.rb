@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class ChoiceQuestionsController < QuestionsController
-
   private
 
   def permitted_question_attributes
@@ -11,8 +11,8 @@ class ChoiceQuestionsController < QuestionsController
   end
 
   def built_question_params
-    super.merge(type: "ChoiceQuestion", choice_question_options_attributes: [
-      {letter: "a"}, {letter: "b"}
-    ])
+    super.merge(type: 'ChoiceQuestion', choice_question_options_attributes: [
+                  { letter: 'a' }, { letter: 'b' }
+                ])
   end
 end

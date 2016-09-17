@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class IntercomSyncer
-
   def initialize(organization)
     @organization = organization
   end

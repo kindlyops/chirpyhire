@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Messaging
   class Client
     cattr_accessor :client

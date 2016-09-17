@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Map
   def initialize(organization)
     @organization = organization

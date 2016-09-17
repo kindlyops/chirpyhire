@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'sidekiq/web'
 Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 
@@ -5,7 +6,7 @@ Rails.application.routes.draw do
   resource :health, only: :show
 
   resources :candidates, only: [:index, :update, :show]
-  get "messages" => "conversations#index"
+  get 'messages' => 'conversations#index'
 
   resources :users, only: [] do
     resources :messages, only: [:index, :create], shallow: true
@@ -33,9 +34,9 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/stripe/events'
 
-  devise_for :accounts, controllers: {sessions: 'sessions', registrations: 'registrations', invitations: 'invitations'}
+  devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
 
-  authenticate :account, lambda { |a| a.super_admin? } do
+  authenticate :account, ->(a) { a.super_admin? } do
     mount Sidekiq::Web => '/sidekiq'
     namespace :admin do
       resources :accounts
@@ -65,7 +66,7 @@ Rails.application.routes.draw do
       resources :templates
       resources :users
 
-      root to: "accounts#index"
+      root to: 'accounts#index'
     end
   end
 

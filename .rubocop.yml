@@ -1,0 +1,3 @@
+Rails:
+  Enabled: true
+require: rubocop-rspec

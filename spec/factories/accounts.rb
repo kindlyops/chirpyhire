@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 FactoryGirl.define do
   factory :account do
     user
     email { Faker::Internet.email }
-    password "password"
-    password_confirmation "password"
+    password 'password'
+    password_confirmation 'password'
 
     trait :with_subscription do
       after(:create) do |account|

@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class AccountDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -29,7 +30,7 @@ class AccountDashboard < Administrate::BaseDashboard
     invitation_sent_at: Field::DateTime,
     invitation_accepted_at: Field::DateTime,
     invitation_limit: Field::Number,
-    invitations_count: Field::Number,
+    invitations_count: Field::Number
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -41,7 +42,7 @@ class AccountDashboard < Administrate::BaseDashboard
     :invited_by,
     :user,
     :id,
-    :email,
+    :email
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -68,7 +69,7 @@ class AccountDashboard < Administrate::BaseDashboard
     :invitation_sent_at,
     :invitation_accepted_at,
     :invitation_limit,
-    :invitations_count,
+    :invitations_count
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -93,7 +94,7 @@ class AccountDashboard < Administrate::BaseDashboard
     :invitation_sent_at,
     :invitation_accepted_at,
     :invitation_limit,
-    :invitations_count,
+    :invitations_count
   ].freeze
 
   # Overwrite this method to customize how accounts are displayed

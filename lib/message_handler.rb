@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class MessageHandler
-
   def self.call(sender, message_sid)
     new(sender, message_sid).call
   end

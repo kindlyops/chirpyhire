@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 class Candidate < ApplicationRecord
   include PublicActivity::Model
   include Filterable
   tracked only: [:create, :update], on: {
-    update: ->(model,_) { model.changes.include?("status") }
+    update: ->(model, _) { model.changes.include?('status') }
   }, properties: ->(_, model) { { status: model.status } }
 
   belongs_to :user
@@ -11,9 +12,9 @@ class Candidate < ApplicationRecord
   has_many :referrers, through: :referrals
   has_many :activities, as: :trackable
 
-  alias :features :candidate_features
+  alias features candidate_features
 
-  STATUSES = ["Potential", "Qualified", "Bad Fit", "Hired"]
+  STATUSES = ['Potential', 'Qualified', 'Bad Fit', 'Hired'].freeze
   validates :status, inclusion: { in: STATUSES }
 
   delegate :first_name, :phone_number, :organization_name,
@@ -34,30 +35,30 @@ class Candidate < ApplicationRecord
 
   def self.created_in(created_in)
     period = {
-      "Past 24 Hours" => 24.hours.ago,
-      "Past Week" => 1.week.ago,
-      "Past Month" => 1.month.ago,
-      "All Time" => DateTime.new(2016, 02, 01)
+      'Past 24 Hours' => 24.hours.ago,
+      'Past Week' => 1.week.ago,
+      'Past Month' => 1.month.ago,
+      'All Time' => DateTime.new(2016, 0o2, 0o1)
     }[created_in]
     return self unless period.present?
 
-    where("candidates.created_at > ?", period)
+    where('candidates.created_at > ?', period)
   end
 
   def self.hired
-    where(status: "Hired")
+    where(status: 'Hired')
   end
 
   def self.qualified
-    where(status: "Qualified")
+    where(status: 'Qualified')
   end
 
   def self.potential
-    where(status: "Potential")
+    where(status: 'Potential')
   end
 
   def self.bad_fit
-    where(status: "Bad Fit")
+    where(status: 'Bad Fit')
   end
 
   def address
@@ -66,34 +67,34 @@ class Candidate < ApplicationRecord
   end
 
   def address_feature
-    candidate_features.where("properties->>'child_class' = ?", "address").first
+    candidate_features.where("properties->>'child_class' = ?", 'address').first
   end
 
   def choice_features
-    candidate_features.where("properties->>'child_class' = ?", "choice")
+    candidate_features.where("properties->>'child_class' = ?", 'choice')
   end
 
   def document_features
-    candidate_features.where("properties->>'child_class' = ?", "document")
+    candidate_features.where("properties->>'child_class' = ?", 'document')
   end
 
   def yes_no_features
-    candidate_features.where("properties->>'child_class' = ?", "yes_no")
+    candidate_features.where("properties->>'child_class' = ?", 'yes_no')
   end
 
   def qualified?
-    status == "Qualified"
+    status == 'Qualified'
   end
 
   def bad_fit?
-    status == "Bad Fit"
+    status == 'Bad Fit'
   end
 
   def potential?
-    status == "Potential"
+    status == 'Potential'
   end
 
   def hired?
-    status == "Hired"
+    status == 'Hired'
   end
 end

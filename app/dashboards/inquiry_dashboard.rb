@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class InquiryDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +14,7 @@ class InquiryDashboard < Administrate::BaseDashboard
     answer: Field::HasOne,
     id: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +26,7 @@ class InquiryDashboard < Administrate::BaseDashboard
     :message,
     :question,
     :answer,
-    :id,
+    :id
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +37,7 @@ class InquiryDashboard < Administrate::BaseDashboard
     :answer,
     :id,
     :created_at,
-    :updated_at,
+    :updated_at
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -45,7 +46,7 @@ class InquiryDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :message,
     :question,
-    :answer,
+    :answer
   ].freeze
 
   # Overwrite this method to customize how inquiries are displayed

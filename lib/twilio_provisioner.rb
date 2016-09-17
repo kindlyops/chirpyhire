@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 class TwilioProvisioner
-
   def self.call(organization)
     new(organization).call
   end
@@ -14,12 +14,13 @@ class TwilioProvisioner
     sub_account.incoming_phone_numbers.create(
       phone_number: available_local_phone_number,
       voice_url: nil,
-      sms_url: "#{ENV.fetch("TWILIO_WEBHOOK_BASE")}/twilio/text",
+      sms_url: "#{ENV.fetch('TWILIO_WEBHOOK_BASE')}/twilio/text",
       capabilities: {
         voice: false,
         sms: true,
         mms: true
-    })
+      }
+    )
     organization.update(update_params)
   end
 
@@ -36,7 +37,7 @@ class TwilioProvisioner
   end
 
   def available_local_phone_numbers
-    @available_local_phone_numbers ||= sub_account.available_phone_numbers.get('US').local.list(near_lat_long: "#{location.latitude},#{location.longitude}", in_region: "#{location.state}")
+    @available_local_phone_numbers ||= sub_account.available_phone_numbers.get('US').local.list(near_lat_long: "#{location.latitude},#{location.longitude}", in_region: location.state.to_s)
   end
 
   def available_local_phone_number
@@ -53,5 +54,4 @@ class TwilioProvisioner
   attr_reader :organization
 
   delegate :location, to: :organization
-
 end

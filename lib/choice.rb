@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Choice
   delegate :label, to: :feature
   def initialize(feature)

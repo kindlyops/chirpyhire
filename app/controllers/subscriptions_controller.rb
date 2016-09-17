@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SubscriptionsController < ApplicationController
   skip_before_action :block_invalid_subscriptions
   before_action :ensure_new_subscription, only: [:new, :create]
@@ -20,7 +21,7 @@ class SubscriptionsController < ApplicationController
     if @subscription.update(permitted_attributes(Subscription))
       Payment::Job::UpdateSubscription.perform_later(@subscription)
 
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
+      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription changed.'
     else
       render :edit
     end
@@ -33,7 +34,7 @@ class SubscriptionsController < ApplicationController
       current_organization.update(stripe_token: params[:stripe_token])
       @subscription.activate!
       Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
+      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription created.'
     else
       render :new
     end
@@ -43,7 +44,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorized_subscription
     if @subscription.cancel!
       Payment::Job::CancelSubscription.perform_later(@subscription)
-      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
+      redirect_to subscription_path(@subscription), notice: 'Sorry to see you go. Your account is canceled.'
     else
       render :edit
     end

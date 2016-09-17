@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DocumentQuestionsController < QuestionsController
   private
 
@@ -10,6 +11,6 @@ class DocumentQuestionsController < QuestionsController
   end
 
   def built_question_params
-    super.merge(type: "DocumentQuestion")
+    super.merge(type: 'DocumentQuestion')
   end
 end

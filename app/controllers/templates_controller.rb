@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class TemplatesController < ApplicationController
   decorates_assigned :template
 
@@ -5,7 +6,7 @@ class TemplatesController < ApplicationController
     @template = authorized_template
 
     if @template.update(permitted_attributes(Template))
-      redirect_to survey_path, notice: "Nice! Template saved."
+      redirect_to survey_path, notice: 'Nice! Template saved.'
     else
       render :edit
     end

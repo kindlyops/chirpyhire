@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -64,25 +65,24 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
   config.cache_store = :dalli_store,
-                      (ENV["MEMCACHIER_SERVERS"] || "").split(","),
-                      {:username => ENV["MEMCACHIER_USERNAME"],
-                       :password => ENV["MEMCACHIER_PASSWORD"],
-                       :failover => true,
-                       :socket_timeout => 1.5,
-                       :socket_failure_delay => 0.2
-                      }
+                       (ENV['MEMCACHIER_SERVERS'] || '').split(','),
+                       { username: ENV['MEMCACHIER_USERNAME'],
+                         password: ENV['MEMCACHIER_PASSWORD'],
+                         failover: true,
+                         socket_timeout: 1.5,
+                         socket_failure_delay: 0.2 }
 
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS"),
+    address: ENV.fetch('SMTP_ADDRESS'),
     authentication: :plain,
-    domain: ENV.fetch("SMTP_DOMAIN"),
+    domain: ENV.fetch('SMTP_DOMAIN'),
     enable_starttls_auto: true,
-    password: ENV.fetch("SMTP_PASSWORD"),
-    port: "587",
-    user_name: ENV.fetch("SMTP_USERNAME")
+    password: ENV.fetch('SMTP_PASSWORD'),
+    port: '587',
+    user_name: ENV.fetch('SMTP_USERNAME')
   }
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: ENV["SMTP_HOST"] }
+  config.action_mailer.default_url_options = { host: ENV['SMTP_HOST'] }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

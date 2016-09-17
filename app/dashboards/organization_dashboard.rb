@@ -1,4 +1,5 @@
-require "administrate/base_dashboard"
+# frozen_string_literal: true
+require 'administrate/base_dashboard'
 
 class OrganizationDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -25,7 +26,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     time_zone: Field::String,
-    onboarding_status: Field::Number,
+    onboarding_status: Field::Number
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -37,7 +38,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :users,
     :candidates,
     :referrers,
-    :accounts,
+    :accounts
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -60,7 +61,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :time_zone,
-    :onboarding_status,
+    :onboarding_status
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -81,7 +82,7 @@ class OrganizationDashboard < Administrate::BaseDashboard
     :twilio_auth_token,
     :phone_number,
     :time_zone,
-    :onboarding_status,
+    :onboarding_status
   ].freeze
 
   # Overwrite this method to customize how organizations are displayed
