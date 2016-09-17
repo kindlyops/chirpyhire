@@ -1,6 +1,10 @@
 # frozen_string_literal: true
-class Payment::Job::CancelSubscription < ApplicationJob
-  def perform(subscription)
-    Payment::Subscriptions::Cancel.call(subscription)
+module Payment
+  module Job
+    class CancelSubscription < ApplicationJob
+      def perform(subscription)
+        Payment::Subscriptions::Cancel.call(subscription)
+      end
+    end
   end
 end

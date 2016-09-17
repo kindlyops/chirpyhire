@@ -14,13 +14,11 @@ class CandidateAdvancer
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)
     elsif last_question.rejects?(candidate)
-      candidate.update(status: 'Bad Fit')
-      send_bad_fit_notification
+      mark_as_bad_fit
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
     else
-      candidate.update(status: 'Qualified')
-      AutomatonJob.perform_later(user, 'screen')
+      qualify_candidate
     end
   end
 
@@ -47,10 +45,22 @@ class CandidateAdvancer
   end
 
   def initial_message
-    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n#{next_unasked_question.formatted_text}"
+    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n"\
+    "#{next_unasked_question.formatted_text}"
   end
 
   def subscription_notice
-    "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
+    'If you ever wish to stop receiving text messages from '\
+    "#{organization.name} just reply STOP."
+  end
+
+  def mark_as_bad_fit
+    candidate.update(status: 'Bad Fit')
+    send_bad_fit_notification
+  end
+
+  def qualify_candidate
+    candidate.update(status: 'Qualified')
+    AutomatonJob.perform_later(user, 'screen')
   end
 end

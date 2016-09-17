@@ -4,7 +4,8 @@ class Subscription < ApplicationRecord
   belongs_to :plan
   belongs_to :organization
 
-  validates :plan, :trial_message_limit, :organization, :state, presence: { on: :create }
+  validates :plan, :trial_message_limit, :organization, :state,
+            presence: { on: :create }
 
   delegate :stripe_id, :name, :price, to: :plan, prefix: true
 
@@ -27,22 +28,7 @@ class Subscription < ApplicationRecord
   end
 
   def refresh(stripe_subscription:)
-    update(
-      application_fee_percent: stripe_subscription.application_fee_percent,
-      cancel_at_period_end:    stripe_subscription.cancel_at_period_end,
-      canceled_at:             stripe_timestamp(stripe_subscription.canceled_at),
-      stripe_created_at:       stripe_timestamp(stripe_subscription.created),
-      current_period_end:      stripe_timestamp(stripe_subscription.current_period_end),
-      current_period_start:    stripe_timestamp(stripe_subscription.current_period_start),
-      stripe_customer_id:      stripe_subscription.customer,
-      ended_at:                stripe_timestamp(stripe_subscription.ended_at),
-      quantity:                stripe_subscription.quantity,
-      start:                   stripe_timestamp(stripe_subscription.start),
-      status:                  stripe_subscription.status,
-      tax_percent:             stripe_subscription.tax_percent,
-      trial_end:               stripe_timestamp(stripe_subscription.trial_end),
-      trial_start:             stripe_timestamp(stripe_subscription.trial_start)
-    )
+    update(stripe_properties(stripe_subscription))
   end
 
   def over_message_limit?
@@ -79,6 +65,34 @@ class Subscription < ApplicationRecord
   end
 
   private
+
+  def stripe_properties(stripe_subscription)
+    formatted_timestamps(stripe_subscription).merge(
+      application_fee_percent: stripe_subscription.application_fee_percent,
+      cancel_at_period_end:    stripe_subscription.cancel_at_period_end,
+      stripe_created_at:       stripe_timestamp(stripe_subscription.created),
+      stripe_customer_id:      stripe_subscription.customer,
+      quantity:                stripe_subscription.quantity,
+      status:                  stripe_subscription.status,
+      tax_percent:             stripe_subscription.tax_percent
+    )
+  end
+
+  def formatted_timestamps(stripe_subscription)
+    stripe_timestamps.each_with_object({}) do |timestamp, attributes|
+      formatted = stripe_timestamp(stripe_subscription.send(timestamp))
+      attributes[timestamp] = formatted
+    end
+  end
+
+  def stripe_timestamps
+    %i(current_period_end
+       current_period_start
+       ended_at
+       start
+       trial_end
+       trial_start)
+  end
 
   def stripe_timestamp(unix_timestamp)
     return unless unix_timestamp.present?

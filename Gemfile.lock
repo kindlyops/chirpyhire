@@ -350,8 +350,6 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rspec (1.7.0)
-      rubocop (>= 0.42.0)
     ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
@@ -482,7 +480,6 @@ DEPENDENCIES
   rollbar (~> 2.11.5)
   rspec-rails (~> 3.5.1)
   rubocop (~> 0.42.0)
-  rubocop-rspec
   sass-rails (~> 5.0.5)
   shoulda-matchers (~> 2.8.0)
   sidekiq (~> 4.0.0)

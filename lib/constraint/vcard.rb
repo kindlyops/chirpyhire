@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 module Constraint
   class Vcard
-    MEDIA_TYPES = %w(text/vcard text/directory text/x-vcard text/directory;profile=vCard).freeze
+    MEDIA_TYPES = %w(text/vcard
+                     text/directory
+                     text/x-vcard
+                     text/directory;profile=vCard).freeze
 
     def matches?(request)
       media_content_types(request).any? do |type|
@@ -12,7 +15,9 @@ module Constraint
     private
 
     def media_content_types(request)
-      request.request_parameters.select { |key, _value| key.match(/MediaContentType/) }.values
+      request.request_parameters.select do |key, _value|
+        key.match(/MediaContentType/)
+      end.values
     end
   end
 end

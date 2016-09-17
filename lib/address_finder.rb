@@ -52,7 +52,9 @@ class AddressFinder
   end
 
   def results
-    @results ||= client.search(text, params).sort { |r1, r2| r2.data['confidence'] <=> r1.data['confidence'] }
+    @results ||= client.search(text, params).sort do |r1, r2|
+      r2.data['confidence'] <=> r1.data['confidence']
+    end
   end
 
   def params

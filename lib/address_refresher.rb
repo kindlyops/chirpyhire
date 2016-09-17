@@ -6,7 +6,7 @@ class AddressRefresher
   end
 
   def call
-    return 'No address found' unless message.has_address? && candidate.present?
+    return 'No address found' unless message.address? && candidate.present?
 
     if csv.present?
       csv << row
@@ -24,11 +24,15 @@ class AddressRefresher
     fake_inquiry = Struct.new(:question).new({})
 
     if address_feature.present?
-      address_feature.update(properties: AddressQuestion.extract(message, fake_inquiry))
+      address_feature.update(
+        properties: AddressQuestion.extract(message, fake_inquiry)
+      )
       "Updated candidate feature #{address_feature.id}"
     else
-      address_feature = candidate.candidate_features.create(label: question.label,
-                                                            properties: AddressQuestion.extract(message, fake_inquiry))
+      address_feature = candidate.candidate_features.create(
+        label: question.label,
+        properties: AddressQuestion.extract(message, fake_inquiry)
+      )
       "Created candidate feature #{address_feature.id}"
     end
   end

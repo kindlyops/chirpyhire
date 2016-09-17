@@ -4,7 +4,8 @@ module Constraint
     OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze
 
     def matches?(request)
-      OPT_OUT_RESPONSES.include?(body(request).gsub(/[^a-z0-9\s]/i, '').strip.upcase)
+      cleaned_body = body(request).gsub(/[^a-z0-9\s]/i, '').strip.upcase
+      OPT_OUT_RESPONSES.include?(cleaned_body)
     end
 
     private

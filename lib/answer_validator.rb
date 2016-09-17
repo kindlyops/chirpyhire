@@ -6,10 +6,11 @@ class AnswerValidator
 
   def validate
     unless inquiry.question_type == format
-      answer.errors.add(:inquiry, "expected #{inquiry.question_type} but received #{format}")
+      error_message = "expected #{inquiry.question_type} but received #{format}"
+      answer.errors.add(:inquiry, error_message)
 
-      if inquiry.question_type == 'AddressQuestion' && AddressFinder.new(message.body).naive_match?
-        Rollbar.debug('Unable to find naive address', id: message.id, body: message.body)
+      if inquiry.of_address? && AddressFinder.new(message.body).naive_match?
+        log('Unable to find naive address')
       end
     end
   end
@@ -28,5 +29,13 @@ class AnswerValidator
 
   def inquiry
     @inquiry ||= answer.inquiry
+  end
+
+  def log(log_message)
+    Rollbar.debug(
+      log_message,
+      id: message.id,
+      body: message.body
+    )
   end
 end

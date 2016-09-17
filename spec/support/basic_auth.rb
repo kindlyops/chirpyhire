@@ -2,7 +2,17 @@
 module BasicAuth
   def http_login(username, password)
     @env ||= {}
-    @env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
+
+    @env['HTTP_AUTHORIZATION'] = credentials(username, password)
+  end
+
+  private
+
+  def credentials(username, password)
+    ActionController::HttpAuthentication::Basic.encode_credentials(
+      username,
+      password
+    )
   end
 end
 

@@ -45,11 +45,7 @@ class User < ApplicationRecord
     where(has_unread_messages: true)
   end
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def has_outstanding_inquiry?
+  def outstanding_inquiry?
     outstanding_inquiry.present?
   end
 

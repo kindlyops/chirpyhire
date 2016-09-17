@@ -16,7 +16,11 @@ module Messaging
     attr_reader :media_instance
 
     def method_missing(method, *args, &block)
-      media_instance.send(method, *args, &block)
+      media_instance.send(method, *args, &block) || super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      super
     end
   end
 end

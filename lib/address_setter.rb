@@ -7,23 +7,8 @@ class AddressSetter
 
   def call
     return 'Address present' if candidate.address_feature.present?
-    address_found = false
 
-    messages.each do |message|
-      next unless message.has_address?
-
-      if csv.present?
-        row = fetch_row(message)
-        csv << row
-      else
-        create_address(message)
-      end
-
-      address_found = true
-      break
-    end
-
-    if address_found
+    if look_for_address
       'Address found'
     else
       'No address found'
@@ -41,8 +26,10 @@ class AddressSetter
   def create_address(message)
     fake_inquiry = Struct.new(:question).new({})
 
-    address_feature = candidate.candidate_features.create(label: question.label,
-                                                          properties: AddressQuestion.extract(message, fake_inquiry))
+    address_feature = candidate.candidate_features.create(
+      label: question.label,
+      properties: AddressQuestion.extract(message, fake_inquiry)
+    )
     "Created candidate feature #{address_feature.id}"
   end
 
@@ -81,5 +68,24 @@ class AddressSetter
 
   def survey
     @survey ||= candidate.organization.survey
+  end
+
+  def look_for_address
+    address_found = false
+
+    messages.each do |message|
+      next unless message.address?
+
+      if csv.present?
+        row = fetch_row(message)
+        csv << row
+      else
+        create_address(message)
+      end
+      address_found = true
+      break
+    end
+
+    address_found
   end
 end

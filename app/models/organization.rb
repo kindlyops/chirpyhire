@@ -33,11 +33,11 @@ class Organization < ApplicationRecord
                 direction: sent_message.direction)
   end
 
-  def has_persisted_subscription?
+  def persisted_subscription?
     subscription.present? && subscription.persisted?
   end
 
-  def has_new_subscription?
+  def new_subscription?
     subscription.present? && subscription.new_record?
   end
 

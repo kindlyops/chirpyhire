@@ -18,7 +18,8 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid) do
+  message_params = %i(from to body media direction date_sent date_created sid)
+  Message = Struct.new(*message_params) do
     def num_media
       media.list.count.to_s
     end
@@ -63,15 +64,32 @@ class FakeMessaging
   end
 
   def create(from:, to:, body:, direction: 'outbound-api', format: :image)
-    if format == :text
-      media = Media.new([])
-    elsif format == :image
-      media = Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
-    end
+    media = build_media(format)
 
-    message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
+    message = Message.new(from,
+                          to,
+                          body,
+                          media,
+                          direction,
+                          DateTime.current,
+                          DateTime.current,
+                          Faker::Number.number(10))
+    append_message(message)
+  end
+
+  private
+
+  def append_message(message)
     self.class.messages << message
     message
+  end
+
+  def build_media(format)
+    if format == :text
+      Media.new([])
+    elsif format == :image
+      Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
+    end
   end
 end
 

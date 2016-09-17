@@ -6,7 +6,9 @@ class Inquiry < ApplicationRecord
   delegate :label, to: :question
   delegate :type, to: :question, prefix: true
 
-  scope :unanswered, -> { includes(:answer).where(answers: { inquiry_id: nil }) }
+  def self.unanswered
+    includes(:answer).where(answers: { inquiry_id: nil })
+  end
 
   def question_name
     question.label
@@ -14,5 +16,9 @@ class Inquiry < ApplicationRecord
 
   def unanswered?
     answer.blank?
+  end
+
+  def of_address?
+    question_type == 'AddressQuestion'
   end
 end

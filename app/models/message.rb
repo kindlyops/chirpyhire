@@ -14,7 +14,10 @@ class Message < ApplicationRecord
   end
 
   def self.current_month
-    where(created_at: DateTime.current.beginning_of_month..DateTime.current.end_of_month)
+    beginning_of_month = DateTime.current.beginning_of_month
+    end_of_month = DateTime.current.end_of_month
+
+    where(created_at: beginning_of_month..end_of_month)
   end
 
   def self.last_month
@@ -39,24 +42,24 @@ class Message < ApplicationRecord
     direction == 'inbound'
   end
 
-  def has_images?
+  def images?
     return media_instances.any?(&:image?) unless persisted?
     media_instances.images.present?
   end
 
-  def has_address?
+  def address?
     return false unless body.present?
     address.found?
   end
 
-  def has_yes_or_no?
+  def yes_or_no?
     return false unless body.present?
-    YesNoQuestion::REGEXP === body.strip.downcase
+    YesNoQuestion::REGEXP =~ body.strip.downcase
   end
 
-  def has_choice?(choices)
+  def choice?(choices)
     return false unless body.present? && choices.present?
-    Regexp.new("\\A([#{choices}]){1}\\)?\\z") === body.strip.downcase
+    (Regexp.new("\\A([#{choices}]){1}\\)?\\z") =~ body.strip.downcase).present?
   end
 
   def address

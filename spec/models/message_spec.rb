@@ -2,12 +2,12 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
-  describe '#has_address?' do
+  describe '#address?' do
     context 'without a body' do
       let(:message) { create(:message, body: nil) }
 
       it 'is false' do
-        expect(message.has_address?).to eq(false)
+        expect(message.address?).to eq(false)
       end
     end
 
@@ -19,19 +19,19 @@ RSpec.describe Message, type: :model do
       end
 
       it 'is true' do
-        expect(message.has_address?).to eq(true)
+        expect(message.address?).to eq(true)
       end
     end
   end
 
-  describe 'has_choice?' do
+  describe 'choice?' do
     let(:choices) { 'abc' }
 
     context 'without a body' do
       let(:message) { create(:message, body: nil) }
 
       it 'is false' do
-        expect(message.has_choice?(choices)).to eq(false)
+        expect(message.choice?(choices)).to eq(false)
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe Message, type: :model do
       context 'that just includes a choice letter' do
         it 'is true' do
           ['A', 'a', 'A)         ', 'a)'].each do |body|
-            expect(create(:message, body: body).has_choice?(choices)).to eq(true)
+            expect(create(:message, body: body).choice?(choices)).to eq(true)
           end
         end
       end
@@ -47,7 +47,7 @@ RSpec.describe Message, type: :model do
       context "that includes a letter that isn't a choice" do
         it 'is false' do
           ['Y', 'y', 'Y)     ', 'y)'].each do |body|
-            expect(create(:message, body: body).has_choice?(choices)).to eq(false)
+            expect(create(:message, body: body).choice?(choices)).to eq(false)
           end
         end
       end
@@ -56,7 +56,7 @@ RSpec.describe Message, type: :model do
         let(:message) { create(:message, body: 'Test Body') }
 
         it 'is false' do
-          expect(message.has_choice?(choices)).to eq(false)
+          expect(message.choice?(choices)).to eq(false)
         end
       end
     end

@@ -3,11 +3,6 @@ module DeviseHelper
   def devise_error_messages!
     return '' unless devise_error_messages?
 
-    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-    sentence = I18n.t('errors.messages.not_saved',
-                      count: resource.errors.count,
-                      resource: resource.class.model_name.human.downcase)
-
     html = <<-HTML
     <div class="error" id="error_explanation">
       <h2>#{sentence}</h2>
@@ -20,5 +15,19 @@ module DeviseHelper
 
   def devise_error_messages?
     !resource.errors.empty?
+  end
+
+  private
+
+  def sentence
+    I18n.t('errors.messages.not_saved',
+           count: resource.errors.count,
+           resource: resource.class.model_name.human.downcase)
+  end
+
+  def messages
+    resource.errors.full_messages.map do |msg|
+      content_tag(:li, msg)
+    end.join
   end
 end

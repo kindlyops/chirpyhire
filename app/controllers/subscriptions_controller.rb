@@ -21,7 +21,8 @@ class SubscriptionsController < ApplicationController
     if @subscription.update(permitted_attributes(Subscription))
       Payment::Job::UpdateSubscription.perform_later(@subscription)
 
-      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription changed.'
+      redirect_to subscription_path(@subscription),
+                  notice: 'Nice! Subscription changed.'
     else
       render :edit
     end
@@ -30,11 +31,14 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = authorized_subscription
 
-    if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
+    if stripe_token? && @subscription.update(permitted_attributes(Subscription))
       current_organization.update(stripe_token: params[:stripe_token])
       @subscription.activate!
-      Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
-      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription created.'
+      Payment::Job::ProcessSubscription.perform_later(
+        @subscription, current_account.email
+      )
+      redirect_to subscription_path(@subscription),
+                  notice: 'Nice! Subscription created.'
     else
       render :new
     end
@@ -44,7 +48,8 @@ class SubscriptionsController < ApplicationController
     @subscription = authorized_subscription
     if @subscription.cancel!
       Payment::Job::CancelSubscription.perform_later(@subscription)
-      redirect_to subscription_path(@subscription), notice: 'Sorry to see you go. Your account is canceled.'
+      redirect_to subscription_path(@subscription), notice: 'Sorry to see '\
+      'you go. Your account is canceled.'
     else
       render :edit
     end
@@ -57,8 +62,16 @@ class SubscriptionsController < ApplicationController
   end
 
   def ensure_new_subscription
-    unless authorized_subscription.trialing? && authorized_subscription.stripe_id.blank?
+    unless trialing? && authorized_subscription.stripe_id.blank?
       redirect_to edit_subscription_path(authorized_subscription)
     end
+  end
+
+  def stripe_token?
+    params[:stripe_token].present?
+  end
+
+  def trialing?
+    authorized_subscription.trialing?
   end
 end

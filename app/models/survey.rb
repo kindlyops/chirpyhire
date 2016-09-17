@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 class Survey < ApplicationRecord
   belongs_to :organization
-  belongs_to :actionable, class_name: 'SurveyActionable', foreign_key: :actionable_id, inverse_of: :survey
+  belongs_to :actionable,
+             class_name: 'SurveyActionable',
+             foreign_key: :actionable_id,
+             inverse_of: :survey
   belongs_to :welcome, class_name: 'Template', foreign_key: :welcome_id
   belongs_to :thank_you, class_name: 'Template', foreign_key: :thank_you_id
   belongs_to :bad_fit, class_name: 'Template', foreign_key: :bad_fit_id
 
   has_many :questions
-  accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: false
+  accepts_nested_attributes_for :questions,
+                                reject_if: :all_blank, allow_destroy: false
 
   validate :unique_priorities, on: :update
 
@@ -17,7 +21,10 @@ class Survey < ApplicationRecord
 
   def next_unasked_question_for(user)
     ids = user.inquiries.pluck(:question_id)
-    questions.where.not(id: ids).where(status: Question.statuses[:active]).order(:priority).first
+    questions
+      .where.not(id: ids)
+      .where(status: Question.statuses[:active])
+      .order(:priority).first
   end
 
   private

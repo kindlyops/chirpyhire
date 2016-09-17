@@ -42,7 +42,6 @@ group :test do
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'rubocop', '~> 0.42.0'
-  gem 'rubocop-rspec'
 end
 
 group :development do

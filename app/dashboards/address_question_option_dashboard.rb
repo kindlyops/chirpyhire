@@ -55,7 +55,8 @@ class AddressQuestionOptionDashboard < Administrate::BaseDashboard
     :question_id
   ].freeze
 
-  # Overwrite this method to customize how address question options are displayed
+  # Overwrite this method to customize
+  # how address question options are displayed
   # across all pages of the admin dashboard.
   #
   # def display_resource(address_question_option)

@@ -78,20 +78,20 @@ RSpec.describe AddressQuestion, type: :model do
     end
   end
 
-  describe '#has_geofence?' do
+  describe '#geofenced?' do
     context 'with geofence' do
       before do
         create(:address_question_option, address_question: question)
       end
 
       it 'is true' do
-        expect(question.has_geofence?).to eq(true)
+        expect(question.geofenced?).to eq(true)
       end
     end
 
     context 'without geofence' do
       it 'is false' do
-        expect(question.has_geofence?).to eq(false)
+        expect(question.geofenced?).to eq(false)
       end
     end
   end

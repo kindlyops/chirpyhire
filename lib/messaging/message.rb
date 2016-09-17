@@ -19,7 +19,11 @@ module Messaging
     attr_reader :message
 
     def method_missing(method, *args, &block)
-      message.send(method, *args, &block)
+      message.send(method, *args, &block) || super
+    end
+
+    def respond_to_missing?(method_name, include_private = false)
+      super
     end
   end
 end
