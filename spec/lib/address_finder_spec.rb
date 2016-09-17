@@ -1,5 +1,4 @@
 require 'rails_helper'
-require_relative "address_finder_spec_example"
 
 RSpec.describe "AddressFinder" do
   let(:finder) { AddressFinder.new(address) }
@@ -75,20 +74,12 @@ RSpec.describe "AddressFinder" do
     end
   end
 
-  context "with valid address but wrong zipcode", vcr: { cassette_name: "AddressFinder-wrong-zipcode" } do
-    let(:address) { "2 civic center drive 94913" }
-    include_examples "address won't be found"
-  end
-
-  context "with invalid address" do
-    context "no zipcode" do
-      let(:address) { "4059 Mt Lee Dr" }
-      include_examples "address won't be found"
-    end
-
-    context "no street address" do
-      let(:address) { "90068" }
-      include_examples "address won't be found"
+  context "unfindable addresses (wrong zipcode, no zipcode, no street address)" do
+    ["2 civic center drive 94913", "4059 Mt Lee Dr", "90068"].each do |address|
+      let(:address) { address }
+      it "is false" do
+        expect(finder.found?).to eq(false)
+      end
     end
   end
 end
