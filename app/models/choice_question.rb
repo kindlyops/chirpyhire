@@ -46,7 +46,7 @@ template
   end
 
   def choice_options_list
-    in_memory_sorted_options.each_with_object('') do |option, result|
+    in_memory_sorted_options.each_with_object(String.new) do |option, result|
       result << "#{option.letter}) #{option.text}\n"
     end
   end

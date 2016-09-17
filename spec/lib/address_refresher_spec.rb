@@ -6,7 +6,7 @@ RSpec.describe AddressRefresher do
 
   describe '#call' do
     context 'with a csv passed' do
-      let(:csv) { CSV.new('') }
+      let(:csv) { CSV.new(String.new) }
       let(:refresher) { described_class.new(message, csv: csv) }
 
       context 'message has an address' do
