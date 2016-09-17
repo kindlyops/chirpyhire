@@ -75,7 +75,7 @@
     }
     .cancel_subscription {
       padding-top: 1em;
-      display: block;
+      display: inline-block;
       color: $medium-gray;
 
       &:hover, &:focus {
