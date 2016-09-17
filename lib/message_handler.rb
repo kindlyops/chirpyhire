@@ -8,7 +8,8 @@ class MessageHandler
 
   def call
     existing_message = sender.messages.find_by(sid: message_sid)
-    return existing_message if existing_message.present? else handle_message
+    return existing_message if existing_message.present?
+    handle_message
   end
 
   private
