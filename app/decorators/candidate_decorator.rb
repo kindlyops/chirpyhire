@@ -27,6 +27,6 @@ class CandidateDecorator < Draper::Decorator
   end
 
   def call_to_actions
-    return ["change_stages", "message"]
+    ["change_stage", "message"]
   end
 end
