@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Payment::Subscriptions::Update, vcr: { cassette_name: "Payment::Subscriptions::Update-call" } do
-  subject { Payment::Subscriptions::Update.new(subscription) }
+RSpec.describe Payment::Subscriptions::Update do
+  subject { Payment::Subscriptions::Update.new(subscription, quantity: 2) }
 
   let!(:stripe_plan) { Stripe::Plan.create(id: "test", amount: 5_000, currency: "usd", interval: "month", name: "test") }
 
@@ -28,12 +28,40 @@ RSpec.describe Payment::Subscriptions::Update, vcr: { cassette_name: "Payment::S
     context "with an existing stripe customer" do
       let!(:organization) { create(:organization, stripe_customer_id: stripe_customer.id) }
       let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-      let!(:subscription) { create(:subscription, plan: plan, organization: organization, quantity: 2, stripe_id: stripe_subscription.id) }
+      let!(:subscription) { create(:subscription, plan: plan, organization: organization, quantity: 1, stripe_id: stripe_subscription.id) }
 
-      it "updates the quantity of the subscription" do
-        expect {
-          subject.call
-        }.to change{stripe_subscription.refresh.quantity}.from(1).to(2)
+      context "with a valid card", vcr: { cassette_name: "Payment::Subscriptions::Update-call" } do
+        it "updates the quantity of the stripe subscription" do
+          expect {
+            subject.call
+          }.to change{stripe_subscription.refresh.quantity}.from(1).to(2)
+        end
+
+        it "updates the quantity of the subscription" do
+          expect {
+            subject.call
+          }.to change{subscription.reload.quantity}.from(1).to(2)
+        end
+      end
+
+      context "with an expired stripe card on file", vcr: { cassette_name: "Payment::Subscriptions::Update-call-expired-card" } do
+        before(:each) do
+          allow_any_instance_of(Stripe::Subscription).to receive(:save).and_raise(Stripe::CardError.new("Expired Card", 402, :expired_card))
+        end
+
+        it "raises the Payment::CardError" do
+          expect{
+            subject.call
+          }.to raise_error(Payment::CardError)
+        end
+
+        it "does not change the subscription quantity" do
+          expect{
+            expect{
+              subject.call
+            }.to raise_error(Payment::CardError)
+          }.not_to change{subscription.reload.quantity}
+        end
       end
     end
   end

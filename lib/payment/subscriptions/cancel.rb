@@ -9,6 +9,7 @@ class Payment::Subscriptions::Cancel
 
   def call
     stripe_subscription.delete
+    subscription.cancel!
   end
 
   private

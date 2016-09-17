@@ -1,15 +1,19 @@
 class Payment::Subscriptions::Process
 
-  def self.call(subscription, email)
-    new(subscription, email).call
+  def self.call(token, subscription, email, attributes)
+    new(token, subscription, email, attributes).call
   end
 
-  def initialize(subscription, email)
+  def initialize(token, subscription, email, attributes)
+    @token = token
     @subscription = subscription
     @email = email
+    @attributes = attributes
   end
 
   def call
+    return unless token.present?
+
     if organization.stripe_customer_id.blank?
       stripe_customer = create_stripe_customer_with_subscription
       stripe_subscription = stripe_customer.subscriptions.first
@@ -18,12 +22,15 @@ class Payment::Subscriptions::Process
       stripe_subscription = create_stripe_subscription(stripe_customer)
     end
 
-    subscription.update(stripe_id: stripe_subscription.id)
+    subscription.update!(attributes.merge(stripe_id: stripe_subscription.id))
+    subscription.activate!
+  rescue Stripe::CardError => e
+    raise Payment::CardError.new(e)
   end
 
   private
 
-  attr_reader :subscription, :email
+  attr_reader :subscription, :email, :attributes, :token
 
   def find_stripe_customer
     Stripe::Customer.retrieve(organization.stripe_customer_id)
@@ -31,7 +38,7 @@ class Payment::Subscriptions::Process
 
   def create_stripe_customer_with_subscription
     stripe_customer = Stripe::Customer.create(
-      source:   organization.stripe_token,
+      source:   token,
       plan:     subscription.plan_stripe_id,
       quantity: subscription.quantity,
       description: organization.name,
