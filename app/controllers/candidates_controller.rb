@@ -31,7 +31,7 @@ class CandidatesController < ApplicationController
     if authorized_candidate.update(permitted_attributes(Candidate))
       redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.stage.name}"
     else
-      redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's status"
+      redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's stage"
     end
   end
 
