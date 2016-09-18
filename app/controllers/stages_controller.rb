@@ -7,7 +7,7 @@ class StagesController < ApplicationController
     new_stage_name = params[:new_stage]
     stages = current_organization.stages
     if stages.exists?(name: new_stage_name)
-      skip_authorization
+      authorize Stage.none
       redirect_to stages_url, alert: "Oops! You already have a stage with that name."
     elsif create_new_stage(new_stage_name)
       redirect_to stages_url, notice: "Nice! Stage created."
