@@ -2,10 +2,10 @@ class YesNoQuestionDecorator < Draper::Decorator
   delegate_all
 
   def label_placeholder
-    "Transportation"
+    'Transportation'
   end
 
   def text_placeholder
-    "Can you drive?"
+    'Can you drive?'
   end
 end

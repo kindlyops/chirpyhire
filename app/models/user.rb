@@ -19,7 +19,7 @@ class User < ApplicationRecord
   end
 
   def name=(name)
-    first, last = name.split(" ", 2)
+    first, last = name.split(' ', 2)
     self.first_name = first
     self.last_name = last
   end
@@ -33,9 +33,7 @@ class User < ApplicationRecord
   end
 
   def name
-    if first_name.present?
-      "#{first_name} #{last_name}".squish
-    end
+    "#{first_name} #{last_name}".squish if first_name.present?
   end
 
   def self.by_having_unread_messages

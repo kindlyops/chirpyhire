@@ -7,7 +7,7 @@ class AddressFinder
   end
 
   delegate :address, :latitude, :longitude, :country, :country_code,
-  :city, :postal_code, to: :result
+           :city, :postal_code, to: :result
 
   def found?
     naive_match? && result.present? && text.include?(result.postal_code)
@@ -18,25 +18,23 @@ class AddressFinder
     text.scan(NAIVE_ADDRESS_REGEXP).present?
   end
 
-  alias :full_street_address :address
+  alias full_street_address address
 
-  def self.client=(client)
-    @client = client
+  class << self
+    attr_writer :client
   end
 
-  def self.client
-    @client
+  class << self
+    attr_reader :client
   end
 
   def state
     STATE_MAPPING[result.state.downcase] || result.state
   end
 
-  alias :state_code :state
+  alias state_code state
 
-  def error_message=(error_message)
-    @error_message = error_message
-  end
+  attr_writer :error_message
 
   attr_reader :error_message
 
@@ -53,7 +51,7 @@ class AddressFinder
   end
 
   def results
-    @results ||= client.search(text, params).sort {|r1, r2| r2.data["confidence"] <=> r1.data["confidence"] }
+    @results ||= client.search(text, params).sort { |r1, r2| r2.data['confidence'] <=> r1.data['confidence'] }
   end
 
   def params
@@ -61,55 +59,54 @@ class AddressFinder
   end
 
   STATE_MAPPING = {
-    "alabama" => "AL",
-    "alaska" => "AK",
-    "arkansas" => "AR",
-    "california" => "CA",
-    "colorado" => "CO",
-    "connecticut" => "CT",
-    "delaware" => "DE",
-    "florida" => "FL",
-    "georgia" => "GA",
-    "hawaii" => "HI",
-    "idaho" => "ID",
-    "illinois" => "IL",
-    "indiana" => "IN",
-    "iowa" => "IA",
-    "kansas" => "KS",
-    "kentucky" => "KY",
-    "louisiana" => "LA",
-    "maine" => "ME",
-    "maryland" => "MD",
-    "massachusetts" => "MA",
-    "michigan" => "MI",
-    "minnesota" => "MN",
-    "mississippi" => "MS",
-    "missouri" => "MO",
-    "montana" => "MT",
-    "nebraska" => "NE",
-    "nevada" => "NV",
-    "new hampshire" => "NH",
-    "new jersey" => "NJ",
-    "new mexico" => "NM",
-    "new york" => "NY",
-    "north carolina" => "NC",
-    "north dakota" => "ND",
-    "ohio" => "OH",
-    "oklahoma" => "OK",
-    "oregon" => "OR",
-    "pennsylvania" => "PA",
-    "rhode island" => "RI",
-    "south carolina" => "SC",
-    "south dakota" => "SD",
-    "tennessee" => "TN",
-    "texas" => "TX",
-    "utah" => "UT",
-    "vermont" => "VT",
-    "virginia" => "VA",
-    "washington" => "WA",
-    "west virginia" => "WV",
-    "wisconsin" => "WI",
-    "wyoming" => "WY"
-  }
+    'alabama' => 'AL',
+    'alaska' => 'AK',
+    'arkansas' => 'AR',
+    'california' => 'CA',
+    'colorado' => 'CO',
+    'connecticut' => 'CT',
+    'delaware' => 'DE',
+    'florida' => 'FL',
+    'georgia' => 'GA',
+    'hawaii' => 'HI',
+    'idaho' => 'ID',
+    'illinois' => 'IL',
+    'indiana' => 'IN',
+    'iowa' => 'IA',
+    'kansas' => 'KS',
+    'kentucky' => 'KY',
+    'louisiana' => 'LA',
+    'maine' => 'ME',
+    'maryland' => 'MD',
+    'massachusetts' => 'MA',
+    'michigan' => 'MI',
+    'minnesota' => 'MN',
+    'mississippi' => 'MS',
+    'missouri' => 'MO',
+    'montana' => 'MT',
+    'nebraska' => 'NE',
+    'nevada' => 'NV',
+    'new hampshire' => 'NH',
+    'new jersey' => 'NJ',
+    'new mexico' => 'NM',
+    'new york' => 'NY',
+    'north carolina' => 'NC',
+    'north dakota' => 'ND',
+    'ohio' => 'OH',
+    'oklahoma' => 'OK',
+    'oregon' => 'OR',
+    'pennsylvania' => 'PA',
+    'rhode island' => 'RI',
+    'south carolina' => 'SC',
+    'south dakota' => 'SD',
+    'tennessee' => 'TN',
+    'texas' => 'TX',
+    'utah' => 'UT',
+    'vermont' => 'VT',
+    'virginia' => 'VA',
+    'washington' => 'WA',
+    'west virginia' => 'WV',
+    'wisconsin' => 'WI',
+    'wyoming' => 'WY'
+  }.freeze
 end
-

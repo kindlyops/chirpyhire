@@ -1,9 +1,9 @@
 class Subscription < ApplicationRecord
-  INACTIVE_STATUSES = %w(past_due canceled unpaid)
+  INACTIVE_STATUSES = %w(past_due canceled unpaid).freeze
   belongs_to :plan
   belongs_to :organization
 
-  validates_presence_of :plan, :trial_message_limit, :organization, :state, on: :create
+  validates :plan, :trial_message_limit, :organization, :state, presence: { on: :create }
 
   delegate :stripe_id, :name, :price, to: :plan, prefix: true
 

@@ -6,9 +6,7 @@ class UserFinder
 
   def call
     user = organization.users.find_by(phone_number: attributes[:phone_number])
-    if user.blank?
-      user = organization.users.create(attributes)
-    end
+    user = organization.users.create(attributes) if user.blank?
     user
   end
 

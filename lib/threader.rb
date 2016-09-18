@@ -24,19 +24,19 @@ class Threader
 
   def preceding_message
     @preceding_message ||= begin
-      user.messages.
-      where("external_created_at <= ?", message.external_created_at).
-      where("id < ?", message.id).
-      order(:external_created_at, :id).last
+      user.messages
+          .where('external_created_at <= ?', message.external_created_at)
+          .where('id < ?', message.id)
+          .order(:external_created_at, :id).last
     end
   end
 
   def next_message
     @next_message ||= begin
-      user.messages.
-      where("external_created_at >= ?", message.external_created_at).
-      where("id > ?", message.id).
-      order(:external_created_at, :id).first
+      user.messages
+          .where('external_created_at >= ?', message.external_created_at)
+          .where('id > ?', message.id)
+          .order(:external_created_at, :id).first
     end
   end
 

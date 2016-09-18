@@ -1,3 +1,3 @@
 ActiveSupport::Inflector.inflections do |inflection|
-  inflection.irregular "is", "are"
+  inflection.irregular 'is', 'are'
 end

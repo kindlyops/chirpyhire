@@ -6,7 +6,7 @@ class UserDecorator < Draper::Decorator
     if object.phone_number
       object.phone_number.phony_formatted
     else
-      ""
+      ''
     end
   end
 

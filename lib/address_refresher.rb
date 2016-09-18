@@ -1,12 +1,11 @@
 class AddressRefresher
-
   def initialize(message, csv: nil)
     @message = message
     @csv = csv
   end
 
   def call
-    return "No address found" unless message.has_address? && candidate.present?
+    return 'No address found' unless message.has_address? && candidate.present?
 
     if csv.present?
       csv << row
@@ -69,12 +68,10 @@ class AddressRefresher
   end
 
   def question
-    @question ||= survey.questions.find_by(type: "AddressQuestion")
+    @question ||= survey.questions.find_by(type: 'AddressQuestion')
   end
 
   def survey
     @survey ||= candidate.organization.survey
   end
 end
-
-

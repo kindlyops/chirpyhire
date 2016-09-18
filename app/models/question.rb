@@ -4,16 +4,16 @@ class Question < ApplicationRecord
   enum status: [:active, :inactive]
 
   delegate :bad_fit, to: :survey
-  validates_presence_of :text, :label, :status, :priority
+  validates :text, :label, :status, :priority, presence: true
 
-  TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion YesNoQuestion)
-  validates_inclusion_of :type, in: TYPES
+  TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion YesNoQuestion).freeze
+  validates :type, inclusion: { in: TYPES }
 
   def self.by_priority
     order(:priority)
   end
 
-  def rejects?(candidate)
+  def rejects?(_candidate)
     false
   end
 

@@ -1,5 +1,4 @@
 class Payment::Subscriptions::Process
-
   def self.call(token, subscription, email, attributes)
     new(token, subscription, email, attributes).call
   end
@@ -25,7 +24,7 @@ class Payment::Subscriptions::Process
     subscription.update!(attributes.merge(stripe_id: stripe_subscription.id))
     subscription.activate!
   rescue Stripe::CardError => e
-    raise Payment::CardError.new(e)
+    raise Payment::CardError, e
   end
 
   private

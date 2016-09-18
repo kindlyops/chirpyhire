@@ -13,7 +13,7 @@ class Payment::Subscriptions::Update
     stripe_subscription.save
     subscription.update!(attributes)
   rescue Stripe::CardError => e
-    raise Payment::CardError.new(e)
+    raise Payment::CardError, e
   end
 
   private
