@@ -1,7 +1,6 @@
 module BasicAuth
   def http_login(username, password)
     @env ||= {}
-
     @env['HTTP_AUTHORIZATION'] = credentials(username, password)
   end
 

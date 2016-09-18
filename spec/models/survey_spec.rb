@@ -17,7 +17,7 @@ RSpec.describe Survey, type: :model do
       end
 
       context 'with the first feature asked' do
-        before do
+        before(:each) do
           message = create(:message, user: user)
           create(:inquiry, message: message, question: first_question)
         end
@@ -40,7 +40,7 @@ RSpec.describe Survey, type: :model do
 
     context 'with multiple active questions' do
       context 'each having a different priority' do
-        before do
+        before(:each) do
           survey.questions_attributes = [attributes_for(:document_question), attributes_for(:document_question)]
         end
 
@@ -51,7 +51,7 @@ RSpec.describe Survey, type: :model do
       end
 
       context 'with shared priority' do
-        before do
+        before(:each) do
           survey.questions_attributes = [attributes_for(:document_question, priority: 1), attributes_for(:document_question, priority: 1)]
         end
 

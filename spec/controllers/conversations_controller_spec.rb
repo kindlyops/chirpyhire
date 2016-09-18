@@ -49,7 +49,7 @@ RSpec.describe ConversationsController, type: :controller do
         end
 
         context 'order' do
-          before do
+          before(:each) do
             message.update(external_created_at: 4.days.ago)
             other_message.update(external_created_at: 2.days.ago)
           end

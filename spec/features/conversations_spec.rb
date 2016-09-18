@@ -52,7 +52,7 @@ RSpec.feature 'Conversations', type: :feature, js: true do
       end
 
       context 'with unread messages' do
-        before do
+        before(:each) do
           users.first.update(has_unread_messages: true)
         end
 

@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     allow = account_attributes.push([user_attributes: user_attributes])
+
     params.require(resource_name).permit(allow)
   end
 
@@ -53,6 +54,7 @@ class RegistrationsController < Devise::RegistrationsController
     Rollbar.debug(e.message)
     flash[:alert] = "Sorry but we're a little overloaded right now and can't "\
     'find addresses. Please try again in a few minutes.'
+
     render :new
   end
 

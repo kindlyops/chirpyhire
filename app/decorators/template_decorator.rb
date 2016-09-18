@@ -11,6 +11,7 @@ class TemplateDecorator < Draper::Decorator
       bad_fit: 'This message is sent to candidates when Chirpyhire '\
       'determines they are a bad fit. Let the candidate know and thank them '\
       'for their interest.'
+
     }[name.parameterize(separator: '_').to_sym]
   end
 end

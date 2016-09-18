@@ -13,9 +13,9 @@ RSpec.describe AddressQuestionsController, type: :controller do
     attributes_for(:address_question)
   end
 
-  let(:invalid_attributes) do
+  let(:invalid_attributes) {
     { text: '', label: '', type: 'AddressQuestion' }
-  end
+  }
 
   describe 'GET #new' do
     it 'assigns a new address_question as @address_question' do
@@ -35,9 +35,9 @@ RSpec.describe AddressQuestionsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new AddressQuestion' do
-        expect do
+        expect {
           post :create, params: { address_question: valid_attributes }
-        end.to change(AddressQuestion, :count).by(1)
+        }.to change(AddressQuestion, :count).by(1)
       end
 
       it 'assigns a newly created address_question as @address_question' do
@@ -53,14 +53,14 @@ RSpec.describe AddressQuestionsController, type: :controller do
 
       context 'with address question option' do
         context 'with valid params' do
-          let(:valid_attributes) do
+          let(:valid_attributes) {
             attributes_for(:address_question).merge(address_question_option_attributes: attributes_for(:address_question_option))
-          end
+          }
 
           it 'creates an address question option' do
-            expect do
+            expect {
               post :create, params: { address_question: valid_attributes }
-            end.to change(AddressQuestionOption, :count).by(1)
+            }.to change(AddressQuestionOption, :count).by(1)
           end
         end
 
@@ -70,15 +70,15 @@ RSpec.describe AddressQuestionsController, type: :controller do
           end
 
           it 'does not create an address question' do
-            expect do
+            expect {
               post :create, params: { address_question: invalid_attributes }
-            end.not_to change(AddressQuestion, :count)
+            }.not_to change(AddressQuestion, :count)
           end
 
           it 'does not create an address question option' do
-            expect do
+            expect {
               post :create, params: { address_question: invalid_attributes }
-            end.not_to change(AddressQuestionOption, :count)
+            }.not_to change(AddressQuestionOption, :count)
           end
 
           it "re-renders the 'new' template" do
@@ -104,16 +104,15 @@ RSpec.describe AddressQuestionsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { text: 'New question text', label: 'New question label' }
-      end
+      }
 
       it 'updates the requested address_question' do
         address_question = survey.questions.create! valid_attributes
-
-        expect do
+        expect {
           put :update, params: { id: address_question.to_param, address_question: new_attributes }
-        end.to change { address_question.reload.text }.to(new_attributes[:text])
+        }.to change { address_question.reload.text }.to(new_attributes[:text])
       end
 
       it 'assigns the requested address_question as @address_question' do
@@ -131,29 +130,29 @@ RSpec.describe AddressQuestionsController, type: :controller do
 
     context 'with address question option' do
       context 'with valid params' do
-        let(:valid_attributes) do
+        let(:valid_attributes) {
           attributes_for(:address_question).merge(address_question_option_attributes: attributes_for(:address_question_option))
-        end
+        }
 
-        let(:new_attributes) do
+        let(:new_attributes) {
           { text: 'New question text', label: 'New question label', address_question_option_attributes: { distance: 1 } }
-        end
+        }
 
         it 'updates the requested address_question_option' do
           address_question = survey.questions.create! valid_attributes
           address_question_option = address_question.address_question_option
           new_attributes[:address_question_option_attributes][:id] = address_question_option.id
 
-          expect do
+          expect {
             put :update, params: { id: address_question.to_param, address_question: new_attributes }
-          end.to change { address_question_option.reload.distance }.to(new_attributes[:address_question_option_attributes][:distance])
+          }.to change { address_question_option.reload.distance }.to(new_attributes[:address_question_option_attributes][:distance])
         end
       end
 
       context 'with invalid params' do
-        let(:valid_attributes) do
+        let(:valid_attributes) {
           attributes_for(:address_question)
-        end
+        }
 
         let(:invalid_attributes) do
           { text: 'Valid text', label: 'Valid label', type: 'AddressQuestion', address_question_option_attributes: { distance: 10 } }

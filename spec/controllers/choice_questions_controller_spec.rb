@@ -12,9 +12,9 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     attributes_for(:choice_question)
   end
 
-  let(:invalid_attributes) do
+  let(:invalid_attributes) {
     { text: '', label: '', type: 'ChoiceQuestion' }
-  end
+  }
 
   describe 'GET #new' do
     it 'assigns a new choice_question as @question' do
@@ -34,9 +34,9 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new ChoiceQuestion' do
-        expect do
+        expect {
           post :create, params: { choice_question: valid_attributes }
-        end.to change(ChoiceQuestion, :count).by(1)
+        }.to change(ChoiceQuestion, :count).by(1)
       end
 
       it 'assigns a newly created choice_question as @question' do
@@ -65,14 +65,14 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
 
     context 'with choice question option' do
       context 'with valid params' do
-        let(:valid_attributes) do
+        let(:valid_attributes) {
           attributes_for(:choice_question).merge(choice_question_options_attributes: [attributes_for(:choice_question_option)])
-        end
+        }
 
         it 'creates an choice question option' do
-          expect do
+          expect {
             post :create, params: { choice_question: valid_attributes }
-          end.to change(ChoiceQuestionOption, :count).by(1)
+          }.to change(ChoiceQuestionOption, :count).by(1)
         end
       end
 
@@ -82,15 +82,15 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
         end
 
         it 'does not create an choice question' do
-          expect do
+          expect {
             post :create, params: { choice_question: invalid_attributes }
-          end.not_to change(ChoiceQuestion, :count)
+          }.not_to change(ChoiceQuestion, :count)
         end
 
         it 'does not create an choice question option' do
-          expect do
+          expect {
             post :create, params: { choice_question: invalid_attributes }
-          end.not_to change(ChoiceQuestionOption, :count)
+          }.not_to change(ChoiceQuestionOption, :count)
         end
 
         it "re-renders the 'new' template" do
@@ -103,11 +103,11 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
 
   describe 'PUT #update' do
     context 'versions of choice options' do
-      let!(:question) do
+      let!(:question) {
         create(:choice_question, survey: survey, choice_question_options_attributes: [
                  { letter: 'a', text: 'original A' }
                ])
-      end
+      }
 
       context 'with existing choice options' do
         let!(:old_choice_question_option) { question.choice_question_options.first }
@@ -126,9 +126,9 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
           end
 
           it 'still changes the updated_at on the question' do
-            expect do
+            expect {
               put :update, params: params
-            end.to change { question.reload.updated_at }
+            }.to change { question.reload.updated_at }
           end
 
           with_versioning do
@@ -143,16 +143,16 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     end
 
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { text: 'New question text', label: 'New question label' }
-      end
+      }
 
       it 'updates the requested choice_question' do
         choice_question = survey.questions.create! valid_attributes
 
-        expect do
+        expect {
           put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
-        end.to change { choice_question.reload.text }.to(new_attributes[:text])
+        }.to change { choice_question.reload.text }.to(new_attributes[:text])
       end
 
       it 'assigns the requested choice_question as @question' do
@@ -170,29 +170,29 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
 
     context 'with choice question option' do
       context 'with valid params' do
-        let(:valid_attributes) do
+        let(:valid_attributes) {
           attributes_for(:choice_question).merge(choice_question_options_attributes: [attributes_for(:choice_question_option)])
-        end
+        }
 
-        let(:new_attributes) do
+        let(:new_attributes) {
           { text: 'New question text', label: 'New question label', choice_question_options_attributes: [{ text: 'Foo' }] }
-        end
+        }
 
         it 'updates the requested choice_question_option' do
           choice_question = survey.questions.create! valid_attributes
           choice_question_option = choice_question.choice_question_options.first
           new_attributes[:choice_question_options_attributes].first[:id] = choice_question_option.id
 
-          expect do
+          expect {
             put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
-          end.to change { choice_question_option.reload.text }.to(new_attributes[:choice_question_options_attributes].first[:text])
+          }.to change { choice_question_option.reload.text }.to(new_attributes[:choice_question_options_attributes].first[:text])
         end
       end
 
       context 'with invalid params' do
-        let(:valid_attributes) do
+        let(:valid_attributes) {
           attributes_for(:choice_question)
-        end
+        }
 
         let(:invalid_attributes) do
           { text: 'Valid text', label: 'Valid label', type: 'AddressQuestion', choice_question_options_attributes: [{ text: 'Foo' }] }

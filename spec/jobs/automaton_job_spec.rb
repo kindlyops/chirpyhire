@@ -6,7 +6,8 @@ RSpec.describe AutomatonJob do
   describe '#perform' do
     it 'calls the Automaton' do
       expect(Automaton).to receive(:call).with(user, 'screen')
-      described_class.perform_now(user, 'screen')
+
+      AutomatonJob.perform_now(user, 'screen')
     end
   end
 end

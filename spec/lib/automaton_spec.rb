@@ -6,13 +6,13 @@ RSpec.describe Automaton do
 
   describe '.call' do
     it 'creates an automaton' do
-      expect(described_class).to receive(:new).with(user, 'screen').and_call_original
-      described_class.call(user, 'screen')
+      expect(Automaton).to receive(:new).with(user, 'screen').and_call_original
+      Automaton.call(user, 'screen')
     end
   end
 
   describe '#call' do
-    let(:automaton) { described_class.new(user, 'screen') }
+    let(:automaton) { Automaton.new(user, 'screen') }
 
     context 'with rules' do
       context 'on the organization' do

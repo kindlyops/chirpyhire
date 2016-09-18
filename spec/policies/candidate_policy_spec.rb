@@ -11,9 +11,9 @@ RSpec.describe CandidatePolicy do
     let(:organization) { nil }
 
     it 'raises a NotAuthorizedError' do
-      expect do
+      expect {
         subject
-      end.to raise_error(Pundit::NotAuthorizedError)
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 

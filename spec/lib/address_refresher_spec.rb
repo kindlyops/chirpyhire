@@ -6,7 +6,8 @@ RSpec.describe AddressRefresher do
   describe '#call' do
     context 'with a csv passed' do
       let(:csv) { CSV.new('') }
-      let(:refresher) { described_class.new(message, csv: csv) }
+
+      let(:refresher) { AddressRefresher.new(message, csv: csv) }
 
       context 'message has an address' do
         context 'with a candidate', vcr: { cassette_name: 'AddressFinder-valid-address' } do
@@ -46,7 +47,7 @@ RSpec.describe AddressRefresher do
     end
 
     context 'without a csv passed' do
-      let(:refresher) { described_class.new(message) }
+      let(:refresher) { AddressRefresher.new(message) }
 
       context 'message has an address' do
         context 'with a candidate', vcr: { cassette_name: 'AddressFinder-valid-address' } do
@@ -58,9 +59,9 @@ RSpec.describe AddressRefresher do
             let!(:question) { create(:address_question, survey: survey) }
 
             it 'creates a candidate feature' do
-              expect do
+              expect {
                 refresher.call
-              end.to change { candidate.candidate_features.count }.by(1)
+              }.to change { candidate.candidate_features.count }.by(1)
             end
           end
 
@@ -69,15 +70,15 @@ RSpec.describe AddressRefresher do
             let(:street_address) { address_feature.properties['address'] }
 
             it 'does not create a candidate feature' do
-              expect do
+              expect {
                 refresher.call
-              end.not_to change { candidate.candidate_features.count }
+              }.not_to change { candidate.candidate_features.count }
             end
 
             it 'updates the existing candidate feature' do
-              expect do
+              expect{
                 refresher.call
-              end.to change { address_feature.reload.properties['address'] }.from(street_address).to('Mount Lee Drive, McNeil, CA 90068, United States of America')
+              }.to change { address_feature.reload.properties['address'] }.from(street_address).to('Mount Lee Drive, McNeil, CA 90068, United States of America')
             end
           end
         end

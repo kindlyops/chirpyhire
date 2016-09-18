@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Address do
   let(:address_candidate_feature) { create(:candidate_feature, :address) }
-  let(:address) { described_class.new(address_candidate_feature) }
+
+  let(:address) { Address.new(address_candidate_feature) }
   describe '#coordinates' do
     context 'with latitude and longitude' do
       let(:latitude) { 12.345678 }
@@ -18,7 +19,7 @@ RSpec.describe Address do
     end
 
     context 'without latitude and longitude' do
-      before do
+      before(:each) do
         address_candidate_feature.update(properties: {})
       end
 

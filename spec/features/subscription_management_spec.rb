@@ -27,6 +27,7 @@ RSpec.feature 'Subscription Management', type: :feature, js: true do
       end
 
       click_on 'submit-button'
+
       expect(page).to have_current_path(%r{\/subscriptions\/\d+})
       expect(page).to have_text('Nice! Subscription created.')
     end
@@ -65,6 +66,7 @@ RSpec.feature 'Subscription Management', type: :feature, js: true do
         end
 
         click_on 'Update Subscription'
+
         expect(page).to have_current_path(%r{\/subscriptions\/\d+})
         expect(page).to have_text('Nice! Subscription changed.')
       end
@@ -75,6 +77,7 @@ RSpec.feature 'Subscription Management', type: :feature, js: true do
         visit edit_subscription_path(subscription)
 
         click_on 'Cancel Subscription'
+
         expect(page).to have_current_path(%r{\/subscriptions\/\d+})
         expect(page).to have_text('Sorry to see you go.')
       end

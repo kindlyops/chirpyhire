@@ -4,6 +4,7 @@ class Survey < ApplicationRecord
              class_name: 'SurveyActionable',
              foreign_key: :actionable_id,
              inverse_of: :survey
+
   belongs_to :welcome, class_name: 'Template', foreign_key: :welcome_id
   belongs_to :thank_you, class_name: 'Template', foreign_key: :thank_you_id
   belongs_to :bad_fit, class_name: 'Template', foreign_key: :bad_fit_id

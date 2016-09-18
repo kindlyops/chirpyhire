@@ -9,6 +9,7 @@ class AnswerFormatter
     return 'AddressQuestion' if message.address?
     return 'YesNoQuestion' if message.yes_or_no?
     return 'ChoiceQuestion' if message.choice?(choices)
+
     'Unknown Format'
   end
 

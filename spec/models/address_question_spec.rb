@@ -21,7 +21,7 @@ RSpec.describe AddressQuestion, type: :model do
       let(:candidate) { create(:candidate, :with_address) }
 
       context 'and the candidates coordinates are within the geofence' do
-        before do
+        before(:each) do
           existing_properties = candidate.address_feature.properties
           candidate.address_feature.update(properties: existing_properties.merge(latitude: latitude, longitude: longitude))
         end
@@ -32,7 +32,7 @@ RSpec.describe AddressQuestion, type: :model do
       end
 
       context 'and the candidates coordinates are outside the geofence' do
-        before do
+        before(:each) do
           existing_properties = candidate.address_feature.properties
           candidate.address_feature.update(properties: existing_properties.merge(latitude: 38.918138, longitude: -77.241273))
         end
@@ -79,7 +79,7 @@ RSpec.describe AddressQuestion, type: :model do
 
   describe '#geofenced?' do
     context 'with geofence' do
-      before do
+      before(:each) do
         create(:address_question_option, address_question: question)
       end
 

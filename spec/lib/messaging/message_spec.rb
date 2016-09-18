@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Messaging::Message do
   let(:inner_message) { Struct.new(:num_media).new(rand(1..100).to_s) }
-  let(:message) { described_class.new(inner_message) }
+
+  let(:message) { Messaging::Message.new(inner_message) }
 
   describe '#num_media' do
     it 'converts the message num_media from string to integer' do

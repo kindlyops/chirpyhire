@@ -43,7 +43,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
           let!(:question) { create(:question, label: label, survey: survey) }
 
           context 'with document' do
-            before do
+            before(:each) do
               create(:candidate_feature, label: label, candidate: candidate, properties: { url0: '/path/to/image', child_class: 'document' })
             end
 
@@ -60,7 +60,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
           let!(:question) { create(:question, :choice, label: label, survey: survey) }
 
           context 'with choice' do
-            before do
+            before(:each) do
               create(:candidate_feature, label: label, candidate: candidate, properties: { choice_option: 'Live-in', child_class: 'choice' })
             end
 

@@ -8,19 +8,19 @@ RSpec.describe InvitationsController, type: :controller do
     { account: { email: 'bob@example.com' } }
   end
 
-  before do
+  before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:account]
   end
 
   describe '#create' do
-    before do
+    before(:each) do
       sign_in(inviter)
     end
 
     it 'creates the user' do
-      expect do
+      expect {
         post :create, params: invite_params
-      end.to change { organization.users.count }.by(1)
+      }.to change { organization.users.count }.by(1)
     end
   end
 

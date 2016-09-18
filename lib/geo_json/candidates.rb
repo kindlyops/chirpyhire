@@ -38,6 +38,7 @@ module GeoJson
 
     def geometry(candidate)
       {
+
         type: 'Point',
         coordinates: [longitude(candidate), latitude(candidate)]
       }

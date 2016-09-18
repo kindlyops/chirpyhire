@@ -13,7 +13,7 @@ RSpec.describe Report::Weekly do
 
   describe '#humanized_week' do
     context 'by default' do
-      before do
+      before(:each) do
         Timecop.freeze(Date.new(2016, 0o7, 21))
       end
 
@@ -23,7 +23,7 @@ RSpec.describe Report::Weekly do
     end
 
     context 'with date passed in' do
-      let(:report) { described_class.new(recipient, date: Date.new(2016, 0o1, 21)) }
+      let(:report) { Report::Weekly.new(recipient, date: Date.new(2016, 0o1, 21)) }
       it 'is the date formatted' do
         expect(report.humanized_week).to eq('January 14th - January 20th')
       end

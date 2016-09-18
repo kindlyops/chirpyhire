@@ -11,9 +11,9 @@ RSpec.describe MessagePolicy do
     let(:organization) { nil }
 
     it 'raises a NotAuthorizedError' do
-      expect do
+      expect {
         subject
-      end.to raise_error(Pundit::NotAuthorizedError)
+      }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe MessagePolicy do
       it { should forbid_new_and_create_actions }
 
       context 'recipient is subscribed' do
-        before do
+        before(:each) do
           message.user.update(subscribed: true)
         end
 

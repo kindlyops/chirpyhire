@@ -9,6 +9,7 @@ class AnswerValidator
       answer.errors.add(:inquiry, error_message)
 
       log('Unable to find naive address') if inquiry.of_address? && naive_match?
+
     end
   end
 

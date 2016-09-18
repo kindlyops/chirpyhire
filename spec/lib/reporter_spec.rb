@@ -7,7 +7,7 @@ RSpec.describe Reporter do
 
   describe 'report' do
     context 'with an inactive account' do
-      before do
+      before(:each) do
         recipients.sample.update(invitation_token: Faker::Lorem.sentence)
       end
 

@@ -22,7 +22,7 @@ RSpec.feature 'Messages', type: :feature, js: true do
       let(:new_message) { 'This is a new message to send' }
 
       context 'subscribed' do
-        before do
+        before(:each) do
           user.update(subscribed: true)
         end
 

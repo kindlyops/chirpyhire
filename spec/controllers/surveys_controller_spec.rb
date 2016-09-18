@@ -33,16 +33,16 @@ RSpec.describe SurveysController, type: :controller do
     let!(:second_question) { create(:document_question, survey: survey, priority: 2) }
 
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { questions_attributes: [{ id: first_question.id, priority: 2 }, { id: second_question.id, priority: 1 }] }
-      end
+      }
 
       it 'updates the requested survey' do
-        expect do
-          expect do
+        expect {
+          expect {
             put :update, params: { id: survey.to_param, survey: new_attributes }
-          end.to change { first_question.reload.priority }.to(2)
-        end.to change { second_question.reload.priority }.to(1)
+          }.to change { first_question.reload.priority }.to(2)
+        }.to change { second_question.reload.priority }.to(1)
       end
 
       it 'assigns the requested survey as @survey' do
@@ -57,9 +57,9 @@ RSpec.describe SurveysController, type: :controller do
     end
 
     context 'with invalid params' do
-      let(:invalid_attributes) do
+      let(:invalid_attributes) {
         { questions_attributes: [{ id: first_question.id, priority: 1 }, { id: second_question.id, priority: 1 }] }
-      end
+      }
 
       it 'assigns the survey as @survey' do
         put :update, params: { id: survey.to_param, survey: invalid_attributes }

@@ -22,6 +22,7 @@ class SubscriptionsController < ApplicationController
 
       redirect_to subscription_path(@subscription),
                   notice: 'Nice! Subscription changed.'
+
     else
       render :edit
     end
@@ -35,6 +36,7 @@ class SubscriptionsController < ApplicationController
 
       redirect_to subscription_path(@subscription), notice: 'Nice! '\
       'Subscription created.'
+
     else
       render :new
     end
@@ -43,6 +45,7 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription = authorized_subscription
     Payment::Subscriptions::Cancel.call(@subscription)
+
     redirect_to subscription_path(@subscription), notice: 'Sorry to see you '\
     'go. Your account is canceled.'
   end

@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the trial is finished' do
-      before do
+      before(:each) do
         subscription.update(state: 'trialing')
         subscription.update(trial_message_limit: 1)
         create_list(:message, 2, user: user)
@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the monthly message limit is reached' do
-      before do
+      before(:each) do
         subscription.update(state: 'active', quantity: 1)
         Plan.messages_per_quantity = 1
         create(:message, user: user)
@@ -36,7 +36,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the phone number is blank' do
-      before do
+      before(:each) do
         user.update(phone_number: nil)
       end
 
@@ -48,15 +48,15 @@ RSpec.describe User, type: :model do
 
   describe '#receive_message' do
     it 'creates a message for the user' do
-      expect do
+      expect {
         user.receive_message(body: 'Foo')
-      end.to change { user.messages.count }.by(1)
+      }.to change { user.messages.count }.by(1)
     end
 
     it 'sends a message' do
-      expect do
+      expect {
         user.receive_message(body: 'Foo')
-      end.to change { FakeMessaging.messages.count }.by(1)
+      }.to change { FakeMessaging.messages.count }.by(1)
     end
 
     context 'with prior messages' do

@@ -24,7 +24,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
   end
 
   context 'when a candidate has texted START' do
-    before do
+    before(:each) do
       post '/twilio/text', params: start_message_params
     end
 
@@ -40,7 +40,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
         }
       end
 
-      before do
+      before(:each) do
         post '/twilio/text', params: snarf_start_message_params
       end
 
@@ -56,7 +56,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
           }
         end
 
-        before do
+        before(:each) do
           post '/twilio/text', params: address_message_params
         end
 
@@ -72,11 +72,11 @@ RSpec.feature 'Surveying Candidates', type: :request do
             }
           end
 
-          before do
+          before(:each) do
             post '/twilio/text', params: snarf_address_message_params
           end
 
-          it 'sends the next question to the second candidate' do
+          it 'should send the next question to the second candidate' do
             last_message = organization.messages.by_recency.first
             expect(last_message.inquiry.present?).to be(true)
             expect(last_message.user).to eq(snarf.user)
@@ -97,7 +97,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
         }
       end
 
-      before do
+      before(:each) do
         post '/twilio/text', params: address_message_params
       end
 

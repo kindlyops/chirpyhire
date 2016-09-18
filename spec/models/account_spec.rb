@@ -29,9 +29,9 @@ RSpec.describe Account, type: :model do
         end
 
         it "does not override the user's organization" do
-          expect do
+          expect {
             Account.accept_invitation!(invitation_attributes)
-          end.not_to change { invitable.reload.user.organization.present? }
+          }.not_to change { invitable.reload.user.organization.present? }
         end
       end
     end
@@ -41,9 +41,9 @@ RSpec.describe Account, type: :model do
     context 'with an invitation token' do
       let(:account) { create(:account, invitation_token: '123') }
       it 'does not send a password reset email' do
-        expect do
+        expect {
           account.send_reset_password_instructions
-        end.not_to change { ActionMailer::Base.deliveries.count }
+        }.not_to change { ActionMailer::Base.deliveries.count }
       end
     end
   end

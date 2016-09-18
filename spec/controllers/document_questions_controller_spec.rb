@@ -12,9 +12,9 @@ RSpec.describe DocumentQuestionsController, type: :controller do
     attributes_for(:document_question)
   end
 
-  let(:invalid_attributes) do
+  let(:invalid_attributes) {
     { text: '', label: '', type: 'DocumentQuestion' }
-  end
+  }
 
   describe 'GET #new' do
     it 'assigns a new document_question as @question' do
@@ -34,9 +34,9 @@ RSpec.describe DocumentQuestionsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new DocumentQuestion' do
-        expect do
+        expect {
           post :create, params: { document_question: valid_attributes }
-        end.to change(DocumentQuestion, :count).by(1)
+        }.to change(DocumentQuestion, :count).by(1)
       end
 
       it 'assigns a newly created document_question as @question' do
@@ -66,16 +66,16 @@ RSpec.describe DocumentQuestionsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { text: 'New question text', label: 'New question label' }
-      end
+      }
 
       it 'updates the requested document_question' do
         document_question = survey.questions.create! valid_attributes
 
-        expect do
+        expect {
           put :update, params: { id: document_question.to_param, document_question: new_attributes }
-        end.to change { document_question.reload.text }.to(new_attributes[:text])
+        }.to change { document_question.reload.text }.to(new_attributes[:text])
       end
 
       it 'assigns the requested document_question as @question' do

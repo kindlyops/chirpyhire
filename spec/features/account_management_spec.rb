@@ -28,7 +28,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       end
 
       context 'but the Geocoder API limit is reached' do
-        before do
+        before(:each) do
           allow(FakeGeocoder).to receive(:search).and_raise(Geocoder::OverQueryLimitError.new)
         end
 

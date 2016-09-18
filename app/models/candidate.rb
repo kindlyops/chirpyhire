@@ -38,6 +38,7 @@ class Candidate < ApplicationRecord
       'Past Week' => 1.week.ago,
       'Past Month' => 1.month.ago,
       'All Time' => Date.iso8601('2016-02-01')
+
     }[created_in]
     return self unless period.present?
 

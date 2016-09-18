@@ -10,9 +10,9 @@ RSpec.describe Threader do
       let!(:another_message) { create(:message, user: user, created_at: 3.days.ago) }
 
       it 'sets the child on the passed in message' do
-        expect do
-          described_class.new(message).call
-        end.to change { message.child }.from(nil).to(next_message)
+        expect{
+          Threader.new(message).call
+        }.to change { message.child }.from(nil).to(next_message)
       end
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Threader do
       let!(:fourth_oldest) { create(:message, user: user, created_at: 1.day.ago) }
 
       it 'threads appropriately' do
-        described_class.thread
+        Threader.thread
 
         expect(oldest.reload.child).to eq(second_oldest)
         expect(second_oldest.reload.child).to eq(third_oldest)
@@ -42,7 +42,7 @@ RSpec.describe Threader do
         let!(:fourth_oldest) { create(:message, user: user, created_at: oldest.created_at) }
 
         it 'threads appropriately' do
-          described_class.thread
+          Threader.thread
 
           expect(oldest.reload.child).to eq(second_oldest)
           expect(second_oldest.reload.child).to eq(third_oldest)

@@ -22,3 +22,8 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
     - 'config/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+

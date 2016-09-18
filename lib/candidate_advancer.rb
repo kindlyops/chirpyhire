@@ -28,6 +28,7 @@ class CandidateAdvancer
       next_unasked_question.inquire(user)
     else
       qualify_candidate
+
     end
   end
 

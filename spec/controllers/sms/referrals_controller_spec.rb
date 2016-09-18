@@ -23,9 +23,9 @@ RSpec.describe Sms::ReferralsController, vcr: { cassette_name: 'ReferralsControl
         let!(:referrer) { create(:referrer, user: sender) }
 
         it 'creates two messages' do
-          expect do
+          expect {
             post :create, params: params
-          end.to change { sender.messages.count }.by(2)
+          }.to change { sender.messages.count }.by(2)
         end
 
         it 'sends the user a template message to send to the referred candidate' do
@@ -34,58 +34,58 @@ RSpec.describe Sms::ReferralsController, vcr: { cassette_name: 'ReferralsControl
         end
 
         it 'creates a referral' do
-          expect do
+          expect {
             post :create, params: params
-          end.to change { referrer.referrals.count }.by(1)
+          }.to change { referrer.referrals.count }.by(1)
         end
 
         context 'without an existing candidate' do
           it 'creates a candidate' do
-            expect do
+            expect {
               post :create, params: params
-            end.to change { organization.candidates.count }.by(1)
+            }.to change { organization.candidates.count }.by(1)
           end
 
           context "without a user with the candidate's phone number" do
             it 'creates a user' do
-              expect do
+              expect {
                 post :create, params: params
-              end.to change { organization.users.count }.by(1)
+              }.to change { organization.users.count }.by(1)
             end
           end
 
           context "with a user with the candidate's phone number" do
-            before do
+            before(:each) do
               create(:user, organization: organization, phone_number: '+14047908943')
             end
 
             it 'does not create a new user' do
-              expect do
+              expect {
                 post :create, params: params
-              end.not_to change { User.count }
+              }.not_to change { User.count }
             end
           end
         end
 
         context 'with an existing candidate' do
-          before do
+          before(:each) do
             user = create(:user, phone_number: '+14047908943', organization: organization)
             create(:candidate, user: user)
           end
 
           it 'does not create a new candidate' do
-            expect do
+            expect {
               post :create, params: params
-            end.not_to change { Candidate.count }
+            }.not_to change { Candidate.count }
           end
         end
       end
 
       context 'that is not a referrer for the organization' do
         it 'creates one messages' do
-          expect do
+          expect {
             post :create, params: params
-          end.to change { sender.messages.count }.by(1)
+          }.to change { sender.messages.count }.by(1)
         end
 
         it 'lets the user know they are not a referrer' do
@@ -94,22 +94,22 @@ RSpec.describe Sms::ReferralsController, vcr: { cassette_name: 'ReferralsControl
         end
 
         it 'does not create a referral' do
-          expect do
+          expect {
             post :create, params: params
-          end.not_to change { Referral.count }
+          }.not_to change { Referral.count }
         end
 
         it 'does not create a candidate' do
-          expect do
+          expect {
             post :create, params: params
-          end.not_to change { Candidate.count }
+          }.not_to change { Candidate.count }
         end
 
         context "without a user with the candidate's phone number" do
           it 'does not create a user' do
-            expect do
+            expect {
               post :create, params: params
-            end.not_to change { User.count }
+            }.not_to change { User.count }
           end
         end
       end
@@ -122,23 +122,23 @@ RSpec.describe Sms::ReferralsController, vcr: { cassette_name: 'ReferralsControl
       end
 
       it 'creates a user for the sender' do
-        expect do
-          expect do
+        expect {
+          expect {
             post :create, params: params
-          end.not_to change { User.where.not(phone_number: params['From']).count }
-        end.to change { User.where(phone_number: params['From']).count }.by(1)
+          }.not_to change { User.where.not(phone_number: params['From']).count }
+        }.to change { User.where(phone_number: params['From']).count }.by(1)
       end
 
       it 'does not create a referral' do
-        expect do
+        expect {
           post :create, params: params
-        end.not_to change { Referral.count }
+        }.not_to change { Referral.count }
       end
 
       it 'does not create a candidate' do
-        expect do
+        expect {
           post :create, params: params
-        end.not_to change { Candidate.count }
+        }.not_to change { Candidate.count }
       end
     end
   end

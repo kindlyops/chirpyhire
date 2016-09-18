@@ -6,9 +6,9 @@ RSpec.describe Candidate, type: :model do
   describe '#activity tracking' do
     describe 'create' do
       it 'creates an activity' do
-        expect do
+        expect {
           candidate
-        end.to change { PublicActivity::Activity.count }.by(1)
+        }.to change { PublicActivity::Activity.count }.by(1)
         expect(candidate.activities.last.properties['status']).to eq('Potential')
       end
     end
@@ -18,18 +18,18 @@ RSpec.describe Candidate, type: :model do
 
       context 'changing the status' do
         it 'creates an activity' do
-          expect do
+          expect {
             candidate.update(status: 'Qualified')
-          end.to change { PublicActivity::Activity.count }.by(1)
+          }.to change { PublicActivity::Activity.count }.by(1)
           expect(candidate.activities.last.properties['status']).to eq('Qualified')
         end
       end
 
       context 'not changing the status' do
         it 'does not create an activity' do
-          expect do
+          expect {
             candidate.touch
-          end.not_to change { PublicActivity::Activity.count }
+          }.not_to change { PublicActivity::Activity.count }
         end
       end
     end
@@ -38,9 +38,9 @@ RSpec.describe Candidate, type: :model do
       let!(:candidate) { create(:candidate) }
 
       it 'does not create an activity' do
-        expect do
+        expect {
           candidate.destroy
-        end.not_to change { PublicActivity::Activity.count }
+        }.not_to change { PublicActivity::Activity.count }
       end
     end
   end

@@ -17,6 +17,7 @@ class YesNoQuestion < Question
     feature = candidate.candidate_features
                        .where(label: label)
                        .find_by("properties->>'child_class' = ?", 'yes_no')
+
     feature['properties']['yes_no_option'] == 'No'
   end
 

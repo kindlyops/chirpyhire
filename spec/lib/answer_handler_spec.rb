@@ -15,30 +15,30 @@ RSpec.describe AnswerHandler do
   describe '.call' do
     context 'with an answer format that matches the feature format' do
       it 'creates an answer' do
-        expect do
-          described_class.call(user, inquiry, message)
-        end.to change { Answer.count }.by(1)
+        expect {
+          AnswerHandler.call(user, inquiry, message)
+        }.to change { Answer.count }.by(1)
       end
 
       it 'creates a AutomatonJob' do
-        expect do
-          described_class.call(user, inquiry, message)
-        end.to have_enqueued_job(AutomatonJob).with(user, 'answer')
+        expect {
+          AnswerHandler.call(user, inquiry, message)
+        }.to have_enqueued_job(AutomatonJob).with(user, 'answer')
       end
 
       context 'when the inquiry has already been answered' do
         let!(:inquiry) { create(:inquiry, :with_answer, message: message, question: question) }
 
         it 'does not create an answer' do
-          expect do
-            described_class.call(user, inquiry, message)
-          end.not_to change { Answer.count }
+          expect {
+            AnswerHandler.call(user, inquiry, message)
+          }.not_to change { Answer.count }
         end
 
         it 'does not create an AutomatonJob' do
-          expect do
-            described_class.call(user, inquiry, message)
-          end.not_to have_enqueued_job(AutomatonJob)
+          expect {
+            AnswerHandler.call(user, inquiry, message)
+          }.not_to have_enqueued_job(AutomatonJob)
         end
       end
     end
@@ -49,9 +49,9 @@ RSpec.describe AnswerHandler do
         let!(:message) { create(:message, user: user, body: body) }
 
         it 'does not create an answer' do
-          expect do
-            described_class.call(user, inquiry, message)
-          end.not_to change { Answer.count }
+          expect {
+            AnswerHandler.call(user, inquiry, message)
+          }.not_to change { Answer.count }
         end
       end
     end

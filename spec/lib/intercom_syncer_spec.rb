@@ -15,50 +15,50 @@ RSpec.describe IntercomSyncer, vcr: { cassette_name: 'IntercomSyncer' } do
   subject { IntercomSyncer.new(organization) }
 
   it 'sets the candidates count' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['candidates_count'] }.from(nil).to(0)
+    }.to change { fetch_company.call.custom_attributes['candidates_count'] }.from(nil).to(0)
   end
 
   it 'sets the qualified candidates count' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['qualified_candidates_count'] }.from(nil).to(0)
+    }.to change { fetch_company.call.custom_attributes['qualified_candidates_count'] }.from(nil).to(0)
   end
 
   it 'sets the hired candidates count' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['hired_candidates_count'] }.from(nil).to(0)
+    }.to change { fetch_company.call.custom_attributes['hired_candidates_count'] }.from(nil).to(0)
   end
 
   it 'sets the bad fit candidates count' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['bad_fit_candidates_count'] }.from(nil).to(0)
+    }.to change { fetch_company.call.custom_attributes['bad_fit_candidates_count'] }.from(nil).to(0)
   end
 
   it 'sets the trial percentage remaining' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['trial_percentage_remaining'] }.from(nil).to(100)
+    }.to change { fetch_company.call.custom_attributes['trial_percentage_remaining'] }.from(nil).to(100)
   end
 
   it 'sets the trial remaining messages count' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['trail_remaining_messages_count'] }.from(nil).to(500)
+    }.to change { fetch_company.call.custom_attributes['trail_remaining_messages_count'] }.from(nil).to(500)
   end
 
   it 'sets the subscription state' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['subscription_state'] }.from(nil).to('trialing')
+    }.to change { fetch_company.call.custom_attributes['subscription_state'] }.from(nil).to('trialing')
   end
 
   it 'sets the phone number' do
-    expect do
+    expect{
       subject.call
-    end.to change { fetch_company.call.custom_attributes['phone_number'] }.from(nil).to(phone_number.phony_formatted)
+    }.to change { fetch_company.call.custom_attributes['phone_number'] }.from(nil).to(phone_number.phony_formatted)
   end
 end

@@ -43,7 +43,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         context 'at the monthly message limit' do
-          before do
+          before(:each) do
             Plan.messages_per_quantity = 1
             create(:message, user: account.user)
           end
@@ -55,7 +55,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         context 'above the monthly message limit' do
-          before do
+          before(:each) do
             Plan.messages_per_quantity = 1
             create_list(:message, 2, user: account.user)
           end
@@ -78,7 +78,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         context 'at the trial message limit' do
-          before do
+          before(:each) do
             create(:message, user: account.user)
           end
 
@@ -89,7 +89,7 @@ RSpec.describe ApplicationController, type: :controller do
         end
 
         context 'above the trial message limit' do
-          before do
+          before(:each) do
             create_list(:message, 2, user: account.user)
           end
 
