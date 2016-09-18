@@ -1,7 +1,6 @@
-# frozen_string_literal: true
 class MediaInstance < ApplicationRecord
   belongs_to :message
-  URI_BASE = 'https://api.twilio.com'
+  URI_BASE = 'https://api.twilio.com'.freeze
 
   IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze
 

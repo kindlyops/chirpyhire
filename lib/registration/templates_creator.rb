@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Registration
   class TemplatesCreator
     def initialize(organization)

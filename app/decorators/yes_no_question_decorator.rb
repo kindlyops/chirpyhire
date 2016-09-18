@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class YesNoQuestionDecorator < Draper::Decorator
   delegate_all
 

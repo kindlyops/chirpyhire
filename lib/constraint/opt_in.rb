@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Constraint
   class OptIn
     OPT_IN_RESPONSES = %w(START).freeze

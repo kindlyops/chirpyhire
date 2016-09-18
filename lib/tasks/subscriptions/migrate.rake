@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 namespace :subscriptions do
   desc 'Migrates subscription flag status from candidates to users.'
   task :migrate, [:update] => [:environment] do |_task, args|

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class QuestionsController < ApplicationController
   decorates_assigned :question
 

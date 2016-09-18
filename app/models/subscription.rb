@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Subscription < ApplicationRecord
   INACTIVE_STATUSES = %w(past_due canceled unpaid).freeze
   belongs_to :plan

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Plan < ApplicationRecord
   def self.messages_per_quantity
     @messages_per_quantity ||= 500

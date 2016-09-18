@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class FakeGeocoder
   Result = Struct.new(:data) do
     def address

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Constraint
   class OptOut
     OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze

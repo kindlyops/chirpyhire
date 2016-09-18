@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AnswerHandler
   def self.call(sender, inquiry, message)
     new(sender, inquiry, message).call

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Messageable
   extend ActiveSupport::Concern
 

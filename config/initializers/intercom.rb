@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 intercom_client = Intercom::Client.new(
   app_id: ENV.fetch('INTERCOM_APP_ID', 'ys27hogk'),
   api_key: ENV.fetch('INTERCOM_API_KEY')

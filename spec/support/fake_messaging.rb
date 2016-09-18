@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class FakeMessaging
   MediaInstance = Struct.new(:content_type, :uri) do
     IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Messaging
   class Message
     def initialize(message)

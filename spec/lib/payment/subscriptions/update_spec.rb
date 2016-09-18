@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Payment::Subscriptions::Update, vcr: { cassette_name: 'Payment::Subscriptions::Update-call' } do

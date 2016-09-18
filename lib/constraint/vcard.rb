@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Constraint
   class Vcard
     MEDIA_TYPES = %w(text/vcard

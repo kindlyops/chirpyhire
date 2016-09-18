@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class MessagesController < ApplicationController
   decorates_assigned :message, :messages, :user
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized

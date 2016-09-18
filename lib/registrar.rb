@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Registrar
   def initialize(account)
     @account = account

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class SurveyAdvancer
   def self.call(organization)
     new(organization).call

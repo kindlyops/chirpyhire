@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 namespace :addresses do
   desc 'Creates csv report of potential address changes. Pass update=true to make the change.'
   task :setter, [:update] => [:environment] do |_task, args|

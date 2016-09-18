@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Template < ApplicationRecord
   belongs_to :organization
   has_many :notifications

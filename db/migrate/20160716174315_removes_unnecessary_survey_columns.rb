@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class RemovesUnnecessarySurveyColumns < ActiveRecord::Migration[5.0]
   def change
     remove_reference :candidate_features, :persona_feature, index: true, foreign_key: true

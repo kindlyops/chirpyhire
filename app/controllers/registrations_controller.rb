@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class RegistrationsController < Devise::RegistrationsController
   before_action :fetch_address, only: :create
 

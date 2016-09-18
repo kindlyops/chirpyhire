@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Features
   module InvitationHelpers
     def send_invitation_to(email)

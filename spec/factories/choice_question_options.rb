@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 FactoryGirl.define do
   factory :choice_question_option do
     letter { [*'a'..'z'].sample }

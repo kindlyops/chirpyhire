@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddressRefresher
   def initialize(message, csv: nil)
     @message = message

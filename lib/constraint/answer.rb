@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Constraint
   class Answer
     def matches?(request)

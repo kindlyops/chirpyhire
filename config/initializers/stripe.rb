@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 if Rails.env.production?
   Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
   StripeEvent.authentication_secret = ENV.fetch('STRIPE_WEBHOOK_SECRET')

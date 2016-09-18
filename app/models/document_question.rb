@@ -1,6 +1,5 @@
-# frozen_string_literal: true
 class DocumentQuestion < Question
-  URI_BASE = 'https://api.twilio.com'
+  URI_BASE = 'https://api.twilio.com'.freeze
   def self.extract(message, _inquiry)
     properties = fetch_properties(message)
     properties[:child_class] = 'document'

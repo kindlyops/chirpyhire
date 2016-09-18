@@ -1,9 +1,8 @@
-# frozen_string_literal: true
 module Maps
   class CandidatesController < ApplicationController
     skip_after_action :verify_policy_scoped
     skip_after_action :verify_authorized
-    DEFAULT_FILTER = 'Qualified'
+    DEFAULT_FILTER = 'Qualified'.freeze
 
     def show
       determine_status

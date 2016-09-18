@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 namespace :internal do
   desc 'Syncs with intercom'
   task intercom: :environment do |_task|

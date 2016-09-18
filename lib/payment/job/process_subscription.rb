@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Payment
   module Job
     class ProcessSubscription < ApplicationJob

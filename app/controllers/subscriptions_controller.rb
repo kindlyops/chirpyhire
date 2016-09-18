@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class SubscriptionsController < ApplicationController
   skip_before_action :block_invalid_subscriptions
   before_action :ensure_new_subscription, only: [:new, :create]

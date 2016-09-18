@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class DeviseInvitableAddToAccounts < ActiveRecord::Migration
   def up
     change_table :accounts do |t|

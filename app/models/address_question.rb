@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddressQuestion < Question
   has_one :address_question_option,
           foreign_key: :question_id, inverse_of: :address_question

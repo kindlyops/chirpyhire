@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 FactoryGirl.define do
   factory :location do
     latitude 33.929966

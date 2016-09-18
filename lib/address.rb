@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Address
   delegate :id, :label, to: :feature
 

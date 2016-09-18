@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Candidate < ApplicationRecord
   include PublicActivity::Model
   include Filterable

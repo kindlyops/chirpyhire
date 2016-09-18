@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class ReportMailer < ActionMailer::Base
   default from: 'Harry Whelchel <harry@chirpyhire.com>',
           bcc: 'team@chirpyhire.com'

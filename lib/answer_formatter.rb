@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AnswerFormatter
   def initialize(answer, inquiry)
     @answer = answer

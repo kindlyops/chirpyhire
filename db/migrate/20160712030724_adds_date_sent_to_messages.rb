@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddsDateSentToMessages < ActiveRecord::Migration[5.0]
   def change
     add_column :messages, :sent_at, :datetime

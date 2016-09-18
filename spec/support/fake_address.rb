@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 FakeAddress = Struct.new(:address,
                          :latitude,
                          :longitude,

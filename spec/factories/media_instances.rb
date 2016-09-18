@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 FactoryGirl.define do
   factory :media_instance do
     content_type { %w(image/jpeg image/gif image/png image/bmp).sample }

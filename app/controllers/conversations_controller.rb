@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class ConversationsController < ApplicationController
   decorates_assigned :conversations
   skip_after_action :verify_policy_scoped, only: :index

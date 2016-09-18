@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class UserFinder
   def initialize(organization:, attributes:)
     @organization = organization

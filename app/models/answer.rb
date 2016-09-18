@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Answer < ApplicationRecord
   include Messageable
   belongs_to :inquiry

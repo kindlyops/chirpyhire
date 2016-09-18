@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Survey < ApplicationRecord
   belongs_to :organization
   belongs_to :actionable,

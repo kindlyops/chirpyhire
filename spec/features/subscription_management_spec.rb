@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Subscription Management', type: :feature, js: true do

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Activity < PublicActivity::Activity
   def self.qualified
     where("properties->>'status' = ?", 'Qualified')

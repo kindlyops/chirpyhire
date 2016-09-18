@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.feature 'Account Invitations', type: :feature, js: true do

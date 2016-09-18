@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class YesNoQuestion < Question
   REGEXP = /\A(yes|no|y|n)\z/
   def self.extract(message, inquiry)

@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddressQuestionOption < ApplicationRecord
   belongs_to :address_question,
              class_name: 'AddressQuestion',

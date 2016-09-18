@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddressFinder
   NAIVE_ADDRESS_REGEXP = /.+\d{5,}.*/m
 

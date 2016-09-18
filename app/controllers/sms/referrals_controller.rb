@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Sms
   class ReferralsController < Sms::BaseController
     def create

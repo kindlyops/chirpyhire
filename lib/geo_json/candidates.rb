@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module GeoJson
   class Candidates
     include ActionView::Helpers::DateHelper

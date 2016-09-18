@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 require 'rails_helper'
 
 RSpec.describe Sms::ReferralsController, vcr: { cassette_name: 'ReferralsController' }, type: :controller do

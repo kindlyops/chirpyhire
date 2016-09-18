@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class SurveysController < ApplicationController
   decorates_assigned :survey
 

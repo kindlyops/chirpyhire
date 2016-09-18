@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class AddsActionableToRulesTemplatesAndCandidatePersonas < ActiveRecord::Migration[5.0]
   def change
     add_reference :rules, :actionable, index: true, foreign_key: true

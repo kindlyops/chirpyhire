@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module BasicAuth
   def http_login(username, password)
     @env ||= {}

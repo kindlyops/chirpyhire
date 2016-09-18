@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 namespace :messages do
   desc 'Set build relationships between messages'
   task thread: :environment do |_task|

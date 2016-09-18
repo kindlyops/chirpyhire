@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class YesNo
   delegate :label, to: :feature
   def initialize(feature)

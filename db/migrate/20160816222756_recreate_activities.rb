@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # Migration responsible for creating a table with activities
 class RecreateActivities < ActiveRecord::Migration
   # Create table

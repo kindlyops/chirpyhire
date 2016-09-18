@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 module Registration
   class CandidateFeaturesCreator
     def initialize(user)

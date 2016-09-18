@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class Rule < ApplicationRecord
   TRIGGERS = %w(subscribe screen answer).freeze
   belongs_to :organization

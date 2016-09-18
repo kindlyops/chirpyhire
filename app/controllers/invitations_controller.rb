@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class InvitationsController < Devise::InvitationsController
   before_action :add_user_params, only: :update
 

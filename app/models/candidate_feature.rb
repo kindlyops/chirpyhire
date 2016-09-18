@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 class CandidateFeature < ApplicationRecord
   belongs_to :candidate
 
