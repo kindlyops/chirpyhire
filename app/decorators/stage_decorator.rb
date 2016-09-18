@@ -5,7 +5,7 @@ class StageDecorator < Draper::Decorator
     delete_button_class = if not_deletable then 'disabled' else '' end
     delete_button_tipsy_class = if tipsy_needed then 'tipsy-needed-w' else '' end
 
-    "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order'>#{order}.</span> #{name}</div></div>\
+    "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order sortable-number'>#{order}.</span> #{name}</div></div>\
      <a class='delete-stage button #{delete_button_tipsy_class} #{delete_button_class}' \
         href='stages/delete/#{id}' \
         data-turbolinks='false' \

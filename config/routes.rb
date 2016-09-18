@@ -21,8 +21,9 @@ Rails.application.routes.draw do
   resources :choice_questions, except: :destroy
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
-  resources :stages, only: [:index, :create, :update]
+  put 'stages/reorder' => 'stages#reorder'
   get 'stages/delete/:id' => 'stages#destroy'
+  resources :stages, only: [:index, :create]
 
   namespace :maps do
     resources :candidates, only: [:index, :show]
@@ -34,7 +35,6 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'sms/base#unknown_message'
 
-  post 'stages/reorder' => 'stages#reorder'
 
   mount StripeEvent::Engine, at: '/stripe/events'
 

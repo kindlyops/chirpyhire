@@ -19,9 +19,11 @@ class StagesController < ApplicationController
 
   def reorder
     skip_authorization
-    stages_with_order = params[:stages_with_order]
-    current_organization.reorder_stages(stages_with_order)
-    redirect_to stages_url, turbolinks: true, notice: "Nice! Stage order saved."
+    stages_with_new_order = scoped_stages.map do |stage|
+      { id: stage.id, order: params[stage.id.to_s] }
+    end
+    current_organization.reorder_stages(stages_with_new_order)
+    redirect_to stages_url, notice: "Nice! Stage order saved."
   end
 
   def destroy

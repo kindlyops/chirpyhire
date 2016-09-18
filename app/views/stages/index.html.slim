@@ -5,13 +5,15 @@
     h1 Candidate Stages
   p Add a new stage or reorder current stages. 
   hr
-  ul.stages
-    - @stages.each do |stage|
-      li.stage.drag-and-drop data-id=stage.id = stage.list_item
+  = form_tag("/stages/reorder", method: "put") do
+    ul.stages
+      - @stages.each_with_index do |stage, i|
+        li.stage.drag-and-drop data-id=stage.id
+          = hidden_field_tag(stage.id, stage.order, class: "hidden-order")
+          = stage.list_item
+    = submit_tag("Save order", class:"save-order-button button")
   = form_tag("/stages", method: "post") do
     .new-stage-wrapper.drag-and-drop
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
       button title="Add Stage" id="add-stage"
         i.fa.fa-plus
-  a.save-order-button.button href="javascript:void(0)" Save order
-

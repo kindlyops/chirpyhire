@@ -3,7 +3,7 @@ window.App = window.App || {};
 $(window).load(function() {
 	var delay = 400, 
 		className= "tipsy-font",
-		options = {className: className, delayIn: delay, delayOut: delay, fade: true}; 
+		options = {className: className, delayIn: delay, delayOut: delay / 2, fade: true}; 
 	$(".tipsy-needed").tipsy(options);
 	options.gravity = 'w';
 	$(".tipsy-needed-w").tipsy(options);

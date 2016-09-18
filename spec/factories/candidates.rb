@@ -14,7 +14,9 @@ FactoryGirl.define do
     end
 
     before(:create) do |candidate, evaluator|
-      if evaluator.organization
+      if evaluator.user.present?
+        candidate.stage = evaluator.user.organization.potential_stage
+      elsif evaluator.organization
         candidate.user = create(:user, organization: evaluator.organization)
       end
     end

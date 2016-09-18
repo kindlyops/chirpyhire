@@ -71,9 +71,9 @@ class Candidate < ApplicationRecord
 
   private 
 
-  def ensure_candidate_has_stage(cand)
-    unless cand.stage.present?
-      cand.stage = organization.potential_stage
+  def ensure_candidate_has_stage
+    unless stage.present?
+      stage = organization.potential_stage
     end
   end
 

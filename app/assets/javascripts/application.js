@@ -35,4 +35,7 @@
 //= require payment
 //= require subscription
 //= require flash
+//
+// Internal library code
+//= require sortable
 
