@@ -39,7 +39,7 @@ class StagesController < ApplicationController
     stage = authorize(Stage.new(
       organization: current_organization,
       name: new_stage_name,
-      order: current_organization.stages.map(&:order).max + 1))
+      order: current_organization.stages.maximum(:order) + 1))
     stage.save
   end
 

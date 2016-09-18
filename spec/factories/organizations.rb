@@ -21,7 +21,7 @@ FactoryGirl.define do
     end
 
     after(:build) do |organization|
-      organization.stages = Stage.defaults
+      organization.stages = StageDefaults.defaults
     end
   end
 end

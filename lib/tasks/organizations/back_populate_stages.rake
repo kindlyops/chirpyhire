@@ -3,7 +3,7 @@ namespace :organizations do
   task :back_populate_stages => :environment do 
     Organization.find_each do |org|
       unless org.stages.present? and org.stages.any?
-        Stage.defaults(org.id).each do |stage|
+        StageDefaults.defaults(org.id).each do |stage|
           stage.save!
         end
       end

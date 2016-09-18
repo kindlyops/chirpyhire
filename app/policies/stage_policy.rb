@@ -5,7 +5,7 @@ class StagePolicy < ApplicationPolicy
   end
 
   def destroy?
-    @record.default_stage_mapping.nil? && @record.candidates.empty?
+    record.standard_stage_mapping.nil? && record.candidates.empty?
   end
 
   def reorder?

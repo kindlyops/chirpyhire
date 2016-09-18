@@ -123,7 +123,7 @@ class Organization < ApplicationRecord
 
   before_create do |organization|
     unless organization.stages.present?
-      organization.stages = Stage.defaults
+      organization.stages = StageDefaults.defaults
     end
   end
 
