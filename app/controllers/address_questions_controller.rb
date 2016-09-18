@@ -11,6 +11,13 @@ class AddressQuestionsController < QuestionsController
   end
 
   def built_question_params
-    super.merge(type: 'AddressQuestion', address_question_option_attributes: { distance: 10, latitude: current_organization.latitude, longitude: current_organization.longitude })
+    super.merge(
+      type: 'AddressQuestion',
+      address_question_option_attributes: {
+        distance: 10,
+        latitude: current_organization.latitude,
+        longitude: current_organization.longitude
+      }
+    )
   end
 end

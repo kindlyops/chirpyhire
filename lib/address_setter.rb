@@ -35,7 +35,10 @@ class AddressSetter
 
   def fetch_row(message)
     new_address = message.address
+    row(message, new_address)
+  end
 
+  def row(message, new_address)
     [message.id,
      message.body,
      current_address.formatted_address,
@@ -76,16 +79,19 @@ class AddressSetter
     messages.each do |message|
       next unless message.address?
 
-      if csv.present?
-        row = fetch_row(message)
-        csv << row
-      else
-        create_address(message)
-      end
+      create_or_append_to_csv(csv, message)
       address_found = true
       break
     end
 
     address_found
+  end
+
+  def create_or_append_to_csv(csv, message)
+    if csv.present?
+      csv << fetch_row(message)
+    else
+      create_address(message)
+    end
   end
 end

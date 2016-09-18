@@ -10,9 +10,15 @@ module Report
     delegate :first_name, to: :recipient, prefix: true
 
     def humanized_week
-      start_of_week = (date - 7).strftime("%B #{(date - 7).day.ordinalize}")
-      end_of_week = (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
       start_of_week + String.new(' - ') + end_of_week
+    end
+
+    def start_of_week
+      (date - 7).strftime("%B #{(date - 7).day.ordinalize}")
+    end
+
+    def end_of_week
+      (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
     end
 
     def hired_count

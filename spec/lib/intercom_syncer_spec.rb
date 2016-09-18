@@ -4,13 +4,13 @@ require 'rails_helper'
 RSpec.describe IntercomSyncer, vcr: { cassette_name: 'IntercomSyncer' } do
   let(:phone_number) { '+1234567890' }
   let(:organization) { create(:organization, :with_subscription, phone_number: phone_number, id: 1001) }
-
+  let(:communicator) { CustomerCommunicator.instance.client }
   before do
-    $intercom.companies.create(company_id: organization.id)
+    communicator.companies.create(company_id: organization.id)
   end
 
   let(:fetch_company) do
-    -> { $intercom.companies.find(company_id: organization.id) }
+    -> { communicator.companies.find(company_id: organization.id) }
   end
 
   subject { IntercomSyncer.new(organization) }

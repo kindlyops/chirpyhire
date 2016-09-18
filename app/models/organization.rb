@@ -58,7 +58,7 @@ class Organization < ApplicationRecord
   end
 
   def users_with_unread_messages_count
-    users.has_unread_messages.count
+    users.with_unread_messages.count
   end
 
   private

@@ -1,25 +1,32 @@
 # frozen_string_literal: true
-class Sms::BaseController < ActionController::Base
-  protect_from_forgery with: :null_session
-  after_action :set_header
+module Sms
+  class BaseController < ActionController::Base
+    protect_from_forgery with: :null_session
+    after_action :set_header
 
-  def unknown_message
-    UnknownMessageHandlerJob.perform_later(sender, params['MessageSid'])
+    def unknown_message
+      UnknownMessageHandlerJob.perform_later(sender, params['MessageSid'])
 
-    head :ok
-  end
+      head :ok
+    end
 
-  private
+    private
 
-  def sender
-    @sender ||= UserFinder.new(attributes: { phone_number: params['From'] }, organization: organization).call
-  end
+    def sender
+      @sender ||= begin
+        UserFinder.new(
+          attributes: { phone_number: params['From'] },
+          organization: organization
+        ).call
+      end
+    end
 
-  def organization
-    @organization ||= Organization.find_by(phone_number: params['To'])
-  end
+    def organization
+      @organization ||= Organization.find_by(phone_number: params['To'])
+    end
 
-  def set_header
-    response.headers['Content-Type'] = 'text/xml'
+    def set_header
+      response.headers['Content-Type'] = 'text/xml'
+    end
   end
 end

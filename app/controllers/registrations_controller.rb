@@ -22,10 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def sign_up_params
-    allow = [:email, :password, :password_confirmation, :agreed_to_terms,
-             [user_attributes: [:phone_number, :name,
-                                organization_attributes: [:name,
-                                                          location_attributes: [:full_street_address, :latitude, :longitude, :city, :state, :state_code, :postal_code, :country, :country_code]]]]]
+    allow = account_attributes.push([user_attributes: user_attributes])
     params.require(resource_name).permit(allow)
   end
 
@@ -34,24 +31,67 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def fetch_address
-    build_resource(sign_up_params)
+    with_rate_limit_protection do
+      build_resource(sign_up_params)
 
-    finder = AddressFinder.new(location_params[:full_street_address])
-    if finder.found?
-      %i(full_street_address latitude longitude city state state_code postal_code country country_code).each do |field|
-        location_params[field] = finder.send(field)
+      if finder.found?
+        populate_location_attributes
+      else
+        flash[:alert] = "We couldn't find that address. Please provide the"\
+        " city, state, and zipcode if you haven't yet."
+        render :new
       end
-    else
-      flash[:alert] = "We couldn't find that address. Please provide the city, state, and zipcode if you haven't yet."
-      render :new
     end
-  rescue Geocoder::OverQueryLimitError
-    Rollbar.debug($ERROR_INFO.message)
-    flash[:alert] = "Sorry but we're a little overloaded right now and can't find addresses. Please try again in a few minutes."
+  end
+
+  def finder
+    @finder ||= AddressFinder.new(location_attributes[:full_street_address])
+  end
+
+  def with_rate_limit_protection
+    yield
+  rescue Geocoder::OverQueryLimitError => e
+    Rollbar.debug(e.message)
+    flash[:alert] = "Sorry but we're a little overloaded right now and can't "\
+    'find addresses. Please try again in a few minutes.'
     render :new
   end
 
-  def location_params
-    params[:account][:user_attributes][:organization_attributes][:location_attributes]
+  def populate_location_attributes
+    location_attribute_keys.each do |field|
+      location_attributes[field] = finder.send(field)
+    end
+  end
+
+  def location_attributes
+    organization_attributes[:location_attributes]
+  end
+
+  def organization_attributes
+    params[:account][:user_attributes][:organization_attributes]
+  end
+
+  def user_attributes
+    [:phone_number, :name, organization_attributes: organization_attribute_keys]
+  end
+
+  def organization_attribute_keys
+    [:name, location_attributes: location_attribute_keys]
+  end
+
+  def account_attributes
+    %i(email password password_confirmation agreed_to_terms)
+  end
+
+  def location_attribute_keys
+    %i(full_street_address
+       latitude
+       longitude
+       city
+       state
+       state_code
+       postal_code
+       country
+       country_code)
   end
 end

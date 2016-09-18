@@ -21,19 +21,10 @@ class AddressRefresher
   attr_reader :message, :csv
 
   def create_or_update_address
-    fake_inquiry = Struct.new(:question).new({})
-
     if address_feature.present?
-      address_feature.update(
-        properties: AddressQuestion.extract(message, fake_inquiry)
-      )
-      "Updated candidate feature #{address_feature.id}"
+      update_address_feature
     else
-      address_feature = candidate.candidate_features.create(
-        label: question.label,
-        properties: AddressQuestion.extract(message, fake_inquiry)
-      )
-      "Created candidate feature #{address_feature.id}"
+      create_address_feature
     end
   end
 
@@ -42,12 +33,36 @@ class AddressRefresher
               message.body,
               current_address.formatted_address,
               new_address.address,
-              current_address.id,
-              new_address.latitude,
-              new_address.longitude,
-              new_address.postal_code,
-              new_address.country,
-              new_address.city]
+              current_address.id].concat(new_address_elements)
+  end
+
+  def new_address_elements
+    [
+      new_address.latitude,
+      new_address.longitude,
+      new_address.postal_code,
+      new_address.country,
+      new_address.city
+    ]
+  end
+
+  def create_address_feature
+    address_feature = candidate.candidate_features.create(
+      label: question.label,
+      properties: AddressQuestion.extract(message, fake_inquiry)
+    )
+    "Created candidate feature #{address_feature.id}"
+  end
+
+  def update_address_feature
+    address_feature.update(
+      properties: AddressQuestion.extract(message, fake_inquiry)
+    )
+    "Updated candidate feature #{address_feature.id}"
+  end
+
+  def fake_inquiry
+    @fake_inquiry ||= Struct.new(:question).new({})
   end
 
   def candidate

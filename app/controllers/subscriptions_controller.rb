@@ -32,11 +32,7 @@ class SubscriptionsController < ApplicationController
     @subscription = authorized_subscription
 
     if stripe_token? && @subscription.update(permitted_attributes(Subscription))
-      current_organization.update(stripe_token: params[:stripe_token])
-      @subscription.activate!
-      Payment::Job::ProcessSubscription.perform_later(
-        @subscription, current_account.email
-      )
+      activate_subscription(@subscription)
       redirect_to subscription_path(@subscription),
                   notice: 'Nice! Subscription created.'
     else
@@ -56,6 +52,14 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def activate_subscription(subscription)
+    current_organization.update(stripe_token: params[:stripe_token])
+    subscription.activate!
+    Payment::Job::ProcessSubscription.perform_later(
+      subscription, current_account.email
+    )
+  end
 
   def authorized_subscription
     @authorized_subscription ||= authorize current_organization.subscription

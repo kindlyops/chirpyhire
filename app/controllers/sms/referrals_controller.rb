@@ -3,9 +3,7 @@ module Sms
   class ReferralsController < Sms::BaseController
     def create
       if referrer.present?
-        referrer.refer(candidate)
-        sender.receive_message(body: thanks)
-        sender.receive_message(body: notice)
+        refer_and_notify
       else
         sender.receive_message(body: not_referrer)
       end
@@ -13,6 +11,12 @@ module Sms
     end
 
     private
+
+    def refer_and_notify
+      referrer.refer(candidate)
+      sender.receive_message(body: thanks)
+      sender.receive_message(body: notice)
+    end
 
     def vcard
       @vcard ||= Vcard.new(url: params['MediaUrl0'])

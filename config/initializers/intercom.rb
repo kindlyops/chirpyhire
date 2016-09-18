@@ -1,5 +1,9 @@
 # frozen_string_literal: true
-$intercom = Intercom::Client.new(app_id: ENV.fetch('INTERCOM_APP_ID', 'ys27hogk'), api_key: ENV.fetch('INTERCOM_API_KEY'))
+intercom_client = Intercom::Client.new(
+  app_id: ENV.fetch('INTERCOM_APP_ID', 'ys27hogk'),
+  api_key: ENV.fetch('INTERCOM_API_KEY')
+)
+CustomerCommunicator.instance.client = intercom_client
 
 IntercomRails.config do |config|
   # == Intercom app_id

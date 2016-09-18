@@ -12,6 +12,7 @@ AllCops:
     - 'spec/**/*'
     - 'bin/**/*'
     - 'app/dashboards/**/*'
+    - 'app/controllers/admin/**/*'
 
 Style/Documentation:
   Enabled: false

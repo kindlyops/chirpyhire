@@ -6,7 +6,7 @@ module ApplicationHelper
 
   def disable_turbolinks_caching
     content_for(:disable_turbolinks_caching) do
-      raw("<meta name='turbolinks-cache-control' content='no-cache'>")
+      safe_join(["<meta name='turbolinks-cache-control' content='no-cache'>"])
     end
   end
 end

@@ -16,15 +16,20 @@ class Registrar
 
   private
 
-  attr_reader :account, :bad_fit, :welcome, :thank_you, :survey
+  attr_reader :account, :survey
+  delegate :thank_you, to: :templates
 
   def setup_organization
-    create_templates
+    templates.call
     create_survey
-    create_questions
+    Registration::QuestionsCreator.new(survey).call
     create_rules
-    create_dummy_candidate_and_features
+    Registration::CandidateFeaturesCreator.new(user).call
     create_subscription
+  end
+
+  def templates
+    @templates ||= Registration::TemplatesCreator.new(organization)
   end
 
   def create_subscription
@@ -37,91 +42,9 @@ class Registrar
 
   def create_survey
     @survey = organization.create_survey(
-      bad_fit: bad_fit,
-      welcome: welcome,
-      thank_you: thank_you
-    )
-  end
-
-  def create_templates
-    create_bad_fit_template
-    create_welcome_template
-    create_thank_you_template
-  end
-
-  def create_bad_fit_template
-    @bad_fit = organization.templates.create(
-      name: 'Bad Fit',
-      body:
-        "Thank you very much for your interest. Unfortunately, we don't "\
-        'have a good fit for you at this time. If anything changes we will '\
-        'let you know.'
-    )
-  end
-
-  def create_welcome_template
-    @welcome = organization.templates.create(
-      name: 'Welcome',
-      body: "Hello this is #{organization.name}. We're so glad you are "\
-      'interested in learning about opportunities here. We have a few '\
-      'questions to ask you via text message.'
-    )
-  end
-
-  def create_thank_you_template
-    @thank_you = organization.templates.create(
-      name: 'Thank You', body: 'Thanks for your interest!'
-    )
-  end
-
-  def create_questions
-    create_address_question
-    create_transportation_question
-    create_availability_question
-  end
-
-  def create_address_question
-    address_question = questions.create!(
-      priority: 1,
-      label: 'Address',
-      type: 'AddressQuestion',
-      text: 'What is your street address and zipcode?'
-    )
-    create_address_question_option(address_question)
-  end
-
-  def create_address_question_option(address_question)
-    address_question.create_address_question_option(
-      distance: 10,
-      latitude: organization.latitude,
-      longitude: organization.longitude
-    )
-  end
-
-  def create_availability_question
-    questions.create!(
-      priority: 3,
-      label: 'Availability',
-      type: 'ChoiceQuestion',
-      text: 'What is your availability?',
-      choice_question_options_attributes: availability_options
-    )
-  end
-
-  def availability_options
-    [
-      { text: 'Live-in', letter: 'a' },
-      { text: 'Hourly', letter: 'b' },
-      { text: 'Both', letter: 'c' }
-    ]
-  end
-
-  def create_transportation_question
-    questions.create(
-      priority: 2,
-      label: 'Transportation',
-      type: 'YesNoQuestion',
-      text: 'Do you have reliable personal transportation?'
+      bad_fit: templates.bad_fit,
+      welcome: templates.welcome,
+      thank_you: templates.thank_you
     )
   end
 
@@ -131,53 +54,12 @@ class Registrar
     rules.create!(trigger: 'screen', actionable: thank_you.create_actionable)
   end
 
-  def create_dummy_candidate_and_features
-    candidate = user.create_candidate(status: 'Qualified')
-    create_address_feature(candidate)
-    create_availability_feature(candidate)
-    create_transportation_feature(candidate)
-  end
-
-  def create_address_feature(candidate)
-    candidate.candidate_features.create(label: 'Address', properties: {
-                                          child_class: 'address',
-                                          address: location.full_street_address,
-                                          latitude: location.latitude,
-                                          longitude: location.longitude,
-                                          postal_code: location.postal_code,
-                                          country: location.country,
-                                          city: location.city
-                                        })
-  end
-
-  def create_availability_feature(candidate)
-    candidate.candidate_features.create(label: 'Availability', properties: {
-                                          child_class: 'choice',
-                                          choice_option: 'Hourly'
-                                        })
-  end
-
-  def create_transportation_feature(candidate)
-    candidate.candidate_features.create(label: 'Transportation', properties: {
-                                          child_class: 'yes_no',
-                                          yes_no_option: 'Yes'
-                                        })
-  end
-
   def rules
     @rules ||= organization.rules
   end
 
-  def questions
-    @questions ||= survey.questions
-  end
-
   def organization
     @organization ||= account.organization
-  end
-
-  def location
-    @location ||= organization.location
   end
 
   def user

@@ -10,7 +10,7 @@ module DeviseHelper
     </div>
     HTML
 
-    html.html_safe
+    safe_join([html])
   end
 
   def devise_error_messages?

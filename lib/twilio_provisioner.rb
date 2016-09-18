@@ -33,9 +33,9 @@ class TwilioProvisioner
   def sub_account
     @sub_account ||= begin
       if organization.twilio_account_sid.present?
-        $twilio.accounts.get(organization.twilio_account_sid)
+        telefony.accounts.get(organization.twilio_account_sid)
       else
-        $twilio.accounts.create(friendly_name: organization.name)
+        telefony.accounts.create(friendly_name: organization.name)
       end
     end
   end
@@ -63,6 +63,10 @@ class TwilioProvisioner
       twilio_account_sid: sub_account.sid,
       twilio_auth_token: sub_account.auth_token
     )
+  end
+
+  def telefony
+    Telefony.instance.client
   end
 
   attr_reader :organization

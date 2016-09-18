@@ -11,9 +11,19 @@ class CandidateAdvancer
   def call
     return if organization.over_message_limit? || user.unsubscribed?
 
+    next_step
+  end
+
+  private
+
+  attr_reader :user
+  delegate :last_answer, :organization, :candidate, to: :user
+  delegate :survey, to: :organization
+
+  def next_step
     if initial_question?
       next_unasked_question.inquire(user, message_text: initial_message)
-    elsif last_question.rejects?(candidate)
+    elsif candidate_rejected?
       mark_as_bad_fit
     elsif next_unasked_question.present?
       next_unasked_question.inquire(user)
@@ -22,11 +32,9 @@ class CandidateAdvancer
     end
   end
 
-  private
-
-  attr_reader :user
-  delegate :last_answer, :organization, :candidate, to: :user
-  delegate :survey, to: :organization
+  def candidate_rejected?
+    last_question.rejects?(candidate)
+  end
 
   def initial_question?
     survey.questions.present? && user.inquiries.count.zero?
