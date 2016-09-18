@@ -13,95 +13,95 @@ RSpec.describe DocumentQuestionsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    { text: "", label: "", type: "DocumentQuestion" }
+    { text: '', label: '', type: 'DocumentQuestion' }
   }
 
-  describe "GET #new" do
-    it "assigns a new document_question as @question" do
+  describe 'GET #new' do
+    it 'assigns a new document_question as @question' do
       get :new, params: {}
       expect(assigns(:question)).to be_a_new(DocumentQuestion)
     end
   end
 
-  describe "GET #edit" do
-    it "assigns the requested document_question as @question" do
+  describe 'GET #edit' do
+    it 'assigns the requested document_question as @question' do
       document_question = survey.questions.create! valid_attributes
-      get :edit, params: {id: document_question.to_param}
+      get :edit, params: { id: document_question.to_param }
       expect(assigns(:question)).to eq(document_question)
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new DocumentQuestion" do
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new DocumentQuestion' do
         expect {
-          post :create, params: {document_question: valid_attributes}
+          post :create, params: { document_question: valid_attributes }
         }.to change(DocumentQuestion, :count).by(1)
       end
 
-      it "assigns a newly created document_question as @question" do
-        post :create, params: {document_question: valid_attributes}
+      it 'assigns a newly created document_question as @question' do
+        post :create, params: { document_question: valid_attributes }
         expect(assigns(:question)).to be_a(DocumentQuestion)
         expect(assigns(:question)).to be_persisted
       end
 
-      it "redirects to the survey" do
-        post :create, params: {document_question: valid_attributes}
+      it 'redirects to the survey' do
+        post :create, params: { document_question: valid_attributes }
         expect(response).to redirect_to(survey_path)
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved document_question as @question" do
-        post :create, params: {document_question: invalid_attributes}
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved document_question as @question' do
+        post :create, params: { document_question: invalid_attributes }
         expect(assigns(:question)).to be_a_new(DocumentQuestion)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {document_question: invalid_attributes}
-        expect(response).to render_template("new")
+        post :create, params: { document_question: invalid_attributes }
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
+  describe 'PUT #update' do
+    context 'with valid params' do
       let(:new_attributes) {
-        { text: "New question text", label: "New question label" }
+        { text: 'New question text', label: 'New question label' }
       }
 
-      it "updates the requested document_question" do
+      it 'updates the requested document_question' do
         document_question = survey.questions.create! valid_attributes
 
         expect {
-          put :update, params: {id: document_question.to_param, document_question: new_attributes}
-        }.to change{document_question.reload.text}.to(new_attributes[:text])
+          put :update, params: { id: document_question.to_param, document_question: new_attributes }
+        }.to change { document_question.reload.text }.to(new_attributes[:text])
       end
 
-      it "assigns the requested document_question as @question" do
+      it 'assigns the requested document_question as @question' do
         document_question = survey.questions.create! valid_attributes
-        put :update, params: {id: document_question.to_param, document_question: new_attributes}
+        put :update, params: { id: document_question.to_param, document_question: new_attributes }
         expect(assigns(:question)).to eq(document_question)
       end
 
-      it "redirects to the survey" do
+      it 'redirects to the survey' do
         document_question = survey.questions.create! valid_attributes
-        put :update, params: {id: document_question.to_param, document_question: new_attributes}
+        put :update, params: { id: document_question.to_param, document_question: new_attributes }
         expect(response).to redirect_to(survey_path)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the document_question as @question" do
+    context 'with invalid params' do
+      it 'assigns the document_question as @question' do
         document_question = survey.questions.create! valid_attributes
-        put :update, params: {id: document_question.to_param, document_question: invalid_attributes}
+        put :update, params: { id: document_question.to_param, document_question: invalid_attributes }
         expect(assigns(:question)).to eq(document_question)
       end
 
       it "re-renders the 'edit' template" do
         document_question = survey.questions.create! valid_attributes
-        put :update, params: {id: document_question.to_param, document_question: invalid_attributes}
-        expect(response).to render_template("edit")
+        put :update, params: { id: document_question.to_param, document_question: invalid_attributes }
+        expect(response).to render_template('edit')
       end
     end
   end

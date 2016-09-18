@@ -1,0 +1,28 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'db/**/*'
+    - 'script/**/*'
+    - 'bin/**/*'
+    - 'app/dashboards/**/*'
+    - 'app/controllers/admin/**/*'
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'

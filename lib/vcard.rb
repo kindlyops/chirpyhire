@@ -1,5 +1,4 @@
 class Vcard
-
   def initialize(url:)
     @url = url
   end

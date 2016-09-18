@@ -20,7 +20,7 @@ RSpec.describe SubscriptionPolicy do
   it { should permit_action(:destroy) }
   it { should permit_action(:show) }
 
-  context "subscription does not belong to the organization" do
+  context 'subscription does not belong to the organization' do
     let(:organization) { create(:organization) }
 
     it 'excludes subscription in resolved scope' do

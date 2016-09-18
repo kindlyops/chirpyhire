@@ -1,11 +1,10 @@
 class Plan < ApplicationRecord
-
   def self.messages_per_quantity
     @messages_per_quantity ||= 500
   end
 
-  def self.messages_per_quantity=(quantity)
-    @messages_per_quantity = quantity
+  class << self
+    attr_writer :messages_per_quantity
   end
 
   DEFAULT_QUANTITY = 2

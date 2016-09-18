@@ -1,12 +1,11 @@
 class AddressSetter
-
   def initialize(candidate, csv: nil)
     @candidate = candidate
     @csv = csv
   end
 
   def call
-    return "Address present" if candidate.address_feature.present?
+    return 'Address present' if candidate.address_feature.present?
     address_found = false
 
     messages.each do |message|
@@ -24,9 +23,9 @@ class AddressSetter
     end
 
     if address_found
-      "Address found"
+      'Address found'
     else
-      "No address found"
+      'No address found'
     end
   end
 
@@ -50,15 +49,15 @@ class AddressSetter
     new_address = message.address
 
     [message.id,
-    message.body,
-    current_address.formatted_address,
-    new_address.address,
-    current_address.id,
-    new_address.latitude,
-    new_address.longitude,
-    new_address.postal_code,
-    new_address.country,
-    new_address.city]
+     message.body,
+     current_address.formatted_address,
+     new_address.address,
+     current_address.id,
+     new_address.latitude,
+     new_address.longitude,
+     new_address.postal_code,
+     new_address.country,
+     new_address.city]
   end
 
   def address_feature
@@ -76,12 +75,10 @@ class AddressSetter
   end
 
   def question
-    @question ||= survey.questions.find_by(type: "AddressQuestion")
+    @question ||= survey.questions.find_by(type: 'AddressQuestion')
   end
 
   def survey
     @survey ||= candidate.organization.survey
   end
 end
-
-

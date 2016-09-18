@@ -3,7 +3,7 @@ FactoryGirl.define do
     survey
     sequence(:label) { |n| "label#{n}" }
     sequence(:priority)
-    type "ChoiceQuestion"
+    type 'ChoiceQuestion'
     text { Faker::Lorem.sentence }
 
     choice_question_options_attributes { [attributes_for(:choice_question_option)] }

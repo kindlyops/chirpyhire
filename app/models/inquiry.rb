@@ -15,4 +15,3 @@ class Inquiry < ApplicationRecord
     answer.blank?
   end
 end
-

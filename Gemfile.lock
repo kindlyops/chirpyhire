@@ -1,16 +1,4 @@
 GIT
-  remote: git://github.com/drapergem/draper.git
-  revision: de70008a5e68007d26bd9be87f9a83e0ea64750e
-  branch: rails-5
-  specs:
-    draper (2.1.0)
-      actionpack (~> 5.0)
-      activemodel (~> 5.0)
-      activemodel-serializers-xml (~> 1.0)
-      activesupport (~> 5.0)
-      request_store (~> 1.0)
-
-GIT
   remote: git://github.com/hwhelchel/administrate.git
   revision: 085028c9613036fda0125c2e16d9cbda8ce296ad
   branch: rails5
@@ -45,23 +33,6 @@ GIT
       activerecord (> 5.x)
       activesupport (> 5.x)
       builder (~> 3.1)
-
-GIT
-  remote: git://github.com/sinatra/rack-protection.git
-  revision: 7e723a74763bb83989d1249cdceb9cceb2ee6f01
-  specs:
-    rack-protection (2.0.0)
-      rack
-
-GIT
-  remote: git://github.com/sinatra/sinatra.git
-  revision: 285275b42fa1bf096a5c9559b6cead2f31b65b66
-  specs:
-    sinatra (2.0.0.pre.alpha)
-      mustermann (~> 0.4)
-      rack (~> 2.0)
-      rack-protection (~> 2.0)
-      tilt (~> 2.0)
 
 GIT
   remote: git@github.com:DockYard/capybara-email.git
@@ -122,8 +93,9 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    arel (7.1.1)
-    autoprefixer-rails (6.4.0.2)
+    arel (7.1.2)
+    ast (2.3.0)
+    autoprefixer-rails (6.4.1.1)
       execjs
     bcrypt (3.1.11)
     better_errors (2.1.1)
@@ -170,12 +142,18 @@ GEM
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
     diff-lcs (1.2.5)
-    domain_name (0.5.20160615)
+    domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.1.1)
     dotenv-rails (2.1.1)
       dotenv (= 2.1.1)
       railties (>= 4.0, < 5.1)
+    draper (3.0.0.pre1)
+      actionpack (~> 5.0)
+      activemodel (~> 5.0)
+      activemodel-serializers-xml (~> 1.0)
+      activesupport (~> 5.0)
+      request_store (~> 1.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -201,12 +179,12 @@ GEM
       json (~> 1.8)
     intercom-rails (0.3.2)
       activesupport (> 3.0)
-    jquery-rails (4.1.1)
+    jquery-rails (4.2.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    jwt (1.5.4)
+    jwt (1.5.5)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -228,8 +206,7 @@ GEM
       railties (>= 3.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
-    mustermann (0.4.0)
-      tool (~> 0.2)
+    mustermann (1.0.0.beta2)
     namae (0.10.2)
     naught (1.1.0)
     neat (1.8.0)
@@ -242,12 +219,13 @@ GEM
       pkg-config (~> 1.1.7)
     normalize-rails (4.1.1)
     orm_adapter (0.5.0)
-    paper_trail (5.2.0)
+    paper_trail (5.2.2)
       activerecord (>= 3.0, < 6.0)
-      activesupport (>= 3.0, < 6.0)
       request_store (~> 1.1)
+    parser (2.3.1.3)
+      ast (~> 2.2)
     pg (0.18.4)
-    phony (2.15.28)
+    phony (2.15.31)
     phony_rails (0.14.2)
       activesupport (>= 3.0)
       phony (~> 2.12)
@@ -256,6 +234,7 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
+    powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -277,6 +256,8 @@ GEM
       pundit (~> 1.0, >= 1.0.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.1)
+    rack-protection (2.0.0.beta2)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (5.0.0.1)
@@ -291,7 +272,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.0.1)
       sprockets-rails (>= 2.0.0)
-    rails-controller-testing (1.0.0)
+    rails-controller-testing (1.0.1)
       actionpack (~> 5.x)
       actionview (~> 5.x)
       activesupport (~> 5.x)
@@ -311,6 +292,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (2.1.0)
     rake (11.2.2)
     redis (3.3.1)
     request_store (1.3.1)
@@ -322,7 +304,7 @@ GEM
       netrc (~> 0.8)
     rollbar (2.11.5)
       multi_json
-    rspec-core (3.5.2)
+    rspec-core (3.5.3)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -330,7 +312,7 @@ GEM
     rspec-mocks (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
-    rspec-rails (3.5.1)
+    rspec-rails (3.5.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -339,6 +321,13 @@ GEM
       rspec-mocks (~> 3.5.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    rubocop (0.42.0)
+      parser (>= 2.3.1.1, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
     sass-rails (5.0.6)
@@ -347,19 +336,24 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    selectize-rails (0.12.2)
+    selectize-rails (0.12.3)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     sidekiq (4.0.2)
       concurrent-ruby (~> 1.0)
       connection_pool (~> 2.2, >= 2.2.0)
       redis (~> 3.2, >= 3.2.1)
+    sinatra (2.0.0.beta2)
+      mustermann (= 1.0.0.beta2)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0.beta2)
+      tilt (~> 2.0)
     skylight (0.10.6)
       activesupport (>= 3.0.0)
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
-    slim-rails (3.1.0)
+    slim-rails (3.1.1)
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
@@ -368,7 +362,7 @@ GEM
     sprockets (3.7.0)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.1.1)
+    sprockets-rails (3.2.0)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
@@ -379,7 +373,6 @@ GEM
     thread_safe (0.3.5)
     tilt (2.0.5)
     timecop (0.8.1)
-    tool (0.2.3)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -389,11 +382,12 @@ GEM
       multi_json (>= 1.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.1)
+    uglifier (3.0.2)
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    unicode-display_width (1.1.1)
     vcardigan (0.0.9)
     vcr (3.0.3)
     warden (1.2.6)
@@ -433,7 +427,7 @@ DEPENDENCIES
   devise (~> 4.2.0)
   devise_invitable (~> 1.6.0)
   dotenv-rails (~> 2.1.0)
-  draper!
+  draper (~> 3.0.0.pre1)
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.6.0)
@@ -460,16 +454,16 @@ DEPENDENCIES
   puma-heroku (~> 1.0.0)
   pundit!
   pundit-matchers (~> 1.0.2)
-  rack-protection!
   rails (~> 5.0.0)
   rails-controller-testing
   rails_12factor (~> 0.0.3)
   rollbar (~> 2.11.5)
   rspec-rails (~> 3.5.1)
+  rubocop (~> 0.42.0)
   sass-rails (~> 5.0.5)
   shoulda-matchers (~> 2.8.0)
   sidekiq (~> 4.0.0)
-  sinatra!
+  sinatra (~> 2.0.0.beta2)
   skylight (~> 0.10.4)
   slim-rails (~> 3.1.0)
   spring

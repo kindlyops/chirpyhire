@@ -3,7 +3,7 @@ class Sms::BaseController < ActionController::Base
   after_action :set_header
 
   def unknown_message
-    UnknownMessageHandlerJob.perform_later(sender, params["MessageSid"])
+    UnknownMessageHandlerJob.perform_later(sender, params['MessageSid'])
 
     head :ok
   end
@@ -11,14 +11,14 @@ class Sms::BaseController < ActionController::Base
   private
 
   def sender
-    @sender ||= UserFinder.new(attributes: {phone_number: params["From"]}, organization: organization).call
+    @sender ||= UserFinder.new(attributes: { phone_number: params['From'] }, organization: organization).call
   end
 
   def organization
-    @organization ||= Organization.find_by(phone_number: params["To"])
+    @organization ||= Organization.find_by(phone_number: params['To'])
   end
 
   def set_header
-    response.headers["Content-Type"] = "text/xml"
+    response.headers['Content-Type'] = 'text/xml'
   end
 end
