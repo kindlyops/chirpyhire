@@ -1,6 +1,7 @@
 module Messaging
   class Client
     cattr_accessor :client
+    cattr_accessor :master
     self.client = Twilio::REST::Client
 
     def initialize(context)
