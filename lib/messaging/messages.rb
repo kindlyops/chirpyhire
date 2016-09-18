@@ -17,7 +17,7 @@ module Messaging
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      super
+      messages.respond_to?(method_name, include_private = false) || super
     end
   end
 end

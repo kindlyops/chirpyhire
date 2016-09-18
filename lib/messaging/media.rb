@@ -27,7 +27,7 @@ module Messaging
     end
 
     def respond_to_missing?(method_name, include_private = false)
-      super
+      media.respond_to?(method, *args, &block) || super
     end
   end
 end

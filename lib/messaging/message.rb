@@ -13,16 +13,10 @@ module Messaging
       Messaging::Media.new(message.media)
     end
 
+    delegate :sid, :body, :direction, :date_sent, :date_created, to: :message
+
     private
 
     attr_reader :message
-
-    def method_missing(method, *args, &block)
-      message.send(method, *args, &block) || super
-    end
-
-    def respond_to_missing?(method_name, include_private = false)
-      super
-    end
   end
 end
