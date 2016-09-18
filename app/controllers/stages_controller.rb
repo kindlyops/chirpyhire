@@ -12,7 +12,6 @@ class StagesController < ApplicationController
     elsif create_new_stage(new_stage_name)
       redirect_to stages_url, notice: "Nice! Stage created."
     else
-      Rollbar.error(stage.errors)
       redirect_to stages_url, alert: "Oops! We were unable to create your stage."
     end
   end

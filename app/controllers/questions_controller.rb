@@ -14,7 +14,6 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to survey_url, notice: "Nice! Question saved."
     else
-      Rollbar.error(@question.errors)
       render :new
     end
   end
