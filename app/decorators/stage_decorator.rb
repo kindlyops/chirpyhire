@@ -6,7 +6,7 @@ class StageDecorator < Draper::Decorator
   end
 
   def delete_button_class
-    if not_deletable then 'disabled' else '' end
+    if StagePolicy.deletable(self) then '' else 'disabled' end
   end
 
   def delete_button_tipsy_class
@@ -24,10 +24,6 @@ class StageDecorator < Draper::Decorator
   end
 
   private
-
-  def not_deletable
-    standard_stage_mapping.present? || candidates.any?
-  end
 
   def tooltip_needed
     candidates.any? || standard_stage_mapping.present?

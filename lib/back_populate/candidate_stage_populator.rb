@@ -1,5 +1,5 @@
-class BackPopulate::CandidateStageRefresher
-  def self.refresh(candidate)
+class BackPopulate::CandidateStagePopulator
+  def self.populate(candidate)
     if candidate.status == "Potential" && !(candidate.stage.present? && candidate.stage.potential?)
       candidate.stage = candidate.organization.potential_stage
       candidate.save!
