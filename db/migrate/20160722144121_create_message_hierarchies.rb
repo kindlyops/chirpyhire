@@ -7,10 +7,10 @@ class CreateMessageHierarchies < ActiveRecord::Migration[5.0]
     end
 
     add_index :message_hierarchies, [:ancestor_id, :descendant_id, :generations],
-              unique: true,
-              name: 'message_anc_desc_idx'
+      unique: true,
+      name: "message_anc_desc_idx"
 
     add_index :message_hierarchies, [:descendant_id],
-              name: 'message_desc_idx'
+      name: "message_desc_idx"
   end
 end

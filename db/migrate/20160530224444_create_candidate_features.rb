@@ -7,7 +7,7 @@ class CreateCandidateFeatures < ActiveRecord::Migration[5.0]
       t.timestamps null: false
     end
 
-    add_index :candidate_features, :properties, using: :gin
+    add_index  :candidate_features, :properties, using: :gin
     add_reference :inquiries, :candidate_feature, null: false, index: true, foreign_key: true
   end
 end

@@ -16,7 +16,6 @@ class CreateActivities < ActiveRecord::Migration[5.0]
     add_index :activities, [:owner_id, :owner_type]
     add_index :activities, [:recipient_id, :recipient_type]
   end
-
   # Drop table
   def self.down
     drop_table :activities
