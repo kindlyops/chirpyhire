@@ -1,8 +1,6 @@
 class YesNoQuestion < Question
   REGEXP = /\A(yes|no|y|n)\z/
-  def self.extract(message, inquiry)
-    inquiry.question
-
+  def self.extract(message, _inquiry)
     properties = {}
     properties[:child_class] = 'yes_no'
 
