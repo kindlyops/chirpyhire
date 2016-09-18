@@ -17,3 +17,8 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
