@@ -86,19 +86,19 @@ class Organization < ApplicationRecord
 
 
   def bad_fit_candidate_activities
-    candidate_activities.for_stage(self.bad_fit_stage)
+    candidate_activities.for_stage(bad_fit_stage)
   end
 
   def potential_candidate_activities
-    candidate_activities.for_stage(self.potential_stage)
+    candidate_activities.for_stage(potential_stage)
   end
 
   def qualified_candidate_activities
-    candidate_activities.for_stage(self.qualified_stage)
+    candidate_activities.for_stage(qualified_stage)
   end
 
   def hired_candidate_activities
-    candidate_activities.for_stage(self.hired_stage)
+    candidate_activities.for_stage(hired_stage)
   end
 
   def default_display_stage
@@ -109,7 +109,7 @@ class Organization < ApplicationRecord
     Organization.transaction do
       # To avoid Unique Key errors when updating sequentially
       # we set all values to their negative in a transaction
-      stages.find_each do |stage|
+      stages.find do |stage|
         stage.order *= -1
         stage.save!
       end

@@ -1,4 +1,4 @@
-module StageHelper
+class StageOrderer
    def self.reset_orders(organization_id) 
     stages = Organization.find(organization_id).stages.ordered
     Stage.transaction do

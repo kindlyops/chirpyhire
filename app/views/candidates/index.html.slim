@@ -6,7 +6,7 @@
       select.stage name="stage_id"
         = options_for_select(current_organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
-      label
+      label for=""
         i.fa.fa-th-large.button-group-item selected=true
       label
         = link_to maps_candidates_path, class: "button-group-item" do
