@@ -23,24 +23,23 @@ RSpec.describe ApplicationController, type: :controller do
       sign_in(account)
     end
 
-    context "accessing an unauthorized resource" do
+    context 'accessing an unauthorized resource' do
       let!(:subscription) { create(:subscription, organization: account.organization, state: 'active', quantity: 1) }
 
       controller do
         def index
-          raise Pundit::NotAuthorizedError.new
-          head :ok
+          raise Pundit::NotAuthorizedError
         end
       end
 
-      context "with referer present" do
-        let(:referer) { "https://google.com" }
+      context 'with referer present' do
+        let(:referer) { 'https://google.com' }
 
         before do
           @request.env['HTTP_REFERER'] = referer
         end
 
-        it "redirects to the referer" do
+        it 'redirects to the referer' do
           get :index
           expect(response).to redirect_to(referer)
         end
