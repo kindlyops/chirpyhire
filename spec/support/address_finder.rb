@@ -40,14 +40,13 @@ class FakeGeocoder
   def self.search(*)
     [Result.new(
       'bounds' => bounds,
-        'components' => components,
-        'geometry' => geometry,
-        'confidence' => 10,
-        'formatted' =>
+      'components' => components,
+      'geometry' => geometry,
+      'confidence' => 10,
+      'formatted' =>
           'Market Street, Charlottesville, VA 22902, '\
           'United States of America'
-      )
-    ]
+    )]
   end
 
   class << self

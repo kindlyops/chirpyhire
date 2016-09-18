@@ -24,11 +24,11 @@ RSpec.describe Payment::Subscriptions::Process do
 
   let(:email) { 'frank.paucek@heathcote.com' }
 
-  subject { Payment::Subscriptions::Process.new(stripe_token.id, subscription, email, {plan_id: plan.id}) }
+  subject { Payment::Subscriptions::Process.new(stripe_token.id, subscription, email, plan_id: plan.id) }
 
-  describe "#call" do
-    context "without an existing stripe customer", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer" } do
-      let(:organization) { create(:organization, name: "Little-Abshire") }
+  describe '#call' do
+    context 'without an existing stripe customer', vcr: { cassette_name: 'Payment::Subscriptions::Process-call-without-stripe-customer' } do
+      let(:organization) { create(:organization, name: 'Little-Abshire') }
 
       before do
         organization.update(stripe_customer_id: nil)
@@ -40,16 +40,16 @@ RSpec.describe Payment::Subscriptions::Process do
         end.to change { organization.reload.stripe_customer_id }.from(nil)
       end
 
-      it "activates the subscription" do
-        expect {
+      it 'activates the subscription' do
+        expect do
           subject.call
-        }.to change{subscription.reload.state}.from("trialing").to("active")
+        end.to change { subscription.reload.state }.from('trialing').to('active')
       end
 
-      it "updates the local subscription" do
-        expect{
+      it 'updates the local subscription' do
+        expect do
           subject.call
-        }.to change { subscription.reload.stripe_id }.from(nil)
+        end.to change { subscription.reload.stripe_id }.from(nil)
       end
 
       it 'sets the description and email on the stripe customer', vcr: { cassette_name: 'Payment::Subscriptions::Process-call-without-stripe-customer-desc-email' } do
@@ -59,37 +59,36 @@ RSpec.describe Payment::Subscriptions::Process do
         expect(stripe_customer.email).to eq(email)
       end
 
-      context "with an invalid credit card", vcr: { cassette_name: "Payment::Subscriptions::Process-call-without-stripe-customer-desc-email-invalid-card" } do
-
+      context 'with an invalid credit card', vcr: { cassette_name: 'Payment::Subscriptions::Process-call-without-stripe-customer-desc-email-invalid-card' } do
         let(:card) do
           {
-            number: "4000000000000002",
-            exp_month: "8",
+            number: '4000000000000002',
+            exp_month: '8',
             exp_year: 1.year.from_now.year,
-            cvc: "123"
+            cvc: '123'
           }
         end
 
-        it "raises the Payment::CardError" do
-          expect{
+        it 'raises the Payment::CardError' do
+          expect do
             subject.call
-          }.to raise_error(Payment::CardError)
+          end.to raise_error(Payment::CardError)
         end
 
-        it "does not set the stripe customer id on the organization" do
-          expect{
-            expect{
+        it 'does not set the stripe customer id on the organization' do
+          expect do
+            expect do
               subject.call
-            }.to raise_error(Payment::CardError)
-          }.not_to change{organization.reload.stripe_customer_id}
+            end.to raise_error(Payment::CardError)
+          end.not_to change { organization.reload.stripe_customer_id }
         end
 
-        it "does not set the stripe id on the subscription" do
-          expect{
-            expect{
+        it 'does not set the stripe id on the subscription' do
+          expect do
+            expect do
               subject.call
-            }.to raise_error(Payment::CardError)
-          }.not_to change{subscription.reload.stripe_id}
+            end.to raise_error(Payment::CardError)
+          end.not_to change { subscription.reload.stripe_id }
         end
       end
     end

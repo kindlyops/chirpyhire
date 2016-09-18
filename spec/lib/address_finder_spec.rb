@@ -74,10 +74,10 @@ RSpec.describe 'AddressFinder' do
     end
   end
 
-  context "unfindable addresses (wrong zipcode, no zipcode, no street address)" do
-    ["2 civic center drive 94913", "4059 Mt Lee Dr", "90068"].each do |address|
+  context 'unfindable addresses (wrong zipcode, no zipcode, no street address)' do
+    ['2 civic center drive 94913', '4059 Mt Lee Dr', '90068'].each do |address|
       let(:address) { address }
-      it "is false" do
+      it 'is false' do
         expect(finder.found?).to eq(false)
       end
     end
