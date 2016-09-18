@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class LocationDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -20,7 +20,7 @@ class LocationDashboard < Administrate::BaseDashboard
     country: Field::String,
     country_code: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -32,7 +32,7 @@ class LocationDashboard < Administrate::BaseDashboard
     :organization,
     :id,
     :latitude,
-    :longitude
+    :longitude,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -50,7 +50,7 @@ class LocationDashboard < Administrate::BaseDashboard
     :country,
     :country_code,
     :created_at,
-    :updated_at
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -66,7 +66,7 @@ class LocationDashboard < Administrate::BaseDashboard
     :state_code,
     :postal_code,
     :country,
-    :country_code
+    :country_code,
   ].freeze
 
   # Overwrite this method to customize how locations are displayed

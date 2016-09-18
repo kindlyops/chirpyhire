@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class ReferrerDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +13,7 @@ class ReferrerDashboard < Administrate::BaseDashboard
     candidates: Field::HasMany,
     id: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +25,7 @@ class ReferrerDashboard < Administrate::BaseDashboard
     :user,
     :referrals,
     :candidates,
-    :id
+    :id,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -36,7 +36,7 @@ class ReferrerDashboard < Administrate::BaseDashboard
     :candidates,
     :id,
     :created_at,
-    :updated_at
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -45,7 +45,7 @@ class ReferrerDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = [
     :user,
     :referrals,
-    :candidates
+    :candidates,
   ].freeze
 
   # Overwrite this method to customize how referrers are displayed

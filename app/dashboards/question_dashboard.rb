@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class QuestionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -17,7 +17,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     type: Field::String,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
-    label: Field::String
+    label: Field::String,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -29,7 +29,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :survey,
     :inquiries,
     :id,
-    :text
+    :text,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -44,7 +44,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :type,
     :created_at,
     :updated_at,
-    :label
+    :label,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -57,7 +57,7 @@ class QuestionDashboard < Administrate::BaseDashboard
     :status,
     :priority,
     :type,
-    :label
+    :label,
   ].freeze
 
   # Overwrite this method to customize how questions are displayed

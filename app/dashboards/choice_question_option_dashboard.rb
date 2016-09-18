@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -14,7 +14,7 @@ class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
     text: Field::String,
     question_id: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -25,7 +25,7 @@ class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
   COLLECTION_ATTRIBUTES = [
     :choice_question,
     :id,
-    :letter
+    :letter,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -37,7 +37,7 @@ class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
     :text,
     :question_id,
     :created_at,
-    :updated_at
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -47,7 +47,7 @@ class ChoiceQuestionOptionDashboard < Administrate::BaseDashboard
     :choice_question,
     :letter,
     :text,
-    :question_id
+    :question_id,
   ].freeze
 
   # Overwrite this method to customize how choice question options are displayed

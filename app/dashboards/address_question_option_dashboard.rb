@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class AddressQuestionOptionDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -15,7 +15,7 @@ class AddressQuestionOptionDashboard < Administrate::BaseDashboard
     longitude: Field::Number.with_options(decimals: 2),
     question_id: Field::Number,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +27,7 @@ class AddressQuestionOptionDashboard < Administrate::BaseDashboard
     :address_question,
     :id,
     :distance,
-    :latitude
+    :latitude,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,7 +40,7 @@ class AddressQuestionOptionDashboard < Administrate::BaseDashboard
     :longitude,
     :question_id,
     :created_at,
-    :updated_at
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -51,11 +51,10 @@ class AddressQuestionOptionDashboard < Administrate::BaseDashboard
     :distance,
     :latitude,
     :longitude,
-    :question_id
+    :question_id,
   ].freeze
 
-  # Overwrite this method to customize
-  # how address question options are displayed
+  # Overwrite this method to customize how address question options are displayed
   # across all pages of the admin dashboard.
   #
   # def display_resource(address_question_option)

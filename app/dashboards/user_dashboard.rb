@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class UserDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -23,7 +23,7 @@ class UserDashboard < Administrate::BaseDashboard
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
     subscribed: Field::Boolean,
-    has_unread_messages: Field::Boolean
+    has_unread_messages: Field::Boolean,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -35,7 +35,7 @@ class UserDashboard < Administrate::BaseDashboard
     :organization,
     :candidate,
     :referrer,
-    :account
+    :account,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -56,7 +56,7 @@ class UserDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :subscribed,
-    :has_unread_messages
+    :has_unread_messages,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -75,7 +75,7 @@ class UserDashboard < Administrate::BaseDashboard
     :last_name,
     :phone_number,
     :subscribed,
-    :has_unread_messages
+    :has_unread_messages,
   ].freeze
 
   # Overwrite this method to customize how users are displayed

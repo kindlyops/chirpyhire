@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class CandidateDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -15,7 +15,7 @@ class CandidateDashboard < Administrate::BaseDashboard
     id: Field::Number,
     status: Field::String,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime
+    updated_at: Field::DateTime,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -27,7 +27,7 @@ class CandidateDashboard < Administrate::BaseDashboard
     :user,
     :candidate_features,
     :referrals,
-    :referrers
+    :referrers,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -40,7 +40,7 @@ class CandidateDashboard < Administrate::BaseDashboard
     :id,
     :status,
     :created_at,
-    :updated_at
+    :updated_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -51,7 +51,7 @@ class CandidateDashboard < Administrate::BaseDashboard
     :candidate_features,
     :referrals,
     :referrers,
-    :status
+    :status,
   ].freeze
 
   # Overwrite this method to customize how candidates are displayed

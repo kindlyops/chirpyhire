@@ -1,4 +1,4 @@
-require 'administrate/base_dashboard'
+require "administrate/base_dashboard"
 
 class MessageDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +13,7 @@ class MessageDashboard < Administrate::BaseDashboard
     inquiry: Field::HasOne,
     answer: Field::HasOne,
     notification: Field::HasOne,
-    child: Field::BelongsTo.with_options(class_name: 'Message'),
+    child: Field::BelongsTo.with_options(class_name: "Message"),
     id: Field::Number,
     sid: Field::String,
     body: Field::Text,
@@ -22,7 +22,7 @@ class MessageDashboard < Administrate::BaseDashboard
     updated_at: Field::DateTime,
     sent_at: Field::DateTime,
     external_created_at: Field::DateTime,
-    child_id: Field::Number
+    child_id: Field::Number,
   }.freeze
 
   # COLLECTION_ATTRIBUTES
@@ -34,7 +34,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :media_instances,
     :user,
     :inquiry,
-    :answer
+    :answer,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -54,7 +54,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :updated_at,
     :sent_at,
     :external_created_at,
-    :child_id
+    :child_id,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -72,7 +72,7 @@ class MessageDashboard < Administrate::BaseDashboard
     :direction,
     :sent_at,
     :external_created_at,
-    :child_id
+    :child_id,
   ].freeze
 
   # Overwrite this method to customize how messages are displayed
