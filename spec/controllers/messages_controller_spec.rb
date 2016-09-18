@@ -22,9 +22,9 @@ RSpec.describe MessagesController, type: :controller do
     context 'when user has unread messages' do
       let(:user) { create(:user, organization: organization, has_unread_messages: true) }
       it 'marks the user as not having unread messages' do
-        expect do
+        expect {
           get :index, params: { user_id: user.id }
-        end.to change { user.reload.has_unread_messages? }.from(true).to(false)
+        }.to change { user.reload.has_unread_messages? }.from(true).to(false)
       end
     end
 
@@ -86,15 +86,15 @@ RSpec.describe MessagesController, type: :controller do
         end
 
         it 'creates a new message' do
-          expect do
+          expect {
             post :create, params: message_params
-          end.to change { user.messages.count }.by(1)
+          }.to change { user.messages.count }.by(1)
         end
 
         it 'sends the message' do
-          expect do
+          expect {
             post :create, params: message_params
-          end.to change { FakeMessaging.messages.count }.by(1)
+          }.to change { FakeMessaging.messages.count }.by(1)
         end
       end
 
@@ -107,15 +107,15 @@ RSpec.describe MessagesController, type: :controller do
         end
 
         it 'does not create a new message' do
-          expect do
+          expect {
             post :create, params: message_params
-          end.not_to change { user.messages.count }
+          }.not_to change { user.messages.count }
         end
 
         it 'does not send the message' do
-          expect do
+          expect {
             post :create, params: message_params
-          end.not_to change { FakeMessaging.messages.count }
+          }.not_to change { FakeMessaging.messages.count }
         end
       end
     end

@@ -31,9 +31,9 @@ RSpec.describe Payment::Subscriptions::Refresh, vcr: { cassette_name: 'Payment::
       let!(:subscription) { create(:subscription, plan: plan, organization: organization, quantity: 2, stripe_id: stripe_subscription.id) }
 
       it 'refreshes the subscription' do
-        expect do
+        expect {
           subject.call
-        end.to change { subscription.reload.quantity }.from(2).to(1)
+        }.to change { subscription.reload.quantity }.from(2).to(1)
       end
     end
   end

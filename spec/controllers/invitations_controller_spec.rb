@@ -18,9 +18,9 @@ RSpec.describe InvitationsController, type: :controller do
     end
 
     it 'creates the user' do
-      expect do
+      expect {
         post :create, params: invite_params
-      end.to change { organization.users.count }.by(1)
+      }.to change { organization.users.count }.by(1)
     end
   end
 

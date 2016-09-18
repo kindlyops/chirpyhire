@@ -23,9 +23,9 @@ RSpec.describe AnswerHandlerJob do
     context 'if the message exists' do
       it "doesn't raise an error" do
         message
-        expect do
+        expect {
           AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
-        end.not_to raise_error
+        }.not_to raise_error
       end
     end
   end

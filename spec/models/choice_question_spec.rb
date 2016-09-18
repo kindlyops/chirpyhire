@@ -37,12 +37,12 @@ RSpec.describe ChoiceQuestion, type: :model do
     let!(:message) { create(:message, body: 'A) ') }
     let(:survey) { create(:survey) }
 
-    let!(:choice_question) do
+    let!(:choice_question) {
       create(:choice_question, text: 'What is your availability?', survey: survey,
                                choice_question_options_attributes: [
                                  { letter: 'a', text: 'Live-in' }
                                ])
-    end
+    }
     let!(:additional_options) do
       [
         choice_question.choice_question_options.create(letter: 'b', text: 'Hourly'),

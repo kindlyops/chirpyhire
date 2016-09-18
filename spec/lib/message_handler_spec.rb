@@ -11,9 +11,9 @@ RSpec.describe MessageHandler do
   let(:message) { message_handler.call }
   describe '#call' do
     it 'creates the message' do
-      expect do
+      expect {
         message
-      end.to change { Message.count }.by(1)
+      }.to change { Message.count }.by(1)
     end
 
     context 'with prior messages' do
@@ -30,9 +30,9 @@ RSpec.describe MessageHandler do
       let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
 
       it 'creates the media instances' do
-        expect do
+        expect{
           message
-        end.to change { MediaInstance.count }.by(1)
+        }.to change { MediaInstance.count }.by(1)
         expect(message.media_instances.length).to eq(1)
       end
     end

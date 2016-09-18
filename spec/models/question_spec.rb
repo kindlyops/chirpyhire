@@ -7,22 +7,22 @@ RSpec.describe Question, type: :model do
 
   describe '#inquire' do
     it 'creates a message' do
-      expect do
+      expect{
         question.inquire(candidate.user)
-      end.to change { Message.count }.by(1)
+      }.to change { Message.count }.by(1)
     end
 
     it 'creates an inquiry' do
-      expect do
+      expect{
         question.inquire(candidate.user)
-      end.to change { question.inquiries.count }.by(1)
+      }.to change { question.inquiries.count }.by(1)
     end
 
     context 'choice question' do
-      let(:question) do
+      let(:question) {
         create(:choice_question, text: 'What is your availability?', survey: survey,
                                  choice_question_options_attributes: [{ letter: 'a', text: 'Live-in' }])
-      end
+      }
       before(:each) do
         question.choice_question_options.create(letter: 'b', text: 'Hourly')
         question.choice_question_options.create(letter: 'c', text: 'Both')

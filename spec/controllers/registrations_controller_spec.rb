@@ -35,9 +35,9 @@ RSpec.describe RegistrationsController, type: :controller do
     end
 
     it 'creates an account' do
-      expect do
+      expect {
         post :create, params: account_params
-      end.to change { Account.count }.by(1)
+      }.to change { Account.count }.by(1)
     end
 
     it 'agrees to the terms' do
@@ -46,22 +46,22 @@ RSpec.describe RegistrationsController, type: :controller do
     end
 
     it 'creates an organization' do
-      expect do
+      expect {
         post :create, params: account_params
-      end.to change { Organization.count }.by(1)
+      }.to change { Organization.count }.by(1)
     end
 
     it 'creates a location with a postal code' do
-      expect do
+      expect {
         post :create, params: account_params
-      end.to change { Location.count }.by(1)
+      }.to change { Location.count }.by(1)
       expect(Location.last.postal_code).to eq('22902')
     end
 
     it 'creates a user' do
-      expect do
+      expect {
         post :create, params: account_params
-      end.to change { User.count }.by(1)
+      }.to change { User.count }.by(1)
     end
   end
 end

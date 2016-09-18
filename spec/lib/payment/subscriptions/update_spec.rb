@@ -32,15 +32,15 @@ RSpec.describe Payment::Subscriptions::Update do
 
       context 'with a valid card', vcr: { cassette_name: 'Payment::Subscriptions::Update-call' } do
         it 'updates the quantity of the stripe subscription' do
-          expect do
+          expect {
             subject.call
-          end.to change { stripe_subscription.refresh.quantity }.from(1).to(2)
+          }.to change { stripe_subscription.refresh.quantity }.from(1).to(2)
         end
 
         it 'updates the quantity of the subscription' do
-          expect do
+          expect {
             subject.call
-          end.to change { subscription.reload.quantity }.from(1).to(2)
+          }.to change { subscription.reload.quantity }.from(1).to(2)
         end
       end
 
@@ -50,17 +50,17 @@ RSpec.describe Payment::Subscriptions::Update do
         end
 
         it 'raises the Payment::CardError' do
-          expect do
+          expect{
             subject.call
-          end.to raise_error(Payment::CardError)
+          }.to raise_error(Payment::CardError)
         end
 
         it 'does not change the subscription quantity' do
-          expect do
-            expect do
+          expect{
+            expect{
               subject.call
-            end.to raise_error(Payment::CardError)
-          end.not_to change { subscription.reload.quantity }
+            }.to raise_error(Payment::CardError)
+          }.not_to change { subscription.reload.quantity }
         end
       end
     end

@@ -11,25 +11,25 @@ RSpec.describe TwilioProvisioner do
       end
 
       it 'does not update the organization' do
-        expect do
+        expect {
           TwilioProvisioner.new(organization).call
-        end.not_to change { organization.phone_number }
+        }.not_to change { organization.phone_number }
       end
     end
 
     context 'when the organization does not have a phone number', vcr: { cassette_name: 'TwilioProvisioner-call' } do
       it 'creates a twilio subaccount' do
-        expect do
-          expect do
+        expect {
+          expect {
             TwilioProvisioner.new(organization).call
-          end.to change { organization.twilio_account_sid.present? }.from(false).to(true)
-        end.to change { organization.twilio_auth_token.present? }.from(false).to(true)
+          }.to change { organization.twilio_account_sid.present? }.from(false).to(true)
+        }.to change { organization.twilio_auth_token.present? }.from(false).to(true)
       end
 
       it 'creates a phone number for the organization' do
-        expect do
+        expect {
           TwilioProvisioner.new(organization).call
-        end.to change { organization.phone_number.present? }.from(false).to(true)
+        }.to change { organization.phone_number.present? }.from(false).to(true)
       end
     end
   end

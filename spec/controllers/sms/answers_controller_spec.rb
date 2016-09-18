@@ -30,9 +30,9 @@ RSpec.describe Sms::AnswersController, type: :controller do
       let(:inquiry) { create(:inquiry, message: message, question: question) }
 
       it 'creates a AnswerHandlerJob' do
-        expect do
+        expect {
           post :create, params: params
-        end.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
+        }.to have_enqueued_job(AnswerHandlerJob).with(user, inquiry, inbound_message.sid)
       end
     end
 
@@ -40,15 +40,15 @@ RSpec.describe Sms::AnswersController, type: :controller do
       let(:inquiry) { nil }
 
       it 'does not create an AnswerHandlerJob' do
-        expect do
+        expect {
           post :create, params: params
-        end.not_to have_enqueued_job(AnswerHandlerJob)
+        }.not_to have_enqueued_job(AnswerHandlerJob)
       end
 
       it 'creates an UnknownMessageHandlerJob' do
-        expect do
+        expect {
           post :create, params: params
-        end.to have_enqueued_job(UnknownMessageHandlerJob).with(user, inbound_message.sid)
+        }.to have_enqueued_job(UnknownMessageHandlerJob).with(user, inbound_message.sid)
       end
     end
   end

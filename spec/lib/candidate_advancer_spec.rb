@@ -15,33 +15,33 @@ RSpec.describe CandidateAdvancer do
       end
 
       it 'does not create an inquiry of the next candidate feature' do
-        expect do
+        expect {
           CandidateAdvancer.call(user)
-        end.not_to change { user.inquiries.count }
+        }.not_to change { user.inquiries.count }
       end
 
       it 'does not create a notification' do
-        expect do
+        expect {
           CandidateAdvancer.call(user)
-        end.not_to change { user.notifications.count }
+        }.not_to change { user.notifications.count }
       end
 
       it 'does not create a message' do
-        expect do
+        expect {
           CandidateAdvancer.call(user)
-        end.not_to change { Message.count }
+        }.not_to change { Message.count }
       end
 
       it 'does not create an AutomatonJob for the screen event' do
-        expect do
+        expect{
           CandidateAdvancer.call(user)
-        end.not_to have_enqueued_job(AutomatonJob)
+        }.not_to have_enqueued_job(AutomatonJob)
       end
 
       it "does not change the candidate's status" do
-        expect do
+        expect{
           CandidateAdvancer.call(user)
-        end.not_to change { candidate.status }
+        }.not_to change { candidate.status }
       end
     end
 
@@ -57,33 +57,33 @@ RSpec.describe CandidateAdvancer do
         end
 
         it 'does not create an inquiry of the next candidate feature' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { user.inquiries.count }
+          }.not_to change { user.inquiries.count }
         end
 
         it 'does not create a notification' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { user.notifications.count }
+          }.not_to change { user.notifications.count }
         end
 
         it 'does not create a message' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { Message.count }
+          }.not_to change { Message.count }
         end
 
         it 'does not create an AutomatonJob for the screen event' do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.not_to have_enqueued_job(AutomatonJob)
+          }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.not_to change { candidate.status }
+          }.not_to change { candidate.status }
         end
       end
 
@@ -95,33 +95,33 @@ RSpec.describe CandidateAdvancer do
         end
 
         it 'does not create an inquiry of the next candidate feature' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { user.inquiries.count }
+          }.not_to change { user.inquiries.count }
         end
 
         it 'does not create a notification' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { user.notifications.count }
+          }.not_to change { user.notifications.count }
         end
 
         it 'does not create a message' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.not_to change { Message.count }
+          }.not_to change { Message.count }
         end
 
         it 'does not create an AutomatonJob for the screen event' do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.not_to have_enqueued_job(AutomatonJob)
+          }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.not_to change { candidate.status }
+          }.not_to change { candidate.status }
         end
       end
 
@@ -152,15 +152,15 @@ RSpec.describe CandidateAdvancer do
         end
 
         it 'creates an inquiry of the next candidate feature' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.to change { user.inquiries.count }.by(1)
+          }.to change { user.inquiries.count }.by(1)
         end
 
         it 'creates a message' do
-          expect do
+          expect {
             CandidateAdvancer.call(user)
-          end.to change { Message.count }.by(1)
+          }.to change { Message.count }.by(1)
         end
 
         context 'and the last answer was unacceptable' do
@@ -177,27 +177,27 @@ RSpec.describe CandidateAdvancer do
 
           context 'with a template for the survey' do
             it 'does not create an inquiry of the next candidate feature' do
-              expect do
+              expect {
                 CandidateAdvancer.call(user)
-              end.not_to change { user.inquiries.count }
+              }.not_to change { user.inquiries.count }
             end
 
             it 'creates a notification' do
-              expect do
+              expect {
                 CandidateAdvancer.call(user)
-              end.to change { user.notifications.count }.by(1)
+              }.to change { user.notifications.count }.by(1)
             end
 
             it 'creates a message' do
-              expect do
+              expect {
                 CandidateAdvancer.call(user)
-              end.to change { Message.count }.by(1)
+              }.to change { Message.count }.by(1)
             end
 
             it "changes the candidate's status to Bad Fit" do
-              expect do
+              expect{
                 CandidateAdvancer.call(user)
-              end.to change { candidate.status }.from('Potential').to('Bad Fit')
+              }.to change { candidate.status }.from('Potential').to('Bad Fit')
             end
           end
         end
@@ -205,15 +205,15 @@ RSpec.describe CandidateAdvancer do
 
       context 'with all profile features present' do
         it 'creates an AutomatonJob for the screen event' do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.to have_enqueued_job(AutomatonJob).with(user, 'screen')
+          }.to have_enqueued_job(AutomatonJob).with(user, 'screen')
         end
 
         it "changes the candidate's status to Qualified" do
-          expect do
+          expect{
             CandidateAdvancer.call(user)
-          end.to change { candidate.status }.from('Potential').to('Qualified')
+          }.to change { candidate.status }.from('Potential').to('Qualified')
         end
       end
     end

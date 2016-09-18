@@ -20,39 +20,39 @@ RSpec.describe 'Stripe Events' do
 
   describe 'enqueuing jobs' do
     it 'customer.subscription.created' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(Payment::Job::RefreshSubscription)
+      }.to have_enqueued_job(Payment::Job::RefreshSubscription)
     end
 
     it 'customer.subscription.deleted' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(Payment::Job::RefreshSubscription)
+      }.to have_enqueued_job(Payment::Job::RefreshSubscription)
     end
 
     it 'customer.subscription.trial_will_end' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(Payment::Job::RefreshSubscription)
+      }.to have_enqueued_job(Payment::Job::RefreshSubscription)
     end
 
     it 'customer.subscription.updated' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(Payment::Job::RefreshSubscription)
+      }.to have_enqueued_job(Payment::Job::RefreshSubscription)
     end
 
     it 'charge.failed' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(ActionMailer::DeliveryJob)
+      }.to have_enqueued_job(ActionMailer::DeliveryJob)
     end
 
     it 'charge.succeeded' do |example|
-      expect do
+      expect {
         post '/stripe/events', params: { id: example.description }, env: @env
-      end.to have_enqueued_job(ActionMailer::DeliveryJob)
+      }.to have_enqueued_job(ActionMailer::DeliveryJob)
     end
   end
 

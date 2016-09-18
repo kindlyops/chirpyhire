@@ -33,21 +33,21 @@ RSpec.describe Payment::Subscriptions::Process do
       end
 
       it 'creates a stripe customer' do
-        expect do
+        expect{
           subject.call
-        end.to change { organization.reload.stripe_customer_id }.from(nil)
+        }.to change { organization.reload.stripe_customer_id }.from(nil)
       end
 
       it 'activates the subscription' do
-        expect do
+        expect {
           subject.call
-        end.to change { subscription.reload.state }.from('trialing').to('active')
+        }.to change { subscription.reload.state }.from('trialing').to('active')
       end
 
       it 'updates the local subscription' do
-        expect do
+        expect{
           subject.call
-        end.to change { subscription.reload.stripe_id }.from(nil)
+        }.to change { subscription.reload.stripe_id }.from(nil)
       end
 
       it 'sets the description and email on the stripe customer', vcr: { cassette_name: 'Payment::Subscriptions::Process-call-without-stripe-customer-desc-email' } do
@@ -68,25 +68,25 @@ RSpec.describe Payment::Subscriptions::Process do
         end
 
         it 'raises the Payment::CardError' do
-          expect do
+          expect{
             subject.call
-          end.to raise_error(Payment::CardError)
+          }.to raise_error(Payment::CardError)
         end
 
         it 'does not set the stripe customer id on the organization' do
-          expect do
-            expect do
+          expect{
+            expect{
               subject.call
-            end.to raise_error(Payment::CardError)
-          end.not_to change { organization.reload.stripe_customer_id }
+            }.to raise_error(Payment::CardError)
+          }.not_to change { organization.reload.stripe_customer_id }
         end
 
         it 'does not set the stripe id on the subscription' do
-          expect do
-            expect do
+          expect{
+            expect{
               subject.call
-            end.to raise_error(Payment::CardError)
-          end.not_to change { subscription.reload.stripe_id }
+            }.to raise_error(Payment::CardError)
+          }.not_to change { subscription.reload.stripe_id }
         end
       end
     end
@@ -101,15 +101,15 @@ RSpec.describe Payment::Subscriptions::Process do
       end
 
       it 'does not create a new stripe customer' do
-        expect do
+        expect{
           subject.call
-        end.not_to change { organization.reload.stripe_customer_id }
+        }.not_to change { organization.reload.stripe_customer_id }
       end
 
       it 'updates the local subscription' do
-        expect do
+        expect{
           subject.call
-        end.to change { subscription.reload.stripe_id }.from(nil)
+        }.to change { subscription.reload.stripe_id }.from(nil)
       end
     end
   end

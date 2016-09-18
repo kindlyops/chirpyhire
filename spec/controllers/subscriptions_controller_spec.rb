@@ -9,13 +9,13 @@ RSpec.describe SubscriptionsController, type: :controller do
     sign_in(account)
   end
 
-  let(:valid_attributes) do
+  let(:valid_attributes) {
     { plan_id: plan.id, quantity: 1 }
-  end
+  }
 
-  let(:invalid_attributes) do
+  let(:invalid_attributes) {
     { plan_id: plan.id }
-  end
+  }
 
   describe 'GET #new' do
     let!(:subscription) { create(:subscription, organization: organization, plan: plan) }
@@ -58,9 +58,9 @@ RSpec.describe SubscriptionsController, type: :controller do
           end
 
           it 'does not create a new subscription' do
-            expect do
+            expect {
               post :create, params: { stripe_token: stripe_token, subscription: valid_attributes }
-            end.not_to change(Subscription, :count)
+            }.not_to change(Subscription, :count)
           end
 
           it 'assigns the trialing subscription as @subscription' do
@@ -117,9 +117,9 @@ RSpec.describe SubscriptionsController, type: :controller do
         end
 
         it 'does not activate the subscription' do
-          expect do
+          expect {
             post :create, params: { subscription: invalid_attributes }
-          end.not_to change { subscription.reload.state }
+          }.not_to change { subscription.reload.state }
         end
       end
     end
@@ -143,9 +143,9 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { quantity: 2 }
-      end
+      }
 
       let!(:subscription) { organization.create_subscription valid_attributes }
 
@@ -197,9 +197,9 @@ RSpec.describe SubscriptionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let(:valid_attributes) do
+    let(:valid_attributes) {
       { plan_id: plan.id, quantity: 1, state: 'active' }
-    end
+    }
 
     let!(:subscription) { organization.create_subscription valid_attributes }
 

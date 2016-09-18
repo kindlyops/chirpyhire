@@ -8,15 +8,15 @@ RSpec.describe Template, type: :model do
     let(:user) { create(:user, organization: organization) }
 
     it 'sends a message to the user' do
-      expect do
+      expect{
         subject.perform(user)
-      end.to change { FakeMessaging.messages.count }.by(1)
+      }.to change { FakeMessaging.messages.count }.by(1)
     end
 
     it 'creates an notification' do
-      expect do
+      expect {
         subject.perform(user)
-      end.to change { subject.notifications.count }.by(1)
+      }.to change { subject.notifications.count }.by(1)
     end
   end
 end

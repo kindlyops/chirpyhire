@@ -12,45 +12,45 @@ RSpec.describe Registrar do
       let(:account) { create(:account) }
 
       it 'creates three rules for the organization' do
-        expect do
+        expect {
           registrar.register
-        end.to change { organization.rules.count }.by(3)
+        }.to change { organization.rules.count }.by(3)
       end
 
       it 'creates two actionables' do
-        expect do
+        expect {
           registrar.register
-        end.to change { Actionable.count }.by(2)
+        }.to change { Actionable.count }.by(2)
       end
 
       it 'creates a survey' do
-        expect do
+        expect {
           registrar.register
-        end.to change { organization.survey.present? }.from(false).to(true)
+        }.to change { organization.survey.present? }.from(false).to(true)
       end
 
       it 'enqueues a TwilioProvisioner job' do
-        expect do
+        expect {
           registrar.register
-        end.to have_enqueued_job(TwilioProvisionerJob)
+        }.to have_enqueued_job(TwilioProvisionerJob)
       end
 
       it 'enqueues a IntercomSyncerJob' do
-        expect do
+        expect {
           registrar.register
-        end.to have_enqueued_job(IntercomSyncerJob)
+        }.to have_enqueued_job(IntercomSyncerJob)
       end
 
       it 'creates three questions' do
-        expect do
+        expect {
           registrar.register
-        end.to change { Question.count }.by(3)
+        }.to change { Question.count }.by(3)
       end
 
       it 'creates a dummy candidate with candidate features' do
-        expect do
+        expect {
           registrar.register
-        end.to change { organization.candidates.count }.by(1)
+        }.to change { organization.candidates.count }.by(1)
         candidate = organization.candidates.first
 
         expect(candidate.address_feature.present?).to eq(true)
@@ -59,9 +59,9 @@ RSpec.describe Registrar do
       end
 
       it 'creates a trial subscription' do
-        expect do
+        expect {
           registrar.register
-        end.to change { organization.reload.subscription.present? }.from(false).to(true)
+        }.to change { organization.reload.subscription.present? }.from(false).to(true)
 
         expect(organization.subscription.trialing?).to eq(true)
         expect(organization.subscription.plan).to eq(plan)
@@ -69,9 +69,9 @@ RSpec.describe Registrar do
       end
 
       it 'creates a welcome, bad fit, thank you template for the survey' do
-        expect do
+        expect {
           registrar.register
-        end.to change { Template.count }.by(3)
+        }.to change { Template.count }.by(3)
       end
     end
 
@@ -82,15 +82,15 @@ RSpec.describe Registrar do
       let!(:location) { build(:location, organization: organization) }
 
       it 'does not create a survey' do
-        expect do
+        expect {
           registrar.register
-        end.not_to change { organization.survey.present? }
+        }.not_to change { organization.survey.present? }
       end
 
       it 'does not create a welcome, bad fit, thank you template for the survey' do
-        expect do
+        expect {
           registrar.register
-        end.not_to change { Template.count }
+        }.not_to change { Template.count }
       end
     end
   end

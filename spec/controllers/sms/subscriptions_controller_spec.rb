@@ -14,9 +14,9 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
     end
 
     it 'creates a MessageHandlerJob to log the START message' do
-      expect do
+      expect {
         post :create, params: params
-      end.to have_enqueued_job(MessageHandlerJob)
+      }.to have_enqueued_job(MessageHandlerJob)
     end
 
     context 'with an existing user' do
@@ -40,17 +40,17 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
         end
 
         it 'creates a subscribe Automaton Job' do
-          expect do
+          expect {
             post :create, params: params
-          end.to have_enqueued_job(AutomatonJob).with(user, 'subscribe')
+          }.to have_enqueued_job(AutomatonJob).with(user, 'subscribe')
         end
 
         context 'when the AutomatonJob raises' do
           it "doesn't set the subscribe flag" do
             allow(AutomatonJob).to receive(:perform_later).and_raise(Redis::ConnectionError)
-            expect do
+            expect {
               post :create, params: params
-            end.to raise_error(Redis::ConnectionError)
+            }.to raise_error(Redis::ConnectionError)
             expect(user.reload.subscribed?).to eq(false)
           end
         end
@@ -60,38 +60,38 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
         let!(:candidate) { create(:candidate, user: user) }
 
         it 'does not create a candidate for the user' do
-          expect do
+          expect {
             post :create, params: params
-          end.not_to change { user.reload.candidate.present? }
+          }.not_to change { user.reload.candidate.present? }
         end
       end
 
       context 'without an existing candidate' do
         it 'creates a candidate for the user' do
-          expect do
+          expect {
             post :create, params: params
-          end.to change { user.reload.candidate.present? }.from(false).to(true)
+          }.to change { user.reload.candidate.present? }.from(false).to(true)
         end
 
         it 'sets the user subscription flag to true' do
-          expect do
+          expect {
             post :create, params: params
-          end.to change { user.reload.subscribed? }.from(false).to(true)
+          }.to change { user.reload.subscribed? }.from(false).to(true)
         end
       end
     end
 
     context 'without an existing user' do
       it 'creates a user using the phone number' do
-        expect do
+        expect {
           post :create, params: params
-        end.to change { User.where(phone_number: phone_number).count }.by(1)
+        }.to change { User.where(phone_number: phone_number).count }.by(1)
       end
 
       it 'creates a candidate for the user' do
-        expect do
+        expect {
           post :create, params: params
-        end.to change { organization.candidates.count }.by(1)
+        }.to change { organization.candidates.count }.by(1)
       end
 
       it 'sets the subscription flag to true' do
@@ -112,18 +112,18 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
     end
 
     it 'creates a MessageHandlerJob to log the STOP message' do
-      expect do
+      expect {
         post :create, params: params
-      end.to have_enqueued_job(MessageHandlerJob)
+      }.to have_enqueued_job(MessageHandlerJob)
     end
 
     context 'with a user' do
       let!(:user) { create(:user, organization: organization, phone_number: phone_number) }
 
       it 'creates a message' do
-        expect do
+        expect {
           delete :destroy, params: params
-        end.to change { user.messages.count }.by(1)
+        }.to change { user.messages.count }.by(1)
       end
 
       context 'that is subscribed' do
@@ -132,15 +132,15 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
         end
 
         it 'sets the user subscription flag to false' do
-          expect do
+          expect {
             delete :destroy, params: params
-          end.to change { user.reload.subscribed? }.from(true).to(false)
+          }.to change { user.reload.subscribed? }.from(true).to(false)
         end
 
         it 'does not send a message' do
-          expect do
+          expect {
             delete :destroy, params: params
-          end.not_to change { Message.count }
+          }.not_to change { Message.count }
         end
       end
 
@@ -155,21 +155,21 @@ RSpec.describe Sms::SubscriptionsController, type: :controller do
 
     context 'without an existing user' do
       it 'creates a user' do
-        expect do
+        expect {
           delete :destroy, params: params
-        end.to change { organization.users.count }.by(1)
+        }.to change { organization.users.count }.by(1)
       end
 
       it 'creates a message' do
-        expect do
+        expect {
           delete :destroy, params: params
-        end.to change { Message.count }.by(1)
+        }.to change { Message.count }.by(1)
       end
 
       it 'does not create a candidate' do
-        expect do
+        expect {
           delete :destroy, params: params
-        end.not_to change { organization.candidates.count }
+        }.not_to change { organization.candidates.count }
       end
 
       it "lets the user know they aren't subscribed" do

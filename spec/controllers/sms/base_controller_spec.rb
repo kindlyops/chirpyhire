@@ -20,15 +20,15 @@ RSpec.describe Sms::BaseController, type: :controller do
       end
 
       it 'does not create a message' do
-        expect do
+        expect {
           post :unknown_message, params: { 'MessageSid' => '123', 'To' => phone_number }
-        end.not_to change { Message.count }
+        }.not_to change { Message.count }
       end
 
       it 'creates an UnknownMessageHandlerJob' do
-        expect do
+        expect {
           post :unknown_message, params: { 'MessageSid' => '123', 'To' => phone_number }
-        end.to have_enqueued_job(UnknownMessageHandlerJob)
+        }.to have_enqueued_job(UnknownMessageHandlerJob)
       end
     end
 
@@ -38,9 +38,9 @@ RSpec.describe Sms::BaseController, type: :controller do
     end
 
     it 'creates a user' do
-      expect do
+      expect {
         post :unknown_message, params: { 'MessageSid' => '123', 'To' => phone_number }
-      end.to change { organization.users.count }.by(1)
+      }.to change { organization.users.count }.by(1)
     end
   end
 end

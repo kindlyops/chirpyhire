@@ -41,9 +41,9 @@ RSpec.describe Payment::Subscriptions::Cancel, vcr: { cassette_name: 'Payment::S
 
       it 'cancels the subscription' do
         allow(stripe_subscription).to receive(:delete)
-        expect do
+        expect {
           subject.call
-        end.to change { subscription.reload.state }.from('active').to('canceled')
+        }.to change { subscription.reload.state }.from('active').to('canceled')
       end
     end
   end

@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence(:label) { |n| "label#{n}" }
 
     trait :address do
-      properties do
+      properties {
         { city: 'Atlanta',
           address: Faker::Address.street_address,
           country: 'USA',
@@ -12,7 +12,7 @@ FactoryGirl.define do
           longitude:  rand(-84.633424..-84.144741),
           postal_code: Faker::Address.zip_code,
           child_class: 'address' }
-      end
+      }
     end
 
     transient do

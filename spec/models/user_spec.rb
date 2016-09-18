@@ -48,15 +48,15 @@ RSpec.describe User, type: :model do
 
   describe '#receive_message' do
     it 'creates a message for the user' do
-      expect do
+      expect {
         user.receive_message(body: 'Foo')
-      end.to change { user.messages.count }.by(1)
+      }.to change { user.messages.count }.by(1)
     end
 
     it 'sends a message' do
-      expect do
+      expect {
         user.receive_message(body: 'Foo')
-      end.to change { FakeMessaging.messages.count }.by(1)
+      }.to change { FakeMessaging.messages.count }.by(1)
     end
 
     context 'with prior messages' do

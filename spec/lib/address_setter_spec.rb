@@ -56,9 +56,9 @@ RSpec.describe AddressSetter do
             let!(:question) { create(:address_question, survey: survey) }
 
             it 'creates a candidate feature' do
-              expect do
+              expect {
                 setter.call
-              end.to change { candidate.candidate_features.count }.by(1)
+              }.to change { candidate.candidate_features.count }.by(1)
             end
 
             context 'message does not have an address' do
@@ -77,15 +77,15 @@ RSpec.describe AddressSetter do
             let(:street_address) { address_feature.properties['address'] }
 
             it 'does not create a candidate feature' do
-              expect do
+              expect {
                 setter.call
-              end.not_to change { candidate.candidate_features.count }
+              }.not_to change { candidate.candidate_features.count }
             end
 
             it 'does not change existing candidate feature' do
-              expect do
+              expect{
                 setter.call
-              end.not_to change { address_feature.reload.properties['address'] }
+              }.not_to change { address_feature.reload.properties['address'] }
             end
           end
         end

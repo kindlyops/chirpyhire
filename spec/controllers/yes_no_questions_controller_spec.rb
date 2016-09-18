@@ -8,13 +8,13 @@ RSpec.describe YesNoQuestionsController, type: :controller do
     sign_in(account)
   end
 
-  let(:valid_attributes) do
+  let(:valid_attributes) {
     attributes_for(:yes_no_question)
-  end
+  }
 
-  let(:invalid_attributes) do
+  let(:invalid_attributes) {
     { text: '', label: '', type: 'YesNoQuestion' }
-  end
+  }
 
   describe 'GET #new' do
     it 'assigns a new yes_no_question as @question' do
@@ -34,9 +34,9 @@ RSpec.describe YesNoQuestionsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new YesNoQuestion' do
-        expect do
+        expect {
           post :create, params: { yes_no_question: valid_attributes }
-        end.to change(YesNoQuestion, :count).by(1)
+        }.to change(YesNoQuestion, :count).by(1)
       end
 
       it 'assigns a newly created yes_no_question as @question' do
@@ -66,16 +66,16 @@ RSpec.describe YesNoQuestionsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
+      let(:new_attributes) {
         { text: 'New question text', label: 'New question label' }
-      end
+      }
 
       it 'updates the requested yes_no_question' do
         yes_no_question = survey.questions.create! valid_attributes
 
-        expect do
+        expect {
           put :update, params: { id: yes_no_question.to_param, yes_no_question: new_attributes }
-        end.to change { yes_no_question.reload.text }.to(new_attributes[:text])
+        }.to change { yes_no_question.reload.text }.to(new_attributes[:text])
       end
 
       it 'assigns the requested yes_no_question as @question' do
