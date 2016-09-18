@@ -10,16 +10,10 @@ module Messaging
       IMAGE_TYPES.include?(media_instance.content_type)
     end
 
+    delegate :sid, :uri, :content_type, to: :media_instance
+
     private
 
     attr_reader :media_instance
-
-    def method_missing(method, *args, &block)
-      media_instance.send(method, *args, &block) || super
-    end
-
-    def respond_to_missing?(method_name, include_private = false)
-      media_instance.respond_to?(method_name, include_private = false) || super
-    end
   end
 end
