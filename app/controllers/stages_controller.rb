@@ -7,7 +7,7 @@ class StagesController < ApplicationController
     new_stage_name = params[:new_stage]
     stages = current_organization.stages
     if stages.exists?(name: new_stage_name)
-      authorize Stage.none
+      authorize Stage
       redirect_to stages_url, alert: "Oops! You already have a stage with that name."
     elsif create_new_stage(new_stage_name)
       redirect_to stages_url, notice: "Nice! Stage created."
@@ -17,7 +17,7 @@ class StagesController < ApplicationController
   end
 
   def reorder
-    skip_authorization
+    authorize Stage  
     stages_with_new_order = scoped_stages.map do |stage|
       { id: stage.id, order: params[stage.id.to_s] }
     end

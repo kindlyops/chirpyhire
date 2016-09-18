@@ -20,7 +20,7 @@ RSpec.describe StagesController, type: :controller do
     it "can create a stage" do
       expect {
         get :create, params: { new_stage: "Test stage" }
-      }.to change{organization.stages.count}.from(5).to(6)
+      }.to change{organization.stages.count}.from(4).to(5)
       expect(organization.stages.last.name).to eq("Test stage")
     end
 

@@ -21,8 +21,7 @@ Rails.application.routes.draw do
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
   put 'stages/reorder' => 'stages#reorder'
-  get 'stages/delete/:id' => 'stages#destroy'
-  resources :stages, only: [:index, :create]
+  resources :stages, only: [:index, :create, :destroy]
 
   namespace :maps do
     resources :candidates, only: [:index, :show]

@@ -3,15 +3,24 @@
 .stages-wrapper
   .header
     h1 Candidate Stages
-  p Add a new stage or reorder current stages. 
+  p Reorder current stages or add a new one. 
   hr
   = form_tag("/stages/reorder", method: "put") do
     ul.stages
       - @stages.each_with_index do |stage, i|
         li.stage.drag-and-drop data-id=stage.id
           = hidden_field_tag(stage.id, stage.order, class: "hidden-order")
-          = stage.list_item
+          .stage-item-text
+            .stage-item-text-wrapper
+              = raw(stage.list_item)
+          = link_to("stages/#{stage.id}",
+            method: "delete",
+            class: ['delete-stage', 'button', stage.delete_button_class, stage.delete_button_tipsy_class],
+            data: { turbolinks: false },
+            title: stage.delete_button_title)
+            i.fa.fa-trash-o
     = submit_tag("Save order", class:"save-order-button button")
+  hr
   = form_tag("/stages", method: "post") do
     .new-stage-wrapper.drag-and-drop
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)

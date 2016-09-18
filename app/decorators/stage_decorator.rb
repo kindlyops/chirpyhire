@@ -2,25 +2,18 @@ class StageDecorator < Draper::Decorator
   delegate_all
   
   def list_item
-    delete_button_class = if not_deletable then 'disabled' else '' end
-    delete_button_tipsy_class = if tipsy_needed then 'tipsy-needed-w' else '' end
-
-    "<div class='stage-item-text'><div class='stage-item-text-wrapper'><span class='order sortable-number'>#{order}.</span> #{name}</div></div>\
-     <a class='delete-stage button #{delete_button_tipsy_class} #{delete_button_class}' \
-        href='stages/delete/#{id}' \
-        data-turbolinks='false' \
-        title='#{button_title}'>\
-       <i class='fa fa-trash-o'></i>\
-     </a>".html_safe
+    "<span class='order sortable-number'>#{order}.</span> #{name}"
   end
 
-  private
-
-  def not_deletable
-    default_stage_mapping.present? || candidates.any?
+  def delete_button_class
+    if not_deletable then 'disabled' else '' end
   end
 
-  def button_title
+  def delete_button_tipsy_class
+    if tooltip_needed then 'tipsy-needed-w' else '' end
+  end
+
+  def delete_button_title
     if default_stage_mapping.present? 
       'This stage cannot be deleted' 
     elsif candidates.any? 
@@ -30,7 +23,13 @@ class StageDecorator < Draper::Decorator
     end
   end
 
-  def tipsy_needed
+  private
+
+  def not_deletable
+    default_stage_mapping.present? || candidates.any?
+  end
+
+  def tooltip_needed
     candidates.any? || default_stage_mapping.present?
   end
 end
