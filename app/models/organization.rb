@@ -109,7 +109,7 @@ class Organization < ApplicationRecord
     Organization.transaction do
       # To avoid Unique Key errors when updating sequentially
       # we set all values to their negative in a transaction
-      stages.find do |stage|
+      stages.each do |stage|
         stage.order *= -1
         stage.save!
       end
