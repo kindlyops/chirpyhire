@@ -20,6 +20,8 @@ class Candidate < ApplicationRecord
 
   delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
 
+  before_create :ensure_candidate_has_stage
+
   def self.by_recency
     order(created_at: :desc, id: :desc)
   end
@@ -65,15 +67,11 @@ class Candidate < ApplicationRecord
     candidate_features.where("properties->>'child_class' = ?", "yes_no")
   end
 
-
-  before_create :ensure_candidate_has_stage
-
-
   private 
 
   def ensure_candidate_has_stage
-    unless stage.present?
-      stage = organization.potential_stage
+    unless self.stage.present?
+      self.stage = organization.potential_stage
     end
   end
 

@@ -7,6 +7,8 @@ $(document).on("turbolinks:load", function() {
     });
     // Toggle to ensure zero height div at start, and then make visible
     $(".card-stages-drawer").slideToggle(0, function() { $(".card-stages-drawer").css("visibility", "visible") });
+    // Remove first to avoid double binding when turbo-links reloads
+    $(document).off("click", "button.change-candidate-stage")
     $(document).on("click", "button.change-candidate-stage", function() {
       var parentCard = $(this).closest(".card");
       parentCard.find(".card-stages-drawer").slideToggle(400);

@@ -32,8 +32,9 @@
                 - stages.each do |stage|
                   li.stage
                     - if candidate.stage_id != stage.id
-                      a.stage-name href="candidates/stage/#{candidate.id}/#{stage.id}"
-                        strong = stage.name
+                      = form_for candidate
+                        = hidden_field_tag(:stage, stage.id, name: "candidate[stage_id]")
+                        strong = submit_tag(stage.name, class: "simple-button")
                     - else
                       strong = stage.name
           .card-call-to-actions

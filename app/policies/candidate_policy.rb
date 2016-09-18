@@ -7,10 +7,6 @@ class CandidatePolicy < ApplicationPolicy
     show?
   end
 
-  def update_stage?
-    update?
-  end
-
   def permitted_attributes
     [:stage_id]
   end

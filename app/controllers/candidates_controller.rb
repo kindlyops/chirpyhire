@@ -26,12 +26,7 @@ class CandidatesController < ApplicationController
       end
     end
   end
-
-  def update_stage
-    params[:candidate] = {stage_id: params[:stage_id]}
-    update
-  end
-
+  
   def update
     if authorized_candidate.update(permitted_attributes(Candidate))
       redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.stage.name}"

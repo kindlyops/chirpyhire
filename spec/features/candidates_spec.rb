@@ -23,8 +23,8 @@ RSpec.feature "Candidates", type: :feature, js: true do
           visit candidates_path
           first(".change-stage-button").click
 
-          qualified_link_that_doesnt_exist = all("li.stage")[1].first("a")
-          potential_link_that_does_exist = all("li.stage")[0].first("a")
+          qualified_link_that_doesnt_exist = all("li.stage")[1].first("input[type=submit]")
+          potential_link_that_does_exist = all("li.stage")[0].first("input[type=submit]")
           
           expect(qualified_link_that_doesnt_exist).to eq(nil)
           expect(potential_link_that_does_exist).not_to eq(nil)

@@ -37,7 +37,7 @@ RSpec.describe CandidatesController, type: :controller do
       end
 
       it "can change a candidates stage" do
-        get :update_stage, params: { id: organization.candidates.first.id, stage_id: organization.bad_fit_stage.id }
+        get :update, params: { id: organization.candidates.first.id, candidate: { stage_id: organization.bad_fit_stage.id } }
         expect(qualified_stage.candidates.count).to eq(2)
         expect(organization.bad_fit_stage.candidates.count).to eq(1)
       end

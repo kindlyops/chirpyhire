@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe BackPopulate::CandidateStageRefresher do
-  Candidate.skip_callback(:create, :before, :ensure_candidate_has_stage)
   let(:organization) { create(:organization) }
   let(:hired_candidate) { create(:candidate, status: "Hired", organization: organization) }
   let(:potential_candidate) { create(:candidate, status: "Potential", organization: organization) }
@@ -10,6 +9,12 @@ RSpec.describe BackPopulate::CandidateStageRefresher do
   let(:candidate_with_stage) { create(:candidate, organization: organization, stage: organization.potential_stage) }
 
   describe "#refresh" do
+    around(:each) do |example|
+      Candidate.skip_callback(:create, :before, :ensure_candidate_has_stage)
+      example.run
+      Candidate.set_callback(:create, :before, :ensure_candidate_has_stage)
+    end
+    
     context "candidate does not have a stage" do
       it "populates it properly for hired" do
         expect {
