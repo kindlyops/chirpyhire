@@ -17,8 +17,6 @@ RSpec.describe StagesController, type: :controller do
   end
 
   describe '#create' do
-    let!(:delete_me_stage) { create(:stage, organization: organization, name: "delete_me", order: 5)}
-
     it "can create a stage" do
       expect {
         get :create, params: { new_stage: "Test stage" }
@@ -39,6 +37,7 @@ RSpec.describe StagesController, type: :controller do
   end
 
   describe '#destroy' do
+    let!(:delete_me_stage) { create(:stage, organization: organization, name: "delete_me", order: 5)}
     it "can delete stage" do
       expect {
         get :destroy, params: {id: delete_me_stage.id}

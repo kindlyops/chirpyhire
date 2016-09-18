@@ -31,19 +31,19 @@ class Candidate < ApplicationRecord
   end
 
   def self.hired
-    self.by_default_stage(Stage::HIRED)
+    joins(:stage).merge(Stage.hired)
   end
 
   def self.qualified
-    self.by_default_stage(Stage::QUALIFIED)
+    joins(:stage).merge(Stage.qualified)
   end
 
   def self.potential
-    self.by_default_stage(Stage::POTENTIAL)
+    joins(:stage).merge(Stage.potential)
   end
 
   def self.bad_fit
-    self.by_default_stage(Stage::BAD_FIT)
+    joins(:stage).merge(Stage.bad_fit)
   end
 
   def address
@@ -73,9 +73,5 @@ class Candidate < ApplicationRecord
     unless self.stage.present?
       self.stage = organization.potential_stage
     end
-  end
-
-  def self.by_default_stage(stage)
-    joins(:stage).merge(Stage.where(default_stage_mapping: stage))
   end
 end
