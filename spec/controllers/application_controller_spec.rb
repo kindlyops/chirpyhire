@@ -23,6 +23,30 @@ RSpec.describe ApplicationController, type: :controller do
       sign_in(account)
     end
 
+    context "accessing an unauthorized resource" do
+      let!(:subscription) { create(:subscription, organization: account.organization, state: 'active', quantity: 1) }
+
+      controller do
+        def index
+          raise Pundit::NotAuthorizedError.new
+          head :ok
+        end
+      end
+
+      context "with referer present" do
+        let(:referer) { "https://google.com" }
+
+        before do
+          @request.env['HTTP_REFERER'] = referer
+        end
+
+        it "redirects to the referer" do
+          get :index
+          expect(response).to redirect_to(referer)
+        end
+      end
+    end
+
     context 'subscription gates' do
       controller do
         skip_after_action :verify_policy_scoped

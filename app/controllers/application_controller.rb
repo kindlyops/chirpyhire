@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
       scope: 'pundit',
       default: :default
     )
+
     redirect_to(request.referer || root_path)
   end
 
