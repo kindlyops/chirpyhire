@@ -28,7 +28,7 @@ class MessageHandler
     message
 
   rescue Twilio::REST::RequestError => e
-    retries_remaining = @retries - 1
+    retries_remaining = retries - 1
     Rollbar.log(e, "Twilio message not found", { organization_id: @sender.organization_id, retries_remaining: retries_remaining })
     if retries_remaining > 0
       MessageHandlerJob.set(wait: 30.seconds).perform_later(@sender, @message_sid, retries_remaining)
@@ -43,7 +43,7 @@ class MessageHandler
 
   delegate :organization, to: :sender
 
-  attr_reader :sender, :message_sid
+  attr_reader :sender, :message_sid, :retries
 
   def message
     @message ||= Message.new(

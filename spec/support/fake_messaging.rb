@@ -17,31 +17,29 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid) do
+  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid, :exists) do
     def num_media
-      media.list.count.to_s
+      if exists.nil? || exists
+        media.list.count.to_s
+      else
+        raise Twilio::REST::RequestError, "I don't exist."
+      end
     end
 
     def media_urls
-      media.list.map(&:uri)
+      if exists.nil? || exists
+        media.list.map(&:uri)
+      else
+        raise Twilio::REST::RequestError, "I don't exist."
+      end
     end
 
     def address
-      @address ||= AddressFinder.new(body)
-    end
-  end
-
-  NonExistentMessage = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid) do
-    def num_media
-      raise Twilio::REST::RequestError, "I don't exist."
-    end
-
-    def media_urls
-      raise Twilio::REST::RequestError, "I don't exist."
-    end
-
-    def address
-      raise Twilio::REST::RequestError, "I don't exist."
+      if exists.nil? || exists
+        @address ||= AddressFinder.new(body)
+      else
+        raise Twilio::REST::RequestError, "I don't exist."
+      end
     end
   end
 
@@ -83,11 +81,7 @@ class FakeMessaging
       media = Media.new([MediaInstance.new("image/jpeg", "/example/path/to/image.png")])
     end
 
-    if exists
-      message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
-    else
-      message = NonExistentMessage.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10))
-    end
+    message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10), exists)
     self.class.messages << message
     message
   end
