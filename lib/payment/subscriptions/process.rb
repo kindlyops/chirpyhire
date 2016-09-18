@@ -1,30 +1,41 @@
 module Payment
   module Subscriptions
     class Process
-      def self.call(subscription, email)
-        new(subscription, email).call
+      def self.call(token, subscription, email, attributes)
+        new(token, subscription, email, attributes).call
       end
 
-      def initialize(subscription, email)
+      def initialize(token, subscription, email, attributes)
+        @token = token
         @subscription = subscription
         @email = email
+        @attributes = attributes
       end
 
       def call
-        if organization.stripe_customer_id.blank?
-          stripe_customer = create_stripe_customer_with_subscription
-          stripe_subscription = stripe_customer.subscriptions.first
-        else
-          stripe_customer = find_stripe_customer
-          stripe_subscription = create_stripe_subscription(stripe_customer)
-        end
+        return unless token.present?
 
-        subscription.update(stripe_id: stripe_subscription.id)
+        subscription.update!(
+          attributes.merge(stripe_id: stripe_subscription.id)
+        )
+        subscription.activate!
+      rescue Stripe::CardError => e
+        raise Payment::CardError, e
       end
 
       private
 
-      attr_reader :subscription, :email
+      attr_reader :subscription, :email, :attributes, :token
+
+      def stripe_subscription
+        if organization.stripe_customer_id.blank?
+          stripe_customer = create_stripe_customer_with_subscription
+          stripe_customer.subscriptions.first
+        else
+          stripe_customer = find_stripe_customer
+          create_stripe_subscription(stripe_customer)
+        end
+      end
 
       def find_stripe_customer
         Stripe::Customer.retrieve(organization.stripe_customer_id)
@@ -32,7 +43,7 @@ module Payment
 
       def create_stripe_customer_with_subscription
         stripe_customer = Stripe::Customer.create(
-          source:   organization.stripe_token,
+          source:   token,
           plan:     subscription.plan_stripe_id,
           quantity: subscription.quantity,
           description: organization.name,

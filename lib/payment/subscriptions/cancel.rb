@@ -11,6 +11,7 @@ module Payment
 
       def call
         stripe_subscription.delete
+        subscription.cancel!
       end
 
       private

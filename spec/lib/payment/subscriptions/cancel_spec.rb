@@ -28,12 +28,22 @@ RSpec.describe Payment::Subscriptions::Cancel, vcr: { cassette_name: 'Payment::S
     context 'with an existing stripe customer' do
       let!(:organization) { create(:organization, stripe_customer_id: stripe_customer.id) }
       let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
-      let!(:subscription) { create(:subscription, plan: plan, organization: organization, stripe_id: stripe_subscription.id) }
+      let!(:subscription) { create(:subscription, plan: plan, organization: organization, stripe_id: stripe_subscription.id, state: "active") }
 
-      it 'sends cancel message to stripe' do
+      before(:each) do
         allow(Stripe::Subscription).to receive(:retrieve) { stripe_subscription }
+      end
+
+      it "sends cancel message to stripe" do
         expect(stripe_subscription).to receive(:delete)
         subject.call
+      end
+
+      it "cancels the subscription" do
+        allow(stripe_subscription).to receive(:delete)
+        expect {
+          subject.call
+        }.to change{subscription.reload.state}.from("active").to("canceled")
       end
     end
   end
