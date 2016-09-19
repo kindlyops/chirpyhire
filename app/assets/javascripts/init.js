@@ -1,5 +1,6 @@
 window.App = window.App || {};
 
+// Enable tipsy
 $(window).load(function() {
 	var delay = 400, 
 		className= "tipsy-font",
@@ -11,4 +12,12 @@ $(window).load(function() {
 	$(".tipsy-needed-e").tipsy(options);
 	options.gravity = 's';
 	$(".tipsy-needed-s").tipsy(options);
+});
+
+// Block disabled links
+$(document).on("turbolinks:load", function() {
+	$(document).on("click", "a.disabled", function(e) { 
+		e.stopImmediatePropagation();
+		return false;
+	});
 });

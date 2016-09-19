@@ -5,7 +5,7 @@ class StagePolicy < ApplicationPolicy
   end
 
   def edit?
-    show?
+    self.class.updatable?(record)
   end
 
   def update?
@@ -22,6 +22,10 @@ class StagePolicy < ApplicationPolicy
 
   def permitted_attributes
     [:name]
+  end
+
+  def self.updatable?(stage)
+    stage.standard_stage_mapping.nil?
   end
 
   def self.deletable?(stage)

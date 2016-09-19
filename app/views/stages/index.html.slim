@@ -14,8 +14,9 @@
               class: ["edit-stage", "button", stage.modify_button_class, "simple-button", 'tipsy-needed-w'],
               title: stage.modify_button_title do
                 i.fa.fa-pencil
+        // If method is defined, disabled links still click through, so we clear the method when not deletable
         = link_to("/stages/#{stage.id}",
-          method: "delete",
+          method: (StagePolicy.deletable?(stage) ? "delete" : ""),
           class: ['delete-stage', 'remove-field', 'tipsy-needed-w', stage.delete_button_class],
           data: { turbolinks: false },
           title: stage.delete_button_title)
