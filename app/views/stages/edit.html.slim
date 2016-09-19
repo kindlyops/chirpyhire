@@ -1,0 +1,4 @@
+= form_for @stage do |f|
+  = render partial: "common/validation_errors", locals: { model: @stage }
+  = f.text_field :name
+  = f.submit : save

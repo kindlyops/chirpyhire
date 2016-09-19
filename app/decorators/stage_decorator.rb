@@ -6,11 +6,19 @@ class StageDecorator < Draper::Decorator
   end
 
   def delete_button_class
-    if StagePolicy.deletable?(self) then '' else 'disabled' end
+    !StagePolicy.deletable?(self) ? 'disabled' : ''
   end
 
-  def delete_button_tipsy_class
-    if tooltip_needed then 'tipsy-needed-w' else '' end
+  def modify_button_class
+    !can_modify ? 'disabled' : ''
+  end
+
+  def modify_button_title
+    if !can_modify
+      'This stage cannot be modified'
+    else
+      'Modify stage'
+    end
   end
 
   def delete_button_title
@@ -24,6 +32,10 @@ class StageDecorator < Draper::Decorator
   end
 
   private
+
+  def can_modify
+    !standard_stage_mapping.present?
+  end
 
   def tooltip_needed
     candidates.any? || standard_stage_mapping.present?

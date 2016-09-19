@@ -12,6 +12,10 @@ class StagesController < ApplicationController
     end
   end
 
+  def edit
+    @stage = authorize(Stage.find(params[:id]))
+  end
+
   def reorder
     authorize Stage  
     stages_with_new_order = scoped_stages.map do |stage|

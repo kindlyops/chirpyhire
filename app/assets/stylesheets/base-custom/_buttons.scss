@@ -13,16 +13,29 @@
 		}
 	}
 
+	&:disabled, &.disabled {
+		cursor: default;
+	}
+
 	&:not(.simple-button) {	
 		&:disabled, &.disabled {
 			&:focus {
 				outline: 0;
 			}
-			cursor: default;
 			opacity: 0.5;
 
 			&:hover {
 				background-color: $action-color;
+			}
+		}
+	}
+
+	&.simple-button {
+		&:disabled, &.disabled {
+			cursor: default;
+
+			i {
+				color: $disabled-color;
 			}
 		}
 	}
@@ -51,7 +64,7 @@ a, button {
 			}
 			cursor: default;
 
-			color: $light-gray;
+			color: $disabled-color;
 		}
 	}
 }
