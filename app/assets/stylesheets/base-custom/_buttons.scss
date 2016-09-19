@@ -27,9 +27,9 @@
 	}
 }
 
-a {
+a, button {
 	// Cocoon class conventions use underscore
-	&.remove_fields, &.remove-field {
+	&.remove_fields, &.remove-field, &.add-field {
 		float: right;
 		padding: 0 0.25em;
 		color: $medium-gray;

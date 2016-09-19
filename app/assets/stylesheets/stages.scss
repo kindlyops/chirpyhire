@@ -7,53 +7,21 @@
 		@include shift(3);
 	}
 
-	.header {
-		display: flex;
-		margin: 15px 0;
-		justify-content: space-between;
-	}
-
-	.stages {
-		justify-content: flex-start;
-
-		li.stage {
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-			margin: 5px 0;
-			.stage-item-text {
-				display: flex;
-				justify-content: center;
-				align-content: center;
-				flex-direction: column;
-				padding-left: 0.5em;
-			}
-			.stage-item-text, .stage-item-text-wrapper, .order {
-				cursor: move;
-			}
-
-			&:hover, &:focus {
-			  background-color: #f3f3f3;
-			}
-		}
-	}
-
 	.save-order-button {
 		margin: 15px 0;
 	}
 
 	.new-stage-wrapper {
 		width: 100%;
-
+		border: 1px solid $light-gray;
+		box-shadow: 1px 1px $light-gray;
+		border-radius: 3px;
+		display: flex;
+		justify-content: space-between;
 		#new_stage {
-			width: 75%;
+			width: 94.5%;
 			display: inline-block;
 			margin: 0;
-		}
-		button {
-			float:right;
-			display: inline-block;
-			padding-bottom: 0.85em;
 		}
 	}
 }

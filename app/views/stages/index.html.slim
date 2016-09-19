@@ -1,29 +1,28 @@
 = title "Stages | Chirpyhire"
 
 .stages-wrapper
-  .header
-    h1 Candidate Stages
+  h1 Candidate Stages
   p Reorder current stages or add a new one. 
   hr
-  = form_tag("/stages/reorder", method: "put") do
-    ul.stages
-      - @stages.each_with_index do |stage, i|
-        li.stage.drag-and-drop data-id=stage.id
-          = hidden_field_tag(stage.id, stage.order, class: "hidden-order")
-          .stage-item-text
-            .stage-item-text-wrapper
-              = raw(stage.list_item)
-          = link_to("stages/#{stage.id}",
-            method: "delete",
-            class: ['delete-stage', 'remove-field', stage.delete_button_class, stage.delete_button_tipsy_class],
-            data: { turbolinks: false },
-            title: stage.delete_button_title)
-            | &times;
-    = submit_tag("Save order", class:"save-order-button button")
-  hr
+  ul.stages
+    - @stages.each do |stage|
+      li.stage.drag-and-drop data-id=stage.id
+        .drag-and-drop-text
+          .stage-item-text-wrapper
+            = raw(stage.list_item)
+        = link_to("stages/#{stage.id}",
+          method: "delete",
+          class: ['delete-stage', 'remove-field', stage.delete_button_class, stage.delete_button_tipsy_class],
+          data: { turbolinks: false },
+          title: stage.delete_button_title)
+          | &times;
   = render partial: "common/validation_errors", locals: { model: @stage }
   = form_tag("/stages", method: "post") do
-    .new-stage-wrapper.drag-and-drop
+    .new-stage-wrapper
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
-      button title="Add Stage" id="add-stage"
-        i.fa.fa-plus
+      button.simple-button.add-field title="Add Stage" id="add-stage"
+        | &plus;
+  = form_tag("/stages/reorder", method: "put", class: "reorder-form") do
+    - @stages.each do |stage|
+      = hidden_field_tag(stage.id, stage.order, class: "hidden-order")
+    = submit_tag("Save order", class:"save-order-button button")

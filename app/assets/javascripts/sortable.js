@@ -5,5 +5,6 @@ App.Sortable = {
 			draggedNumber = draggedDiv.textContent;
 		draggedDiv.textContent = relatedDiv.textContent;
 		relatedDiv.textContent = draggedNumber;
-	}
+	},
+	handle: ".drag-and-drop"
 }

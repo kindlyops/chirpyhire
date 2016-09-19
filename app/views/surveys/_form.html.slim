@@ -5,13 +5,13 @@
   - render partial: "common/validation_errors", locals: { model: survey }
   ul.survey--questions
     = f.fields_for :questions, survey.questions.by_priority do |q|
-      li.survey--question
+      li.survey--question.drag-and-drop
         = q.hidden_field :id
-        .field
-          = q.label :priority do
-            span.survey--question-priority.sortable-number = "#{q.object.priority}."
-            span.survey--question-label.drag-and-drop = "#{q.object.label}"
-          = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
+        .drag-and-drop-text
+          .field
+            strong.survey--question-priority.sortable-number = "#{q.object.priority}. "
+            strong.survey--question-label = "#{q.object.label}"
+            = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
   .actions
     = f.submit "Save"
 

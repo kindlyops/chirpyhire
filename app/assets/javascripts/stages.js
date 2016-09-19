@@ -3,16 +3,17 @@ $(document).on("turbolinks:load", function() {
 		setupSorting = function() {
 			if(wrapper.find(".stage").length) {
 				var stagesList = wrapper.find(".stages"),
+					reorderForm = wrapper.find(".reorder-form"),
 					stagesListElement = stagesList[0];
 				new Sortable(stagesListElement, {
-					handle: ".stage",
+					handle: App.Sortable.handle,
 					animation: 125,
 					chosenClass: "sortable-chosen",
 					ghostClass: "sortable-ghost",
 					onMove: App.Sortable.onMoveUpdateNumber,
 					onUpdate: function(e) {
 						stagesList.find(".stage").each(function(i, stageItem) {
-							$(stageItem).find(".hidden-order").val(i + 1);
+							reorderForm.find("input.hidden-order[name='" + $(stageItem).attr("data-id") + "']").val(i + 1);
 						});
 					}
 				});

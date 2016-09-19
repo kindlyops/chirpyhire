@@ -3,7 +3,7 @@ $(document).on("turbolinks:load", function() {
 
     var sortableList = $(".survey--questions").get(0);
     var sortable = new Sortable(sortableList, {
-      handle: ".survey--question-label",
+      handle: App.Sortable.handle,
       animation: 125,
       onMove: App.Sortable.onMoveUpdateNumber,
       onUpdate: function(e) {
