@@ -28,10 +28,10 @@ en:
         text: "Question response"
       choice_question:
         choice_question_options:
-          one:
-            "A question response"
-          other:
-            "Question responses"
+          one: "A question response"
+          other: "Question responses"
+      stage:
+        name: "Stage name"
     errors:
       models:
         choice_question_option:
@@ -42,6 +42,10 @@ en:
           attributes:
             choice_question_options:
               blank: "is required."
+        stage:
+          attributes:
+            name:
+              taken: "\"%{value}\" is already used by another stage."
   hello: "Hello world"
   pundit:
     default: 'You cannot perform this action.'
