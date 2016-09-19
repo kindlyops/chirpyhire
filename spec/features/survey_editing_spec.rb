@@ -309,7 +309,7 @@ RSpec.feature "SurveyEditing", type: :feature, js: true do
         choice = find(".nested-fields", match: :first)
         choice_text = choice.find('.field input').value
         within(choice) do
-          find(".remove-field", match: :first).trigger('click')
+          find(".remove_fields", match: :first).trigger('click')
         end
         click_button("Save")
         expect(page).to have_text("Nice! Question saved.")

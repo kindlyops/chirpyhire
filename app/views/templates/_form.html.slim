@@ -4,7 +4,7 @@ h1
 p = template.info
 hr
 = form_for template.object do |f|
-- render partial: "common/validation_errors", locals: { model: template}
+  - render partial: "common/validation_errors", locals: { model: template}
   .field
     = f.label :body, "Message"
     = f.text_area :body, required: true, autofocus: true, rows: 5
