@@ -1,4 +1,10 @@
-= form_for @stage do |f|
-  = render partial: "common/validation_errors", locals: { model: @stage }
-  = f.text_field :name
-  = f.submit : save
+= title "Edit \"#{@stage.name}\" | Chirpyhire"
+
+.edit-stages-wrapper
+  h1 = "Edit stage \"#{@stage.name}\""
+  hr
+  = form_for @stage do |f|
+    = render partial: "common/validation_errors", locals: { model: @stage }
+    = f.label :name
+    = f.text_field :name
+    = f.submit "Save"

@@ -15,7 +15,7 @@ class StageDecorator < Draper::Decorator
 
   def modify_button_title
     if !can_modify
-      'This stage cannot be modified'
+      'This stage cannot be edited'
     else
       'Modify stage'
     end

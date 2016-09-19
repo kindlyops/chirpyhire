@@ -14,8 +14,7 @@
               class: ["edit-stage", "button", stage.modify_button_class, "simple-button", 'tipsy-needed-w'],
               title: stage.modify_button_title do
                 i.fa.fa-pencil
-        // Try to use delete stage path??
-        = link_to("stages/#{stage.id}",
+        = link_to("/stages/#{stage.id}",
           method: "delete",
           class: ['delete-stage', 'remove-field', 'tipsy-needed-w', stage.delete_button_class],
           data: { turbolinks: false },

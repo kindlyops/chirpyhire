@@ -4,16 +4,28 @@ class StagePolicy < ApplicationPolicy
     true
   end
 
-  def destroy?
-    self.class.deletable?(record)
+  def edit?
+    show?
   end
 
-  def self.deletable?(stage)
-    stage.standard_stage_mapping.nil? && stage.candidates.empty?
+  def update?
+    edit?
   end
 
   def reorder?
     true
+  end
+
+  def destroy?
+    self.class.deletable?(record)
+  end
+
+  def permitted_attributes
+    [:name]
+  end
+
+  def self.deletable?(stage)
+    stage.standard_stage_mapping.nil? && stage.candidates.empty?
   end
 
   class Scope < ApplicationPolicy::Scope

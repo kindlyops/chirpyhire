@@ -6,14 +6,23 @@ class StagesController < ApplicationController
 
   def create
     if create_new_stage(params[:new_stage])
-      redirect_to stages_url, notice: "Nice! Stage created."
-    else
-      render :index
+      flash[:notice] = "Nice! Stage created."
     end
+    render :index
   end
 
   def edit
-    @stage = authorize(Stage.find(params[:id]))
+    @stage = authorized_stage
+  end
+
+  def update
+    @stage = authorized_stage
+    if @stage.update(permitted_attributes(Stage))
+      flash[:notice] = "Nice! Stage \"#{authorized_stage.name}\" updated."
+      render :index
+    else
+      render :edit
+    end
   end
 
   def reorder
@@ -22,18 +31,22 @@ class StagesController < ApplicationController
       { id: stage.id, order: params[stage.id.to_s] }
     end
     current_organization.reorder_stages(stages_with_new_order)
-    redirect_to stages_url, notice: "Nice! Stage order saved."
+    flash[:notice] = "Nice! Stage order saved."
+    render :index
   end
 
   def destroy
     if authorize(Stage.find(params[:id])).destroy
-      redirect_to stages_url, notice: "Nice! Stage deleted."
-    else
-      redirect_to stages_url, alert: "Oops! We were unable to delete your stage."
+      flash[:notice] = "Nice! Stage deleted."
     end
+    render :index
   end
 
   private
+
+  def authorized_stage
+    authorize(Stage.find(params[:id]))
+  end
 
   def setup_stages
     @stages = scoped_stages.decorate
