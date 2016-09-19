@@ -12,16 +12,20 @@
     .nested-fields {
       display: flex;
       align-items: center;
+      margin-bottom: $small-spacing;
 
       .field {
         display: flex;
         align-items: center;
+        
+        input[type='text'] {
+          margin: 0;
+        }
 
         label {
           margin-bottom: 0.75em;
           padding-right: 1em;
         }
-
       }
     }
   }

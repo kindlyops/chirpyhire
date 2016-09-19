@@ -15,10 +15,10 @@
               = raw(stage.list_item)
           = link_to("stages/#{stage.id}",
             method: "delete",
-            class: ['delete-stage', 'button', stage.delete_button_class, stage.delete_button_tipsy_class],
+            class: ['delete-stage', 'remove-field', stage.delete_button_class, stage.delete_button_tipsy_class],
             data: { turbolinks: false },
             title: stage.delete_button_title)
-            i.fa.fa-trash-o
+            | &times;
     = submit_tag("Save order", class:"save-order-button button")
   hr
   = render partial: "common/validation_errors", locals: { model: @stage }

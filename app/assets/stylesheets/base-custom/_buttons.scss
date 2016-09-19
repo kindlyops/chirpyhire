@@ -26,3 +26,25 @@
 		}
 	}
 }
+
+a {
+	// Cocoon class conventions use underscore
+	&.remove_fields, &.remove-field {
+		float: right;
+		padding: 0 0.25em;
+		color: $medium-gray;
+
+		position: relative;
+		bottom: 3px;
+		font-size: 2em;
+		
+		&:disabled, &.disabled {
+			&:focus {
+				outline: none;
+			}
+			cursor: default;
+
+			color: $light-gray;
+		}
+	}
+}
