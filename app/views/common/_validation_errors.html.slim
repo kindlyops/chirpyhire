@@ -1,0 +1,6 @@
+- if model.errors.any?
+      .error_explanation
+        strong = "#{pluralize(model.errors.count, "error")} prohibited this #{model.class.model_name.human.downcase} from being created:"
+        ul
+          - model.errors.full_messages.each do |message|
+            li = message

@@ -18,15 +18,10 @@
             class: ['delete-stage', 'button', stage.delete_button_class, stage.delete_button_tipsy_class],
             data: { turbolinks: false },
             title: stage.delete_button_title)
-            i.fa.fa-exchange-o
+            i.fa.fa-trash-o
     = submit_tag("Save order", class:"save-order-button button")
   hr
-  - if @stage.errors.any?
-      #error_explanation
-        h2 = "#{pluralize(@stage.errors.count, "error")} prohibited this stage from being created:"
-        ul
-          - @stage.errors.full_messages.each do |message|
-            li = message
+  = render partial: "common/validation_errors", locals: { model: @stage }
   = form_tag("/stages", method: "post") do
     .new-stage-wrapper.drag-and-drop
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
