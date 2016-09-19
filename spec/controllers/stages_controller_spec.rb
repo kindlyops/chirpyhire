@@ -29,11 +29,6 @@ RSpec.describe StagesController, type: :controller do
         get :create, params: { new_stage: "Potential" }
       }.not_to change{organization.stages.count}
     end
-
-    it "notifies the user if a stage has the same name" do
-        get :create, params: { new_stage: "Potential" }
-        expect(flash[:alert]).to have_text("Oops")
-    end
   end
 
   describe '#destroy' do

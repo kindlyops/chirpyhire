@@ -5,7 +5,11 @@ class StagePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.standard_stage_mapping.nil? && record.candidates.empty?
+    self.class.deletable?(record)
+  end
+
+  def self.deletable?(stage)
+    stage.standard_stage_mapping.nil? && stage.candidates.empty?
   end
 
   def reorder?

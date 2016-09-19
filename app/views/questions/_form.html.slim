@@ -9,6 +9,7 @@
       = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
       .checkbox
   - if question.errors.any?
+    - binding.pry
     #error_explanation
       h2 = "#{pluralize(question.errors.count, "error")} prohibited this Question from being saved:"
       ul
@@ -21,7 +22,6 @@
   .field
     = f.label :text, "Question Text"
     = f.text_area :text, required: true, placeholder: question.text_placeholder
-
   = render partial: "#{question.type.pluralize.underscore}/form", locals: { f: f }
   .actions
     = f.submit "Save"

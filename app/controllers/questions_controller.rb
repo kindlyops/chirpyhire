@@ -20,7 +20,6 @@ class QuestionsController < ApplicationController
 
   def update
     @question = authorized_question
-
     if @question.update(permitted_question_attributes)
       redirect_to survey_url, notice: "Nice! Question saved."
     else

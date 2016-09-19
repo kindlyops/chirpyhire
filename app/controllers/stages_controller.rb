@@ -1,18 +1,14 @@
 class StagesController < ApplicationController
+  before_action :setup_stages
+
   def index
-    @stages = scoped_stages.decorate
   end
 
   def create
-    new_stage_name = params[:new_stage]
-    stages = current_organization.stages
-    if stages.exists?(name: new_stage_name)
-      authorize Stage
-      redirect_to stages_url, alert: "Oops! You already have a stage with that name."
-    elsif create_new_stage(new_stage_name)
+    if create_new_stage(params[:new_stage])
       redirect_to stages_url, notice: "Nice! Stage created."
     else
-      redirect_to stages_url, alert: "Oops! We were unable to create your stage."
+      render :index
     end
   end
 
@@ -35,12 +31,17 @@ class StagesController < ApplicationController
 
   private
 
+  def setup_stages
+    @stages = scoped_stages.decorate
+    @stage = Stage.new
+  end
+
   def create_new_stage(new_stage_name)
-    stage = authorize(Stage.new(
+    @stage = authorize(Stage.new(
       organization: current_organization,
       name: new_stage_name,
       order: current_organization.stages.maximum(:order) + 1))
-    stage.save
+    @stage.save
   end
 
   def scoped_stages

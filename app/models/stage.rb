@@ -1,6 +1,7 @@
 class Stage < ApplicationRecord
   belongs_to :organization
   has_many :candidates
+  validates :name, uniqueness: { scope: :organization, message: 'already in use for another stage.'}
 
   POTENTIAL = 0
   QUALIFIED = 1

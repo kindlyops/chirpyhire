@@ -6,7 +6,7 @@ class StageDecorator < Draper::Decorator
   end
 
   def delete_button_class
-    if StagePolicy.deletable(self) then '' else 'disabled' end
+    if StagePolicy.deletable?(self) then '' else 'disabled' end
   end
 
   def delete_button_tipsy_class
