@@ -2,7 +2,7 @@
 
 <%= @report.recipient_first_name %>,
 
-There <%= 'is'.pluralize(@report.qualified_count) %> <%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?status=Qualified", target: "_blank" %>.
+There <%= 'is'.pluralize(@report.qualified_count) %> <%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?stage_id=#{@report.organization.qualified_stage.id}", target: "_blank" %>.
 
 Thanks,
 

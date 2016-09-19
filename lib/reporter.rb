@@ -12,6 +12,12 @@ class Reporter
     end
   end
 
+  def reports
+    recipients.active.map do |recipient|
+      ReportMailer.send(period, report_for(recipient))
+    end
+  end
+
   private
 
   def report_for(recipient)
