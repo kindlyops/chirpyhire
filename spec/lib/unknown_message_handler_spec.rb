@@ -16,7 +16,7 @@ RSpec.describe UnknownMessageHandler do
     end
 
     it 'marks the user as having unread messages' do
-      expect{
+      expect {
         message_handler.call
       }.to change { sender.has_unread_messages? }.from(false).to(true)
     end

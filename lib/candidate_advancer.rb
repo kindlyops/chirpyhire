@@ -19,7 +19,7 @@ class CandidateAdvancer
       next_unasked_question.inquire(user)
     else
       candidate.update(stage: candidate.organization.qualified_stage)
-      AutomatonJob.perform_later(user, "screen")
+      AutomatonJob.perform_later(user, 'screen')
     end
   end
 

@@ -1,5 +1,4 @@
 class Map
-
   attr_reader :organization
 
   def initialize(organization)
@@ -7,7 +6,7 @@ class Map
   end
 
   def center
-    location = self.organization.location
+    location = organization.location
     [location.longitude, location.latitude]
   end
 

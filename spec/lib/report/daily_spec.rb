@@ -1,4 +1,4 @@
-     require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Report::Daily do
   let(:recipient) { create(:account) }
@@ -41,7 +41,7 @@ RSpec.describe Report::Daily do
       context 'on the date passed' do
         let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, stage: organization.qualified_stage, organization: organization) }
-        it "is the count of candidates" do
+        it 'is the count of candidates' do
           expect(report.qualified_count).to eq(count)
         end
       end
@@ -56,7 +56,7 @@ RSpec.describe Report::Daily do
           end
         end
 
-        it "is only the candidates qualified on the date" do
+        it 'is only the candidates qualified on the date' do
           create(:candidate, stage: organization.qualified_stage, organization: organization)
           expect(report.qualified_count).to eq(1)
         end

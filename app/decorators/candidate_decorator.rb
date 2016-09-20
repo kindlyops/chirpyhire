@@ -4,7 +4,7 @@ class CandidateDecorator < Draper::Decorator
   decorates_association :user
   delegate :phone_number, to: :user, prefix: true
   delegate :handle, to: :user
-  
+
   def choices
     @choices ||= begin
       return [] unless choice_features.present?
@@ -27,6 +27,6 @@ class CandidateDecorator < Draper::Decorator
   end
 
   def call_to_actions
-    ["change_stage", "message"]
+    %w(change_stage message)
   end
 end

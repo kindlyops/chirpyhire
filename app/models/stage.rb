@@ -8,14 +8,14 @@ class Stage < ApplicationRecord
   BAD_FIT = 2
   HIRED = 3
 
-  enum standard_stage_mapping: { potential: Stage::POTENTIAL, qualified: Stage::QUALIFIED, bad_fit: Stage::BAD_FIT, hired: Stage::HIRED}
+  enum standard_stage_mapping: { potential: Stage::POTENTIAL, qualified: Stage::QUALIFIED, bad_fit: Stage::BAD_FIT, hired: Stage::HIRED }
 
   def self.ordered
     order(:order)
   end
 
   private
-  
+
   after_destroy do |stage|
     StageOrderer.reset_orders(stage.organization_id)
   end

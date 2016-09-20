@@ -7,25 +7,25 @@ RSpec.describe Candidate, type: :model do
       it 'creates an activity' do
         expect {
           candidate
-        }.to change{PublicActivity::Activity.count}.by(1)
-        expect(candidate.activities.last.properties["stage_id"]).to eq(candidate.organization.potential_stage.id)
+        }.to change { PublicActivity::Activity.count }.by(1)
+        expect(candidate.activities.last.properties['stage_id']).to eq(candidate.organization.potential_stage.id)
       end
     end
 
     describe 'update' do
       let!(:candidate) { create(:candidate) }
 
-      context "changing the stage" do
-        it "creates an activity" do
+      context 'changing the stage' do
+        it 'creates an activity' do
           expect {
             candidate.update(stage: candidate.organization.qualified_stage)
-          }.to change{PublicActivity::Activity.count}.by(1)
-          expect(candidate.activities.last.properties["stage_id"]).to eq(candidate.organization.qualified_stage.id)
+          }.to change { PublicActivity::Activity.count }.by(1)
+          expect(candidate.activities.last.properties['stage_id']).to eq(candidate.organization.qualified_stage.id)
         end
       end
 
-      context "not changing the stage" do
-        it "does not create an activity" do
+      context 'not changing the stage' do
+        it 'does not create an activity' do
           expect {
             candidate.touch
           }.not_to change { PublicActivity::Activity.count }

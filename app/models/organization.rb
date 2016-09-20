@@ -61,17 +61,17 @@ class Organization < ApplicationRecord
     users.has_unread_messages.count
   end
 
-  alias_method :active_record_stages, :stages
+  alias unordered_stages stages
   def stages
-    ordered_stages ||= self.active_record_stages.ordered
+    ordered_stages ||= unordered_stages.ordered
   end
 
-  # There should only ever be one of each default type for 
+  # There should only ever be one of each default type for
   # and organization
   def bad_fit_stage
     stages.bad_fit.first
   end
-  
+
   def potential_stage
     stages.potential.first
   end
@@ -83,7 +83,6 @@ class Organization < ApplicationRecord
   def hired_stage
     stages.hired.first
   end
-
 
   def bad_fit_candidate_activities
     candidate_activities.for_stage(bad_fit_stage)

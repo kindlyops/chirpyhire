@@ -50,14 +50,14 @@ RSpec.describe Payment::Subscriptions::Update do
         end
 
         it 'raises the Payment::CardError' do
-          expect{
+          expect {
             subject.call
           }.to raise_error(Payment::CardError)
         end
 
         it 'does not change the subscription quantity' do
-          expect{
-            expect{
+          expect {
+            expect {
               subject.call
             }.to raise_error(Payment::CardError)
           }.not_to change { subscription.reload.quantity }

@@ -7,13 +7,13 @@ RSpec.describe Question, type: :model do
 
   describe '#inquire' do
     it 'creates a message' do
-      expect{
+      expect {
         question.inquire(candidate.user)
       }.to change { Message.count }.by(1)
     end
 
     it 'creates an inquiry' do
-      expect{
+      expect {
         question.inquire(candidate.user)
       }.to change { question.inquiries.count }.by(1)
     end

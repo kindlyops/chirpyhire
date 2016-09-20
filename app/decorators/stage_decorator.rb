@@ -1,6 +1,6 @@
 class StageDecorator < Draper::Decorator
   delegate_all
-  
+
   def list_item
     "<strong class='order sortable-number'>#{order}.</strong> <strong>#{name}</strong>"
   end
@@ -22,12 +22,12 @@ class StageDecorator < Draper::Decorator
   end
 
   def delete_button_title
-    if standard_stage_mapping.present? 
-      'This stage cannot be deleted' 
-    elsif candidates.any? 
-      'Please remove candidates from stage to delete' 
-    else 
-      'Delete Stage' 
+    if standard_stage_mapping.present?
+      'This stage cannot be deleted'
+    elsif candidates.any?
+      'Please remove candidates from stage to delete'
+    else
+      'Delete Stage'
     end
   end
 

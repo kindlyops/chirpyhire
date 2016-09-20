@@ -105,12 +105,12 @@ RSpec.describe CandidatesController, type: :controller do
       end
     end
 
-    context "with candidates" do
+    context 'with candidates' do
       let(:qualified_stage) { organization.qualified_stage }
       let!(:candidates) { create_list(:candidate, 3, stage: qualified_stage, organization: organization) }
 
-      context "geojson" do
-        context "with candidates with addresses without phone numbers" do
+      context 'geojson' do
+        context 'with candidates with addresses without phone numbers' do
           let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
 
           it 'is OK' do
@@ -125,18 +125,18 @@ RSpec.describe CandidatesController, type: :controller do
         expect(assigns(:candidates)).to match_array(candidates)
       end
 
-      it "can change a candidates stage" do
+      it 'can change a candidates stage' do
         get :update, params: { id: organization.candidates.first.id, candidate: { stage_id: organization.bad_fit_stage.id } }
         expect(qualified_stage.candidates.count).to eq(2)
         expect(organization.bad_fit_stage.candidates.count).to eq(1)
       end
 
-      context "order" do
+      context 'order' do
         let(:potential_stage) { organization.potential_stage }
         let!(:old_candidate) { create(:candidate, id: 15, stage: potential_stage, organization: organization) }
         let!(:recent_candidate) { create(:candidate, id: 16, stage: potential_stage, organization: organization) }
 
-        it "returns the most recent candidates first" do
+        it 'returns the most recent candidates first' do
           get :index, params: { stage_id: potential_stage.id }
           expect(assigns(:candidates)).to eq([recent_candidate, old_candidate])
         end

@@ -1,5 +1,4 @@
 class StagePolicy < ApplicationPolicy
-
   def create?
     true
   end

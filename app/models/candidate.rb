@@ -2,9 +2,9 @@ class Candidate < ApplicationRecord
   include PublicActivity::Model
   include Filterable
   tracked only: [:create, :update], on: {
-    update: ->(model,_) { model.changes.include?("stage_id") }
+    update: ->(model, _) { model.changes.include?('stage_id') }
   },
-  properties: ->(_, model) { { stage_id: model.stage_id } }
+          properties: ->(_, model) { { stage_id: model.stage_id } }
 
   belongs_to :user
   belongs_to :stage
@@ -84,11 +84,9 @@ class Candidate < ApplicationRecord
     candidate_features.where("properties->>'child_class' = ?", 'yes_no')
   end
 
-  private 
+  private
 
   def ensure_candidate_has_stage
-    unless self.stage.present?
-      self.stage = organization.potential_stage
-    end
+    self.stage = organization.potential_stage unless stage.present?
   end
 end

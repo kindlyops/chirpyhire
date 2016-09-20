@@ -9,23 +9,23 @@ RSpec.feature 'Candidates', type: :feature, js: true do
     login_as(account, scope: :account)
   end
 
-  context "with candidates" do
-    context "qualified candidates" do
+  context 'with candidates' do
+    context 'qualified candidates' do
       let(:qualified_stage) { account.organization.qualified_stage }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
-      context "with other stages" do
-        it "has stage drawer window hidden initially" do 
+      context 'with other stages' do
+        it 'has stage drawer window hidden initially' do
           visit candidates_path
           expect(first('li.stage > a')).to eq(nil)
         end
-        it "can not move from qualified to qualified" do
+        it 'can not move from qualified to qualified' do
           visit candidates_path
-          first(".change-stage-button").click
+          first('.change-stage-button').click
 
-          qualified_link_that_doesnt_exist = all("li.stage")[1].first("input[type=submit]")
-          potential_link_that_does_exist = all("li.stage")[0].first("input[type=submit]")
-          
+          qualified_link_that_doesnt_exist = all('li.stage')[1].first('input[type=submit]')
+          potential_link_that_does_exist = all('li.stage')[0].first('input[type=submit]')
+
           expect(qualified_link_that_doesnt_exist).to eq(nil)
           expect(potential_link_that_does_exist).not_to eq(nil)
         end
@@ -93,13 +93,12 @@ RSpec.feature 'Candidates', type: :feature, js: true do
       end
     end
 
-    context "filtering" do
+    context 'filtering' do
       let(:qualified_stage) { account.organization.qualified_stage }
       let(:potential_stage) { account.organization.potential_stage }
       let(:bad_fit_stage) { account.organization.bad_fit_stage }
       let(:hired_stage) { account.organization.hired_stage }
-      context "default" do
-
+      context 'default' do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
@@ -140,7 +139,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
 
         let!(:candidate) { create(:candidate, organization: account.organization, stage: bad_fit_stage) }
 
-        it "only shows bad fit candidates" do
+        it 'only shows bad fit candidates' do
           visit candidates_path << "?stage_id=#{bad_fit_stage.id}"
 
           candidates.each do |candidate|
@@ -160,7 +159,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
 
         let!(:candidate) { create(:candidate, organization: account.organization, stage: hired_stage) }
 
-        it "only shows Hired candidates" do
+        it 'only shows Hired candidates' do
           visit candidates_path << "?stage_id=#{hired_stage.id}"
 
           candidates.each do |candidate|
@@ -180,7 +179,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
 
         let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
-        it "only shows qualified candidates" do
+        it 'only shows qualified candidates' do
           visit candidates_path << "?stage_id=#{qualified_stage.id}"
 
           candidates.each do |candidate|
@@ -200,7 +199,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
 
         let!(:candidate) { create(:candidate, organization: account.organization, stage: potential_stage) }
 
-        it "only shows potential candidates" do
+        it 'only shows potential candidates' do
           visit candidates_path << "?stage_id=#{potential_stage.id}"
 
           candidates.each do |candidate|
@@ -211,7 +210,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
       end
     end
 
-    context "more than one page of candidates" do
+    context 'more than one page of candidates' do
       let(:qualified_stage) { account.organization.qualified_stage }
       let(:users) { create_list(:user, 14, organization: account.organization) }
       let!(:candidates) do

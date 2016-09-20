@@ -83,7 +83,7 @@ RSpec.describe AddressSetter do
             end
 
             it 'does not change existing candidate feature' do
-              expect{
+              expect {
                 setter.call
               }.not_to change { address_feature.reload.properties['address'] }
             end

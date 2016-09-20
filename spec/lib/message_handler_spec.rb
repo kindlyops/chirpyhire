@@ -30,7 +30,7 @@ RSpec.describe MessageHandler do
       let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
 
       it 'creates the media instances' do
-        expect{
+        expect {
           message
         }.to change { MediaInstance.count }.by(1)
         expect(message.media_instances.length).to eq(1)
