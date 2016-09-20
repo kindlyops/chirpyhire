@@ -19,8 +19,9 @@ class Payment::Subscriptions::Update
   private
 
   def stripe_subscription
-    @stripe_subscription ||= Stripe::Subscription.retrieve(subscription.stripe_id)
+    @stripe_subscription ||= begin
+      Stripe::Subscription.retrieve(subscription.stripe_id)
+    end
   end
-
   attr_reader :subscription, :attributes
 end

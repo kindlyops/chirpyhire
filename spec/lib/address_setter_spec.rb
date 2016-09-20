@@ -6,6 +6,7 @@ RSpec.describe AddressSetter do
   describe '#call' do
     context 'with a csv passed' do
       let(:csv) { CSV.new('') }
+
       let(:setter) { AddressSetter.new(candidate, csv: csv) }
 
       context 'message has an address' do

@@ -5,7 +5,9 @@ class MessagesController < ApplicationController
   def index
     @messages = scoped_messages.by_recency.page(params.fetch(:page, 1))
 
-    message_user.update(has_unread_messages: false) if message_user.has_unread_messages?
+    if message_user.has_unread_messages?
+      message_user.update(has_unread_messages: false)
+    end
 
     respond_to do |format|
       format.html {}
@@ -25,7 +27,11 @@ class MessagesController < ApplicationController
   private
 
   def send_message
-    @sent_message ||= message_user.receive_message(body: params[:message][:body])
+    @sent_message ||= begin
+      message_user.receive_message(
+        body: params[:message][:body]
+      )
+    end
   end
 
   def scoped_messages
@@ -44,7 +50,8 @@ class MessagesController < ApplicationController
   end
 
   def message_not_authorized
-    redirect_to user_messages_url(message_user), alert: 'Unfortunately they are '\
-    "unsubscribed! You can't text unsubscribed candidates using Chirpyhire."
+    redirect_to user_messages_url(message_user), alert: 'Unfortunately '\
+    "they are unsubscribed! You can't text unsubscribed candidates "\
+    'using Chirpyhire.'
   end
 end

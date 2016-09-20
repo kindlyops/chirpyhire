@@ -26,3 +26,6 @@ Metrics/LineLength:
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
+
+Style/ClassAndModuleChildren:
+  Enabled: false

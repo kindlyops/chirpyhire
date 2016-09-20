@@ -8,9 +8,9 @@ RSpec.describe YesNoQuestionsController, type: :controller do
     sign_in(account)
   end
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:yes_no_question)
-  }
+  end
 
   let(:invalid_attributes) {
     { text: '', label: '', type: 'YesNoQuestion' }

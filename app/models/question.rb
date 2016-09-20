@@ -6,7 +6,11 @@ class Question < ApplicationRecord
   delegate :bad_fit, to: :survey
   validates :text, :label, :status, :priority, presence: true
 
-  TYPES = %w(ChoiceQuestion AddressQuestion DocumentQuestion YesNoQuestion).freeze
+  TYPES = %w(ChoiceQuestion
+             AddressQuestion
+             DocumentQuestion
+             YesNoQuestion).freeze
+
   validates :type, inclusion: { in: TYPES }
 
   def self.by_priority

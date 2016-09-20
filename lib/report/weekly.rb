@@ -11,6 +11,14 @@ class Report::Weekly
     (date - 7).strftime("%B #{(date - 7).day.ordinalize}") << ' - ' << (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
   end
 
+  def start_of_week
+    (date - 7).strftime("%B #{(date - 7).day.ordinalize}")
+  end
+
+  def end_of_week
+    (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
+  end
+
   def hired_count
     organization.hired_candidate_activities.where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1', date, date).count
   end

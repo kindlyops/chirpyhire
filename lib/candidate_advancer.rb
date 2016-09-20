@@ -10,17 +10,7 @@ class CandidateAdvancer
   def call
     return if organization.over_message_limit? || user.unsubscribed?
 
-    if initial_question?
-      next_unasked_question.inquire(user, message_text: initial_message)
-    elsif last_question.rejects?(candidate)
-      candidate.update(stage: candidate.organization.bad_fit_stage)
-      send_bad_fit_notification
-    elsif next_unasked_question.present?
-      next_unasked_question.inquire(user)
-    else
-      candidate.update(stage: candidate.organization.qualified_stage)
-      AutomatonJob.perform_later(user, 'screen')
-    end
+    advance_candidate
   end
 
   private
@@ -28,6 +18,23 @@ class CandidateAdvancer
   attr_reader :user
   delegate :last_answer, :organization, :candidate, to: :user
   delegate :survey, to: :organization
+
+  def advance_candidate
+    if initial_question?
+      next_unasked_question.inquire(user, message_text: initial_message)
+    elsif candidate_rejected?
+      mark_as_bad_fit
+    elsif next_unasked_question.present?
+      next_unasked_question.inquire(user)
+    else
+      qualify_candidate
+
+    end
+  end
+
+  def candidate_rejected?
+    last_question.rejects?(candidate)
+  end
 
   def initial_question?
     survey.questions.present? && user.inquiries.count.zero?
@@ -46,10 +53,22 @@ class CandidateAdvancer
   end
 
   def initial_message
-    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n#{next_unasked_question.formatted_text}"
+    "#{survey.welcome.body}\n\n#{subscription_notice}\n\n"\
+    "#{next_unasked_question.formatted_text}"
   end
 
   def subscription_notice
-    "If you ever wish to stop receiving text messages from #{organization.name} just reply STOP."
+    'If you ever wish to stop receiving text messages from '\
+    "#{organization.name} just reply STOP."
+  end
+
+  def mark_as_bad_fit
+    candidate.update(stage: candidate.organization.bad_fit_stage)
+    send_bad_fit_notification
+  end
+
+  def qualify_candidate
+    candidate.update(stage: candidate.organization.qualified_stage)
+    AutomatonJob.perform_later(user, 'screen')
   end
 end

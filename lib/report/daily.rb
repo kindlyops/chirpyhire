@@ -20,7 +20,8 @@ class Report::Daily
   end
 
   def subject
-    "#{qualified_count} Qualified #{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
+    "#{qualified_count} Qualified "\
+    "#{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
   end
 
   def organization

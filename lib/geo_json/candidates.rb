@@ -22,15 +22,24 @@ class GeoJson::Candidates
 
     {
       type: 'Feature',
-      properties: {
-        description: description(candidate),
-        stage_id: candidate.stage_id,
-        stage_name: candidate.stage.name
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [candidate.address.longitude, candidate.address.latitude]
-      }
+      properties: properties(candidate),
+      geometry: geometry(candidate)
+    }
+  end
+
+  def properties(candidate)
+    {
+      description: description(candidate),
+      stage_id: candidate.stage_id,
+      stage_name: candidate.stage.name
+    }
+  end
+
+  def geometry(candidate)
+    {
+
+      type: 'Point',
+      coordinates: [candidate.address.longitude, candidate.address.latitude]
     }
   end
 

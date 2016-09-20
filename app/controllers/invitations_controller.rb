@@ -27,6 +27,10 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def add_user_params
-    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:agreed_to_terms, user_attributes: [:name]])
+    devise_parameter_sanitizer.permit(
+      :accept_invitation,
+      keys: [:agreed_to_terms,
+             user_attributes: [:name]]
+    )
   end
 end

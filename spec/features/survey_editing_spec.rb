@@ -259,6 +259,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
 
   context 'Choice Questions' do
     let(:label) { 'Availability' }
+
     let!(:choice_question) {
       create(:choice_question, label: label, survey: survey, choice_question_options_attributes: [
                { letter: 'a', text: 'Live-in' }

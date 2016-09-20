@@ -1,36 +1,34 @@
-module Constraint
-  class Answer
-    def matches?(request)
-      @request = request
-      user.present? && candidate.present? && outstanding_inquiry.present?
-    end
+class Constraint::Answer
+  def matches?(request)
+    @request = request
+    user.present? && candidate.present? && outstanding_inquiry.present?
+  end
 
-    private
+  private
 
-    attr_reader :request
+  attr_reader :request
 
-    def candidate
-      user.candidate
-    end
+  def candidate
+    user.candidate
+  end
 
-    def outstanding_inquiry
-      user.outstanding_inquiry
-    end
+  def outstanding_inquiry
+    user.outstanding_inquiry
+  end
 
-    def user
-      organization.users.find_by(phone_number: from)
-    end
+  def user
+    organization.users.find_by(phone_number: from)
+  end
 
-    def organization
-      Organization.find_by(phone_number: to)
-    end
+  def organization
+    Organization.find_by(phone_number: to)
+  end
 
-    def to
-      request.request_parameters['To']
-    end
+  def to
+    request.request_parameters['To']
+  end
 
-    def from
-      request.request_parameters['From']
-    end
+  def from
+    request.request_parameters['From']
   end
 end

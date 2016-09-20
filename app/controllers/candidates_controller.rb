@@ -22,26 +22,32 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
-        @candidates = recent_filtered_candidates.page(params.fetch(:page, 1))
+        @candidates = filtered_and_paged_candidates
       end
     end
   end
 
   def edit
-    @candidates = recent_filtered_candidates.page(params.fetch(:page, 1))
+    @candidates = filtered_and_paged_candidates
     @candidate = authorized_candidate
     render :index
   end
 
   def update
     if authorized_candidate.update(permitted_attributes(Candidate))
-      redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.stage.name}"
+      redirect_to candidates_url, notice: 'Nice! '\
+      "#{authorized_candidate.handle} marked as #{authorized_candidate.status}"
     else
-      redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's stage"
+      redirect_to candidates_url, alert: "Oops! Couldn't change "\
+      "the candidate's status"
     end
   end
 
   private
+
+  def filtered_and_paged_candidates
+    recent_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+  end
 
   def authorized_candidate
     authorize Candidate.find(params[:id])
@@ -49,10 +55,6 @@ class CandidatesController < ApplicationController
 
   def recent_candidates
     policy_scope(Candidate).by_recency
-  end
-
-  def recent_filtered_candidates
-    recent_candidates.filter(filtering_params)
   end
 
   def filtering_params
@@ -63,12 +65,12 @@ class CandidatesController < ApplicationController
     created_in = params[:created_in]
 
     if created_in.present?
-      cookies[:candidate_created_in_filter] = { value: created_in }
+      cookies[:candidate_created_in_filter] = cookie(created_in)
       created_in
     elsif cookies[:candidate_created_in_filter].present?
       cookies[:candidate_created_in_filter]
     else
-      cookies[:candidate_created_in_filter] = { value: DEFAULT_CREATED_IN_FILTER }
+      cookies[:candidate_created_in_filter] = cookie(DEFAULT_CREATED_IN_FILTER)
       return DEFAULT_CREATED_IN_FILTER
     end
   end
@@ -86,5 +88,9 @@ class CandidatesController < ApplicationController
       cookies[:candidate_stage_filter] = { value: default_stage_id }
       return default_stage_id
     end
+  end
+
+  def cookie(value)
+    { value: value }
   end
 end

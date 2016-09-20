@@ -38,19 +38,49 @@ class FakeGeocoder
   end
 
   def self.search(*)
-    [Result.new('bounds' => { 'northeast' => { 'lat' => 38.032225, 'lng' => -78.4811563 }, 'southwest' => { 'lat' => 38.0315186, 'lng' => -78.4830319 } },
-                'components' =>
-         { '_type' => 'road',
-           'city' => 'Charlottesville',
-           'country' => 'United States of America',
-           'country_code' => 'us',
-           'hamlet' => 'Vinegar Hill',
-           'postcode' => '22902',
-           'road' => 'Market Street',
-           'state' => 'CA' },
-                'confidence' => 10,
-                'formatted' => 'Market Street, Charlottesville, VA 22902, United States of America',
-                'geometry' => { 'lat' => 37.870842, 'lng' => -122.501366 })]
+    [Result.new(
+      'bounds' => bounds,
+      'components' => components,
+      'geometry' => geometry,
+      'confidence' => 10,
+      'formatted' =>
+          'Market Street, Charlottesville, VA 22902, '\
+          'United States of America'
+    )]
+  end
+
+  class << self
+    private
+
+    def northeast
+      { 'lat' => 38.032225, 'lng' => -78.4811563 }
+    end
+
+    def southwest
+      { 'lat' => 38.0315186, 'lng' => -78.4830319 }
+    end
+
+    def bounds
+      {
+        'northeast' => northeast,
+        'southwest' => southwest
+      }
+    end
+
+    def geometry
+      { 'lat' => 37.870842, 'lng' => -122.501366 }
+    end
+
+    def components
+      { '_type' => 'road',
+        'city' => 'Charlottesville',
+        'country' => 'United States of America',
+        'country_code' => 'us',
+        'hamlet' => 'Vinegar Hill',
+        'postcode' => '22902',
+        'road' => 'Market Street',
+        'state' => 'CA' }
+    end
   end
 end
 

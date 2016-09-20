@@ -9,7 +9,7 @@ class SurveyAdvancer
 
   def call
     organization.candidates.potential.find_each do |candidate|
-      CandidateAdvancerJob.perform_later(candidate.user) unless candidate.has_outstanding_inquiry?
+      CandidateAdvancerJob.perform_later(candidate.user) unless candidate.outstanding_inquiry?
     end
   end
 
