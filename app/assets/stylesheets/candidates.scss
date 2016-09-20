@@ -19,6 +19,9 @@
 
     .stages-table {
       @include rounded-table;
+      td input[type='submit'] {
+        white-space: normal;
+      }
     }
   }
 

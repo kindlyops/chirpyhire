@@ -1,7 +1,7 @@
 window.App = window.App || {};
 
 // Enable tipsy
-$(window).load(function() {
+$(document).on("turbolinks:load", function() {
 	var delay = 400, 
 		className= "tipsy-font",
 		options = {className: className, delayIn: delay, delayOut: delay / 2, fade: true}; 

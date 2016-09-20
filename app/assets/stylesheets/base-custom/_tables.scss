@@ -6,6 +6,7 @@
 	tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 	td {
 		border: $base-border;
-		padding: $small-spacing 0 $small-spacing $tiny-spacing;
+		padding: $small-spacing $tiny-spacing $small-spacing $tiny-spacing;
+		word-wrap: break-word;
 	}
 }
