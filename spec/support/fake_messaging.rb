@@ -19,7 +19,7 @@ class FakeMessaging
 
   Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid, :exists) do
     def num_media
-      if exists.nil? || exists
+      if message_exists
         media.list.count.to_s
       else
         raise Twilio::REST::RequestError, "I don't exist."
@@ -27,7 +27,7 @@ class FakeMessaging
     end
 
     def media_urls
-      if exists.nil? || exists
+      if message_exists
         media.list.map(&:uri)
       else
         raise Twilio::REST::RequestError, "I don't exist."
@@ -35,11 +35,15 @@ class FakeMessaging
     end
 
     def address
-      if exists.nil? || exists
+      if message_exists
         @address ||= AddressFinder.new(body)
       else
         raise Twilio::REST::RequestError, "I don't exist."
       end
+    end
+
+    def message_exists
+      exists.nil? || exists
     end
   end
 
