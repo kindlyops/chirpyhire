@@ -1,6 +1,7 @@
 class MessageHandler
   DEFAULT_RETRIES = 3
   def initialize(sender, message_sid, retries: DEFAULT_RETRIES)
+    binding.pry
     @sender = sender
     @message_sid = message_sid
     @retries = retries
@@ -23,7 +24,7 @@ class MessageHandler
   rescue Twilio::REST::RequestError => e
     retries_remaining = retries - 1
     raise unless e.message.end_with?('was not found') && retries_remaining > 0
-    MessageHandlerJob.set(wait: 15.seconds).perform_later(@sender, @message_sid, retries_remaining)
+    MessageHandlerJob.set(wait: 15.seconds).perform_later(@sender, @message_sid, retries: retries_remaining)
   end
 
   def build_media_instances

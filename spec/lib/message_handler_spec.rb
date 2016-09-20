@@ -11,6 +11,7 @@ RSpec.describe MessageHandler do
 
   let(:message) { message_handler.call }
   describe '#call' do
+    include ActiveJob::TestHelper
     context 'where message exists' do
       it 'creates the message' do
         expect {
@@ -46,6 +47,13 @@ RSpec.describe MessageHandler do
         expect {
           message
         }.to have_enqueued_job(MessageHandlerJob)
+      end
+      it 'fails after running multiple retries' do
+        expect {
+          perform_enqueued_jobs do
+            message
+          end
+        }.to raise_error(Twilio::REST::RequestError)
       end
     end
   end
