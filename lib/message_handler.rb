@@ -29,11 +29,8 @@ class MessageHandler
 
   rescue Twilio::REST::RequestError => e
     retries_remaining = retries - 1
-    if retries_remaining > 0
-      MessageHandlerJob.set(wait: 15.seconds).perform_later(@sender, @message_sid, retries_remaining)
-    else
-      raise
-    end
+    raise unless e.message.end_with?('was not found') && retries_remaining > 0
+    MessageHandlerJob.set(wait: 15.seconds).perform_later(@sender, @message_sid, retries_remaining)
   end
 
   def external_message

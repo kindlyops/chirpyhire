@@ -22,7 +22,7 @@ class FakeMessaging
       if message_exists
         media.list.count.to_s
       else
-        raise Twilio::REST::RequestError, "I don't exist."
+        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
       end
     end
 
@@ -30,7 +30,7 @@ class FakeMessaging
       if message_exists
         media.list.map(&:uri)
       else
-        raise Twilio::REST::RequestError, "I don't exist."
+        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
       end
     end
 
@@ -38,7 +38,7 @@ class FakeMessaging
       if message_exists
         @address ||= AddressFinder.new(body)
       else
-        raise Twilio::REST::RequestError, "I don't exist."
+        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
       end
     end
 
