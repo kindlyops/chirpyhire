@@ -13,3 +13,8 @@
 /tmp
 .env
 spec/examples.txt
+**/*.orig
+**/*BASE*
+**/*REMOTE*
+**/*BACKUP*
+**/*LOCAL*
