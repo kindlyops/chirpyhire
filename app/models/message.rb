@@ -5,7 +5,7 @@ class Message < ApplicationRecord
   has_one :inquiry
   has_one :answer
   has_one :notification
-  belongs_to :child, class_name: "Message"
+  belongs_to :child, class_name: 'Message'
   delegate :organization, to: :user
 
   def self.by_recency
@@ -32,12 +32,10 @@ class Message < ApplicationRecord
     media_instances
   end
 
-  def images
-    media_instances.images
-  end
+  delegate :images, to: :media_instances
 
   def inbound?
-    direction == "inbound"
+    direction == 'inbound'
   end
 
   def has_images?

@@ -1,3 +1,1 @@
-if Rails.env.development?
-  BetterErrors.editor = :subl
-end
+BetterErrors.editor = :subl if Rails.env.development?

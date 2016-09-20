@@ -1,5 +1,6 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
+  DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
     @candidate = authorized_candidate
@@ -14,15 +15,16 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    filtered_candidates = scoped_candidates.by_recency
+    unfiltered_candidates = scoped_candidates.by_recency
+
     respond_to do |format|
       format.geojson do
-        @candidates = filtered_candidates.with_addresses.decorate
+        @candidates = unfiltered_candidates.with_addresses.decorate
         render json: GeoJson::Candidates.new(@candidates).call
       end
 
       format.html do
-        @candidates = filtered_candidates.where(stage_id: stage_id).page(params.fetch(:page, 1))
+        @candidates = unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
       end
     end
   end
@@ -43,6 +45,24 @@ class CandidatesController < ApplicationController
 
   def scoped_candidates
     policy_scope(Candidate)
+  end
+
+  def filtering_params
+    { created_in: created_in, stage_id: stage_id }
+  end
+
+  def created_in
+    created_in = params[:created_in]
+
+    if created_in.present?
+      cookies[:candidate_created_in_filter] = { value: created_in }
+      created_in
+    elsif cookies[:candidate_created_in_filter].present?
+      cookies[:candidate_created_in_filter]
+    else
+      cookies[:candidate_created_in_filter] = { value: DEFAULT_CREATED_IN_FILTER }
+      return DEFAULT_CREATED_IN_FILTER
+    end
   end
 
   def stage_id

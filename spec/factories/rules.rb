@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :rule do
     organization
-    trigger { "subscribe" }
+    trigger { 'subscribe' }
 
     transient do
       format :text

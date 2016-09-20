@@ -1,5 +1,4 @@
 class MessageHandler
-
   def self.call(sender, message_sid)
     new(sender, message_sid).call
   end

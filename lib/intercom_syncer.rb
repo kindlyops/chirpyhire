@@ -1,5 +1,4 @@
 class IntercomSyncer
-
   def initialize(organization)
     @organization = organization
   end

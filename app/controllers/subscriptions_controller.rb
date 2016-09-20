@@ -17,10 +17,10 @@ class SubscriptionsController < ApplicationController
   def update
     @subscription = authorized_subscription
 
-    if @subscription.update(permitted_attributes(Subscription))
-      Payment::Job::UpdateSubscription.perform_later(@subscription)
+    if successfully_updated_subscription?
+      SurveyAdvancer.call(current_organization)
 
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription changed."
+      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription changed.'
     else
       render :edit
     end
@@ -29,11 +29,10 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = authorized_subscription
 
-    if params[:stripe_token].present? && @subscription.update(permitted_attributes(Subscription))
-      current_organization.update(stripe_token: params[:stripe_token])
-      @subscription.activate!
-      Payment::Job::ProcessSubscription.perform_later(@subscription, current_account.email)
-      redirect_to subscription_path(@subscription), notice: "Nice! Subscription created."
+    if successfully_created_subscription?
+      SurveyAdvancer.call(current_organization)
+
+      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription created.'
     else
       render :new
     end
@@ -41,15 +40,31 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     @subscription = authorized_subscription
-    if @subscription.cancel!
-      Payment::Job::CancelSubscription.perform_later(@subscription)
-      redirect_to subscription_path(@subscription), notice: "Sorry to see you go. Your account is canceled."
-    else
-      render :edit
-    end
+    Payment::Subscriptions::Cancel.call(@subscription)
+    redirect_to subscription_path(@subscription), notice: 'Sorry to see you go. Your account is canceled.'
   end
 
   private
+
+  def successfully_updated_subscription?
+    Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
+  rescue Payment::CardError => e
+    flash[:alert] = e.message
+    false
+  end
+
+  def successfully_created_subscription?
+    Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
+  rescue Payment::CardError => e
+    flash[:alert] = e.message
+    false
+  end
+
+  def payment_error_message(error)
+    <<-ERROR
+#{error.message} Need Help? <a href='javascript:void(0)' onclick="Intercom('showNewMessage')">Message Us</a>
+    ERROR
+  end
 
   def authorized_subscription
     @authorized_subscription ||= authorize current_organization.subscription

@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.opencagedata.com/geocode/v1/json?countrycode=us&key=OPENCAGE_KEY&language=en&min_confidence=8&no_annotations=1&q=2%20civic%20center%20drive%2094913
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Sep 2016 22:30:38 GMT
+      Server:
+      - Apache/2.4.7 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Ratelimit-Limit:
+      - '2500'
+      X-Ratelimit-Remaining:
+      - '2491'
+      X-Ratelimit-Reset:
+      - '1473984000'
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json; charset=utf-8
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2491,"reset":1473984000},"results":[{"bounds":{"northeast":{"lat":38.3556638,"lng":-81.6408485},"southwest":{"lat":38.3551092,"lng":-81.6415519}},"components":{"_type":"road","city":"Charleston","country":"United
+        States of America","country_code":"us","county":"Kanawha County","postcode":"25301","road":"Civic
+        Center Drive","state":"West Virginia"},"confidence":10,"formatted":"Civic
+        Center Drive, Charleston, WV 25301, United States of America","geometry":{"lat":38.3553095,"lng":-81.6413027}},{"bounds":{"northeast":{"lat":32.6715056,"lng":-117.1052921},"southwest":{"lat":32.669415,"lng":-117.1127169}},"components":{"_type":"road","city":"National
+        City","country":"United States of America","country_code":"us","county":"San
+        Diego County","postcode":"91950","road":"Civic Center Drive","state":"California"},"confidence":9,"formatted":"Civic
+        Center Drive, National City, CA 91950, United States of America","geometry":{"lat":32.6703759,"lng":-117.1093461}},{"bounds":{"northeast":{"lat":44.3483948,"lng":-69.795545},"southwest":{"lat":44.3479264,"lng":-69.7957886}},"components":{"_type":"road","city":"Augusta","country":"United
+        States of America","country_code":"us","county":"Kennebec County","postcode":"04330","road":"Civic
+        Center Drive","state":"Maine"},"confidence":10,"formatted":"Civic Center Drive,
+        Augusta, ME 04330, United States of America","geometry":{"lat":44.3479264,"lng":-69.795545}},{"bounds":{"northeast":{"lat":27.5336595,"lng":-81.8339196},"southwest":{"lat":27.5326517,"lng":-81.835178}},"components":{"_type":"road","country":"United
+        States of America","country_code":"us","county":"Hardee County","hamlet":"Coker","postcode":"33873","road":"Civic
+        Center Drive","state":"Florida"},"confidence":10,"formatted":"Civic Center
+        Drive, Coker, FL 33873, United States of America","geometry":{"lat":27.5326517,"lng":-81.8348297}},{"bounds":{"northeast":{"lat":42.669801,"lng":-83.3900169},"southwest":{"lat":42.667607,"lng":-83.3900809}},"components":{"_type":"road","country":"United
+        States of America","country_code":"us","county":"Oakland County","locality":"Waterford
+        Township","postcode":"48329","road":"Civic Center Drive","state":"Michigan"},"confidence":10,"formatted":"Civic
+        Center Drive, Waterford Township, MI 48329, United States of America","geometry":{"lat":42.6680365,"lng":-83.3900294}},{"bounds":{"northeast":{"lat":35.8822434,"lng":-81.5121808},"southwest":{"lat":35.8806439,"lng":-81.5132644}},"components":{"_type":"road","city":"Lenoir","country":"United
+        States of America","country_code":"us","county":"Caldwell County","postcode":"28645","road":"Civic
+        Center Drive","state":"North Carolina"},"confidence":10,"formatted":"Civic
+        Center Drive, Lenoir, NC 28645, United States of America","geometry":{"lat":35.8814176,"lng":-81.5129211}},{"bounds":{"northeast":{"lat":40.419004,"lng":-74.4164527},"southwest":{"lat":40.4156891,"lng":-74.4212329}},"components":{"_type":"road","city":"East
+        Brunswick Township","country":"United States of America","country_code":"us","county":"Middlesex
+        County","postcode":"08816","road":"Civic Center Drive","state":"New Jersey"},"confidence":10,"formatted":"Civic
+        Center Drive, East Brunswick Township, NJ 08816, United States of America","geometry":{"lat":40.4159764,"lng":-74.4188022}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
+        using an OpenCage Data API","timestamp":{"created_http":"Thu, 15 Sep 2016
+        22:30:38 GMT","created_unix":1473978638},"total_results":7}'
+    http_version: 
+  recorded_at: Thu, 15 Sep 2016 22:30:59 GMT
+recorded_with: VCR 3.0.3

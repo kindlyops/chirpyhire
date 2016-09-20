@@ -18,7 +18,7 @@ class Account < ApplicationRecord
     super if invitation_token.nil?
   end
 
-  def self.accept_invitation!(attributes={})
+  def self.accept_invitation!(attributes = {})
     original_token = attributes.delete(:invitation_token)
     invitable = find_by_invitation_token(original_token, false)
     if invitable.errors.empty?

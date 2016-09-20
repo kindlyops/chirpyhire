@@ -1,5 +1,4 @@
 class Reporter
-
   def initialize(recipients, report_klass, period)
     @recipients = recipients
     @report_klass = report_klass

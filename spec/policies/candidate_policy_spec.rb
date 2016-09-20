@@ -7,18 +7,18 @@ RSpec.describe CandidatePolicy do
 
   let(:resolved_scope) { CandidatePolicy::Scope.new(organization, Candidate.all).resolve }
 
-  context "being a visitor" do
+  context 'being a visitor' do
     let(:organization) { nil }
 
-    it "raises a NotAuthorizedError" do
+    it 'raises a NotAuthorizedError' do
       expect {
         subject
       }.to raise_error(Pundit::NotAuthorizedError)
     end
   end
 
-  context "having an organization" do
-    context "candidate does not belong to the organization" do
+  context 'having an organization' do
+    context 'candidate does not belong to the organization' do
       let(:organization) { create(:organization) }
 
       it { should forbid_new_and_create_actions }
@@ -31,7 +31,7 @@ RSpec.describe CandidatePolicy do
       end
     end
 
-    context "candidate belongs to the organization" do
+    context 'candidate belongs to the organization' do
       let(:organization) { candidate.organization }
 
       it { should forbid_new_and_create_actions }

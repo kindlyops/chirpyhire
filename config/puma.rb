@@ -1,1 +1,1 @@
-plugin "heroku"
+plugin 'heroku'

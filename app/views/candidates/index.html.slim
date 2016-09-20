@@ -5,6 +5,7 @@
     .dropdown
       select.stage name="stage_id"
         = options_for_select(current_organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
+      = select_tag "created_in", options_for_select(["Past 24 Hours", "Past Week", "Past Month", "All Time"], cookies.fetch(:candidate_created_in_filter, "Past Week"))
     .button-group
       label for=""
         i.fa.fa-th-large.button-group-item selected=true

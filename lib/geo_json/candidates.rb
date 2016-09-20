@@ -6,7 +6,7 @@ class GeoJson::Candidates
   end
 
   def call
-    { type: "FeatureCollection",
+    { type: 'FeatureCollection',
       features: build_features,
       stage_infos: @stage_infos
     }
@@ -22,14 +22,14 @@ class GeoJson::Candidates
     return unless candidate.address.present? && candidate.stage.present?
 
     {
-      type: "Feature",
+      type: 'Feature',
       properties: {
         description: description(candidate),
         stage_id: candidate.stage_id,
         stage_name: candidate.stage.name
       },
       geometry: {
-        type: "Point",
+        type: 'Point',
         coordinates: [candidate.address.longitude, candidate.address.latitude]
       }
     }

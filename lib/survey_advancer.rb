@@ -1,5 +1,4 @@
 class SurveyAdvancer
-
   def self.call(organization)
     new(organization).call
   end

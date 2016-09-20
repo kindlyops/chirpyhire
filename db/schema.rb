@@ -191,7 +191,6 @@ ActiveRecord::Schema.define(version: 20160918173502) do
     t.datetime "updated_at",                                                null: false
     t.string   "time_zone",          default: "Eastern Time (US & Canada)", null: false
     t.string   "stripe_customer_id"
-    t.string   "stripe_token"
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
   end
 

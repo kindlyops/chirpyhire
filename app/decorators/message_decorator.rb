@@ -4,7 +4,7 @@ class MessageDecorator < Draper::Decorator
   delegate :phone_number, :handle, to: :user, prefix: true
 
   def contents
-    return "images" if images.present?
-    "text"
+    return 'images' if images.present?
+    'text'
   end
 end

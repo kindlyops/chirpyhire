@@ -1,5 +1,6 @@
 class Candidate < ApplicationRecord
   include PublicActivity::Model
+  include Filterable
   tracked only: [:create, :update], on: {
     update: ->(model,_) { model.changes.include?("stage_id") }
   },
@@ -12,7 +13,7 @@ class Candidate < ApplicationRecord
   has_many :referrers, through: :referrals
   has_many :activities, as: :trackable
 
-  alias :features :candidate_features
+  alias features candidate_features
 
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
@@ -28,6 +29,22 @@ class Candidate < ApplicationRecord
 
   def self.with_addresses
     joins(:candidate_features).merge(CandidateFeature.address)
+  end
+
+  def self.stage_id(stage_id)
+    joins(:stage).where(stages: { id: stage_id })
+  end
+
+  def self.created_in(created_in)
+    period = {
+      'Past 24 Hours' => 24.hours.ago,
+      'Past Week' => 1.week.ago,
+      'Past Month' => 1.month.ago,
+      'All Time' => DateTime.new(2016, 0o2, 0o1)
+    }[created_in]
+    return self unless period.present?
+
+    where('candidates.created_at > ?', period)
   end
 
   def self.hired
@@ -52,19 +69,19 @@ class Candidate < ApplicationRecord
   end
 
   def address_feature
-    candidate_features.where("properties->>'child_class' = ?", "address").first
+    candidate_features.where("properties->>'child_class' = ?", 'address').first
   end
 
   def choice_features
-    candidate_features.where("properties->>'child_class' = ?", "choice")
+    candidate_features.where("properties->>'child_class' = ?", 'choice')
   end
 
   def document_features
-    candidate_features.where("properties->>'child_class' = ?", "document")
+    candidate_features.where("properties->>'child_class' = ?", 'document')
   end
 
   def yes_no_features
-    candidate_features.where("properties->>'child_class' = ?", "yes_no")
+    candidate_features.where("properties->>'child_class' = ?", 'yes_no')
   end
 
   private 
