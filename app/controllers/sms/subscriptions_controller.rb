@@ -1,53 +1,51 @@
-module Sms
-  class SubscriptionsController < Sms::BaseController
-    def create
-      handle_incoming_message
+class Sms::SubscriptionsController < Sms::BaseController
+  def create
+    handle_incoming_message
 
-      if sender.subscribed?
-        sender.receive_message(body: already_subscribed)
-      else
-        subscribe_sender
-      end
-      head :ok
+    if sender.subscribed?
+      sender.receive_message(body: already_subscribed)
+    else
+      subscribe_sender
     end
+    head :ok
+  end
 
-    def destroy
-      handle_incoming_message
+  def destroy
+    handle_incoming_message
 
-      if sender.unsubscribed?
-        sender.receive_message(body: not_subscribed)
-      else
-        sender.update(subscribed: false)
-      end
-      head :ok
+    if sender.unsubscribed?
+      sender.receive_message(body: not_subscribed)
+    else
+      sender.update(subscribed: false)
     end
+    head :ok
+  end
 
-    private
+  private
 
-    def subscribe_sender
-      ApplicationRecord.transaction do
-        sender.update(subscribed: true)
-        ensure_candidate
-        AutomatonJob.perform_later(sender, 'subscribe')
-      end
+  def subscribe_sender
+    ApplicationRecord.transaction do
+      sender.update(subscribed: true)
+      ensure_candidate
+      AutomatonJob.perform_later(sender, 'subscribe')
     end
+  end
 
-    def handle_incoming_message
-      MessageHandlerJob.perform_later(sender, params['MessageSid'])
-    end
+  def handle_incoming_message
+    MessageHandlerJob.perform_later(sender, params['MessageSid'])
+  end
 
-    def already_subscribed
-      'You are already subscribed. '\
-      "Thanks for your interest in #{organization.name}."
-    end
+  def already_subscribed
+    'You are already subscribed. '\
+    "Thanks for your interest in #{organization.name}."
+  end
 
-    def not_subscribed
-      'You were not subscribed to '\
-      "#{organization.name}. To subscribe reply with START."
-    end
+  def not_subscribed
+    'You were not subscribed to '\
+    "#{organization.name}. To subscribe reply with START."
+  end
 
-    def ensure_candidate
-      sender.candidate || sender.create_candidate
-    end
+  def ensure_candidate
+    sender.candidate || sender.create_candidate
   end
 end
