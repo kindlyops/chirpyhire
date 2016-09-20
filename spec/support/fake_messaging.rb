@@ -79,6 +79,8 @@ class FakeMessaging
     self.class.messages.find { |message| message.sid == sid }
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/ParameterLists
   def create(from:, to:, body:, direction: 'outbound-api', format: :image, exists: true)
     media = build_media(format)
 
@@ -93,6 +95,8 @@ class FakeMessaging
                           exists)
     append_message(message)
   end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/ParameterLists
 
   private
 
