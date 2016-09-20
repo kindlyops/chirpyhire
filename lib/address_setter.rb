@@ -7,7 +7,7 @@ class AddressSetter
   def call
     return 'Address present' if candidate.address_feature.present?
 
-    if look_for_address
+    if address_found?
       'Address found'
     else
       'No address found'
@@ -72,7 +72,7 @@ class AddressSetter
     @survey ||= candidate.organization.survey
   end
 
-  def look_for_address
+  def address_found?
     address_found = false
 
     messages.each do |message|

@@ -22,12 +22,12 @@ class AnswerFormatter
       if inquiry.question_type == 'ChoiceQuestion'
         question = inquiry.question
         choice_question = question.becomes(question.type.constantize)
-        version(choice_question)
+        find_version(choice_question)
       end
     end
   end
 
-  def version(choice_question)
+  def find_version(choice_question)
     choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)
   end
 
