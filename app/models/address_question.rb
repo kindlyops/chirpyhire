@@ -1,10 +1,11 @@
 class AddressQuestion < Question
-  has_one :address_question_option, foreign_key: :question_id, inverse_of: :address_question
-  accepts_nested_attributes_for :address_question_option, reject_if: :all_blank, allow_destroy: true
+  has_one :address_question_option,
+          foreign_key: :question_id, inverse_of: :address_question
+  accepts_nested_attributes_for :address_question_option,
+                                reject_if: :all_blank, allow_destroy: true
   delegate :latitude, :longitude, :distance, to: :address_question_option
 
-  def self.extract(message, inquiry)
-    question = inquiry.question
+  def self.extract(message, _inquiry)
     address = message.address
     {
       address: address.address,
@@ -18,21 +19,27 @@ class AddressQuestion < Question
   end
 
   def rejects?(candidate)
-    return false unless has_geofence?
-    Geocoder::Calculations.distance_between(candidate.address.coordinates, coordinates) > distance
+    return false unless geofenced?
+    distance_away(candidate) > distance
   end
 
-  def has_geofence?
+  def geofenced?
     address_question_option.present?
   end
 
   def distance_in_miles
-    return unless has_geofence?
+    return unless geofenced?
     address_question_option.distance
   end
 
   def coordinates
-    return [] unless has_geofence?
+    return [] unless geofenced?
     [address_question_option.latitude, address_question_option.longitude]
+  end
+
+  def distance_away(candidate)
+    Geocoder::Calculations.distance_between(
+      candidate.address.coordinates, coordinates
+    )
   end
 end

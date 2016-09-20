@@ -5,11 +5,7 @@ class Sms::SubscriptionsController < Sms::BaseController
     if sender.subscribed?
       sender.receive_message(body: already_subscribed)
     else
-      ApplicationRecord.transaction do
-        sender.update(subscribed: true)
-        ensure_candidate
-        AutomatonJob.perform_later(sender, 'subscribe')
-      end
+      subscribe_sender
     end
     head :ok
   end
@@ -27,16 +23,26 @@ class Sms::SubscriptionsController < Sms::BaseController
 
   private
 
+  def subscribe_sender
+    ApplicationRecord.transaction do
+      sender.update(subscribed: true)
+      ensure_candidate
+      AutomatonJob.perform_later(sender, 'subscribe')
+    end
+  end
+
   def handle_incoming_message
     MessageHandlerJob.perform_later(sender, params['MessageSid'])
   end
 
   def already_subscribed
-    "You are already subscribed. Thanks for your interest in #{organization.name}."
+    'You are already subscribed. '\
+    "Thanks for your interest in #{organization.name}."
   end
 
   def not_subscribed
-    "You were not subscribed to #{organization.name}. To subscribe reply with START."
+    'You were not subscribed to '\
+    "#{organization.name}. To subscribe reply with START."
   end
 
   def ensure_candidate

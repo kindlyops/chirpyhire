@@ -18,7 +18,7 @@ class Candidate < ApplicationRecord
 
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
-           :receive_message, :handle, :has_outstanding_inquiry?, to: :user
+           :receive_message, :handle, :outstanding_inquiry?, to: :user
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -37,7 +37,8 @@ class Candidate < ApplicationRecord
       'Past 24 Hours' => 24.hours.ago,
       'Past Week' => 1.week.ago,
       'Past Month' => 1.month.ago,
-      'All Time' => DateTime.new(2016, 0o2, 0o1)
+      'All Time' => Date.iso8601('2016-02-01')
+
     }[created_in]
     return self unless period.present?
 
@@ -66,7 +67,7 @@ class Candidate < ApplicationRecord
   end
 
   def address_feature
-    candidate_features.where("properties->>'child_class' = ?", 'address').first
+    candidate_features.find_by("properties->>'child_class' = ?", 'address')
   end
 
   def choice_features

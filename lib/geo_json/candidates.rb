@@ -23,14 +23,23 @@ class GeoJson::Candidates
 
     {
       type: 'Feature',
-      properties: {
-        description: description(candidate),
-        status: candidate.status
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [longitude(candidate), latitude(candidate)]
-      }
+      properties: properties(candidate),
+      geometry: geometry(candidate)
+    }
+  end
+
+  def properties(candidate)
+    {
+      description: description(candidate),
+      status: candidate.status
+    }
+  end
+
+  def geometry(candidate)
+    {
+
+      type: 'Point',
+      coordinates: [longitude(candidate), latitude(candidate)]
     }
   end
 
@@ -47,6 +56,8 @@ class GeoJson::Candidates
   end
 
   def description(candidate)
-    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>#{candidate.handle}</a></h3><p>Address: #{address(candidate)}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
+    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>"\
+    "#{candidate.handle}</a></h3><p>Address: #{address(candidate)}</p>"\
+    "<p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
   end
 end

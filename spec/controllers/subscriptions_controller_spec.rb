@@ -9,13 +9,13 @@ RSpec.describe SubscriptionsController, type: :controller do
     sign_in(account)
   end
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     { plan_id: plan.id, quantity: 1 }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { plan_id: plan.id }
-  }
+  end
 
   describe 'GET #new' do
     let!(:subscription) { create(:subscription, organization: organization, plan: plan) }

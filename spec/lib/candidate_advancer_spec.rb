@@ -171,7 +171,7 @@ RSpec.describe CandidateAdvancer do
           let(:message) { create(:message, :with_image, user: user) }
           let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
 
-          before(:each) do
+          before do
             allow_any_instance_of(Question).to receive(:rejects?).and_return(true)
           end
 

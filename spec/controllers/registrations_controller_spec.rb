@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RegistrationsController, type: :controller do
   let!(:plan) { create(:plan) }
+
   before(:each) do
     @request.env['devise.mapping'] = Devise.mappings[:account]
   end
