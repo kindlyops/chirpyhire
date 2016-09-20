@@ -1,5 +1,4 @@
 class Report::Daily
-
   def initialize(recipient, date: Date.current)
     @recipient = recipient
     @date = date

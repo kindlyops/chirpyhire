@@ -4,7 +4,7 @@ require 'mock_helper'
 RSpec.describe AnswerHandlerJob do
   let(:sender) { create(:user) }
   let(:inquiry) { create(:inquiry) }
-  let(:fake_message) { FakeMessaging.inbound_message(sender, sender.organization, "test body", format: :text) }
+  let(:fake_message) { FakeMessaging.inbound_message(sender, sender.organization, 'test body', format: :text) }
   let(:message_sid) { fake_message.sid }
   let(:message) { create(:message, user: sender, sid: message_sid) }
 
@@ -22,7 +22,7 @@ RSpec.describe AnswerHandlerJob do
       AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
 
-    context "if the message exists" do
+    context 'if the message exists' do
       it "doesn't raise an error" do
         message
         expect {

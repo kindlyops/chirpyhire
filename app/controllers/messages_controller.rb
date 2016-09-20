@@ -18,7 +18,7 @@ class MessagesController < ApplicationController
 
     if authorize @message
       @message = send_message
-      redirect_to user_messages_url(message_user), notice: "Message sent!"
+      redirect_to user_messages_url(message_user), notice: 'Message sent!'
     end
   end
 
@@ -44,7 +44,7 @@ class MessagesController < ApplicationController
   end
 
   def message_not_authorized
-    redirect_to user_messages_url(message_user), alert: "Unfortunately they are "\
+    redirect_to user_messages_url(message_user), alert: 'Unfortunately they are '\
     "unsubscribed! You can't text unsubscribed candidates using Chirpyhire."
   end
 end

@@ -5,9 +5,7 @@ Rollbar.configure do |config|
   config.access_token = ENV['ROLLBAR_ACCESS_TOKEN']
 
   # Here we'll disable in 'test':
-  unless Rails.env.production?
-    config.enabled = false
-  end
+  config.enabled = false unless Rails.env.production?
 
   if Rails.env.production?
     config.js_enabled = true
@@ -15,7 +13,7 @@ Rollbar.configure do |config|
       accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
       captureUncaught: true,
       payload: {
-        environment: "production"
+        environment: 'production'
       }
     }
   end
@@ -23,9 +21,9 @@ Rollbar.configure do |config|
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
   # `username`, and `email` methods to fetch those properties. To customize:
-  config.person_method = "current_account"
+  config.person_method = 'current_account'
   # config.person_id_method = "my_id"
-  config.person_username_method = "name"
+  config.person_username_method = 'name'
   # config.person_email_method = "my_email"
 
   # If you want to attach custom data to all exception and message reports,

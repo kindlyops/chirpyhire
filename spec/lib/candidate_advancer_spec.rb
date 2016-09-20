@@ -8,31 +8,31 @@ RSpec.describe CandidateAdvancer do
   let!(:subscription) { create(:subscription, organization: user.organization) }
   let(:candidate) { user.candidate }
 
-  describe ".call" do
-    context "when the user is unsubscribed" do
+  describe '.call' do
+    context 'when the user is unsubscribed' do
       before(:each) do
         user.update(subscribed: false)
       end
 
-      it "does not create an inquiry of the next candidate feature" do
+      it 'does not create an inquiry of the next candidate feature' do
         expect {
           CandidateAdvancer.call(user)
-        }.not_to change{user.inquiries.count}
+        }.not_to change { user.inquiries.count }
       end
 
-      it "does not create a notification" do
+      it 'does not create a notification' do
         expect {
           CandidateAdvancer.call(user)
-        }.not_to change{user.notifications.count}
+        }.not_to change { user.notifications.count }
       end
 
-      it "does not create a message" do
+      it 'does not create a message' do
         expect {
           CandidateAdvancer.call(user)
-        }.not_to change{Message.count}
+        }.not_to change { Message.count }
       end
 
-      it "does not create an AutomatonJob for the screen event" do
+      it 'does not create an AutomatonJob for the screen event' do
         expect{
           CandidateAdvancer.call(user)
         }.not_to have_enqueued_job(AutomatonJob)
@@ -41,40 +41,40 @@ RSpec.describe CandidateAdvancer do
       it "does not change the candidate's status" do
         expect{
           CandidateAdvancer.call(user)
-        }.not_to change{candidate.status}
+        }.not_to change { candidate.status }
       end
     end
 
-    context "when the user is subscribed" do
+    context 'when the user is subscribed' do
       before(:each) do
         user.update(subscribed: true)
       end
 
       context "when the organization's trial is finished" do
         before(:each) do
-          subscription.update(state: "trialing", trial_message_limit: 1)
+          subscription.update(state: 'trialing', trial_message_limit: 1)
           create_list(:message, 2, user: user)
         end
 
-        it "does not create an inquiry of the next candidate feature" do
+        it 'does not create an inquiry of the next candidate feature' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{user.inquiries.count}
+          }.not_to change { user.inquiries.count }
         end
 
-        it "does not create a notification" do
+        it 'does not create a notification' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{user.notifications.count}
+          }.not_to change { user.notifications.count }
         end
 
-        it "does not create a message" do
+        it 'does not create a message' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{Message.count}
+          }.not_to change { Message.count }
         end
 
-        it "does not create an AutomatonJob for the screen event" do
+        it 'does not create an AutomatonJob for the screen event' do
           expect{
             CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
@@ -83,36 +83,36 @@ RSpec.describe CandidateAdvancer do
         it "does not change the candidate's status" do
           expect{
             CandidateAdvancer.call(user)
-          }.not_to change{candidate.status}
+          }.not_to change { candidate.status }
         end
       end
 
       context "when the organization's monthly limit is reached" do
         before(:each) do
-          subscription.update(state: "active", quantity: 1)
+          subscription.update(state: 'active', quantity: 1)
           Plan.messages_per_quantity = 1
           create(:message, user: user)
         end
 
-        it "does not create an inquiry of the next candidate feature" do
+        it 'does not create an inquiry of the next candidate feature' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{user.inquiries.count}
+          }.not_to change { user.inquiries.count }
         end
 
-        it "does not create a notification" do
+        it 'does not create a notification' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{user.notifications.count}
+          }.not_to change { user.notifications.count }
         end
 
-        it "does not create a message" do
+        it 'does not create a message' do
           expect {
             CandidateAdvancer.call(user)
-          }.not_to change{Message.count}
+          }.not_to change { Message.count }
         end
 
-        it "does not create an AutomatonJob for the screen event" do
+        it 'does not create an AutomatonJob for the screen event' do
           expect{
             CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
@@ -121,11 +121,11 @@ RSpec.describe CandidateAdvancer do
         it "does not change the candidate's status" do
           expect{
             CandidateAdvancer.call(user)
-          }.not_to change{candidate.status}
+          }.not_to change { candidate.status }
         end
       end
 
-      context "initial question" do
+      context 'initial question' do
         let!(:question) { create(:question, survey: survey) }
         let!(:welcome) { survey.welcome }
         let(:organization) { user.organization }
@@ -140,30 +140,30 @@ RSpec.describe CandidateAdvancer do
           "#{welcome.body}\n\n#{subscription_notice}\n\n#{formatted_text}"
         end
 
-        it "appends the welcome, unsubscribed notification, and the question together" do
+        it 'appends the welcome, unsubscribed notification, and the question together' do
           CandidateAdvancer.call(user)
           expect(user.messages.last.body).to eq(initial_message)
         end
       end
 
-      context "with an undetermined or stale profile feature" do
+      context 'with an undetermined or stale profile feature' do
         before(:each) do
           create(:question, survey: survey)
         end
 
-        it "creates an inquiry of the next candidate feature" do
+        it 'creates an inquiry of the next candidate feature' do
           expect {
             CandidateAdvancer.call(user)
-          }.to change{user.inquiries.count}.by(1)
+          }.to change { user.inquiries.count }.by(1)
         end
 
-        it "creates a message" do
+        it 'creates a message' do
           expect {
             CandidateAdvancer.call(user)
-          }.to change{Message.count}.by(1)
+          }.to change { Message.count }.by(1)
         end
 
-        context "and the last answer was unacceptable" do
+        context 'and the last answer was unacceptable' do
           let!(:prior_question) { create(:document_question, survey: survey) }
           let!(:prior_inquiry) { create(:inquiry, question: prior_question, message: create(:message, user: user)) }
           let(:question) { create(:document_question, survey: survey) }
@@ -175,45 +175,45 @@ RSpec.describe CandidateAdvancer do
             allow_any_instance_of(Question).to receive(:rejects?).and_return(true)
           end
 
-          context "with a template for the survey" do
-            it "does not create an inquiry of the next candidate feature" do
+          context 'with a template for the survey' do
+            it 'does not create an inquiry of the next candidate feature' do
               expect {
                 CandidateAdvancer.call(user)
-              }.not_to change{user.inquiries.count}
+              }.not_to change { user.inquiries.count }
             end
 
-            it "creates a notification" do
+            it 'creates a notification' do
               expect {
                 CandidateAdvancer.call(user)
-              }.to change{user.notifications.count}.by(1)
+              }.to change { user.notifications.count }.by(1)
             end
 
-            it "creates a message" do
+            it 'creates a message' do
               expect {
                 CandidateAdvancer.call(user)
-              }.to change{Message.count}.by(1)
+              }.to change { Message.count }.by(1)
             end
 
             it "changes the candidate's status to Bad Fit" do
               expect{
                 CandidateAdvancer.call(user)
-              }.to change{candidate.status}.from("Potential").to("Bad Fit")
+              }.to change { candidate.status }.from('Potential').to('Bad Fit')
             end
           end
         end
       end
 
-      context "with all profile features present" do
-        it "creates an AutomatonJob for the screen event" do
+      context 'with all profile features present' do
+        it 'creates an AutomatonJob for the screen event' do
           expect{
             CandidateAdvancer.call(user)
-          }.to have_enqueued_job(AutomatonJob).with(user, "screen")
+          }.to have_enqueued_job(AutomatonJob).with(user, 'screen')
         end
 
         it "changes the candidate's status to Qualified" do
           expect{
             CandidateAdvancer.call(user)
-          }.to change{candidate.status}.from("Potential").to("Qualified")
+          }.to change { candidate.status }.from('Potential').to('Qualified')
         end
       end
     end

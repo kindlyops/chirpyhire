@@ -1,9 +1,9 @@
-$intercom = Intercom::Client.new(app_id: ENV.fetch("INTERCOM_APP_ID", "ys27hogk"), api_key: ENV.fetch("INTERCOM_API_KEY"))
+$intercom = Intercom::Client.new(app_id: ENV.fetch('INTERCOM_APP_ID', 'ys27hogk'), api_key: ENV.fetch('INTERCOM_API_KEY'))
 
 IntercomRails.config do |config|
   # == Intercom app_id
   #
-  config.app_id = ENV["INTERCOM_APP_ID"] || "ys27hogk"
+  config.app_id = ENV['INTERCOM_APP_ID'] || 'ys27hogk'
   config.include_for_logged_out_users = true
   # == Intercom session_duration
   #
@@ -17,14 +17,14 @@ IntercomRails.config do |config|
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
   #
-  config.enabled_environments = ["development", "production"]
+  config.enabled_environments = %w(development production)
   config.api_secret = Rails.application.secrets.intercom_secure_mode_secret_key
   # == Current user method/variable
   # The method/variable that contains the logged in user in your controllers.
   # If it is `current_user` or `@user`, then you can ignore this
   #
-  config.user.current = Proc.new { current_account }
-  config.user.current = [Proc.new { current_account }]
+  config.user.current = proc { current_account }
+  config.user.current = [proc { current_account }]
 
   # == Include for logged out Users
   # If set to true, include the Intercom messenger on all pages, regardless of whether
@@ -64,34 +64,33 @@ IntercomRails.config do |config|
   # in your controllers. 'Companies' are generic groupings of users, so this
   # could be a company, app or group.
   #
-  config.company.current = Proc.new { current_organization }
+  config.company.current = proc { current_organization }
   #
   # Or if you are using devise you can just use the following config
   #
   # config.company.current = Proc.new { current_user.company }
-
 
   # == Company Custom Data
   # A hash of additional data you wish to send about a company.
   # This works the same as User custom data above.
   #
   config.company.custom_data = {
-    phone_number: Proc.new { |company| company.decorate.phone_number },
-    base_paid_plan_price: Proc.new { |_| Plan::DEFAULT_PRICE_IN_DOLLARS },
-    base_paid_plan_message_limit: Proc.new {|_| Plan.messages_per_quantity }
+    phone_number: proc { |company| company.decorate.phone_number },
+    base_paid_plan_price: proc { |_| Plan::DEFAULT_PRICE_IN_DOLLARS },
+    base_paid_plan_message_limit: proc { |_| Plan.messages_per_quantity }
   }
 
   # == Company Plan name
   # This is the name of the plan a company is currently paying (or not paying) for.
   # e.g. Messaging, Free, Pro, etc.
   #
-  config.company.plan = Proc.new { |current_company| current_company.plan_name }
+  config.company.plan = proc { |current_company| current_company.plan_name }
 
   # == Company Monthly Spend
   # This is the amount the company spends each month on your app. If your company
   # has a plan, it will set the 'total value' of that plan appropriately.
   #
-  config.company.monthly_spend = Proc.new { |current_company| current_company.subscription_price }
+  config.company.monthly_spend = proc { |current_company| current_company.subscription_price }
   # config.company.monthly_spend = Proc.new { |current_company| (current_company.plan.price - current_company.subscription.discount) }
 
   # == Custom Style

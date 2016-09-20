@@ -1,5 +1,4 @@
 class Automaton
-
   def self.call(user, trigger)
     new(user, trigger).call
   end

@@ -1,8 +1,8 @@
 class MediaInstance < ApplicationRecord
   belongs_to :message
-  URI_BASE = "https://api.twilio.com"
+  URI_BASE = 'https://api.twilio.com'.freeze
 
-  IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp)
+  IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze
 
   def image?
     IMAGE_TYPES.include?(content_type)

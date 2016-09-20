@@ -1,7 +1,7 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_STATUS_FILTER = "Qualified"
-  DEFAULT_CREATED_IN_FILTER = "Past Week"
+  DEFAULT_STATUS_FILTER = 'Qualified'.freeze
+  DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
     @candidate = authorized_candidate

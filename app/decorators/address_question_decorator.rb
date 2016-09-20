@@ -2,10 +2,10 @@ class AddressQuestionDecorator < Draper::Decorator
   delegate_all
 
   def label_placeholder
-    "Address"
+    'Address'
   end
 
   def text_placeholder
-    "What is your street address and zipcode?"
+    'What is your street address and zipcode?'
   end
 end

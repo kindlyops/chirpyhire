@@ -32,7 +32,11 @@ html
         = render "components/guest_navigation" unless current_account.present?
         = render partial: "subscriptions/ribbon" if current_account.present?
         - if notice.present?
-            p.flash-notice = notice
+            p.flash-notice
+              = notice
         - if alert.present?
-            p.flash-alert = alert
+            p.flash-alert
+              = alert
+              '  Need Help?
+              a href="javascript:void(0)" onclick="Intercom('showNewMessage')" Message Us
         = yield

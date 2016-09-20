@@ -4,26 +4,26 @@ RSpec.describe SurveyAdvancer do
   let(:organization) { create(:organization) }
   let(:advancer) { SurveyAdvancer }
 
-  describe "#call" do
-    context "with a Potential candidate" do
+  describe '#call' do
+    context 'with a Potential candidate' do
       let(:user) { create(:user, organization: organization) }
-      let!(:candidate) { create(:candidate, status: "Potential", user: user) }
+      let!(:candidate) { create(:candidate, status: 'Potential', user: user) }
 
       let!(:survey) { create(:survey, organization: organization) }
       let(:question) { create(:question, survey: survey) }
 
-      context "with no outstanding inquiry" do
-        it "enqueues a CandidateAdvancerJob" do
+      context 'with no outstanding inquiry' do
+        it 'enqueues a CandidateAdvancerJob' do
           expect {
             advancer.call(organization)
           }.to have_enqueued_job(CandidateAdvancerJob).with(user)
         end
 
-        context "multiple candidates" do
+        context 'multiple candidates' do
           let(:second_user) { create(:user, organization: organization) }
-          let!(:second_candidate) { create(:candidate, status: "Potential", user: second_user) }
+          let!(:second_candidate) { create(:candidate, status: 'Potential', user: second_user) }
 
-          it "enqueues a CandidateAdvancerJob for each candidate" do
+          it 'enqueues a CandidateAdvancerJob for each candidate' do
             expect {
               advancer.call(organization)
             }.to have_enqueued_job(CandidateAdvancerJob).exactly(2).times
@@ -31,11 +31,11 @@ RSpec.describe SurveyAdvancer do
         end
       end
 
-      context "with outstanding inquiry" do
+      context 'with outstanding inquiry' do
         let(:message) { create(:message, user: user) }
         let!(:inquiry) { create(:inquiry, question: question, message: message) }
 
-        it "does not enqueue a CandidateAdvancerJob" do
+        it 'does not enqueue a CandidateAdvancerJob' do
           expect {
             advancer.call(organization)
           }.not_to have_enqueued_job(CandidateAdvancerJob)
@@ -43,11 +43,11 @@ RSpec.describe SurveyAdvancer do
       end
     end
 
-    context "with a non Potential candidate" do
+    context 'with a non Potential candidate' do
       let(:user) { create(:user, organization: organization) }
-      let(:candidate) { create(:candidate, status: "Bad Fit", user: user) }
+      let(:candidate) { create(:candidate, status: 'Bad Fit', user: user) }
 
-      it "does not enqueue a CandidateAdvancerJob" do
+      it 'does not enqueue a CandidateAdvancerJob' do
         expect {
           advancer.call(organization)
         }.not_to have_enqueued_job(CandidateAdvancerJob)

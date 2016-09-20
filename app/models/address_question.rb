@@ -13,7 +13,7 @@ class AddressQuestion < Question
       postal_code: address.postal_code,
       country: address.country,
       city: address.city,
-      child_class: "address"
+      child_class: 'address'
     }
   end
 
