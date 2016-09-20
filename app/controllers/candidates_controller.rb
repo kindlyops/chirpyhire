@@ -15,18 +15,22 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    unfiltered_candidates = scoped_candidates.by_recency
-
     respond_to do |format|
       format.geojson do
-        @candidates = unfiltered_candidates.with_addresses.decorate
+        @candidates = recent_candidates.with_addresses.decorate
         render json: GeoJson::Candidates.new(@candidates).call
       end
 
       format.html do
-        @candidates = unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+        @candidates = recent_filtered_candidates.page(params.fetch(:page, 1))
       end
     end
+  end
+
+  def edit
+    @candidates = recent_filtered_candidates.page(params.fetch(:page, 1))
+    @candidate = authorized_candidate
+    render :index
   end
 
   def update
@@ -43,8 +47,12 @@ class CandidatesController < ApplicationController
     authorize Candidate.find(params[:id])
   end
 
-  def scoped_candidates
-    policy_scope(Candidate)
+  def recent_candidates
+    policy_scope(Candidate).by_recency
+  end
+
+  def recent_filtered_candidates
+    recent_candidates.filter(filtering_params)
   end
 
   def filtering_params

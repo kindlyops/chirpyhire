@@ -1,0 +1,11 @@
+@mixin rounded-table {
+	border-collapse: separate;
+	tr:first-child td:first-child { border-top-left-radius: 10px; }
+	tr:first-child td:last-child { border-top-right-radius: 10px; }
+	tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+	tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+	td {
+		border: $base-border;
+		padding: $small-spacing 0 $small-spacing $tiny-spacing;
+	}
+}
