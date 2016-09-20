@@ -1,8 +1,8 @@
 // Ensures that the number attached to the hovered ghost element
 // is hidden to avoid inconsistencies with the real elements.
 .sortable-chosen .sortable-number {
-	visibility: hidden;
+  visibility: hidden;
 }
 .sortable-ghost .sortable-number {
-	visibility: visible;
+  visibility: visible;
 }

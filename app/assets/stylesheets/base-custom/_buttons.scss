@@ -1,70 +1,70 @@
 #{$all-buttons}, .button {
-	&.simple-button {
-		background: none;
-		border: none; 
-		padding: 0;
-		cursor: pointer;
-		color: $action-color;
-		transition: none;
-		&:focus, &:hover {
-			background: none;
-			color: $action-color;
-			outline: 0;
-		}
-	}
+  &.simple-button {
+    background: none;
+    border: none; 
+    padding: 0;
+    cursor: pointer;
+    color: $action-color;
+    transition: none;
+    &:focus, &:hover {
+      background: none;
+      color: $action-color;
+      outline: 0;
+    }
+  }
 
-	&:disabled, &.disabled {
-		cursor: default;
-	}
+  &:disabled, &.disabled {
+    cursor: default;
+  }
 
-	&:not(.simple-button) {	
-		&:disabled, &.disabled {
-			&:focus {
-				outline: 0;
-			}
-			opacity: 0.5;
+  &:not(.simple-button) { 
+    &:disabled, &.disabled {
+      &:focus {
+        outline: 0;
+      }
+      opacity: 0.5;
 
-			&:hover {
-				background-color: $action-color;
-			}
-		}
-	}
+      &:hover {
+        background-color: $action-color;
+      }
+    }
+  }
 
-	&.simple-button {
-		&:disabled, &.disabled {
-			cursor: default;
+  &.simple-button {
+    &:disabled, &.disabled {
+      cursor: default;
 
-			i {
-				color: $disabled-color;
-			}
-		}
-	}
+      i {
+        color: $disabled-color;
+      }
+    }
+  }
 }
 
 a, button {
-	// Cocoon class conventions use underscore
-	&.remove_fields, &.remove-field, &.add-field {
-		float: right;
-		padding: 0 0.25em;
-		color: $medium-gray;
+  // Cocoon class conventions use underscore
+  &.remove_fields, &.remove-field, &.add-field {
+    float: right;
+    padding: 0 0.25em;
+    color: $medium-gray;
 
-		position: relative;
-		bottom: 3px;
-		font-size: 2em;
+    position: relative;
+    bottom: 3px;
+    font-size: 2em;
 
-		&:focus, &:hover {
-			background: none;
-			color: $action-color;
-			outline: 0;
-		}
-		
-		&:disabled, &.disabled {
-			&:focus {
-				outline: 0;
-			}
-			cursor: default;
+    &:focus, &:hover {
+      background: none;
+      color: $action-color;
+      outline: 0;
+    }
+    
+    &:disabled, &.disabled {
+      &:focus {
+        outline: 0;
+      }
+      cursor: default;
 
-			color: $disabled-color;
-		}
-	}
+      color: $disabled-color;
+    }
+  }
 }

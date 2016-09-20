@@ -1,23 +1,23 @@
 .drag-and-drop {
-	border: 1px solid $light-gray;
-	box-shadow: 1px 1px $light-gray;
-	border-radius: 3px;
-	cursor: move;
-	display: flex;
-	justify-content: space-between;
-	margin: 5px 0;
-	padding: 0.5em 0;
-	min-height: 70px;
-	
-	&:hover, &:focus {
-		background-color: #f3f3f3;
-	}
-	.drag-and-drop-text {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		flex-direction: column;
-		padding-left: 0.5em;
-	}
+  border: 1px solid $light-gray;
+  box-shadow: 1px 1px $light-gray;
+  border-radius: 3px;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  padding: 0.5em 0;
+  min-height: 70px;
+  
+  &:hover, &:focus {
+    background-color: #f3f3f3;
+  }
+  .drag-and-drop-text {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    padding-left: 0.5em;
+  }
 }
