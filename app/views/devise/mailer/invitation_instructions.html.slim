@@ -8,4 +8,6 @@ p
   p
     = t("devise.mailer.invitation_instructions.accept_until", due_date: l(@resource.invitation_due_at, format: :'devise.mailer.invitation_instructions.accept_until_format'))
 p
+  / rubocop:disable Rails/OutputSafety
   = t("devise.mailer.invitation_instructions.ignore").html_safe
+  / rubocop:enable Rails/OutputSafety

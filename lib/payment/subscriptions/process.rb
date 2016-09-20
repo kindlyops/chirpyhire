@@ -13,15 +13,9 @@ class Payment::Subscriptions::Process
   def call
     return unless token.present?
 
-    if organization.stripe_customer_id.blank?
-      stripe_customer = create_stripe_customer_with_subscription
-      stripe_subscription = stripe_customer.subscriptions.first
-    else
-      stripe_customer = find_stripe_customer
-      stripe_subscription = create_stripe_subscription(stripe_customer)
-    end
-
-    subscription.update!(attributes.merge(stripe_id: stripe_subscription.id))
+    subscription.update!(
+      attributes.merge(stripe_id: stripe_subscription.id)
+    )
     subscription.activate!
   rescue Stripe::CardError => e
     raise Payment::CardError, e
@@ -30,6 +24,16 @@ class Payment::Subscriptions::Process
   private
 
   attr_reader :subscription, :email, :attributes, :token
+
+  def stripe_subscription
+    if organization.stripe_customer_id.blank?
+      stripe_customer = create_stripe_customer_with_subscription
+      stripe_customer.subscriptions.first
+    else
+      stripe_customer = find_stripe_customer
+      create_stripe_subscription(stripe_customer)
+    end
+  end
 
   def find_stripe_customer
     Stripe::Customer.retrieve(organization.stripe_customer_id)

@@ -12,7 +12,9 @@ class Report::Daily
   end
 
   def qualified_count
-    organization.candidate_activities.qualified.where(created_at: date.beginning_of_day..date.end_of_day).count
+    organization.candidate_activities.qualified.where(
+      created_at: date.beginning_of_day..date.end_of_day
+    ).count
   end
 
   def recipient_email
@@ -20,7 +22,8 @@ class Report::Daily
   end
 
   def subject
-    "#{qualified_count} Qualified #{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
+    "#{qualified_count} Qualified "\
+    "#{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
   end
 
   def organization

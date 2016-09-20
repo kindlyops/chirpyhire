@@ -8,23 +8,47 @@ class Report::Weekly
   delegate :first_name, to: :recipient, prefix: true
 
   def humanized_week
-    (date - 7).strftime("%B #{(date - 7).day.ordinalize}") << ' - ' << (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
+    start_of_week + String.new(' - ') + end_of_week
+  end
+
+  def start_of_week
+    (date - 7).strftime("%B #{(date - 7).day.ordinalize}")
+  end
+
+  def end_of_week
+    (date - 1).strftime("%B #{(date - 1).day.ordinalize}")
   end
 
   def hired_count
-    organization.candidate_activities.hired.where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1', date, date).count
+    organization.candidate_activities.hired.where(
+      'candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
+      date,
+      date
+    ).count
   end
 
   def qualified_count
-    organization.candidate_activities.qualified.where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1', date, date).count
+    organization.candidate_activities.qualified.where(
+      'candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
+      date,
+      date
+    ).count
   end
 
   def potential_count
-    organization.candidate_activities.potential.where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1', date, date).count
+    organization.candidate_activities.potential.where(
+      'candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
+      date,
+      date
+    ).count
   end
 
   def bad_fit_count
-    organization.candidate_activities.bad_fit.where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1', date, date).count
+    organization.candidate_activities.bad_fit.where(
+      'candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
+      date,
+      date
+    ).count
   end
 
   def recipient_email

@@ -20,7 +20,9 @@ class SubscriptionsController < ApplicationController
     if successfully_updated_subscription?
       SurveyAdvancer.call(current_organization)
 
-      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription changed.'
+      redirect_to subscription_path(@subscription),
+                  notice: 'Nice! Subscription changed.'
+
     else
       render :edit
     end
@@ -32,7 +34,9 @@ class SubscriptionsController < ApplicationController
     if successfully_created_subscription?
       SurveyAdvancer.call(current_organization)
 
-      redirect_to subscription_path(@subscription), notice: 'Nice! Subscription created.'
+      redirect_to subscription_path(@subscription), notice: 'Nice! '\
+      'Subscription created.'
+
     else
       render :new
     end
@@ -41,20 +45,30 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription = authorized_subscription
     Payment::Subscriptions::Cancel.call(@subscription)
-    redirect_to subscription_path(@subscription), notice: 'Sorry to see you go. Your account is canceled.'
+
+    redirect_to subscription_path(@subscription), notice: 'Sorry to see you '\
+    'go. Your account is canceled.'
   end
 
   private
 
   def successfully_updated_subscription?
-    Payment::Subscriptions::Update.call(@subscription, permitted_attributes(Subscription))
+    Payment::Subscriptions::Update.call(
+      @subscription,
+      permitted_attributes(Subscription)
+    )
   rescue Payment::CardError => e
     flash[:alert] = e.message
     false
   end
 
   def successfully_created_subscription?
-    Payment::Subscriptions::Process.call(params[:stripe_token], @subscription, current_account.email, permitted_attributes(Subscription))
+    Payment::Subscriptions::Process.call(
+      params[:stripe_token],
+      @subscription,
+      current_account.email,
+      permitted_attributes(Subscription)
+    )
   rescue Payment::CardError => e
     flash[:alert] = e.message
     false
@@ -62,7 +76,8 @@ class SubscriptionsController < ApplicationController
 
   def payment_error_message(error)
     <<-ERROR
-#{error.message} Need Help? <a href='javascript:void(0)' onclick="Intercom('showNewMessage')">Message Us</a>
+#{error.message} Need Help? <a href='javascript:void(0)'
+onclick="Intercom('showNewMessage')">Message Us</a>
     ERROR
   end
 
@@ -71,8 +86,16 @@ class SubscriptionsController < ApplicationController
   end
 
   def ensure_new_subscription
-    unless authorized_subscription.trialing? && authorized_subscription.stripe_id.blank?
+    unless trialing? && authorized_subscription.stripe_id.blank?
       redirect_to edit_subscription_path(authorized_subscription)
     end
+  end
+
+  def stripe_token?
+    params[:stripe_token].present?
+  end
+
+  def trialing?
+    authorized_subscription.trialing?
   end
 end

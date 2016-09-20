@@ -16,8 +16,6 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    unfiltered_candidates = scoped_candidates.by_recency
-
     respond_to do |format|
       format.geojson do
         @candidates = unfiltered_candidates.with_addresses.decorate
@@ -25,20 +23,30 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
-        @candidates = unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+        @candidates = filtered_and_paged_candidates
       end
     end
   end
 
   def update
     if authorized_candidate.update(permitted_attributes(Candidate))
-      redirect_to candidates_url, notice: "Nice! #{authorized_candidate.handle} marked as #{authorized_candidate.status}"
+      redirect_to candidates_url, notice: 'Nice! '\
+      "#{authorized_candidate.handle} marked as #{authorized_candidate.status}"
     else
-      redirect_to candidates_url, alert: "Oops! Couldn't change the candidate's status"
+      redirect_to candidates_url, alert: "Oops! Couldn't change "\
+      "the candidate's status"
     end
   end
 
   private
+
+  def unfiltered_candidates
+    scoped_candidates.by_recency
+  end
+
+  def filtered_and_paged_candidates
+    unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+  end
 
   def authorized_candidate
     authorize Candidate.find(params[:id])
@@ -56,12 +64,12 @@ class CandidatesController < ApplicationController
     created_in = params[:created_in]
 
     if created_in.present?
-      cookies[:candidate_created_in_filter] = { value: created_in }
+      cookies[:candidate_created_in_filter] = cookie(created_in)
       created_in
     elsif cookies[:candidate_created_in_filter].present?
       cookies[:candidate_created_in_filter]
     else
-      cookies[:candidate_created_in_filter] = { value: DEFAULT_CREATED_IN_FILTER }
+      cookies[:candidate_created_in_filter] = cookie(DEFAULT_CREATED_IN_FILTER)
       return DEFAULT_CREATED_IN_FILTER
     end
   end
@@ -78,5 +86,9 @@ class CandidatesController < ApplicationController
       cookies[:candidate_status_filter] = { value: DEFAULT_STATUS_FILTER }
       return DEFAULT_STATUS_FILTER
     end
+  end
+
+  def cookie(value)
+    { value: value }
   end
 end

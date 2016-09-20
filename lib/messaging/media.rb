@@ -1,29 +1,23 @@
-module Messaging
-  class Media
-    include Enumerable
+class Messaging::Media
+  include Enumerable
 
-    def initialize(media)
-      @media = media
-    end
+  def initialize(media)
+    @media = media
+  end
 
-    def each(&block)
-      list.each(&block)
-    end
+  def each(&block)
+    list.each(&block)
+  end
 
-    private
+  private
 
-    attr_reader :media
+  attr_reader :media
 
-    def list
-      media.list.map(&method(:wrap))
-    end
+  def list
+    media.list.map(&method(:wrap))
+  end
 
-    def wrap(media_instance)
-      Messaging::MediaInstance.new(media_instance)
-    end
-
-    def method_missing(method, *args, &block)
-      media.send(method, *args, &block)
-    end
+  def wrap(media_instance)
+    Messaging::MediaInstance.new(media_instance)
   end
 end

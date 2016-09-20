@@ -17,7 +17,8 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(:from, :to, :body, :media, :direction, :date_sent, :date_created, :sid, :exists) do
+  message_params = %i(from to body media direction date_sent date_created sid exists)
+  Message = Struct.new(*message_params) do
     def num_media
       if message_exists
         media.list.count.to_s
@@ -78,16 +79,34 @@ class FakeMessaging
     self.class.messages.find { |message| message.sid == sid }
   end
 
-  def create(from:, to:, body:, direction: "outbound-api", format: :image, exists: true)
-    if format == :text
-      media = Media.new([])
-    elsif format == :image
-      media = Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
-    end
+  def create(from:, to:, body:, direction: 'outbound-api', format: :image, exists: true)
+    media = build_media(format)
 
-    message = Message.new(from, to, body, media, direction, DateTime.current, DateTime.current, Faker::Number.number(10), exists)
+    message = Message.new(from,
+                          to,
+                          body,
+                          media,
+                          direction,
+                          DateTime.current,
+                          DateTime.current,
+                          Faker::Number.number(10),
+                          exists)
+    append_message(message)
+  end
+
+  private
+
+  def append_message(message)
     self.class.messages << message
     message
+  end
+
+  def build_media(format)
+    if format == :text
+      Media.new([])
+    elsif format == :image
+      Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
+    end
   end
 end
 

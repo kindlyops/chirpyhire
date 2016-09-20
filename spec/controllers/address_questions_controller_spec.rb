@@ -9,9 +9,9 @@ RSpec.describe AddressQuestionsController, type: :controller do
     sign_in(account)
   end
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:address_question)
-  }
+  end
 
   let(:invalid_attributes) {
     { text: '', label: '', type: 'AddressQuestion' }
@@ -110,7 +110,6 @@ RSpec.describe AddressQuestionsController, type: :controller do
 
       it 'updates the requested address_question' do
         address_question = survey.questions.create! valid_attributes
-
         expect {
           put :update, params: { id: address_question.to_param, address_question: new_attributes }
         }.to change { address_question.reload.text }.to(new_attributes[:text])

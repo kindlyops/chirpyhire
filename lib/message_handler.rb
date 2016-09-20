@@ -15,14 +15,7 @@ class MessageHandler
   private
 
   def handle_message
-    external_message.media.each do |media_instance|
-      message.media_instances.new(
-        content_type: media_instance.content_type,
-        sid: media_instance.sid,
-        uri: media_instance.uri
-      )
-    end
-
+    build_media_instances
     message.save
     Threader.new(message).call
     message
@@ -31,6 +24,16 @@ class MessageHandler
     retries_remaining = retries - 1
     raise unless e.message.end_with?('was not found') && retries_remaining > 0
     MessageHandlerJob.set(wait: 15.seconds).perform_later(@sender, @message_sid, retries_remaining)
+  end
+
+  def build_media_instances
+    external_message.media.each do |media_instance|
+      message.media_instances.new(
+        content_type: media_instance.content_type,
+        sid: media_instance.sid,
+        uri: media_instance.uri
+      )
+    end
   end
 
   def external_message

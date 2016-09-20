@@ -40,15 +40,11 @@ class User < ApplicationRecord
     order(has_unread_messages: :desc)
   end
 
-  def self.has_unread_messages
+  def self.with_unread_messages
     where(has_unread_messages: true)
   end
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
-  def has_outstanding_inquiry?
+  def outstanding_inquiry?
     outstanding_inquiry.present?
   end
 

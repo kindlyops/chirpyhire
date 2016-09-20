@@ -5,10 +5,11 @@ class AnswerFormatter
   end
 
   def format
-    return 'DocumentQuestion' if message.has_images?
-    return 'AddressQuestion' if message.has_address?
-    return 'YesNoQuestion' if message.has_yes_or_no?
-    return 'ChoiceQuestion' if message.has_choice?(choices)
+    return 'DocumentQuestion' if message.images?
+    return 'AddressQuestion' if message.address?
+    return 'YesNoQuestion' if message.yes_or_no?
+    return 'ChoiceQuestion' if message.choice?(choices)
+
     'Unknown Format'
   end
 
@@ -21,9 +22,13 @@ class AnswerFormatter
       if inquiry.question_type == 'ChoiceQuestion'
         question = inquiry.question
         choice_question = question.becomes(question.type.constantize)
-        choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)
+        find_version(choice_question)
       end
     end
+  end
+
+  def find_version(choice_question)
+    choice_question.paper_trail.version_at(inquiry.created_at, has_many: true)
   end
 
   def choices
