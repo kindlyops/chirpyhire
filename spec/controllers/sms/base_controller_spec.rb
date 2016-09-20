@@ -10,7 +10,7 @@ RSpec.describe Sms::BaseController, type: :controller do
         ActionController::Base.allow_forgery_protection = true
       end
 
-      after do
+      after(:each) do
         ActionController::Base.allow_forgery_protection = false
       end
 

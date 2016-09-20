@@ -13,7 +13,7 @@ RSpec.describe Message, type: :model do
     context 'with a body' do
       let(:message) { create(:message, body: 'Test Body') }
 
-      before do
+      before(:each) do
         allow(message).to receive(:address).and_return(OpenStruct.new(found?: true))
       end
 

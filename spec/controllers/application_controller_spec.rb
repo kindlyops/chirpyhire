@@ -19,7 +19,7 @@ RSpec.describe ApplicationController, type: :controller do
   context 'logged in' do
     let(:account) { create(:account) }
 
-    before do
+    before(:each) do
       sign_in(account)
     end
 
@@ -35,7 +35,7 @@ RSpec.describe ApplicationController, type: :controller do
       context 'with referer present' do
         let(:referer) { 'https://google.com' }
 
-        before do
+        before(:each) do
           @request.env['HTTP_REFERER'] = referer
         end
 

@@ -29,7 +29,7 @@ RSpec.describe InvitationsController, type: :controller do
     let(:account) { Account.invite!({ email: email }, inviter) }
     let!(:user) { create(:user) }
 
-    before do
+    before(:each) do
       account.update(user: user)
     end
 

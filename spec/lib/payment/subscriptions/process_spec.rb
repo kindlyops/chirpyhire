@@ -16,7 +16,7 @@ RSpec.describe Payment::Subscriptions::Process do
   let!(:plan) { create(:plan, stripe_id: stripe_plan.id) }
   let!(:subscription) { create(:subscription, plan: plan, organization: organization) }
 
-  after do
+  after(:each) do
     stripe_plan.delete
   end
 
@@ -28,7 +28,7 @@ RSpec.describe Payment::Subscriptions::Process do
     context 'without an existing stripe customer', vcr: { cassette_name: 'Payment::Subscriptions::Process-call-without-stripe-customer' } do
       let(:organization) { create(:organization, name: 'Little-Abshire') }
 
-      before do
+      before(:each) do
         organization.update(stripe_customer_id: nil)
       end
 
@@ -96,7 +96,7 @@ RSpec.describe Payment::Subscriptions::Process do
       let!(:stripe_card) { stripe_customer.sources.create(source: stripe_token.id) }
       let!(:organization) { create(:organization, stripe_customer_id: stripe_customer.id) }
 
-      after do
+      after(:each) do
         stripe_customer.delete
       end
 

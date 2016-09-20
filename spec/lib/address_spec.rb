@@ -9,7 +9,7 @@ RSpec.describe Address do
       let(:latitude) { 12.345678 }
       let(:longitude) { 87.654321 }
 
-      before do
+      before(:each) do
         address_candidate_feature.update(properties: { latitude: latitude, longitude: longitude })
       end
 

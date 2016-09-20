@@ -7,7 +7,7 @@ RSpec.describe 'Stripe Events' do
       .to_return(status: status, body: File.read("spec/support/fixtures/#{fixture_id}.json"))
   end
 
-  before do |example|
+  before(:each) do |example|
     old_adapter = ActiveJob::Base.queue_adapter
     ActiveJob::Base.queue_adapter = :test
     stub_event(example.description)

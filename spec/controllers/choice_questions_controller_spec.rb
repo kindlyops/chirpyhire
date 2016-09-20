@@ -4,7 +4,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
   let(:account) { create(:account, :with_subscription) }
   let!(:survey) { create(:survey, organization: account.organization) }
 
-  before do
+  before(:each) do
     sign_in(account)
   end
 

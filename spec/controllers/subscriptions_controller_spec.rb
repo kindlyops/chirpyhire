@@ -5,7 +5,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   let(:organization) { account.organization }
   let(:plan) { create(:plan) }
 
-  before do
+  before(:each) do
     sign_in(account)
   end
 

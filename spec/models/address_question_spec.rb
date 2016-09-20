@@ -68,7 +68,7 @@ RSpec.describe AddressQuestion, type: :model do
         child_class: 'address' }
     end
 
-    before do
+    before(:each) do
       allow(message).to receive(:address).and_return(address)
     end
 

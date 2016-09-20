@@ -13,7 +13,7 @@ RSpec.describe DocumentQuestion, type: :model do
       }
     end
 
-    before do
+    before(:each) do
       allow(message).to receive(:images).and_return([document])
     end
 

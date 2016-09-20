@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Subscription Management', type: :feature, js: true do
   let!(:stripe_plan) { Stripe::Plan.create(id: 'test', amount: 5_000, currency: 'usd', interval: 'month', name: 'test') }
 
-  after do
+  after(:each) do
     stripe_plan.delete
   end
 
@@ -48,7 +48,7 @@ RSpec.feature 'Subscription Management', type: :feature, js: true do
     let!(:stripe_card) { stripe_customer.sources.create(source: stripe_token.id) }
     let!(:stripe_subscription) { stripe_customer.subscriptions.create(plan: stripe_plan.id) }
 
-    after do
+    after(:each) do
       stripe_customer.delete
     end
 

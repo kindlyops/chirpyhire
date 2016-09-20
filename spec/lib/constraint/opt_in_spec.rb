@@ -4,7 +4,7 @@ RSpec.describe Constraint::OptIn do
   let(:request) { ActionDispatch::Request.new({}) }
   let(:constraint) { described_class.new }
 
-  before do
+  before(:each) do
     allow(request).to receive(:request_parameters).and_return(parameters)
   end
 

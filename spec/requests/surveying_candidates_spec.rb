@@ -7,7 +7,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
   let(:account) { create(:account, user: user) }
   let!(:plan) { create(:plan) }
 
-  before do
+  before(:each) do
     allow(IntercomSyncerJob).to receive(:perform_later).once
   end
 
@@ -76,7 +76,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
             post '/twilio/text', params: snarf_address_message_params
           end
 
-          it 'should send the next question to the second candidate' do
+          it 'sends the next question to the second candidate' do
             last_message = organization.messages.by_recency.first
             expect(last_message.inquiry.present?).to be(true)
             expect(last_message.user).to eq(snarf.user)

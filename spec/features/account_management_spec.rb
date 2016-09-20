@@ -8,7 +8,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
     context 'with valid credentials' do
       let(:password) { Faker::Internet.password }
 
-      before do
+      before(:each) do
         allow(IntercomSyncerJob).to receive(:perform_later).once
       end
 

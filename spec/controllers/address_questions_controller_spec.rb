@@ -4,7 +4,7 @@ RSpec.describe AddressQuestionsController, type: :controller do
   let(:account) { create(:account, :with_subscription) }
   let!(:survey) { create(:survey, organization: account.organization) }
 
-  before do
+  before(:each) do
     create(:location, organization: account.organization)
     sign_in(account)
   end

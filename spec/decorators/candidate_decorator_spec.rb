@@ -15,7 +15,7 @@ RSpec.describe CandidateDecorator do
         }
       end
 
-      before do
+      before(:each) do
         create(:candidate_feature, candidate: model, properties: choice_properties, label: question.label)
       end
 
@@ -43,7 +43,7 @@ RSpec.describe CandidateDecorator do
         }
       end
 
-      before do
+      before(:each) do
         create(:candidate_feature, candidate: model, properties: document_properties, label: question.label)
       end
 

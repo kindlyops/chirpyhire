@@ -7,7 +7,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
   let!(:location) { create(:location, organization: organization) }
   let!(:survey) { create(:survey, organization: organization) }
 
-  before do
+  before(:each) do
     login_as(account, scope: :account)
   end
 
@@ -80,7 +80,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         Capybara.current_driver = :webkit
       end
 
-      after do
+      after(:each) do
         Capybara.current_driver = :poltergeist
       end
 

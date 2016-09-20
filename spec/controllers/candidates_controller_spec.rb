@@ -5,7 +5,7 @@ RSpec.describe CandidatesController, type: :controller do
   let(:account) { organization.accounts.first }
   let(:user) { account.user }
 
-  before do
+  before(:each) do
     sign_in(account)
   end
 

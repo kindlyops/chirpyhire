@@ -19,7 +19,7 @@ RSpec.describe Payment::Subscriptions::Cancel, vcr: { cassette_name: 'Payment::S
   let!(:stripe_card) { stripe_customer.sources.create(source: stripe_token.id) }
   let!(:stripe_subscription) { stripe_customer.subscriptions.create(plan: stripe_plan.id) }
 
-  after do
+  after(:each) do
     stripe_plan.delete
     stripe_customer.delete
   end

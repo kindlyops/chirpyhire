@@ -5,7 +5,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
   let(:user) { create(:user, organization: organization) }
   let(:account) { create(:account, user: user) }
 
-  before do
+  before(:each) do
     login_as(account, scope: :account)
   end
 

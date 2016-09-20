@@ -58,7 +58,7 @@ RSpec.describe Candidate, type: :model do
         }
       end
 
-      before do
+      before(:each) do
         create(:candidate_feature, candidate: candidate, properties: address_properties)
       end
 

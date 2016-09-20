@@ -5,7 +5,7 @@ RSpec.describe ConversationsController, type: :controller do
   let(:account) { organization.accounts.first }
   let(:user) { account.user }
 
-  before do
+  before(:each) do
     sign_in(account)
   end
 
@@ -24,7 +24,7 @@ RSpec.describe ConversationsController, type: :controller do
       let!(:second_oldest_message) { create(:message, user: user) }
       let!(:message) { create(:message, user: user) }
 
-      before do
+      before(:each) do
         oldest_message.update(child: second_oldest_message)
         second_oldest_message.update(child: message)
       end
@@ -39,7 +39,7 @@ RSpec.describe ConversationsController, type: :controller do
         let!(:other_old_message) { create(:message, user: user) }
         let!(:other_message) { create(:message, user: user) }
 
-        before do
+        before(:each) do
           other_old_message.update(child: other_message)
         end
 
