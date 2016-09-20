@@ -3,8 +3,7 @@ class UserDecorator < Draper::Decorator
   decorates_association :candidate
 
   def phone_number
-    if object.phone_number
-      object.phone_number&.phony_formatted
+    object.phone_number&.phony_formatted || ''
   end
 
   def send_message_title
