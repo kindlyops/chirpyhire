@@ -14,20 +14,21 @@ RSpec.feature 'Candidates', type: :feature, js: true do
       let(:qualified_stage) { account.organization.qualified_stage }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
-      context 'with other stages' do
-        it 'has stage drawer window hidden initially' do
-          visit candidates_path
-          expect(first('li.stage > a')).to eq(nil)
-        end
+      context 'changing stages' do
         it 'can not move from qualified to qualified' do
-          visit candidates_path
-          first('.change-stage-button').click
+          visit edit_candidate_path(candidate)
 
-          qualified_link_that_doesnt_exist = all('li.stage')[1].first('input[type=submit]')
-          potential_link_that_does_exist = all('li.stage')[0].first('input[type=submit]')
-
+          qualified_link_that_doesnt_exist = all('.stages-table td')[1].first('input[type=submit]')
           expect(qualified_link_that_doesnt_exist).to eq(nil)
-          expect(potential_link_that_does_exist).not_to eq(nil)
+        end
+        it 'can move from qualified to potential' do 
+          visit edit_candidate_path(candidate)
+
+          potential_link_that_does_exist = all('.stages-table td')[0].first('input[type=submit]')
+          potential_link_that_does_exist.click
+          cards_that_no_longer_exist = all(".card")
+          expect(cards_that_no_longer_exist).to be_empty
+          expect(page).to have_text("marked as Potential")
         end
       end
 
