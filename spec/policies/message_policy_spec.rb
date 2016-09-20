@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MessagePolicy do
-  subject { described_class.new(organization, message) }
+  subject { MessagePolicy.new(organization, message) }
 
   let(:message) { create(:message) }
 

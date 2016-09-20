@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Constraint::Answer do
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { described_class.new }
+  let(:constraint) { Constraint::Answer.new }
   let(:organization) { create(:organization) }
 
   before(:each) do

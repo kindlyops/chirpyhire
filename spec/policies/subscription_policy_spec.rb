@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionPolicy do
-  subject { described_class.new(organization, subscription) }
+  subject { SubscriptionPolicy.new(organization, subscription) }
 
   let(:subscription) { create(:subscription) }
   let(:organization) { subscription.organization }

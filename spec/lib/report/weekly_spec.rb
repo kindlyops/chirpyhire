@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Report::Weekly do
   let(:recipient) { create(:account) }
   let(:organization) { recipient.organization }
-  let(:report) { described_class.new(recipient) }
+  let(:report) { Report::Weekly.new(recipient) }
 
   describe '#organization_name' do
     it "is the organization's name" do

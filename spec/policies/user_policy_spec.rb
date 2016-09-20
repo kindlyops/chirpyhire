@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UserPolicy do
-  subject { described_class.new(organization, user) }
+  subject { UserPolicy.new(organization, user) }
 
   let!(:user) { create(:user) }
 

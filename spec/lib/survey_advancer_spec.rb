@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SurveyAdvancer do
   let(:organization) { create(:organization) }
-  let(:advancer) { described_class }
+  let(:advancer) { SurveyAdvancer }
 
   describe '#call' do
     context 'with a Potential candidate' do

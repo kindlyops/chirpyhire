@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswerFormatter do
-  let(:formatter) { described_class.new(answer, inquiry) }
+  let(:formatter) { AnswerFormatter.new(answer, inquiry) }
 
   describe '#format' do
     context 'choice question inquiry' do

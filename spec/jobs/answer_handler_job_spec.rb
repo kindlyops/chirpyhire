@@ -10,21 +10,21 @@ RSpec.describe AnswerHandlerJob do
   describe '#perform' do
     it 'handles the message' do
       expect(MessageHandler).to receive(:call).with(sender, message_sid).and_return(message)
-      described_class.perform_now(sender, inquiry, message_sid)
+      AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
 
     it 'handles the answer' do
       allow(MessageHandler).to receive(:call).with(sender, message_sid).and_return(message)
 
       expect(AnswerHandler).to receive(:call).with(sender, inquiry, message)
-      described_class.perform_now(sender, inquiry, message_sid)
+      AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
 
     context 'if the message exists' do
       it "doesn't raise an error" do
         message
         expect {
-          described_class.perform_now(sender, inquiry, message_sid)
+          AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
         }.not_to raise_error
       end
     end

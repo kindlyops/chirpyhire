@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SurveyDecorator do
   let(:model) { create(:survey) }
-  let(:survey) { described_class.new(model) }
+  let(:survey) { SurveyDecorator.new(model) }
 
   describe '#questions' do
     let!(:inactive_question) { create(:choice_question, survey: survey, status: 1, priority: 1) }

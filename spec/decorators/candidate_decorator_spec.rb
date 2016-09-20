@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe CandidateDecorator do
   let(:model) { create(:candidate) }
-  let(:candidate) { described_class.new(model) }
+  let(:candidate) { CandidateDecorator.new(model) }
 
   describe '#choices' do
     context 'with choices' do

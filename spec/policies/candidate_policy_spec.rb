@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CandidatePolicy do
-  subject { described_class.new(organization, candidate) }
+  subject { CandidatePolicy.new(organization, candidate) }
 
   let(:candidate) { create(:candidate) }
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Reporter do
   let(:count) { rand(1..5) }
   let!(:recipients) { create_list(:account, count) }
-  let(:reporter) { described_class.new(Account, Report::Daily, :daily) }
+  let(:reporter) { Reporter.new(Account, Report::Daily, :daily) }
 
   describe 'report' do
     context 'with an inactive account' do

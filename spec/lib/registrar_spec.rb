@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Registrar do
-  let(:registrar) { described_class.new(account) }
+  let(:registrar) { Registrar.new(account) }
 
   let(:organization) { account.organization }
   let!(:location) { create(:location, organization: organization) }
