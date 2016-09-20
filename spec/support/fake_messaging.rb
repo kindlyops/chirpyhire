@@ -23,7 +23,7 @@ class FakeMessaging
       if message_exists
         media.list.count.to_s
       else
-        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
+        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
       end
     end
 
@@ -31,7 +31,7 @@ class FakeMessaging
       if message_exists
         media.list.map(&:uri)
       else
-        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
+        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
       end
     end
 
@@ -39,7 +39,7 @@ class FakeMessaging
       if message_exists
         @address ||= AddressFinder.new(body)
       else
-        raise Twilio::REST::RequestError, "The requested resource foo.json was not found"
+        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
       end
     end
 
@@ -52,13 +52,13 @@ class FakeMessaging
   self.messages = []
 
   def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image, exists: true)
-    body = format == :text ? body : ""
+    body = format == :text ? body : ''
 
     new('foo', 'bar').create(
       from: sender.phone_number,
       to: organization.phone_number,
       body: body,
-      direction: "inbound",
+      direction: 'inbound',
       format: format,
       exists: exists
     )

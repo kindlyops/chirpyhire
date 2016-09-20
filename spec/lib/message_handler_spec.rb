@@ -10,39 +10,39 @@ RSpec.describe MessageHandler do
   let(:message_handler) { MessageHandler.new(sender, fake_message.sid) }
 
   let(:message) { message_handler.call }
-  describe "#call" do
-    context "where message exists" do
-      it "creates the message" do
+  describe '#call' do
+    context 'where message exists' do
+      it 'creates the message' do
         expect {
           message
-        }.to change{Message.count}.by(1)
+        }.to change { Message.count }.by(1)
       end
 
-      context "with prior messages" do
+      context 'with prior messages' do
         let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
         let!(:most_recent_message) { create(:message, user: sender) }
 
-        it "sets the new message as the child on the most recent message" do
+        it 'sets the new message as the child on the most recent message' do
           message
           expect(sender.messages.by_recency.second.child).to eq(message)
         end
       end
 
-      context "with media" do
+      context 'with media' do
         let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
 
-        it "creates the media instances" do
-          expect{
+        it 'creates the media instances' do
+          expect {
             message
-          }.to change{MediaInstance.count}.by(1)
+          }.to change { MediaInstance.count }.by(1)
           expect(message.media_instances.length).to eq(1)
         end
       end
     end
 
-    context "where message does not exist" do
-      let(:fake_message) { FakeMessaging.inbound_message(sender, organization, exists: false)}
-      it "tries again" do
+    context 'where message does not exist' do
+      let(:fake_message) { FakeMessaging.inbound_message(sender, organization, exists: false) }
+      it 'tries again' do
         expect {
           message
         }.to have_enqueued_job(MessageHandlerJob)

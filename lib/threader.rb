@@ -13,7 +13,7 @@ class Threader
       messages = user.messages.by_recency.reverse
 
       messages.each_with_index do |message, index|
-        message.update(child_id: messages[index + 1].try!(:id))
+        message.update(child_id: messages[index + 1]&.id)
       end
     end
   end

@@ -10,7 +10,7 @@ RSpec.describe Threader do
       let!(:another_message) { create(:message, user: user, created_at: 3.days.ago) }
 
       it 'sets the child on the passed in message' do
-        expect{
+        expect {
           Threader.new(message).call
         }.to change { message.child }.from(nil).to(next_message)
       end

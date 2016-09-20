@@ -8,15 +8,15 @@ RSpec.describe AnswerHandlerJob do
   let(:message_sid) { fake_message.sid }
   let(:message) { create(:message, user: sender, sid: message_sid) }
 
-  describe "#perform" do
-    it "handles the message" do
-      mock_message_handler = double("mock_message_handler")
+  describe '#perform' do
+    it 'handles the message' do
+      mock_message_handler = double('mock_message_handler')
       expect(mock_message_handler).to receive(:call).and_return(message)
       expect(MessageHandler).to receive(:new).with(sender, message.sid).and_return(mock_message_handler)
       AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
     end
 
-    it "handles the answer" do
+    it 'handles the answer' do
       Mock.message_handler(sender, message)
       expect(AnswerHandler).to receive(:call).with(sender, inquiry, message)
       AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
@@ -32,4 +32,3 @@ RSpec.describe AnswerHandlerJob do
     end
   end
 end
-
