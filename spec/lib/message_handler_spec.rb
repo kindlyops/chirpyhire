@@ -42,7 +42,7 @@ RSpec.describe MessageHandler do
     end
 
     context 'where message does not exist' do
-      let(:fake_message) { FakeMessaging.inbound_message(sender, organization, exists: false) }
+      let(:fake_message) { FakeMessaging.non_existent_inbound_message(sender, organization) }
       it 'tries again' do
         expect {
           message

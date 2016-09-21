@@ -1,9 +1,7 @@
 class FakeMessaging
   MediaInstance = Struct.new(:content_type, :uri) do
-    IMAGE_TYPES = %w(image/jpeg image/gif image/png image/bmp).freeze
-
     def image?
-      IMAGE_TYPES.include?(content_type)
+      %w(image/jpeg image/gif image/png image/bmp).include?(content_type)
     end
 
     def sid
@@ -17,41 +15,31 @@ class FakeMessaging
     end
   end
 
-  message_params = %i(from to body media direction date_sent date_created sid exists)
-  Message = Struct.new(*message_params) do
+  Message = Struct.new(*%i(from to body media direction date_sent date_created sid does_not_exist)) do
     def num_media
-      if message_exists
-        media.list.count.to_s
-      else
-        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
-      end
+      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      media.list.count.to_s
     end
 
     def media_urls
-      if message_exists
-        media.list.map(&:uri)
-      else
-        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
-      end
+      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      media.list.map(&:uri)
     end
 
     def address
-      if message_exists
-        @address ||= AddressFinder.new(body)
-      else
-        raise Twilio::REST::RequestError, 'The requested resource foo.json was not found'
-      end
+      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      @address ||= AddressFinder.new(body)
     end
 
-    def message_exists
-      exists.nil? || exists
+    def message_does_not_exist
+      does_not_exist
     end
   end
 
   cattr_accessor :messages
   self.messages = []
 
-  def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image, exists: true)
+  def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
     body = format == :text ? body : ''
 
     new('foo', 'bar').create(
@@ -59,13 +47,23 @@ class FakeMessaging
       to: organization.phone_number,
       body: body,
       direction: 'inbound',
-      format: format,
-      exists: exists
+      format: format
     )
   end
 
-  def initialize(_account_sid, _auth_token)
+  def self.non_existent_inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
+    body = format == :text ? body : ''
+
+    new('foo', 'bar').create_non_existent_message(
+      from: sender.phone_number,
+      to: organization.phone_number,
+      body: body,
+      direction: 'inbound',
+      format: format
+    )
   end
+
+  def initialize(_account_sid, _auth_token) end
 
   def messages
     self
@@ -80,8 +78,7 @@ class FakeMessaging
   end
 
   # rubocop:disable Metrics/MethodLength
-  # rubocop:disable Metrics/ParameterLists
-  def create(from:, to:, body:, direction: 'outbound-api', format: :image, exists: true)
+  def create(from:, to:, body:, direction: 'outbound-api', format: :image)
     media = build_media(format)
 
     message = Message.new(from,
@@ -92,11 +89,25 @@ class FakeMessaging
                           DateTime.current,
                           DateTime.current,
                           Faker::Number.number(10),
-                          exists)
+                          false)
+    append_message(message)
+  end
+
+  def create_non_existent_message(from:, to:, body:, direction: 'outbound-api', format: :image)
+    media = build_media(format)
+
+    message = Message.new(from,
+                          to,
+                          body,
+                          media,
+                          direction,
+                          DateTime.current,
+                          DateTime.current,
+                          Faker::Number.number(10),
+                          true)
     append_message(message)
   end
   # rubocop:enable Metrics/MethodLength
-  # rubocop:enable Metrics/ParameterLists
 
   private
 
@@ -115,8 +126,4 @@ class FakeMessaging
 end
 
 Messaging::Client.client = FakeMessaging
-RSpec.configure do |config|
-  config.before(:each) do
-    FakeMessaging.messages = []
-  end
-end
+RSpec.configure { |config| config.before(:each) { FakeMessaging.messages = [] } }

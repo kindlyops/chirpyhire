@@ -15,7 +15,7 @@ class MessageHandler
   private
 
   def handle_message
-    build_media_instances
+    build_and_save_media_instances
     Threader.new(message).call
     message
 
@@ -27,7 +27,7 @@ class MessageHandler
       .perform_later(@sender, @message_sid, retries: retries_remaining)
   end
 
-  def build_media_instances
+  def build_and_save_media_instances
     external_message.media.each do |media_instance|
       message.media_instances.new(
         content_type: media_instance.content_type,
