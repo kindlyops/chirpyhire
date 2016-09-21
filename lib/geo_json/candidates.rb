@@ -2,7 +2,11 @@ class GeoJson::Candidates
   include ActionView::Helpers::DateHelper
   def initialize(candidates)
     @candidates = candidates
-    @stage_infos = candidates.first.organization.stages.map { |st| { id: st.id, name: st.name } }
+    @stage_infos = candidates
+                   .first
+                   .organization
+                   .stages
+                   .map { |st| { id: st.id, name: st.name } }
   end
 
   def call
@@ -44,6 +48,9 @@ class GeoJson::Candidates
   end
 
   def description(candidate)
-    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>#{candidate.handle}</a></h3><p>Address: #{candidate.address.formatted_address}</p><p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
+    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>\
+      #{candidate.handle}</a></h3>\
+    <p>Address: #{candidate.address.formatted_address}</p>\
+    <p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
   end
 end

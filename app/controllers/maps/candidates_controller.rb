@@ -20,7 +20,8 @@ class Maps::CandidatesController < ApplicationController
     if stage_id.present?
       cookies[:candidate_stage_filter] = { value: stage_id }
     elsif cookies[:candidate_stage_filter].blank?
-      cookies[:candidate_stage_filter] = { value: current_organization.default_display_stage.id }
+      cookies[:candidate_stage_filter] =
+        { value: current_organization.default_display_stage.id }
     end
   end
 end

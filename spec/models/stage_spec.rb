@@ -12,9 +12,12 @@ RSpec.describe StageDefaults do
     end
     it 'does allow duplicate names across organizations' do
       duplicate_name = 'new stage'
-      new_stage1 = organization1.stages.create(name: duplicate_name, order: 10)
-      new_stage2 = organization2.stages.create(name: duplicate_name, order: 10)
-      expect(new_stage2.errors).to be_empty
+
+      organization1.stages.create(name: duplicate_name, order: 10)
+      duplicate_stage_different_org =
+        organization2.stages.create(name: duplicate_name, order: 10)
+
+      expect(duplicate_stage_different_org.errors).to be_empty
     end
   end
 

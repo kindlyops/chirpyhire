@@ -26,8 +26,7 @@ class Organization < ApplicationRecord
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
 
-    Message.new(sid: sent_message.sid,
-                body: sent_message.body,
+    Message.new(sid: sent_message.sid, body: sent_message.body,
                 sent_at: sent_message.date_sent,
                 external_created_at: sent_message.date_created,
                 direction: sent_message.direction)
@@ -57,17 +56,12 @@ class Organization < ApplicationRecord
     messaging_client.media.get(sid)
   end
 
-  def users_with_unread_messages_count
-    users.with_unread_messages.count
-  end
-
   alias unordered_stages stages
   def stages
-    ordered_stages ||= unordered_stages.ordered
+    @stages ||= unordered_stages.ordered
   end
 
-  # There should only ever be one of each default type for
-  # and organization
+  # There should only ever be one of each default type for an organization
   def bad_fit_stage
     stages.bad_fit.first
   end
@@ -106,25 +100,24 @@ class Organization < ApplicationRecord
 
   def reorder_stages(stages_with_order)
     Organization.transaction do
-      # To avoid Unique Key errors when updating sequentially
-      # we set all values to their negative in a transaction
+      # To avoid Unique Key errors we set all values to their negative first
       stages.each do |stage|
         stage.order *= -1
         stage.save!
       end
-      stages_with_order.each do |info|
-        stage = Stage.find(info[:id])
-        stage.order = info[:order]
-        stage.save!
-      end
+      update_stages_to_new_values(stages_with_order)
     end
   end
 
-  before_create do |organization|
-    unless organization.stages.present?
-      organization.stages = StageDefaults.defaults
+  def update_stages_to_new_values(stages_with_order)
+    stages_with_order.each do |info|
+      stage = Stage.find(info[:id])
+      stage.order = info[:order]
+      stage.save!
     end
   end
+
+  before_create { |o| o.stages = StageDefaults.defaults if o.stages.empty? }
 
   private
 

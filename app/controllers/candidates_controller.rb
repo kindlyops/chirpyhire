@@ -76,17 +76,18 @@ class CandidatesController < ApplicationController
   end
 
   def stage_id
-    stage_id = params[:stage_id]
+    stage_id = determine_stage_id
+    cookies[:candidate_stage_filter] = cookie(stage_id)
+    stage_id
+  end
 
-    if stage_id.present?
-      cookies[:candidate_stage_filter] = { value: stage_id }
-      stage_id
+  def determine_stage_id
+    if params[:stage_id].present?
+      params[:stage_id]
     elsif cookies[:candidate_stage_filter].present?
       cookies[:candidate_stage_filter]
     else
-      default_stage_id = current_organization.default_display_stage.id
-      cookies[:candidate_stage_filter] = { value: default_stage_id }
-      return default_stage_id
+      current_organization.default_display_stage.id
     end
   end
 

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20160918173502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -26,8 +27,8 @@ ActiveRecord::Schema.define(version: 20160918173502) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -35,8 +36,8 @@ ActiveRecord::Schema.define(version: 20160918173502) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.string   "invited_by_type"
     t.integer  "invited_by_id"
+    t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.boolean  "agreed_to_terms",        default: false, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true, using: :btree
@@ -93,11 +94,11 @@ ActiveRecord::Schema.define(version: 20160918173502) do
   end
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",                null: false
-    t.jsonb    "properties",   default: "{}", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "label",                       null: false
+    t.integer  "candidate_id",              null: false
+    t.jsonb    "properties",   default: {}, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "label",                     null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end

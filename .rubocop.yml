@@ -29,3 +29,6 @@ Style/BlockDelimiters:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/NegatedIf:
+  Enabled: false

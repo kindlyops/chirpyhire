@@ -7,5 +7,5 @@ class StageOrderer
         stage.save!
       end
     end
- end
+  end
 end
