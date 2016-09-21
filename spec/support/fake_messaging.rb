@@ -15,27 +15,6 @@ class FakeMessaging
     end
   end
 
-  Message = Struct.new(*%i(from to body media direction date_sent date_created sid does_not_exist)) do
-    def num_media
-      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
-      media.list.count.to_s
-    end
-
-    def media_urls
-      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
-      media.list.map(&:uri)
-    end
-
-    def address
-      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
-      @address ||= AddressFinder.new(body)
-    end
-
-    def message_does_not_exist
-      does_not_exist
-    end
-  end
-
   cattr_accessor :messages
   self.messages = []
 
@@ -63,7 +42,8 @@ class FakeMessaging
     )
   end
 
-  def initialize(_account_sid, _auth_token) end
+  def initialize(_account_sid, _auth_token)
+  end
 
   def messages
     self
@@ -81,30 +61,30 @@ class FakeMessaging
   def create(from:, to:, body:, direction: 'outbound-api', format: :image)
     media = build_media(format)
 
-    message = Message.new(from,
-                          to,
-                          body,
-                          media,
-                          direction,
-                          DateTime.current,
-                          DateTime.current,
-                          Faker::Number.number(10),
-                          false)
+    message = FakeMessage.new(from,
+                              to,
+                              body,
+                              media,
+                              direction,
+                              DateTime.current,
+                              DateTime.current,
+                              Faker::Number.number(10),
+                              exists: true)
     append_message(message)
   end
 
   def create_non_existent_message(from:, to:, body:, direction: 'outbound-api', format: :image)
     media = build_media(format)
 
-    message = Message.new(from,
-                          to,
-                          body,
-                          media,
-                          direction,
-                          DateTime.current,
-                          DateTime.current,
-                          Faker::Number.number(10),
-                          true)
+    message = FakeMessage.new(from,
+                              to,
+                              body,
+                              media,
+                              direction,
+                              DateTime.current,
+                              DateTime.current,
+                              Faker::Number.number(10),
+                              exists: false)
     append_message(message)
   end
   # rubocop:enable Metrics/MethodLength
