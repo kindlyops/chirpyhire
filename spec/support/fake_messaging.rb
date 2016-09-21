@@ -1,42 +1,22 @@
 class FakeMessaging
-  MediaInstance = Struct.new(:content_type, :uri) do
-    def image?
-      %w(image/jpeg image/gif image/png image/bmp).include?(content_type)
-    end
-
-    def sid
-      Faker::Number.number(10)
-    end
-  end
-
-  Media = Struct.new(:media_instances) do
-    def list
-      media_instances
-    end
-  end
-
   cattr_accessor :messages
   self.messages = []
 
   def self.inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
-    body = format == :text ? body : ''
-
-    new('foo', 'bar').create(
+    create(
       from: sender.phone_number,
       to: organization.phone_number,
-      body: body,
+      body: format == :text ? body : '',
       direction: 'inbound',
       format: format
     )
   end
 
   def self.non_existent_inbound_message(sender, organization, body = Faker::Lorem.word, format: :image)
-    body = format == :text ? body : ''
-
-    new('foo', 'bar').create_non_existent_message(
+    create_non_existent_message(
       from: sender.phone_number,
       to: organization.phone_number,
-      body: body,
+      body: format == :text ? body : '',
       direction: 'inbound',
       format: format
     )
@@ -57,51 +37,37 @@ class FakeMessaging
     self.class.messages.find { |message| message.sid == sid }
   end
 
-  # rubocop:disable Metrics/MethodLength
   def create(from:, to:, body:, direction: 'outbound-api', format: :image)
-    media = build_media(format)
+    self.class.create(from: from, to: to, body: body, direction: direction, format: format)
+  end
 
+  def self.create(from:, to:, body:, direction: 'outbound-api', format: :image)
     message = FakeMessage.new(from,
                               to,
                               body,
-                              media,
+                              format,
                               direction,
-                              DateTime.current,
-                              DateTime.current,
                               Faker::Number.number(10),
                               exists: true)
     append_message(message)
   end
 
-  def create_non_existent_message(from:, to:, body:, direction: 'outbound-api', format: :image)
-    media = build_media(format)
+  private_class_method
 
+  def self.create_non_existent_message(from:, to:, body:, direction: 'outbound-api', format: :image)
     message = FakeMessage.new(from,
                               to,
                               body,
-                              media,
+                              format,
                               direction,
-                              DateTime.current,
-                              DateTime.current,
                               Faker::Number.number(10),
                               exists: false)
     append_message(message)
   end
-  # rubocop:enable Metrics/MethodLength
 
-  private
-
-  def append_message(message)
-    self.class.messages << message
+  def self.append_message(message)
+    messages << message
     message
-  end
-
-  def build_media(format)
-    if format == :text
-      Media.new([])
-    elsif format == :image
-      Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
-    end
   end
 end
 

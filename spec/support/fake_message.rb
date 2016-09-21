@@ -2,14 +2,14 @@ class FakeMessage
   attr_reader :sid, :body, :direction, :date_sent, :date_created, :from, :to, :media
 
   # rubocop:disable Metrics/ParameterLists
-  def initialize(from, to, body, media, direction, date_sent, date_created, sid, exists: true)
+  def initialize(from, to, body, format, direction, sid, exists: true)
     @from = from
     @to = to
     @body = body
-    @media = media
+    @media = build_media(format)
     @direction = direction
-    @date_sent = date_sent
-    @date_created = date_created
+    @date_sent = DateTime.current
+    @date_created = DateTime.current
     @sid = sid
     @exists = exists
   end
@@ -33,4 +33,28 @@ class FakeMessage
   private
 
   attr_reader :exists
+
+  MediaInstance = Struct.new(:content_type, :uri) do
+    def image?
+      %w(image/jpeg image/gif image/png image/bmp).include?(content_type)
+    end
+
+    def sid
+      Faker::Number.number(10)
+    end
+  end
+
+  Media = Struct.new(:media_instances) do
+    def list
+      media_instances
+    end
+  end
+
+  def build_media(format)
+    if format == :text
+      Media.new([])
+    elsif format == :image
+      Media.new([MediaInstance.new('image/jpeg', '/example/path/to/image.png')])
+    end
+  end
 end
