@@ -17,17 +17,17 @@ class FakeMessaging
 
   Message = Struct.new(*%i(from to body media direction date_sent date_created sid does_not_exist)) do
     def num_media
-      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
       media.list.count.to_s
     end
 
     def media_urls
-      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
       media.list.map(&:uri)
     end
 
     def address
-      raise Twilio::REST::RequestError, 'The requested resource foo.json was not found' if message_does_not_exist
+      raise Twilio::REST::RequestError.new('The requested resource was not found', 20404) if message_does_not_exist
       @address ||= AddressFinder.new(body)
     end
 
