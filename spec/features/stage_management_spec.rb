@@ -17,7 +17,7 @@ RSpec.feature 'Stage Management', type: :feature, js: true do
       end
 
       click_on 'Add Stage'
-      expect(page).to have_current_path(%r{/\/stages\/?/})
+      expect(page).to have_current_path(%r{/stages/?})
       expect(page).to have_text('Nice! Stage created.')
     end
   end
@@ -34,7 +34,7 @@ RSpec.feature 'Stage Management', type: :feature, js: true do
         end
 
         click_on 'Save'
-        expect(page).to have_current_path(%r{/\/stages\/?/})
+        expect(page).to have_current_path(%r{/stages/?})
         expect(page).to have_text('Changed stage')
       end
     end

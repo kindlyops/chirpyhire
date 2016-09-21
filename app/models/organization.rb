@@ -58,7 +58,7 @@ class Organization < ApplicationRecord
 
   alias unordered_stages stages
   def stages
-    @stages ||= unordered_stages.ordered
+    unordered_stages.ordered
   end
 
   # There should only ever be one of each default type for an organization
@@ -117,7 +117,9 @@ class Organization < ApplicationRecord
     end
   end
 
-  before_create { |o| o.stages = StageDefaults.defaults if o.stages.empty? }
+  before_create do |organization|
+    organization.stages = StageDefaults.defaults if organization.stages.empty?
+  end
 
   private
 
