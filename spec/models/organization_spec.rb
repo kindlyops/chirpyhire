@@ -8,7 +8,7 @@ RSpec.describe Organization, type: :model do
     let(:user) { create(:user, organization: organization) }
 
     it 'sends the sms message' do
-      expect{
+      expect {
         organization.send_message(to: user.phone_number, body: 'Test')
       }.to change { FakeMessaging.messages.count }.by(1)
     end

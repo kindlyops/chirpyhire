@@ -33,7 +33,7 @@ RSpec.describe Payment::Subscriptions::Process do
       end
 
       it 'creates a stripe customer' do
-        expect{
+        expect {
           subject.call
         }.to change { organization.reload.stripe_customer_id }.from(nil)
       end
@@ -45,7 +45,7 @@ RSpec.describe Payment::Subscriptions::Process do
       end
 
       it 'updates the local subscription' do
-        expect{
+        expect {
           subject.call
         }.to change { subscription.reload.stripe_id }.from(nil)
       end
@@ -68,22 +68,22 @@ RSpec.describe Payment::Subscriptions::Process do
         end
 
         it 'raises the Payment::CardError' do
-          expect{
+          expect {
             subject.call
           }.to raise_error(Payment::CardError)
         end
 
         it 'does not set the stripe customer id on the organization' do
-          expect{
-            expect{
+          expect {
+            expect {
               subject.call
             }.to raise_error(Payment::CardError)
           }.not_to change { organization.reload.stripe_customer_id }
         end
 
         it 'does not set the stripe id on the subscription' do
-          expect{
-            expect{
+          expect {
+            expect {
               subject.call
             }.to raise_error(Payment::CardError)
           }.not_to change { subscription.reload.stripe_id }
@@ -101,13 +101,13 @@ RSpec.describe Payment::Subscriptions::Process do
       end
 
       it 'does not create a new stripe customer' do
-        expect{
+        expect {
           subject.call
         }.not_to change { organization.reload.stripe_customer_id }
       end
 
       it 'updates the local subscription' do
-        expect{
+        expect {
           subject.call
         }.to change { subscription.reload.stripe_id }.from(nil)
       end

@@ -13,7 +13,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
 
   let!(:registrar) { Registrar.new(account).register }
   let(:alice) { create(:candidate, organization: organization) }
-  let(:start_message) { FakeMessaging.new('foo', 'bar').create(from: alice.phone_number, to: organization.phone_number, body: 'START', direction: 'inbound', format: :text) }
+  let(:start_message) { FakeMessaging.inbound_message(alice, organization, 'START', format: :text) }
   let(:start_message_params) do
     {
       'To' => start_message.to,
@@ -30,7 +30,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
 
     context 'and another candidate for the agency has texted START', vcr: { cassette_name: 'surveying-multiple-candidates' } do
       let(:snarf) { create(:candidate, organization: organization) }
-      let(:snarf_start_message) { FakeMessaging.new('foo', 'bar').create(from: snarf.phone_number, to: organization.phone_number, body: 'START', direction: 'inbound', format: :text) }
+      let(:snarf_start_message) { FakeMessaging.inbound_message(snarf, organization, 'START', format: :text) }
       let(:snarf_start_message_params) do
         {
           'To' => snarf_start_message.to,
@@ -46,7 +46,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
 
       context 'and the first candidate has responded with an address that is too far away' do
         let(:body) { '2 Civic Center Drive 94903' }
-        let(:address_message) { FakeMessaging.new('foo', 'bar').create(from: alice.phone_number, to: organization.phone_number, body: body, direction: 'inbound', format: :text) }
+        let(:address_message) { FakeMessaging.inbound_message(alice, organization, body, format: :text) }
         let(:address_message_params) do
           {
             'To' => address_message.to,
@@ -62,7 +62,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
 
         context 'and the second candidate has responded with a valid address answer' do
           let(:snarf_body) { '1805 Severus dr , 94589' }
-          let(:snarf_address_message) { FakeMessaging.new('foo', 'bar').create(from: snarf.phone_number, to: organization.phone_number, body: snarf_body, direction: 'inbound', format: :text) }
+          let(:snarf_address_message) { FakeMessaging.inbound_message(snarf, organization, snarf_body, format: :text) }
           let(:snarf_address_message_params) do
             {
               'To' => snarf_address_message.to,
@@ -87,7 +87,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
     end
 
     context 'and has submitted an address answer to the first address question' do
-      let(:address_message) { FakeMessaging.new('foo', 'bar').create(from: alice.phone_number, to: organization.phone_number, body: body, direction: 'inbound', format: :text) }
+      let(:address_message) { FakeMessaging.inbound_message(alice, organization, body, format: :text) }
       let(:address_message_params) do
         {
           'To' => address_message.to,

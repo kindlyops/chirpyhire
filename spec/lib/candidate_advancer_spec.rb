@@ -33,13 +33,13 @@ RSpec.describe CandidateAdvancer do
       end
 
       it 'does not create an AutomatonJob for the screen event' do
-        expect{
+        expect {
           CandidateAdvancer.call(user)
         }.not_to have_enqueued_job(AutomatonJob)
       end
 
       it "does not change the candidate's status" do
-        expect{
+        expect {
           CandidateAdvancer.call(user)
         }.not_to change { candidate.status }
       end
@@ -75,13 +75,13 @@ RSpec.describe CandidateAdvancer do
         end
 
         it 'does not create an AutomatonJob for the screen event' do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.not_to change { candidate.status }
         end
@@ -113,13 +113,13 @@ RSpec.describe CandidateAdvancer do
         end
 
         it 'does not create an AutomatonJob for the screen event' do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.not_to have_enqueued_job(AutomatonJob)
         end
 
         it "does not change the candidate's status" do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.not_to change { candidate.status }
         end
@@ -195,7 +195,7 @@ RSpec.describe CandidateAdvancer do
             end
 
             it "changes the candidate's status to Bad Fit" do
-              expect{
+              expect {
                 CandidateAdvancer.call(user)
               }.to change { candidate.status }.from('Potential').to('Bad Fit')
             end
@@ -205,13 +205,13 @@ RSpec.describe CandidateAdvancer do
 
       context 'with all profile features present' do
         it 'creates an AutomatonJob for the screen event' do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.to have_enqueued_job(AutomatonJob).with(user, 'screen')
         end
 
         it "changes the candidate's status to Qualified" do
-          expect{
+          expect {
             CandidateAdvancer.call(user)
           }.to change { candidate.status }.from('Potential').to('Qualified')
         end

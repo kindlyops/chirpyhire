@@ -9,7 +9,7 @@ class UnknownMessageHandler
   end
 
   def call
-    MessageHandler.call(sender, message_sid)
+    MessageHandler.new(sender, message_sid).call
     sender.update(has_unread_messages: true)
   end
 
