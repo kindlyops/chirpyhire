@@ -80,4 +80,8 @@ RSpec.describe Candidate, type: :model do
       end
     end
   end
+
+  it "#before_create has a stage" do
+    expect(candidate.stage).not_to eq(nil)
+  end
 end
