@@ -8,7 +8,7 @@ class GeoJson::Candidates
   def call
     { type: 'FeatureCollection',
       features: build_features,
-      stage_infos: @stage_infos }
+      stages: @stages }
   end
 
   private

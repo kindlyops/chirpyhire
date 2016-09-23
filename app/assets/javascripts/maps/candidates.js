@@ -1,14 +1,18 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidates #map").length) {
-    var dropdownStageSelector = ".maps-candidates .dropdown select";
+    var dropdownStageSelector = ".maps-candidates .dropdown select",
+      isCurrentStageFunc = function(currentStageId) {
+        return function(stage) {
+          return stage.id.toString() === currentStageId
+        }
+      };
 
     function watchSelect(map, stages) {
       $(document).on("change", dropdownStageSelector, function(event) {
         var currentStageId = this.value,
-          isCurrentStage = function(stage) {
-            return stage.id.toString() === currentStageId
-          },
-          currentStageName = stages.filter(isCurrentStage)[0].name,
+          isCurrentStage = isCurrentStageFunc(currentStageId)
+          currentStageName = 
+            stages.filter(isCurrentStage)[0].name,
           unselectedStages = _.reject(stages, isCurrentStage);
 
         map.popup.remove();
@@ -20,10 +24,14 @@ $(document).on("turbolinks:load", function() {
       });
     }
 
-    function watchCardLink() {
+    function watchCardLink(stages) {
       $(document).on("click", ".maps-candidates .candidates-cards", function(event) {
+        var url = 
+          $(this).attr("href") 
+          + "?stage_name=" 
+          + stages.filter(isCurrentStageFunc($(dropdownStageSelector).val()))[0].name;
         event.preventDefault();
-        Turbolinks.visit($(this).attr("href") + "?stage_name=" + $(dropdownStageSelector).val());
+        Turbolinks.visit(url);
       });
     }
 
@@ -69,7 +77,7 @@ $(document).on("turbolinks:load", function() {
         });
       }
 
-      watchCardLink();
+      watchCardLink(stages);
     }
 
     $.get({
