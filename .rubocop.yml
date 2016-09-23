@@ -11,6 +11,11 @@ AllCops:
     - 'bin/**/*'
     - 'app/dashboards/**/*'
     - 'app/controllers/admin/**/*'
+    - '**/*.orig'
+    - '**/*.BACKUP*'
+    - '**/*.BASE*'
+    - '**/*.REMOTE*'
+    - '**/*.LOCAL*'
 
 Style/Documentation:
   Enabled: false
@@ -31,4 +36,7 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/NegatedIf:
+  Enabled: false
+
+Style/NumericPredicate:
   Enabled: false

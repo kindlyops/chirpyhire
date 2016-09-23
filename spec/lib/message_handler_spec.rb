@@ -11,30 +11,49 @@ RSpec.describe MessageHandler do
 
   let(:message) { message_handler.call }
   describe '#call' do
-    it 'creates the message' do
-      expect {
-        message
-      }.to change { Message.count }.by(1)
-    end
+    include ActiveJob::TestHelper
+    context 'where message exists' do
+      it 'creates the message' do
+        expect {
+          message
+        }.to change { Message.count }.by(1)
+      end
 
-    context 'with prior messages' do
-      let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
-      let!(:most_recent_message) { create(:message, user: sender) }
+      context 'with prior messages' do
+        let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
+        let!(:most_recent_message) { create(:message, user: sender) }
 
-      it 'sets the new message as the child on the most recent message' do
-        message
-        expect(sender.messages.by_recency.second.child).to eq(message)
+        it 'sets the new message as the child on the most recent message' do
+          message
+          expect(sender.messages.by_recency.second.child).to eq(message)
+        end
+      end
+
+      context 'with media' do
+        let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
+
+        it 'creates the media instances' do
+          expect {
+            message
+          }.to change { MediaInstance.count }.by(1)
+          expect(message.media_instances.length).to eq(1)
+        end
       end
     end
 
-    context 'with media' do
-      let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
-
-      it 'creates the media instances' do
+    context 'where message does not exist' do
+      let(:fake_message) { FakeMessaging.non_existent_inbound_message(sender, organization) }
+      it 'tries again' do
         expect {
           message
-        }.to change { MediaInstance.count }.by(1)
-        expect(message.media_instances.length).to eq(1)
+        }.to have_enqueued_job(MessageHandlerJob)
+      end
+      it 'fails after running multiple retries' do
+        expect {
+          perform_enqueued_jobs do
+            message
+          end
+        }.to raise_error(Twilio::REST::RequestError)
       end
     end
   end

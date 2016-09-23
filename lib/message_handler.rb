@@ -1,27 +1,33 @@
 class MessageHandler
-  def self.call(sender, message_sid)
-    new(sender, message_sid).call
+  DEFAULT_RETRIES = 3
+  def initialize(sender, message_sid, retries: DEFAULT_RETRIES)
+    @sender = sender
+    @message_sid = message_sid
+    @retries = retries
   end
 
   def call
     existing_message = sender.messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
-
-    build_media_instances
-
-    message.save
-    Threader.new(message).call
-    message
-  end
-
-  def initialize(sender, message_sid)
-    @sender = sender
-    @message_sid = message_sid
+    handle_message
   end
 
   private
 
-  def build_media_instances
+  def handle_message
+    build_and_save_media_instances
+    Threader.new(message).call
+    message
+
+  rescue Twilio::REST::RequestError => e
+    retries_remaining = retries - 1
+    raise unless e.code == 20_404 && retries_remaining > 0
+    MessageHandlerJob
+      .set(wait: 15.seconds)
+      .perform_later(@sender, @message_sid, retries: retries_remaining)
+  end
+
+  def build_and_save_media_instances
     external_message.media.each do |media_instance|
       message.media_instances.new(
         content_type: media_instance.content_type,
@@ -29,6 +35,7 @@ class MessageHandler
         uri: media_instance.uri
       )
     end
+    message.save
   end
 
   def external_message
@@ -37,7 +44,7 @@ class MessageHandler
 
   delegate :organization, to: :sender
 
-  attr_reader :sender, :message_sid
+  attr_reader :sender, :message_sid, :retries
 
   def message
     @message ||= Message.new(
