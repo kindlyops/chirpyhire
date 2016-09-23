@@ -6,7 +6,7 @@
         .i.fa.fa-share
   .card-copy
     table.stages-table
-      - current_organization.stages.each_slice(2) do |stage_left, stage_right|
+      - current_organization.ordered_stages.each_slice(2) do |stage_left, stage_right|
         tr
           = render partial: "candidates/card_back_table_cell",
             locals: { candidate: candidate, stage: stage_left}

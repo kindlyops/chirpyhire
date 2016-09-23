@@ -21,7 +21,7 @@ RSpec.describe StagesController, type: :controller do
       expect {
         get :create, params: { new_stage: 'Test stage' }
       }.to change { organization.stages.count }.from(4).to(5)
-      expect(organization.stages.last.name).to eq('Test stage')
+      expect(organization.ordered_stages.last.name).to eq('Test stage')
     end
 
     it 'can not create a stage with the same name' do

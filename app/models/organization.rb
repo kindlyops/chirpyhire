@@ -56,9 +56,8 @@ class Organization < ApplicationRecord
     messaging_client.media.get(sid)
   end
 
-  alias unordered_stages stages
-  def stages
-    unordered_stages.ordered
+  def ordered_stages
+    stages.ordered
   end
 
   # There should only ever be one of each default type for an organization
@@ -96,26 +95,6 @@ class Organization < ApplicationRecord
 
   def default_display_stage
     qualified_stage
-  end
-
-  def reorder_stages(stages_with_order)
-    binding.pry
-    Organization.transaction do
-      # To avoid Unique Key errors we set all values to their negative first
-      stages.each do |stage|
-        stage.order *= -1
-        stage.save!
-      end
-      update_stages_to_new_values(stages_with_order)
-    end
-  end
-
-  def update_stages_to_new_values(stages_with_order)
-    stages_with_order.each do |info|
-      stage = Stage.find(info[:id])
-      stage.order = info[:order]
-      stage.save!
-    end
   end
 
   before_create do |organization|

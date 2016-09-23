@@ -2,7 +2,7 @@ class GeoJson::Candidates
   include ActionView::Helpers::DateHelper
   def initialize(candidates)
     @candidates = candidates
-    @stages =  stages.map { |st| { id: st.id, name: st.name } }
+    @stages = stages.map { |st| { id: st.id, name: st.name } }
   end
 
   def call
@@ -21,7 +21,6 @@ class GeoJson::Candidates
 
   def build_feature(candidate)
     return unless candidate.address.present? && candidate.stage.present?
-
     {
       type: 'Feature',
       properties: properties(candidate),
@@ -39,7 +38,6 @@ class GeoJson::Candidates
 
   def geometry(candidate)
     {
-
       type: 'Point',
       coordinates: [candidate.address.longitude, candidate.address.latitude]
     }

@@ -4,7 +4,7 @@
   .controls
     .dropdown
       select.stage name="stage"
-        = options_for_select(@map.organization.stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
+        = options_for_select(@map.organization.ordered_stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-group
       label
         = link_to candidates_path, class: "candidates-cards" do
