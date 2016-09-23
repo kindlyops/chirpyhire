@@ -13,7 +13,7 @@ $(document).on("turbolinks:load", function() {
           onMove: App.Sortable.onMoveUpdateNumber,
           onUpdate: function(e) {
             stagesList.find(".stage").each(function(i, stageItem) {
-              reorderForm.find("input.hidden-order[name='" + $(stageItem).attr("data-id") + "']").val(i + 1);
+              reorderForm.find("input.hidden-order[name='stages[" + $(stageItem).attr("data-id") + "][order]']").val(i + 1);
             });
           }
         });

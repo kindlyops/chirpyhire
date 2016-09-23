@@ -33,7 +33,7 @@ class StageOrderer
 
   def update_stages_to_new_values(stages_with_order)
     stages.each do |stage|
-      stage.update!(order: stages_with_order[stage.id][:order])
+      stage.update!(order: stages_with_order[stage.id.to_s][:order].to_i)
     end
   end
 end

@@ -1,10 +1,14 @@
 class StagePolicy < ApplicationPolicy
+  def show?
+    record.organization == organization
+  end
+
   def create?
-    true
+    show?
   end
 
   def edit?
-    self.class.updatable?(record)
+    self.class.updatable?(record) && show?
   end
 
   def update?
@@ -12,11 +16,11 @@ class StagePolicy < ApplicationPolicy
   end
 
   def reorder?
-    true
+    show?
   end
 
   def destroy?
-    self.class.deletable?(record)
+    self.class.deletable?(record) && show?
   end
 
   def permitted_attributes

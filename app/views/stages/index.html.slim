@@ -29,7 +29,8 @@
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
       button.simple-button.add-field title="Add Stage" id="add-stage"
         | &plus;
-  = form_tag("/stages/reorder", method: "put", class: "reorder-form") do
+  = form_tag("/stages/reorder", method: "put", class: "reorder-form", :html => {:'data-type' => 'json'}) do
     - @stages.each do |stage|
-      = hidden_field_tag(stage.id, stage.order, class: "hidden-order")
+      = fields_for 'stages[]', stage do |stages_fields|
+        = stages_fields.hidden_field(:order, class: "hidden-order")
     = submit_tag("Save order", class:"save-order-button button")

@@ -26,9 +26,10 @@ class StagesController < ApplicationController
   end
 
   def reorder
-    new_stage_order = build_new_stage_order
+    stage_ids = params[:stages].keys
+    Stage.find(stage_ids).each { |stage| authorize stage }
     StageOrderer.new(current_organization.id)
-                .reorder(new_stage_order)
+                .reorder(stage_ids)
 
     flash[:notice] = 'Nice! Stage order saved.'
     redirect_to stages_url
@@ -58,16 +59,6 @@ class StagesController < ApplicationController
                          order: current_organization.stages.maximum(:order) + 1
     ))
     @stage.save
-  end
-
-  def build_new_stage_order
-    stage_order_array = scoped_stages.map do |stage|
-      [stage.id, { order: params[stage.id.to_s] }]
-    end
-    new_stage_order = Hash[stage_order_array]
-    stages = Stage.find(new_stage_order.keys)
-    stages.each { |stage| authorize stage }
-    new_stage_order
   end
 
   def scoped_stages
