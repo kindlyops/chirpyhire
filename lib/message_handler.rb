@@ -1,9 +1,7 @@
 class MessageHandler
-  DEFAULT_RETRIES = 3
-  def initialize(sender, message_sid, retries: DEFAULT_RETRIES)
+  def initialize(sender, message_sid)
     @sender = sender
     @message_sid = message_sid
-    @retries = retries
   end
 
   def call
@@ -18,13 +16,6 @@ class MessageHandler
     build_and_save_media_instances
     Threader.new(message).call
     message
-
-  rescue Twilio::REST::RequestError => e
-    retries_remaining = retries - 1
-    raise unless e.code == 20_404 && retries_remaining > 0
-    MessageHandlerJob
-      .set(wait: 15.seconds)
-      .perform_later(@sender, @message_sid, retries: retries_remaining)
   end
 
   def build_and_save_media_instances
@@ -44,7 +35,7 @@ class MessageHandler
 
   delegate :organization, to: :sender
 
-  attr_reader :sender, :message_sid, :retries
+  attr_reader :sender, :message_sid
 
   def message
     @message ||= Message.new(

@@ -1,16 +1,20 @@
-class AnswerHandlerJob < ApplicationJob
-  def perform(sender, inquiry, message_sid)
+class AnswerHandlerJob < MessageHandlerRetryJob
+  def perform(sender, inquiry, message_sid,
+              retries: MessageHandlerRetryJob::DEFAULT_RETRIES)
     @sender = sender
-    message = MessageHandler.new(sender, message_sid).call
+    @inquiry = inquiry
+    @message_sid = message_sid
+    @retries_remaining = retries
 
+    message = MessageHandler.new(sender, message_sid).call
     AnswerHandler.call(sender, inquiry, message)
+  end
+
+  def retry_with(job, retries)
+    job.perform_later(sender, inquiry, message_sid, retries: retries)
   end
 
   private
 
-  attr_reader :sender
-
-  def organization
-    sender.organization
-  end
+  attr_accessor :sender, :inquiry, :message_sid
 end
