@@ -1,4 +1,3 @@
-- users_with_unread_messages_count = current_organization.users.with_unread_messages.count
 header.navigation role="banner"
   .navigation-wrapper
     nav.left role="navigation"
@@ -13,14 +12,20 @@ header.navigation role="banner"
           a href="/messages"
             span.desktop
               ' Messages
-              - unless users_with_unread_messages_count.zero?
-                = "(#{users_with_unread_messages_count})"
-            - if users_with_unread_messages_count.zero?
+              - unless current_organization.users\
+                                            .with_unread_messages\
+                                            .count\
+                                            .zero?
+                = "(#{current_organization.users.with_unread_messages.count})"
+            - if current_organization.users.with_unread_messages.count.zero?
               i.mobile.fa.fa-commenting.fa-2x
             - else
               span.fa-stack
                 i.mobile.fa.fa-comment.fa-stack-2x
-                i.users-unread-message-count.fa-stack-1x = users_with_unread_messages_count
+                i.users-unread-message-count.fa-stack-1x 
+                  = current_organization.users\
+                                        .with_unread_messages\
+                                        .count
         li.nav-link
           = link_to survey_path do
             span.desktop Survey
