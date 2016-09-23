@@ -99,6 +99,7 @@ class Organization < ApplicationRecord
   end
 
   def reorder_stages(stages_with_order)
+    binding.pry
     Organization.transaction do
       # To avoid Unique Key errors we set all values to their negative first
       stages.each do |stage|
