@@ -19,9 +19,5 @@ FactoryGirl.define do
         create(:user, :with_account, organization: organization)
       end
     end
-
-    after(:build) do |organization|
-      organization.stages = StageDefaults.defaults
-    end
   end
 end
