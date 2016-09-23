@@ -58,7 +58,7 @@ class CandidatesController < ApplicationController
   end
 
   def filtering_params
-    { created_in: created_in, stage_id: stage_id }
+    { created_in: created_in, stage_name: stage_name }
   end
 
   def created_in
@@ -75,19 +75,19 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def stage_id
-    stage_id = determine_stage_id
-    cookies[:candidate_stage_filter] = cookie(stage_id)
-    stage_id
+  def stage_name
+    stage_name = determine_stage_name
+    cookies[:candidate_stage_filter] = cookie(stage_name)
+    stage_name
   end
 
-  def determine_stage_id
-    if params[:stage_id].present?
-      params[:stage_id]
+  def determine_stage_name
+    if params[:stage_name].present?
+      params[:stage_name]
     elsif cookies[:candidate_stage_filter].present?
       cookies[:candidate_stage_filter]
     else
-      current_organization.default_display_stage.id
+      current_organization.default_display_stage.name
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160918173502) do
+ActiveRecord::Schema.define(version: 20160923144828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20160918173502) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at"              null: false
+    t.datetime "updated_at"              null: false
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 20160918173502) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "standard_stage_mapping"
+    t.index ["organization_id", "name"], name: "index_stages_on_organization_id_and_name", unique: true, using: :btree
     t.index ["organization_id", "order"], name: "index_stages_on_organization_id_and_order", unique: true, using: :btree
     t.index ["organization_id"], name: "index_stages_on_organization_id", using: :btree
   end

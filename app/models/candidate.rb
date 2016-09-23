@@ -30,8 +30,8 @@ class Candidate < ApplicationRecord
     joins(:candidate_features).merge(CandidateFeature.address)
   end
 
-  def self.stage_id(stage_id)
-    joins(:stage).where(stages: { id: stage_id })
+  def self.stage_name(stage_name)
+    joins(:stage).where(stages: { name: stage_name })
   end
 
   def self.created_in(created_in)

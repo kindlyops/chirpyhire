@@ -33,7 +33,7 @@ class StagePolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      organization.stages
+      organization.ordered_stages
     end
   end
 end

@@ -2,12 +2,12 @@ class StageDecorator < Draper::Decorator
   delegate_all
 
   def delete_button_class
-    '' if StagePolicy.deletable?(self)
+    return '' if StagePolicy.deletable?(self)
     'disabled'
   end
 
   def modify_button_class
-    '' if StagePolicy.deletable?(self)
+    return '' if StagePolicy.deletable?(self)
     'disabled'
   end
 

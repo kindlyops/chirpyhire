@@ -9,7 +9,7 @@
       li.stage.drag-and-drop data-id=stage.id
         .drag-and-drop-text
           .stage-item-text-wrapper
-            strong.order.sortable-number = stage.order
+            strong.order.sortable-number = stage.order.to_s + ". "
             strong = stage.name
             = link_to edit_stage_path(stage),
               class: ["edit-stage", "button", stage.modify_button_class, "simple-button", 'tipsy-needed-w'],
@@ -19,13 +19,12 @@
         = link_to("/stages/#{stage.id}",
           method: (StagePolicy.deletable?(stage) ? "delete" : ""),
           class: ['delete-stage', 'remove-field', 'tipsy-needed-w', stage.delete_button_class],
-          data: { turbolinks: false },
           title: stage.delete_button_title)
           | &times;
 
 
   = render partial: "common/validation_errors", locals: { model: @stage }
-  = form_tag("/stages", method: "post") do
+  = form_for @stage do
     .new-stage-wrapper
       = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
       button.simple-button.add-field title="Add Stage" id="add-stage"
