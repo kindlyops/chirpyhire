@@ -137,7 +137,7 @@ RSpec.describe CandidatesController, type: :controller do
         let!(:recent_candidate) { create(:candidate, id: 16, stage: potential_stage, organization: organization) }
 
         it 'returns the most recent candidates first' do
-          get :index, params: { stage_id: potential_stage.id }
+          get :index, params: { stage_name: potential_stage.name }
           expect(assigns(:candidates)).to eq([recent_candidate, old_candidate])
         end
       end

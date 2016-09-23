@@ -141,7 +141,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let!(:candidate) { create(:candidate, organization: account.organization, stage: bad_fit_stage) }
 
         it 'only shows bad fit candidates' do
-          visit candidates_path << "?stage_id=#{bad_fit_stage.id}"
+          visit candidates_path << "?stage_name=#{bad_fit_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -161,7 +161,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let!(:candidate) { create(:candidate, organization: account.organization, stage: hired_stage) }
 
         it 'only shows Hired candidates' do
-          visit candidates_path << "?stage_id=#{hired_stage.id}"
+          visit candidates_path << "?stage_name=#{hired_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -181,7 +181,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
         it 'only shows qualified candidates' do
-          visit candidates_path << "?stage_id=#{qualified_stage.id}"
+          visit candidates_path << "?stage_name=#{qualified_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -201,7 +201,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let!(:candidate) { create(:candidate, organization: account.organization, stage: potential_stage) }
 
         it 'only shows potential candidates' do
-          visit candidates_path << "?stage_id=#{potential_stage.id}"
+          visit candidates_path << "?stage_name=#{potential_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
