@@ -63,12 +63,12 @@ class CandidateAdvancer
   end
 
   def mark_as_bad_fit
-    candidate.update(stage: candidate.organization.bad_fit_stage)
+    candidate.update!(stage: candidate.organization.bad_fit_stage)
     send_bad_fit_notification
   end
 
   def qualify_candidate
-    candidate.update(stage: candidate.organization.qualified_stage)
+    candidate.update!(stage: candidate.organization.qualified_stage)
     AutomatonJob.perform_later(user, 'screen')
   end
 end

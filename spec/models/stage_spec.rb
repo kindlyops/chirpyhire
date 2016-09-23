@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe StageDefaults do
   describe 'validation' do
     let(:organization1) { create(:organization, :with_subscription, :with_account) }
+    let(:used_name) { organization1.stages.first.name }
     let(:organization2) { create(:organization, :with_subscription, :with_account) }
 
     it "doesn't allow duplicate names within an organization" do
-      used_name = organization1.stages.first.name
       stage = organization1.stages.create(name: used_name, order: 10)
       expect(stage.errors).to include(:name)
     end

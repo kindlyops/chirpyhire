@@ -7,11 +7,13 @@ class StageDecorator < Draper::Decorator
   end
 
   def delete_button_class
-    !StagePolicy.deletable?(self) ? 'disabled' : ''
+    '' if StagePolicy.deletable?(self)
+    'disabled'
   end
 
   def modify_button_class
-    !StagePolicy.updatable?(self) ? 'disabled' : ''
+    '' if StagePolicy.deletable?(self)
+    'disabled'
   end
 
   def modify_button_title
