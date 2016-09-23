@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Stage, type: :model do
-  context 'with an organization' do 
+  context 'with an organization' do
     let(:organization1) { create(:organization, :with_subscription, :with_account) }
     describe 'validation' do
       let(:used_name) { organization1.stages.first.name }
@@ -25,7 +25,7 @@ RSpec.describe Stage, type: :model do
     it '#after_destroy removes holes in an organizations stage order' do
       expect {
         organization1.ordered_stages.first.destroy
-      }.to change { organization1.ordered_stages.last.order}.by(-1)
+      }.to change { organization1.ordered_stages.last.order }.by(-1)
     end
   end
 

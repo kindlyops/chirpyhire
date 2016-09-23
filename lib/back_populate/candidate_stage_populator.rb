@@ -1,6 +1,6 @@
 class BackPopulate::CandidateStagePopulator
   def self.populate(candidate)
-    return unless candidate.stage.blank? 
+    return unless candidate.stage.blank?
 
     case candidate.status
     when 'Potential'
@@ -15,18 +15,18 @@ class BackPopulate::CandidateStagePopulator
   end
 
   def self.check_potential(candidate)
-      candidate.update!(stage: candidate.organization.potential_stage)
+    candidate.update!(stage: candidate.organization.potential_stage)
   end
 
   def self.check_bad_fit(candidate)
-      candidate.update!(stage: candidate.organization.bad_fit_stage)
+    candidate.update!(stage: candidate.organization.bad_fit_stage)
   end
 
   def self.check_qualified(candidate)
-      candidate.update!(stage: candidate.organization.qualified_stage)
+    candidate.update!(stage: candidate.organization.qualified_stage)
   end
 
   def self.check_hired(candidate)
-      candidate.update!(stage: candidate.organization.hired_stage)
+    candidate.update!(stage: candidate.organization.hired_stage)
   end
 end

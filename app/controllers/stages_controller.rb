@@ -54,7 +54,7 @@ class StagesController < ApplicationController
   end
 
   def create_new_stage(new_stage_name)
-    @stage =  authorize(current_organization.stages.build(
+    @stage = authorize(current_organization.stages.build(
                          name: new_stage_name,
                          order: current_organization.stages.maximum(:order) + 1
     ))
