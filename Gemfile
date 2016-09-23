@@ -59,7 +59,7 @@ group :production do
   gem 'skylight', '~> 0.10.4'
 end
 
-gem 'rollbar', '~> 2.11.5'
+gem 'rollbar', '~> 2.12.0'
 
 # Authentication
 gem 'devise', '~> 4.2.0'
