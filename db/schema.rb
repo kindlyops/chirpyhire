@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20160923144828) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at"              null: false
-    t.datetime "updated_at"              null: false
+    t.datetime "created_at"                              null: false
+    t.datetime "updated_at"                              null: false
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"

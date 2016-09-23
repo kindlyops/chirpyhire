@@ -23,7 +23,7 @@ $(document).on("turbolinks:load", function() {
     function watchCardLink() {
       $(document).on("click", ".maps-candidates .candidates-cards", function(event) {
         event.preventDefault();
-        Turbolinks.visit($(this).attr("href") + "?stage_id=" + $(dropdownStageSelector).val());
+        Turbolinks.visit($(this).attr("href") + "?stage_name=" + $(dropdownStageSelector).val());
       });
     }
 
