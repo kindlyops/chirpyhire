@@ -34,5 +34,4 @@ RSpec.describe Stage, type: :model do
       expect(StageDefaults.defaults.count).to eq(4)
     end
   end
-
 end

@@ -24,11 +24,11 @@ class StagePolicy < ApplicationPolicy
   end
 
   def self.updatable?(stage)
-    stage.standard_stage_mapping.nil?
+    stage.standard_stage_mapping.blank?
   end
 
   def self.deletable?(stage)
-    stage.standard_stage_mapping.nil? && stage.candidates.empty?
+    stage.standard_stage_mapping.blank? && stage.candidates.empty?
   end
 
   class Scope < ApplicationPolicy::Scope
