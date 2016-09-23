@@ -1,11 +1,6 @@
 class StageDecorator < Draper::Decorator
   delegate_all
 
-  def list_item
-    "<strong class='order sortable-number'>#{order}.</strong>\
-     <strong>#{name}</strong>"
-  end
-
   def delete_button_class
     '' if StagePolicy.deletable?(self)
     'disabled'

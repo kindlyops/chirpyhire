@@ -9,7 +9,8 @@
       li.stage.drag-and-drop data-id=stage.id
         .drag-and-drop-text
           .stage-item-text-wrapper
-            = raw(stage.list_item)
+            strong.order.sortable-number = stage.order
+            strong = stage.name
             = link_to edit_stage_path(stage),
               class: ["edit-stage", "button", stage.modify_button_class, "simple-button", 'tipsy-needed-w'],
               title: stage.modify_button_title do
