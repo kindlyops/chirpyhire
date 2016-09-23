@@ -40,3 +40,6 @@ Style/NegatedIf:
 
 Style/NumericPredicate:
   Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: false

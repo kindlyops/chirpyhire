@@ -2,31 +2,15 @@ class BackPopulate::CandidateStagePopulator
   def self.populate(candidate)
     return unless candidate.stage.blank?
 
-    case candidate.status
-    when 'Potential'
-      check_potential(candidate)
-    when 'Bad Fit'
-      check_bad_fit(candidate)
-    when 'Qualified'
-      check_qualified(candidate)
-    when 'Hired'
-      check_hired(candidate)
+    status_stage_map = {
+      'Potential' => candidate.organization.potential_stage,
+      'Bad Fit' => candidate.organization.bad_fit_stage,
+      'Qualified' => candidate.organization.qualified_stage,
+      'Hired' => candidate.organization.hired_stage,
+    }
+
+    status_stage_map.each do |status, stage|
+      candidate.update!(stage: stage) if candidate.status == status
     end
-  end
-
-  def self.check_potential(candidate)
-    candidate.update!(stage: candidate.organization.potential_stage)
-  end
-
-  def self.check_bad_fit(candidate)
-    candidate.update!(stage: candidate.organization.bad_fit_stage)
-  end
-
-  def self.check_qualified(candidate)
-    candidate.update!(stage: candidate.organization.qualified_stage)
-  end
-
-  def self.check_hired(candidate)
-    candidate.update!(stage: candidate.organization.hired_stage)
   end
 end
