@@ -2,19 +2,19 @@ $(document).on("turbolinks:load", function() {
   if($(".maps-candidates #map").length) {
     var dropdownStageSelector = ".maps-candidates .dropdown select";
 
-    function watchSelect(map, stage_infos) {
+    function watchSelect(map, stages) {
       $(document).on("change", dropdownStageSelector, function(event) {
         var currentStageId = this.value,
-          isCurrentStage = function(stage_info) {
-            return stage_info.id.toString() === currentStageId
+          isCurrentStage = function(stage) {
+            return stage.id.toString() === currentStageId
           },
-          currentStageName = stage_infos.filter(isCurrentStage)[0].name,
-          unselectedStageInfos = _.reject(stage_infos, isCurrentStage);
+          currentStageName = stages.filter(isCurrentStage)[0].name,
+          unselectedStages = _.reject(stages, isCurrentStage);
 
         map.popup.remove();
 
-        _.each(unselectedStageInfos, function(info) {
-          map.setLayoutProperty(info.name, 'visibility', 'none');
+        _.each(unselectedStages, function(stage) {
+          map.setLayoutProperty(stage.name, 'visibility', 'none');
         });
         map.setLayoutProperty(currentStageName, 'visibility', 'visible');
       });
@@ -28,11 +28,11 @@ $(document).on("turbolinks:load", function() {
     }
 
     function initMap(candidatesGeoData) {
-      var styleId, center, zoom, layers, sources, stage_infos;
+      var styleId, center, zoom, layers, sources, stages;
       styleId = "candidates";
       center = $("#map").data("center");
       zoom = $("#map").data("zoom");
-      stage_infos = candidatesGeoData.stage_infos;
+      stages = candidatesGeoData.stages;
 
       sources = [{
         id: styleId,
@@ -40,16 +40,16 @@ $(document).on("turbolinks:load", function() {
         data: candidatesGeoData
       }];
 
-      layers = _.map(stage_infos, _.bind(function(info) {
+      layers = _.map(stages, _.bind(function(stage) {
         return {
-          "id": info.name,
+          "id": stage.name,
           "type": "symbol",
           "source": styleId,
           "layout": {
             "icon-image": "chirpyhire-marker-15",
-            "visibility": $(dropdownStageSelector).val() === info.id.toString() ? 'visible' : 'none'
+            "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
-          "filter": ["==", "stage_name", info.name]
+          "filter": ["==", "stage_name", stage.name]
         };
       }, this));
 
@@ -58,14 +58,14 @@ $(document).on("turbolinks:load", function() {
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: _.map(stage_infos, 'name')
+        popupLayers: _.map(stages, 'name')
       });
 
       if(map.loaded()) {
-        watchSelect(map, stage_infos);
+        watchSelect(map, stages);
       } else {
         map.on('load', function() {
-          watchSelect(map, stage_infos);
+          watchSelect(map, stages);
         });
       }
 

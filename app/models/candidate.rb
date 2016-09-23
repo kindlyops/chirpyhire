@@ -3,8 +3,7 @@ class Candidate < ApplicationRecord
   include Filterable
   tracked only: [:create, :update], on: {
     update: ->(model, _) { model.changes.include?('stage_id') }
-  },
-          properties: ->(_, model) { { stage_id: model.stage_id } }
+  }, properties: ->(_, model) { { stage_id: model.stage_id } }
 
   belongs_to :user
   belongs_to :stage
@@ -18,8 +17,8 @@ class Candidate < ApplicationRecord
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
            :receive_message, :handle, :outstanding_inquiry?, to: :user
-
   delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
+  delegate :stages, to: :organization
 
   before_create :ensure_candidate_has_stage
 
