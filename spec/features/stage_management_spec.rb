@@ -23,7 +23,7 @@ RSpec.feature 'Stage Management', type: :feature, js: true do
   end
 
   describe 'modyfing a stage' do
-    let!(:extra_stage) { create(:stage, organization: organization, name: 'Extra Stage', order: StageDefaults.defaults.count + 1) }
+    let!(:extra_stage) { create(:stage, organization: organization, name: 'Extra Stage', order: StageDefaults.count + 1) }
 
     describe 'changing stage name', vcr: { cassette_name: 'Stage-Management-changing-stage-name' } do
       it 'works' do

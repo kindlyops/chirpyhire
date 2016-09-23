@@ -1,32 +1,34 @@
 module StageDefaults
-  # rubocop:disable MethodLength
-  def self.defaults(organization_id = nil)
+  def self.populate(organization)
+    DEFAULTS.map(&organization.stages.method(:build))
+  end
+
+  def self.count
+    DEFAULTS.count
+  end
+
+  DEFAULTS =
     [
-      Stage.new(
-        organization_id: organization_id,
+      {
         name: 'Potential',
         order: 1,
         standard_stage_mapping: Stage::POTENTIAL
-      ),
-      Stage.new(
-        organization_id: organization_id,
+      },
+      {
         name: 'Qualified',
         order: 2,
         standard_stage_mapping: Stage::QUALIFIED
-      ),
-      Stage.new(
-        organization_id: organization_id,
+      },
+      {
         name: 'Bad Fit',
         order: 3,
         standard_stage_mapping: Stage::BAD_FIT
-      ),
-      Stage.new(
-        organization_id: organization_id,
+      },
+      {
         name: 'Hired',
         order: 4,
         standard_stage_mapping: Stage::HIRED
-      )
-    ]
-  end
-  # rubocop:enable MethodLength
+      }
+    ].freeze
+  private_constant :DEFAULTS
 end

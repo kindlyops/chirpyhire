@@ -98,7 +98,7 @@ class Organization < ApplicationRecord
   end
 
   before_create do |organization|
-    organization.stages = StageDefaults.defaults if organization.stages.empty?
+    StageDefaults.populate(organization) if organization.stages.empty?
   end
 
   private
