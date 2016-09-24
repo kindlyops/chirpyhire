@@ -13,7 +13,7 @@ RSpec.feature 'Stage Management', type: :feature, js: true do
     it 'works' do
       visit stages_path
       within(find('.new-stage-wrapper')) do
-        fill_in 'new_stage', with: 'Contacted'
+        fill_in 'stage[name]', with: 'Contacted'
       end
 
       click_on 'Add Stage'

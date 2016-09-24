@@ -1,6 +1,8 @@
 module StageDefaults
   def self.populate(organization)
+    return false unless organization.stages.empty?
     DEFAULTS.map(&organization.stages.method(:build))
+    true
   end
 
   def self.count

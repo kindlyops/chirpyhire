@@ -5,10 +5,12 @@ class StagesController < ApplicationController
   end
 
   def create
-    if create_new_stage(params[:new_stage])
-      flash[:notice] = 'Nice! Stage created.'
-    end
-    redirect_to stages_url
+    created_stage = current_organization
+                    .stages
+                    .create(permitted_attributes(Stage.new))
+    @stage = authorize(created_stage)
+    flash[:notice] = 'Nice! Stage created.' if @stage.errors.blank?
+    render :index
   end
 
   def edit
@@ -28,7 +30,7 @@ class StagesController < ApplicationController
   def reorder
     stage_ids = params[:stages].keys
     Stage.find(stage_ids).each { |stage| authorize stage }
-    StageOrderer.new(current_organization.id)
+    StageOrderer.new(current_organization.stages)
                 .reorder(stage_ids)
 
     flash[:notice] = 'Nice! Stage order saved.'
@@ -51,14 +53,6 @@ class StagesController < ApplicationController
   def setup_stages
     @stages = scoped_stages.decorate
     @stage = current_organization.stages.build
-  end
-
-  def create_new_stage(new_stage_name)
-    @stage = authorize(current_organization.stages.build(
-                         name: new_stage_name,
-                         order: current_organization.stages.maximum(:order) + 1
-    ))
-    @stage.save
   end
 
   def scoped_stages

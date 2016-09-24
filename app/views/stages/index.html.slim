@@ -24,9 +24,10 @@
 
 
   = render partial: "common/validation_errors", locals: { model: @stage }
-  = form_for @stage do
+  = form_for @stage do |f|
     .new-stage-wrapper
-      = text_field_tag(:new_stage, nil, placeholder: "New stage", required: true)
+      = f.text_field(:name, placeholder: "New stage", required: true, id: 'new_stage')
+      = f.hidden_field(:order, value: @stages.pluck(:order).max + 1)
       button.simple-button.add-field title="Add Stage" id="add-stage"
         | &plus;
   = form_tag("/stages/reorder", method: "put", class: "reorder-form", :html => {:'data-type' => 'json'}) do

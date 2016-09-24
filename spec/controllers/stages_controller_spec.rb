@@ -19,14 +19,26 @@ RSpec.describe StagesController, type: :controller do
   describe '#create' do
     it 'can create a stage' do
       expect {
-        get :create, params: { new_stage: 'Test stage' }
+        get :create,
+            params: {
+              stage: {
+                name: 'Test stage',
+                order: organization.stages.count + 1
+              }
+            }
       }.to change { organization.stages.count }.from(4).to(5)
       expect(organization.ordered_stages.last.name).to eq('Test stage')
     end
 
     it 'can not create a stage with the same name' do
       expect {
-        get :create, params: { new_stage: 'Potential' }
+        get :create,
+            params: {
+              stage: {
+                name: 'Potential',
+                order: organization.stages.count + 1
+              }
+            }
       }.not_to change { organization.stages.count }
     end
   end

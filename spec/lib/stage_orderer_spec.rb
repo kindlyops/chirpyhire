@@ -10,7 +10,7 @@ RSpec.describe StageOrderer do
       new_stage_array = organization.ordered_stages.map do |stage|
         [stage.id.to_s, { order: (stage.order % stage_count) + 1 }]
       end
-      StageOrderer.new(organization.id).reorder(Hash[new_stage_array])
+      StageOrderer.new(organization.stages).reorder(Hash[new_stage_array])
       expect(organization.ordered_stages.first).to eq(last_stage)
     end
   end

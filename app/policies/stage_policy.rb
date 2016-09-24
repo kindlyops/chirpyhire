@@ -24,7 +24,7 @@ class StagePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name]
+    [:name, :order]
   end
 
   def self.updatable?(stage)

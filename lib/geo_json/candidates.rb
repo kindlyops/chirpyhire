@@ -2,7 +2,7 @@ class GeoJson::Candidates
   include ActionView::Helpers::DateHelper
   def initialize(candidates)
     @candidates = candidates
-    @stages = stages.map { |st| { id: st.id, name: st.name } }
+    @stages = stages.map { |stage| { id: stage.id, name: stage.name } }
   end
 
   def call

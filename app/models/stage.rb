@@ -20,6 +20,6 @@ class Stage < ApplicationRecord
   end
 
   after_destroy do |stage|
-    StageOrderer.new(stage.organization_id).reset
+    StageOrderer.new(stage.organization.stages).reset
   end
 end

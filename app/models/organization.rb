@@ -14,7 +14,7 @@ class Organization < ApplicationRecord
   has_one :location
   has_one :subscription
 
-  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :location, :stages
   delegate :conversations, to: :messages
   delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
@@ -98,7 +98,7 @@ class Organization < ApplicationRecord
   end
 
   before_create do |organization|
-    StageDefaults.populate(organization) if organization.stages.empty?
+    StageDefaults.populate(organization)
   end
 
   private

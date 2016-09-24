@@ -1,7 +1,6 @@
 class StageOrderer
-  def initialize(organization_id)
-    @organization_id = organization_id
-    @stages = Organization.find(organization_id).ordered_stages
+  def initialize(stages)
+    @stages = stages.ordered
   end
 
   def reorder(stages_with_order)
@@ -21,7 +20,7 @@ class StageOrderer
 
   private
 
-  attr_reader :stages, :organization_id
+  attr_reader :stages
 
   def clear_stage_order_positions_for_update
     # To avoid Unique Key errors, set all values to
