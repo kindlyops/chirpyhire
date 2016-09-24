@@ -11,16 +11,17 @@
           .stage-item-text-wrapper
             strong.order.sortable-number = stage.order.to_s + ". "
             strong = stage.name
-            = link_to edit_stage_path(stage),
-              class: ["edit-stage", "button", stage.modify_button_class, "simple-button", 'tipsy-needed-w'],
-              title: stage.modify_button_title do
-                i.fa.fa-pencil
-        // If method is defined, disabled links still click through, so we clear the method when not deletable
-        = link_to("/stages/#{stage.id}",
-          method: (StagePolicy.deletable?(stage) ? "delete" : ""),
-          class: ['delete-stage', 'remove-field', 'tipsy-needed-w', stage.delete_button_class],
-          title: stage.delete_button_title)
-          | &times;
+            - if StagePolicy.updatable?(stage)
+              = link_to edit_stage_path(stage),
+                class: ["edit-stage", "button", "simple-button", 'tipsy-needed-w'],
+                title: 'Modify stage' do
+                  i.fa.fa-pencil
+        - if StagePolicy.deletable?(stage)
+          = link_to("/stages/#{stage.id}",
+            method: 'delete',
+            class: ['delete-stage', 'remove-field', 'tipsy-needed-w'],
+            title: 'Delete stage')
+            | &times;
 
 
   = render partial: "common/validation_errors", locals: { model: @stage }
