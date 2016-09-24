@@ -31,7 +31,7 @@ class StagesController < ApplicationController
     stage_ids = params[:stages].keys
     Stage.find(stage_ids).each { |stage| authorize stage }
     StageOrderer.new(current_organization.stages)
-                .reorder(stage_ids)
+                .reorder(params[:stages])
 
     flash[:notice] = 'Nice! Stage order saved.'
     redirect_to stages_url

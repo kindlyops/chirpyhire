@@ -18,13 +18,13 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         it 'can not move from qualified to qualified' do
           visit edit_candidate_path(candidate)
 
-          qualified_link_that_doesnt_exist = all('.stages-table td')[1].first('input[type=submit]')
+          qualified_link_that_doesnt_exist = all('.stage-item')[1].first('buttom[type=submit]')
           expect(qualified_link_that_doesnt_exist).to eq(nil)
         end
         it 'can move from qualified to potential' do
           visit edit_candidate_path(candidate)
 
-          potential_link_that_does_exist = all('.stages-table td')[0].first('input[type=submit]')
+          potential_link_that_does_exist = all('.stage-item')[0].first('button[type=submit]')
           potential_link_that_does_exist.click
           cards_that_no_longer_exist = all('.card')
           expect(cards_that_no_longer_exist).to be_empty
