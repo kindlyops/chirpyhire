@@ -1,7 +1,8 @@
-td
-  - if candidate.stage_id != stage.id
-    = form_for candidate
-      = hidden_field_tag(:stage, stage.id, name: "candidate[stage_id]")
-      strong = submit_tag(stage.name, class: "simple-button")
-  - else
-    strong = stage.name
+- if candidate.stage_id != stage.id
+  .stage-item
+      = form_for candidate do |f|
+        = f.hidden_field(:stage_id, value: stage.id)
+        button = stage.name
+- else
+  .stage-item.inactive
+    button type='button' = stage.name

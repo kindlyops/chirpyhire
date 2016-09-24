@@ -16,13 +16,6 @@
     @include media ($horizontal-bar-mode) {
       max-width: 25%;
     }
-
-    .stages-table {
-      @include rounded-table;
-      td input[type='submit'] {
-        white-space: normal;
-      }
-    }
   }
 
   .controls {
@@ -43,35 +36,29 @@
     }
   }
 
-  .card-call-to-actions {
-    form, button {
-      flex-grow: 1;
-    }
-
-    form {
-      display: flex;
-      justify-content: center;
-    }
-
-    button {
-      border-radius: 0;
-      i {
-        font-size: 1.5em;
-      }
-      a {
-        color: $base-font-color;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-  }
   .card-header .card-header-right {
     display: inline;
     float: right;
     a {
       color: inherit;
     }
+  }
+  .stage-buttons {
+    flex-direction: column;
+    .stage-row {
+      display: flex;
+      justify-content: center;
+      .stage-item {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+        max-width: 50%;
+        &.inactive, &.inactive button {
+          background-color: $disabled-color;
+          cursor: default;
+        }
+      }
+    }    
   }
 
   .card-image {

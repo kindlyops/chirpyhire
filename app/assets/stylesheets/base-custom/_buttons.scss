@@ -68,3 +68,29 @@ a, button {
     }
   }
 }
+
+.flat-button-group {
+  display: flex;
+  form, button {
+    flex-grow: 1;
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+  }
+
+  button {
+    white-space: normal;
+    border-radius: 0;
+    i {
+      font-size: 1.5em;
+    }
+    a {
+      color: $base-font-color;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
