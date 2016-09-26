@@ -10,7 +10,7 @@ class StagesController < ApplicationController
                     .create(permitted_attributes(Stage.new))
     @stage = authorize(created_stage)
     flash[:notice] = 'Nice! Stage created.' if @stage.errors.blank?
-    render :index
+    redirect_to stages_url
   end
 
   def edit
