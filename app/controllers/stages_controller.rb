@@ -28,8 +28,7 @@ class StagesController < ApplicationController
   end
 
   def reorder
-    stage_ids = params[:stages].keys
-    Stage.find(stage_ids).each { |stage| authorize stage }
+    authorize_stages
     StageOrderer.new(current_organization.stages)
                 .reorder(params[:stages])
 
@@ -45,6 +44,11 @@ class StagesController < ApplicationController
   end
 
   private
+
+  def authorize_stages
+    stage_ids = params[:stages].keys
+    Stage.find(stage_ids).each { |stage| authorize stage }
+  end
 
   def authorized_stage
     authorize(Stage.find(params[:id]))

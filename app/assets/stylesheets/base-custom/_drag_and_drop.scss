@@ -1,14 +1,17 @@
-.drag-and-drop {
+@mixin drag-and-drop-styled {
   border: 1px solid $light-gray;
   box-shadow: 1px 1px $light-gray;
   border-radius: 3px;
-  cursor: move;
   display: flex;
   justify-content: space-between;
   margin: 5px 0;
-  padding: 0.5em 0;
   min-height: 70px;
-  
+}
+
+.drag-and-drop {
+  cursor: move;
+  padding: 0.5em 0;
+  @include drag-and-drop-styled;
   &:hover, &:focus {
     background-color: #f3f3f3;
   }
@@ -20,4 +23,8 @@
     flex-direction: column;
     padding-left: 0.5em;
   }
+}
+
+.drag-and-drop-item {
+  @include drag-and-drop-styled
 }

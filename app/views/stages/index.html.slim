@@ -23,11 +23,11 @@
             title: 'Delete stage')
             | &times;
 
-
+  hr
   = render partial: "common/validation_errors", locals: { model: @stage }
   = form_for @stage do |f|
-    .new-stage-wrapper
-      = f.text_field(:name, placeholder: "New stage", required: true, id: 'new_stage')
+    .new-stage-wrapper.drag-and-drop-item
+      = f.text_field(:name, placeholder: "New stage", required: true, id: 'new_stage', class: 'right-extra-button')
       = f.hidden_field(:order, value: @stages.pluck(:order).max + 1)
       button.simple-button.add-field title="Add Stage" id="add-stage"
         | &plus;
