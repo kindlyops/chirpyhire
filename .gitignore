@@ -14,7 +14,9 @@
 .env
 spec/examples.txt
 **/*.orig
-**/*BASE*
 **/*REMOTE*
 **/*BACKUP*
 **/*LOCAL*
+
+# Ignore Redis dumps
+*.rdb
