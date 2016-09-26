@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20160916170921) do
     t.string   "status",     default: "Potential", null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "stage_id"
+    t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
   end
 
@@ -243,6 +245,18 @@ ActiveRecord::Schema.define(version: 20160916170921) do
     t.index ["organization_id"], name: "index_rules_on_organization_id", using: :btree
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.integer  "organization_id",        null: false
+    t.string   "name",                   null: false
+    t.integer  "order",                  null: false
+    t.integer  "standard_stage_mapping"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["organization_id", "name"], name: "index_stages_on_organization_id_and_name", unique: true, using: :btree
+    t.index ["organization_id", "order"], name: "index_stages_on_organization_id_and_order", unique: true, using: :btree
+    t.index ["organization_id"], name: "index_stages_on_organization_id", using: :btree
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
     t.string   "stripe_customer_id"
@@ -337,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160916170921) do
   add_foreign_key "answers", "inquiries"
   add_foreign_key "answers", "messages"
   add_foreign_key "candidate_features", "candidates"
+  add_foreign_key "candidates", "stages"
   add_foreign_key "candidates", "users"
   add_foreign_key "choice_question_options", "questions"
   add_foreign_key "inquiries", "messages"
@@ -352,6 +367,7 @@ ActiveRecord::Schema.define(version: 20160916170921) do
   add_foreign_key "referrers", "users"
   add_foreign_key "rules", "actionables"
   add_foreign_key "rules", "organizations"
+  add_foreign_key "stages", "organizations"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "surveys", "actionables"
