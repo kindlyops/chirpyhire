@@ -1,6 +1,6 @@
 class BackPopulate::CandidateStagePopulator
   def self.populate(candidate)
-    return unless candidate.stage.blank?
+    return unless candidate.stage_id.blank?
 
     status_stage_map = {
       'Potential' => candidate.organization.potential_stage,
@@ -10,7 +10,7 @@ class BackPopulate::CandidateStagePopulator
     }
 
     status_stage_map.each do |status, stage|
-      candidate.update!(stage: stage) if candidate.status == status
+      candidate.update!(stage_id: stage.id) if candidate.status == status
     end
   end
 end
