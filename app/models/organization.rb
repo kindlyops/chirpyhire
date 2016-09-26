@@ -9,11 +9,12 @@ class Organization < ApplicationRecord
   has_many :messages, through: :users
   has_many :templates
   has_many :rules
+  has_many :stages
   has_one :survey
   has_one :location
   has_one :subscription
 
-  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :location, :stages
   delegate :conversations, to: :messages
   delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
@@ -25,8 +26,7 @@ class Organization < ApplicationRecord
   def send_message(to:, body:, from: phone_number)
     sent_message = messaging_client.send_message(to: to, body: body, from: from)
 
-    Message.new(sid: sent_message.sid,
-                body: sent_message.body,
+    Message.new(sid: sent_message.sid, body: sent_message.body,
                 sent_at: sent_message.date_sent,
                 external_created_at: sent_message.date_created,
                 direction: sent_message.direction)
@@ -58,6 +58,35 @@ class Organization < ApplicationRecord
 
   def users_with_unread_messages_count
     users.with_unread_messages.count
+  end
+
+  def ordered_stages
+    stages.ordered
+  end
+
+  # There should only ever be one of each default type for an organization
+  def bad_fit_stage
+    stages.bad_fit.first
+  end
+
+  def potential_stage
+    stages.potential.first
+  end
+
+  def qualified_stage
+    stages.qualified.first
+  end
+
+  def hired_stage
+    stages.hired.first
+  end
+
+  def default_display_stage
+    qualified_stage
+  end
+
+  before_create do |organization|
+    StageDefaults.populate(organization)
   end
 
   private
