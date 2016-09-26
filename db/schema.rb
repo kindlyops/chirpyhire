@@ -249,9 +249,9 @@ ActiveRecord::Schema.define(version: 20160923144828) do
     t.integer  "organization_id",        null: false
     t.string   "name",                   null: false
     t.integer  "order",                  null: false
+    t.integer  "standard_stage_mapping"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.integer  "standard_stage_mapping"
     t.index ["organization_id", "name"], name: "index_stages_on_organization_id_and_name", unique: true, using: :btree
     t.index ["organization_id", "order"], name: "index_stages_on_organization_id_and_order", unique: true, using: :btree
     t.index ["organization_id"], name: "index_stages_on_organization_id", using: :btree
