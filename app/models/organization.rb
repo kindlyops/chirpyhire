@@ -101,35 +101,6 @@ class Organization < ApplicationRecord
     StageDefaults.populate(organization)
   end
 
-  def ordered_stages
-    stages.ordered
-  end
-
-  # There should only ever be one of each default type for an organization
-  def bad_fit_stage
-    stages.bad_fit.first
-  end
-
-  def potential_stage
-    stages.potential.first
-  end
-
-  def qualified_stage
-    stages.qualified.first
-  end
-
-  def hired_stage
-    stages.hired.first
-  end
-
-  def default_display_stage
-    qualified_stage
-  end
-
-  before_create do |organization|
-    StageDefaults.populate(organization)
-  end
-
   private
 
   def messaging_client
