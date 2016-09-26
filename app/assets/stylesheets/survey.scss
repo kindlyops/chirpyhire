@@ -1,22 +1,22 @@
-.survey {
-  $large-screen: 53.75em !default;
-  $horizontal-bar-mode: $large-screen;
+.survey, .survey-edit {
   @include outer-container;
   padding: 1em;
+}
 
-  .edit_survey {
-    @include media ($horizontal-bar-mode) {
-      @include span-columns(6);
-      @include shift(3);
-    }
+.survey.edit {
+  @include media ($large-screen) {
+    @include span-columns(6);
+    @include shift(3);
   }
+}
 
+.survey {
   .header {
     display: flex;
     justify-content: space-between;
     margin: 0 0 0.5em 0;
 
-    @include media ($horizontal-bar-mode) {
+    @include media ($large-screen) {
       margin: 0 1em 1em 1em;
     }
   }
@@ -32,7 +32,7 @@
 
     margin: 0 0 1.5em 0;
     cursor: default;
-    @include media ($horizontal-bar-mode) {
+    @include media ($large-screen) {
       margin: 0 1em 1.5em 1em;
       max-width: 22%;
     }
@@ -40,27 +40,6 @@
 
   .survey--questions {
     padding-bottom: 0.5em;
-  }
-
-  .survey--question {
-    padding: 2em 0;
-  }
-
-  .survey--question-label, .survey--question-priority {
-    font-size: 1.25em;
-  }
-
-  .survey--question-label {
-    border: 1px solid $light-gray;
-    padding: 1.5em;
-    margin-left: 1em;
-    box-shadow: 1px 1px $light-gray;
-    cursor: move;
-    border-radius: 3px;
-
-    &:hover, &:focus {
-      background-color: #f3f3f3;
-    }
   }
 
   .settings {

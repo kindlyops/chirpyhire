@@ -87,10 +87,10 @@ if Rails.env.development?
     rand((seed_coordinate - 0.3)..(seed_coordinate + 0.3))
   end
 
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Bad Fit", organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Qualified", organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Potential", organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), status: "Hired", organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.bad_fit_stage, organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.qualified_stage, organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.potential_stage, organization: org, created_at: rand(1.month).seconds.ago) }
+  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.hired_stage, organization: org, created_at: rand(1.month).seconds.ago) }
 
   Candidate.find_each do |candidate|
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "#{welcome.body}\n\nIf you ever wish to stop receiving text messages from #{org.name} just reply STOP.\n\n#{address_question.formatted_text}")
@@ -122,7 +122,7 @@ if Rails.env.development?
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: bad_fit.body)
   end
 
-  Candidate.where(status: ["Hired", "Qualified"]).find_each do |candidate|
+  Candidate.qualified.or(Candidate.hired).find_each do |candidate|
     FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "Yes")
     FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Transportation", properties: {
       child_class: "yes_no",

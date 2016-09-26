@@ -19,6 +19,7 @@
 //= require lodash
 //= require cocoon
 //= require jquery.card
+//= require jquery.tipsy
 
 //= require init
 //= require map
@@ -28,9 +29,10 @@
 //= require address_question_option
 //= require maps/candidates
 //= require maps/candidate
+//= require stages
 //= require survey
 //= require survey.edit
 //= require payment
 //= require subscription
 //= require flash
-
+//= require sortable

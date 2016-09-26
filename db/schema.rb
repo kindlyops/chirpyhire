@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160916170921) do
+ActiveRecord::Schema.define(version: 20160923144828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,11 +93,11 @@ ActiveRecord::Schema.define(version: 20160916170921) do
   end
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",                null: false
-    t.jsonb    "properties",   default: "{}", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "label",                       null: false
+    t.integer  "candidate_id",              null: false
+    t.jsonb    "properties",   default: {}, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "label",                     null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end

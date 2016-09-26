@@ -1,33 +1,27 @@
 class Maps::CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped
   skip_after_action :verify_authorized
-  DEFAULT_FILTER = 'Qualified'.freeze
 
   def show
-    determine_status
-
+    set_stage_filter_cookie
     @map = Map.new(current_organization)
   end
 
   def index
-    determine_status
-
+    set_stage_filter_cookie
     @map = Map.new(current_organization)
   end
 
   private
 
-  def determine_status
-    status = params[:status]
+  def set_stage_filter_cookie
+    stage_id = params[:stage_id]
 
-    if status.present?
-      cookies[:candidate_status_filter] = { value: status }
-      status
-    elsif cookies[:candidate_status_filter].present?
-      cookies[:candidate_status_filter]
-    else
-      cookies[:candidate_status_filter] = { value: DEFAULT_FILTER }
-      return DEFAULT_FILTER
+    if stage_id.present?
+      cookies[:candidate_stage_filter] = { value: stage_id }
+    elsif cookies[:candidate_stage_filter].blank?
+      cookies[:candidate_stage_filter] =
+        { value: current_organization.default_display_stage.id }
     end
   end
 end

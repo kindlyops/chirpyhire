@@ -8,18 +8,16 @@ class SurveyAdvancer
   end
 
   def call
-    potential_candidates.find_each do |candidate|
-      unless candidate.outstanding_inquiry?
-        CandidateAdvancerJob.perform_later(candidate.user)
-      end
+    organization.candidates.potential.find_each do |candidate|
+      advance(candidate) unless candidate.outstanding_inquiry?
     end
   end
 
   private
 
-  attr_reader :organization
-
-  def potential_candidates
-    @potential_candidates ||= organization.candidates.where(status: 'Potential')
+  def advance(candidate)
+    CandidateAdvancerJob.perform_later(candidate.user)
   end
+
+  attr_reader :organization
 end

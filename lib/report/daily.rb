@@ -12,7 +12,7 @@ class Report::Daily
   end
 
   def qualified_count
-    organization.candidate_activities.qualified.where(
+    organization.qualified_candidate_activities.where(
       created_at: date.beginning_of_day..date.end_of_day
     ).count
   end

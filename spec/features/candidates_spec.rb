@@ -11,14 +11,24 @@ RSpec.feature 'Candidates', type: :feature, js: true do
 
   context 'with candidates' do
     context 'qualified candidates' do
-      let!(:candidate) { create(:candidate, organization: account.organization, status: 'Qualified') }
+      let(:qualified_stage) { account.organization.qualified_stage }
+      let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
-      context 'marking as hired' do
-        it 'lets the account mark a candidate as hired' do
-          visit candidates_path
+      context 'changing stages' do
+        it 'can not move from qualified to qualified' do
+          visit edit_candidate_path(candidate)
 
-          click_button('hired')
-          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Hired")
+          qualified_link_that_doesnt_exist = all('.stage-item')[1].first('buttom[type=submit]')
+          expect(qualified_link_that_doesnt_exist).to eq(nil)
+        end
+        it 'can move from qualified to potential' do
+          visit edit_candidate_path(candidate)
+
+          potential_link_that_does_exist = all('.stage-item')[0].first('button[type=submit]')
+          potential_link_that_does_exist.click
+          cards_that_no_longer_exist = all('.card')
+          expect(cards_that_no_longer_exist).to be_empty
+          expect(page).to have_text('marked as Potential')
         end
       end
 
@@ -84,35 +94,20 @@ RSpec.feature 'Candidates', type: :feature, js: true do
       end
     end
 
-    context 'hired candidates' do
-      let!(:candidate) { create(:candidate, organization: account.organization, status: 'Hired') }
-
-      it 'lets the account call the candidate' do
-        visit candidates_path << '?status=Hired'
-        call_button = find_button("call-#{candidate.user_id}")
-        expect(call_button.present?).to eq(true)
-      end
-
-      context 'marking as bad fit' do
-        it 'lets the account mark a candidate as bad fit' do
-          visit candidates_path << '?status=Hired'
-
-          click_button('bad-fit')
-          expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Bad Fit")
-        end
-      end
-    end
-
     context 'filtering' do
+      let(:qualified_stage) { account.organization.qualified_stage }
+      let(:potential_stage) { account.organization.potential_stage }
+      let(:bad_fit_stage) { account.organization.bad_fit_stage }
+      let(:hired_stage) { account.organization.hired_stage }
       context 'default' do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ['Potential', 'Bad Fit', 'Hired'][index], user: user)
+            create(:candidate, stage: [potential_stage, bad_fit_stage, hired_stage][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: 'Qualified') }
+        let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
         it 'only shows Qualified candidates by default' do
           visit candidates_path
@@ -139,28 +134,19 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: %w(Potential Hired Qualified)[index], user: user)
+            create(:candidate, stage: [potential_stage, hired_stage, qualified_stage][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: 'Bad Fit') }
+        let!(:candidate) { create(:candidate, organization: account.organization, stage: bad_fit_stage) }
 
         it 'only shows bad fit candidates' do
-          visit candidates_path << '?status=Bad Fit'
+          visit candidates_path << "?stage_name=#{bad_fit_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
           end
           expect(page).to have_text(candidate.phone_number.phony_formatted)
-        end
-
-        context 'marking as qualified' do
-          it 'lets the account mark a candidate as qualified' do
-            visit candidates_path << '?status=Bad Fit'
-
-            click_button('qualified')
-            expect(page).to have_text("Nice! #{candidate.phone_number.phony_formatted} marked as Qualified")
-          end
         end
       end
 
@@ -168,14 +154,14 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ['Potential', 'Bad Fit', 'Qualified'][index], user: user)
+            create(:candidate, stage: [potential_stage, bad_fit_stage, qualified_stage][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: 'Hired') }
+        let!(:candidate) { create(:candidate, organization: account.organization, stage: hired_stage) }
 
         it 'only shows Hired candidates' do
-          visit candidates_path << '?status=Hired'
+          visit candidates_path << "?stage_name=#{hired_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -188,14 +174,14 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ['Potential', 'Hired', 'Bad Fit'][index], user: user)
+            create(:candidate, stage: [potential_stage, hired_stage, bad_fit_stage][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: 'Qualified') }
+        let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
 
         it 'only shows qualified candidates' do
-          visit candidates_path << '?status=Qualified'
+          visit candidates_path << "?stage_name=#{qualified_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -208,14 +194,14 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         let(:users) { create_list(:user, 3, organization: account.organization) }
         let!(:candidates) do
           users.each_with_index do |user, index|
-            create(:candidate, status: ['Bad Fit', 'Hired', 'Qualified'][index], user: user)
+            create(:candidate, stage: [bad_fit_stage, hired_stage, qualified_stage][index], user: user)
           end
         end
 
-        let!(:candidate) { create(:candidate, organization: account.organization, status: 'Potential') }
+        let!(:candidate) { create(:candidate, organization: account.organization, stage: potential_stage) }
 
         it 'only shows potential candidates' do
-          visit candidates_path << '?status=Potential'
+          visit candidates_path << "?stage_name=#{potential_stage.name}"
 
           candidates.each do |candidate|
             expect(page).not_to have_text(candidate.phone_number.phony_formatted)
@@ -226,10 +212,11 @@ RSpec.feature 'Candidates', type: :feature, js: true do
     end
 
     context 'more than one page of candidates' do
+      let(:qualified_stage) { account.organization.qualified_stage }
       let(:users) { create_list(:user, 14, organization: account.organization) }
       let!(:candidates) do
         users.each do |user|
-          create(:candidate, status: 'Qualified', user: user)
+          create(:candidate, stage: qualified_stage, user: user)
         end
       end
 

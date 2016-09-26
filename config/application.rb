@@ -35,5 +35,18 @@ module Biscayne
     config.action_controller.per_form_csrf_tokens = true
     config.action_controller.forgery_protection_origin_check = false
     config.active_job.queue_adapter = :sidekiq
+
+    # Prevent extra markup from being added with form validation, appending
+    # it as a class to the existing markup instead
+    # http://stackoverflow.com/a/8380400
+    ActionView::Base.field_error_proc = proc do |html_tag, _instance|
+      class_attr_index = html_tag.index 'class="'
+      added_error_class = 'validation-error'
+      if class_attr_index
+        html_tag.insert class_attr_index + 7, "#{added_error_class} "
+      else
+        html_tag.insert html_tag.index('>'), " class='#{added_error_class}'"
+      end
+    end
   end
 end

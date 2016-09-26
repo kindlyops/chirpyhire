@@ -56,10 +56,6 @@ class Organization < ApplicationRecord
     messaging_client.media.get(sid)
   end
 
-  def users_with_unread_messages_count
-    users.with_unread_messages.count
-  end
-
   def ordered_stages
     stages.ordered
   end
@@ -79,6 +75,22 @@ class Organization < ApplicationRecord
 
   def hired_stage
     stages.hired.first
+  end
+
+  def bad_fit_candidate_activities
+    candidate_activities.for_stage(bad_fit_stage)
+  end
+
+  def potential_candidate_activities
+    candidate_activities.for_stage(potential_stage)
+  end
+
+  def qualified_candidate_activities
+    candidate_activities.for_stage(qualified_stage)
+  end
+
+  def hired_candidate_activities
+    candidate_activities.for_stage(hired_stage)
   end
 
   def default_display_stage

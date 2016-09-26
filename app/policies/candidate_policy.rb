@@ -8,7 +8,7 @@ class CandidatePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:status]
+    [:stage_id]
   end
 
   class Scope < ApplicationPolicy::Scope

@@ -28,7 +28,7 @@
       display: flex;
       width: 70%;
     }
-    .status {
+    .stage {
       margin-right: 0.5em;
       @include media ($horizontal-bar-mode) {
         margin-right: 1em;
@@ -36,31 +36,33 @@
     }
   }
 
-  .card-call-to-actions {
-    form, button {
-      flex-grow: 1;
-    }
-
-    form {
-      display: flex;
-      justify-content: center;
-    }
-
-    button {
-      border-radius: 0;
-      i {
-        font-size: 1.5em;
-      }
-      a {
-        color: $base-font-color;
-      }
-    }
-  }
   .card-header {
-    .created_at {
+    a {
+      margin-right: 0.3em;
+      color: inherit;
+    }
+
+    .card-header-right {
       display: inline;
       float: right;
     }
+  }
+  .stage-buttons {
+    flex-direction: column;
+    .stage-row {
+      display: flex;
+      justify-content: center;
+      .stage-item {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+        max-width: 50%;
+        &.inactive, &.inactive button {
+          background-color: $disabled-color;
+          cursor: default;
+        }
+      }
+    }    
   }
 
   .card-image {

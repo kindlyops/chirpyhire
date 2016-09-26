@@ -7,7 +7,7 @@ RSpec.describe SurveyAdvancer do
   describe '#call' do
     context 'with a Potential candidate' do
       let(:user) { create(:user, organization: organization) }
-      let!(:candidate) { create(:candidate, status: 'Potential', user: user) }
+      let!(:candidate) { create(:candidate, stage: organization.potential_stage, user: user) }
 
       let!(:survey) { create(:survey, organization: organization) }
       let(:question) { create(:question, survey: survey) }
@@ -21,7 +21,7 @@ RSpec.describe SurveyAdvancer do
 
         context 'multiple candidates' do
           let(:second_user) { create(:user, organization: organization) }
-          let!(:second_candidate) { create(:candidate, status: 'Potential', user: second_user) }
+          let!(:second_candidate) { create(:candidate, stage: organization.potential_stage, user: second_user) }
 
           it 'enqueues a CandidateAdvancerJob for each candidate' do
             expect {
@@ -45,7 +45,7 @@ RSpec.describe SurveyAdvancer do
 
     context 'with a non Potential candidate' do
       let(:user) { create(:user, organization: organization) }
-      let(:candidate) { create(:candidate, status: 'Bad Fit', user: user) }
+      let(:candidate) { create(:candidate, organization.bad_fit_stage, user: user) }
 
       it 'does not enqueue a CandidateAdvancerJob' do
         expect {

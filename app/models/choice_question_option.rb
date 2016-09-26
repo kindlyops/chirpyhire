@@ -6,4 +6,5 @@ class ChoiceQuestionOption < ApplicationRecord
              inverse_of: :choice_question_options
 
   validates :letter, inclusion: { in: [*'a'..'z'] }
+  validates :text, uniqueness: { scope: :question_id }
 end

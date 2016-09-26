@@ -6,11 +6,13 @@ RSpec.describe BackPopulate::CandidateStagePopulator do
   let(:potential_candidate) { create(:candidate, status: 'Potential', organization: organization) }
   let(:qualified_candidate) { create(:candidate, status: 'Qualified', organization: organization) }
   let(:bad_fit_candidate) { create(:candidate, status: 'Bad Fit', organization: organization) }
+  let(:candidate_with_stage) { create(:candidate, organization: organization, stage: organization.potential_stage) }
 
   describe '#populate' do
-    before(:each) do
-      StageDefaults.populate(organization)
-      organization.save!
+    around(:each) do |example|
+      Candidate.skip_callback(:create, :before, :ensure_candidate_has_stage)
+      example.run
+      Candidate.set_callback(:create, :before, :ensure_candidate_has_stage)
     end
 
     context 'candidate does not have a stage' do
@@ -33,6 +35,13 @@ RSpec.describe BackPopulate::CandidateStagePopulator do
         expect {
           BackPopulate::CandidateStagePopulator.populate(bad_fit_candidate)
         }.to change { bad_fit_candidate.stage_id }.from(nil).to(organization.bad_fit_stage.id)
+      end
+    end
+    context 'candidate already has a stage' do
+      it 'does nothing' do
+        expect {
+          BackPopulate::CandidateStagePopulator.populate(candidate_with_stage)
+        }.not_to change { candidate_with_stage.stage_id }
       end
     end
   end

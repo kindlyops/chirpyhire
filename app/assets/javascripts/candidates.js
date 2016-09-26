@@ -1,9 +1,14 @@
 $(document).on("turbolinks:load", function() {
-  if($(".candidates").length) {
-    $(document).on("click", ".candidates .card-call-to-actions button", function(event) {
+
+  var bindUI = function() {
+    $(document).on("click", ".candidates .card-call-to-actions button", function() {
       var $button = $(this);
       Turbolinks.visit($button.find('a').attr('href'));
     });
+  }
+
+  if($(".candidates").length) {
+    bindUI();
 
     $(document).on("change", ".candidates .dropdown select", function(event) {
       var newSearch, queryParamRegExp;

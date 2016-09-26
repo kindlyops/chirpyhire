@@ -1,12 +1,7 @@
 .subscription.edit
   = form_for(@subscription) do |f|
     h1 Subscription
-    - if @subscription.errors.any?
-      #error_explanation
-        h2 = "#{pluralize(@subscription.errors.count, "error")} prohibited this subscription from being saved:"
-        ul
-          - @subscription.errors.full_messages.each do |message|
-            li = message
+    - render partial: "common/validation_errors", locals: { model: @subscription}
     = f.hidden_field :plan_id
     p Select a limit that meets your needs. Upgrade or downgrade at any time.
     p

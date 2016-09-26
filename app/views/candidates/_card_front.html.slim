@@ -1,0 +1,17 @@
+.card
+  .card-header
+    = candidate.handle
+    .card-header-right
+      .created_at
+        i.fa.fa-clock-o
+        '
+        = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
+  .card-copy
+    .card-copy-top
+      = render partial: "candidates/address", locals: { candidate: candidate }
+      = render partial: "candidates/yes_no", collection: candidate.yes_nos
+      = render partial: "candidates/choice", collection: candidate.choices
+      = render partial: "candidates/document", collection: candidate.documents
+    .card-call-to-actions.flat-button-group
+      - candidate.call_to_actions.each do |cta|
+        = render partial: "candidates/#{cta}", locals: { candidate: candidate }

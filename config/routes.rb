@@ -4,7 +4,7 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
 
-  resources :candidates, only: [:index, :update, :show]
+  resources :candidates, only: [:index, :update, :show, :edit]
   get 'messages' => 'conversations#index'
 
   resources :users, only: [] do
@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   resources :choice_questions, except: :destroy
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
+  put 'stages/reorder' => 'stages#reorder'
+  resources :stages, only: [:index, :create, :destroy, :edit, :update]
 
   namespace :maps do
     resources :candidates, only: [:index, :show]
