@@ -5,12 +5,17 @@ class StagesController < ApplicationController
   end
 
   def create
-    created_stage = current_organization
-                    .stages
-                    .create(permitted_attributes(Stage.new))
-    @stage = authorize(created_stage)
-    flash[:notice] = 'Nice! Stage created.' if @stage.errors.blank?
-    redirect_to stages_url
+    new_stage = current_organization
+                .stages
+                .build(permitted_attributes(Stage))
+    @stage = authorize(new_stage)
+
+    if @stage.save
+      flash[:notice] = 'Nice! Stage created.'
+      redirect_to stages_url
+    else
+      render :index
+    end
   end
 
   def edit
