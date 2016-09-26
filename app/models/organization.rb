@@ -81,22 +81,6 @@ class Organization < ApplicationRecord
     stages.hired.first
   end
 
-  def bad_fit_candidate_activities
-    candidate_activities.for_stage(bad_fit_stage)
-  end
-
-  def potential_candidate_activities
-    candidate_activities.for_stage(potential_stage)
-  end
-
-  def qualified_candidate_activities
-    candidate_activities.for_stage(qualified_stage)
-  end
-
-  def hired_candidate_activities
-    candidate_activities.for_stage(hired_stage)
-  end
-
   def default_display_stage
     qualified_stage
   end
