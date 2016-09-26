@@ -1,9 +1,8 @@
 .card
   .card-header
+    = link_to candidates_path
+      .i.fa.fa-chevron-left
     = candidate.handle
-    .card-header-right
-      = link_to candidates_path
-        .i.fa.fa-chevron-left
   .card-copy
     .stage-buttons.flat-button-group
       - current_organization.ordered_stages.each_slice(2) do |stage_left, stage_right|

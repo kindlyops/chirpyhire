@@ -36,11 +36,15 @@
     }
   }
 
-  .card-header .card-header-right {
-    display: inline;
-    float: right;
+  .card-header {
     a {
+      margin-right: 0.3em;
       color: inherit;
+    }
+
+    .card-header-right {
+      display: inline;
+      float: right;
     }
   }
   .stage-buttons {
