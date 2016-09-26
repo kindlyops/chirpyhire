@@ -56,6 +56,10 @@ class Organization < ApplicationRecord
     messaging_client.media.get(sid)
   end
 
+  def users_with_unread_messages_count
+    users.with_unread_messages.count
+  end
+
   def ordered_stages
     stages.ordered
   end

@@ -8,10 +8,9 @@ RSpec.describe BackPopulate::CandidateStagePopulator do
   let(:bad_fit_candidate) { create(:candidate, status: 'Bad Fit', organization: organization) }
 
   describe '#populate' do
-    around(:each) do |example|
+    before(:each) do
       StageDefaults.populate(organization)
       organization.save!
-      example.run
     end
 
     context 'candidate does not have a stage' do
