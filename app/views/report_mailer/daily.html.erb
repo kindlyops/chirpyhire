@@ -405,7 +405,7 @@
 
                             <%= @report.recipient_first_name %>,<br>
 <br>
-There <%= 'is'.pluralize(@report.qualified_count) %> <%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?status=Qualified", target: "_blank" %>.<br>
+There <%= 'is'.pluralize(@report.qualified_count) %> <%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?stage_name=#{@report.organization.qualified_stage.name}", target: "_blank" %>.<br>
 <br>
 Thanks,<br>
 <br>

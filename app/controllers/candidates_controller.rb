@@ -1,6 +1,5 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_STATUS_FILTER = 'Qualified'.freeze
   DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
@@ -18,7 +17,7 @@ class CandidatesController < ApplicationController
   def index
     respond_to do |format|
       format.geojson do
-        @candidates = unfiltered_candidates.with_addresses.decorate
+        @candidates = recent_candidates.with_addresses.decorate
         render json: GeoJson::Candidates.new(@candidates).call
       end
 
@@ -28,10 +27,17 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def edit
+    @candidates = filtered_and_paged_candidates
+    @candidate = authorized_candidate
+    render :index
+  end
+
   def update
     if authorized_candidate.update(permitted_attributes(Candidate))
       redirect_to candidates_url, notice: 'Nice! '\
-      "#{authorized_candidate.handle} marked as #{authorized_candidate.status}"
+      "#{authorized_candidate.handle} marked \
+      as #{authorized_candidate.stage.name}"
     else
       redirect_to candidates_url, alert: "Oops! Couldn't change "\
       "the candidate's status"
@@ -40,24 +46,20 @@ class CandidatesController < ApplicationController
 
   private
 
-  def unfiltered_candidates
-    scoped_candidates.by_recency
-  end
-
   def filtered_and_paged_candidates
-    unfiltered_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+    recent_candidates.filter(filtering_params).page(params.fetch(:page, 1))
   end
 
   def authorized_candidate
     authorize Candidate.find(params[:id])
   end
 
-  def scoped_candidates
-    policy_scope(Candidate)
+  def recent_candidates
+    policy_scope(Candidate).by_recency
   end
 
   def filtering_params
-    { status: status, created_in: created_in }
+    { created_in: created_in, stage_name: stage_name }
   end
 
   def created_in
@@ -74,17 +76,19 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def status
-    status = params[:status]
+  def stage_name
+    stage_name = determine_stage_name
+    cookies[:candidate_stage_filter] = cookie(stage_name)
+    stage_name
+  end
 
-    if status.present?
-      cookies[:candidate_status_filter] = { value: status }
-      status
-    elsif cookies[:candidate_status_filter].present?
-      cookies[:candidate_status_filter]
+  def determine_stage_name
+    if params[:stage_name].present?
+      params[:stage_name]
+    elsif cookies[:candidate_stage_filter].present?
+      cookies[:candidate_stage_filter]
     else
-      cookies[:candidate_status_filter] = { value: DEFAULT_STATUS_FILTER }
-      return DEFAULT_STATUS_FILTER
+      current_organization.default_display_stage.name
     end
   end
 

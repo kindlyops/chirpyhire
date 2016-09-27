@@ -1,0 +1,96 @@
+#{$all-buttons}, .button {
+  &.simple-button {
+    background: none;
+    border: none; 
+    padding: 0;
+    cursor: pointer;
+    color: $action-color;
+    transition: none;
+    &:focus, &:hover {
+      background: none;
+      color: $action-color;
+      outline: 0;
+    }
+  }
+
+  &:disabled, &.disabled {
+    cursor: default;
+  }
+
+  &:not(.simple-button) { 
+    &:disabled, &.disabled {
+      &:focus {
+        outline: 0;
+      }
+      opacity: 0.5;
+
+      &:hover {
+        background-color: $action-color;
+      }
+    }
+  }
+
+  &.simple-button {
+    &:disabled, &.disabled {
+      cursor: default;
+
+      i {
+        color: $disabled-color;
+      }
+    }
+  }
+}
+
+a, button {
+  // Cocoon class conventions use underscore
+  &.remove_fields, &.remove-field, &.add-field {
+    float: right;
+    padding: 0 0.75em;
+    color: $medium-gray;
+
+    position: relative;
+    bottom: 3px;
+    font-size: 2em;
+
+    &:focus, &:hover {
+      background: none;
+      color: $action-color;
+      outline: 0;
+    }
+    
+    &:disabled, &.disabled {
+      &:focus {
+        outline: 0;
+      }
+      cursor: default;
+
+      color: $disabled-color;
+    }
+  }
+}
+
+.flat-button-group {
+  display: flex;
+  form, button {
+    flex-grow: 1;
+  }
+
+  form {
+    display: flex;
+    justify-content: center;
+  }
+
+  button {
+    white-space: normal;
+    border-radius: 0;
+    i {
+      font-size: 1.5em;
+    }
+    a {
+      color: $base-font-color;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

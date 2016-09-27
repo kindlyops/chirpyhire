@@ -35,5 +35,11 @@ Style/BlockDelimiters:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/NegatedIf:
+  Enabled: false
+
 Style/NumericPredicate:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
   Enabled: false

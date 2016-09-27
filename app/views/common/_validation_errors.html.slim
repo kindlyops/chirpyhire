@@ -1,0 +1,5 @@
+- if model.errors.any?
+      .validation_error_explanation
+        ul
+          - model.errors.full_messages.each do |message|
+            li = message

@@ -8,12 +8,7 @@
     = f.label :status, class: "label-switch", title: f.object.active? ? "Pause Question" : "Activate Question" do
       = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
       .checkbox
-  - if question.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(question.errors.count, "error")} prohibited this Question from being saved:"
-      ul
-        - question.errors.full_messages.each do |message|
-          li = message
+  = render partial: "common/validation_errors", locals: { model: question }
   - if question.new_record?
     .field
       = f.label :label
@@ -21,7 +16,6 @@
   .field
     = f.label :text, "Question Text"
     = f.text_area :text, required: true, placeholder: question.text_placeholder
-
   = render partial: "#{question.type.pluralize.underscore}/form", locals: { f: f }
   .actions
     = f.submit "Save"

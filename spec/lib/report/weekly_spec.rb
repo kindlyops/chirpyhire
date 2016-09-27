@@ -40,7 +40,7 @@ RSpec.describe Report::Weekly do
     context 'with candidates hired' do
       context 'in the past week' do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: 'Hired', organization: organization, created_at: 4.days.ago) }
+        let!(:candidates) { create_list(:candidate, count, stage: organization.hired_stage, organization: organization, created_at: 4.days.ago) }
         it 'is the count of candidates' do
           expect(report.hired_count).to eq(count)
         end
@@ -50,12 +50,12 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: 'Hired', organization: organization, created_at: 14.days.ago)
+            create(:candidate, stage: organization.hired_stage, organization: organization, created_at: 14.days.ago)
           end
         end
 
         it 'is only the candidates hired in the past week' do
-          create(:candidate, status: 'Hired', organization: organization, created_at: Date.yesterday)
+          create(:candidate, stage: organization.hired_stage, organization: organization, created_at: Date.yesterday)
           expect(report.hired_count).to eq(1)
         end
       end
@@ -72,7 +72,7 @@ RSpec.describe Report::Weekly do
     context 'with candidates qualified' do
       context 'in the past week' do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: 'Qualified', organization: organization, created_at: 4.days.ago) }
+        let!(:candidates) { create_list(:candidate, count, stage: organization.qualified_stage, organization: organization, created_at: 4.days.ago) }
         it 'is the count of candidates' do
           expect(report.qualified_count).to eq(count)
         end
@@ -82,12 +82,12 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: 'Qualified', organization: organization, created_at: 14.days.ago)
+            create(:candidate, stage: organization.qualified_stage, organization: organization, created_at: 14.days.ago)
           end
         end
 
         it 'is only the candidates qualified in the past week' do
-          create(:candidate, status: 'Qualified', organization: organization, created_at: Date.yesterday)
+          create(:candidate, stage: organization.qualified_stage, organization: organization, created_at: Date.yesterday)
           expect(report.qualified_count).to eq(1)
         end
       end
@@ -104,7 +104,7 @@ RSpec.describe Report::Weekly do
     context 'with candidates potential' do
       context 'in the past week' do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: 'Potential', organization: organization, created_at: 4.days.ago) }
+        let!(:candidates) { create_list(:candidate, count, stage: organization.potential_stage, organization: organization, created_at: 4.days.ago) }
         it 'is the count of candidates' do
           expect(report.potential_count).to eq(count)
         end
@@ -114,12 +114,12 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: 'Potential', organization: organization, created_at: 14.days.ago)
+            create(:candidate, stage: organization.potential_stage, organization: organization, created_at: 14.days.ago)
           end
         end
 
         it 'is only the candidates potential in the past week' do
-          create(:candidate, status: 'Potential', organization: organization, created_at: Date.yesterday)
+          create(:candidate, stage: organization.potential_stage, organization: organization, created_at: Date.yesterday)
           expect(report.potential_count).to eq(1)
         end
       end
@@ -136,7 +136,7 @@ RSpec.describe Report::Weekly do
     context 'with candidates bad_fit' do
       context 'in the past week' do
         let(:count) { rand(1..10) }
-        let!(:candidates) { create_list(:candidate, count, status: 'Bad Fit', organization: organization, created_at: 4.days.ago) }
+        let!(:candidates) { create_list(:candidate, count, stage: organization.bad_fit_stage, organization: organization, created_at: 4.days.ago) }
         it 'is the count of candidates' do
           expect(report.bad_fit_count).to eq(count)
         end
@@ -146,12 +146,12 @@ RSpec.describe Report::Weekly do
         let(:count) { rand(1..10) }
         let!(:candidates) do
           count.times do
-            create(:candidate, status: 'Bad Fit', organization: organization, created_at: 14.days.ago)
+            create(:candidate, stage: organization.bad_fit_stage, organization: organization, created_at: 14.days.ago)
           end
         end
 
         it 'is only the candidates bad_fit in the past week' do
-          create(:candidate, status: 'Bad Fit', organization: organization, created_at: Date.yesterday)
+          create(:candidate, stage: organization.bad_fit_stage, organization: organization, created_at: Date.yesterday)
           expect(report.bad_fit_count).to eq(1)
         end
       end

@@ -1,0 +1,38 @@
+= title "Stages | Chirpyhire"
+
+.stages-wrapper
+  h1 Candidate Stages
+  p Reorder current stages or add a new one. 
+  hr
+  ul.stages
+    - @stages.each do |stage|
+      li.stage.drag-and-drop data-id=stage.id
+        .drag-and-drop-text
+          .stage-item-text-wrapper
+            strong.order.sortable-number = stage.order.to_s + ". "
+            strong = stage.name
+            - if StagePolicy.updatable?(stage)
+              = link_to edit_stage_path(stage),
+                class: ["edit-stage", "button", "simple-button", 'tipsy-needed-w'],
+                title: 'Modify stage' do
+                  i.fa.fa-pencil
+        - if StagePolicy.deletable?(stage)
+          = link_to("/stages/#{stage.id}",
+            method: 'delete',
+            class: ['delete-stage', 'remove-field', 'tipsy-needed-w'],
+            title: 'Delete stage')
+            | &times;
+
+  hr
+  = render partial: "common/validation_errors", locals: { model: @stage }
+  = form_for @stage do |f|
+    .new-stage-wrapper.drag-and-drop-item
+      = f.text_field(:name, placeholder: "New stage", required: true, id: 'new_stage', class: 'right-extra-button')
+      = f.hidden_field(:order, value: @stages.pluck(:order).max + 1)
+      button.simple-button.add-field title="Add Stage" id="add-stage"
+        | &plus;
+  = form_tag("/stages/reorder", method: "put", class: "reorder-form", :html => {:'data-type' => 'json'}) do
+    - @stages.each do |stage|
+      = fields_for 'stages[]', stage do |stages_fields|
+        = stages_fields.hidden_field(:order, class: "hidden-order")
+    = submit_tag("Save order", class:"save-order-button button")

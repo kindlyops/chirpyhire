@@ -19,7 +19,33 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
+# N.B. Plurality of errors vs non-errors for table names is an issue
+# https://github.com/rails/rails/issues/26544
 en:
+  activerecord:
+    attributes:
+      choice_question_options:
+        text: "Question response"
+      choice_question:
+        choice_question_options:
+          one: "A question response"
+          other: "Question responses"
+      stage:
+        name: "Stage name"
+    errors:
+      models:
+        choice_question_option:
+          attributes:
+            text:
+              taken: "is already used by another option."
+        choice_question:
+          attributes:
+            choice_question_options:
+              blank: "is required."
+        stage:
+          attributes:
+            name:
+              taken: "\"%{value}\" is already used by another stage."
   hello: "Hello world"
   pundit:
     default: 'You cannot perform this action.'

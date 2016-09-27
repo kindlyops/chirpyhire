@@ -5,10 +5,6 @@ class CandidateDecorator < Draper::Decorator
   delegate :phone_number, to: :user, prefix: true
   delegate :handle, to: :user
 
-  def statuses
-    Candidate::STATUSES
-  end
-
   def choices
     @choices ||= begin
       return [] unless choice_features.present?
@@ -31,9 +27,6 @@ class CandidateDecorator < Draper::Decorator
   end
 
   def call_to_actions
-    return %w(bad_fit qualified message) if potential?
-    return %w(call qualified message) if bad_fit?
-    return %w(bad_fit hired message) if qualified?
-    return %w(call bad_fit message) if hired?
+    %w(change_stage message)
   end
 end

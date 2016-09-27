@@ -19,7 +19,7 @@ RSpec.describe CandidatesController, type: :controller do
       let!(:past_24_hour_candidates) do
         Array.new(2) do
           create(:candidate,
-                 status: 'Qualified',
+                 stage: organization.qualified_stage,
                  created_at: rand_time(24.hours.ago),
                  organization: organization)
         end
@@ -28,7 +28,7 @@ RSpec.describe CandidatesController, type: :controller do
       let!(:past_week_candidates) do
         Array.new(2) do
           create(:candidate,
-                 status: 'Qualified',
+                 stage: organization.qualified_stage,
                  created_at: rand_time(1.week.ago, 25.hours.ago),
                  organization: organization)
         end
@@ -37,7 +37,7 @@ RSpec.describe CandidatesController, type: :controller do
       let!(:past_month_candidates) do
         Array.new(2) do
           create(:candidate,
-                 status: 'Qualified',
+                 stage: organization.qualified_stage,
                  created_at: rand_time(1.month.ago, 8.days.ago),
                  organization: organization)
         end
@@ -46,7 +46,7 @@ RSpec.describe CandidatesController, type: :controller do
       let!(:beyond_month_candidates) do
         Array.new(2) do
           create(:candidate,
-                 status: 'Qualified',
+                 stage: organization.qualified_stage,
                  created_at: rand_time(6.months.ago, 35.days.ago),
                  organization: organization)
         end
@@ -106,11 +106,12 @@ RSpec.describe CandidatesController, type: :controller do
     end
 
     context 'with candidates' do
-      let!(:candidates) { create_list(:candidate, 3, status: 'Qualified', organization: organization) }
+      let(:qualified_stage) { organization.qualified_stage }
+      let!(:candidates) { create_list(:candidate, 3, stage: qualified_stage, organization: organization) }
 
       context 'geojson' do
         context 'with candidates with addresses without phone numbers' do
-          let!(:candidates) { create_list(:candidate, 3, :with_address, status: 'Qualified', organization: organization) }
+          let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
 
           it 'is OK' do
             get :index, format: :geojson
@@ -124,12 +125,19 @@ RSpec.describe CandidatesController, type: :controller do
         expect(assigns(:candidates)).to match_array(candidates)
       end
 
+      it 'can change a candidates stage' do
+        get :update, params: { id: organization.candidates.first.id, candidate: { stage_id: organization.bad_fit_stage.id } }
+        expect(qualified_stage.candidates.count).to eq(2)
+        expect(organization.bad_fit_stage.candidates.count).to eq(1)
+      end
+
       context 'order' do
-        let!(:old_candidate) { create(:candidate, id: 10, organization: organization) }
-        let!(:recent_candidate) { create(:candidate, id: 11, organization: organization) }
+        let(:potential_stage) { organization.potential_stage }
+        let!(:old_candidate) { create(:candidate, id: 15, stage: potential_stage, organization: organization) }
+        let!(:recent_candidate) { create(:candidate, id: 16, stage: potential_stage, organization: organization) }
 
         it 'returns the most recent candidates first' do
-          get :index, params: { status: 'Potential' }
+          get :index, params: { stage_name: potential_stage.name }
           expect(assigns(:candidates)).to eq([recent_candidate, old_candidate])
         end
       end

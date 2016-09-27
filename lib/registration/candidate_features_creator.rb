@@ -4,7 +4,7 @@ class Registration::CandidateFeaturesCreator
   end
 
   def call
-    candidate = user.create_candidate(status: 'Qualified')
+    candidate = user.create_candidate(stage: user.organization.qualified_stage)
     create_address_feature(candidate)
     create_availability_feature(candidate)
     create_transportation_feature(candidate)

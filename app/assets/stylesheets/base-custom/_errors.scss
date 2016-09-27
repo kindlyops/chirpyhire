@@ -1,0 +1,15 @@
+$error-border-color: #cc6666;
+$error-background-color: #eebbbb;
+
+.validation_error_explanation {
+  display: inline-block;
+  border: 1px solid $error-border-color;
+  border-radius: $base-border-radius;
+  padding: 1em;
+  margin: 10px 0;
+  background: $error-background-color;
+
+  ul {
+    margin-left: 10px;
+  }
+}

@@ -2,10 +2,11 @@ class Candidate < ApplicationRecord
   include PublicActivity::Model
   include Filterable
   tracked only: [:create, :update], on: {
-    update: ->(model, _) { model.changes.include?('status') }
-  }, properties: ->(_, model) { { status: model.status } }
+    update: ->(model, _) { model.changes.include?('stage_id') }
+  }, properties: ->(_, model) { { stage_id: model.stage_id } }
 
   belongs_to :user
+  belongs_to :stage
   has_many :candidate_features
   has_many :referrals
   has_many :referrers, through: :referrals
@@ -13,12 +14,13 @@ class Candidate < ApplicationRecord
 
   alias features candidate_features
 
-  STATUSES = ['Potential', 'Qualified', 'Bad Fit', 'Hired'].freeze
-  validates :status, inclusion: { in: STATUSES }
-
   delegate :first_name, :phone_number, :organization_name,
            :organization, :messages, :outstanding_inquiry,
            :receive_message, :handle, :outstanding_inquiry?, to: :user
+  delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
+  delegate :stages, to: :organization
+
+  before_create :ensure_candidate_has_stage
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -28,8 +30,8 @@ class Candidate < ApplicationRecord
     joins(:candidate_features).merge(CandidateFeature.address)
   end
 
-  def self.status(status)
-    where(status: status)
+  def self.stage_name(stage_name)
+    joins(:stage).where(stages: { name: stage_name })
   end
 
   def self.created_in(created_in)
@@ -46,19 +48,19 @@ class Candidate < ApplicationRecord
   end
 
   def self.hired
-    where(status: 'Hired')
+    joins(:stage).merge(Stage.hired)
   end
 
   def self.qualified
-    where(status: 'Qualified')
+    joins(:stage).merge(Stage.qualified)
   end
 
   def self.potential
-    where(status: 'Potential')
+    joins(:stage).merge(Stage.potential)
   end
 
   def self.bad_fit
-    where(status: 'Bad Fit')
+    joins(:stage).merge(Stage.bad_fit)
   end
 
   def address
@@ -82,19 +84,9 @@ class Candidate < ApplicationRecord
     candidate_features.where("properties->>'child_class' = ?", 'yes_no')
   end
 
-  def qualified?
-    status == 'Qualified'
-  end
+  private
 
-  def bad_fit?
-    status == 'Bad Fit'
-  end
-
-  def potential?
-    status == 'Potential'
-  end
-
-  def hired?
-    status == 'Hired'
+  def ensure_candidate_has_stage
+    self.stage = organization.potential_stage unless stage.present?
   end
 end

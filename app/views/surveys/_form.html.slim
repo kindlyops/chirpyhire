@@ -2,21 +2,16 @@
   h1 Edit Survey
   p Change the order questions are asked.
   hr
-  - if survey.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(survey.errors.count, "error")} prohibited this Survey from being saved:"
-      ul
-        - survey.errors.full_messages.each do |message|
-          li = message
+  - render partial: "common/validation_errors", locals: { model: survey }
   ul.survey--questions
     = f.fields_for :questions, survey.questions.by_priority do |q|
-      li.survey--question
+      li.survey--question.drag-and-drop
         = q.hidden_field :id
-        .field
-          = q.label :priority do
-            span.survey--question-priority = "#{q.object.priority}."
-            span.survey--question-label = "#{q.object.label}"
-          = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
+        .drag-and-drop-text
+          .field
+            strong.survey--question-priority.sortable-number = "#{q.object.priority}. "
+            strong.survey--question-label = "#{q.object.label}"
+            = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
   .actions
     = f.submit "Save"
 

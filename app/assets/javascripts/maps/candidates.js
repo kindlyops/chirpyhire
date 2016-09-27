@@ -1,51 +1,63 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidates #map").length) {
-    function watchSelect(map, statuses) {
-      $(document).on("change", ".maps-candidates .dropdown select", function(event) {
-        var currentStatus = this.value;
-        var unselectedStatuses = _.reject(statuses, function(status) {
-          return status === currentStatus;
-        });
+    var dropdownStageSelector = ".maps-candidates .dropdown select",
+      isCurrentStageFunc = function(currentStageId) {
+        return function(stage) {
+          return stage.id.toString() === currentStageId
+        }
+      };
+
+    function watchSelect(map, stages) {
+      $(document).on("change", dropdownStageSelector, function(event) {
+        var currentStageId = this.value,
+          isCurrentStage = isCurrentStageFunc(currentStageId)
+          currentStageName = 
+            stages.filter(isCurrentStage)[0].name,
+          unselectedStages = _.reject(stages, isCurrentStage);
 
         map.popup.remove();
 
-        _.each(unselectedStatuses, function(status) {
-          map.setLayoutProperty(status, 'visibility', 'none');
+        _.each(unselectedStages, function(stage) {
+          map.setLayoutProperty(stage.name, 'visibility', 'none');
         });
-        map.setLayoutProperty(currentStatus, 'visibility', 'visible');
+        map.setLayoutProperty(currentStageName, 'visibility', 'visible');
       });
     }
 
-    function watchCardLink() {
+    function watchCardLink(stages) {
       $(document).on("click", ".maps-candidates .candidates-cards", function(event) {
+        var url = 
+          $(this).attr("href") 
+          + "?stage_name=" 
+          + stages.filter(isCurrentStageFunc($(dropdownStageSelector).val()))[0].name;
         event.preventDefault();
-        Turbolinks.visit($(this).attr("href") + "?status=" + $(".maps-candidates .dropdown select").val());
+        Turbolinks.visit(url);
       });
     }
 
-    function initMap(candidates) {
-      var styleId, center, zoom, layers, sources, statuses;
+    function initMap(candidatesGeoData) {
+      var styleId, center, zoom, layers, sources, stages;
       styleId = "candidates";
       center = $("#map").data("center");
       zoom = $("#map").data("zoom");
-      statuses = candidates.statuses;
+      stages = candidatesGeoData.stages;
 
       sources = [{
         id: styleId,
         type: "geojson",
-        data: candidates
+        data: candidatesGeoData
       }];
 
-      layers = _.map(statuses, _.bind(function(status) {
+      layers = _.map(stages, _.bind(function(stage) {
         return {
-          "id": status,
+          "id": stage.name,
           "type": "symbol",
           "source": styleId,
           "layout": {
             "icon-image": "chirpyhire-marker-15",
-            "visibility": $(".maps-candidates .dropdown select").val() === status ? 'visible' : 'none'
+            "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
-          "filter": ["==", "status", status]
+          "filter": ["==", "stage_name", stage.name]
         };
       }, this));
 
@@ -54,18 +66,18 @@ $(document).on("turbolinks:load", function() {
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: statuses
+        popupLayers: _.map(stages, 'name')
       });
 
       if(map.loaded()) {
-        watchSelect(map, statuses);
+        watchSelect(map, stages);
       } else {
         map.on('load', function() {
-          watchSelect(map, statuses);
+          watchSelect(map, stages);
         });
       }
 
-      watchCardLink();
+      watchCardLink(stages);
     }
 
     $.get({
