@@ -6,7 +6,7 @@ class UnknownMessageHandlerJob < MessageHandlerRetryJob
     @retries_remaining = retries
 
     MessageHandler.new(sender, message_sid).call
-    sender.update(has_unread_messages: true)
+    sender.update!(has_unread_messages: true)
   end
 
   def retry_with(job, retries)
