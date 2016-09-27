@@ -3,11 +3,10 @@
   = f.hidden_field :type, required: true
   - if question.persisted?
     h1 = question.label
-
-  .field.question-status
-    = f.label :status, class: "label-switch", title: f.object.active? ? "Pause Question" : "Activate Question" do
-      = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
-      .checkbox
+    .field.question-status
+      = f.label :status, class: "label-switch", title: f.object.active? ? "Pause Question" : "Activate Question" do
+        = f.check_box :status, { checked: f.object.active? }, "active", "inactive"
+        .checkbox
   = render partial: "common/validation_errors", locals: { model: question }
   - if question.new_record?
     .field
