@@ -40,21 +40,5 @@ RSpec.describe MessageHandler do
         end
       end
     end
-
-    context 'where message does not exist' do
-      let(:fake_message) { FakeMessaging.non_existent_inbound_message(sender, organization) }
-      it 'tries again' do
-        expect {
-          message
-        }.to have_enqueued_job(MessageHandlerJob)
-      end
-      it 'fails after running multiple retries' do
-        expect {
-          perform_enqueued_jobs do
-            message
-          end
-        }.to raise_error(Twilio::REST::RequestError)
-      end
-    end
   end
 end
