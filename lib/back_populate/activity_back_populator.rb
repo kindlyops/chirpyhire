@@ -1,7 +1,9 @@
 class BackPopulate::ActivityBackPopulator
   def self.populate(candidate)
-    activities = candidate.activities
-    organization = candidate.organization
+    update_activities(candidate.activities, candidate.organization)
+  end
+
+  def self.update_activities(activities, organization)
     activities.each do |activity|
       update_activity(activity, organization)
     end
@@ -26,5 +28,5 @@ class BackPopulate::ActivityBackPopulator
     }
   end
 
-  private_class_method :update_activity
+  private_class_method :update_activities, :update_activity, :status_stage_map
 end
