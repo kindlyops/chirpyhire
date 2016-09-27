@@ -6,8 +6,6 @@ class BackPopulate::ActivityBackPopulator
     end
   end
 
-  private_class_method
-
   def self.update_activity(activity, organization)
     return if activity.properties.key?('stage_id')
 
@@ -24,4 +22,6 @@ class BackPopulate::ActivityBackPopulator
       activity.save!
     end
   end
+
+  private_class_method :update_activity
 end
