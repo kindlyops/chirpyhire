@@ -94,3 +94,9 @@ a, button {
     }
   }
 }
+
+.pagination {
+  .page.current > a {
+    color: $blue;
+  }
+}
