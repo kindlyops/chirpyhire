@@ -1,5 +1,11 @@
 html {
   box-sizing: border-box;
+
+  footer {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em;
+  }
 }
 
 *,
