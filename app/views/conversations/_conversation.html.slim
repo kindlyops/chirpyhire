@@ -7,4 +7,5 @@
       p.conversation-detail
         = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
       h1 = conversation.user_handle
+      span.phone-number = conversation.user_phone_number
       = render partial: "conversations/#{conversation.contents}", locals: { conversation: conversation }

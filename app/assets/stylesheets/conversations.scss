@@ -68,6 +68,14 @@
         margin: 0 0 0.5em 0;
       }
 
+      h1, span.phone-number {
+        display: inline-block;
+      }
+
+      span.phone-number {
+        margin-left: 0.2em;
+      }
+
       p {
         line-height: 1.5em;
         margin-bottom: 0.5em;
