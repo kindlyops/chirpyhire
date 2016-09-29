@@ -13,8 +13,8 @@ RSpec.describe Nicknames::Generator do
     it 'should not generate the same name as another candidate' do
       generator = Nicknames::Generator.new(candidate)
       allow(generator).to receive(:random_nickname).exactly(2).times
-        .and_return(candidate.nickname, "Dumb Bunny")
-      expect(generator.generate).to eq("Dumb Bunny")
+        .and_return(candidate.nickname, 'Dumb Bunny')
+      expect(generator.generate).to eq('Dumb Bunny')
     end
 
     it 'should eventually throw an error when running out of nicknames' do
