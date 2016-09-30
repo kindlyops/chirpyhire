@@ -3,9 +3,9 @@
     span
       | To:
       '
-      span.name = user.handle
-      '
       span.phone-number = user.phone_number
+      '
+      span.handle = user.handle
   = link_to_next_page @messages, 'Load more messages', class: 'load_more', remote: true
   .chat
     = render partial: "messages/message", collection: messages.reverse
