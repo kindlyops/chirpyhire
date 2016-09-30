@@ -12,7 +12,7 @@ module Nicknames
             organization.candidates.count > nickname_count
       loop do
         nickname = random_nickname
-        return nickname if free?(nickname)
+        return nickname unless taken?(nickname)
       end
     end
 
@@ -22,8 +22,8 @@ module Nicknames
 
     private
 
-    def free?(nickname)
-      organization.candidates.where(nickname: nickname).count == 0
+    def taken?(nickname)
+      organization.candidates.exists?(nickname: nickname)
     end
 
     def random_nickname
