@@ -22,7 +22,7 @@ RSpec.describe Nicknames::Generator do
       allow(generator).to receive(:nickname_count).and_return(0)
       expect {
         generator.generate
-      }.to raise_error(StandardError)
+      }.to raise_error(Nicknames::OutOfNicknamesError)
     end
   end
 end
