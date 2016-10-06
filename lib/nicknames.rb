@@ -9,7 +9,7 @@ module Nicknames
     end
 
     def generate
-      raise OutOfNicknamesError.new('Unable to find new nickname') if
+      raise OutOfNicknamesError, 'Unable to find new nickname' if
             organization.candidates.count > nickname_count
       loop do
         nickname = random_nickname
@@ -34,7 +34,7 @@ module Nicknames
     attr_reader :candidate, :organization
   end
 
-  CONFIG = YAML.load_file("#{Rails.root.to_s}/lib/.nicknames.yml")
+  CONFIG = YAML.load_file("#{Rails.root}/lib/.nicknames.yml")
   ANIMALS = CONFIG['Animals']
   ADJECTIVES = CONFIG['Adjectives']
 
