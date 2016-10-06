@@ -30,7 +30,7 @@ class User < ApplicationRecord
     elsif candidate&.nickname.present?
       candidate.nickname
     else
-      phone_number
+      ''
     end
   end
 
