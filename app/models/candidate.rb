@@ -20,7 +20,7 @@ class Candidate < ApplicationRecord
   delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
   delegate :stages, to: :organization
 
-  before_create :ensure_candidate_has_stage
+  before_create :ensure_candidate_has_stage, :add_nickname
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -88,5 +88,9 @@ class Candidate < ApplicationRecord
 
   def ensure_candidate_has_stage
     self.stage = organization.potential_stage unless stage.present?
+  end
+
+  def add_nickname
+    self.nickname = Nicknames::Generator.new(self).generate
   end
 end
