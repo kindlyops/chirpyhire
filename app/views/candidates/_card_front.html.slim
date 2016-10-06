@@ -1,11 +1,14 @@
 .card
   .card-header
-    = candidate.handle
-    .card-header-right
-      .created_at
-        i.fa.fa-clock-o
-        '
-        = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
+    .card-header-row
+      = candidate.user_phone_number
+      .card-header-right
+        .created_at
+          i.fa.fa-clock-o
+          '
+          = "#{time_ago_in_words(candidate.created_at, locale: :en_abbrev)}"
+    .card-header-row.handle
+      = candidate.handle
   .card-copy
     .card-copy-top
       = render partial: "candidates/address", locals: { candidate: candidate }

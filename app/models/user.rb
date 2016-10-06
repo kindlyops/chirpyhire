@@ -27,8 +27,10 @@ class User < ApplicationRecord
   def handle
     if name.present?
       name
+    elsif candidate&.nickname.present?
+      candidate.nickname
     else
-      phone_number.phony_formatted
+      ''
     end
   end
 
