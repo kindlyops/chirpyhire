@@ -81,7 +81,12 @@ RSpec.describe Candidate, type: :model do
     end
   end
 
-  it '#before_create has a stage' do
-    expect(candidate.stage).not_to eq(nil)
+  context '#before_create' do
+    it 'has a stage' do
+      expect(candidate.stage).not_to eq(nil)
+    end
+    it 'has a nickname' do
+      expect(candidate.nickname).not_to eq(nil)
+    end
   end
 end
