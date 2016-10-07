@@ -21,3 +21,15 @@ $(document).on("turbolinks:load", function() {
     return false;
   });
 });
+
+// Turbolinks scroll to top issues
+// https://github.com/turbolinks/turbolinks-classic/issues/66
+$(document).on("turbolinks:before-visit", function() {
+  window.prevPageYOffset = window.pageYOffset;
+  window.prevPageXOffset = window.pageXOffset;
+});
+$(document).on("turbolinks:render", function() {
+  if ($(".fix-turbolinks-scroll").length > 0) {
+    window.scrollTo(window.prevPageXOffset, window.prevPageYOffset);
+  }
+});
