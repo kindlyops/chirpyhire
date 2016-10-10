@@ -5,7 +5,7 @@ class WhitelistQuestion < Question
                                 reject_if: :all_blank, allow_destroy: true
   validates :whitelist_question_options, presence: true
 
-  def self.extract_internal(properties, message, inquiry)
+  def self.extract_internal(properties, message, _inquiry)
     properties[:whitelist_option] = message.body.strip
     properties
   end

@@ -14,7 +14,7 @@ class AnswerClassifier
     return YesNoQuestion if message.yes_or_no?
     return ChoiceQuestion if message.choice?(choices)
     return WhitelistQuestion if message.whitelist?(whitelist_options)
-    
+
     raise NotClassifiedError, 'Message was not succesfully classified
     to match any known question types.'
   end
@@ -25,9 +25,9 @@ class AnswerClassifier
 
   def whitelist_options
     inquiry.question
-      .becomes(WhitelistQuestion)
-      .whitelist_question_options
-      .pluck(:text)
+           .becomes(WhitelistQuestion)
+           .whitelist_question_options
+           .pluck(:text)
   end
 
   def choice_question

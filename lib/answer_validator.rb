@@ -4,19 +4,14 @@ class AnswerValidator
   end
 
   def validate
-    unless inquiry.asks_question_of?(question_class)
-      error_message =
-        "expected #{inquiry.question_type}
-         but received #{question_class.name}"
-      answer.errors.add(:inquiry, error_message)
-
+    if !inquiry.asks_question_of?(question_class)
+      add_wrong_question_type_error
       if inquiry.asks_question_of?(AddressQuestion) && naive_match?
         log('Unable to find naive address')
       end
     end
   rescue AnswerClassifier::NotClassifiedError
-    error_message =
-      "expected #{inquiry.question_type}
+    error_message = "expected #{inquiry.question_type}
        but wasn't classified as any question type"
     answer.errors.add(:inquiry, error_message)
   end
@@ -24,6 +19,13 @@ class AnswerValidator
   private
 
   attr_reader :answer
+
+  def add_wrong_question_type_error
+    error_message =
+      "expected #{inquiry.question_type}
+       but received #{question_class.name}"
+    answer.errors.add(:inquiry, error_message)
+  end
 
   def message
     @message ||= answer.message

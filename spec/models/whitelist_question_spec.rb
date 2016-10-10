@@ -5,7 +5,7 @@ RSpec.describe WhitelistQuestion, type: :model do
 
   describe '.extract' do
     let(:message) { create(:message, body: ' 30342 ') }
-    let(:question) { create(:whitelist_question, whitelist_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305'} ]) }
+    let(:question) { create(:whitelist_question, whitelist_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
     let(:inquiry) { create(:inquiry, question: question) }
     let(:expected_properties) do
       {

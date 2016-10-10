@@ -25,7 +25,7 @@ RSpec.describe AnswerClassifier do
     end
     context 'whitelist question inquiry' do
       let(:message) { create(:message, body: '30342') }
-      let(:question) { create(:whitelist_question, whitelist_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305'} ]) }
+      let(:question) { create(:whitelist_question, whitelist_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
       let(:inquiry) { create(:inquiry, question: question) }
       let(:answer) { build(:answer, message: message) }
       let(:expected_properties) do
@@ -40,8 +40,8 @@ RSpec.describe AnswerClassifier do
         end
       end
 
-      context 'which is not in the whitelist' do 
-        let(:message) { create(:message, body: '20010')}
+      context 'which is not in the whitelist' do
+        let(:message) { create(:message, body: '20010') }
         it 'is unable to classify the answer' do
           expect { classifier.classify }.to raise_error(AnswerClassifier::NotClassifiedError)
         end

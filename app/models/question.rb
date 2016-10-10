@@ -36,7 +36,7 @@ class Question < ApplicationRecord
 
   def self.extract(message, inquiry)
     properties = {}
-    properties[:child_class] = self.child_class_property
+    properties[:child_class] = child_class_property
     extract_internal(properties, message, inquiry)
   end
 end
