@@ -6,7 +6,7 @@ class ChoiceQuestion < Question
                                 reject_if: :all_blank, allow_destroy: true
   validates :choice_question_options, presence: true
 
-  def self.extract(message, inquiry)
+  def self.extract_internal(properties, message, inquiry)
     answer = message.body.strip.downcase
     choice_option = /\A([a-z]){1}\)?\z/.match(answer)[1]
 
@@ -14,7 +14,12 @@ class ChoiceQuestion < Question
       option.letter == choice_option
     end
 
-    properties_for(result)
+    properties[:choice_option] = result.text
+    properties
+  end
+
+  def self.child_class_property
+    'choice'
   end
 
   def formatted_text
@@ -52,13 +57,6 @@ template
 
   class << self
     private
-
-    def properties_for(option)
-      properties = {}
-      properties[:child_class] = 'choice'
-      properties[:choice_option] = option.text
-      properties
-    end
 
     def choice_question(inquiry)
       question = inquiry.question

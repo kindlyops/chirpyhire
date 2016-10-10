@@ -21,7 +21,7 @@ class Inquiry < ApplicationRecord
     question_type == 'AddressQuestion'
   end
 
-  def of?(format)
-    question_type == format
+  def asks_question_of?(question_class)
+    question_type == question_class.name
   end
 end

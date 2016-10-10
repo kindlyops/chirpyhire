@@ -9,9 +9,13 @@ class Question < ApplicationRecord
   TYPES = %w(ChoiceQuestion
              AddressQuestion
              DocumentQuestion
-             YesNoQuestion).freeze
+             YesNoQuestion
+             WhitelistQuestion).freeze
 
   validates :type, inclusion: { in: TYPES }
+
+  class NotImplementedError < StandardError
+  end
 
   def self.by_priority
     order(:priority)
@@ -28,5 +32,11 @@ class Question < ApplicationRecord
 
   def formatted_text
     text
+  end
+
+  def self.extract(message, inquiry)
+    properties = {}
+    properties[:child_class] = self.child_class_property
+    extract_internal(properties, message, inquiry)
   end
 end

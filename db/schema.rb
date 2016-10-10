@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006201452) do
+ActiveRecord::Schema.define(version: 20161009191346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -348,6 +348,15 @@ ActiveRecord::Schema.define(version: 20161006201452) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
 
+  create_table "whitelist_question_options", force: :cascade do |t|
+    t.string   "text",        null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_whitelist_question_options_on_question_id", using: :btree
+    t.index ["text", "question_id"], name: "index_whitelist_question_options_on_text_and_question_id", unique: true, using: :btree
+  end
+
   add_foreign_key "accounts", "users"
   add_foreign_key "address_question_options", "questions"
   add_foreign_key "answers", "inquiries"
@@ -380,4 +389,5 @@ ActiveRecord::Schema.define(version: 20161006201452) do
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
+  add_foreign_key "whitelist_question_options", "questions"
 end

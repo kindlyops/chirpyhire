@@ -61,6 +61,11 @@ class Message < ApplicationRecord
     (Regexp.new("\\A([#{choices}]){1}\\)?\\z") =~ body.strip.downcase).present?
   end
 
+  def whitelist?(whitelist_options)
+    return false unless body.present?
+    whitelist_options.include?(body.strip)
+  end
+
   def address
     @address ||= AddressFinder.new(body)
   end
