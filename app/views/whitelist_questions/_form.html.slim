@@ -1,0 +1,9 @@
+#whitelist-question-options.multi-option-question
+  - if question.whitelist_question_options.any?
+    = f.fields_for :whitelist_question_options do |option|
+      = render 'whitelist_questions/whitelist_question_option_fields', f: option
+  - else
+    = f.fields_for :whitelist_question_options, WhitelistQuestionOption.new do |option|
+      = render 'whitelist_questions/whitelist_question_option_fields', f: option  
+  .links
+    = link_to_add_association 'Add option', f, :whitelist_question_options, class: "button", partial: 'whitelist_questions/whitelist_question_option_fields'

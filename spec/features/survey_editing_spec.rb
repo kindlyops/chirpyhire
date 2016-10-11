@@ -271,9 +271,8 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       it 'works' do
         visit survey_path
         find('#add-question', match: :first).trigger('click')
-        within(find('#choice-type')) do
-          click_link('Add Question')
-        end
+        find('#choice-type').find('.button').trigger('click')
+
         fill_in 'choice_question_label', with: 'Fancy Choice Label'
         fill_in 'choice_question_text', with: 'Fancy Choice Text'
         fill_in 'choice_question_choice_question_options_attributes_0_text', with: 'Choice A'
@@ -355,6 +354,77 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         expect(page).to have_text('Nice! Question saved.')
         expect(page).to have_text('New Choice')
       end
+    end
+  end
+
+  context 'Whitelist Question' do
+    let(:label) { 'Zipcode' }
+    let!(:whitelist_question) {
+      create(:whitelist_question, label: label, survey: survey, whitelist_question_options_attributes: [{ text: '30342' }])
+    }
+    let!(:option) { whitelist_question.whitelist_question_options.first }
+
+    it 'adds a question successfully' do
+      visit survey_path
+      find('#add-question', match: :first).trigger('click')
+      find('#whitelist-type').find('.button').trigger('click')
+
+      fill_in 'whitelist_question_label', with: 'Fancy Whitelist Label'
+      fill_in 'whitelist_question_text', with: 'Fancy Whitelist Text'
+      fill_in 'whitelist_question_whitelist_question_options_attributes_0_text', with: '30342'
+
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('Fancy Whitelist Text')
+      expect(page).to have_text('Fancy Whitelist Label')
+    end
+
+    it 'adds an option successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+      click_link('Add option')
+
+      all('.nested-fields').last.find("input[placeholder='Valid answer']").set('Another Option')
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('Another Option')
+    end
+    context 'removing an option' do
+      let!(:option2) { create(:whitelist_question_option, whitelist_question: whitelist_question, text: '30327') }
+      it 'works' do
+        visit survey_path
+        find('#edit-question', match: :first).trigger('click')
+        option = find('.nested-fields', match: :first)
+        option_text = option.find('.field input').value
+
+        within(option) do
+          find('.remove_fields', match: :first).trigger('click')
+        end
+
+        click_button('Save')
+        expect(page).to have_text('Nice! Question saved.')
+        expect(page).not_to have_text(option_text)
+      end
+    end
+
+    it 'edits the text of the question successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+
+      fill_in 'whitelist_question_text', with: 'New question text'
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('New question text')
+    end
+
+    it 'edits the text of an option successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+      all('.nested-fields').first.find("input[placeholder='Valid answer']").set('New Option')
+
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('New Option')
     end
   end
 end

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   decorates_assigned :question
-
+  helper QuestionHelper
   def new
     @question = authorize(built_question)
   end
