@@ -389,6 +389,26 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       expect(page).to have_text('Nice! Question saved.')
       expect(page).to have_text('Another Option')
     end
+
+    it 'edits the text of the question successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+
+      fill_in 'whitelist_question_text', with: 'New question text'
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('New question text')
+    end
+
+    it 'edits the text of an option successfully' do
+      visit edit_question_path(whitelist_question.id)
+      first('.nested-fields').find("input[placeholder='Valid answer']").set('New Option')
+
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('New Option')
+    end
+
     context 'removing an option' do
       let!(:option2) { create(:whitelist_question_option, whitelist_question: whitelist_question, text: '30327') }
       it 'works' do
@@ -405,26 +425,6 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         expect(page).to have_text('Nice! Question saved.')
         expect(page).not_to have_text(option_text)
       end
-    end
-
-    it 'edits the text of the question successfully' do
-      visit survey_path
-      find('#edit-question', match: :first).trigger('click')
-
-      fill_in 'whitelist_question_text', with: 'New question text'
-      click_button('Save')
-      expect(page).to have_text('Nice! Question saved.')
-      expect(page).to have_text('New question text')
-    end
-
-    it 'edits the text of an option successfully' do
-      visit survey_path
-      find('#edit-question', match: :first).trigger('click')
-      all('.nested-fields').first.find("input[placeholder='Valid answer']").set('New Option')
-
-      click_button('Save')
-      expect(page).to have_text('Nice! Question saved.')
-      expect(page).to have_text('New Option')
     end
   end
 end

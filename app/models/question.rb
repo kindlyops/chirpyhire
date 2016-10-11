@@ -14,9 +14,6 @@ class Question < ApplicationRecord
 
   validates :type, inclusion: { in: TYPES }
 
-  class NotImplementedError < StandardError
-  end
-
   def self.by_priority
     order(:priority)
   end
