@@ -1,5 +1,9 @@
 header.super-navigation.navigation role="banner"
   .navigation-wrapper
     nav.left role="navigation"
-      Test
+      select.organization name='organization'
+        = options_for_select(\
+          Organization.all.map { |org| [org.name, org.id] },\
+          cookies[:super_admin_organization_id]\
+        )
 

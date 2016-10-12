@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organization
+    if current_account&.super_admin?
+      org_id = (cookies[:super_admin_organization_id] ||= current_user.organization.id)
+      @current_organization ||= 
+        cookies[:super_admin_organization_id] ||= current_user.organization
+    end
     @current_organization ||= current_user.organization
   end
 
