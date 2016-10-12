@@ -93,7 +93,8 @@ class Candidate < ApplicationRecord
   end
 
   def features(question_class)
-    candidate_features.where("properties->>'child_class' = ?", question_class.child_class_property)
+    candidate_features.where("properties->>'child_class' = ?",
+                             question_class.child_class_property)
   end
 
   private

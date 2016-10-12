@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
 
   def question_type
     controller_name = self.class.name
-    @question_type ||= controller_name.chomp("sController")
+    @question_type ||= controller_name.chomp('sController')
   end
 
   def question_type_class
