@@ -204,6 +204,13 @@ RSpec.describe CandidateAdvancer do
       end
 
       context 'with all profile features present' do
+        let!(:prior_question) { create(:document_question, survey: survey) }
+        let!(:prior_inquiry) { create(:inquiry, question: prior_question, message: create(:message, user: user)) }
+        let(:question) { create(:choice_question, survey: survey) }
+        let!(:inquiry) { create(:inquiry, question: question, message: create(:message, user: user)) }
+        let(:message) { create(:message, body: question.choice_question_options.first.letter, user: user) }
+        let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
+
         it 'creates an AutomatonJob for the screen event' do
           expect {
             CandidateAdvancer.call(user)

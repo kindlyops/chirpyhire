@@ -10,7 +10,8 @@ class Question < ApplicationRecord
              AddressQuestion
              DocumentQuestion
              YesNoQuestion
-             WhitelistQuestion).freeze
+             WhitelistQuestion
+             ZipcodeQuestion).freeze
 
   validates :type, inclusion: { in: TYPES }
 

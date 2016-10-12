@@ -31,17 +31,10 @@
     }
     
     @include media ($horizontal-bar-mode) {
-      flex-wrap: nowrap;
       align-items: space-around;
       .card {
         margin: 0 1em 1.5em 1em;
-
-        &:first-child {
-          margin: 0 1em 1.5em 0;
-        }
-        &:last-child {
-          margin: 0 0 1.5em 1em;
-        }
+        flex-basis: 18em;
       }
     }
   }

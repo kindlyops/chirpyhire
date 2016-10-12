@@ -13,7 +13,10 @@ class AnswerClassifier
     return AddressQuestion if message.address?
     return YesNoQuestion if message.yes_or_no?
     return ChoiceQuestion if message.choice?(choices)
-    return WhitelistQuestion if message.whitelist?(whitelist_options)
+
+    if message.whitelist?(whitelist_options)
+      return inquiry.of_zipcode? ? ZipcodeQuestion : WhitelistQuestion
+    end
 
     raise NotClassifiedError, 'Message was not succesfully classified
     to match any known question types.'

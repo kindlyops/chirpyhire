@@ -37,14 +37,34 @@ class QuestionsController < ApplicationController
     survey.questions.build(built_question_params)
   end
 
-  def built_question_params
-    { priority: new_priority }
-  end
-
   def new_priority
     highest_priority_question = survey.questions.active.order(:priority).last
     return 1 unless highest_priority_question.present?
     highest_priority_question.priority + 1
+  end
+
+  def built_question_params
+    {
+      priority: new_priority,
+      type: question_type
+    }
+  end
+
+  def authorized_question
+    authorize question_type_class.find(params[:id])
+  end
+
+  def permitted_question_attributes
+    permitted_attributes(question_type_class)
+  end
+
+  def question_type
+    controller_name = self.class.name
+    @question_type ||= controller_name.chomp("sController")
+  end
+
+  def question_type_class
+    @question_type_class = question_type.constantize
   end
 
   def survey

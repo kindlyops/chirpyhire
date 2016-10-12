@@ -1,13 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create!([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create!(name: 'Emanuel', city: cities.first)
-
 longitude = ENV.fetch("longitude", -84.373931).to_f
 latitude = ENV.fetch("latitude", 33.929966).to_f
+
 
 if Rails.env.development?
   if Plan.count > 0
@@ -26,7 +19,6 @@ if Rails.env.development?
     phone_number: ENV.fetch("TEST_ORG_PHONE"),
     stripe_customer_id: ENV.fetch("TEST_STRIPE_CUSTOMER_ID", "cus_90xvMZp8CMvOE9")
   )
-  puts "Created Organization"
 
   org.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
   puts "Created Subscription"
@@ -41,18 +33,15 @@ if Rails.env.development?
    phone_number: ENV.fetch("DEV_PHONE"),
    organization: org
   )
-  puts "Created User"
 
   puts "Creating Account"
   email = ENV.fetch("DEV_EMAIL")
   unless user.account.present?
     user.create_account!(password: "password", password_confirmation: "password", user: user, email: email, super_admin: true)
   end
-  puts "Created Account"
 
   puts "Creating Referrer"
   Referrer.find_or_create_by(user: user)
-  puts "Created Referrer"
 
   unless org.survey.present?
     bad_fit = Template.create(organization: org, name: "Bad Fit", body: "Thank you very much for your interest. Unfortunately, we don't "\
@@ -63,17 +52,21 @@ if Rails.env.development?
   end
 
   unless org.survey.questions.present?
-    address_question = org.survey.questions.create!(priority: 1, label: "Address", type: "AddressQuestion", text: "What is your address and zipcode?")
+    address_question = org.survey.questions.create!(priority: 1, label: "Address", type: AddressQuestion.name, text: "What is your address and zipcode?")
     address_question.create_address_question_option(distance: 20, latitude: latitude, longitude: longitude )
-    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: "ChoiceQuestion", text: "What is your availability?",
+    choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: ChoiceQuestion.name, text: "What is your availability?",
       choice_question_options_attributes: [
-        {text: "Live-in", letter: "a"}
+        {text: "Live-in", letter: "a"},
+        {text: "Hourly", letter: "b"},
+        {text: "Both", letter: "c"},
         ])
-    choice_question.choice_question_options.create(text: "Hourly", letter: "b")
-    choice_question.choice_question_options.create(text: "Both", letter: "c")
-    yes_no_question = org.survey.questions.create(priority: 3, label: "Transportation", type: "YesNoQuestion", text: "Do you have reliable personal transportation?")
-    # cna_question = org.survey.questions.create!(priority: 4, label: "CNA License", type: "DocumentQuestion", text: "Please send us a photo of your CNA license.")
-    puts "Created Profile Features"
+    yes_no_question = org.survey.questions.create(priority: 3, label: "Transportation", type: YesNoQuestion.name, text: "Do you have reliable personal transportation?")
+    zipcode_question = org.survey.questions.create!(priority: 4, label: "Zipcode", type: ZipcodeQuestion.name, text: "What is your zipcode?",
+      whitelist_question_options_attributes: [
+        {text: "30342"},
+        {text: "30327"}
+        ])
+    puts "Created Questions"
   end
 
   unless org.rules.present?
@@ -87,48 +80,58 @@ if Rails.env.development?
     rand((seed_coordinate - 0.3)..(seed_coordinate + 0.3))
   end
 
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.bad_fit_stage, organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.qualified_stage, organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.potential_stage, organization: org, created_at: rand(1.month).seconds.ago) }
-  25.times { FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: org.hired_stage, organization: org, created_at: rand(1.month).seconds.ago) }
+  puts "Creating Candidates"
+  Stage.standard_stage_mappings.keys.each do |stage_name|
+    stage = org.send("#{stage_name}_stage")
+    25.times do |i|
+      if i % 5 > 0
+        FactoryGirl.create(:candidate, :with_address, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: stage, organization: org, created_at: rand(1.month).seconds.ago)
+      else
+        FactoryGirl.create(:candidate, latitude: random_coordinate(latitude), longitude: random_coordinate(longitude), stage: stage, organization: org, created_at: rand(1.month).seconds.ago)
+      end
+    end
+  end
 
+  def create_exchange(candidate, question, question_class, label, response_body, successful = true)
+    query = FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: question.formatted_text)
+    inquiry = FactoryGirl.create(:inquiry, message: query, question: question)
+    response = FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: response_body)
+    FactoryGirl.create(:candidate_feature, candidate: candidate, label: label, properties: question_class.extract(response, inquiry))
+
+    if !successful
+      FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "Thank you very much for your interest. Unfortunately, we don't "\
+      "have a good fit for you at this time. If anything changes we will let you know.")
+    end
+  end
+
+  puts "Creating Candidates' conversations"
   Candidate.find_each do |candidate|
-    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "#{welcome.body}\n\nIf you ever wish to stop receiving text messages from #{org.name} just reply STOP.\n\n#{address_question.formatted_text}")
-    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: Faker::Address.street_address)
-    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Address", properties: {
-      child_class: "address",
-      address: location.full_street_address,
-      latitude: location.latitude,
-      longitude: location.longitude,
-      postal_code: location.postal_code,
-      country: location.country,
-      city: location.city
-    })
-    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: choice_question.formatted_text)
-    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: %w(a b c).sample)
-    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Availability", properties: {
-      child_class: "choice",
-      choice_option: "Hourly"
-    })
-    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: yes_no_question.formatted_text)
+    if candidate.address.present?
+      address_query = FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "#{welcome.body}\n\nIf you ever wish to stop receiving text messages from #{org.name} just reply STOP.\n\n#{address_question.formatted_text}")
+      address_inquiry = FactoryGirl.create(:inquiry, message: address_query, question: address_question)
+      address_response = FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: candidate.address.formatted_address)
+    end
+
+    create_exchange(candidate, choice_question, ChoiceQuestion, "Availability", %w(a b c).sample)
   end
 
   Candidate.bad_fit.find_each do |candidate|
-    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "No")
-    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Transportation", properties: {
-      child_class: "yes_no",
-      yes_no_option: "No"
-    })
-    FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: bad_fit.body)
+    if (candidate.address.blank?) 
+      create_exchange(candidate, yes_no_question, YesNoQuestion, "Transportation", "Yes")
+      create_exchange(candidate, zipcode_question, ZipcodeQuestion, "Zipcode", "30305", false)
+    else
+      create_exchange(candidate, yes_no_question, YesNoQuestion, "Transportation", "No", false)
+    end
   end
+  puts 'Finished bad fit candidates'
 
   Candidate.qualified.or(Candidate.hired).find_each do |candidate|
-    FactoryGirl.create(:message, user: candidate.user, direction: "inbound", body: "Yes")
-    FactoryGirl.create(:candidate_feature, candidate: candidate, label: "Transportation", properties: {
-      child_class: "yes_no",
-      yes_no_option: "Yes"
-    })
-    # FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: cna_question.formatted_text)
+    create_exchange(candidate, yes_no_question, YesNoQuestion, "Transportation", "Yes")
+
+    if candidate.address.blank?
+      create_exchange(candidate, zipcode_question, ZipcodeQuestion, "Zipcode", "30327")
+    end
+
     FactoryGirl.create(:candidate_feature, candidate: candidate, label: "CNA License", properties: {
       child_class: "document",
       url0: "http://www.rejuven8bykelly.com/yahoo_site_admin/assets/images/CNAlic2012.20143437_std.jpg"
@@ -136,6 +139,7 @@ if Rails.env.development?
     FactoryGirl.create(:message, :with_image, user: candidate.user, direction: "inbound")
     FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: thank_you.body)
   end
+  puts 'Finished hired/qualified candidates'
 
   puts "Development specific seeding completed"
 end

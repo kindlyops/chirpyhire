@@ -64,24 +64,36 @@ class Candidate < ApplicationRecord
   end
 
   def address
-    return NullAddress.new unless address_feature.present?
+    return nil unless address_feature.present?
     Address.new(address_feature)
   end
 
+  def zipcode
+    zipcode_feature&.properties&.dig('whitelist_option')
+  end
+
+  def zipcode_feature
+    features(ZipcodeQuestion).first
+  end
+
   def address_feature
-    candidate_features.find_by("properties->>'child_class' = ?", 'address')
+    features(AddressQuestion).first
   end
 
   def choice_features
-    candidate_features.where("properties->>'child_class' = ?", 'choice')
+    features(ChoiceQuestion)
   end
 
   def document_features
-    candidate_features.where("properties->>'child_class' = ?", 'document')
+    features(DocumentQuestion)
   end
 
   def yes_no_features
-    candidate_features.where("properties->>'child_class' = ?", 'yes_no')
+    features(YesNoQuestion)
+  end
+
+  def features(question_class)
+    candidate_features.where("properties->>'child_class' = ?", question_class.child_class_property)
   end
 
   private

@@ -18,7 +18,11 @@ class Inquiry < ApplicationRecord
   end
 
   def of_address?
-    question_type == 'AddressQuestion'
+    question_type == AddressQuestion.name
+  end
+
+  def of_zipcode?
+    question_type == ZipcodeQuestion.name
   end
 
   def asks_question_of?(question_class)

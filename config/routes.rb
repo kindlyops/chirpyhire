@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :document_questions, except: :destroy
   resources :choice_questions, except: :destroy
   resources :whitelist_questions, except: :destroy
+  resources :zipcode_questions, except: :destroy
   resources :questions, only: [:edit, :new]
   resources :templates, only: [:edit, :update]
   put 'stages/reorder' => 'stages#reorder'
