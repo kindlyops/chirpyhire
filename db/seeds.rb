@@ -62,7 +62,7 @@ if Rails.env.development?
         ])
     yes_no_question = org.survey.questions.create(priority: 3, label: "Transportation", type: YesNoQuestion.name, text: "Do you have reliable personal transportation?")
     zipcode_question = org.survey.questions.create!(priority: 4, label: "Zipcode", type: ZipcodeQuestion.name, text: "What is your zipcode?",
-      whitelist_question_options_attributes: [
+      zipcode_question_options_attributes: [
         {text: "30342"},
         {text: "30327"}
         ])

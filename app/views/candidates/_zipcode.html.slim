@@ -1,6 +1,5 @@
-- if candidate.address.blank? && candidate.zipcode.present?
-  p
-    | Zipcode:
-    '
-    = link_to maps_candidate_path(candidate) do
-      strong = candidate.zipcode
+p
+  | Zipcode:
+  '
+  = link_to maps_candidate_path(candidate) do
+    strong = candidate.zipcode

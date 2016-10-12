@@ -11,11 +11,12 @@
       = candidate.handle
   .card-copy
     .card-copy-top
-      = render partial: "candidates/address", locals: { candidate: candidate }
-      = render partial: "candidates/zipcode", locals: { candidate: candidate }
+      - if candidate.address.present?
+        = render partial: "candidates/address", locals: { candidate: candidate }
+      - elsif candidate.zipcode.present?
+        = render partial: "candidates/zipcode", locals: { candidate: candidate }
       = render partial: "candidates/yes_no", collection: candidate.yes_nos
       = render partial: "candidates/choice", collection: candidate.choices
-        /= render partial: "candidates/whitelist", collection: candidate.whitelists
       = render partial: "candidates/document", collection: candidate.documents
     .card-call-to-actions.flat-button-group
       - candidate.call_to_actions.each do |cta|

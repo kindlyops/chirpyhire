@@ -13,10 +13,7 @@ class AnswerClassifier
     return AddressQuestion if message.address?
     return YesNoQuestion if message.yes_or_no?
     return ChoiceQuestion if message.choice?(choices)
-
-    if message.whitelist?(whitelist_options)
-      return inquiry.of_zipcode? ? ZipcodeQuestion : WhitelistQuestion
-    end
+    return ZipcodeQuestion if message.valid_zipcode?(zipcode_options)
 
     raise NotClassifiedError, 'Message was not succesfully classified
     to match any known question types.'
@@ -26,10 +23,10 @@ class AnswerClassifier
 
   attr_reader :answer, :inquiry
 
-  def whitelist_options
+  def zipcode_options
     inquiry.question
-           .becomes(WhitelistQuestion)
-           .whitelist_question_options
+           .becomes(ZipcodeQuestion)
+           .zipcode_question_options
            .pluck(:text)
   end
 

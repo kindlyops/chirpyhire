@@ -1,4 +1,4 @@
-class WhitelistQuestionDecorator < Draper::Decorator
+class ZipcodeQuestionDecorator < Draper::Decorator
   delegate_all
 
   def label_placeholder

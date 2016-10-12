@@ -1,0 +1,9 @@
+#zipcode-question-options.multi-option-question
+  - if question.zipcode_question_options.any?
+    = f.fields_for :zipcode_question_options do |option|
+      = render 'zipcode_questions/zipcode_question_option_fields', f: option
+  - else
+    = f.fields_for :zipcode_question_options, ZipcodeQuestionOption.new do |option|
+      = render 'zipcode_questions/zipcode_question_option_fields', f: option  
+  .links
+    = link_to_add_association 'Add option', f, :zipcode_question_options, class: "button", partial: 'zipcode_questions/zipcode_question_option_fields'

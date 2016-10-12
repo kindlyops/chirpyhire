@@ -23,24 +23,24 @@ RSpec.describe AnswerClassifier do
         end
       end
     end
-    context 'whitelist question inquiry' do
+    context 'zipcode question inquiry' do
       let(:message) { create(:message, body: '30342') }
-      let(:question) { create(:whitelist_question, whitelist_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
+      let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
       let(:inquiry) { create(:inquiry, question: question) }
       let(:answer) { build(:answer, message: message) }
       let(:expected_properties) do
         {
-          whitelist_option: '30342',
-          child_class: WhitelistQuestion.child_class_property
+          zipcode_option: '30342',
+          child_class: ZipcodeQuestion.child_class_property
         }
       end
-      context 'which is in the whitelist' do
-        it 'classifies the answer as for a whitelist question' do
-          expect(classifier.classify).to eq(WhitelistQuestion)
+      context 'which is in the zipcode' do
+        it 'classifies the answer as for a zipcode question' do
+          expect(classifier.classify).to eq(ZipcodeQuestion)
         end
       end
 
-      context 'which is not in the whitelist' do
+      context 'which is not in the zipcode' do
         let(:message) { create(:message, body: '20010') }
         it 'is unable to classify the answer' do
           expect { classifier.classify }.to raise_error(AnswerClassifier::NotClassifiedError)

@@ -348,13 +348,13 @@ ActiveRecord::Schema.define(version: 20161009191346) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
 
-  create_table "whitelist_question_options", force: :cascade do |t|
+  create_table "zipcode_question_options", force: :cascade do |t|
     t.string   "text",        null: false
     t.integer  "question_id", null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["question_id"], name: "index_whitelist_question_options_on_question_id", using: :btree
-    t.index ["text", "question_id"], name: "index_whitelist_question_options_on_text_and_question_id", unique: true, using: :btree
+    t.index ["question_id"], name: "index_zipcode_question_options_on_question_id", using: :btree
+    t.index ["text", "question_id"], name: "index_zipcode_question_options_on_text_and_question_id", unique: true, using: :btree
   end
 
   add_foreign_key "accounts", "users"
@@ -389,5 +389,5 @@ ActiveRecord::Schema.define(version: 20161009191346) do
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
-  add_foreign_key "whitelist_question_options", "questions"
+  add_foreign_key "zipcode_question_options", "questions"
 end

@@ -357,26 +357,26 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
     end
   end
 
-  context 'Whitelist Question' do
+  context 'Zipcode Question' do
     let(:label) { 'Zipcode' }
-    let!(:whitelist_question) {
-      create(:whitelist_question, label: label, survey: survey, whitelist_question_options_attributes: [{ text: '30342' }])
+    let!(:zipcode_question) {
+      create(:zipcode_question, label: label, survey: survey, zipcode_question_options_attributes: [{ text: '30342' }])
     }
-    let!(:option) { whitelist_question.whitelist_question_options.first }
+    let!(:option) { zipcode_question.zipcode_question_options.first }
 
     it 'adds a question successfully' do
       visit survey_path
       find('#add-question', match: :first).trigger('click')
-      find('#whitelist-type').find('.button').trigger('click')
+      find('#zipcode-type').find('.button').trigger('click')
 
-      fill_in 'whitelist_question_label', with: 'Fancy Whitelist Label'
-      fill_in 'whitelist_question_text', with: 'Fancy Whitelist Text'
-      fill_in 'whitelist_question_whitelist_question_options_attributes_0_text', with: '30342'
+      fill_in 'zipcode_question_label', with: 'Fancy Zipcode Label'
+      fill_in 'zipcode_question_text', with: 'Fancy Zipcode Text'
+      fill_in 'zipcode_question_zipcode_question_options_attributes_0_text', with: '30342'
 
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
-      expect(page).to have_text('Fancy Whitelist Text')
-      expect(page).to have_text('Fancy Whitelist Label')
+      expect(page).to have_text('Fancy Zipcode Text')
+      expect(page).to have_text('Fancy Zipcode Label')
     end
 
     it 'adds an option successfully' do
@@ -384,7 +384,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       find('#edit-question', match: :first).trigger('click')
       click_link('Add option')
 
-      all('.nested-fields').last.find("input[placeholder='Valid answer']").set('Another Option')
+      all('.nested-fields').last.find("input[placeholder='Valid zipcode']").set('Another Option')
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
       expect(page).to have_text('Another Option')
@@ -394,15 +394,15 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       visit survey_path
       find('#edit-question', match: :first).trigger('click')
 
-      fill_in 'whitelist_question_text', with: 'New question text'
+      fill_in 'zipcode_question_text', with: 'New question text'
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
       expect(page).to have_text('New question text')
     end
 
     it 'edits the text of an option successfully' do
-      visit edit_question_path(whitelist_question.id)
-      first('.nested-fields').find("input[placeholder='Valid answer']").set('New Option')
+      visit edit_question_path(zipcode_question.id)
+      first('.nested-fields').find("input[placeholder='Valid zipcode']").set('New Option')
 
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
@@ -410,7 +410,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
     end
 
     context 'removing an option' do
-      let!(:option2) { create(:whitelist_question_option, whitelist_question: whitelist_question, text: '30327') }
+      let!(:option2) { create(:zipcode_question_option, zipcode_question: zipcode_question, text: '30327') }
       it 'works' do
         visit survey_path
         find('#edit-question', match: :first).trigger('click')

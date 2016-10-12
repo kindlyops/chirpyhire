@@ -69,11 +69,7 @@ class Candidate < ApplicationRecord
   end
 
   def zipcode
-    zipcode_feature&.properties&.dig('whitelist_option')
-  end
-
-  def zipcode_feature
-    features(ZipcodeQuestion).first
+    features(ZipcodeQuestion).first&.properties&.dig('option')
   end
 
   def address_feature
@@ -92,12 +88,12 @@ class Candidate < ApplicationRecord
     features(YesNoQuestion)
   end
 
+  private
+
   def features(question_class)
     candidate_features.where("properties->>'child_class' = ?",
                              question_class.child_class_property)
   end
-
-  private
 
   def ensure_candidate_has_stage
     self.stage = organization.potential_stage unless stage.present?
