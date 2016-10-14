@@ -12,8 +12,8 @@ RSpec.describe CandidatesController, type: :controller do
   describe '#show' do
     let(:user) { create(:user, organization: organization) }
     let(:candidate) { create(:candidate, user: user) }
-    context "geojson" do
-      it "is OK" do
+    context 'geojson' do
+      it 'is OK' do
         get :show, params: { id: candidate.id, format: 'geojson' }
         expect(response).to be_ok
       end
