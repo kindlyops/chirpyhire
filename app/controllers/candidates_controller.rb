@@ -3,14 +3,15 @@ class CandidatesController < ApplicationController
   DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
-    @candidate = authorized_candidate
-
     respond_to do |format|
       format.geojson do
+        @candidate = authorized_candidate.decorate
         render json: GeoJson::Candidates.new([@candidate]).call
       end
 
-      format.html
+      format.html do
+        @candidate = authorized_candidate
+      end
     end
   end
 
