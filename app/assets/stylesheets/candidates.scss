@@ -24,14 +24,28 @@
     justify-content: space-between;
     display: flex;
 
-    .dropdown {
-      display: flex;
-      width: 70%;
+    select {
+      margin-left: 0.4em;
     }
-    .stage {
-      margin-right: 0.5em;
-      @include media ($horizontal-bar-mode) {
-        margin-right: 1em;
+
+    .dropdown .label {
+      display: none;
+    }
+  
+    @include media ($horizontal-bar-mode) {
+      .dropdowns {
+        display: flex;
+        width: 70%;
+        .dropdown {
+          display: flex;
+          .label {
+            line-height: 20px;
+            display: inherit;
+          }
+        }
+        select {
+          margin-right: 1em;
+        }
       }
     }
   }

@@ -43,6 +43,13 @@ class Candidate < ApplicationRecord
     where('candidates.created_at > ?', period)
   end
 
+  def self.zipcode(zipcode)
+    return self if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
+    joins(:candidate_features)
+      .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
+      .where("properties->>'option' = ?", zipcode)
+  end
+
   def self.hired
     joins(:stage).merge(Stage.hired)
   end
