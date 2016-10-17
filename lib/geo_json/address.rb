@@ -6,8 +6,6 @@ class GeoJson::Address
     candidates.map(&method(:build_feature))
   end
 
-  private
-
   def self.build_feature(candidate)
     {
       type: 'Feature',
@@ -38,4 +36,6 @@ class GeoJson::Address
     <p>Address: #{candidate.address.formatted_address}</p>\
     <p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
   end
+
+  private_class_method :build_feature, :properties, :geometry
 end

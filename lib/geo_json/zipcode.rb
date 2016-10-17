@@ -1,5 +1,5 @@
 class GeoJson::Zipcode
-  MAPPING_FILE = "lib/geo_json_data/state_to_zipcode_mapping.json"
+  MAPPING_FILE = 'lib/geo_json_data/state_to_zipcode_mapping.json'.freeze
   def initialize(candidates)
     @candidates = candidates.select { |c| c.zipcode.present? }.compact
     @zipcode_json_by_state = {}
@@ -8,9 +8,9 @@ class GeoJson::Zipcode
 
   def features
     stage_zipcode_groups = candidates
-      .group_by { |c| [c.stage, c.zipcode] }
+                           .group_by { |c| [c.stage, c.zipcode] }
 
-    return stage_zipcode_groups
+    stage_zipcode_groups
       .map(&method(:build_feature_for_stage_zipcode_group))
       .flatten
       .compact
@@ -31,25 +31,25 @@ class GeoJson::Zipcode
     state_json = state_json(state)
 
     feature = find_zipcode_feature(state_json, zipcode)
-    feature["properties"]["stage_name"] = stage.name
-    feature["properties"]["description"] = description(scoped_candidates)
+    feature['properties']['stage_name'] = stage.name
+    feature['properties']['description'] = description(scoped_candidates)
     feature
   end
 
   def find_zipcode_feature(state_json, zipcode)
-    feature = state_json["features"].detect do |feature|
-      feature["properties"]["ZCTA5CE10"] == zipcode
+    feature = state_json['features'].detect do |f|
+      f['properties']['ZCTA5CE10'] == zipcode
     end
     Logging::Logger.log("Zipcode #{zipcode} data not found") if feature.blank?
     feature
   end
 
   def description(candidates)
-    candidates.map { |c| c.nickname }.join("\n")
+    candidates.map(&:nickname).join("\n")
   end
-  
+
   def state_json(state)
-    unless zipcode_json_by_state.has_key?(state)
+    unless zipcode_json_by_state.key?(state)
       state_data = File.read("#{Rails.root}/lib/geo_json_data/#{state}.json")
       zipcode_json_by_state[state] = JSON.parse(state_data)
     end
