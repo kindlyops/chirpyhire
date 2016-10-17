@@ -88,7 +88,9 @@ $(document).on("turbolinks:load", function() {
           "type": "fill",
           "source": zipcodeSourceId,
           "paint": {
-            "fill-color": "rgba(100, 100, 100, 0.2)"
+            "fill-color": "rgba(43, 163, 115, 0.1)",
+            "fill-antialias": true,
+            "fill-outline-color": "rgba(43, 163, 115, 0.5)"
           },
           "layout": {
             "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'

@@ -22,6 +22,7 @@ class CandidatesController < ApplicationController
       end
 
       format.html do
+        @zipcodes = zipcodes
         @candidates = filtered_and_paged_candidates
       end
     end
@@ -30,6 +31,7 @@ class CandidatesController < ApplicationController
   def edit
     @candidates = filtered_and_paged_candidates
     @candidate = authorized_candidate
+    @zipcodes = zipcodes
     render :index
   end
 
@@ -46,8 +48,16 @@ class CandidatesController < ApplicationController
 
   private
 
+  def zipcodes
+    filtered_candidates.map(&:zipcode).uniq.compact.sort
+  end
+
   def filtered_and_paged_candidates
-    recent_candidates.filter(filtering_params).page(params.fetch(:page, 1))
+    filtered_candidates.page(params.fetch(:page, 1))
+  end
+
+  def filtered_candidates
+    recent_candidates.filter(filtering_params)
   end
 
   def authorized_candidate
@@ -67,13 +77,10 @@ class CandidatesController < ApplicationController
 
     if created_in.present?
       cookies[:candidate_created_in_filter] = cookie(created_in)
-      created_in
-    elsif cookies[:candidate_created_in_filter].present?
-      cookies[:candidate_created_in_filter]
-    else
+    elsif cookies[:candidate_created_in_filter].blank?
       cookies[:candidate_created_in_filter] = cookie(DEFAULT_CREATED_IN_FILTER)
-      return DEFAULT_CREATED_IN_FILTER
     end
+    cookies[:candidate_created_in_filter]
   end
 
   def stage_name

@@ -7,6 +7,7 @@ FactoryGirl.define do
       organization nil
       latitude nil
       longitude nil
+      zipcode nil
     end
 
     trait :with_subscription do
@@ -16,6 +17,12 @@ FactoryGirl.define do
     before(:create) do |candidate, evaluator|
       if evaluator.organization
         candidate.user = create(:user, organization: evaluator.organization)
+      end
+    end
+
+    after(:create) do |candidate, evaluator|
+      if evaluator.zipcode
+        create(:candidate_feature, candidate: candidate, zipcode: evaluator.zipcode)
       end
     end
 

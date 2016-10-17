@@ -1,6 +1,7 @@
 class GeoJson::Zipcode
   MAPPING_FILE = 'lib/geo_json_data/state_to_zipcode_mapping.json'.freeze
   def initialize(candidates)
+    # include here
     @candidates = candidates.select { |c| c.zipcode.present? }.compact
     @zipcode_json_by_state = {}
     @zipcode_mapping = JSON.parse(File.read("#{Rails.root}/#{MAPPING_FILE}"))
@@ -31,9 +32,16 @@ class GeoJson::Zipcode
     state_json = state_json(state)
 
     feature = find_zipcode_feature(state_json, zipcode)
-    feature['properties']['stage_name'] = stage.name
-    feature['properties']['description'] = description(scoped_candidates)
-    feature
+    {
+      properties:
+      {
+        stage_name: stage.name,
+        description: description(scoped_candidates),
+        zipcode: feature["properties"]["ZCTA5CE10"]
+      },
+      geometry: feature["geometry"],
+      type: "Feature"
+    }
   end
 
   def find_zipcode_feature(state_json, zipcode)
