@@ -20,3 +20,8 @@ spec/examples.txt
 
 # Ignore Redis dumps
 *.rdb
+
+# Ignore large zipcode data files
+lib/geo_json_data
+
+biscayne.sublime-workspace

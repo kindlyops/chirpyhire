@@ -18,9 +18,13 @@ $(document).on("turbolinks:load", function() {
         map.popup.remove();
 
         _.each(unselectedStages, function(stage) {
-          map.setLayoutProperty(stage.name, 'visibility', 'none');
+          getOrderedLayerIds(stage.name).forEach(function(layer_id) {
+            map.setLayoutProperty(layer_id, 'visibility', 'none');
+          });
         });
-        map.setLayoutProperty(currentStageName, 'visibility', 'visible');
+        getOrderedLayerIds(currentStageName).forEach(function(layer_id) {
+          map.setLayoutProperty(layer_id, 'visibility', 'visible');
+        });
       });
     }
 
@@ -35,38 +39,72 @@ $(document).on("turbolinks:load", function() {
       });
     }
 
+    function getOrderedLayerIds(stage_name) {
+      return [stage_name + "_address", stage_name + "_zipcode"]
+    }
+
     function initMap(candidatesGeoData) {
-      var styleId, center, zoom, layers, sources, stages;
-      styleId = "candidates";
-      center = $("#map").data("center");
-      zoom = $("#map").data("zoom");
-      stages = candidatesGeoData.stages;
+      var addressSourceId = "candidates_address",
+        zipcodeSourceId = "candidates_zipcode",
+        center =  $("#map").data("center"),
+        zoom = $("#map").data("zoom"),
+        stages = candidatesGeoData.stages,
+        layers, sources,
+        address_source,zipcode_source,
+        address_layers, zipcode_layers;
 
-      sources = [{
-        id: styleId,
+      address_source = {
+        id: addressSourceId,
         type: "geojson",
-        data: candidatesGeoData
-      }];
+        data: candidatesGeoData.sources[0]
+      };
 
-      layers = _.map(stages, _.bind(function(stage) {
+      zipcode_source = {
+        id: zipcodeSourceId,
+        type: "geojson",
+        data: candidatesGeoData.sources[1]
+      };
+
+      sources = [address_source, zipcode_source];
+
+      address_layers = _.map(stages, function(stage) {
+        layer_ids = getOrderedLayerIds(stage.name);
         return {
-          "id": stage.name,
+          "id": layer_ids[0],
           "type": "symbol",
-          "source": styleId,
+          "source": addressSourceId,
           "layout": {
             "icon-image": "chirpyhire-marker-15",
             "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
           "filter": ["==", "stage_name", stage.name]
         };
-      }, this));
+      });
+      
+      zipcode_layers = _.map(stages, function(stage) {
+        layer_ids = getOrderedLayerIds(stage.name);
+        return {
+          "id": layer_ids[1],
+          "type": "fill",
+          "source": zipcodeSourceId,
+          "paint": {
+            "fill-color": "rgba(100, 100, 100, 0.2)"
+          },
+          "layout": {
+            "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
+          },
+          "filter": ["==", "stage_name", stage.name]
+        };
+      });
+
+      layers = _.flatten([address_layers, zipcode_layers])
 
       var map = new App.Map({
         center: center,
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: _.map(stages, 'name')
+        popupLayers: _.map(layers, 'id')
       });
 
       if(map.loaded()) {

@@ -26,10 +26,6 @@ class Candidate < ApplicationRecord
     order(created_at: :desc, id: :desc)
   end
 
-  def self.with_addresses
-    joins(:candidate_features).merge(CandidateFeature.address)
-  end
-
   def self.stage_name(stage_name)
     joins(:stage).where(stages: { name: stage_name })
   end

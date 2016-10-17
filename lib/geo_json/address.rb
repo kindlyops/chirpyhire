@@ -1,26 +1,14 @@
-class GeoJson::Candidates
-  include ActionView::Helpers::DateHelper
-  def initialize(candidates)
-    @candidates = candidates
-    @stages = stages.map { |stage| { id: stage.id, name: stage.name } }
-  end
+class GeoJson::Address
+  extend ActionView::Helpers::DateHelper
 
-  def call
-    { type: 'FeatureCollection',
-      features: build_features,
-      stages: @stages }
+  def self.features(candidates)
+    candidates = candidates.select { |c| c.address.present? }.compact
+    candidates.map(&method(:build_feature))
   end
 
   private
 
-  attr_reader :candidates
-
-  def build_features
-    @candidates.map(&method(:build_feature)).compact
-  end
-
-  def build_feature(candidate)
-    return unless candidate.address.present? && candidate.stage.present?
+  def self.build_feature(candidate)
     {
       type: 'Feature',
       properties: properties(candidate),
@@ -28,7 +16,7 @@ class GeoJson::Candidates
     }
   end
 
-  def properties(candidate)
+  def self.properties(candidate)
     {
       description: description(candidate),
       stage_id: candidate.stage_id,
@@ -36,18 +24,14 @@ class GeoJson::Candidates
     }
   end
 
-  def geometry(candidate)
+  def self.geometry(candidate)
     {
       type: 'Point',
       coordinates: [candidate.address.longitude, candidate.address.latitude]
     }
   end
 
-  def stages
-    candidates.first.stages
-  end
-
-  def description(candidate)
+  def self.description(candidate)
     "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>\
       #{candidate.phone_number}</a></h3>\
     <p class='handle sub-header'>#{candidate.handle}</p>

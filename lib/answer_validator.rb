@@ -44,10 +44,12 @@ class AnswerValidator
   end
 
   def log(log_message)
-    Rollbar.debug(
+    Logging::Logger.log(
       log_message,
-      id: message.id,
-      body: message.body
+      {
+        id: message.id,
+        body: message.body
+      }
     )
   end
 end
