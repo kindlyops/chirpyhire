@@ -29,19 +29,27 @@ class GeoJson::Zipcode
     stage = key[0]
     zipcode = key[1]
 
-    state = state_for(zipcode)
-    state_json = state_json(state)
+    state_json = state_json(zipcode)
     feature = find_zipcode_feature(state_json, zipcode)
+    properties = feature_properties(stage, zipcode, scoped_candidates, feature)
+
+    build_zipcode_feature(properties, feature)
+  end
+
+  def build_zipcode_feature(properties, feature)
     {
-      properties:
-      {
-        stage_name: stage.name,
-        description: description(stage, zipcode, scoped_candidates),
-        zipcode: feature['properties']['ZCTA5CE10'],
-        center: feature['geometry']['center']
-      },
+      properties: properties,
       geometry: feature['geometry'],
       type: GeoJson::FEATURE_TYPE
+    }
+  end
+
+  def feature_properties(stage, zipcode, scoped_candidates, feature)
+    {
+      stage_name: stage.name,
+      description: description(stage, zipcode, scoped_candidates),
+      zipcode: zipcode,
+      center: feature['geometry']['center']
     }
   end
 
@@ -55,9 +63,12 @@ class GeoJson::Zipcode
 
   def description(stage, zipcode, candidates)
     return single_description(candidates[0]) if candidates.count == 1
-    "<h3>Zipcode: <a href='/candidates?zipcode=#{zipcode}&stage_name=#{URI.encode(stage.name)}&created_in=#{URI.encode(Candidate::CREATED_IN_OPTIONS[:ALL_TIME])}'>\
-      #{zipcode}</a></h3>\
-    <p class='handle sub-header'>#{candidates.count} candidates</p>"
+    "<h3>Zipcode: <a href='/candidates?" \
+      "zipcode=#{zipcode}" \
+      "&stage_name=#{URI.encode(stage.name)}" \
+      "&created_in=#{URI.encode(Candidate::CREATED_IN_OPTIONS[:ALL_TIME])}'>" \
+      "#{zipcode}</a></h3>" \
+    "<p class='handle sub-header'>#{candidates.count} candidates</p>"
   end
 
   def single_description(candidate)
@@ -65,7 +76,8 @@ class GeoJson::Zipcode
     GeoJson.single_description(candidate, candidate_location_p_tag: location)
   end
 
-  def state_json(state)
+  def state_json(zipcode)
+    state = state_for(zipcode)
     unless zipcode_json_by_state.key?(state)
       state_data = File.read("#{Rails.root}/lib/geo_json_data/#{state}.json")
       zipcode_json_by_state[state] = JSON.parse(state_data)

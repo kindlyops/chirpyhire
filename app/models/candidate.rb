@@ -25,9 +25,9 @@ class Candidate < ApplicationRecord
   CREATED_IN_OPTIONS = {
     PAST_24_HOURS: 'Past 24 Hours',
     PAST_WEEK: 'Past Week',
-    PAST_MONTH:'Past Month',
+    PAST_MONTH: 'Past Month',
     ALL_TIME: 'All Time'
-  }
+  }.freeze
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -49,12 +49,15 @@ class Candidate < ApplicationRecord
     where('candidates.created_at > ?', period)
   end
 
+  # rubocop:disable Metrics/LineLength
   def self.zipcode(zipcode)
     return self if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
+
     joins(:candidate_features)
       .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
       .where("properties->>'option' = ?", zipcode)
   end
+  # rubocop:enable Metrics/LineLength
 
   def self.hired
     joins(:stage).merge(Stage.hired)

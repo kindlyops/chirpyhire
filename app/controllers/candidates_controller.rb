@@ -74,15 +74,27 @@ class CandidatesController < ApplicationController
   end
 
   def created_in
-    cookied_query_param(:created_in, :candidate_created_in_filter, DEFAULT_CREATED_IN_FILTER)
+    cookied_query_param(
+      :created_in,
+      :candidate_created_in_filter,
+      DEFAULT_CREATED_IN_FILTER
+    )
   end
 
   def stage_name
-    cookied_query_param(:stage_name, :candidate_stage_filter, current_organization.default_display_stage.name)
+    cookied_query_param(
+      :stage_name,
+      :candidate_stage_filter,
+      current_organization.default_display_stage.name
+    )
   end
 
   def zipcode
-    cookied_query_param(:zipcode, :candidate_zipcode_filter, CandidateFeature::ALL_ZIPCODES_CODE)
+    cookied_query_param(
+      :zipcode,
+      :candidate_zipcode_filter,
+      CandidateFeature::ALL_ZIPCODES_CODE
+    )
   end
 
   def cookied_query_param(param_sym, cookie_sym, default)
