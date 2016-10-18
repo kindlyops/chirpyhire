@@ -30,17 +30,17 @@ class GeoJson::Zipcode
 
     state = state_for(zipcode)
     state_json = state_json(state)
-
     feature = find_zipcode_feature(state_json, zipcode)
     {
       properties:
       {
         stage_name: stage.name,
         description: description(scoped_candidates),
-        zipcode: feature["properties"]["ZCTA5CE10"]
+        zipcode: feature["properties"]["ZCTA5CE10"],
+        center: feature["geometry"]["center"]
       },
       geometry: feature["geometry"],
-      type: "Feature"
+      type: GeoJson::FEATURE_TYPE
     }
   end
 
@@ -53,7 +53,13 @@ class GeoJson::Zipcode
   end
 
   def description(candidates)
+    return single_description(candidates[0]) if candidates.count == 1
     candidates.map(&:nickname).join("\n")
+  end
+
+  def single_description(candidate)
+    location = "<p>Zipcode: #{candidate.zipcode}</p>"
+    GeoJson.single_description(candidate, candidate_location_p_tag: location)
   end
 
   def state_json(state)

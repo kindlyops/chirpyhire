@@ -40,7 +40,11 @@ $(document).on("turbolinks:load", function() {
     }
 
     function getOrderedLayerIds(stage_name) {
-      return [stage_name + "_address", stage_name + "_zipcode"]
+      return [
+        stage_name + "_address",
+        stage_name + "_zipcode",
+        stage_name + "_zipcode_hover"
+      ]
     }
 
     function initMap(candidatesGeoData) {
@@ -50,63 +54,75 @@ $(document).on("turbolinks:load", function() {
         zoom = $("#map").data("zoom"),
         stages = candidatesGeoData.stages,
         layers, sources,
-        address_source,zipcode_source,
-        address_layers, zipcode_layers;
+        addressSource, zipcodeSource,
+        addressLayers, zipcodeLayers;
 
-      address_source = {
+      addressSource = {
         id: addressSourceId,
         type: "geojson",
         data: candidatesGeoData.sources[0]
       };
 
-      zipcode_source = {
+      zipcodeSource = {
         id: zipcodeSourceId,
         type: "geojson",
         data: candidatesGeoData.sources[1]
       };
 
-      sources = [address_source, zipcode_source];
+      sources = [addressSource, zipcodeSource];
 
-      address_layers = _.map(stages, function(stage) {
-        layer_ids = getOrderedLayerIds(stage.name);
+      addressLayers = _.map(stages, function(stage) {
+        layerIds = getOrderedLayerIds(stage.name);
         return {
-          "id": layer_ids[0],
+          "id": layerIds[0],
           "type": "symbol",
           "source": addressSourceId,
           "layout": {
-            "icon-image": "chirpyhire-marker-15",
+            "icon-image": App.MapsCommon.icon,
             "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
           "filter": ["==", "stage_name", stage.name]
         };
       });
       
-      zipcode_layers = _.map(stages, function(stage) {
-        layer_ids = getOrderedLayerIds(stage.name);
-        return {
-          "id": layer_ids[1],
+      zipcodeLayersInfo = _.map(stages, function(stage) {
+        layerIds = getOrderedLayerIds(stage.name);
+        standardLayer = {
+          "id": layerIds[1],
           "type": "fill",
           "source": zipcodeSourceId,
-          "paint": {
-            "fill-color": "rgba(43, 163, 115, 0.1)",
-            "fill-antialias": true,
-            "fill-outline-color": "rgba(43, 163, 115, 0.5)"
-          },
+          "paint": App.MapsCommon.paintFill,
           "layout": {
             "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
           "filter": ["==", "stage_name", stage.name]
         };
+        hoverLayer = {
+          id: layerIds[2],
+          "type": "fill",
+          "source": zipcodeSourceId,
+          "paint": App.MapsCommon.hoverPaintFill,
+          "layout": {
+            "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
+          },
+          "filter": ["==", "zipcode", ""]
+        }
+        return {
+          layers: [standardLayer, hoverLayer],
+          hoverOffFilter: hoverLayer.filter,
+          hoverOnFilterFunction: function(feature) { return ["==", "zipcode", feature.properties.zipcode]; },
+        }
       });
 
-      layers = _.flatten([address_layers, zipcode_layers])
+      layers = addressLayers.concat(_.flatten(_.map(zipcodeLayersInfo, 'layers')))
 
       var map = new App.Map({
         center: center,
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: _.map(layers, 'id')
+        popupLayers: _.map(layers, 'id'),
+        hoverLayerConfigs: zipcodeLayersInfo
       });
 
       if(map.loaded()) {

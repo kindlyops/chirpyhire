@@ -1,27 +1,55 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidate #map").length) {
-    function initMap(candidates) {
-      var styleId, center, zoom, layers, sources, popupLayers;
-      styleId = "candidate";
-      center = candidates.features[0].geometry.coordinates
-      zoom = $("#map").data("zoom");
+    function determineCenter(candidateGeoData) {
+      if (candidateGeoData.sources[0].features.length == 1) {
+        return candidateGeoData.sources[0].features[0].geometry.coordinates
+      } else {
+        return candidateGeoData.sources[1].features[0].properties.center
+      }
+    };
 
-      sources = [{
-        id: styleId,
+    function initMap(candidateGeoData) {
+      var addressSourceId = "candidate_address",
+        zipcodeSourceId = "candidate_zipcode",
+        center = determineCenter(candidateGeoData),
+        zoom =  $("#map").data("zoom"),
+        layers, sources,
+        address_source, zipcode_source,
+        address_layer, zipcode_layer;
+
+
+      address_source = {
+        id: addressSourceId,
         type: "geojson",
-        data: candidates
-      }];
+        data: candidateGeoData.sources[0]
+      };
 
-      layers = [{
-        "id": styleId,
+      zipcode_source = {
+        id: zipcodeSourceId,
+        type: "geojson",
+        data: candidateGeoData.sources[1]
+      };
+
+      address_layer = {
+        "id": addressSourceId,
         "type": "symbol",
-        "source": styleId,
+        "source": addressSourceId,
         "layout": {
-          "icon-image": "chirpyhire-marker-15"
+          "icon-image": App.MapsCommon.icon
         }
-      }];
+      };
 
-      popupLayers = [styleId];
+      zipcode_layer = {
+        "id": zipcodeSourceId,
+        "type": "fill",
+        "source": zipcodeSourceId,
+        "paint": App.MapsCommon.paintFill
+      }
+
+      sources = [address_source, zipcode_source];
+      layers = [address_layer, zipcode_layer];
+
+      popupLayers = [addressSourceId, zipcodeSourceId];
 
       var map = new App.Map({
         center: center,

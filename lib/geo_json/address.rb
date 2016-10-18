@@ -1,6 +1,4 @@
 class GeoJson::Address
-  extend ActionView::Helpers::DateHelper
-
   def self.features(candidates)
     candidates = candidates.select { |c| c.address.present? }.compact
     candidates.map(&method(:build_feature))
@@ -8,7 +6,7 @@ class GeoJson::Address
 
   def self.build_feature(candidate)
     {
-      type: 'Feature',
+      type: GeoJson::FEATURE_TYPE,
       properties: properties(candidate),
       geometry: geometry(candidate)
     }
@@ -30,11 +28,8 @@ class GeoJson::Address
   end
 
   def self.description(candidate)
-    "<h3>Candidate: <a href='/users/#{candidate.user_id}/messages'>\
-      #{candidate.phone_number}</a></h3>\
-    <p class='handle sub-header'>#{candidate.handle}</p>
-    <p>Address: #{candidate.address.formatted_address}</p>\
-    <p>Created: #{time_ago_in_words(candidate.created_at)} ago</p>"
+    location = "<p>Address: #{candidate.address.formatted_address}</p>"
+    GeoJson.single_description(candidate, candidate_location_p_tag: location)
   end
 
   private_class_method :build_feature, :properties, :geometry

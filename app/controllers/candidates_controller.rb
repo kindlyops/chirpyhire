@@ -7,7 +7,6 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       format.geojson do
-        # TODO Update this map JS
         render json: GeoJson.build_sources([@candidate])
       end
 
