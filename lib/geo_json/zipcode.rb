@@ -1,3 +1,4 @@
+require 'uri'
 class GeoJson::Zipcode
   MAPPING_FILE = 'lib/geo_json_data/state_to_zipcode_mapping.json'.freeze
   def initialize(candidates)
@@ -35,7 +36,7 @@ class GeoJson::Zipcode
       properties:
       {
         stage_name: stage.name,
-        description: description(scoped_candidates),
+        description: description(stage, zipcode, scoped_candidates),
         zipcode: feature['properties']['ZCTA5CE10'],
         center: feature['geometry']['center']
       },
@@ -52,9 +53,11 @@ class GeoJson::Zipcode
     feature
   end
 
-  def description(candidates)
+  def description(stage, zipcode, candidates)
     return single_description(candidates[0]) if candidates.count == 1
-    candidates.map(&:nickname).join("\n")
+    "<h3>Zipcode: <a href='/candidates?zipcode=#{zipcode}&stage_name=#{URI.encode(stage.name)}&created_in=#{URI.encode(Candidate::CREATED_IN_OPTIONS[:ALL_TIME])}'>\
+      #{zipcode}</a></h3>\
+    <p class='handle sub-header'>#{candidates.count} candidates</p>"
   end
 
   def single_description(candidate)

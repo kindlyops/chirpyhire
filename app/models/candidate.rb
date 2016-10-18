@@ -22,6 +22,13 @@ class Candidate < ApplicationRecord
 
   before_create :ensure_candidate_has_stage, :add_nickname
 
+  CREATED_IN_OPTIONS = {
+    PAST_24_HOURS: 'Past 24 Hours',
+    PAST_WEEK: 'Past Week',
+    PAST_MONTH:'Past Month',
+    ALL_TIME: 'All Time'
+  }
+
   def self.by_recency
     order(created_at: :desc, id: :desc)
   end
@@ -32,11 +39,10 @@ class Candidate < ApplicationRecord
 
   def self.created_in(created_in)
     period = {
-      'Past 24 Hours' => 24.hours.ago,
-      'Past Week' => 1.week.ago,
-      'Past Month' => 1.month.ago,
-      'All Time' => Date.iso8601('2016-02-01')
-
+      CREATED_IN_OPTIONS[:PAST_24_HOURS] => 24.hours.ago,
+      CREATED_IN_OPTIONS[:PAST_WEEK] => 1.week.ago,
+      CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
+      CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
     }[created_in]
     return self unless period.present?
 
