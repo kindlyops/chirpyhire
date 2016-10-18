@@ -14,23 +14,24 @@ $(document).on("turbolinks:load", function() {
         center = determineCenter(candidateGeoData),
         zoom =  $("#map").data("zoom"),
         layers, sources,
-        address_source, zipcode_source,
-        address_layer, zipcode_layer;
+        addressSource, zipcodeSource,
+        addressLayer, zipcodeLayer, zipcodeHoverLayer,
+        hoverLayerConfig;
 
 
-      address_source = {
+      addressSource = {
         id: addressSourceId,
         type: "geojson",
         data: candidateGeoData.sources[0]
       };
 
-      zipcode_source = {
+      zipcodeSource = {
         id: zipcodeSourceId,
         type: "geojson",
         data: candidateGeoData.sources[1]
       };
 
-      address_layer = {
+      addressLayer = {
         "id": addressSourceId,
         "type": "symbol",
         "source": addressSourceId,
@@ -39,24 +40,38 @@ $(document).on("turbolinks:load", function() {
         }
       };
 
-      zipcode_layer = {
+      zipcodeLayer = {
         "id": zipcodeSourceId,
         "type": "fill",
         "source": zipcodeSourceId,
         "paint": App.MapsCommon.paintFill
-      }
+      };
 
-      sources = [address_source, zipcode_source];
-      layers = [address_layer, zipcode_layer];
+      zipcodeHoverLayer = {
+        "id": zipcodeSourceId + "_hover",
+        "type": "fill",
+        "source": zipcodeSourceId,
+        "paint": App.MapsCommon.hoverPaintFill,
+        "filter": ["==", "zipcode", ""]
+      };
+
+      sources = [addressSource, zipcodeSource];
+      layers = [addressLayer, zipcodeLayer, zipcodeHoverLayer];
 
       popupLayers = [addressSourceId, zipcodeSourceId];
+      hoverLayerConfig = {
+        layers: [zipcodeLayer, zipcodeHoverLayer],
+        hoverOffFilter: zipcodeHoverLayer.filter,
+        hoverOnFilterFunction: function(feature) { return ["==", "zipcode", feature.properties.zipcode]; }
+      };
 
       var map = new App.Map({
         center: center,
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: popupLayers
+        popupLayers: popupLayers,
+        hoverLayerConfigs: [hoverLayerConfig]
       });
     }
 
