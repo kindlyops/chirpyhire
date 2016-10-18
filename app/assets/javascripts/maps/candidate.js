@@ -18,7 +18,6 @@ $(document).on("turbolinks:load", function() {
         addressLayer, zipcodeLayer, zipcodeHoverLayer,
         hoverLayerConfig;
 
-
       addressSource = {
         id: addressSourceId,
         type: "geojson",

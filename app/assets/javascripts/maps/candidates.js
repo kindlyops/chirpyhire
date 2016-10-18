@@ -55,7 +55,8 @@ $(document).on("turbolinks:load", function() {
         stages = candidatesGeoData.stages,
         layers, sources,
         addressSource, zipcodeSource,
-        addressLayers, zipcodeLayers;
+        addressLayers, zipcodeLayers,
+        nonHoverLayers;
 
       addressSource = {
         id: addressSourceId,
@@ -106,7 +107,7 @@ $(document).on("turbolinks:load", function() {
             "visibility": $(dropdownStageSelector).val() === stage.id.toString() ? 'visible' : 'none'
           },
           "filter": ["==", "zipcode", ""]
-        }
+        };
         return {
           layers: [standardLayer, hoverLayer],
           hoverOffFilter: hoverLayer.filter,
@@ -114,14 +115,15 @@ $(document).on("turbolinks:load", function() {
         }
       });
 
-      layers = addressLayers.concat(_.flatten(_.map(zipcodeLayersInfo, 'layers')))
+      layers = addressLayers.concat(_.flatten(_.map(zipcodeLayersInfo, 'layers')));
+      nonHoverLayers = _.map(addressLayers.concat(_.map(zipcodeLayersInfo, function(info) { return info.layers[0] })), 'id');
 
       var map = new App.Map({
         center: center,
         zoom: zoom,
         sources: sources,
         layers: layers,
-        popupLayers: _.map(layers, 'id'),
+        popupLayers: nonHoverLayers,
         hoverLayerConfigs: zipcodeLayersInfo
       });
 

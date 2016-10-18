@@ -17,7 +17,7 @@ class CandidatesController < ApplicationController
   def index
     respond_to do |format|
       format.geojson do
-        @candidates = recent_candidates.decorate
+        @candidates = recent_candidates.includes(:candidate_features).decorate
         render json: GeoJson.build_sources(@candidates)
       end
 

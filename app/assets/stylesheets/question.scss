@@ -31,6 +31,7 @@
     }
     
     @include media ($horizontal-bar-mode) {
+      flex-wrap: nowrap;
       align-items: space-around;
       .card {
         margin: 0 1em 1.5em 1em;
