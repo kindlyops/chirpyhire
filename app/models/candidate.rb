@@ -44,14 +44,13 @@ class Candidate < ApplicationRecord
       CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
       CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
     }[created_in]
-    return self unless period.present?
-
+    return where(nil) unless period.present?
     where('candidates.created_at > ?', period)
   end
 
   # rubocop:disable Metrics/LineLength
   def self.zipcode(zipcode)
-    return self if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
+    return where(nil) if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
 
     joins(:candidate_features)
       .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
