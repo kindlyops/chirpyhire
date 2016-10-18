@@ -1,5 +1,5 @@
 module GeoJson
-  FEATURE_TYPE = 'Feature'
+  FEATURE_TYPE = 'Feature'.freeze
   extend ActionView::Helpers::DateHelper
   def self.build_sources(candidates)
     address_features = GeoJson::Address.features(candidates)
@@ -30,7 +30,6 @@ module GeoJson
   def self.stage_models(candidate)
     candidate.stages.map { |stage| { id: stage.id, name: stage.name } }
   end
-
 
   private_class_method :build_source, :stage_models
 end

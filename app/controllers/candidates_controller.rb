@@ -50,11 +50,11 @@ class CandidatesController < ApplicationController
 
   def zipcodes
     zips = recent_candidates
-      .map(&:zipcode)
-      .uniq
-      .compact
-      .sort
-    [CandidateFeature::ALL_ZIPCODES_CODE].push(*zips)
+           .map(&:zipcode)
+           .uniq
+           .compact
+           .sort
+    [CandidateFeature::ALL_ZIPCODES_CODE].concat(zips)
   end
 
   def filtered_and_paged_candidates

@@ -3,7 +3,7 @@ class CandidateFeature < ApplicationRecord
 
   delegate :user, to: :candidate
 
-  ALL_ZIPCODES_CODE = 'All'
+  ALL_ZIPCODES_CODE = 'All'.freeze
 
   def self.address
     where("properties->>'child_class' = ?", 'address')

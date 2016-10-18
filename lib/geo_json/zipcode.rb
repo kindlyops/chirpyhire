@@ -36,10 +36,10 @@ class GeoJson::Zipcode
       {
         stage_name: stage.name,
         description: description(scoped_candidates),
-        zipcode: feature["properties"]["ZCTA5CE10"],
-        center: feature["geometry"]["center"]
+        zipcode: feature['properties']['ZCTA5CE10'],
+        center: feature['geometry']['center']
       },
-      geometry: feature["geometry"],
+      geometry: feature['geometry'],
       type: GeoJson::FEATURE_TYPE
     }
   end

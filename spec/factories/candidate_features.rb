@@ -34,7 +34,7 @@ FactoryGirl.define do
 
       if evaluator.zipcode
         candidate_feature['properties']['option'] = evaluator.zipcode
-        candidate_feature['properties']['child_class'] = 
+        candidate_feature['properties']['child_class'] =
           ZipcodeQuestion.child_class_property
       end
     end
