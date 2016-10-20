@@ -56,6 +56,7 @@ $(document).on("turbolinks:load", function() {
         layers, sources,
         addressSource, zipcodeSource,
         addressLayers, zipcodeLayers,
+        zipcodeLayersInfo,
         nonHoverLayers;
 
       addressSource = {
@@ -109,14 +110,16 @@ $(document).on("turbolinks:load", function() {
           "filter": ["==", "zipcode", ""]
         };
         return {
-          layers: [standardLayer, hoverLayer],
+          triggerLayer: standardLayer
+          hoverLayer: hoverLayer
           hoverOffFilter: hoverLayer.filter,
           hoverOnFilterFunction: function(feature) { return ["==", "zipcode", feature.properties.zipcode]; },
         }
       });
 
-      layers = addressLayers.concat(_.flatten(_.map(zipcodeLayersInfo, 'layers')));
-      nonHoverLayers = _.map(addressLayers.concat(_.map(zipcodeLayersInfo, function(info) { return info.layers[0] })), 'id');
+      zipcodeLayers = _.flatten(_.map(zipcodeLayersInfo, function(info) { [info.triggerLayer, info.hoverLayer] }))
+      layers = addressLayers.concat(zipcodeLayers);
+      nonHoverLayers = _.map(addressLayers.concat(_.map(zipcodeLayersInfo, 'triggerLayer' })), 'id');
 
       var map = new App.Map({
         center: center,
