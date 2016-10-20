@@ -9,6 +9,10 @@ class QuestionsController < ApplicationController
     @question = authorize(Question.find(params[:id]))
   end
 
+  def show
+    redirect_to edit_question_path(authorize(Question.find(params[:id])))
+  end
+
   def create
     @question = authorize(new_question)
     if @question.save

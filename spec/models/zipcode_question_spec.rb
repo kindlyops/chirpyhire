@@ -18,4 +18,19 @@ RSpec.describe ZipcodeQuestion, type: :model do
       expect(ZipcodeQuestion.extract(message, inquiry)).to eq(expected_properties)
     end
   end
+
+  describe '.zipcode_is_five_digits' do
+    context 'does not allow options with text' do
+      let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: 'zipss' }]) }
+      it 'has errors' do
+        expect{ question }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Zipcode question options must be five digits")
+      end
+    end
+    context 'does not allow options that are not five digits' do
+      let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: '1234' }]) }
+      it 'has errors' do
+        expect{ question }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Zipcode question options must be five digits")
+      end
+    end
+  end
 end
