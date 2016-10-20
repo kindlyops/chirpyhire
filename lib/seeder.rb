@@ -113,7 +113,7 @@ class Seeder
     end
 
     unless org.survey.questions.present?
-      @location_question = create_location_question(1)
+      create_location_question(1)
       @choice_question = org.survey.questions.create!(priority: 2, label: "Availability", type: ChoiceQuestion.name, text: "What is your availability?",
         choice_question_options_attributes: [
           {text: "Live-in", letter: "a"},

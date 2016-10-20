@@ -8,6 +8,7 @@ FactoryGirl.define do
       latitude nil
       longitude nil
       zipcode nil
+      address_zipcode nil
     end
 
     trait :with_subscription do
@@ -25,11 +26,13 @@ FactoryGirl.define do
         create(:candidate_feature, candidate: candidate, zipcode: evaluator.zipcode)
       end
     end
-
+ 
     trait :with_address do
       after(:create) do |candidate, evaluator|
         if evaluator.latitude && evaluator.longitude
           create(:candidate_feature, :address, candidate: candidate, latitude: evaluator.latitude, longitude: evaluator.longitude)
+        elsif evaluator.address_zipcode
+          create(:candidate_feature, :address, candidate: candidate, address_zipcode: evaluator.address_zipcode)
         else
           create(:candidate_feature, :address, candidate: candidate)
         end
