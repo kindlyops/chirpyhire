@@ -26,10 +26,9 @@ class GeoJson::Zipcode
   attr_accessor :zipcode_json_by_state
 
   def build_feature_for_stage_zipcode_group(stage_zipcode_group)
-    key = stage_zipcode_group[0]
     scoped_candidates = stage_zipcode_group[1]
-    stage = key[0]
-    zipcode = key[1]
+    stage = stage_zipcode_group[0][0]
+    zipcode = stage_zipcode_group[0][1]
 
     state_json = state_json(zipcode)
     feature = find_zipcode_feature(state_json, zipcode)
@@ -38,7 +37,7 @@ class GeoJson::Zipcode
     build_zipcode_feature(properties, feature)
   rescue DataNotFoundError => e
     Logging::Logger.log(e.message)
-    return nil;
+    return nil
   end
 
   def build_zipcode_feature(properties, feature)
@@ -62,7 +61,7 @@ class GeoJson::Zipcode
     feature = state_json['features'].detect do |f|
       f['properties']['ZCTA5CE10'] == zipcode
     end
-    raise DataNotFoundError, "Zipcode #{zipcode} data not found" if feature.blank?
+    raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
     feature
   end
 
@@ -83,7 +82,7 @@ class GeoJson::Zipcode
 
   def state_json(zipcode)
     state = state_for(zipcode)
-    raise DataNotFoundError, "State for #{zipcode} not found" if state.blank?
+    raise DataNotFoundError, "No state for #{zipcode}" if state.blank?
 
     unless zipcode_json_by_state.key?(state)
       state_data = File.read("#{Rails.root}/lib/geo_json_data/#{state}.json")

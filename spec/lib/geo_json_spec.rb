@@ -53,4 +53,3 @@ RSpec.describe GeoJson do
     end
   end
 end
-

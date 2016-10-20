@@ -38,14 +38,9 @@ class Candidate < ApplicationRecord
   end
 
   def self.created_in(created_in)
-    period = {
-      CREATED_IN_OPTIONS[:PAST_24_HOURS] => 24.hours.ago,
-      CREATED_IN_OPTIONS[:PAST_WEEK] => 1.week.ago,
-      CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
-      CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
-    }[created_in]
-    return where(nil) unless period.present?
-    where('candidates.created_at > ?', period)
+    min_date = min_date(created_in)
+    return where(nil) unless min_date.present?
+    where('candidates.created_at > ?', min_date)
   end
 
   # rubocop:disable Metrics/LineLength
@@ -100,6 +95,16 @@ class Candidate < ApplicationRecord
   end
 
   private
+
+  def self.min_date(created_in)
+    {
+      CREATED_IN_OPTIONS[:PAST_24_HOURS] => 24.hours.ago,
+      CREATED_IN_OPTIONS[:PAST_WEEK] => 1.week.ago,
+      CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
+      CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
+    }[created_in]
+  end
+  private_class_method :min_date
 
   def features(question_class)
     candidate_features.where("properties->>'child_class' = ?",

@@ -1,15 +1,14 @@
 class FakeLogger
-  def initialize
-    @logged_messages = []
-  end
+  @@logged_messages = []
 
-  attr_accessor :logged_messages
+  cattr_accessor :logged_messages
 
-  def log(message)
+  def self.log(message)
     logged_messages.push(message)
   end
 end
 
-logger = FakeLogger.new
-Logging::Logger = logger
-RSpec.configure { |config| config.before(:each) { logger.logged_messages = [] } }
+module Logging
+  Logger = FakeLogger
+end
+RSpec.configure { |config| config.before(:each) { FakeLogger.logged_messages = [] } }
