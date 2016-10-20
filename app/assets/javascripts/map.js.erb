@@ -81,8 +81,9 @@
     _initHover: function() {
       this._map.on('mousemove', function(e) {
         this.hoverLayerConfigs.forEach(function(hoverConfig) {
-          var hoverLayerId = hoverConfig.hoverLayer.id,
-            features = this._map.queryRenderedFeatures(e.point, { layers: [hoverConfig.triggerLayer.id] });
+          var triggerLayerId = hoverConfig.layers[0].id,
+            hoverLayerId = hoverConfig.layers[1].id,
+            features = this._map.queryRenderedFeatures(e.point, { layers: [triggerLayerId] });
 
           if (features.length) {
             this._map.setFilter(hoverLayerId, hoverConfig.hoverOnFilterFunction(features[0]));
