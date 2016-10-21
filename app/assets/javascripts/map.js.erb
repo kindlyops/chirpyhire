@@ -35,17 +35,19 @@
     },
     _init: function() {
       this._initMap();
+      if(this._map.loaded()) {
+        this._onLoad();
+      } else {
+        this._map.on('load', this._onLoad.bind(this))
+      }
+    },
+    _onLoad: function() {
+      this._addSourcesAndLayers();
       if (this.popupLayers.length) {
         this._initPopup();
       }
       if (this.hoverLayerConfigs.length) {
         this._initHover();
-      }
-
-      if(this._map.loaded()) {
-        this._addSourcesAndLayers();
-      } else {
-        this._map.on('load', this._addSourcesAndLayers.bind(this))
       }
     },
     _initMap: function() {

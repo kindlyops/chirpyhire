@@ -116,7 +116,7 @@ $(document).on("turbolinks:load", function() {
       return {
         address: stage_name + "_address",
         zipcode: stage_name + "_zipcode",
-        zipcodeHover: +stage_name + "_zipcode_hover"
+        zipcodeHover: stage_name + "_zipcode_hover"
       };
     }
 
@@ -134,9 +134,9 @@ $(document).on("turbolinks:load", function() {
 
     function watchSelect() {
       $(document).on("change", dropdownStageSelector, function(event) {
-        var currentStageId = this.value,
-          currentLayerIds,
+        var currentLayerIds,
           unselectedStages;
+        currentStageId = this.value;
 
         currentLayerIds = currentLayers();
         unselectedStages = _.reject(stages, isCurrentStage(currentStageId));
@@ -145,10 +145,10 @@ $(document).on("turbolinks:load", function() {
 
         _.each(unselectedStages, function(stage) {
           if (mapType == 'address') {
-            map.setLayoutProperty(getLayerIds(stage).address, 'visibility', 'none');
+            map.setLayoutProperty(getLayerIds(stage.name).address, 'visibility', 'none');
           } else {
-            map.setLayoutProperty(getLayerIds(stage).zipcode, 'visibility', 'none');
-            map.setLayoutProperty(getLayerIds(stage).zipcodeHover, 'visibility', 'none');
+            map.setLayoutProperty(getLayerIds(stage.name).zipcode, 'visibility', 'none');
+            map.setLayoutProperty(getLayerIds(stage.name).zipcodeHover, 'visibility', 'none');
           }
         });
         if (mapType == 'address') {
