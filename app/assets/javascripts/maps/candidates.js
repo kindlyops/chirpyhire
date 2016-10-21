@@ -2,7 +2,7 @@ $(document).on("turbolinks:load", function() {
   if($(".maps-candidates #map").length) {
     var dropdownStageSelector = ".maps-candidates .dropdown select",
       currentStageId = $(dropdownStageSelector).val(),
-      mapType = 'address',
+      mapType = $(".map-type i[selected]").attr('data-map-type'),
       stages,
       map,
       addressLayers = [],
