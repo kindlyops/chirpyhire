@@ -1,5 +1,5 @@
 class FakeLogger
-  @@logged_messages = []
+  self.logged_messages = []
 
   cattr_accessor :logged_messages
 

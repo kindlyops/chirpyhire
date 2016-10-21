@@ -42,7 +42,6 @@ FactoryGirl.define do
         candidate_feature['properties']['child_class'] =
           ZipcodeQuestion.child_class_property
       end
-
     end
   end
 end

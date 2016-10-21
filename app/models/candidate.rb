@@ -47,13 +47,14 @@ class Candidate < ApplicationRecord
   def self.zipcode(zipcode)
     return where(nil) if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
 
-      self.joins(:candidate_features)
-          .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
-          .where("properties->>'option' = ?", zipcode)
-    .or(
-      self.joins(:candidate_features)
-          .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
-          .where("properties->>'postal_code' = ?", zipcode))
+    joins(:candidate_features)
+      .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
+      .where("properties->>'option' = ?", zipcode)
+      .or(
+        joins(:candidate_features)
+            .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
+            .where("properties->>'postal_code' = ?", zipcode)
+      )
   end
   # rubocop:enable Metrics/LineLength
 
@@ -79,7 +80,9 @@ class Candidate < ApplicationRecord
   end
 
   def zipcode
-    features(ZipcodeQuestion).first&.properties&.dig('option') || address&.zipcode
+    features(ZipcodeQuestion)
+      .first&.properties
+      &.dig('option') || address&.zipcode
   end
 
   def address_feature
@@ -111,7 +114,9 @@ class Candidate < ApplicationRecord
   private_class_method :min_date
 
   def features(question_class)
-    candidate_features.select { |f| f.properties["child_class"] == question_class.child_class_property }
+    candidate_features.select do |f|
+      f.properties['child_class'] == question_class.child_class_property
+    end
   end
 
   def ensure_candidate_has_stage

@@ -106,31 +106,31 @@ RSpec.describe CandidatesController, type: :controller do
     end
 
     context 'with zipcode filter' do
-      let(:zipcodes) { ['30342', '30305', '30307'] }
+      let(:zipcodes) { %w(30342 30305 30307) }
       let!(:no_address_or_zipcode_candidates) do
         Array.new(3) do
           create(:candidate,
-            stage: organization.qualified_stage,
-            organization: organization)
+                 stage: organization.qualified_stage,
+                 organization: organization)
         end
       end
 
       let!(:zipcode_candidates) do
         zipcodes.map do |zipcode|
           create(:candidate,
-            stage: organization.qualified_stage,
-            organization: organization,
-            zipcode: zipcode)
+                 stage: organization.qualified_stage,
+                 organization: organization,
+                 zipcode: zipcode)
         end
       end
 
       let!(:address_candidates) do
-        (['12345', '30305']).map do |zipcode|
+        %w(12345 30305).map do |zipcode|
           create(:candidate,
-            :with_address,
-            stage: organization.qualified_stage,
-            organization: organization,
-            address_zipcode: zipcode)
+                 :with_address,
+                 stage: organization.qualified_stage,
+                 organization: organization,
+                 address_zipcode: zipcode)
         end
       end
 
