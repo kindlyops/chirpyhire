@@ -1,33 +1,27 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidate #map").length) {
-    function determineCenter(candidateGeoData) {
-      if (candidateGeoData.sources[0].features.length == 1) {
-        return candidateGeoData.sources[0].features[0].geometry.coordinates
-      } else {
-        return candidateGeoData.sources[1].features[0].properties.center
-      }
-    };
-
     function initMap(candidateGeoData) {
       var addressSourceId = "candidate_address",
         zipcodeSourceId = "candidate_zipcode",
-        center = determineCenter(candidateGeoData),
         zoom =  $("#map").data("zoom"),
         layers, sources,
+        addressSourceData = candidateGeoData.sources[0],
+        zipcodeSourceData = candidateGeoData.sources[1],
+        center = determineCenter(addressSourceData, zipcodeSourceData),
         addressSource, zipcodeSource,
         addressLayer, zipcodeLayer, zipcodeHoverLayer,
-        hoverLayerConfig;
+        hoverLayerConfigs;
 
       addressSource = {
         id: addressSourceId,
         type: "geojson",
-        data: candidateGeoData.sources[0]
+        data: addressSourceData
       };
 
       zipcodeSource = {
         id: zipcodeSourceId,
         type: "geojson",
-        data: candidateGeoData.sources[1]
+        data: zipcodeSourceData
       };
 
       addressLayer = {
@@ -54,15 +48,24 @@ $(document).on("turbolinks:load", function() {
         "filter": ["==", "zipcode", ""]
       };
 
-      sources = [addressSource, zipcodeSource];
-      layers = [addressLayer, zipcodeLayer, zipcodeHoverLayer];
+      sources = [addressSource];
+      layers = [addressLayer];
+      popupLayers = [addressSourceId];
+      if (zipcodeSourceData.features.length) {
+        
+        sources.push(zipcodeSource);
+        layers.push(zipcodeLayer)
+        layers.push(zipcodeHoverLayer)
+        popupLayers.push(zipcodeSourceId)
 
-      popupLayers = [addressSourceId, zipcodeSourceId];
-      hoverLayerConfig = {
-        layers: [zipcodeLayer, zipcodeHoverLayer],
-        hoverOffFilter: zipcodeHoverLayer.filter,
-        hoverOnFilterFunction: function(feature) { return ["==", "zipcode", feature.properties.zipcode]; }
-      };
+        hoverLayerConfig = {
+          layers: [zipcodeLayer, zipcodeHoverLayer],
+          hoverOffFilter: zipcodeHoverLayer.filter,
+          hoverOnFilterFunction: function(feature) { return ["==", "zipcode", feature.properties.zipcode]; }
+        };
+        hoverLayerConfigs.push(hoverLayerConfig)
+      }
+
 
       var map = new App.Map({
         center: center,
@@ -70,10 +73,17 @@ $(document).on("turbolinks:load", function() {
         sources: sources,
         layers: layers,
         popupLayers: popupLayers,
-        hoverLayerConfigs: [hoverLayerConfig]
+        hoverLayerConfigs: hoverLayerConfigs
       });
-    }
+    };
 
+    function determineCenter(addressSourceData, zipcodeSourceData) {
+      if (addressSourceData.features.length == 1) {
+        return addressSourceData.features[0].geometry.coordinates
+      } else {
+        return zipcodeSourceData.features[0].properties.center
+      }
+    };
     $.get({
       url: "/candidates/" + $("#map").data("id") + ".geojson",
       dataType: "json",

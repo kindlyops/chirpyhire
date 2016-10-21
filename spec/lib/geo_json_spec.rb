@@ -27,10 +27,10 @@ RSpec.describe GeoJson do
       end
     end
     context 'only candidates with address features' do
-      let(:address_candidate) { create(:candidate, :with_address, organization: organization) }
+      let(:address_candidate) { create(:candidate, :with_address, address_zipcode: '30342', organization: organization) }
       let(:geo_json_data) { GeoJson.build_sources([address_candidate]) }
-      it 'should not have any zipcode features' do
-        expect(geo_json_data[:sources][1][:features].count).to eq(0)
+      it 'should have zipcode features' do
+        expect(geo_json_data[:sources][1][:features].count).to eq(1)
       end
       it 'should have address features' do
         expect(geo_json_data[:sources][0][:features].count).to eq(1)
@@ -40,7 +40,7 @@ RSpec.describe GeoJson do
       end
     end
     context 'candidates with address or zipcode features' do
-      let(:address_candidate) { create(:candidate, :with_address, organization: organization) }
+      let(:address_candidate) { create(:candidate, :with_address, address_zipcode: '30305', organization: organization) }
       let(:zipcode_candidate) { create(:candidate, zipcode: '30342', organization: organization) }
       let(:geo_json_data) { GeoJson.build_sources([address_candidate, zipcode_candidate]) }
 
@@ -48,7 +48,7 @@ RSpec.describe GeoJson do
         expect(geo_json_data[:sources][0][:features].count).to eq(1)
       end
       it 'should have zipcode features' do
-        expect(geo_json_data[:sources][1][:features].count).to eq(1)
+        expect(geo_json_data[:sources][1][:features].count).to eq(2)
       end
     end
   end

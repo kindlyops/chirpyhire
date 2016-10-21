@@ -135,7 +135,7 @@ RSpec.describe ZipcodeQuestionsController, type: :controller do
         }
 
         let(:new_attributes) {
-          { text: 'New question text', label: 'New question label', zipcode_question_options_attributes: [{ text: 'Foo' }] }
+          { text: 'New question text', label: 'New question label', zipcode_question_options_attributes: [{ text: '12345' }] }
         }
 
         it 'updates the requested zipcode_question_option' do

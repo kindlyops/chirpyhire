@@ -13,7 +13,7 @@
     .card-copy-top
       - if candidate.address.present?
         = render partial: "candidates/address", locals: { candidate: candidate }
-      - elsif candidate.zipcode.present?
+      - if candidate.zipcode.present?
         = render partial: "candidates/zipcode", locals: { candidate: candidate }
       = render partial: "candidates/yes_no", collection: candidate.yes_nos
       = render partial: "candidates/choice", collection: candidate.choices

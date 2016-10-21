@@ -384,10 +384,10 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       find('#edit-question', match: :first).trigger('click')
       click_link('Add option')
 
-      all('.nested-fields').last.find("input[placeholder='Valid zipcode']").set('Another Option')
+      all('.nested-fields').last.find("input[placeholder='Valid zipcode']").set('12346')
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
-      expect(page).to have_text('Another Option')
+      expect(page).to have_text('12346')
     end
 
     it 'edits the text of the question successfully' do
@@ -402,11 +402,11 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
 
     it 'edits the text of an option successfully' do
       visit edit_question_path(zipcode_question.id)
-      first('.nested-fields').find("input[placeholder='Valid zipcode']").set('New Option')
+      first('.nested-fields').find("input[placeholder='Valid zipcode']").set('12466')
 
       click_button('Save')
       expect(page).to have_text('Nice! Question saved.')
-      expect(page).to have_text('New Option')
+      expect(page).to have_text('12466')
     end
 
     context 'removing an option' do

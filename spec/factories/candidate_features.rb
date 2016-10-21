@@ -10,7 +10,7 @@ FactoryGirl.define do
           country: 'USA',
           latitude:  rand(33.624972..34.109784),
           longitude:  rand(-84.633424..-84.144741),
-          postal_code: Faker::Address.zip_code,
+          postal_code: Faker::Address.zip_code(state_code || 'GA'),
           child_class: AddressQuestion.child_class_property }
       }
     end
@@ -21,6 +21,7 @@ FactoryGirl.define do
       longitude nil
       zipcode nil
       address_zipcode nil
+      state_code nil
     end
 
     before(:create) do |candidate_feature, evaluator|

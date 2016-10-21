@@ -1,4 +1,4 @@
-Arequire 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe ZipcodeQuestion, type: :model do
   it { should validate_presence_of(:zipcode_question_options) }

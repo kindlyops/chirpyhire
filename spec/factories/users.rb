@@ -1,5 +1,3 @@
-Faker::Config.locale = 'en-US'
-
 FactoryGirl.define do
   factory :user do
     organization

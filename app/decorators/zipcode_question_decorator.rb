@@ -6,6 +6,6 @@ class ZipcodeQuestionDecorator < Draper::Decorator
   end
 
   def text_placeholder
-    'What is your zipcode?'
+    'What is your 5-digit zipcode?'
   end
 end

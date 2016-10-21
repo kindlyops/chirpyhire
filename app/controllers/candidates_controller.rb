@@ -17,7 +17,9 @@ class CandidatesController < ApplicationController
   def index
     respond_to do |format|
       format.geojson do
-        @candidates = recent_candidates.includes(:candidate_features).decorate
+        @candidates = recent_candidates
+          .includes(:candidate_features, :user)
+          .references(:candidate_features, :user)
         render json: GeoJson.build_sources(@candidates)
       end
 
@@ -49,11 +51,13 @@ class CandidatesController < ApplicationController
   private
 
   def zipcodes
-    zips = recent_candidates
-           .map(&:zipcode)
-           .uniq
-           .compact
-           .sort
+    zipcode_feature_zips = recent_candidates.map(&:zipcode)
+    address_feature_zips = recent_candidates.map { |c| c.address&.zipcode }
+    zips = zipcode_feature_zips.concat(address_feature_zips)
+                               .compact
+                               .map { |f| f[0..4] } 
+                               .uniq
+                               .sort
     [CandidateFeature::ALL_ZIPCODES_CODE].concat(zips)
   end
 
