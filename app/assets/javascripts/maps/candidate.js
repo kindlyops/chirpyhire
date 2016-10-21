@@ -10,7 +10,7 @@ $(document).on("turbolinks:load", function() {
         center = determineCenter(addressSourceData, zipcodeSourceData),
         addressSource, zipcodeSource,
         addressLayer, zipcodeLayer, zipcodeHoverLayer,
-        hoverLayerConfigs;
+        hoverLayerConfigs = [];
 
       addressSource = {
         id: addressSourceId,
@@ -52,7 +52,7 @@ $(document).on("turbolinks:load", function() {
       layers = [addressLayer];
       popupLayers = [addressSourceId];
       if (zipcodeSourceData.features.length) {
-        
+
         sources.push(zipcodeSource);
         layers.push(zipcodeLayer)
         layers.push(zipcodeHoverLayer)

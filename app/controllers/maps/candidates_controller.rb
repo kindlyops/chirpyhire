@@ -4,6 +4,7 @@ class Maps::CandidatesController < ApplicationController
 
   def show
     set_stage_filter_cookie
+    @candidate = authorize(Candidate.find(params[:id]))
     @map = Map.new(current_organization)
   end
 

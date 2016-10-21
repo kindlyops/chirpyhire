@@ -1,5 +1,4 @@
 = title "Candidate | Chirpyhire"
 
 .maps-candidate.toggleable-map
-  #map data-zoom==@map.zoom data-id==params[:id]
-    = render 'map_type', map_type: 'address'
+  #map data-zoom=@map.zoom data-id=params[:id] data-map-type=(@candidate.address.present? ? 'address' : 'zipcode')
