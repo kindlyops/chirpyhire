@@ -1,6 +1,5 @@
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
-  DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
     respond_to do |format|
@@ -53,8 +52,6 @@ class CandidatesController < ApplicationController
 
   private
 
-  attr_accessor :state_data
-
   def zipcodes
     zipcode_feature_zips = recent_candidates.map(&:zipcode)
     address_feature_zips = recent_candidates.map { |c| c.address&.zipcode }
@@ -87,7 +84,7 @@ class CandidatesController < ApplicationController
     cookied_query_param(
       :created_in,
       :candidate_created_in_filter,
-      DEFAULT_CREATED_IN_FILTER
+      'Past Week'
     )
   end
 

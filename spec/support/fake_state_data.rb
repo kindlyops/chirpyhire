@@ -1,4 +1,5 @@
 class FakeStateData
+  # rubocop:disable Metrics/MethodLength
   def state_json(zipcode)
     {
       'type' => 'FeatureCollection',
@@ -14,4 +15,5 @@ class FakeStateData
       }]
     }
   end
+  # rubocop:enable Metrics/MethodLength
 end
