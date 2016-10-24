@@ -3,15 +3,15 @@ class CandidatesController < ApplicationController
   DEFAULT_CREATED_IN_FILTER = 'Past Week'.freeze
 
   def show
-    @candidate = authorized_candidate
-
     respond_to do |format|
       format.geojson do
-        state_data = GeoJson::StateData.new
+        @candidate = authorized_candidate.decorate
         render json: GeoJson.build_sources([@candidate], state_data)
       end
 
-      format.html
+      format.html do
+        @candidate = authorized_candidate
+      end
     end
   end
 
@@ -19,7 +19,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.geojson do
         @candidates = recent_candidates
-        render json: GeoJson.build_sources(@candidates, GeoJson::StateData.new)
+        render json: GeoJson.build_sources(@candidates, state_data)
       end
 
       format.html do
@@ -47,7 +47,13 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def state_data
+    @state_data ||= GeoJson::StateData.new
+  end
+
   private
+
+  attr_accessor :state_data
 
   def zipcodes
     zipcode_feature_zips = recent_candidates.map(&:zipcode)

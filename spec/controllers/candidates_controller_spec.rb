@@ -9,6 +9,17 @@ RSpec.describe CandidatesController, type: :controller do
     sign_in(account)
   end
 
+  describe '#show' do
+    let(:user) { create(:user, organization: organization) }
+    let(:candidate) { create(:candidate, user: user) }
+    context 'geojson' do
+      it 'is OK' do
+        get :show, params: { id: candidate.id, format: 'geojson' }
+        expect(response).to be_ok
+      end
+    end
+  end
+
   describe '#index' do
     it 'is OK' do
       get :index
@@ -167,6 +178,11 @@ RSpec.describe CandidatesController, type: :controller do
           let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
 
           it 'is OK' do
+            class CandidatesController
+              def state_data
+                FakeStateData.new
+              end
+            end
             get :index, format: :geojson
             expect(response).to be_ok
           end

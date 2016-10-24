@@ -1,27 +1,7 @@
 require 'rails_helper'
 RSpec.describe GeoJson do
   let(:organization) { create(:organization, :with_subscription, :with_account) }
-  let(:state_data) do
-    state_data = Object.new
-    # rubocop:disable Metrics/MethodLength
-    def state_data.state_json(zipcode)
-      {
-        'type' => 'FeatureCollection',
-        'features' => [{
-          'type' => 'Feature',
-          'properties' => {
-            'ZCTA5CE10' => zipcode
-          },
-          'geometry' => {
-            'center' => [0.0, 0.0],
-            'coordinates' => []
-          }
-        }]
-      }
-    end
-    # rubocop:enable Metrics/MethodLength
-    state_data
-  end
+  let(:state_data) { FakeStateData.new }
 
   context '#build_sources' do
     context 'where the zipcode exists' do
