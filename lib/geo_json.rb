@@ -1,9 +1,9 @@
 module GeoJson
   FEATURE_TYPE = 'Feature'.freeze
   extend ActionView::Helpers::DateHelper
-  def self.build_sources(candidates)
+  def self.build_sources(candidates, state_data)
     address_features = GeoJson::Address.features(candidates)
-    zipcode_features = GeoJson::Zipcode.new(candidates).features
+    zipcode_features = GeoJson::Zipcode.new(candidates, state_data).features
     stages = stage_models(candidates.first)
 
     address_source = build_source(address_features)

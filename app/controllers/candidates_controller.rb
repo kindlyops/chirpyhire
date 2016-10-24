@@ -7,7 +7,8 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       format.geojson do
-        render json: GeoJson.build_sources([@candidate])
+        state_data = GeoJson::StateData.new
+        render json: GeoJson.build_sources([@candidate], state_data)
       end
 
       format.html
@@ -18,7 +19,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.geojson do
         @candidates = recent_candidates
-        render json: GeoJson.build_sources(@candidates)
+        render json: GeoJson.build_sources(@candidates, GeoJson::StateData.new)
       end
 
       format.html do

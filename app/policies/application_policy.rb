@@ -10,10 +10,6 @@ class ApplicationPolicy
     @record = record
   end
 
-  def logged_in?
-    true
-  end
-
   def index?
     false
   end

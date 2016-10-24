@@ -1,10 +1,8 @@
 require 'uri'
 class GeoJson::Zipcode
-  MAPPING_FILE = 'lib/geo_json_data/state_to_zipcode_mapping.json'.freeze
-  def initialize(candidates)
+  def initialize(candidates, state_data)
     @candidates = candidates.select { |c| c.zipcode.present? }.compact
-    @zipcode_json_by_state = {}
-    @zipcode_mapping = JSON.parse(File.read("#{Rails.root}/#{MAPPING_FILE}"))
+    @state_data = state_data
   end
 
   def features
@@ -17,20 +15,19 @@ class GeoJson::Zipcode
       .compact
   end
 
-  private
-
   class DataNotFoundError < StandardError
   end
 
-  attr_reader :candidates, :zipcode_mapping
-  attr_accessor :zipcode_json_by_state
+  private
+
+  attr_reader :candidates, :state_data
 
   def build_feature_for_stage_zipcode_group(stage_zipcode_group)
     scoped_candidates = stage_zipcode_group[1]
     stage = stage_zipcode_group[0][0]
     zipcode = stage_zipcode_group[0][1]
 
-    state_json = state_json(zipcode)
+    state_json = state_data.state_json(zipcode)
     feature = find_zipcode_feature(state_json, zipcode)
     properties = feature_properties(stage, zipcode, scoped_candidates, feature)
 
@@ -78,20 +75,5 @@ class GeoJson::Zipcode
   def single_description(candidate)
     location = "<p>Zipcode: #{candidate.zipcode}</p>"
     GeoJson.single_description(candidate, candidate_location_p_tag: location)
-  end
-
-  def state_json(zipcode)
-    state = state_for(zipcode)
-    raise DataNotFoundError, "No state for #{zipcode}" if state.blank?
-
-    unless zipcode_json_by_state.key?(state)
-      state_data = File.read("#{Rails.root}/lib/geo_json_data/#{state}.json")
-      zipcode_json_by_state[state] = JSON.parse(state_data)
-    end
-    zipcode_json_by_state[state]
-  end
-
-  def state_for(zipcode)
-    zipcode_mapping[zipcode]
   end
 end
