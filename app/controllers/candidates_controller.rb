@@ -14,12 +14,10 @@ class CandidatesController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/MethodLength
   def index
     respond_to do |format|
       format.geojson do
-        @candidates = recent_candidates.includes(:candidate_features, :user)
-                                       .references(:candidate_features, :user)
+        @candidates = recent_candidates
         render json: GeoJson.build_sources(@candidates)
       end
 
@@ -29,7 +27,6 @@ class CandidatesController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   def edit
     @candidates = filtered_and_paged_candidates
@@ -71,7 +68,8 @@ class CandidatesController < ApplicationController
   end
 
   def recent_candidates
-    policy_scope(Candidate).by_recency
+    policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
+                           .references(:candidate_features, :user)
   end
 
   def filtering_params
