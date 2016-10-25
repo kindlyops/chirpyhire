@@ -9,7 +9,7 @@ $(document).on("turbolinks:load", function() {
         center = determineCenter(addressSourceData, zipcodeSourceData),
         addressLayer = buildAddressLayer(addressSourceId),
         zipcodeLayer = buildZipcodeLayer(zipcodeSourceId),
-        zipcodeHoverLayer buildZipcodeHoverLayer(zipcodeSourceId),
+        zipcodeHoverLayer = buildZipcodeHoverLayer(zipcodeSourceId),
         layers = [addressLayer],
         sources = [addressSource],
         popupLayers = [addressSourceId],
