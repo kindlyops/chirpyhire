@@ -22,9 +22,8 @@ module Nicknames
       ANIMALS.count * ADJECTIVES.count
     end
 
-    attr_reader :tried_names
-
     private
+    attr_reader :tried_names
 
     def tried?(nickname)
       tried_names.include?(nickname)

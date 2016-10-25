@@ -15,7 +15,8 @@ RSpec.describe Nicknames::Generator do
       allow(generator).to receive(:random_nickname).exactly(2).times
         .and_return(candidate.nickname, 'Dumb Bunny')
       expect(generator.generate).to eq('Dumb Bunny')
-      expect(generator.tried_names.include?(candidate.nickname)).to eq(true)
+      expect(generator.send(:tried_names)
+        .include?(candidate.nickname)).to eq(true)
     end
 
     it 'should eventually throw an error when running out of nicknames' do
