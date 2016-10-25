@@ -12,9 +12,9 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     attributes_for(:choice_question)
   end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { text: '', label: '', type: 'ChoiceQuestion' }
-  }
+  end
 
   describe 'GET #new' do
     it 'assigns a new choice_question as @question' do

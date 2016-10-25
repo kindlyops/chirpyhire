@@ -43,7 +43,7 @@ $(document).on("turbolinks:load", function() {
       addressLayers = _.map(stages, function(stage) {
         var layerIds = getLayerIds(stage.name),
           visible = $(dropdownStageSelector).val() === stage.id.toString()
-            && mapType == 'address';
+            && mapType === 'address';
         return {
           "id": layerIds.address,
           "type": "symbol",
@@ -59,7 +59,7 @@ $(document).on("turbolinks:load", function() {
       zipcodeLayersInfo = _.map(stages, function(stage) {
         var layerIds = getLayerIds(stage.name),
           visible = $(dropdownStageSelector).val() === stage.id.toString()
-            && mapType == 'zipcode';
+            && mapType === 'zipcode';
           standardLayer = {
             "id": layerIds.zipcode,
             "type": "fill",
@@ -144,14 +144,14 @@ $(document).on("turbolinks:load", function() {
         map.popup.remove();
 
         _.each(unselectedStages, function(stage) {
-          if (mapType == 'address') {
+          if (mapType === 'address') {
             map.setLayoutProperty(getLayerIds(stage.name).address, 'visibility', 'none');
           } else {
             map.setLayoutProperty(getLayerIds(stage.name).zipcode, 'visibility', 'none');
             map.setLayoutProperty(getLayerIds(stage.name).zipcodeHover, 'visibility', 'none');
           }
         });
-        if (mapType == 'address') {
+        if (mapType === 'address') {
           map.setLayoutProperty(currentLayerIds.address, 'visibility', 'visible');
         } else {
           map.setLayoutProperty(currentLayerIds.zipcode, 'visibility', 'visible');
@@ -171,10 +171,10 @@ $(document).on("turbolinks:load", function() {
           $(".map-type i[data-map-type='" + mapType + "']").removeAttr('selected');
           mapType = $target.attr('data-map-type');
 
-          addressVisibleValue = mapType == 'address'
+          addressVisibleValue = mapType === 'address'
             ? 'visible'
             : 'none';
-          zipcodeVisibleValue = mapType == 'zipcode'
+          zipcodeVisibleValue = mapType === 'zipcode'
             ? 'visible'
             : 'none';
 

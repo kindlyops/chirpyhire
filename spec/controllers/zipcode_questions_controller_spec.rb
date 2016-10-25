@@ -12,9 +12,9 @@ RSpec.describe ZipcodeQuestionsController, type: :controller do
     attributes_for(:zipcode_question)
   end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { text: '', label: '', type: ZipcodeQuestion.name }
-  }
+  end
 
   describe 'GET #new' do
     it 'assigns a new zipcode_question as @question' do

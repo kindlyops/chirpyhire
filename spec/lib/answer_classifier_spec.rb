@@ -34,13 +34,13 @@ RSpec.describe AnswerClassifier do
           child_class: ZipcodeQuestion.child_class_property
         }
       end
-      context 'which is in the zipcode' do
+      context 'whose answer is in the list of valid zipcode options' do
         it 'classifies the answer as for a zipcode question' do
           expect(classifier.classify).to eq(ZipcodeQuestion)
         end
       end
 
-      context 'which is not in the zipcode' do
+      context 'whose answer is not in the list of valid zipcode options' do
         let(:message) { create(:message, body: '20010') }
         it 'is unable to classify the answer' do
           expect { classifier.classify }.to raise_error(AnswerClassifier::NotClassifiedError)

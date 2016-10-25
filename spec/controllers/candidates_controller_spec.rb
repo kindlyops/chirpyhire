@@ -176,13 +176,8 @@ RSpec.describe CandidatesController, type: :controller do
       context 'geojson' do
         context 'with candidates with addresses without phone numbers' do
           let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
-
           it 'is OK' do
-            class CandidatesController
-              def state_data
-                FakeStateData.new
-              end
-            end
+            allow_any_instance_of(CandidatesController).to receive(:state_data).and_return(FakeStateData.new)
             get :index, format: :geojson
             expect(response).to be_ok
           end
