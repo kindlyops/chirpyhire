@@ -11,22 +11,19 @@ $(document).on("turbolinks:load", function() {
         zipcodeLayer = buildZipcodeLayer(zipcodeSourceId),
         zipcodeHoverLayer = buildZipcodeHoverLayer(zipcodeSourceId),
         layers = [addressLayer],
+        addressSource = {
+          id: addressSourceId,
+          type: "geojson",
+          data: addressSourceData
+        },
+        zipcodeSource = {
+          id: zipcodeSourceId,
+          type: "geojson",
+          data: zipcodeSourceData
+        },
         sources = [addressSource],
         popupLayers = [addressSourceId],
-        addressSource, zipcodeSource,
         hoverLayerConfigs = [];
-
-      addressSource = {
-        id: addressSourceId,
-        type: "geojson",
-        data: addressSourceData
-      };
-
-      zipcodeSource = {
-        id: zipcodeSourceId,
-        type: "geojson",
-        data: zipcodeSourceData
-      };
 
       if (zipcodeSourceData.features.length) {
         sources.push(zipcodeSource);

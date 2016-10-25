@@ -85,7 +85,7 @@ class Seeder
       @location_question = org.survey.questions.create!(priority: priority, label: "Address", type: AddressQuestion.name, text: "What is your address and zipcode?")
       location_question.create_address_question_option(distance: 20, latitude: latitude, longitude: longitude )
     elsif seed_location_type == "zipcode"
-      @location_question = org.survey.questions.create!(priority: priority, label: "Zipcode", type: ZipcodeQuestion.name, text: "What is your zipcode?",
+      @location_question = org.survey.questions.create!(priority: priority, label: "Zipcode", type: ZipcodeQuestion.name, text: "What is your 5-digit zipcode?",
         zipcode_question_options_attributes: zipcodes.map { |z| { text: z } })
     end
   end

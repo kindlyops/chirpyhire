@@ -72,7 +72,7 @@ class CandidatesController < ApplicationController
   end
 
   def recent_candidates
-    policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
+    @recent_candidates ||= policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
                            .references(:candidate_features, :user)
   end
 

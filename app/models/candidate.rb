@@ -46,15 +46,15 @@ class Candidate < ApplicationRecord
   # rubocop:disable Metrics/LineLength
   def self.zipcode(zipcode)
     return where(nil) if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
-
-    joins(:candidate_features)
+    ids = joins(:candidate_features)
       .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
       .where("properties->>'option' = ?", zipcode)
       .or(
         joins(:candidate_features)
             .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
             .where("properties->>'postal_code' = ?", zipcode)
-      )
+      ).pluck(:id)
+    Candidate.where(id: ids)
   end
   # rubocop:enable Metrics/LineLength
 
