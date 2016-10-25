@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024165542) do
+ActiveRecord::Schema.define(version: 20161024163430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,22 +93,21 @@ ActiveRecord::Schema.define(version: 20161024165542) do
   end
 
   create_table "candidate_features", force: :cascade do |t|
-    t.integer  "candidate_id",                null: false
-    t.jsonb    "properties",   default: "{}", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "label",                       null: false
+    t.integer  "candidate_id",              null: false
+    t.jsonb    "properties",   default: {}, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "label",                     null: false
     t.index ["candidate_id"], name: "index_candidate_features_on_candidate_id", using: :btree
     t.index ["properties"], name: "index_candidate_features_on_properties", using: :gin
   end
 
   create_table "candidates", force: :cascade do |t|
-    t.integer  "user_id",                          null: false
-    t.string   "status",     default: "Potential", null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.integer  "stage_id"
-    t.string   "nickname",                         null: false
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "stage_id",   null: false
+    t.string   "nickname"
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
