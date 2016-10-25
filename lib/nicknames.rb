@@ -23,6 +23,7 @@ module Nicknames
     end
 
     private
+
     attr_reader :tried_names
 
     def tried?(nickname)
