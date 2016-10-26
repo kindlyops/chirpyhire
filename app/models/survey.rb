@@ -8,6 +8,8 @@ class Survey < ApplicationRecord
   belongs_to :welcome, class_name: 'Template', foreign_key: :welcome_id
   belongs_to :thank_you, class_name: 'Template', foreign_key: :thank_you_id
   belongs_to :bad_fit, class_name: 'Template', foreign_key: :bad_fit_id
+  belongs_to(:not_understood,
+    class_name: 'Template', foreign_key: :not_understood_id)
 
   has_many :questions
   accepts_nested_attributes_for :questions,

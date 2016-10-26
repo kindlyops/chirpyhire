@@ -16,11 +16,10 @@ class Registrar
 
   private
 
-  attr_reader :account, :survey
-  delegate :thank_you, to: :templates
+  attr_reader :account, :survey, :templates
 
   def setup_organization
-    templates.call
+    create_templates
     create_survey
     Registration::QuestionsCreator.new(survey).call
     create_rules
@@ -28,8 +27,9 @@ class Registrar
     create_subscription
   end
 
-  def templates
-    @templates ||= Registration::TemplatesCreator.new(organization)
+  def create_templates
+    @templates = Registration::TemplatesCreator.new(organization)
+    @templates.create_templates
   end
 
   def create_subscription
@@ -45,13 +45,15 @@ class Registrar
       bad_fit: templates.bad_fit,
       welcome: templates.welcome,
       thank_you: templates.thank_you
+      not_understood: templates.not_understood
     )
   end
 
   def create_rules
     rules.create!(trigger: 'subscribe', actionable: survey.create_actionable)
     rules.create!(trigger: 'answer', actionable: survey.actionable)
-    rules.create!(trigger: 'screen', actionable: thank_you.create_actionable)
+    rules.create!(trigger: 'screen',
+      actionable: templates.thank_you.create_actionable)
   end
 
   def rules
