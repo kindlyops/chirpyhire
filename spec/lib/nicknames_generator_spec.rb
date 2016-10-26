@@ -19,6 +19,15 @@ RSpec.describe Nicknames::Generator do
         .include?(candidate.nickname)).to eq(true)
     end
 
+    it 'should not rehit the database when randomly generating a dup' do
+      generator = Nicknames::Generator.new(candidate)
+      allow(generator).to receive(:random_nickname).exactly(2).times
+        .and_return(candidate.nickname, 'Dumb Bunny')
+      generator.generate
+      expect(generator.send(:tried_names)
+        .include?(candidate.nickname)).to eq(true)
+    end
+
     it 'should eventually throw an error when running out of nicknames' do
       generator = Nicknames::Generator.new(candidate)
       allow(generator).to receive(:nickname_count).and_return(0)
