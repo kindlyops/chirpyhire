@@ -44,7 +44,7 @@ class Registrar
     @survey = organization.create_survey(
       bad_fit: templates.bad_fit,
       welcome: templates.welcome,
-      thank_you: templates.thank_you
+      thank_you: templates.thank_you,
       not_understood: templates.not_understood
     )
   end
