@@ -7,7 +7,7 @@ class AnswerHandlerJob < MessageHandlerRetryJob
     @retries_remaining = retries
 
     message = MessageHandler.new(sender, message_sid).call
-    AnswerHandler.call(sender, inquiry, message)
+    AnswerHandler.new(sender, inquiry, message).call
   end
 
   def retry_with(job, retries)

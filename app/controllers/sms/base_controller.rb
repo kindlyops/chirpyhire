@@ -12,10 +12,10 @@ class Sms::BaseController < ActionController::Base
 
   def sender
     @sender ||= begin
-      UserFinder.new(
-        attributes: { phone_number: params['From'] },
-        organization: organization
-      ).call
+    UserFinder.find(
+      attributes: { phone_number: params['From'] },
+      organization: organization
+    )
     end
   end
 
