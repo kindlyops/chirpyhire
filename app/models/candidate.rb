@@ -47,13 +47,13 @@ class Candidate < ApplicationRecord
   def self.zipcode(zipcode)
     return where(nil) if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
     ids = joins(:candidate_features)
-      .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
-      .where("properties->>'option' = ?", zipcode)
-      .or(
-        joins(:candidate_features)
-            .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
-            .where("properties->>'postal_code' = ?", zipcode)
-      ).pluck(:id)
+          .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
+          .where("properties->>'option' = ?", zipcode)
+          .or(
+            joins(:candidate_features)
+                .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
+                .where("properties->>'postal_code' = ?", zipcode)
+          ).pluck(:id)
     Candidate.where(id: ids)
   end
   # rubocop:enable Metrics/LineLength
@@ -75,8 +75,7 @@ class Candidate < ApplicationRecord
   end
 
   def address
-    return nil unless address_feature.present?
-    Address.new(address_feature)
+    address_feature.present? ? Address.new(address_feature) : nil
   end
 
   def zipcode

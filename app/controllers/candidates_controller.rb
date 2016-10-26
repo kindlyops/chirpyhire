@@ -55,8 +55,7 @@ class CandidatesController < ApplicationController
   def zipcodes
     zipcode_feature_zips = recent_candidates.map(&:zipcode)
     address_feature_zips = recent_candidates.map { |c| c.address&.zipcode }
-    zips = zipcode_feature_zips.concat(address_feature_zips)
-                               .compact
+    zips = zipcode_feature_zips.concat(address_feature_zips).compact
                                .map { |f| f[0..4] }
                                .uniq
                                .sort
@@ -72,8 +71,9 @@ class CandidatesController < ApplicationController
   end
 
   def recent_candidates
-    @recent_candidates ||= policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
-                           .references(:candidate_features, :user)
+    @recent_candidates ||=
+      policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
+                             .references(:candidate_features, :user)
   end
 
   def filtering_params
