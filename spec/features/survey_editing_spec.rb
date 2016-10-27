@@ -271,9 +271,8 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       it 'works' do
         visit survey_path
         find('#add-question', match: :first).trigger('click')
-        within(find('#choice-type')) do
-          click_link('Add Question')
-        end
+        find('#choice-type').find('.button').trigger('click')
+
         fill_in 'choice_question_label', with: 'Fancy Choice Label'
         fill_in 'choice_question_text', with: 'Fancy Choice Text'
         fill_in 'choice_question_choice_question_options_attributes_0_text', with: 'Choice A'
@@ -354,6 +353,77 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         click_button('Save')
         expect(page).to have_text('Nice! Question saved.')
         expect(page).to have_text('New Choice')
+      end
+    end
+  end
+
+  context 'Zipcode Question' do
+    let(:label) { 'Zipcode' }
+    let!(:zipcode_question) {
+      create(:zipcode_question, label: label, survey: survey, zipcode_question_options_attributes: [{ text: '30342' }])
+    }
+    let!(:option) { zipcode_question.zipcode_question_options.first }
+
+    it 'adds a question successfully' do
+      visit survey_path
+      find('#add-question', match: :first).trigger('click')
+      find('#zipcode-type').find('.button').trigger('click')
+
+      fill_in 'zipcode_question_label', with: 'Fancy Zipcode Label'
+      fill_in 'zipcode_question_text', with: 'Fancy Zipcode Text'
+      fill_in 'zipcode_question_zipcode_question_options_attributes_0_text', with: '30342'
+
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('Fancy Zipcode Text')
+      expect(page).to have_text('Fancy Zipcode Label')
+    end
+
+    it 'adds an option successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+      click_link('Add option')
+
+      all('.nested-fields').last.find("input[placeholder='Valid zipcode']").set('12346')
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('12346')
+    end
+
+    it 'edits the text of the question successfully' do
+      visit survey_path
+      find('#edit-question', match: :first).trigger('click')
+
+      fill_in 'zipcode_question_text', with: 'New question text'
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('New question text')
+    end
+
+    it 'edits the text of an option successfully' do
+      visit edit_question_path(zipcode_question.id)
+      first('.nested-fields').find("input[placeholder='Valid zipcode']").set('12466')
+
+      click_button('Save')
+      expect(page).to have_text('Nice! Question saved.')
+      expect(page).to have_text('12466')
+    end
+
+    context 'removing an option' do
+      let!(:option2) { create(:zipcode_question_option, zipcode_question: zipcode_question, text: '30327') }
+      it 'works' do
+        visit survey_path
+        find('#edit-question', match: :first).trigger('click')
+        option = find('.nested-fields', match: :first)
+        option_text = option.find('.field input').value
+
+        within(option) do
+          find('.remove_fields', match: :first).trigger('click')
+        end
+
+        click_button('Save')
+        expect(page).to have_text('Nice! Question saved.')
+        expect(page).not_to have_text(option_text)
       end
     end
   end

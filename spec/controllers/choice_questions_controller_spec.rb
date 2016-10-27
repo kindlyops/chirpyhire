@@ -12,9 +12,9 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     attributes_for(:choice_question)
   end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { text: '', label: '', type: 'ChoiceQuestion' }
-  }
+  end
 
   describe 'GET #new' do
     it 'assigns a new choice_question as @question' do
@@ -26,7 +26,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
   describe 'GET #edit' do
     it 'assigns the requested choice_question as @question' do
       choice_question = survey.questions.create! valid_attributes
-      get :edit, params: { id: choice_question.to_param }
+      get :edit, params: { id: choice_question.id }
       expect(assigns(:question)).to eq(choice_question)
     end
   end
@@ -151,19 +151,19 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
         choice_question = survey.questions.create! valid_attributes
 
         expect {
-          put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
+          put :update, params: { id: choice_question.id, choice_question: new_attributes }
         }.to change { choice_question.reload.text }.to(new_attributes[:text])
       end
 
       it 'assigns the requested choice_question as @question' do
         choice_question = survey.questions.create! valid_attributes
-        put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
+        put :update, params: { id: choice_question.id, choice_question: new_attributes }
         expect(assigns(:question)).to eq(choice_question)
       end
 
       it 'redirects to the survey' do
         choice_question = survey.questions.create! valid_attributes
-        put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
+        put :update, params: { id: choice_question.id, choice_question: new_attributes }
         expect(response).to redirect_to(survey_path)
       end
     end
@@ -184,7 +184,7 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
           new_attributes[:choice_question_options_attributes].first[:id] = choice_question_option.id
 
           expect {
-            put :update, params: { id: choice_question.to_param, choice_question: new_attributes }
+            put :update, params: { id: choice_question.id, choice_question: new_attributes }
           }.to change { choice_question_option.reload.text }.to(new_attributes[:choice_question_options_attributes].first[:text])
         end
       end
@@ -195,13 +195,13 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
         }
 
         let(:invalid_attributes) do
-          { text: 'Valid text', label: 'Valid label', type: 'AddressQuestion', choice_question_options_attributes: [{ text: 'Foo' }] }
+          { text: 'Valid text', label: 'Valid label', type: 'ChoiceQuestion', choice_question_options_attributes: [{ text: 'Foo' }] }
         end
 
         it "re-renders the 'edit' template" do
           choice_question = survey.questions.create! valid_attributes
 
-          put :update, params: { id: choice_question.to_param, choice_question: invalid_attributes }
+          put :update, params: { id: choice_question.id, choice_question: invalid_attributes }
           expect(response).to render_template('edit')
         end
       end
@@ -210,13 +210,13 @@ RSpec.describe ChoiceQuestionsController, type: :controller do
     context 'with invalid params' do
       it 'assigns the choice_question as @question' do
         choice_question = survey.questions.create! valid_attributes
-        put :update, params: { id: choice_question.to_param, choice_question: invalid_attributes }
+        put :update, params: { id: choice_question.id, choice_question: invalid_attributes }
         expect(assigns(:question)).to eq(choice_question)
       end
 
       it "re-renders the 'edit' template" do
         choice_question = survey.questions.create! valid_attributes
-        put :update, params: { id: choice_question.to_param, choice_question: invalid_attributes }
+        put :update, params: { id: choice_question.id, choice_question: invalid_attributes }
         expect(response).to render_template('edit')
       end
     end

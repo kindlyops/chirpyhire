@@ -55,7 +55,7 @@ class User < ApplicationRecord
   end
 
   def last_answer
-    answers.by_recency.first || NullAnswer.new
+    answers.by_recency.first
   end
 
   def receive_message(body:)

@@ -14,7 +14,7 @@ RSpec.describe ChoiceQuestion, type: :model do
       let(:choice_hash) do
         {
           choice_option: 'original B',
-          child_class: 'choice'
+          child_class: ChoiceQuestion.child_class_property
         }
       end
 

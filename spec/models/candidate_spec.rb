@@ -71,12 +71,8 @@ RSpec.describe Candidate, type: :model do
     end
 
     context 'without an address candidate feature' do
-      it 'does not have a latitude' do
-        expect(candidate.address.latitude).to eq(nil)
-      end
-
-      it 'does not have a longitude' do
-        expect(candidate.address.latitude).to eq(nil)
+      it 'does not have an address' do
+        expect(candidate.address).to eq(nil)
       end
     end
   end

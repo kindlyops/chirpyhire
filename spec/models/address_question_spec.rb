@@ -65,7 +65,7 @@ RSpec.describe AddressQuestion, type: :model do
         latitude: 38.028531,
         longitude: -78.473088,
         postal_code: '22902',
-        child_class: 'address' }
+        child_class: AddressQuestion.child_class_property }
     end
 
     before(:each) do

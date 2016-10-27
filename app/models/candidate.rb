@@ -22,12 +22,15 @@ class Candidate < ApplicationRecord
 
   before_create :ensure_candidate_has_stage, :add_nickname
 
+  CREATED_IN_OPTIONS = {
+    PAST_24_HOURS: 'Past 24 Hours',
+    PAST_WEEK: 'Past Week',
+    PAST_MONTH: 'Past Month',
+    ALL_TIME: 'All Time'
+  }.freeze
+
   def self.by_recency
     order(created_at: :desc, id: :desc)
-  end
-
-  def self.with_addresses
-    joins(:candidate_features).merge(CandidateFeature.address)
   end
 
   def self.stage_name(stage_name)
@@ -35,17 +38,25 @@ class Candidate < ApplicationRecord
   end
 
   def self.created_in(created_in)
-    period = {
-      'Past 24 Hours' => 24.hours.ago,
-      'Past Week' => 1.week.ago,
-      'Past Month' => 1.month.ago,
-      'All Time' => Date.iso8601('2016-02-01')
-
-    }[created_in]
-    return self unless period.present?
-
-    where('candidates.created_at > ?', period)
+    min_date = min_date(created_in)
+    return where(nil) unless min_date.present?
+    where('candidates.created_at > ?', min_date)
   end
+
+  # rubocop:disable Metrics/LineLength
+  def self.zipcode(zipcode)
+    return where(nil) if zipcode == CandidateFeature::ALL_ZIPCODES_CODE
+    ids = joins(:candidate_features)
+          .where("properties->>'child_class' = ?", ZipcodeQuestion.child_class_property)
+          .where("properties->>'option' = ?", zipcode)
+          .or(
+            joins(:candidate_features)
+                .where("properties->>'child_class' = ?", AddressQuestion.child_class_property)
+                .where("properties->>'postal_code' = ?", zipcode)
+          ).pluck(:id)
+    Candidate.where(id: ids)
+  end
+  # rubocop:enable Metrics/LineLength
 
   def self.hired
     joins(:stage).merge(Stage.hired)
@@ -64,27 +75,48 @@ class Candidate < ApplicationRecord
   end
 
   def address
-    return NullAddress.new unless address_feature.present?
-    Address.new(address_feature)
+    address_feature.present? ? Address.new(address_feature) : nil
+  end
+
+  def zipcode
+    features(ZipcodeQuestion)
+      .first&.properties
+      &.dig('option') || address&.zipcode
   end
 
   def address_feature
-    candidate_features.find_by("properties->>'child_class' = ?", 'address')
+    features(AddressQuestion).first
   end
 
   def choice_features
-    candidate_features.where("properties->>'child_class' = ?", 'choice')
+    features(ChoiceQuestion)
   end
 
   def document_features
-    candidate_features.where("properties->>'child_class' = ?", 'document')
+    features(DocumentQuestion)
   end
 
   def yes_no_features
-    candidate_features.where("properties->>'child_class' = ?", 'yes_no')
+    features(YesNoQuestion)
   end
 
   private
+
+  def self.min_date(created_in)
+    {
+      CREATED_IN_OPTIONS[:PAST_24_HOURS] => 24.hours.ago,
+      CREATED_IN_OPTIONS[:PAST_WEEK] => 1.week.ago,
+      CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
+      CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
+    }[created_in]
+  end
+  private_class_method :min_date
+
+  def features(question_class)
+    candidate_features.select do |f|
+      f.properties['child_class'] == question_class.child_class_property
+    end
+  end
 
   def ensure_candidate_has_stage
     self.stage = organization.potential_stage unless stage.present?

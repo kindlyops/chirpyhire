@@ -1,21 +1,34 @@
-class AnswerFormatter
+class AnswerClassifier
   def initialize(answer, inquiry)
     @answer = answer
     @inquiry = inquiry
   end
 
-  def format
-    return 'DocumentQuestion' if message.images?
-    return 'AddressQuestion' if message.address?
-    return 'YesNoQuestion' if message.yes_or_no?
-    return 'ChoiceQuestion' if message.choice?(choices)
+  class NotClassifiedError < StandardError
+  end
 
-    'Unknown Format'
+  def classify
+    message = answer.message
+    return DocumentQuestion if message.images?
+    return AddressQuestion if message.address?
+    return YesNoQuestion if message.yes_or_no?
+    return ChoiceQuestion if message.choice?(choices)
+    return ZipcodeQuestion if message.valid_zipcode?(zipcode_options)
+
+    raise NotClassifiedError, 'Message was not succesfully classified
+    to match any known question types.'
   end
 
   private
 
   attr_reader :answer, :inquiry
+
+  def zipcode_options
+    inquiry.question
+           .becomes(ZipcodeQuestion)
+           .zipcode_question_options
+           .pluck(:text)
+  end
 
   def choice_question
     @choice_question ||= begin
@@ -34,9 +47,5 @@ class AnswerFormatter
   def choices
     return unless choice_question.present?
     choice_question.choice_options_letters.join
-  end
-
-  def message
-    @message ||= answer.message
   end
 end

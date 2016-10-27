@@ -1,0 +1,7 @@
+p = question.formatted_text
+hr
+.extra-information
+  strong Acceptable answers:
+  ul
+    - question.zipcode_question_options.each do |option|
+      li = option.text

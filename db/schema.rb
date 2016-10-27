@@ -103,12 +103,11 @@ ActiveRecord::Schema.define(version: 20161026195758) do
   end
 
   create_table "candidates", force: :cascade do |t|
-    t.integer  "user_id",                          null: false
-    t.string   "status",     default: "Potential", null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.integer  "stage_id"
-    t.string   "nickname"
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "stage_id",   null: false
+    t.string   "nickname",   null: false
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
@@ -350,6 +349,15 @@ ActiveRecord::Schema.define(version: 20161026195758) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
 
+  create_table "zipcode_question_options", force: :cascade do |t|
+    t.string   "text",        null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_zipcode_question_options_on_question_id", using: :btree
+    t.index ["text", "question_id"], name: "index_zipcode_question_options_on_text_and_question_id", unique: true, using: :btree
+  end
+
   add_foreign_key "accounts", "users"
   add_foreign_key "address_question_options", "questions"
   add_foreign_key "answers", "inquiries"
@@ -382,4 +390,5 @@ ActiveRecord::Schema.define(version: 20161026195758) do
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
+  add_foreign_key "zipcode_question_options", "questions"
 end

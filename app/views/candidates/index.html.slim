@@ -2,10 +2,20 @@
 
 .candidates
   .controls
-    .dropdown
-      select.stage name="stage_name"
-        = options_for_select(current_organization.ordered_stages.map {|st| [st.name, st.name]}, cookies[:candidate_stage_filter])
-      = select_tag "created_in", options_for_select(["Past 24 Hours", "Past Week", "Past Month", "All Time"], cookies.fetch(:candidate_created_in_filter, "Past Week"))
+    .dropdowns
+      .dropdown
+        .label
+          ' Stage:
+        select.stage name="stage_name"
+          = options_for_select(current_organization.ordered_stages.map {|st| [st.name, st.name]}, cookies[:candidate_stage_filter])
+      .dropdown
+        .label
+          ' Recency:
+        = select_tag "created_in", options_for_select(Candidate::CREATED_IN_OPTIONS.values, cookies[:candidate_created_in_filter])
+      .dropdown
+        .label
+          ' Zipcode:
+        = select_tag "zipcode", options_for_select(@zipcodes, cookies[:candidate_zipcode_filter])
     .button-group
       label for=""
         i.fa.fa-th-large.button-group-item selected=true
