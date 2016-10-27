@@ -6,9 +6,7 @@ class Rule < ApplicationRecord
   validates :organization, :actionable, presence: true
   validates :trigger, inclusion: { in: TRIGGERS }
 
-  def perform(user)
-    typed_actionable.perform(user)
-  end
+  delegate :perform, to: :typed_actionable
 
   private
 

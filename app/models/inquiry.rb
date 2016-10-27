@@ -6,13 +6,13 @@ class Inquiry < ApplicationRecord
     on: {
       update: ->(model, _) { model.changes.include?('not_understood_count') }
     },
-    properties: ->(_, model) {
+    properties: lambda do |_, model|
       {
         not_understood_count: model.not_understood_count,
         question_type: model.question.type
       }
-    },
-    owner: Proc.new{ |_, model| model.organization }
+    end,
+    owner: proc { |_, model| model.organization }
   )
   belongs_to :question
   has_one :answer

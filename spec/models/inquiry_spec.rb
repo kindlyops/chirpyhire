@@ -28,16 +28,16 @@ RSpec.describe Inquiry do
           expect {
             inquiry.update!(not_understood_count: 1)
           }.to(change {
-              PublicActivity::Activity.where(
-                trackable_type: 'Inquiry'
-              ).count
-            }.by(1))
+                 PublicActivity::Activity.where(
+                   trackable_type: 'Inquiry'
+                 ).count
+               }.by(1))
         end
 
         it 'has owner id and question type' do
           inquiry.update!(not_understood_count: 1)
           expect(inquiry.activities.last.owner).to eq(inquiry.organization)
-          expect(inquiry.activities.last.properties["not_understood_count"]).to(
+          expect(inquiry.activities.last.properties['not_understood_count']).to(
             eq(inquiry.not_understood_count)
           )
         end
@@ -47,9 +47,11 @@ RSpec.describe Inquiry do
         it 'does not create an activity' do
           expect {
             inquiry.update!(question_id: question.id)
-          }.not_to change { PublicActivity::Activity.where(
+          }.not_to change {
+            PublicActivity::Activity.where(
               trackable_type: 'Inquiry'
-            ).count }
+            ).count
+          }
         end
       end
     end
@@ -58,9 +60,11 @@ RSpec.describe Inquiry do
       it 'does not create an activity' do
         expect {
           inquiry
-        }.not_to change { PublicActivity::Activity.where(
-              trackable_type: 'Inquiry'
-            ).count }
+        }.not_to change {
+          PublicActivity::Activity.where(
+            trackable_type: 'Inquiry'
+          ).count
+        }
       end
     end
 
@@ -68,9 +72,11 @@ RSpec.describe Inquiry do
       it 'does not create an activity' do
         expect {
           inquiry.destroy!
-        }.not_to change { PublicActivity::Activity.where(
-              trackable_type: 'Inquiry'
-            ).count }
+        }.not_to change {
+          PublicActivity::Activity.where(
+            trackable_type: 'Inquiry'
+          ).count
+        }
       end
     end
   end

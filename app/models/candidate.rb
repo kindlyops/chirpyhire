@@ -7,7 +7,7 @@ class Candidate < ApplicationRecord
       update: ->(model, _) { model.changes.include?('stage_id') }
     },
     properties: ->(_, model) { { stage_id: model.stage_id } },
-    owner: Proc.new{ |_, model| model.organization }
+    owner: proc { |_, model| model.organization }
   )
 
   belongs_to :user

@@ -7,7 +7,7 @@ FactoryGirl.define do
       survey.bad_fit = create(:template, organization: survey.organization)
       survey.thank_you = create(:template, organization: survey.organization)
       survey.not_understood = create(:template,
-        organization: survey.organization)
+                                     organization: survey.organization)
     end
 
     trait :with_templates do

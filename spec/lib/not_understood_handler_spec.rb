@@ -21,11 +21,13 @@ RSpec.describe NotUnderstoodHandler do
     end
 
     context 'with a not_understood_count above the threshold' do
-      let(:inquiry) { create(
-        :inquiry,
-        question: question,
-        not_understood_count: NotUnderstoodHandler::THRESHOLD
-      ) }
+      let(:inquiry) {
+        create(
+          :inquiry,
+          question: question,
+          not_understood_count: NotUnderstoodHandler::THRESHOLD
+        )
+      }
       it 'does not increment not_understood_count' do
         expect {
           NotUnderstoodHandler.notify(user, inquiry)

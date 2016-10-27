@@ -53,7 +53,7 @@ class Registrar
     rules.create!(trigger: 'subscribe', actionable: survey.create_actionable)
     rules.create!(trigger: 'answer', actionable: survey.actionable)
     rules.create!(trigger: 'screen',
-      actionable: templates.thank_you.create_actionable)
+                  actionable: templates.thank_you.create_actionable)
   end
 
   def rules
