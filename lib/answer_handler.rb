@@ -4,9 +4,13 @@ class AnswerHandler
   end
 
   def call
-    if inquiry.unanswered? && answer.errors.empty?
-      update_or_create_candidate_feature
-      AutomatonJob.perform_later(sender, 'answer')
+    if inquiry.unanswered?
+      if answer.errors.empty?
+        update_or_create_candidate_feature
+        AutomatonJob.perform_later(sender, 'answer')
+      else
+        # TODO JLW
+      end
     end
   end
 
@@ -26,8 +30,6 @@ class AnswerHandler
     feature.properties = extract_properties
     feature.save
   end
-
-  delegate :label, to: :inquiry
 
   def answer
     @answer ||= inquiry.create_answer(message: message)

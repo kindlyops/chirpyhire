@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20161026195758) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "stage_id",   null: false
-    t.string   "nickname",   null: false
+    t.string   "nickname"
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
@@ -385,6 +385,7 @@ ActiveRecord::Schema.define(version: 20161026195758) do
   add_foreign_key "surveys", "actionables"
   add_foreign_key "surveys", "organizations"
   add_foreign_key "surveys", "templates", column: "bad_fit_id"
+  add_foreign_key "surveys", "templates", column: "not_understood_id"
   add_foreign_key "surveys", "templates", column: "thank_you_id"
   add_foreign_key "surveys", "templates", column: "welcome_id"
   add_foreign_key "templates", "actionables"

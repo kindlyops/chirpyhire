@@ -11,7 +11,9 @@ RSpec.describe 'BackPopulateNotUnderstood' do
     end
     context "organization does not have a 'not understood' template" do
       it 'adds a template' do
-        organization.templates.last.destroy!
+        not_understood = organization.templates.last
+        organization.survey.update!(not_understood_id: nil)
+        not_understood.destroy!
         expect(organization.templates.count).to eq(3)
         Rake::Task["templates:back_populate_not_understood"].invoke
         expect(organization.templates.count).to eq(4)
