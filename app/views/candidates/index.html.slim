@@ -11,7 +11,7 @@
       .dropdown
         .label
           ' Recency:
-        = select_tag "created_in", options_for_select(Candidate::CREATED_IN_OPTIONS.values, cookies[:candidate_created_in_filter])
+        = select_tag "created_in", options_for_select(CandidateFilterable::CREATED_IN_OPTIONS.values, cookies[:candidate_created_in_filter])
       .dropdown
         .label
           ' Zipcode:

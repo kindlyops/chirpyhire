@@ -16,6 +16,7 @@ class Inquiry < ApplicationRecord
   )
   belongs_to :question
   has_one :answer
+  has_many :activities, as: :trackable
   delegate :label, to: :question
   delegate :type, to: :question, prefix: true
 

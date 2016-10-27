@@ -19,20 +19,13 @@ class Candidate < ApplicationRecord
 
   alias features candidate_features
 
-  delegate :first_name, :phone_number, :organization_name,
-           :organization, :messages, :outstanding_inquiry,
-           :receive_message, :handle, :outstanding_inquiry?, to: :user
+  delegate :first_name, :phone_number, :organization_name, :handle, :messages,
+           :organization, :outstanding_inquiry, :receive_message,
+           :outstanding_inquiry?, to: :user
   delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
   delegate :stages, to: :organization
 
   before_create :ensure_candidate_has_stage, :add_nickname
-
-  CREATED_IN_OPTIONS = {
-    PAST_24_HOURS: 'Past 24 Hours',
-    PAST_WEEK: 'Past Week',
-    PAST_MONTH: 'Past Month',
-    ALL_TIME: 'All Time'
-  }.freeze
 
   def self.by_recency
     order(created_at: :desc, id: :desc)
@@ -43,7 +36,7 @@ class Candidate < ApplicationRecord
   end
 
   def self.created_in(created_in)
-    min_date = min_date(created_in)
+    min_date = CandidateFilterable.min_date(created_in)
     return where(nil) unless min_date.present?
     where('candidates.created_at > ?', min_date)
   end
@@ -106,16 +99,6 @@ class Candidate < ApplicationRecord
   end
 
   private
-
-  def self.min_date(created_in)
-    {
-      CREATED_IN_OPTIONS[:PAST_24_HOURS] => 24.hours.ago,
-      CREATED_IN_OPTIONS[:PAST_WEEK] => 1.week.ago,
-      CREATED_IN_OPTIONS[:PAST_MONTH] => 1.month.ago,
-      CREATED_IN_OPTIONS[:ALL_TIME] => Date.iso8601('2016-02-01')
-    }[created_in]
-  end
-  private_class_method :min_date
 
   def features(question_class)
     candidate_features.select do |f|

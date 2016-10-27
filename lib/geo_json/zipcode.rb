@@ -64,10 +64,11 @@ class GeoJson::Zipcode
 
   def description(stage, zipcode, candidates)
     return single_description(candidates[0]) if candidates.count == 1
+    all_time_value = CandidateFilterable::CREATED_IN_OPTIONS[:ALL_TIME]
     "<h3>Zipcode: <a href='/candidates?" \
       "zipcode=#{zipcode}" \
       "&stage_name=#{URI.encode(stage.name)}" \
-      "&created_in=#{URI.encode(Candidate::CREATED_IN_OPTIONS[:ALL_TIME])}'>" \
+      "&created_in=#{URI.encode(all_time_value)}'>" \
       "#{zipcode}</a></h3>" \
     "<p class='handle sub-header'>#{candidates.count} candidates</p>"
   end
