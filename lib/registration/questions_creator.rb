@@ -4,7 +4,7 @@ class Registration::QuestionsCreator
   end
 
   def call
-    create_address_question
+    create_location_question
     create_transportation_question
     create_availability_question
   end
@@ -14,21 +14,15 @@ class Registration::QuestionsCreator
   attr_reader :survey
   delegate :questions, :organization, to: :survey
 
-  def create_address_question
-    address_question = questions.create!(
+  def create_location_question
+    questions.create!(
       priority: 1,
-      label: 'Address',
-      type: 'AddressQuestion',
-      text: 'What is your street address and zipcode?'
-    )
-    create_address_question_option(address_question)
-  end
-
-  def create_address_question_option(address_question)
-    address_question.create_address_question_option(
-      distance: 10,
-      latitude: organization.latitude,
-      longitude: organization.longitude
+      label: 'Zipcode',
+      type: ZipcodeQuestion.name,
+      text: 'What is your five-digit zipcode?',
+      zipcode_question_options_attributes: [
+        { text: organization.location.zipcode }
+      ]
     )
   end
 
@@ -36,7 +30,7 @@ class Registration::QuestionsCreator
     questions.create!(
       priority: 3,
       label: 'Availability',
-      type: 'ChoiceQuestion',
+      type: ChoiceQuestion.name,
       text: 'What is your availability?',
       choice_question_options_attributes: availability_options
     )
