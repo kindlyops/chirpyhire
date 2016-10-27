@@ -4,12 +4,13 @@ class AnswerHandler
   end
 
   def call
-    return if inquiry.unanswered?
-    if well_formed_answer?
-      update_or_create_candidate_feature
-      AutomatonJob.perform_later(sender, 'answer')
-    else
-      NotUnderstoodHandler.notify(sender, inquiry)
+    if inquiry.unanswered?
+      if well_formed_answer?
+        update_or_create_candidate_feature
+        AutomatonJob.perform_later(sender, 'answer')
+      else
+        NotUnderstoodHandler.notify(sender, inquiry)
+      end
     end
   end
 

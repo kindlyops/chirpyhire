@@ -21,7 +21,7 @@ RSpec.describe ZipcodeQuestion, type: :model do
 
   describe '.rejects' do
     let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
-    
+
     context 'good zipcode' do
       let(:candidate) { create(:candidate, zipcode: '30342') }
       it 'passes' do
