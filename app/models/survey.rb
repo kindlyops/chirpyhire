@@ -19,7 +19,7 @@ class Survey < ApplicationRecord
     CandidateAdvancer.call(user)
   end
 
-  def has_address_question?
+  def address_question?
     questions.where(type: AddressQuestion.name).present?
   end
 
