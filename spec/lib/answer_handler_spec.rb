@@ -53,6 +53,11 @@ RSpec.describe AnswerHandler do
             AnswerHandler.new(user, inquiry, message).call
           }.not_to change { Answer.count }
         end
+
+        it 'calls into the NotUnderstoodHandler' do
+          expect(NotUnderstoodHandler).to receive(:notify).with(user, inquiry)
+          AnswerHandler.new(user, inquiry, message).call
+        end
       end
     end
   end

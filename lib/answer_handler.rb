@@ -5,11 +5,11 @@ class AnswerHandler
 
   def call
     if inquiry.unanswered?
-      if answer.errors.empty?
+      if well_formed_answer?
         update_or_create_candidate_feature
         AutomatonJob.perform_later(sender, 'answer')
       else
-        # TODO JLW
+        NotUnderstoodHandler.notify(sender, inquiry)
       end
     end
   end
@@ -33,6 +33,10 @@ class AnswerHandler
 
   def answer
     @answer ||= inquiry.create_answer(message: message)
+  end
+
+  def well_formed_answer?
+    answer.errors.empty?
   end
 
   def candidate

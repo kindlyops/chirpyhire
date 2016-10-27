@@ -1,9 +1,14 @@
 class Candidate < ApplicationRecord
-  include PublicActivity::Model
   include Filterable
-  tracked only: [:create, :update], on: {
-    update: ->(model, _) { model.changes.include?('stage_id') }
-  }, properties: ->(_, model) { { stage_id: model.stage_id } }
+  include PublicActivity::Model
+  tracked(
+    only: [:create, :update],
+    on: {
+      update: ->(model, _) { model.changes.include?('stage_id') }
+    },
+    properties: ->(_, model) { { stage_id: model.stage_id } },
+    owner: Proc.new{ |_, model| model.organization }
+  )
 
   belongs_to :user
   belongs_to :stage

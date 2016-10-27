@@ -13,7 +13,7 @@ class AnswerClassifier
     return AddressQuestion if message.address?
     return YesNoQuestion if message.yes_or_no?
     return ChoiceQuestion if message.choice?(choices)
-    return ZipcodeQuestion if message.valid_zipcode?(zipcode_options)
+    return ZipcodeQuestion if message.valid_zipcode?
 
     raise NotClassifiedError, 'Message was not succesfully classified
     to match any known question types.'
@@ -22,13 +22,6 @@ class AnswerClassifier
   private
 
   attr_reader :answer, :inquiry
-
-  def zipcode_options
-    inquiry.question
-           .becomes(ZipcodeQuestion)
-           .zipcode_question_options
-           .pluck(:text)
-  end
 
   def choice_question
     @choice_question ||= begin

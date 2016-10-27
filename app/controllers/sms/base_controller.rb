@@ -2,8 +2,8 @@ class Sms::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
-  def unknown_message
-    UnknownMessageHandlerJob.perform_later(sender, params['MessageSid'])
+  def unsolicited_message
+    UnsolicitedMessageHandlerJob.perform_later(sender, params['MessageSid'])
 
     head :ok
   end
