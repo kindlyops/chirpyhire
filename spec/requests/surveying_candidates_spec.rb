@@ -125,7 +125,10 @@ RSpec.feature 'Surveying Candidates', type: :request do
         it 'does not ask the next question' do
           last_message = organization.messages.by_recency.first
           expect(last_message.inquiry.present?).to be(false)
-          expect(last_message.inbound?).to be(true)
+          expect(last_message.inbound?).to be(false)
+          expect(last_message.body).to(
+            eq(organization.survey.not_understood.body)
+          )
         end
       end
 
@@ -134,7 +137,10 @@ RSpec.feature 'Surveying Candidates', type: :request do
         it 'does not ask the next question' do
           last_message = organization.messages.by_recency.first
           expect(last_message.inquiry.present?).to be(false)
-          expect(last_message.inbound?).to be(true)
+          expect(last_message.inbound?).to be(false)
+          expect(last_message.body).to(
+            eq(organization.survey.not_understood.body)
+          )
         end
       end
     end

@@ -5,6 +5,7 @@ RSpec.describe AnswerHandlerJob do
   extend ::RSpec::Mocks::ExampleMethods
 
   let(:sender) { create(:user) }
+  let!(:survey) { create(:survey, organization: sender.organization) }
   let!(:question) { create(:question, :choice) }
   let!(:option) { question.becomes(ChoiceQuestion).choice_question_options.first.letter }
   let(:inquiry) { create(:inquiry) }
