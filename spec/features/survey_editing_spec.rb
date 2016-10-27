@@ -50,9 +50,9 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
 
   context 'Address Questions' do
     let(:label) { 'Address' }
-    let!(:address_question) { create(:address_question, label: label, survey: survey) }
 
     context 'editing the text' do
+      let!(:address_question) { create(:address_question, label: label, survey: survey) }
       it 'works' do
         visit survey_path
         find('#edit-question', match: :first).trigger('click')
@@ -65,6 +65,8 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
     end
 
     context 'changing the status' do
+      let!(:address_question) { create(:address_question, label: label, survey: survey) }
+
       it 'works' do
         visit survey_path
         find('#edit-question', match: :first).trigger('click')
@@ -101,6 +103,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       end
 
       context 'that exists' do
+        let!(:address_question) { create(:address_question, label: label, survey: survey) }
         let!(:address_question_option) { create(:address_question_option, address_question: address_question) }
 
         context 'removing the limit' do
@@ -138,6 +141,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       end
 
       context 'adding the limit' do
+        let!(:address_question) { create(:address_question, label: label, survey: survey) }
         let(:distance) { Faker::Number.number(2) }
         let(:latitude) { Faker::Address.latitude }
         let(:longitude) { Faker::Address.longitude }

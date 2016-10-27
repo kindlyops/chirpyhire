@@ -9,7 +9,7 @@
   hr
 
   .cards.question-types
-    - if current_organization.survey.questions.where(type: AddressQuestion.name).empty?
+    - unless current_organization.survey.has_address_question?
       #address-type.card
         .card-image
           i.fa.fa-map-marker
