@@ -63,7 +63,7 @@ class Message < ApplicationRecord
 
   def valid_zipcode?
     return false unless body.present?
-    (body =~ /^\d{5}$/) == 0
+    (body.strip =~ /^\d{5}$/) == 0
   end
 
   def address

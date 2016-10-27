@@ -15,6 +15,10 @@ class ZipcodeQuestion < Question
     'zipcode'
   end
 
+  def rejects?(candidate)
+    !zipcode_question_options.pluck(:text).include?(candidate.zipcode)
+  end
+
   def zipcode_is_five_digits
     all_zipcodes = zipcode_question_options.all? do |option|
       (option.text =~ /^\d{5}$/) == 0

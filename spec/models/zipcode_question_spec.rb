@@ -19,6 +19,24 @@ RSpec.describe ZipcodeQuestion, type: :model do
     end
   end
 
+  describe '.rejects' do
+    let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: '30327' }, { text: '30342' }, { text: '30305' }]) }
+    
+    context 'good zipcode' do
+      let(:candidate) { create(:candidate, zipcode: '30342') }
+      it 'passes' do
+        expect(question.rejects?(candidate)).to eq(false)
+      end
+    end
+
+    context 'bad zipcode' do
+      let(:candidate) { create(:candidate, zipcode: '40342') }
+      it 'rejects' do
+        expect(question.rejects?(candidate)).to eq(true)
+      end
+    end
+  end
+
   describe '.zipcode_is_five_digits' do
     context 'does not allow options with text' do
       let(:question) { create(:zipcode_question, zipcode_question_options_attributes: [{ text: 'zipss' }]) }
