@@ -7,7 +7,7 @@ class ImpersonationController < ApplicationController
                             }).first
     raise 'No account for org' if account.blank?
     impersonate_account(account)
-    redirect_to request.referrer
+    redirect_to request.referer
   end
 
   private
