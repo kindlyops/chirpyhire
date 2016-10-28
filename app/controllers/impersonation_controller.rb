@@ -3,8 +3,8 @@ class ImpersonationController < ApplicationController
   def impersonate
     account = Account.joins(:user)
                      .where(users: {
-                        organization_id: params[:organization_id].to_i
-                     }).first
+                              organization_id: params[:organization_id].to_i
+                            }).first
     raise 'No account for org' if account.blank?
     impersonate_account(account)
     redirect_to params[:redirect]
