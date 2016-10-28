@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
       default: :default
     )
 
-    redirect_to(request.referer || root_path)
+    redirect_to(request.referrer || root_path)
   end
 
   def block_invalid_subscriptions

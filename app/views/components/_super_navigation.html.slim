@@ -13,7 +13,6 @@ header.super-navigation.navigation role="banner"
             Organization.all.map { |org| [org.name, org.id] },\
             current_account.organization.id\
           )
-        = hidden_field_tag('redirect', request.original_url)
         button
           ' Change
 
