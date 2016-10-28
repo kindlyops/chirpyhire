@@ -5,7 +5,6 @@ class AnswerHandlerJob < MessageHandlerRetryJob
     @inquiry = inquiry
     @message_sid = message_sid
     @retries_remaining = retries
-
     message = MessageHandler.new(sender, message_sid).call
     AnswerHandler.new(sender, inquiry, message).call
   end

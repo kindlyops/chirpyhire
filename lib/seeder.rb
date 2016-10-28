@@ -3,7 +3,7 @@ class Seeder
     @longitude = ENV.fetch("longitude", -84.373931).to_f
     @latitude = ENV.fetch("latitude", 33.929966).to_f
     @zipcodes = ENV.fetch("zipcodes", ["30342", "30327", "30305", "30306", "30307"])
-    @seed_location_type = ENV.fetch("SEED_LOCATION_TYPE", "address")
+    @seed_location_type = ENV.fetch("SEED_LOCATION_TYPE", "zipcode")
   end
 
   def seed
