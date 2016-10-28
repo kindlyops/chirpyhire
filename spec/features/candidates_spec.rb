@@ -120,7 +120,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         end
 
         context 'with a qualified candidate created a month ago' do
-          let!(:old_qualified_candidate) { create(:candidate, organization: account.organization, status: 'Qualified', created_at: 1.month.ago) }
+          let!(:old_qualified_candidate) { create(:candidate, organization: account.organization, stage: qualified_stage, created_at: 1.month.ago) }
 
           it 'only shows candidates from the past week by default' do
             visit candidates_path
