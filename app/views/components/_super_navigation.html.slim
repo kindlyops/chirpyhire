@@ -1,9 +1,19 @@
 header.super-navigation.navigation role="banner"
-  .navigation-wrapper
-    nav.left role="navigation"
-      select.organization name='organization'
-        = options_for_select(\
-          Organization.all.map { |org| [org.name, org.id] },\
-          cookies[:super_admin_organization_id]\
-        )
+  .navigation-wrapper style='display:flex; justify-content:space-between;'
+    nav.left style='display:flex; align-items:center; margin-left: 4em;'
+      span
+        span style='font-weight:bold'
+          = true_account.user.name
+        '  logged in with:
+        = current_account.organization.name
+    nav.right style='display:flex; align-items:center;'
+      = form_tag('/impersonate', style: 'display:flex;')
+        select.organization name='organization_id' style='margin:0 0 0 1em;'
+          = options_for_select(\
+            Organization.all.map { |org| [org.name, org.id] },\
+            current_account.organization.id\
+          )
+        = hidden_field_tag('redirect', request.original_url)
+        button
+          ' Change
 

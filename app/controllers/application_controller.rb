@@ -13,16 +13,17 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, only: :index, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  impersonates(
+    :account,
+    method: :current_account,
+    with: ->(id) { Account.find_by(id: id) }
+  )
+
   def pundit_user
     current_organization
   end
 
   def current_organization
-    if current_account&.super_admin?
-      org_id = (cookies[:super_admin_organization_id] ||= current_user.organization.id)
-      @current_organization ||= 
-        cookies[:super_admin_organization_id] ||= current_user.organization
-    end
     @current_organization ||= current_user.organization
   end
 

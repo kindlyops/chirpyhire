@@ -1,4 +1,4 @@
-- if current_organization.trialing? && controller_name != "subscriptions"
+- if current_organization.trialing? && controller_name != "subscriptions" && !current_account&.super_admin?
   .notice.ribbon
     ' Trial:
     = number_with_delimiter(current_organization.trial_remaining_messages_count)

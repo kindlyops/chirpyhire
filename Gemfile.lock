@@ -235,6 +235,8 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
+    pretender (0.2.1)
+      actionpack
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -447,6 +449,7 @@ DEPENDENCIES
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
+  pretender (~> 0.2.1)
   pry-byebug
   pry-rails
   public_activity (~> 1.5.0)

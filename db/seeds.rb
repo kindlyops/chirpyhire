@@ -36,8 +36,8 @@ if Rails.env.development?
 
   puts "Creating User"
   user = User.find_or_create_by!(
-   first_name: "Harry",
-   last_name: "Whelchel",
+   first_name: ENV.fetch("DEV_FIRST_NAME"),
+   last_name: ENV.fetch("DEV_LAST_NAME"),
    phone_number: ENV.fetch("DEV_PHONE"),
    organization: org
   )

@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :templates, only: [:edit, :update]
   put 'stages/reorder' => 'stages#reorder'
   resources :stages, only: [:index, :create, :destroy, :edit, :update]
+  post 'impersonate/' => 'impersonation#impersonate'
 
   namespace :maps do
     resources :candidates, only: [:index, :show]

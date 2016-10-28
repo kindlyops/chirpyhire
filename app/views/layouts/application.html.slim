@@ -29,7 +29,7 @@ html
         // End Rollbar Snippet
     body
         = render "components/navigation" if current_account.present?
-        = render "components/super_navigation" if current_account&.super_admin?
+        = render "components/super_navigation" if true_account&.super_admin?
         = render "components/guest_navigation" unless current_account.present?
         = render partial: "subscriptions/ribbon" if current_account.present?
         - if notice.present?
