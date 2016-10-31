@@ -7,7 +7,7 @@
         = options_for_select(current_organization.ordered_stages.map {|st| [st.name, st.name]}, cookies[:candidate_stage_filter])
       = select_tag "created_in", options_for_select(["Past 24 Hours", "Past Week", "Past Month", "All Time"], cookies.fetch(:candidate_created_in_filter, "Past Week"))
     .button-group
-      label for=""
+      label
         i.fa.fa-th-large.button-group-item selected=true
       label
         = link_to maps_candidates_path, class: "button-group-item" do

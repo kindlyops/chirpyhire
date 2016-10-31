@@ -7,14 +7,26 @@ header.navigation {
     @include media ($horizontal-bar-mode) {
       nav.left {
         display: flex;
+        align-items: center;
+        h1 {
+          margin: 0;
+        }
         ul.navigation-menu.left {
           padding: 0 2em;
+        }
+      }
+      nav.right {
+        display: flex;
+        .safari-hack {
+          visibility: hidden;
+        }
+        .navigation-menu-button{ 
+          line-height: 75px;
         }
       }
     }
 
   .app-title {
-    padding: 1.05em 0 0 1.5em;
     h1 {
       font-weight: normal;
     }
