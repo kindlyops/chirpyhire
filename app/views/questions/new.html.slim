@@ -9,7 +9,16 @@
   hr
 
   .cards.question-types
-    - unless current_organization.survey.address_question?
+    - if current_organization.survey.address_question?
+      #address-type.card.disabled.tipsy-needed-s title='You already have an address question in your survey.'
+        .card-image
+          i.fa.fa-map-marker
+        .card-header
+          ' Address
+        .card-copy
+          p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+          = link_to "Add Question", new_address_question_path, class: "button disabled"
+    - else
       #address-type.card
         .card-image
           i.fa.fa-map-marker

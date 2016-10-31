@@ -100,6 +100,19 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
           expect(page).to have_text('Fancy Address Text')
           expect(page).to have_text('Fancy Address Label')
         end
+
+        context 'when it already exists' do
+          let!(:address_question) { create(:address_question, label: label, survey: survey) }
+          it 'is disabled' do
+            visit survey_path
+            find('#add-question', match: :first).trigger('click')
+            expect {
+              within(find('#address-type')) do
+                click_link('Add Question')
+              end
+            }.not_to change { page }
+          end
+        end
       end
 
       context 'that exists' do
