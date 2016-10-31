@@ -18,7 +18,7 @@ RSpec.describe ImpersonationController, type: :controller do
       ImpersonationController.instance_methods(false).each do |method|
         expect {
           post method.to_sym, params: { organization_id: super_org.id }
-        }.to change { flash[:error] }.to('You cannot perform this action.')
+        }.not_to change { session['impersonated_account_id'] }
       end
     end
   end
@@ -29,8 +29,8 @@ RSpec.describe ImpersonationController, type: :controller do
       expect {
         post :impersonate, params: { organization_id: normal_org.id }
       }.to change {
-        subject.current_account
-      }.from(super_account).to(normal_account)
+        session['impersonated_account_id']
+      }.from(nil).to(normal_account.id)
     end
     it "doesn't change the true account" do
       @request.env['HTTP_REFERER'] = '/'
