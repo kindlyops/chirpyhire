@@ -22,6 +22,9 @@ RSpec.describe Inquiry do
   describe '#activity tracking' do
     let(:inquiry) { create(:inquiry) }
     let(:question) { create(:question) }
+    let(:activity_nu_count) {
+      inquiry.activities.last.properties['not_understood_count']
+    }
     describe 'update' do
       context 'changing not understood count' do
         it 'creates an activity' do
@@ -37,9 +40,7 @@ RSpec.describe Inquiry do
         it 'has owner id and question type' do
           inquiry.update!(not_understood_count: 1)
           expect(inquiry.activities.last.owner).to eq(inquiry.organization)
-          expect(inquiry.activities.last.properties['not_understood_count']).to(
-            eq(inquiry.not_understood_count)
-          )
+          expect(activity_nu_count).to eq(inquiry.not_understood_count)
         end
       end
 

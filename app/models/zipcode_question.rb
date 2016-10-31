@@ -6,10 +6,6 @@ class ZipcodeQuestion < Question
   validates :zipcode_question_options, presence: true
   validate :zipcode_is_five_digits
 
-  def rejects?(candidate)
-    !zipcode_question_options.pluck(:text).include?(candidate.zipcode)
-  end
-
   def self.extract_internal(properties, message, _inquiry)
     properties[:option] = message.body.strip
     properties
@@ -20,7 +16,7 @@ class ZipcodeQuestion < Question
   end
 
   def rejects?(candidate)
-    !zipcode_question_options.pluck(:text).include?(candidate.zipcode)
+    zipcode_question_options.pluck(:text).exclude?(candidate.zipcode)
   end
 
   def zipcode_is_five_digits
