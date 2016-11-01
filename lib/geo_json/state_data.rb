@@ -2,6 +2,7 @@ class GeoJson::StateData
   MAPPING_FILE = 'lib/geo_json_data/state_to_zipcode_mapping.json'.freeze
   def initialize
     @zipcode_mapping = JSON.parse(File.read("#{Rails.root}/#{MAPPING_FILE}"))
+    @state_jsons = {}
   end
 
   def state_json(zipcode)
@@ -10,20 +11,19 @@ class GeoJson::StateData
       raise(GeoJson::Zipcode::DataNotFoundError, "No state for #{zipcode}")
     end
 
-    state_data(state)
+    state_jsons[state] || build_state_json(state)
   end
 
   private
 
+  attr_accessor :state_jsons
+
   attr_reader :zipcode_mapping
 
-  def state_data(state)
-    cached_data = Rails.cache.read(cache_key(state))
-    return cached_data if cached_data.present?
+  def build_state_json(state)
     data = fetch_raw_data(state)
-    parsed_data = JSON.parse(data)
-    Rails.cache.write(cache_key(state), parsed_data)
-    parsed_data
+    state_jsons[state] = JSON.parse(data)
+    state_jsons[state]
   end
 
   def fetch_raw_data(state)
@@ -37,9 +37,5 @@ class GeoJson::StateData
 
   def state_for(zipcode)
     zipcode_mapping[zipcode]
-  end
-
-  def cache_key(state)
-    "state_data_#{state}"
   end
 end

@@ -133,7 +133,6 @@ GEM
     connection_pool (2.2.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    dalli (2.7.6)
     database_cleaner (1.5.3)
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
@@ -429,7 +428,6 @@ DEPENDENCIES
   capybara-email!
   capybara-webkit (~> 1.11.1)
   cocoon (~> 1.2.9)
-  dalli (~> 2.7.6)
   database_cleaner (~> 1.5.0)
   devise (~> 4.2.0)
   devise_invitable (~> 1.6.0)

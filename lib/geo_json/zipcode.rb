@@ -27,8 +27,7 @@ class GeoJson::Zipcode
     stage = stage_zipcode_group[0][0]
     zipcode = stage_zipcode_group[0][1]
 
-    state_json = state_data.state_json(zipcode)
-    feature = find_zipcode_feature(state_json, zipcode)
+    feature = find_zipcode_feature(zipcode)
     properties = feature_properties(stage, zipcode, scoped_candidates, feature)
 
     build_zipcode_feature(properties, feature)
@@ -54,12 +53,16 @@ class GeoJson::Zipcode
     }
   end
 
-  def find_zipcode_feature(state_json, zipcode)
-    feature = state_json['features'].detect do |f|
-      f['properties']['ZCTA5CE10'] == zipcode
+  def find_zipcode_feature(zipcode)
+    Rails.cache.fetch(zipcode) do
+      state_json = state_data.state_json(zipcode)
+
+      feature = state_json['features'].detect do |f|
+        f['properties']['ZCTA5CE10'] == zipcode
+      end
+      raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
+      feature
     end
-    raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
-    feature
   end
 
   def description(stage, zipcode, candidates)
