@@ -10,6 +10,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
   end
 
   context 'with candidates' do
+    
     context 'qualified candidates' do
       let(:qualified_stage) { account.organization.qualified_stage }
       let!(:candidate) { create(:candidate, organization: account.organization, stage: qualified_stage) }
