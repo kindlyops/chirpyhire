@@ -6,6 +6,7 @@ module Nicknames
     def initialize(candidate)
       @candidate = candidate
       @organization = candidate.organization
+      @tried_names = Set.new
     end
 
     def generate
@@ -13,7 +14,7 @@ module Nicknames
             organization.candidates.count > nickname_count
       loop do
         nickname = random_nickname
-        return nickname unless taken?(nickname)
+        return nickname unless tried?(nickname) || taken?(nickname)
       end
     end
 
@@ -21,10 +22,18 @@ module Nicknames
       ANIMALS.count * ADJECTIVES.count
     end
 
+    attr_reader :tried_names
+
     private
 
+    def tried?(nickname)
+      tried_names.include?(nickname)
+    end
+
     def taken?(nickname)
-      organization.candidates.exists?(nickname: nickname)
+      exists = organization.candidates.exists?(nickname: nickname)
+      tried_names.add(nickname) if exists
+      exists
     end
 
     def random_nickname

@@ -1,3 +1,2 @@
-button class="change-candidate-stage" title="Change candidate's stage"
-  = link_to edit_candidate_path(candidate), class: 'fix-turbolinks-scroll'
-    i.fa.fa-exchange
+= link_to(edit_candidate_path(candidate), class: 'change-candidate-stage button fix-turbolinks-scroll', title: "Change candidate's stage")
+  i.fa.fa-exchange

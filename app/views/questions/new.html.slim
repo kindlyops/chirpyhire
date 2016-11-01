@@ -9,22 +9,42 @@
   hr
 
   .cards.question-types
-    #address-type.card
-      .card-image
-        i.fa.fa-map-marker
-      .card-header
-        ' Address
-      .card-copy
-        p Ask candidates for their address. Optionally filter candidates that live outside your service area.
-        = new_question_link(new_address_question_path)
-    #zipcode-type.card
-      .card-image
-        i.fa.fa-bullseye
-      .card-header
-        ' Zipcode
-      .card-copy
-        p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
-        = new_question_link(new_zipcode_question_path)
+    - if current_organization.survey.address_question?
+      #address-type.card.disabled.tipsy-needed-s title='You already have an address question in your survey.'
+        .card-image
+          i.fa.fa-map-marker
+        .card-header
+          ' Address
+        .card-copy
+          p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+          = new_question_link(new_address_question_path, "disabled")
+    - else
+      #address-type.card
+        .card-image
+          i.fa.fa-map-marker
+        .card-header
+          ' Address
+        .card-copy
+          p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+          = new_question_link(new_address_question_path)
+    - if current_organization.survey.zipcode_question?
+      #zipcode-type.card.disabled.tipsy-needed-s title='You already have a zipcode question in your survey.'
+        .card-image
+          i.fa.fa-bullseye
+        .card-header
+          ' Zipcode
+        .card-copy
+          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+          = new_question_link(new_zipcode_question_path, "disabled")
+    - else
+      #zipcode-type.card
+        .card-image
+          i.fa.fa-bullseye
+        .card-header
+          ' Zipcode
+        .card-copy
+          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+          = new_question_link(new_zipcode_question_path)
     #yes-no-type.card
       .card-image
         i.fa.fa-share-alt

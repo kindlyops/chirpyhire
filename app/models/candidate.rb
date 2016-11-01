@@ -124,5 +124,8 @@ class Candidate < ApplicationRecord
 
   def add_nickname
     self.nickname = Nicknames::Generator.new(self).generate
+  rescue Nicknames::OutOfNicknamesError => e
+    Logging::Logger.log(e)
+    self.nickname = 'Anonymous'
   end
 end
