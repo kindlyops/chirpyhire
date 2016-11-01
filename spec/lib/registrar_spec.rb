@@ -35,12 +35,6 @@ RSpec.describe Registrar do
         }.to have_enqueued_job(TwilioProvisionerJob)
       end
 
-      it 'enqueues a IntercomSyncerJob' do
-        expect {
-          registrar.register
-        }.to have_enqueued_job(IntercomSyncerJob)
-      end
-
       it 'creates three questions' do
         expect {
           registrar.register

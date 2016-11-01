@@ -8,10 +8,6 @@ RSpec.feature 'Account Management', type: :feature, js: true do
     context 'with valid credentials' do
       let(:password) { Faker::Internet.password }
 
-      before(:each) do
-        allow(IntercomSyncerJob).to receive(:perform_later).once
-      end
-
       scenario 'User progresses to invitation screen', vcr: { cassette_name: 'TwilioProvisioner-call' } do
         visit '/accounts/sign_up'
 

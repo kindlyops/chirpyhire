@@ -76,8 +76,8 @@ class SubscriptionsController < ApplicationController
 
   def payment_error_message(error)
     <<-ERROR
-#{error.message} Need Help? <a href='javascript:void(0)'
-onclick="Intercom('showNewMessage')">Message Us</a>
+#{error.message} Need Help? <a href="mailto:john@chirpyhire.com
+?subject='Chirpyhire Payment Question'">Message Us</a>
     ERROR
   end
 
