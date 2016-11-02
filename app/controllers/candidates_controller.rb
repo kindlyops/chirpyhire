@@ -68,8 +68,9 @@ class CandidatesController < ApplicationController
 
   def recent_candidates
     @recent_candidates ||=
-      policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
-                             .references(:candidate_features, :user)
+      policy_scope(Candidate).by_recency
+                             .includes(:candidate_features, :user, :stage)
+                             .references(:candidate_features, :user, :stage)
   end
 
   def filtering_params

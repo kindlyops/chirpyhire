@@ -12,9 +12,7 @@ $(document).on("turbolinks:load", function() {
       $.get({
         url: "/candidates.geojson",
         dataType: "json",
-        success: function(candidatesGeoData) {
-          fetchZipcodeData(candidatesGeoData, initMap);
-        }
+        success: fetchZipcodeData
       });
     }
 
@@ -23,7 +21,6 @@ $(document).on("turbolinks:load", function() {
         zipcodeSourceId = "candidates_zipcode",
         center =  $("#map").data("center"),
         zoom = $("#map").data("zoom"),
-        zipcodeSourceData = candidatesGeoData.sources[1],
         layers, sources,
         addressSource, zipcodeSource,
         nonHoverLayers;
@@ -38,7 +35,7 @@ $(document).on("turbolinks:load", function() {
       zipcodeSource = {
         id: zipcodeSourceId,
         type: "geojson",
-        data: zipcodeSourceData
+        data: candidatesGeoData.sources[1]
       };
 
       sources = [addressSource, zipcodeSource];
@@ -115,35 +112,41 @@ $(document).on("turbolinks:load", function() {
       watchCardLink();
     };
 
-    function fetchZipcodeData(candidatesGeoData, callback) {
+    function fetchZipcodeData(candidatesGeoData) {
       var zipcodeSourceData = candidatesGeoData.sources[1],
         zipcodeFeatures = [],
         fetchedData = {},
         zipcodes = zipcodeSourceData.features.map(function(feature) { return feature.properties.zipcode; }),
-        zipcodesToFetch = zipcodes.length;
-
-      zipcodes.forEach(function(zipcode) {
-        $.get({
-          url: "/zipcode/" + zipcode,
-          dataType: "json",
-          success: function(featureJson) {
-            fetchedData[zipcode] = featureJson;
-          }
-        }).always(function() {
+        zipcodesToFetch = zipcodes.length,
+        checkFinishedFetchingData = function() {
           zipcodesToFetch -= 1;
           if (zipcodesToFetch == 0) {
             zipcodeSourceData.features.forEach(function(feature) {
-              var zipcode = feature.properties.zipcode;
-              if (fetchedData[zipcode]) {
-                feature.geometry = fetchedData[zipcode].geometry;
-                feature.properties.center = fetchedData[zipcode].geometry.center;
+              var zipcode = feature.properties.zipcode,
+                data = JSON.parse(localStorage.getItem(zipcode));
+              if (data) {
+                feature.geometry = data.geometry;
+                feature.properties.center = data.geometry.center;
                 zipcodeFeatures.push(feature);
               }
             });
             zipcodeSourceData.features = zipcodeFeatures;
-            callback(candidatesGeoData);
+            initMap(candidatesGeoData);
           }
-        });
+        };
+
+      zipcodes.forEach(function(zipcode) {
+        if (!localStorage.getItem(zipcode)) {
+          $.get({
+            url: "/zipcode/" + zipcode,
+            dataType: "text",
+            success: function(featureJson) {
+              localStorage.setItem(zipcode, featureJson);
+            }
+          }).always(checkFinishedFetchingData);
+        } else {
+          checkFinishedFetchingData();
+        }
       })
     }
 
