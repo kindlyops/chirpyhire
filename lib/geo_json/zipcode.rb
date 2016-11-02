@@ -131,7 +131,7 @@ class GeoJson::Zipcode
 
   def read_zipcode_feature(zipcode)
     # JSON.parse(File.read("~/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json"))
-    File.read("/Users/johnwhelchel/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json")
+    File.open("/Users/johnwhelchel/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json")
   rescue Exception => e
     puts "Fuck it #{e.message}"
     raise DataNotFoundError, "shit"
