@@ -1,12 +1,11 @@
 class CandidatesController < ApplicationController
-  include ActionController::Live
   decorates_assigned :candidates, :candidate
 
   def show
     respond_to do |format|
       format.geojson do
         @candidate = authorized_candidate.decorate
-        render json: GeoJson.build_sources([@candidate], state_data)
+        render json: GeoJson.build_geojson_data([@candidate])
       end
 
       format.html do
@@ -19,7 +18,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.geojson do
         @candidates = recent_candidates
-        render json: GeoJson.build_sources(@candidates, state_data)
+        render json: GeoJson.build_geojson_data(@candidates)
       end
 
       format.html do
@@ -28,22 +27,6 @@ class CandidatesController < ApplicationController
       end
     end
   end
-
-  def stream_test
-    skip_authorization
-    begin
-      geo_json = GeoJson::Zipcode.new(recent_candidates, nil)
-      expires_in 30.days, public: true
-      response.headers['Content-Type'] = 'text/event-stream'
-      stuff = geo_json.dumb(params["zipcode"])
-      IO::copy_stream(stuff, response.stream)
-    rescue Exception => e
-      puts e.message
-    ensure
-      response.stream.close
-    end
-  end
-
 
   def edit
     @candidates = filtered_and_paged_candidates
@@ -61,10 +44,6 @@ class CandidatesController < ApplicationController
       redirect_to candidates_url, alert: "Oops! Couldn't change "\
       "the candidate's status"
     end
-  end
-
-  def state_data
-    @state_data ||= GeoJson::StateData.new
   end
 
   private

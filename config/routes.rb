@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   put 'stages/reorder' => 'stages#reorder'
   resources :stages, only: [:index, :create, :destroy, :edit, :update]
 
+  get 'zipcode/:zipcode' => 'zipcode#geo_json'
+
   namespace :maps do
     resources :candidates, only: [:index, :show]
   end
@@ -33,8 +35,6 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'sms/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'sms/base#unknown_message'
-
-  get 'stream_test/:zipcode/candidates.geojson' => 'candidates#stream_test'
 
   mount StripeEvent::Engine, at: '/stripe/events'
 
