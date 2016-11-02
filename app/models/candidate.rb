@@ -72,9 +72,9 @@ class Candidate < ApplicationRecord
   end
 
   def zipcode
-    features(ZipcodeQuestion)
-      .first&.properties
+    full_zipcode = features(ZipcodeQuestion).first&.properties
       &.dig('option') || address&.zipcode
+    full_zipcode[0..4] if full_zipcode.present?
   end
 
   def address_feature
