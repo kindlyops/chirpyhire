@@ -30,9 +30,9 @@ class AddressRefresher
   def row
     @row ||= [message.id,
               message.body,
-              current_address.formatted_address,
+              current_address&.formatted_address,
               new_address.address,
-              current_address.id].concat(new_address_elements)
+              current_address&.id].concat(new_address_elements)
   end
 
   def new_address_elements
@@ -73,13 +73,7 @@ class AddressRefresher
   end
 
   def current_address
-    @current_address ||= begin
-      if address_feature.present?
-        Address.new(address_feature)
-      else
-        NullAddress.new
-      end
-    end
+    @current_address ||= candidate.address
   end
 
   def new_address

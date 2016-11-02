@@ -116,6 +116,59 @@ RSpec.describe CandidatesController, type: :controller do
       end
     end
 
+    context 'with zipcode filter' do
+      let(:zipcodes) { %w(30342 30305 30307) }
+      let!(:no_address_or_zipcode_candidates) do
+        Array.new(3) do
+          create(:candidate,
+                 stage: organization.qualified_stage,
+                 organization: organization)
+        end
+      end
+
+      let!(:zipcode_candidates) do
+        zipcodes.map do |zipcode|
+          create(:candidate,
+                 stage: organization.qualified_stage,
+                 organization: organization,
+                 zipcode: zipcode)
+        end
+      end
+
+      let!(:address_candidates) do
+        %w(12345 30305).map do |zipcode|
+          create(:candidate,
+                 :with_address,
+                 stage: organization.qualified_stage,
+                 organization: organization,
+                 address_zipcode: zipcode)
+        end
+      end
+
+      it 'includes everyone' do
+        get :index, params: { created_in: 'All Time', zipcode: CandidateFeature::ALL_ZIPCODES_CODE }
+        expect(assigns(:candidates)).to include(*no_address_or_zipcode_candidates)
+        expect(assigns(:candidates)).to include(*zipcode_candidates)
+        expect(assigns(:candidates)).to include(*address_candidates)
+      end
+
+      it 'excludes candidates without a zipcode' do
+        get :index, params: { created_in: 'All Time', zipcode: '30342' }
+        expect(assigns(:candidates)).to include(zipcode_candidates[0])
+        expect(assigns(:candidates)).not_to include(*address_candidates)
+        expect(assigns(:candidates)).not_to include(*no_address_or_zipcode_candidates)
+      end
+
+      it 'includes candidates with an address that matches the zipcode' do
+        get :index, params: { created_in: 'All Time', zipcode: '30305' }
+        expect(assigns(:candidates)).to include(zipcode_candidates[1])
+        expect(assigns(:candidates)).to include(address_candidates[1])
+        expect(assigns(:candidates)).not_to include(*no_address_or_zipcode_candidates)
+        expect(assigns(:candidates)).not_to include(address_candidates[0])
+        expect(assigns(:candidates)).not_to include(zipcode_candidates[0], zipcode_candidates[2])
+      end
+    end
+
     context 'with candidates' do
       let(:qualified_stage) { organization.qualified_stage }
       let!(:candidates) { create_list(:candidate, 3, stage: qualified_stage, organization: organization) }
@@ -123,8 +176,8 @@ RSpec.describe CandidatesController, type: :controller do
       context 'geojson' do
         context 'with candidates with addresses without phone numbers' do
           let!(:candidates) { create_list(:candidate, 3, :with_address, stage: qualified_stage, organization: organization) }
-
           it 'is OK' do
+            allow_any_instance_of(CandidatesController).to receive(:state_data).and_return(FakeStateData.new)
             get :index, format: :geojson
             expect(response).to be_ok
           end

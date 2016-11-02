@@ -24,12 +24,18 @@
 en:
   activerecord:
     attributes:
+      zipcode_question_options:
+        text: "Zipcode"
       choice_question_options:
         text: "Question response"
       choice_question:
         choice_question_options:
           one: "A question response"
           other: "Question responses"
+      zipcode_question:
+        zipcode_question_options:
+          one: "A zipcode"
+          other: "Zipcodes"
       stage:
         name: "Stage name"
     errors:

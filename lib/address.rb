@@ -22,6 +22,10 @@ class Address
     feature['properties']['address']
   end
 
+  def zipcode
+    feature['properties']['postal_code']
+  end
+
   private
 
   attr_reader :feature

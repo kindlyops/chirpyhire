@@ -1,10 +1,4 @@
-class Document
-  delegate :label, to: :feature
-
-  def initialize(feature)
-    @feature = feature
-  end
-
+class Document < FeatureViewModel
   def first_page
     feature.properties['url0']
   end
@@ -16,8 +10,4 @@ class Document
   def additional_uris
     uris.drop(1)
   end
-
-  private
-
-  attr_reader :feature
 end

@@ -5,27 +5,25 @@ class CandidateDecorator < Draper::Decorator
   delegate :phone_number, to: :user, prefix: true
 
   def choices
-    @choices ||= begin
-      return [] unless choice_features.present?
-      choice_features.map { |f| Choice.new(f) }
-    end
+    @choices ||= make_feature_view_model(choice_features, Choice)
   end
 
   def yes_nos
-    @yes_nos ||= begin
-      return [] unless yes_no_features.present?
-      yes_no_features.map { |f| YesNo.new(f) }
-    end
+    @yes_nos ||= make_feature_view_model(yes_no_features, YesNo)
   end
 
   def documents
-    @documents ||= begin
-      return [] unless document_features.present?
-      document_features.map { |f| Document.new(f) }
-    end
+    @documents ||= make_feature_view_model(document_features, Document)
   end
 
   def call_to_actions
     %w(change_stage message)
+  end
+
+  private
+
+  def make_feature_view_model(features, view_class)
+    return [] unless features.present?
+    features.map { |f| view_class.new(f) }
   end
 end

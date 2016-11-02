@@ -61,6 +61,11 @@ class Message < ApplicationRecord
     (Regexp.new("\\A([#{choices}]){1}\\)?\\z") =~ body.strip.downcase).present?
   end
 
+  def valid_zipcode?
+    return false unless body.present?
+    (body.strip =~ /^\d{5}$/) == 0
+  end
+
   def address
     @address ||= AddressFinder.new(body)
   end

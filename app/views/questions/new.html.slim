@@ -17,7 +17,7 @@
           ' Address
         .card-copy
           p Ask candidates for their address. Optionally filter candidates that live outside your service area.
-          = link_to "Add Question", new_address_question_path, class: "button disabled"
+          = new_question_link(new_address_question_path, "disabled")
     - else
       #address-type.card
         .card-image
@@ -26,14 +26,32 @@
           ' Address
         .card-copy
           p Ask candidates for their address. Optionally filter candidates that live outside your service area.
-          = link_to "Add Question", new_address_question_path, class: "button"
+          = new_question_link(new_address_question_path)
+    - if current_organization.survey.zipcode_question?
+      #zipcode-type.card.disabled.tipsy-needed-s title='You already have a zipcode question in your survey.'
+        .card-image
+          i.fa.fa-bullseye
+        .card-header
+          ' Zipcode
+        .card-copy
+          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+          = new_question_link(new_zipcode_question_path, "disabled")
+    - else
+      #zipcode-type.card
+        .card-image
+          i.fa.fa-bullseye
+        .card-header
+          ' Zipcode
+        .card-copy
+          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+          = new_question_link(new_zipcode_question_path)
     #yes-no-type.card
       .card-image
         i.fa.fa-share-alt
       .card-header Yes / No Question
       .card-copy
         p Ask a simple yes no question. Filters candidates that answer no.
-        = link_to "Add Question", new_yes_no_question_path, class: "button"
+        = new_question_link(new_yes_no_question_path)
     #choice-type.card
       .card-image
         i.fa.fa-list
@@ -41,7 +59,7 @@
         ' Multiple Choice
       .card-copy
         p Ask candidates any question with multiple choices.
-        = link_to "Add Question", new_choice_question_path, class: "button"
+        = new_question_link(new_choice_question_path)
     #image-type.card
       .card-image
         i.fa.fa-picture-o
@@ -49,4 +67,4 @@
         ' Image
       .card-copy
         p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
-        = link_to "Add Question", new_document_question_path, class: "button"
+        = new_question_link(new_document_question_path)
