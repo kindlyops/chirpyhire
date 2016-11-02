@@ -9,7 +9,67 @@ class GeoJson::Zipcode
     stage_zipcode_groups = candidates
                            .group_by { |c| [c.stage, c.zipcode] }
 
-    stage_zipcode_groups
+    stage = candidates.first.stage
+    # stage_zipcode_groups
+    ["30002",
+"30004",
+"30005",
+"30008",
+"30012",
+"30015",
+"30021",
+"30030",
+"30033",
+"30034",
+"30035",
+"30038",
+"30039",
+"30044",
+"30058",
+"30060",
+"30062",
+"30064",
+"30066",
+"30067",
+"30076",
+"30080",
+"30083",
+"30088",
+"30093",
+"30096",
+"30102",
+"30106",
+"30122",
+"30127",
+"30134",
+"30135",
+"30141",
+"30144",
+"30180",
+"30188",
+"30213",
+"30223",
+"30228",
+"30236",
+"30252",
+"30269",
+"30291",
+"30297",
+"30310",
+"30315",
+"30318",
+"30322",
+"30327",
+"30331",
+"30341",
+"30344",
+"30349",
+"30350",
+"30507",
+"32207",
+"48306",
+"84118",
+"95476"].map { |zipcode| [[stage, zipcode], candidates] }
       .map(&method(:build_feature_for_stage_zipcode_group))
       .flatten
       .compact
@@ -27,7 +87,7 @@ class GeoJson::Zipcode
     stage = stage_zipcode_group[0][0]
     zipcode = stage_zipcode_group[0][1]
 
-    feature = find_zipcode_feature(zipcode)
+    feature = read_zipcode_feature(zipcode)
     properties = feature_properties(stage, zipcode, scoped_candidates, feature)
 
     build_zipcode_feature(properties, feature)
@@ -63,6 +123,13 @@ class GeoJson::Zipcode
       raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
       feature
     end
+  end
+
+  def read_zipcode_feature(zipcode)
+    JSON.parse(File.read("~/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json"))
+  rescue Exception => e
+    puts "Fuck it #{e.message}"
+    raise DataNotFoundError, "shit"
   end
 
   def description(stage, zipcode, candidates)
