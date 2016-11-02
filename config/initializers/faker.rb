@@ -1,1 +1,3 @@
-Faker::Config.locale = 'en-US'
+unless Rails.env.development?
+  Faker::Config.locale = 'en-US'
+end
