@@ -9,11 +9,42 @@ $(document).on("turbolinks:load", function() {
       zipcodeLayers = [];
 
     function init() {
-      $.get({
-        url: "/candidates.geojson",
-        dataType: "json",
-        success: initMap.bind(this)
+      [//"30002",
+      // "30004",
+      // "30005",
+      // "30008",
+      // "30012",
+      // "30015",
+      // "30021",
+      // "30030",
+      // "30033",
+      // "30034",
+      // "30035",
+      // "30038",
+      // "30039",
+      // "30044",
+      // "30058",
+      // "30060",
+      // "30062",
+      // "30064",
+      "30342"].forEach(function(zipcode) {
+        $.get({
+          url: "/stream_test/" + zipcode + "/candidates.geojson",
+          dataType: 'json',
+          success: function(data, status) {
+            console.log(status);
+            console.log(data);
+          },
+          failure: function(stuff) {
+            console.log(stuff)
+          }
+        })
       });
+      // $.get({
+      //   url: "/candidates.geojson",
+      //   dataType: "json",
+      //   success: initMap.bind(this)
+      // });
     }
 
     function initMap(candidatesGeoData) {

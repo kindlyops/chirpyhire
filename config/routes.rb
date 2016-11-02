@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'sms/base#unknown_message'
 
+  get 'stream_test/:zipcode/candidates.geojson' => 'candidates#stream_test'
+
   mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }

@@ -75,6 +75,10 @@ class GeoJson::Zipcode
       .compact
   end
 
+  def dumb(zipcode)
+    read_zipcode_feature(zipcode)
+  end
+
   class DataNotFoundError < StandardError
   end
 
@@ -126,7 +130,8 @@ class GeoJson::Zipcode
   end
 
   def read_zipcode_feature(zipcode)
-    JSON.parse(File.read("~/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json"))
+    # JSON.parse(File.read("~/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json"))
+    File.read("/Users/johnwhelchel/Development/chire/geo_json_pre_convert_to_zip/zipcodes/#{zipcode}.json")
   rescue Exception => e
     puts "Fuck it #{e.message}"
     raise DataNotFoundError, "shit"

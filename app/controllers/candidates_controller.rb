@@ -1,4 +1,5 @@
 class CandidatesController < ApplicationController
+  include ActionController::Live
   decorates_assigned :candidates, :candidate
 
   def show
@@ -26,6 +27,16 @@ class CandidatesController < ApplicationController
         @candidates = filtered_and_paged_candidates
       end
     end
+  end
+
+  def stream_test
+    skip_authorization
+    geo_json = GeoJson::Zipcode.new(recent_candidates, state_data)
+    response.headers['Content-Type'] = 'application/json'
+    stuff = geo_json.dumb(params["zipcode"])
+    response.stream.write stuff
+  ensure
+    response.stream.close
   end
 
   def edit
