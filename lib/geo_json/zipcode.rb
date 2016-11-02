@@ -70,7 +70,7 @@ class GeoJson::Zipcode
     "<h3>Zipcode: <a href='/candidates?" \
       "zipcode=#{zipcode}" \
       "&stage_name=#{URI.encode(stage.name)}" \
-      "&created_in=#{URI.encode(Candidate::CREATED_IN_OPTIONS[:ALL_TIME])}'>" \
+      "&created_in=#{URI.encode(CandidateFilterable::CREATED_IN_OPTIONS[:ALL_TIME])}'>" \
       "#{zipcode}</a></h3>" \
     "<p class='handle sub-header'>#{candidates.count} candidates</p>"
   end

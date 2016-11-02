@@ -396,7 +396,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       let!(:zipcode_question) {
         create(:zipcode_question, label: label, survey: survey, zipcode_question_options_attributes: [{ text: '30342' }])
       }
-      
+
       let!(:option) { zipcode_question.zipcode_question_options.first }
       it 'adds an option successfully' do
         visit survey_path
@@ -446,6 +446,5 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         end
       end
     end
-
   end
 end
