@@ -1,5 +1,3 @@
-require 'memory_profiler'
-
 class CandidatesController < ApplicationController
   include ActionController::Live
   decorates_assigned :candidates, :candidate
@@ -33,31 +31,18 @@ class CandidatesController < ApplicationController
 
   def stream_test
     skip_authorization
-    binding.pry
-    # report = MemoryProfiler.report do
     begin
-      geo_json = GeoJson::Zipcode.new(recent_candidates, state_data)
+      geo_json = GeoJson::Zipcode.new(recent_candidates, nil)
       expires_in 30.days, public: true
       response.headers['Content-Type'] = 'text/event-stream'
       stuff = geo_json.dumb(params["zipcode"])
       IO::copy_stream(stuff, response.stream)
-      # stuff.each_char { |c| response.stream.write c }
     rescue Exception => e
-      binding.pry
+      puts e.message
     ensure
       response.stream.close
     end
-    # end
-    binding.pry
-    # report.pretty_print
   end
-
-  # def pre_signed_test
-  #   binding.pry
-
-  #   signer = Aws::S3::Presigner.new
-  #   redirect_to signer.presigned_url(:get_object, bucket: 'chirpyhire-geojson', key: 'geo_json_data/zipcodes/30342.json')
-  # end
 
 
   def edit
