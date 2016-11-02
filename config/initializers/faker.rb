@@ -1,3 +1,1 @@
-unless Rails.env.production?
-  Faker::Config.locale = 'en-US'
-end
+Faker::Config.locale = 'en-US' unless Rails.env.production?
