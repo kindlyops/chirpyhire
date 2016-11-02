@@ -116,7 +116,6 @@ RSpec.describe Candidate, type: :model do
           candidate_feature
           expect(candidate.zipcode).to eq('NR18')
         end
-
       end
     end
     context 'without a zipcode feature' do
