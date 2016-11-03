@@ -37,7 +37,7 @@ module Biscayne
     config.action_controller.forgery_protection_origin_check = false
     config.active_job.queue_adapter = :sidekiq
 
-    config.cache_store = :memory_store, { size: 100.megabytes }
+    config.cache_store = :memory_store
 
     # Prevent extra markup from being added with form validation, appending
     # it as a class to the existing markup instead
