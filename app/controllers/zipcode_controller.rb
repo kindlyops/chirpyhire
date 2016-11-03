@@ -8,7 +8,6 @@ class ZipcodeController < ApplicationController
     stream_data
   ensure
     response.stream.close
-    source.close if Rails.env.development? && source.present?
   end
 
   private
@@ -25,6 +24,8 @@ class ZipcodeController < ApplicationController
       loop { response.stream.write source.readpartial(1000) } if source.present?
     rescue EOFError
     end
+  ensure
+    source.close if Rails.env.development? && source.present?
   end
   # rubocop:enable Lint/HandleExceptions
 
