@@ -1,6 +1,7 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidate #map").length) {
-    var useLocalStorage = hasLocalStorage();
+    var useLocalStorage = hasLocalStorage(),
+      cache = {};
     function fetchZipcodeData(candidateGeoData) {
       var zipcodeSourceData = candidateGeoData.sources[1],
         feature = zipcodeSourceData.features[0],
