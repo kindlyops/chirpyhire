@@ -19,7 +19,7 @@ RSpec.describe ZipcodeController, type: :controller do
     context "with a zipcode that doesn't exist.", vcr: { cassette_name: 'ZipcodeController#zipcode_nonexistent' } do
       it 'does not return data' do
         get :geo_json, params: { zipcode: 'NR17' }
-        expect(response.body).to eq("")
+        expect(response.body).to eq('')
       end
       it 'logs the missing zipcode' do
         get :geo_json, params: { zipcode: 'NR17' }
