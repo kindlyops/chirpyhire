@@ -1,14 +1,13 @@
 require 'rails_helper'
 RSpec.describe GeoJson do
   let(:organization) { create(:organization, :with_subscription, :with_account) }
-  let(:state_data) { FakeStateData.new }
 
   context '#build_geojson_data' do
     context 'where the zipcode exists' do
       context 'only candidates with zipcode features' do
         let(:zipcode) { '30342' }
         let(:zipcode_candidate) { create(:candidate, zipcode: zipcode, organization: organization) }
-        let(:geo_json_data) { GeoJson.build_geojson_data([zipcode_candidate], state_data) }
+        let(:geo_json_data) { GeoJson.build_geojson_data([zipcode_candidate]) }
         it 'should not have any address features' do
           expect(geo_json_data[:sources][0][:features].count).to eq(0)
         end
@@ -22,7 +21,7 @@ RSpec.describe GeoJson do
       end
       context 'only candidates with address features' do
         let(:address_candidate) { create(:candidate, :with_address, address_zipcode: '30342', organization: organization) }
-        let(:geo_json_data) { GeoJson.build_geojson_data([address_candidate], state_data) }
+        let(:geo_json_data) { GeoJson.build_geojson_data([address_candidate]) }
         it 'should have zipcode features' do
           expect(geo_json_data[:sources][1][:features].count).to eq(1)
         end
@@ -36,7 +35,7 @@ RSpec.describe GeoJson do
       context 'candidates with address or zipcode features' do
         let(:address_candidate) { create(:candidate, :with_address, address_zipcode: '30305', organization: organization) }
         let(:zipcode_candidate) { create(:candidate, zipcode: '30342', organization: organization) }
-        let(:geo_json_data) { GeoJson.build_geojson_data([address_candidate, zipcode_candidate], state_data) }
+        let(:geo_json_data) { GeoJson.build_geojson_data([address_candidate, zipcode_candidate]) }
 
         it 'should have address features' do
           expect(geo_json_data[:sources][0][:features].count).to eq(1)
@@ -44,20 +43,6 @@ RSpec.describe GeoJson do
         it 'should have zipcode features' do
           expect(geo_json_data[:sources][1][:features].count).to eq(2)
         end
-      end
-    end
-
-    context 'where the zipcode does not exist' do
-      let(:zipcode) { '30342' }
-      let(:zipcode_candidate) { create(:candidate, zipcode: zipcode, organization: organization) }
-      let(:geo_json_data) { GeoJson.build_geojson_data([zipcode_candidate], state_data) }
-
-      let(:state_data) { GeoJson::StateData.new }
-      let(:zipcode) { '99999' }
-      it 'should log' do
-        expect {
-          geo_json_data
-        }.to change(Logging::Logger.logged_messages, :count).by(1)
       end
     end
   end
