@@ -6,7 +6,7 @@
       select.stage name="stage"
         = options_for_select(@map.organization.ordered_stages.map {|st| [st.name, st.id]}, cookies[:candidate_stage_filter])
     .button-groups.map-type
-      = render 'map_type', map_type: current_organization.candidates.any? {|c| c.address.present? } ? 'address' : 'zipcode'
+      = render 'map_type', map_type: current_organization.candidates.includes(:candidate_features).any? {|c| c.address.present? } ? 'address' : 'zipcode'
       .button-group
         label
           = link_to candidates_path, class: "candidates-cards" do

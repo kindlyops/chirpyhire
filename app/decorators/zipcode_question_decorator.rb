@@ -1,6 +1,10 @@
 class ZipcodeQuestionDecorator < Draper::Decorator
   delegate_all
 
+  def extra_information_noun
+    'zipcodes'
+  end
+
   def label_placeholder
     'Zipcode'
   end

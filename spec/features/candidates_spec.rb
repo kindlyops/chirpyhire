@@ -88,7 +88,7 @@ RSpec.feature 'Candidates', type: :feature, js: true do
         it "lets the account view the user's messages" do
           visit candidates_path
 
-          click_button("user-#{candidate.user_id}-messages")
+          click_on("user-#{candidate.user_id}-messages")
           expect(page).to have_text('Send')
           expect(page).to have_text(candidate.phone_number.phony_formatted)
         end

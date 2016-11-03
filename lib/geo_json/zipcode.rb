@@ -1,8 +1,7 @@
 require 'uri'
 class GeoJson::Zipcode
-  def initialize(candidates, state_data)
+  def initialize(candidates)
     @candidates = candidates.select { |c| c.zipcode.present? }.compact
-    @state_data = state_data
   end
 
   def features
@@ -15,60 +14,42 @@ class GeoJson::Zipcode
       .compact
   end
 
-  class DataNotFoundError < StandardError
-  end
-
   private
 
-  attr_reader :candidates, :state_data
+  attr_reader :candidates
 
   def build_feature_for_stage_zipcode_group(stage_zipcode_group)
     scoped_candidates = stage_zipcode_group[1]
     stage = stage_zipcode_group[0][0]
     zipcode = stage_zipcode_group[0][1]
 
-    state_json = state_data.state_json(zipcode)
-    feature = find_zipcode_feature(state_json, zipcode)
-    properties = feature_properties(stage, zipcode, scoped_candidates, feature)
+    properties = feature_properties(stage, zipcode, scoped_candidates)
 
-    build_zipcode_feature(properties, feature)
-  rescue DataNotFoundError => e
-    Logging::Logger.log(e.message)
-    return nil
+    build_zipcode_feature(properties)
   end
 
-  def build_zipcode_feature(properties, feature)
+  def build_zipcode_feature(properties)
     {
       properties: properties,
-      geometry: feature['geometry'],
       type: GeoJson::FEATURE_TYPE
     }
   end
 
-  def feature_properties(stage, zipcode, scoped_candidates, feature)
+  def feature_properties(stage, zipcode, scoped_candidates)
     {
       stage_name: stage.name,
       description: description(stage, zipcode, scoped_candidates),
       zipcode: zipcode,
-      center: feature['geometry']['center']
     }
-  end
-
-  def find_zipcode_feature(state_json, zipcode)
-    feature = state_json['features'].detect do |f|
-      f['properties']['ZCTA5CE10'] == zipcode
-    end
-    raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
-    feature
   end
 
   def description(stage, zipcode, candidates)
     return single_description(candidates[0]) if candidates.count == 1
-    all_time_value = CandidateFilterable::CREATED_IN_OPTIONS[:ALL_TIME]
+    created_in = URI.encode(CandidateFilterable::CREATED_IN_OPTIONS[:ALL_TIME])
     "<h3>Zipcode: <a href='/candidates?" \
       "zipcode=#{zipcode}" \
       "&stage_name=#{URI.encode(stage.name)}" \
-      "&created_in=#{URI.encode(all_time_value)}'>" \
+      "&created_in=#{created_in}'>" \
       "#{zipcode}</a></h3>" \
     "<p class='handle sub-header'>#{candidates.count} candidates</p>"
   end

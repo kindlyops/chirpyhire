@@ -1,3 +1,2 @@
-button title="Message Candidate" id="user-#{candidate.user.id}-messages"
-  = link_to user_messages_path(candidate.user) do
-    i.fa.fa-commenting
+= link_to(user_messages_path(candidate.user), title: "Message Candidate", id: "user-#{candidate.user.id}-messages", class: 'button') do
+  i.fa.fa-commenting

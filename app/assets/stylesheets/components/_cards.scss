@@ -81,7 +81,7 @@
     display: flex;
     justify-content: center;
 
-    button {
+    button, a.button {
       background-color: $card-background;
       border: 1px solid $base-border-color;
       color: $base-font-color;
