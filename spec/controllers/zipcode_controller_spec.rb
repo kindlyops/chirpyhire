@@ -12,7 +12,7 @@ RSpec.describe ZipcodeController, type: :controller do
   describe '#geo_json' do
     context 'with a zipcode that exists', vcr: { cassette_name: 'ZipcodeController#zipcode' } do
       it 'returns data' do
-        get :geo_json, params: { zipcode: '02150' }
+        get :geo_json, params: { zipcode: '14585' }
         expect(response.body).not_to be(nil)
       end
     end
