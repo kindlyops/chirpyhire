@@ -8,7 +8,7 @@ class ZipcodeController < ApplicationController
     set_cache
     source = source_stream
     begin
-      loop { response.stream.write source.readpartial(1000) }
+      loop { response.stream.write source.readpartial(1000) if source.present? }
     rescue EOFError
     end
   ensure
@@ -27,7 +27,7 @@ class ZipcodeController < ApplicationController
   def source_stream
     zipcode = params[:zipcode]
     if Rails.env.development?
-      File.open("#{Rails.root}/geo_json_data/zipcodes/#{zipcode}.json")
+      File.open("#{Rails.root}/lib/geo_json_data/zipcodes/#{zipcode}.json")
     else
       S3_BUCKET.object("geo_json_data/zipcodes/#{zipcode}.json").get.body
     end

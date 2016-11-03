@@ -5,6 +5,8 @@ $(document).on("turbolinks:load", function() {
       mapType = $(".map-type i[selected]").attr('data-map-type'),
       stages,
       map,
+      cache = {},
+      useLocalStorage = hasLocalStorage()
       addressLayers = [],
       zipcodeLayers = [];
 
@@ -123,8 +125,9 @@ $(document).on("turbolinks:load", function() {
           if (zipcodesToFetch == 0) {
             zipcodeSourceData.features.forEach(function(feature) {
               var zipcode = feature.properties.zipcode,
-                data = JSON.parse(localStorage.getItem(zipcode));
+                data = getItem(zipcode);
               if (data) {
+                data = JSON.parse(data);
                 feature.geometry = data.geometry;
                 feature.properties.center = data.geometry.center;
                 zipcodeFeatures.push(feature);
@@ -136,12 +139,12 @@ $(document).on("turbolinks:load", function() {
         };
 
       zipcodes.forEach(function(zipcode) {
-        if (!localStorage.getItem(zipcode)) {
+        if (!getItem(zipcode)) {
           $.get({
             url: "/zipcode/" + zipcode,
             dataType: "text",
             success: function(featureJson) {
-              localStorage.setItem(zipcode, featureJson);
+              setItem(zipcode, featureJson);
             }
           }).always(checkFinishedFetchingData);
         } else {
@@ -221,6 +224,33 @@ $(document).on("turbolinks:load", function() {
           map.setLayoutProperty(currentLayersIds.zipcodeHover, 'visibility', zipcodeVisibleValue);
         }
       });
+    }
+
+    function setItem(key, item) {
+      if (useLocalStorage) {
+        localStorage.setItem(key, item);
+      } else {
+        cache[key] = item;
+      }
+    }
+
+    function getItem(key) {
+      if (useLocalStorage) {
+        return localStorage.getItem(key);
+      } else {
+        return cache[key];
+      }
+    }
+
+    function hasLocalStorage() {
+      var test = 'test';
+      try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+      } catch(e) {
+        return false;
+      }
     }
 
     function onMapLoad() {
