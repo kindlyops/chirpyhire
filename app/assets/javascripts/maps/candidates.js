@@ -5,6 +5,8 @@ $(document).on("turbolinks:load", function() {
       mapType = $(".map-type i[selected]").attr('data-map-type'),
       stages,
       map,
+      cache = {},
+      useLocalStorage = hasLocalStorage()
       addressLayers = [],
       zipcodeLayers = [];
 
@@ -12,7 +14,7 @@ $(document).on("turbolinks:load", function() {
       $.get({
         url: "/candidates.geojson",
         dataType: "json",
-        success: initMap.bind(this)
+        success: fetchZipcodeData
       });
     }
 
@@ -110,6 +112,45 @@ $(document).on("turbolinks:load", function() {
       }
 
       watchCardLink();
+    };
+
+    function fetchZipcodeData(candidatesGeoData) {
+      var zipcodeSourceData = candidatesGeoData.sources[1],
+        zipcodeFeatures = [],
+        fetchedData = {},
+        zipcodes = zipcodeSourceData.features.map(function(feature) { return feature.properties.zipcode; }),
+        zipcodesToFetch = zipcodes.length,
+        checkFinishedFetchingData = function() {
+          zipcodesToFetch -= 1;
+          if (zipcodesToFetch == 0) {
+            zipcodeSourceData.features.forEach(function(feature) {
+              var zipcode = feature.properties.zipcode,
+                data = getItem(zipcode);
+              if (data) {
+                data = JSON.parse(data);
+                feature.geometry = data.geometry;
+                feature.properties.center = data.geometry.center;
+                zipcodeFeatures.push(feature);
+              }
+            });
+            zipcodeSourceData.features = zipcodeFeatures;
+            initMap(candidatesGeoData);
+          }
+        };
+
+      zipcodes.forEach(function(zipcode) {
+        if (!getItem(zipcode)) {
+          $.get({
+            url: "/zipcode/" + zipcode,
+            dataType: "text",
+            success: function(featureJson) {
+              setItem(zipcode, featureJson);
+            }
+          }).always(checkFinishedFetchingData);
+        } else {
+          checkFinishedFetchingData();
+        }
+      })
     }
 
     function getLayerIds(stage_name) {
@@ -183,6 +224,33 @@ $(document).on("turbolinks:load", function() {
           map.setLayoutProperty(currentLayersIds.zipcodeHover, 'visibility', zipcodeVisibleValue);
         }
       });
+    }
+
+    function setItem(key, item) {
+      if (useLocalStorage) {
+        localStorage.setItem(key, item);
+      } else {
+        cache[key] = item;
+      }
+    }
+
+    function getItem(key) {
+      if (useLocalStorage) {
+        return localStorage.getItem(key);
+      } else {
+        return cache[key];
+      }
+    }
+
+    function hasLocalStorage() {
+      var test = 'test';
+      try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+      } catch(e) {
+        return false;
+      }
     }
 
     function onMapLoad() {

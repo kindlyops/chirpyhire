@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://chirpyhire-geojson.s3.amazonaws.com/geo_json_data/zipcodes/14585.json
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.6.14 ruby/2.3.1 x86_64-darwin14 resources
+      X-Amz-Date:
+      - 20161103T062647Z
+      Host:
+      - chirpyhire-geojson.s3.amazonaws.com
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJDZQA74A4MCNPNNQ/20161103/us-east-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3b2086f1447f806d9c0dd50464c115ca8adcbef6ace6779e0551d9ee0e522522
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - Z6TEEIchDd2fdjEXfI0BbLEx3oXWDgq9e7nAjKJkdczREsUBUacdTp3qjSXviSH1ZS9H6Dbtiqg=
+      X-Amz-Request-Id:
+      - 46CCC38DB04871D7
+      Date:
+      - Thu, 03 Nov 2016 06:26:49 GMT
+      Last-Modified:
+      - Wed, 02 Nov 2016 22:03:48 GMT
+      Etag:
+      - '"efed81e606d7d343cefc4fdb2732f827"'
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - application/octet-stream
+      Content-Length:
+      - '1019'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: '{"type":"Feature","properties":{"STATEFP10":"36","ZCTA5CE10":"14585","GEOID10":"3614585","CLASSFP10":"B5","MTFCC10":"G6350","FUNCSTAT10":"S","ALAND10":128258,"AWATER10":0,"INTPTLAT10":"+42.9062605","INTPTLON10":"-077.5531453","PARTFLG10":"N"},"geometry":{"type":"MultiPolygon","coordinates":[[[[-77.547997,42.906095],[-77.548156,42.905904],[-77.548241,42.905804],[-77.548517,42.905569],[-77.54868,42.905379],[-77.548843,42.905191],[-77.549058,42.905403],[-77.549191,42.905533],[-77.549207,42.905641],[-77.549193,42.905722],[-77.549138,42.905816],[-77.548841,42.906117],[-77.54863,42.906334],[-77.548503,42.906284],[-77.54816,42.906151],[-77.548125,42.906138],[-77.547997,42.906095]]],[[[-77.555275,42.906572],[-77.555629,42.90864],[-77.555277,42.908537],[-77.554486,42.908316],[-77.554299,42.908266],[-77.55136,42.907483],[-77.551336,42.907477],[-77.551689,42.906437],[-77.551203,42.906263],[-77.552162,42.903734],[-77.554279,42.904519],[-77.554972,42.905934],[-77.555275,42.906572]]]],"center":[-77.550791,42.906264]}}'
+    http_version: 
+  recorded_at: Thu, 03 Nov 2016 06:26:48 GMT
+recorded_with: VCR 3.0.3

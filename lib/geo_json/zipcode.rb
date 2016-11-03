@@ -1,8 +1,7 @@
 require 'uri'
 class GeoJson::Zipcode
-  def initialize(candidates, state_data)
+  def initialize(candidates)
     @candidates = candidates.select { |c| c.zipcode.present? }.compact
-    @state_data = state_data
   end
 
   def features
@@ -15,54 +14,33 @@ class GeoJson::Zipcode
       .compact
   end
 
-  class DataNotFoundError < StandardError
-  end
-
   private
 
-  attr_reader :candidates, :state_data
+  attr_reader :candidates
 
   def build_feature_for_stage_zipcode_group(stage_zipcode_group)
     scoped_candidates = stage_zipcode_group[1]
     stage = stage_zipcode_group[0][0]
     zipcode = stage_zipcode_group[0][1]
 
-    feature = find_zipcode_feature(zipcode)
-    properties = feature_properties(stage, zipcode, scoped_candidates, feature)
+    properties = feature_properties(stage, zipcode, scoped_candidates)
 
-    build_zipcode_feature(properties, feature)
-  rescue DataNotFoundError => e
-    Logging::Logger.log(e.message)
-    return nil
+    build_zipcode_feature(properties)
   end
 
-  def build_zipcode_feature(properties, feature)
+  def build_zipcode_feature(properties)
     {
       properties: properties,
-      geometry: feature['geometry'],
       type: GeoJson::FEATURE_TYPE
     }
   end
 
-  def feature_properties(stage, zipcode, scoped_candidates, feature)
+  def feature_properties(stage, zipcode, scoped_candidates)
     {
       stage_name: stage.name,
       description: description(stage, zipcode, scoped_candidates),
       zipcode: zipcode,
-      center: feature['geometry']['center']
     }
-  end
-
-  def find_zipcode_feature(zipcode)
-    Rails.cache.fetch(zipcode) do
-      state_json = state_data.state_json(zipcode)
-
-      feature = state_json['features'].detect do |f|
-        f['properties']['ZCTA5CE10'] == zipcode
-      end
-      raise DataNotFoundError, "Zipcode #{zipcode}" if feature.blank?
-      feature
-    end
   end
 
   def description(stage, zipcode, candidates)

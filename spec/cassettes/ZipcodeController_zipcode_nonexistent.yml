@@ -1,0 +1,53 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://chirpyhire-geojson.s3.amazonaws.com/geo_json_data/zipcodes/NR17.json
+    body:
+      encoding: ASCII-8BIT
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.6.14 ruby/2.3.1 x86_64-darwin14 resources
+      X-Amz-Date:
+      - 20161103T043007Z
+      Host:
+      - chirpyhire-geojson.s3.amazonaws.com
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJDZQA74A4MCNPNNQ/20161103/us-east-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=26613863d9e3d36ca713e2b35926ceca6074c39e9638c55449100f46cda921a8
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      X-Amz-Request-Id:
+      - 63E4F05D1D909405
+      X-Amz-Id-2:
+      - l6EZx9rzPEUlkK6u99i0NXr7rMGHhaNWc66hfBVrNp2Ag4W/ardJCekZz5I5GGKn6igfKjqLkE0=
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Thu, 03 Nov 2016 04:30:07 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Error><Code>AccessDenied</Code><Message>Access Denied</Message><RequestId>63E4F05D1D909405</RequestId><HostId>l6EZx9rzPEUlkK6u99i0NXr7rMGHhaNWc66hfBVrNp2Ag4W/ardJCekZz5I5GGKn6igfKjqLkE0=</HostId></Error>
+    http_version: 
+  recorded_at: Thu, 03 Nov 2016 04:30:08 GMT
+recorded_with: VCR 3.0.3

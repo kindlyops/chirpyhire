@@ -5,7 +5,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.geojson do
         @candidate = authorized_candidate.decorate
-        render json: GeoJson.build_sources([@candidate], state_data)
+        render json: GeoJson.build_geojson_data([@candidate])
       end
 
       format.html do
@@ -18,7 +18,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.geojson do
         @candidates = recent_candidates
-        render json: GeoJson.build_sources(@candidates, state_data)
+        render json: GeoJson.build_geojson_data(@candidates)
       end
 
       format.html do
@@ -46,10 +46,6 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def state_data
-    @state_data ||= GeoJson::StateData.new
-  end
-
   private
 
   def zipcodes
@@ -72,8 +68,9 @@ class CandidatesController < ApplicationController
 
   def recent_candidates
     @recent_candidates ||=
-      policy_scope(Candidate).by_recency.includes(:candidate_features, :user)
-                             .references(:candidate_features, :user)
+      policy_scope(Candidate).by_recency
+                             .includes(:candidate_features, :user, :stage)
+                             .references(:candidate_features, :user, :stage)
   end
 
   def filtering_params
