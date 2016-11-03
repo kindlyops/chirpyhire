@@ -39,7 +39,7 @@ class ZipcodeController < ApplicationController
     if Rails.env.development?
       File.open("#{Rails.root}/lib/#{relative_file_path}")
     else
-      S3_BUCKET.object("#{relative_file_path}").get.body
+      S3_BUCKET.object(relative_file_path.to_s).get.body
     end
   rescue Errno::ENOENT, Aws::S3::Errors::AccessDenied
     Logging::Logger.log("No zipcode data for #{params[:zipcode]}")
