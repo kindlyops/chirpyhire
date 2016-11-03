@@ -1,5 +1,33 @@
 $(document).on("turbolinks:load", function() {
   if($(".maps-candidate #map").length) {
+    var useLocalStorage = hasLocalStorage();
+    function fetchZipcodeData(candidateGeoData) {
+      var zipcodeSourceData = candidateGeoData.sources[1],
+        feature = zipcodeSourceData.features[0],
+        zipcode = feature.properties.zipcode,
+        loadMapAfterLoadingZipcodeData = function() {
+          var data = JSON.parse(getItem(zipcode));
+          feature.geometry = data.geometry;
+          feature.properties.center = data.geometry.center;
+          initMap(candidateGeoData);
+        };
+
+      if (!getItem(zipcode)) {
+        $.get({
+          url: "/zipcode/" + zipcode,
+          dataType: "text",
+          success: function(featureJson) {
+            if (featureJson) {
+              setItem(zipcode, featureJson);
+              loadMapAfterLoadingZipcodeData();
+            }
+          }
+        });
+      } else {
+        loadMapAfterLoadingZipcodeData();
+      }
+    }
+
     function initMap(candidateGeoData) {
       var addressSourceId = "candidate_address",
         zipcodeSourceId = "candidate_zipcode",
@@ -79,6 +107,33 @@ $(document).on("turbolinks:load", function() {
       };
     }
 
+    function setItem(key, item) {
+      if (useLocalStorage) {
+        localStorage.setItem(key, item);
+      } else {
+        cache[key] = item;
+      }
+    }
+
+    function getItem(key) {
+      if (useLocalStorage) {
+        return localStorage.getItem(key);
+      } else {
+        return cache[key];
+      }
+    }
+
+    function hasLocalStorage() {
+      var test = 'test';
+      try {
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+      } catch(e) {
+        return false;
+      }
+    }
+
     function determineCenter(addressSourceData, zipcodeSourceData) {
       if (addressSourceData.features.length === 1) {
         return addressSourceData.features[0].geometry.coordinates
@@ -90,7 +145,7 @@ $(document).on("turbolinks:load", function() {
     $.get({
       url: "/candidates/" + $("#map").data("id") + ".geojson",
       dataType: "json",
-      success: initMap.bind(this)
+      success: fetchZipcodeData
     });
   }
 });
