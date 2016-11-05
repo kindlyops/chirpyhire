@@ -4,8 +4,8 @@ class Threader
   end
 
   def call
-    message.update(child: next_message) if next_message.present?
-    preceding_message.update(child: message) if preceding_message.present?
+    message.update!(child: next_message) if next_message.present?
+    preceding_message.update!(child: message) if preceding_message.present?
   end
 
   def self.thread
@@ -26,7 +26,7 @@ class Threader
     @preceding_message ||= begin
       user.messages
           .where('external_created_at <= ?', message.external_created_at)
-          .where('id < ?', message.id)
+          .where('id != ?', message.id)
           .order(:external_created_at, :id).last
     end
   end
@@ -35,7 +35,7 @@ class Threader
     @next_message ||= begin
       user.messages
           .where('external_created_at >= ?', message.external_created_at)
-          .where('id > ?', message.id)
+          .where('id != ?', message.id)
           .order(:external_created_at, :id).first
     end
   end

@@ -44,6 +44,10 @@ RSpec.feature 'Surveying Candidates', type: :request do
         post '/twilio/text', params: snarf_start_message_params
       end
 
+      it 'threads the first response to the first start' do
+        expect(Message.find_by(sid: start_message.sid).child).not_to eq(nil)
+      end
+
       context 'and the first candidate has responded with an invalid zipcode' do
         let(:body) { '99999' }
         let(:address_message) { FakeMessaging.inbound_message(alice, organization, body, format: :text) }

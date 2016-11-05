@@ -50,6 +50,17 @@ RSpec.describe Threader do
           expect(fourth_oldest.reload.child).to eq(nil)
         end
       end
+
+      context 'with messages processed in a different order' do
+        let(:user2) { create(:user) }
+        let(:older_message_processed_second) { create(:message, user: user2, external_created_at: 2.days.ago, body: 'a long time ago,')}
+        let(:newer_message_processed_first) { create(:message, user: user2, external_created_at: 1.days.ago, body: 'in a galaxy far...')}
+        it 'threads properly' do
+          Threader.new(newer_message_processed_first).call
+          Threader.new(older_message_processed_second).call
+          expect(older_message_processed_second.child).to eq(newer_message_processed_first)
+        end
+      end
     end
   end
 end

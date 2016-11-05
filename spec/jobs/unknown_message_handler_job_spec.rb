@@ -5,10 +5,7 @@ RSpec.describe UnknownMessageHandlerJob do
 
   let(:organization) { create(:organization) }
   let(:sender) { create(:user, organization: organization) }
-
   let(:message) { FakeMessaging.inbound_message(sender, organization, 'test body', format: :text) }
-
-  let(:new_message) { Message.new(sid: message.sid, body: message.body, direction: message.direction, user: sender) }
 
   describe '#call' do
     it 'calls the Message Handler' do

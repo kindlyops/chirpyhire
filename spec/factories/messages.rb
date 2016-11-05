@@ -14,8 +14,10 @@ FactoryGirl.define do
       body '4059 Mt Lee Dr 90068'
     end
 
-    after(:create) do |message|
-      message.update(external_created_at: message.created_at, sent_at: message.created_at)
+    after(:create) do |message, evaluator|
+      unless evaluator.created_at.present?
+        message.update(external_created_at: message.created_at, sent_at: message.created_at)
+      end
     end
   end
 end
