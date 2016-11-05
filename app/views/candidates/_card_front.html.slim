@@ -11,7 +11,10 @@
       = candidate.handle
   .card-copy
     .card-copy-top
-      = render partial: "candidates/address", locals: { candidate: candidate }
+      - if candidate.address.present?
+        = render partial: "candidates/address", locals: { candidate: candidate }
+      - if candidate.zipcode.present?
+        = render partial: "candidates/zipcode", locals: { candidate: candidate }
       = render partial: "candidates/yes_no", collection: candidate.yes_nos
       = render partial: "candidates/choice", collection: candidate.choices
       = render partial: "candidates/document", collection: candidate.documents

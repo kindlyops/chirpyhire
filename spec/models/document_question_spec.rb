@@ -9,7 +9,7 @@ RSpec.describe DocumentQuestion, type: :model do
     let(:document_hash) do
       {
         url0: "#{DocumentQuestion::URI_BASE}#{document_path}",
-        child_class: 'document'
+        child_class: DocumentQuestion.child_class_property
       }
     end
 

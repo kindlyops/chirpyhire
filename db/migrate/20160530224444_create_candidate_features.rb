@@ -3,7 +3,7 @@ class CreateCandidateFeatures < ActiveRecord::Migration[5.0]
     create_table :candidate_features do |t|
       t.belongs_to :candidate, null: false, index: true, foreign_key: true
       t.belongs_to :persona_feature, null: false, index: true, foreign_key: true
-      t.jsonb :properties, null: false, default: '{}'
+      t.jsonb :properties, null: false, default: {}
       t.timestamps null: false
     end
 

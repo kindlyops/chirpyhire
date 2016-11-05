@@ -74,13 +74,6 @@ class SubscriptionsController < ApplicationController
     false
   end
 
-  def payment_error_message(error)
-    <<-ERROR
-#{error.message} Need Help? <a href="mailto:john@chirpyhire.com
-?subject=Chirpyhire Payment Question">Message Us</a>
-    ERROR
-  end
-
   def authorized_subscription
     @authorized_subscription ||= authorize current_organization.subscription
   end

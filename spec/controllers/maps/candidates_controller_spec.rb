@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Maps::CandidatesController, type: :controller do
-  let(:account) { create(:account, :with_subscription) }
+  let(:organization) { create(:organization, :with_subscription, :with_account) }
+  let(:account) { organization.accounts.first }
   before(:each) do
     sign_in(account)
   end
 
   describe '#show' do
+    let(:candidate) { create(:candidate, organization: organization) }
     let(:params) do
       {
-        id: 1
+        id: candidate.id
       }
     end
 

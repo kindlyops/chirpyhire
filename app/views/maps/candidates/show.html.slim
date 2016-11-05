@@ -1,5 +1,4 @@
 = title "Candidate | Chirpyhire"
 
 .maps-candidate
-  #map data-zoom==@map.zoom data-id==params[:id]
-
+  #map data-zoom=@map.zoom data-id=params[:id] data-map-type=(@candidate.address.present? ? 'address' : 'zipcode')

@@ -7,6 +7,7 @@ AllCops:
     - '**/config.ru'
   Exclude:
     - 'db/**/*'
+    - 'lib/seeder.rb'
     - 'script/**/*'
     - 'bin/**/*'
     - 'app/dashboards/**/*'
