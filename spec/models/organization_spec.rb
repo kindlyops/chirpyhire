@@ -21,6 +21,10 @@ RSpec.describe Organization, type: :model do
       expect(organization.conversations.count).to eq(candidates.count)
     end
 
+    it 'is the latest message' do
+      expect(organization.conversations).to include(candidates.first.messages.maximum(:external_created_at))
+    end
+
   end
 
   it '#before_create has stages' do
