@@ -22,7 +22,7 @@ RSpec.describe Organization, type: :model do
     end
 
     it 'is the latest message' do
-      expect(organization.conversations).to include(candidates.first.messages.maximum(:external_created_at))
+      expect(organization.conversations).to include(candidates.first.messages.order(:external_created_at).reverse.first)
     end
 
   end
