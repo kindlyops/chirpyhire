@@ -14,6 +14,15 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe '#conversations' do
+    let!(:candidates) { create_list(:candidate, 3, :with_message, message_count: 2, organization: organization) }
+    it 'only pulls one message per candidate' do
+      expect(organization.messages.count).to be > candidates.count
+      expect(organization.conversations.count).to eq(candidates.count)
+    end
+
+  end
+
   it '#before_create has stages' do
     expect(organization.stages).not_to be_empty
   end
