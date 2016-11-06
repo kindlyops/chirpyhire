@@ -103,7 +103,7 @@ class Organization < ApplicationRecord
   # rubocop:disable Metrics/LineLength, Metrics/MethodLength
   def conversations
     Message.where(id: ActiveRecord::Base.connection.select_values("
-    SELECT m.id, m.body
+    SELECT m.id
     FROM messages AS m
       JOIN users AS u
         ON m.user_id = u.id
