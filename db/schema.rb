@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024165542) do
+ActiveRecord::Schema.define(version: 20161105162412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20161024165542) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "stage_id",   null: false
-    t.string   "nickname",   null: false
+    t.string   "nickname"
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
@@ -126,10 +126,11 @@ ActiveRecord::Schema.define(version: 20161024165542) do
   end
 
   create_table "inquiries", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "message_id",  null: false
-    t.integer  "question_id", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "message_id",                       null: false
+    t.integer  "question_id",                      null: false
+    t.integer  "not_understood_count", default: 0, null: false
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
     t.index ["question_id"], name: "index_inquiries_on_question_id", using: :btree
   end
@@ -169,8 +170,6 @@ ActiveRecord::Schema.define(version: 20161024165542) do
     t.integer  "user_id",             null: false
     t.datetime "sent_at"
     t.datetime "external_created_at"
-    t.integer  "child_id"
-    t.index ["child_id"], name: "index_messages_on_child_id", unique: true, using: :btree
     t.index ["sid"], name: "index_messages_on_sid", unique: true, using: :btree
     t.index ["user_id"], name: "index_messages_on_user_id", using: :btree
   end
@@ -287,15 +286,17 @@ ActiveRecord::Schema.define(version: 20161024165542) do
   end
 
   create_table "surveys", force: :cascade do |t|
-    t.integer  "organization_id", null: false
+    t.integer  "organization_id",   null: false
     t.integer  "actionable_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "welcome_id",      null: false
-    t.integer  "thank_you_id",    null: false
-    t.integer  "bad_fit_id",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "welcome_id",        null: false
+    t.integer  "thank_you_id",      null: false
+    t.integer  "bad_fit_id",        null: false
+    t.integer  "not_understood_id"
     t.index ["actionable_id"], name: "index_surveys_on_actionable_id", using: :btree
     t.index ["bad_fit_id"], name: "index_surveys_on_bad_fit_id", using: :btree
+    t.index ["not_understood_id"], name: "index_surveys_on_not_understood_id", using: :btree
     t.index ["organization_id"], name: "index_surveys_on_organization_id", unique: true, using: :btree
     t.index ["thank_you_id"], name: "index_surveys_on_thank_you_id", using: :btree
     t.index ["welcome_id"], name: "index_surveys_on_welcome_id", using: :btree
@@ -384,6 +385,7 @@ ActiveRecord::Schema.define(version: 20161024165542) do
   add_foreign_key "surveys", "actionables"
   add_foreign_key "surveys", "organizations"
   add_foreign_key "surveys", "templates", column: "bad_fit_id"
+  add_foreign_key "surveys", "templates", column: "not_understood_id"
   add_foreign_key "surveys", "templates", column: "thank_you_id"
   add_foreign_key "surveys", "templates", column: "welcome_id"
   add_foreign_key "templates", "actionables"

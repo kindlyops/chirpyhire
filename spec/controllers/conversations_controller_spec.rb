@@ -4,7 +4,7 @@ RSpec.describe ConversationsController, type: :controller do
   let(:organization) { create(:organization, :with_subscription, :with_account) }
   let(:account) { organization.accounts.first }
   let(:user) { account.user }
-
+  let!(:candidate) { create(:candidate, user: user) }
   before(:each) do
     sign_in(account)
   end
@@ -20,14 +20,9 @@ RSpec.describe ConversationsController, type: :controller do
     end
 
     context 'with messages' do
-      let!(:oldest_message) { create(:message, user: user) }
-      let!(:second_oldest_message) { create(:message, user: user) }
+      let!(:oldest_message) { create(:message, user: user, external_created_at: 7.days.ago) }
+      let!(:second_oldest_message) { create(:message, user: user, external_created_at: 6.days.ago) }
       let!(:message) { create(:message, user: user) }
-
-      before(:each) do
-        oldest_message.update(child: second_oldest_message)
-        second_oldest_message.update(child: message)
-      end
 
       it "returns the user's last message" do
         get :index, params: params
@@ -35,13 +30,9 @@ RSpec.describe ConversationsController, type: :controller do
       end
 
       context 'with other users on the same organization' do
-        let(:user) { create(:user, organization: organization) }
-        let!(:other_old_message) { create(:message, user: user) }
-        let!(:other_message) { create(:message, user: user) }
-
-        before(:each) do
-          other_old_message.update(child: other_message)
-        end
+        let(:user2) { create(:user, :with_candidate, organization: organization) }
+        let!(:other_old_message) { create(:message, user: user2, external_created_at: 5.days.ago) }
+        let!(:other_message) { create(:message, user: user2) }
 
         it 'includes the last message of the user' do
           get :index, params: params
@@ -54,7 +45,7 @@ RSpec.describe ConversationsController, type: :controller do
             other_message.update(external_created_at: 2.days.ago)
           end
 
-          it 'shows the most recent conversations first' do
+          it 'shows the most <r></r>ecent conversations first' do
             get :index, params: params
             expect(assigns(:conversations)).to eq([other_message, message])
           end

@@ -14,7 +14,6 @@ class MessageHandler
 
   def handle_message
     build_and_save_media_instances
-    Threader.new(message).call
     message
   end
 

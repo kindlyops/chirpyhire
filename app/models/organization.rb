@@ -15,7 +15,6 @@ class Organization < ApplicationRecord
   has_one :subscription
 
   accepts_nested_attributes_for :location, :stages
-  delegate :conversations, to: :messages
   delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
   delegate :trial_remaining_messages_count, :reached_monthly_message_limit?,
@@ -54,6 +53,10 @@ class Organization < ApplicationRecord
 
   def get_media(sid)
     messaging_client.media.get(sid)
+  end
+
+  def inquiries
+    survey.questions.map(&:inquiries).flatten
   end
 
   def ordered_stages
@@ -96,6 +99,23 @@ class Organization < ApplicationRecord
   def default_display_stage
     qualified_stage
   end
+
+  # rubocop:disable Metrics/LineLength, Metrics/MethodLength
+  def conversations
+    Message.where(id: ActiveRecord::Base.connection.select_values("
+    SELECT m.id, m.body
+    FROM messages AS m
+      JOIN users AS u
+        ON m.user_id = u.id
+      JOIN candidates AS c
+        ON u.id = c.user_id
+      LEFT OUTER JOIN messages AS m2
+        ON m.user_id = m2.user_id
+          AND (m.external_created_at < m2.external_created_at
+            OR (m.external_created_at = m2.external_created_at AND m.id < m2.id))
+    WHERE u.organization_id = #{id} AND m2.user_id IS NULL"))
+  end
+  # rubocop:enable Metrics/LineLength, Metrics/MethodLength
 
   before_create do |organization|
     StageDefaults.populate(organization)

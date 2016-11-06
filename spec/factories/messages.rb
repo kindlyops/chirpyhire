@@ -15,7 +15,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |message, evaluator|
-      unless evaluator.created_at.present?
+      unless evaluator.external_created_at.present?
         message.update(external_created_at: message.created_at, sent_at: message.created_at)
       end
     end

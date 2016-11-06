@@ -9,6 +9,7 @@ FactoryGirl.define do
       longitude nil
       zipcode nil
       address_zipcode nil
+      subscribed nil
     end
 
     trait :with_subscription do
