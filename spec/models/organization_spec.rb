@@ -24,7 +24,6 @@ RSpec.describe Organization, type: :model do
     it 'is the latest message' do
       expect(organization.conversations).to include(candidates.first.messages.order(:external_created_at).reverse.first)
     end
-
   end
 
   it '#before_create has stages' do
