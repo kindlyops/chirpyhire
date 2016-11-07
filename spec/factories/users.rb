@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do
     organization
     phone_number { Faker::PhoneNumber.cell_phone }
+    created_at { DateTime.current }
 
     trait :with_account do
       after(:create) do |user|
