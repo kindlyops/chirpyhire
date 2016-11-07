@@ -10,7 +10,6 @@ class Registrar
       setup_organization
 
       TwilioProvisionerJob.perform_later(organization)
-      IntercomSyncerJob.perform_later(organization)
     end
   end
 

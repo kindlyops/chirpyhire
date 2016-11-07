@@ -7,10 +7,6 @@ RSpec.feature 'Surveying Candidates', type: :request do
   let(:account) { create(:account, user: user) }
   let!(:plan) { create(:plan) }
 
-  before(:each) do
-    allow(IntercomSyncerJob).to receive(:perform_later).once
-  end
-
   let!(:registrar) { Registrar.new(account).register }
   let(:alice) { create(:candidate, organization: organization) }
   let(:start_message) { FakeMessaging.inbound_message(alice, organization, 'START', format: :text) }
