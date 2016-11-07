@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   impersonates(
     :account,
     method: :current_account,
-    with: ->(id) { Account.find_by(id: id) }
+    with: ->(id) { Account.find(id) }
   )
 
   def pundit_user
