@@ -17,7 +17,7 @@
           ' Zipcode:
         = select_tag "zipcode", options_for_select(@zipcodes, cookies[:candidate_zipcode_filter])
     .button-group
-      label for=""
+      label
         i.fa.fa-th-large.button-group-item selected=true
       label
         = link_to maps_candidates_path, class: "button-group-item" do

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   put 'stages/reorder' => 'stages#reorder'
   resources :stages, only: [:index, :create, :destroy, :edit, :update]
 
+  get 'zipcode/:zipcode' => 'zipcode#geo_json'
+
   namespace :maps do
     resources :candidates, only: [:index, :show]
   end
