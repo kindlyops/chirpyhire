@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20161027160454) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "stage_id",   null: false
-    t.string   "nickname"
+    t.string   "nickname",   null: false
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
