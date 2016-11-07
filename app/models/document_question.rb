@@ -1,15 +1,13 @@
 class DocumentQuestion < Question
   URI_BASE = 'https://api.twilio.com'.freeze
-  def self.extract(message, _inquiry)
-    properties = fetch_properties(message)
-
-    properties[:child_class] = 'document'
+  def self.extract_internal(properties, message, _inquiry)
+    message.images.each_with_index do |image, i|
+      properties["url#{i}".to_sym] = "#{URI_BASE}#{image.uri.split('.').first}"
+    end
     properties
   end
 
-  def self.fetch_properties(message)
-    message.images.each_with_object({}).with_index do |(image, properties), i|
-      properties["url#{i}".to_sym] = "#{URI_BASE}#{image.uri.split('.').first}"
-    end
+  def self.child_class_property
+    'document'
   end
 end

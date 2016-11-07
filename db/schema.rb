@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161024163430) do
+ActiveRecord::Schema.define(version: 20161024165542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_stat_statements"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -26,8 +27,8 @@ ActiveRecord::Schema.define(version: 20161024163430) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "super_admin",            default: false, null: false
     t.string   "invitation_token"
@@ -35,8 +36,8 @@ ActiveRecord::Schema.define(version: 20161024163430) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.string   "invited_by_type"
     t.integer  "invited_by_id"
+    t.string   "invited_by_type"
     t.integer  "invitations_count",      default: 0
     t.boolean  "agreed_to_terms",        default: false, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true, using: :btree
@@ -107,7 +108,7 @@ ActiveRecord::Schema.define(version: 20161024163430) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "stage_id",   null: false
-    t.string   "nickname"
+    t.string   "nickname",   null: false
     t.index ["nickname"], name: "index_candidates_on_nickname", using: :btree
     t.index ["stage_id"], name: "index_candidates_on_stage_id", using: :btree
     t.index ["user_id"], name: "index_candidates_on_user_id", using: :btree
@@ -347,6 +348,15 @@ ActiveRecord::Schema.define(version: 20161024163430) do
     t.index ["transaction_id"], name: "index_versions_on_transaction_id", using: :btree
   end
 
+  create_table "zipcode_question_options", force: :cascade do |t|
+    t.string   "text",        null: false
+    t.integer  "question_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_zipcode_question_options_on_question_id", using: :btree
+    t.index ["text", "question_id"], name: "index_zipcode_question_options_on_text_and_question_id", unique: true, using: :btree
+  end
+
   add_foreign_key "accounts", "users"
   add_foreign_key "address_question_options", "questions"
   add_foreign_key "answers", "inquiries"
@@ -379,4 +389,5 @@ ActiveRecord::Schema.define(version: 20161024163430) do
   add_foreign_key "templates", "actionables"
   add_foreign_key "templates", "organizations"
   add_foreign_key "users", "organizations"
+  add_foreign_key "zipcode_question_options", "questions"
 end

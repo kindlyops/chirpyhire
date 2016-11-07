@@ -1,14 +1,15 @@
 class YesNoQuestion < Question
   REGEXP = /\A(yes|no|y|n)\z/
-  def self.extract(message, _inquiry)
-    properties = {}
-    properties[:child_class] = 'yes_no'
-
+  def self.extract_internal(properties, message, _inquiry)
     answer = message.body.strip.downcase
     yes_no_option = YesNoQuestion::REGEXP.match(answer)[1]
 
     properties[:yes_no_option] = options[yes_no_option.to_sym]
     properties
+  end
+
+  def self.child_class_property
+    'yes_no'
   end
 
   def rejects?(candidate)

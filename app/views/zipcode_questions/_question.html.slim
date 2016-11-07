@@ -1,0 +1,7 @@
+p = question.formatted_text
+hr
+.extra-information
+  strong Acceptable #{question.decorate.extra_information_noun}
+  ul
+    - question.zipcode_question_options.each do |option|
+      li = option.text

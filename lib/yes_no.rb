@@ -1,14 +1,5 @@
-class YesNo
-  delegate :label, to: :feature
-  def initialize(feature)
-    @feature = feature
-  end
-
+class YesNo < FeatureViewModel
   def option
     feature.properties['yes_no_option']
   end
-
-  private
-
-  attr_reader :feature
 end

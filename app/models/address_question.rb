@@ -5,17 +5,14 @@ class AddressQuestion < Question
                                 reject_if: :all_blank, allow_destroy: true
   delegate :latitude, :longitude, :distance, to: :address_question_option
 
-  def self.extract(message, _inquiry)
-    address = message.address
-    {
-      address: address.address,
-      latitude: address.latitude,
-      longitude: address.longitude,
-      postal_code: address.postal_code,
-      country: address.country,
-      city: address.city,
-      child_class: 'address'
-    }
+  def self.extract_internal(properties, message, _inquiry)
+    properties[:address] = message.address.address
+    properties[:latitude] = message.address.latitude
+    properties[:longitude] = message.address.longitude
+    properties[:postal_code] = message.address.postal_code
+    properties[:country] = message.address.country
+    properties[:city] = message.address.city
+    properties
   end
 
   def rejects?(candidate)
@@ -41,5 +38,9 @@ class AddressQuestion < Question
     Geocoder::Calculations.distance_between(
       candidate.address.coordinates, coordinates
     )
+  end
+
+  def self.child_class_property
+    'address'
   end
 end

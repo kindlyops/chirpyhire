@@ -4,7 +4,7 @@ class AnswerHandler
   end
 
   def call
-    if inquiry.unanswered? && answer.valid?
+    if inquiry.unanswered? && answer.errors.empty?
       update_or_create_candidate_feature
       AutomatonJob.perform_later(sender, 'answer')
     end
@@ -20,12 +20,8 @@ class AnswerHandler
 
   def update_or_create_candidate_feature
     feature = candidate.candidate_features.find_or_initialize_by(label: label)
-    feature.properties = extracted_properties
+    feature.properties = extract_properties
     feature.save
-  end
-
-  def extracted_properties
-    property_extractor.extract(message, inquiry)
   end
 
   delegate :label, to: :inquiry
@@ -40,7 +36,7 @@ class AnswerHandler
     sender.candidate
   end
 
-  def property_extractor
-    AnswerFormatter.new(answer, inquiry).format.constantize
+  def extract_properties
+    inquiry.question_type.constantize.extract(message, inquiry)
   end
 end

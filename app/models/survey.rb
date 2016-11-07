@@ -19,6 +19,14 @@ class Survey < ApplicationRecord
     CandidateAdvancer.call(user)
   end
 
+  def address_question?
+    questions.where(type: AddressQuestion.name).present?
+  end
+
+  def zipcode_question?
+    questions.where(type: ZipcodeQuestion.name).present?
+  end
+
   def next_unasked_question_for(user)
     ids = user.inquiries.pluck(:question_id)
     questions

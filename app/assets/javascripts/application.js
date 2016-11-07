@@ -27,6 +27,7 @@
 //= require candidates
 //= require choice_question_options
 //= require address_question_option
+//= require maps/maps_common.js
 //= require maps/candidates
 //= require maps/candidate
 //= require stages

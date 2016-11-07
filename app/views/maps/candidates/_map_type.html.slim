@@ -1,0 +1,13 @@
+.button-group.map-type
+  - if map_type == 'address'
+    label.address
+      i.fa.fa-map-marker.button-group-item.tipsy-needed selected=true data-map-type='address' title='Address'
+    label.zipcode 
+      i.fa.fa-bullseye.button-group-item.tipsy-needed data-map-type='zipcode' title='Zipcode'
+  - else
+    .hidden
+      label.address
+        i.fa.fa-map-marker.button-group-item.tipsy-needed data-map-type='address' title='Address'
+      label.zipcode
+        i.fa.fa-bullseye.button-group-item.tipsy-needed selected=true data-map-type='zipcode' title='Zipcode'
+

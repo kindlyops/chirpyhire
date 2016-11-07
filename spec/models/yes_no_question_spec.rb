@@ -9,7 +9,7 @@ RSpec.describe YesNoQuestion, type: :model do
     let(:yes_hash) do
       {
         yes_no_option: 'Yes',
-        child_class: 'yes_no'
+        child_class: YesNoQuestion.child_class_property
       }
     end
 
