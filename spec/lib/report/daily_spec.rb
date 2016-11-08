@@ -22,7 +22,7 @@ RSpec.describe Report::Daily do
     end
     context 'when there are new non-understood responses to inquiries' do
       let(:message) { create(:message, user: recipient.user) }
-      let(:inquiry) { create(:inquiry, message: message)}
+      let(:inquiry) { create(:inquiry, message: message) }
       it 'sends' do
         inquiry.update!(not_understood_count: 1)
         expect(report.send?).to eq(true)
