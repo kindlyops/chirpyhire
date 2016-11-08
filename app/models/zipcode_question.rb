@@ -27,4 +27,8 @@ class ZipcodeQuestion < Question
       errors.add(:zipcode_question_options, 'must be five digits')
     end
   end
+
+  def options
+    zipcode_question_options
+  end
 end

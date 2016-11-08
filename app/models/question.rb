@@ -14,6 +14,10 @@ class Question < ApplicationRecord
 
   validates :type, inclusion: { in: TYPES }
 
+  def options
+    []
+  end
+
   def self.by_priority
     order(:priority)
   end

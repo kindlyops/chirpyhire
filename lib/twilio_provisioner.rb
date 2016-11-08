@@ -1,17 +1,25 @@
 class TwilioProvisioner
-  def self.call(organization)
-    new(organization).call
-  end
-
   def initialize(organization)
     @organization = organization
   end
 
-  def call
+  def provision
     return if organization.phone_number.present?
 
     sub_account.incoming_phone_numbers.create(phone_number_attributes)
     organization.update(update_params)
+  end
+
+  def close_account
+    return if organization.phone_number.blank?
+
+    sub_account.update(status: 'closed')
+    organization.subscription.cancel
+  end
+
+  def self.close_account_by_sid(sid)
+    account = master_client.accounts.get(sid)
+    account.update(status: 'closed')
   end
 
   private
