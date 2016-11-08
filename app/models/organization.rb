@@ -101,6 +101,20 @@ class Organization < ApplicationRecord
     StageDefaults.populate(organization)
   end
 
+  def inquiry_activities(since_date_time)
+    ActiveRecord::Base.connection.select_rows("
+      SELECT a.id, a.properties
+      FROM inquiries AS i
+        JOIN messages AS m
+          ON i.message_id = m.id
+        JOIN users AS u
+          ON u.id = m.user_id
+        JOIN activities AS a
+          ON a.trackable_id = i.id AND a.trackable_type = 'Inquiry'
+      WHERE u.organization_id = #{id} \
+        AND a.created_at > #{ActiveRecord::Base.sanitize(since_date_time)}")
+  end
+
   private
 
   def messaging_client

@@ -1,14 +1,13 @@
-class Report::Weekly
-  def initialize(recipient, date: Date.current)
-    @recipient = recipient
-    @date = date
-  end
-
+class Report::Weekly < Report::Report
   delegate :name, to: :organization, prefix: true
   delegate :first_name, to: :recipient, prefix: true
 
   def humanized_week
     start_of_week << ' - ' << end_of_week
+  end
+
+  def template_name
+    'weekly'
   end
 
   def start_of_week
@@ -58,12 +57,4 @@ class Report::Weekly
   def subject
     'Weekly Activity Report - Chirpyhire'
   end
-
-  def organization
-    @organization ||= recipient.organization
-  end
-
-  private
-
-  attr_reader :recipient, :date
 end

@@ -12,7 +12,7 @@ RSpec.describe ReportMailer do
       describe 'without activity' do
         it 'does not send an email' do
           expect {
-            ReportMailer.daily(Report::Daily.new(recipient)).deliver_now
+            ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
           }.not_to change { ReportMailer.deliveries.count }
         end
       end
@@ -24,7 +24,7 @@ RSpec.describe ReportMailer do
 
         it 'does send an email' do
           expect {
-            ReportMailer.daily(Report::Daily.new(recipient)).deliver_now
+            ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
           }.to change { ReportMailer.deliveries.count }.by(1)
         end
       end
@@ -37,7 +37,7 @@ RSpec.describe ReportMailer do
 
       it 'does not send an email to the trialing accounts' do
         expect {
-          ReportMailer.daily(Report::Daily.new(recipient)).deliver_now
+          ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
         }.not_to change { ReportMailer.deliveries.count }
       end
     end
@@ -51,8 +51,8 @@ RSpec.describe ReportMailer do
 
       it 'does send an email' do
         expect {
-          ReportMailer.daily(Report::Weekly.new(recipient)).deliver_now
-        }.not_to change { ReportMailer.deliveries.count }
+          ReportMailer.send_report(Report::Weekly.new(recipient)).deliver_now
+        }.to change { ReportMailer.deliveries.count }
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe ReportMailer do
 
       it 'does not send an email to the trialing accounts' do
         expect {
-          ReportMailer.daily(Report::Weekly.new(recipient)).deliver_now
+          ReportMailer.send_report(Report::Weekly.new(recipient)).deliver_now
         }.not_to change { ReportMailer.deliveries.count }
       end
     end

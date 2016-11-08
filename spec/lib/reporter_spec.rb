@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Reporter do
   let(:count) { rand(1..5) }
   let!(:recipients) { create_list(:account, count) }
-  let(:reporter) { Reporter.new(Account, Report::Daily, :daily) }
+  let(:reporter) { Reporter.new(Account, Report::Daily) }
 
   describe 'report' do
     context 'with an inactive account' do
@@ -14,7 +14,7 @@ RSpec.describe Reporter do
       it 'does not send an email to the inactive accounts' do
         delivery = double
         expect(delivery).to receive(:deliver_now).exactly(count - 1).times
-        allow(ReportMailer).to receive(:daily).and_return(delivery).exactly(count - 1).times
+        allow(ReportMailer).to receive(:send_report).and_return(delivery).exactly(count - 1).times
 
         reporter.report
       end
@@ -23,7 +23,7 @@ RSpec.describe Reporter do
     it 'sends an email to each recipient' do
       delivery = double
       expect(delivery).to receive(:deliver_now).exactly(count).times
-      allow(ReportMailer).to receive(:daily).and_return(delivery).exactly(count).times
+      allow(ReportMailer).to receive(:send_report).and_return(delivery).exactly(count).times
 
       reporter.report
     end

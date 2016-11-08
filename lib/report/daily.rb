@@ -1,20 +1,17 @@
-class Report::Daily
-  def initialize(recipient, date: Date.current)
-    @recipient = recipient
-    @date = date
-  end
-
+class Report::Daily < Report::Report
   delegate :name, to: :organization, prefix: true
   delegate :first_name, to: :recipient, prefix: true
 
-  def humanized_date
-    date.strftime("%B #{date.day.ordinalize}")
+  def send?
+    super && (qualified_count > 0 || unanswered_inquiry_responses.count > 0)
   end
 
-  def qualified_count
-    organization.qualified_candidate_activities.where(
-      created_at: date.beginning_of_day..date.end_of_day
-    ).count
+  def template_name
+    'daily'
+  end
+
+  def humanized_date
+    date.strftime("%B #{date.day.ordinalize}")
   end
 
   def recipient_email
@@ -26,11 +23,13 @@ class Report::Daily
     "#{'Candidate'.pluralize(qualified_count)} - Chirpyhire"
   end
 
-  def organization
-    @organization ||= recipient.organization
+  def qualified_count
+    organization.qualified_candidate_activities.where(
+      created_at: date.beginning_of_day..date.end_of_day
+    ).count
   end
 
-  private
-
-  attr_reader :recipient, :date
+  def unanswered_inquiry_responses
+    @unanswered_inquiry_responses ||= organization.inquiry_activities(1.day.ago)
+  end
 end

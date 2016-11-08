@@ -2,19 +2,14 @@ class ReportMailer < ActionMailer::Base
   default from: 'Harry Whelchel <harry@chirpyhire.com>',
           bcc: 'team@chirpyhire.com'
 
-  def daily(report)
-    unless report.qualified_count.positive? && report.organization.active?
-      return
+  def send_report(report)
+    if report.send?
+      @report = report
+      mail(
+        to: report.recipient_email,
+        subject: report.subject,
+        template_name: report.template_name
+      )
     end
-
-    @report = report
-    mail(to: report.recipient_email, subject: report.subject)
-  end
-
-  def weekly(report)
-    return unless report.organization.active?
-
-    @report = report
-    mail(to: report.recipient_email, subject: report.subject)
   end
 end
