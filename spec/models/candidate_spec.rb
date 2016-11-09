@@ -22,6 +22,11 @@ RSpec.describe Candidate, type: :model do
           }.to change { PublicActivity::Activity.count }.by(1)
           expect(candidate.activities.last.properties['stage_id']).to eq(candidate.organization.qualified_stage.id)
         end
+
+        it 'creates an activity with the organization as owner' do
+          candidate.update(stage: candidate.organization.qualified_stage)
+          expect(candidate.activities.last.owner).to eq(candidate.organization)
+        end
       end
 
       context 'not changing the stage' do

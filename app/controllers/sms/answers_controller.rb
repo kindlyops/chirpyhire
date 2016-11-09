@@ -8,7 +8,7 @@ class Sms::AnswersController < Sms::BaseController
       )
       head :ok
     else
-      unknown_message
+      unsolicited_message
     end
   end
 

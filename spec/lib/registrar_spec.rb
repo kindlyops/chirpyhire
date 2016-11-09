@@ -62,7 +62,7 @@ RSpec.describe Registrar do
         expect(organization.subscription.trial_message_limit).to eq(100)
       end
 
-      it 'creates a welcome, bad fit, thank you template for the survey' do
+      it 'creates a welcome, bad fit, thank you, and not understood template for the survey' do
         expect {
           registrar.register
         }.to change { Template.count }.by(4)

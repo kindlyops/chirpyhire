@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UnknownMessageHandlerJob do
+RSpec.describe UnsolicitedMessageHandlerJob do
   extend ::RSpec::Mocks::ExampleMethods
 
   let(:organization) { create(:organization) }
@@ -19,7 +19,7 @@ RSpec.describe UnknownMessageHandlerJob do
         .with(sender, message.sid)
         .and_return(mock_message_handler)
 
-      UnknownMessageHandlerJob.perform_now(sender, message.sid)
+      UnsolicitedMessageHandlerJob.perform_now(sender, message.sid)
     end
 
     context 'message_exists' do
@@ -32,7 +32,7 @@ RSpec.describe UnknownMessageHandlerJob do
           .and_return(mock_message_handler)
 
         expect {
-          UnknownMessageHandlerJob.perform_now(sender, message.sid)
+          UnsolicitedMessageHandlerJob.perform_now(sender, message.sid)
         }.to change { sender.has_unread_messages? }.from(false).to(true)
       end
     end
@@ -42,14 +42,14 @@ RSpec.describe UnknownMessageHandlerJob do
 
       it 'does not mark the user as having unread messages' do
         expect {
-          UnknownMessageHandlerJob.perform_now(sender, non_existent_message.sid)
+          UnsolicitedMessageHandlerJob.perform_now(sender, non_existent_message.sid)
         }.not_to change { sender.has_unread_messages? }
       end
 
       it 'enqueues another job' do
         expect {
-          UnknownMessageHandlerJob.perform_now(sender, non_existent_message.sid)
-        }.to have_enqueued_job(UnknownMessageHandlerJob)
+          UnsolicitedMessageHandlerJob.perform_now(sender, non_existent_message.sid)
+        }.to have_enqueued_job(UnsolicitedMessageHandlerJob)
           .with(
             sender,
             non_existent_message.sid,

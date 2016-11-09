@@ -7,7 +7,7 @@ RSpec.describe Automaton do
   describe '.call' do
     it 'creates an automaton' do
       expect(Automaton).to receive(:new).with(user, 'screen').and_call_original
-      Automaton.call(user, 'screen')
+      Automaton.new(user, 'screen').call
     end
   end
 

@@ -1,9 +1,14 @@
 class Candidate < ApplicationRecord
-  include PublicActivity::Model
   include Filterable
-  tracked only: [:create, :update], on: {
-    update: ->(model, _) { model.changes.include?('stage_id') }
-  }, properties: ->(_, model) { { stage_id: model.stage_id } }
+  include PublicActivity::Model
+  tracked(
+    only: [:create, :update],
+    on: {
+      update: ->(model, _) { model.changes.include?('stage_id') }
+    },
+    properties: ->(_, model) { { stage_id: model.stage_id } },
+    owner: proc { |_, model| model.organization }
+  )
 
   belongs_to :user
   belongs_to :stage
@@ -14,9 +19,9 @@ class Candidate < ApplicationRecord
 
   alias features candidate_features
 
-  delegate :first_name, :phone_number, :organization_name,
-           :organization, :messages, :outstanding_inquiry,
-           :receive_message, :handle, :outstanding_inquiry?, to: :user
+  delegate :first_name, :phone_number, :organization_name, :handle, :messages,
+           :organization, :outstanding_inquiry, :receive_message,
+           :outstanding_inquiry?, to: :user
   delegate :potential?, :qualified?, :bad_fit?, :hired?, to: :stage
   delegate :stages, to: :organization
 

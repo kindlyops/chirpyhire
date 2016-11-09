@@ -3,12 +3,14 @@ class Rule < ApplicationRecord
   belongs_to :organization
   belongs_to :actionable
 
-  delegate :perform, to: :actionable
-
-  def actionable
-    super.becomes(super.type.constantize)
-  end
-
   validates :organization, :actionable, presence: true
   validates :trigger, inclusion: { in: TRIGGERS }
+
+  delegate :perform, to: :typed_actionable
+
+  private
+
+  def typed_actionable
+    actionable.becomes(actionable.type.constantize)
+  end
 end

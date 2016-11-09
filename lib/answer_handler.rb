@@ -4,9 +4,13 @@ class AnswerHandler
   end
 
   def call
-    if inquiry.unanswered? && answer.errors.empty?
-      update_or_create_candidate_feature
-      AutomatonJob.perform_later(sender, 'answer')
+    if inquiry.unanswered?
+      if well_formed_answer?
+        update_or_create_candidate_feature
+        AutomatonJob.perform_later(sender, 'answer')
+      else
+        NotUnderstoodHandler.notify(sender, inquiry)
+      end
     end
   end
 
@@ -18,19 +22,22 @@ class AnswerHandler
 
   private
 
+  attr_reader :inquiry, :sender, :message
+  delegate :label, to: :inquiry
+
   def update_or_create_candidate_feature
     feature = candidate.candidate_features.find_or_initialize_by(label: label)
     feature.properties = extract_properties
     feature.save
   end
 
-  delegate :label, to: :inquiry
-
   def answer
     @answer ||= inquiry.create_answer(message: message)
   end
 
-  attr_reader :inquiry, :sender, :message
+  def well_formed_answer?
+    answer.errors.empty?
+  end
 
   def candidate
     sender.candidate

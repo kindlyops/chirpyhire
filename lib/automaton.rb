@@ -1,15 +1,11 @@
 class Automaton
-  def self.call(user, trigger)
-    new(user, trigger).call
+  def initialize(user, trigger)
+    @user = user
+    @trigger = trigger
   end
 
   def call
     rules.each { |rule| rule.perform(user) }
-  end
-
-  def initialize(user, trigger)
-    @user = user
-    @trigger = trigger
   end
 
   private
@@ -17,10 +13,6 @@ class Automaton
   attr_reader :user, :trigger
 
   def rules
-    organization.rules.where(trigger: trigger).order(:created_at)
-  end
-
-  def organization
-    @organization ||= user.organization
+    user.organization.rules.where(trigger: trigger).order(:created_at)
   end
 end

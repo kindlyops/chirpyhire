@@ -45,10 +45,10 @@ RSpec.describe Sms::AnswersController, type: :controller do
         }.not_to have_enqueued_job(AnswerHandlerJob)
       end
 
-      it 'creates an UnknownMessageHandlerJob' do
+      it 'creates an UnsolicitedMessageHandlerJob' do
         expect {
           post :create, params: params
-        }.to have_enqueued_job(UnknownMessageHandlerJob).with(user, inbound_message.sid)
+        }.to have_enqueued_job(UnsolicitedMessageHandlerJob).with(user, inbound_message.sid)
       end
     end
   end
