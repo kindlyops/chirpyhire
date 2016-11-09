@@ -178,10 +178,10 @@ class Seeder
   end
 
   def create_other_accounts
-    Organization.each do |organization|
+    Organization.all.each do |organization|
       user = User.create!(organization: organization, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
       organization.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
-      user.create_account!(password: "password", password_confirmation: "password", email: 'user@user.com', super_admin: false)
+      user.create_account!(password: "password", password_confirmation: "password", email: "user#{user.id}@user.com", super_admin: false)
     end
   end
 
