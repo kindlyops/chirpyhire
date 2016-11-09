@@ -16,6 +16,7 @@ class Seeder
     create_survey_rules
     create_candidates
     create_candidate_message_exchanges
+    create_other_accounts
   end
 
   private
@@ -142,8 +143,8 @@ class Seeder
 
   def create_dev_user
     @user = User.find_or_create_by!(
-     first_name: "Harry",
-     last_name: "Whelchel",
+     first_name: ENV.fetch("DEV_FIRST_NAME"),
+     last_name: ENV.fetch("DEV_LAST_NAME"),
      phone_number: ENV.fetch("DEV_PHONE"),
      organization: org
     )
@@ -172,6 +173,14 @@ class Seeder
     FactoryGirl.create(:location, latitude: latitude, longitude: longitude, organization: org)
 
     puts 'Created Organization'
+  end
+
+  def create_other_accounts
+    Organization.each do |organization|
+      user = User.create!(organization: organization, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+      organization.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
+      user.create_account!(password: "password", password_confirmation: "password", email: 'user@user.com', super_admin: false)
+    end
   end
 
   attr_accessor(
