@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   def index
     @messages = scoped_messages.by_recency.page(params.fetch(:page, 1))
 
-    if message_user.has_unread_messages?
+    if message_user.has_unread_messages? && !impersonated
       message_user.update(has_unread_messages: false)
     end
 

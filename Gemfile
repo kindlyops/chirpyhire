@@ -68,6 +68,9 @@ gem 'devise_invitable', '~> 1.6.0'
 # Authorization
 gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2e9d5e022fd23cc0f65bad7f7d82'
 
+# Impersonation
+gem 'pretender', '~> 0.2.1'
+
 gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'vcardigan', '~> 0.0.9'
 gem 'phony_rails', '~> 0.14.0'

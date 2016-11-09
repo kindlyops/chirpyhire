@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :templates, only: [:edit, :update]
   put 'stages/reorder' => 'stages#reorder'
   resources :stages, only: [:index, :create, :destroy, :edit, :update]
+  post 'impersonate/' => 'impersonation#impersonate'
 
   get 'zipcode/:zipcode' => 'zipcode#geo_json'
 
