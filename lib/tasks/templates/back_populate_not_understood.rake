@@ -7,6 +7,7 @@ namespace :templates do
     Organization.find_each do |organization|
       unless organization.templates.map(&:name).include?('Not Understood')
         Registration::TemplatesCreator.new(organization).create_not_understood_template
+        organization.survey.update!(not_understood_id: organization.templates.where(name: 'Not Understood').first.id)
       end
     end
   end
