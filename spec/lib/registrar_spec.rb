@@ -65,7 +65,7 @@ RSpec.describe Registrar do
       it 'creates a welcome, bad fit, thank you template for the survey' do
         expect {
           registrar.register
-        }.to change { Template.count }.by(3)
+        }.to change { Template.count }.by(4)
       end
     end
 
