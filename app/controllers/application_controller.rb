@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def impersonated
-    true_account == current_account
+    true_account != current_account
   end
 
   private
