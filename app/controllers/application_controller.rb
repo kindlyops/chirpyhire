@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= current_account.user
   end
 
+  def impersonated
+    true_account == current_account
+  end
+
   private
 
   def user_not_authorized(exception)
