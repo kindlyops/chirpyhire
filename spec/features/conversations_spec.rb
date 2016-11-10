@@ -8,7 +8,7 @@ RSpec.feature 'Conversations', type: :feature, js: true do
   end
 
   context 'with conversations' do
-    let(:user) { create(:user, organization: account.organization) }
+    let(:user) { create(:user, :with_candidate, organization: account.organization) }
     let!(:conversation) { create(:message, body: 'Conversation Test Body', user: user) }
 
     it 'allows you to view a specific conversation' do
@@ -28,7 +28,7 @@ RSpec.feature 'Conversations', type: :feature, js: true do
     end
 
     context 'more than one page of conversations' do
-      let(:users) { create_list(:user, 16, organization: account.organization) }
+      let(:users) { create_list(:user, 16, :with_candidate, organization: account.organization) }
       let!(:conversations) do
         users.each_with_index do |user, _index|
           create(:message, body: Faker::Lorem.sentence, user: user)

@@ -19,16 +19,6 @@ RSpec.describe MessageHandler do
         }.to change { Message.count }.by(1)
       end
 
-      context 'with prior messages' do
-        let!(:first_message) { create(:message, user: sender, created_at: Date.yesterday) }
-        let!(:most_recent_message) { create(:message, user: sender) }
-
-        it 'sets the new message as the child on the most recent message' do
-          message
-          expect(sender.messages.by_recency.second.child).to eq(message)
-        end
-      end
-
       context 'with media' do
         let(:fake_message) { FakeMessaging.inbound_message(sender, organization) }
 
