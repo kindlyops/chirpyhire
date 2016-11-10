@@ -3,7 +3,6 @@ class Report::Daily < Report::Report
   delegate :first_name, to: :recipient, prefix: true
 
   def send?
-    return true
     super &&
       (qualified_count > 0 || unread_messages_count > 0)
   end
