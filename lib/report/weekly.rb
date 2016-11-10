@@ -2,6 +2,7 @@ class Report::Weekly
   def initialize(recipient, date: Date.current)
     @recipient = recipient
     @date = date
+    @now = DateTime.current
   end
 
   delegate :name, to: :organization, prefix: true
@@ -22,33 +23,33 @@ class Report::Weekly
   def hired_count
     organization
       .hired_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def qualified_count
     organization
       .qualified_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def potential_count
     organization
       .potential_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def bad_fit_count
     organization
       .bad_fit_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def recipient_email
@@ -65,5 +66,5 @@ class Report::Weekly
 
   private
 
-  attr_reader :recipient, :date
+  attr_reader :recipient, :date, :now
 end

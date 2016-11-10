@@ -44,6 +44,17 @@ RSpec.describe Report::Weekly do
         it 'is the count of candidates' do
           expect(report.hired_count).to eq(count)
         end
+        context 'some yesterday, some seven days ago, some today' do
+          let(:user1) { create(:user, :with_candidate, created_at: DateTime.current - 1.minute, organization: organization) }
+          let(:user2) { create(:user, :with_candidate, created_at: DateTime.current - 25.hours, organization: organization) }
+          let(:user3) { create(:user, :with_candidate, created_at: DateTime.current - 145.hours, organization: organization) }
+          it 'is the count of candidates' do
+            user1.candidate.update!(stage: organization.hired_stage)
+            user2.candidate.update!(stage: organization.hired_stage)
+            user3.candidate.update!(stage: organization.hired_stage)
+            expect(report.hired_count).to eq(3 + count)
+          end
+        end
       end
 
       context 'some in other weeks' do
