@@ -3,13 +3,21 @@ class Registration::TemplatesCreator
     @organization = organization
   end
 
-  def call
+  def create_templates
     create_bad_fit_template
     create_welcome_template
     create_thank_you_template
+    create_not_understood_template
   end
 
-  attr_reader :bad_fit, :welcome, :thank_you
+  def create_not_understood_template
+    @not_understood = organization.templates.create(
+      name: 'Not Understood', body: "We didn't quite get that. Please try "\
+      'again, or a staff member will get back to you as soon as possible.'
+    )
+  end
+
+  attr_reader :bad_fit, :welcome, :thank_you, :not_understood
 
   private
 

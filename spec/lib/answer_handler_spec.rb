@@ -16,13 +16,13 @@ RSpec.describe AnswerHandler do
     context 'with an answer format that matches the feature format' do
       it 'creates an answer' do
         expect {
-          AnswerHandler.call(user, inquiry, message)
+          AnswerHandler.new(user, inquiry, message).call
         }.to change { Answer.count }.by(1)
       end
 
       it 'creates a AutomatonJob' do
         expect {
-          AnswerHandler.call(user, inquiry, message)
+          AnswerHandler.new(user, inquiry, message).call
         }.to have_enqueued_job(AutomatonJob).with(user, 'answer')
       end
 
@@ -31,13 +31,13 @@ RSpec.describe AnswerHandler do
 
         it 'does not create an answer' do
           expect {
-            AnswerHandler.call(user, inquiry, message)
+            AnswerHandler.new(user, inquiry, message).call
           }.not_to change { Answer.count }
         end
 
         it 'does not create an AutomatonJob' do
           expect {
-            AnswerHandler.call(user, inquiry, message)
+            AnswerHandler.new(user, inquiry, message).call
           }.not_to have_enqueued_job(AutomatonJob)
         end
       end
@@ -50,8 +50,13 @@ RSpec.describe AnswerHandler do
 
         it 'does not create an answer' do
           expect {
-            AnswerHandler.call(user, inquiry, message)
+            AnswerHandler.new(user, inquiry, message).call
           }.not_to change { Answer.count }
+        end
+
+        it 'calls into the NotUnderstoodHandler' do
+          expect(NotUnderstoodHandler).to receive(:notify).with(user, inquiry)
+          AnswerHandler.new(user, inquiry, message).call
         end
       end
     end

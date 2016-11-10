@@ -5,10 +5,13 @@ RSpec.describe AnswerHandlerJob do
   extend ::RSpec::Mocks::ExampleMethods
 
   let(:sender) { create(:user) }
+  let!(:survey) { create(:survey, organization: sender.organization) }
+  let!(:question) { create(:question, :choice) }
+  let!(:option) { question.becomes(ChoiceQuestion).choice_question_options.first.letter }
   let(:inquiry) { create(:inquiry) }
   let(:fake_message) { FakeMessaging.inbound_message(sender, sender.organization, 'test body', format: :text) }
   let(:message_sid) { fake_message.sid }
-  let(:message) { create(:message, user: sender, sid: message_sid) }
+  let(:message) { create(:message, user: sender, sid: message_sid, body: option) }
 
   describe '#perform' do
     it 'handles the message' do
@@ -23,8 +26,9 @@ RSpec.describe AnswerHandlerJob do
       allow(mock_message_handler).to receive(:call).and_return(message)
       allow(MessageHandler).to receive(:new).with(sender, message.sid).and_return(mock_message_handler)
 
-      expect(AnswerHandler).to receive(:call).with(sender, inquiry, message)
-      AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
+      expect {
+        AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
+      }.not_to raise_error
     end
 
     context 'if the message exists' do
@@ -45,8 +49,9 @@ RSpec.describe AnswerHandlerJob do
       end
 
       it "doesn't call into the answer handler" do
-        expect(AnswerHandler).not_to receive(:call)
-        AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
+        expect {
+          AnswerHandlerJob.perform_now(sender, inquiry, message_sid)
+        }.not_to have_enqueued_job(AutomatonJob)
       end
 
       it 'fails when running out of retries' do

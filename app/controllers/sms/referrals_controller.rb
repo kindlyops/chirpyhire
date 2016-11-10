@@ -38,10 +38,10 @@ class Sms::ReferralsController < Sms::BaseController
   end
 
   def referred_user
-    @referred_user ||= UserFinder.new(
+    @referred_user ||= UserFinder.find(
       attributes: vcard.attributes,
       organization: organization
-    ).call
+    )
   end
 
   def candidate

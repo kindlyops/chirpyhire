@@ -1,4 +1,4 @@
-class UnknownMessageHandlerJob < MessageHandlerRetryJob
+class UnsolicitedMessageHandlerJob < MessageHandlerRetryJob
   def perform(sender, message_sid,
               retries: MessageHandlerRetryJob::DEFAULT_RETRIES)
     @sender = sender

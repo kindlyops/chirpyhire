@@ -1,7 +1,22 @@
 class Inquiry < ApplicationRecord
   include Messageable
+  include PublicActivity::Model
+  tracked(
+    only: [:update],
+    on: {
+      update: ->(model, _) { model.changes.include?('not_understood_count') }
+    },
+    properties: lambda do |_, model|
+      {
+        not_understood_count: model.not_understood_count,
+        question_type: model.question.type
+      }
+    end,
+    owner: proc { |_, model| model.organization }
+  )
   belongs_to :question
   has_one :answer
+  has_many :activities, as: :trackable
   delegate :label, to: :question
   delegate :type, to: :question, prefix: true
 

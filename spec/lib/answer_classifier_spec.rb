@@ -42,7 +42,7 @@ RSpec.describe AnswerClassifier do
 
       context 'whose answer is not in the list of valid zipcode options' do
         let(:message) { create(:message, body: '20010') }
-        it 'still classifies as for a zipcode question' do
+        it 'is still classifies as an attempted zipcode response' do
           expect(classifier.classify).to eq(ZipcodeQuestion)
         end
       end

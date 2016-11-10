@@ -13,6 +13,14 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, only: :index, unless: :devise_controller?
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  include PublicActivity::StoreController
+
+  impersonates(
+    :account,
+    method: :current_account,
+    with: ->(id) { Account.find(id) }
+  )
+
   def pundit_user
     current_organization
   end
@@ -23,6 +31,10 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= current_account.user
+  end
+
+  def impersonated
+    true_account != current_account
   end
 
   private

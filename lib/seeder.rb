@@ -16,6 +16,7 @@ class Seeder
     create_survey_rules
     create_candidates
     create_candidate_message_exchanges
+    create_other_accounts
   end
 
   private
@@ -109,7 +110,9 @@ class Seeder
         "have a good fit for you at this time. If anything changes we will let you know.")
       @welcome = Template.create(organization: org, name: "Welcome", body: "Hello this is Chirpyhire. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
       @thank_you = Template.create(organization: org, name: "Thank You", body: "Thanks for your interest! Please give us a call at 404-867-5309 during the week between 9am - 5pm for next steps.")
-      @survey = org.create_survey(bad_fit: bad_fit, welcome: welcome, thank_you: thank_you)
+      @not_understood = Template.create(organization: org, name: "Not Understood", body: "We didn't quite get that. Please try "\
+      'again, or a staff member will get back to you as soon as possible.')
+      @survey = org.create_survey(bad_fit: bad_fit, welcome: welcome, thank_you: thank_you, not_understood: not_understood)
     end
 
     unless org.survey.questions.present?
@@ -142,8 +145,8 @@ class Seeder
 
   def create_dev_user
     @user = User.find_or_create_by!(
-     first_name: "Harry",
-     last_name: "Whelchel",
+     first_name: ENV.fetch("DEV_FIRST_NAME"),
+     last_name: ENV.fetch("DEV_LAST_NAME"),
      phone_number: ENV.fetch("DEV_PHONE"),
      organization: org
     )
@@ -174,6 +177,14 @@ class Seeder
     puts 'Created Organization'
   end
 
+  def create_other_accounts
+    Organization.all.each do |organization|
+      user = User.create!(organization: organization, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+      organization.create_subscription(plan: plan, state: "trialing", trial_message_limit: 1000)
+      user.create_account!(password: "password", password_confirmation: "password", email: "user#{user.id}@user.com", super_admin: false)
+    end
+  end
+
   attr_accessor(
     :longitude,
     :latitude,
@@ -187,6 +198,7 @@ class Seeder
     :bad_fit,
     :welcome,
     :thank_you,
+    :not_understood,
 
     :location_question,
     :choice_question,
