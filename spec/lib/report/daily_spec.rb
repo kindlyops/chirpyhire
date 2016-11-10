@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Report::Daily do
-  let(:organization) { create(:organization, :with_subscription, :with_account) }
+  let(:organization) { create(:organization, :with_subscription, :with_account, :with_survey) }
   let(:recipient) { organization.accounts.first }
   let(:report) { Report::Daily.new(recipient) }
 
@@ -21,11 +21,36 @@ RSpec.describe Report::Daily do
       end
     end
     context 'when there are new non-understood responses to inquiries' do
-      let(:message) { create(:message, user: recipient.user) }
-      let(:inquiry) { create(:inquiry, message: message) }
-      it 'sends' do
-        inquiry.update!(not_understood_count: 1)
-        expect(report.send?).to eq(true)
+      let(:question) { create(:choice_question, survey: organization.survey) }
+      let(:inquiry_message) { create(:message, user: recipient.user) }
+      let(:inquiry) { create(:inquiry, question: question, message: inquiry_message) }
+      let(:message) { create(:message, body: question.choice_question_options.first.letter, user: recipient.user) }
+      context 'that occured in the last day' do
+        before(:each) do
+          inquiry.update!(not_understood_count: 1)
+        end
+        it 'sends' do
+          expect(report.send?).to eq(true)
+        end
+        context 'with a later accepted valid answer' do
+          let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
+          it 'does not send' do
+            expect(report.send?).to eq(false)
+          end
+        end
+        context 'with a message manually sent by the organization' do
+          it 'does not send' do
+            recipient.user.receive_message(body: 'Thats ok')
+            expect(report.send?).to eq(false)
+          end
+        end
+      end
+      context 'that occurred over a day ago' do
+        it 'does not send' do
+          inquiry.update!(not_understood_count: 1)
+          inquiry.activities.first.update!(created_at: 2.days.ago)
+          expect(report.send?).to eq(false)
+        end
       end
     end
   end
