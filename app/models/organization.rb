@@ -101,35 +101,17 @@ class Organization < ApplicationRecord
     StageDefaults.populate(organization)
   end
 
-  def unanswered_inquiry_messages(since_date_time)
-    inquiry_ids = unresolved_inquiry_activities(since_date_time)
-      .map(&:trackable_id)
-    users = User.includes(:messages)
-      .joins(messages: :inquiry).where('inquiries.id IN (?)', inquiry_ids)
-    users.map do |user| 
-      user.messages
-        .sort_by { |m| m.external_created_at }
-        .reverse!
-        .detect { |m| m.direction = 'inbound' }
-    end
+  def recent_unread_messages_by_user(since_date_time)
+    Message.joins(user: :organization)
+      .order(external_created_at: :desc)
+      .where('organizations.id = ?
+              AND users.has_unread_messages = TRUE
+              AND messages.external_created_at > ?',
+              id, since_date_time)
+      .group_by(&:user_id).map { |g| g[1].first }
   end
 
   private
-
-  def unresolved_inquiry_activities(since_date_time)
-    Activity.select('MAX(activities.id) as id, activities.trackable_id')
-            .joins(inquiry: { message: :user })
-            .joins('LEFT OUTER JOIN answers ON answers.inquiry_id = inquiries.id')
-            .where("users.organization_id = ? \
-                    AND users.has_unread_messages = true \
-                    AND activities.created_at > ? \
-                    AND activities.trackable_type = 'Inquiry'
-                    AND answers.inquiry_id IS NULL",
-                   id,
-                   since_date_time)
-            .group(:trackable_id)
-            .order('id DESC')
-  end
 
   def messaging_client
     @messaging_client ||= Messaging::Client.new(self)

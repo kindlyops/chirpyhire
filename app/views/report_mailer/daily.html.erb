@@ -414,15 +414,16 @@
   There <%= 'is'.pluralize(@report.qualified_count) %> <%= link_to "#{@report.qualified_count} new qualified #{'candidate'.pluralize(@report.qualified_count)}", candidates_url << "?stage_name=#{@report.organization.qualified_stage.name}", target: "_blank" %> waiting for your review.<br>
 <% end %>
 
-<% if @report.unanswered_inquiry_count > 0 %>
-  There <%= 'is'.pluralize(@report.unanswered_inquiry_count) %> <%= @report.unanswered_inquiry_count %> <%= link_to "unanswered #{'message'.pluralize(@report.unanswered_inquiry_count)}", messages_url, target: "_blank" %> from today waiting for a response:<br><br>
-  <% @report.top_unanswered_inquiry_messages.each do |message| %>
-    <span class='handle'><%= link_to "#{message.user.handle}", user_messages_url(message.user), traget: "_blank"%> <%= message.user.phone_number.phony_formatted %>:</span> <%= message.body %><br>
+<% if @report.unread_messages_count > 0 %>
+  There <%= 'is'.pluralize(@report.unread_messages_count) %> <%= @report.unread_messages_count %> <%= link_to "unread #{'message'.pluralize(@report.unread_messages_count)}", messages_url, target: "_blank" %> from today:<br><br>
+  <% @report.top_recent_unread_messages_by_user.each do |message| %>
+    <span class='handle'><%= link_to "#{message.user.handle}", user_messages_url(message.user), traget: "_blank"%> <%= message.user.phone_number.phony_formatted %>:</span> "<%= message.body %>"<br>
   <% end %>
-  <% if @report.unanswered_inquiry_count > @report.top_unanswered_inquiry_messages.count %>
-  ... and <%= @report.unanswered_inquiry_count - @report.top_unanswered_inquiry_messages.count %> more
+  <% if @report.unread_messages_count > @report.top_recent_unread_messages_by_user.count %>
+  ... and <%= @report.unread_messages_count - @report.top_recent_unread_messages_by_user.count %> more
   <br>
   <% end %>
+  <br>Make sure to respond to keep your future caregivers engaged!<br>
 <% end %>
 
 <br>

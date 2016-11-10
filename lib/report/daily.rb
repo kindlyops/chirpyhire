@@ -5,7 +5,7 @@ class Report::Daily < Report::Report
   def send?
     return true
     super &&
-      (qualified_count > 0 || unanswered_inquiry_count > 0)
+      (qualified_count > 0 || unread_messages_count > 0)
   end
 
   def template_name
@@ -23,8 +23,8 @@ class Report::Daily < Report::Report
   def subject
     qualified_candidates_section = "#{qualified_count} Qualified "\
     "#{'Candidate'.pluralize(qualified_count)}"
-    pending_messages_section = "#{unanswered_inquiry_count} pending "\
-    "#{'message'.pluralize(unanswered_inquiry_count)}"
+    pending_messages_section = "#{unread_messages_count} pending "\
+    "#{'message'.pluralize(unread_messages_count)}"
     suffix = "- Chirpyhire"
 
     if qualified_count > 0
@@ -44,17 +44,17 @@ class Report::Daily < Report::Report
     ).count
   end
 
-  def unanswered_inquiry_count
-    unanswered_inquiry_messages.count
+  def unread_messages_count
+    recent_unread_messages_by_user.count
   end
 
-  def top_unanswered_inquiry_messages
-    unanswered_inquiry_messages.take(5)
+  def top_recent_unread_messages_by_user
+    recent_unread_messages_by_user.take(5)
   end
 
-  def unanswered_inquiry_messages
-    @unanswered_inquiries_messages ||=
-      organization.unanswered_inquiry_messages(
+  def recent_unread_messages_by_user
+    @recent_unread_messages_by_user ||=
+      organization.recent_unread_messages_by_user(
         DateTime.current - 24.hours
       )
   end
