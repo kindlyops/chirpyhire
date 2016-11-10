@@ -22,7 +22,7 @@ class Subscription < ApplicationRecord
     end
 
     event :cancel do
-      transitions from: :active, to: :canceled
+      transitions from: [:active, :trialing], to: :canceled
     end
   end
 

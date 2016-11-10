@@ -43,4 +43,8 @@ class AddressQuestion < Question
   def self.child_class_property
     'address'
   end
+
+  def options
+    [address_question_option]
+  end
 end
