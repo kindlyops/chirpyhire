@@ -56,7 +56,7 @@ end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
-  gem 'skylight', '~> 0.10.4'
+  gem 'skylight', '~> 1.0'
 end
 
 gem 'rollbar', '~> 2.12.0'
