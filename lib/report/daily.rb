@@ -20,20 +20,15 @@ class Report::Daily < Report::Report
   end
 
   def subject
-    qualified_candidates_section = "#{qualified_count} Qualified "\
-    "#{'Candidate'.pluralize(qualified_count)}"
-    pending_messages_section = "#{unread_messages_count} pending "\
-    "#{'message'.pluralize(unread_messages_count)}"
-    suffix = "- Chirpyhire"
-
     if qualified_count > 0
-      if unread_message_count > 0
-        "#{qualified_candidates_section} and #{pending_messages_section} #{suffix}"
+      if unread_messages_count > 0
+        subject_suffix("#{qualified_candidates_section} "\
+        "and #{pending_messages_section}")
       else
-        "#{qualified_candidates_section} #{suffix}"
+        subject_suffix(qualified_candidates_section)
       end
     else
-      "#{pending_messages_section} #{suffix}"
+      subject_suffix(pending_messages_section)
     end
   end
 
@@ -56,5 +51,21 @@ class Report::Daily < Report::Report
       organization.recent_unread_messages_by_user(
         DateTime.current - 24.hours
       )
+  end
+
+  private
+
+  def pending_messages_section
+    @pending_messages_section ||= "#{unread_messages_count} pending "\
+    "#{'message'.pluralize(unread_messages_count)}"
+  end
+
+  def qualified_candidates_section
+    @qualified_candidates_section ||= "#{qualified_count} Qualified "\
+    "#{'Candidate'.pluralize(qualified_count)}"
+  end
+
+  def subject_suffix(message)
+    "#{message} - Chirpyhire"
   end
 end

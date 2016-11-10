@@ -103,12 +103,12 @@ class Organization < ApplicationRecord
 
   def recent_unread_messages_by_user(since_date_time)
     Message.joins(user: :organization)
-      .order(external_created_at: :desc)
-      .where('organizations.id = ?
+           .order(external_created_at: :desc)
+           .where('organizations.id = ?
               AND users.has_unread_messages = TRUE
               AND messages.external_created_at > ?',
-              id, since_date_time)
-      .group_by(&:user_id).map { |g| g[1].first }
+                  id, since_date_time)
+           .group_by(&:user_id).map { |g| g[1].first }
   end
 
   private
