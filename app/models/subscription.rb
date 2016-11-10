@@ -34,6 +34,12 @@ class Subscription < ApplicationRecord
     finished_trial? || reached_monthly_message_limit?
   end
 
+  # active? represents actually in the active state via aasm, and therefore
+  # is not the inverse of inactive?.
+  def good_standing?
+    !inactive?
+  end
+
   def inactive?
     canceled? || INACTIVE_STATUSES.include?(status)
   end

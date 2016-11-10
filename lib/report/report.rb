@@ -9,7 +9,7 @@ class Report::Report
   end
 
   def send?
-    organization.active?
+    organization.good_standing?
   end
 
   protected

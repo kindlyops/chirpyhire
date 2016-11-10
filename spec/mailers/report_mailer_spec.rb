@@ -35,10 +35,10 @@ RSpec.describe ReportMailer do
         recipient.organization.subscription.update(state: 'trialing')
       end
 
-      it 'does not send an email to the trialing accounts' do
+      it 'does send an email to the trialing accounts' do
         expect {
           ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
-        }.not_to change { ReportMailer.deliveries.count }
+        }.to change { ReportMailer.deliveries.count }.by(1)
       end
     end
   end

@@ -19,8 +19,9 @@ class Organization < ApplicationRecord
   delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
   delegate :trial_remaining_messages_count, :reached_monthly_message_limit?,
-           :inactive?, :active?, :finished_trial?, :trialing?, :plan_name,
-           :trial_percentage_remaining, :over_message_limit?, to: :subscription
+           :inactive?, :good_standing?, :active?, :finished_trial?, :trialing?,
+           :plan_name, :trial_percentage_remaining, :over_message_limit?,
+           to: :subscription
   delegate :price, :state, to: :subscription, prefix: true
 
   def send_message(to:, body:, from: phone_number)
