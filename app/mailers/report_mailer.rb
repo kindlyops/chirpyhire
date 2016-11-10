@@ -3,7 +3,7 @@ class ReportMailer < ActionMailer::Base
           bcc: 'team@chirpyhire.com'
 
   def daily(report)
-    unless report.qualified_count.positive? && report.organization.active?
+    unless report.qualified_count.positive? && !report.organization.inactive?
       return
     end
 
@@ -12,7 +12,7 @@ class ReportMailer < ActionMailer::Base
   end
 
   def weekly(report)
-    return unless report.organization.active?
+    return unless !report.organization.inactive?
 
     @report = report
     mail(to: report.recipient_email, subject: report.subject)
