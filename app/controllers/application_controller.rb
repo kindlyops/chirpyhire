@@ -52,7 +52,7 @@ class ApplicationController < ActionController::Base
   end
 
   def block_invalid_subscriptions
-    if current_organization.inactive?
+    unless current_organization.good_standing?
       redirect_to(subscription_path(current_organization.subscription))
     end
   end

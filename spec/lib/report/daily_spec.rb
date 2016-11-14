@@ -30,13 +30,21 @@ RSpec.describe Report::Daily do
           message
           NotUnderstoodHandler.notify(recipient.user, inquiry)
         end
-        it 'sends' do
-          expect(report.send?).to eq(true)
+        context 'without a candidate attached to the user' do
+          it 'does not send' do
+            expect(report.send?).to eq(false)
+          end
         end
-        context 'with a later accepted valid answer' do
-          let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
-          it 'sends' do
+        context 'with a candidate attached to the user' do
+          let!(:candidate) { create(:candidate, user: recipient.user) }
+          it 'does not send' do
             expect(report.send?).to eq(true)
+          end
+          context 'with a later accepted valid answer' do
+            let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
+            it 'sends' do
+              expect(report.send?).to eq(true)
+            end
           end
         end
       end
