@@ -49,8 +49,8 @@ RSpec.describe Constraint::OptIn do
       context 'with additional text' do
         let(:parameters) { { 'Body' => 'START to do the limbo?' } }
 
-        it 'is false' do
-          expect(constraint.matches?(request)).to eq(false)
+        it 'is true' do
+          expect(constraint.matches?(request)).to eq(true)
         end
       end
     end
