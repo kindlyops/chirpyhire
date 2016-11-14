@@ -16,13 +16,14 @@ header.navigation role="banner"
                                             .with_unread_messages\
                                             .count\
                                             .zero?
-                = "(#{current_organization.users.with_unread_messages.count})"
+                .unread.unread-desktop
+                  = current_organization.users.with_unread_messages.count
             - if current_organization.users.with_unread_messages.count.zero?
               i.mobile.fa.fa-commenting.fa-2x
             - else
-              span.fa-stack
-                i.mobile.fa.fa-comment.fa-stack-2x
-                i.users-unread-message-count.fa-stack-1x 
+              span.fa-stack.mobile-message-icon
+                i.mobile.fa.fa-comment.fa-2x
+                div.users-unread-message-count.unread
                   = current_organization.users\
                                         .with_unread_messages\
                                         .count

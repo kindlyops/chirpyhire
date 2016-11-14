@@ -36,6 +36,14 @@ class Seeder
       create_exchange(candidate, choice_question, ChoiceQuestion, "Availability", %w(a b c).sample)
     end
 
+    Candidate.potential.find_each do |candidate|
+      if rand(100) > 80
+        FactoryGirl.create(:message, user: candidate.user, direction: 'inbound', body: 'Can I have a job?')
+        FactoryGirl.create(:message, user: candidate.user, direction: "outbound-api", body: "We didn't quite get that.")
+        candidate.user.update!(has_unread_messages: true)
+      end
+    end
+
     Candidate.bad_fit.find_each do |candidate|
       create_exchange(candidate, yes_no_question, YesNoQuestion, "Transportation", "No", false)
     end

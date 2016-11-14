@@ -30,12 +30,19 @@ header.navigation {
   }
 
   @include media ($horizontal-bar-mode) {
-    li.nav-link.mobile {
+    li.nav-link.mobile, .mobile-message-icon {
       display: none;
     }
 
     .desktop {
       display: block;
+    }
+    li.nav-link {
+      .unread.unread-desktop {
+        bottom: 0.7em;
+        right: 0.5em;
+        left: auto;
+      }
     }
   }
 
@@ -144,6 +151,20 @@ header.navigation {
       line-height: $navigation-height;
       text-decoration: none;
       width: auto;
+    }
+
+    .unread {
+      background-color: rgba(212, 19, 13, 1);
+      border-radius: 10px;
+      display: inline;
+      position: relative;
+      bottom: 3.3em;
+      left: 0.3em;
+
+      // padding: 0.1em 0.25em 0.13em 0.25em;
+      padding: 0.1em 0.42em 0.13em 0.4em;
+      color: #fff;
+      font-size: 0.9em;
     }
 
     a {
