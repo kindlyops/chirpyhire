@@ -11,7 +11,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
   let(:alice_sender_object) do
     alice = Object.new
     def alice.phone_number
-      "+12222222222"
+      '+12222222222'
     end
     alice
   end
@@ -34,7 +34,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
       let(:snarf_sender_object) do
         snarf = Object.new
         def snarf.phone_number
-          "+13333333333"
+          '+13333333333'
         end
         snarf
       end

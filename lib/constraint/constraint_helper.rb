@@ -1,5 +1,4 @@
 module Constraint::ConstraintHelper
-
   attr_reader :request
 
   def candidate_present?
@@ -10,13 +9,9 @@ module Constraint::ConstraintHelper
     clean(body)
   end
 
-  def candidate
-    user.candidate
-  end
+  delegate :candidate, to: :user
 
-  def outstanding_inquiry
-    user.outstanding_inquiry
-  end
+  delegate :outstanding_inquiry, to: :user
 
   def user
     organization.users.find_by(phone_number: from)

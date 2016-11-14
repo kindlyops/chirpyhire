@@ -4,7 +4,7 @@ class Constraint::OptOut
 
   def matches?(request)
     @request = request
-    
+
     OPT_OUT_RESPONSES.include?(cleaned_request_body)
   end
 end
