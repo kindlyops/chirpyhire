@@ -198,6 +198,10 @@
             font-weight:normal;
             text-decoration:underline;
           }
+          .handle {
+            font-size: 0.95em;
+            color: #999;
+          }
           @media only screen and (min-width:768px){
             .templateContainer{
               width:600px !important;
@@ -367,7 +371,8 @@
 
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
 
-                            <h1><%= @report.organization_name %> Activity for <%= @report.humanized_date %></h1>
+                            <h3><%= @report.organization_name %></h3>
+                            <h1>Activity for <%= @report.humanized_date %></h1>
 
                         </td>
                     </tr>
@@ -405,7 +410,22 @@
 
                             <%= @report.recipient_first_name %>,<br>
 <br>
-There <%= 'is'.pluralize(@report.qualified_count) %> <%= @report.qualified_count %> new qualified <%= 'candidate'.pluralize(@report.qualified_count) %> waiting for your review. View your candidates <%= link_to 'here', candidates_url << "?stage_name=#{@report.organization.qualified_stage.name}", target: "_blank" %>.<br>
+<% if @report.qualified_count > 0 %>
+  There <%= 'is'.pluralize(@report.qualified_count) %> <%= link_to "#{@report.qualified_count} new qualified #{'candidate'.pluralize(@report.qualified_count)}", candidates_url << "?stage_name=#{@report.organization.qualified_stage.name}", target: "_blank" %> waiting for your review.<br>
+<% end %>
+
+<% if @report.unread_messages_count > 0 %>
+  There <%= 'is'.pluralize(@report.unread_messages_count) %> <%= @report.unread_messages_count %> <%= link_to "unread #{'message'.pluralize(@report.unread_messages_count)}", messages_url, target: "_blank" %> from today:<br><br>
+  <% @report.top_recent_unread_messages_by_user.each do |message| %>
+    <span class='handle'><%= link_to "#{message.user.handle}", user_messages_url(message.user), traget: "_blank"%> <%= message.user.phone_number.phony_formatted %>:</span> "<%= message.body %>"<br>
+  <% end %>
+  <% if @report.unread_messages_count > @report.top_recent_unread_messages_by_user.count %>
+  ... and <%= @report.unread_messages_count - @report.top_recent_unread_messages_by_user.count %> more
+  <br>
+  <% end %>
+  <br>Make sure to respond to keep your future caregivers engaged!<br>
+<% end %>
+
 <br>
 Thanks,<br>
 <br>

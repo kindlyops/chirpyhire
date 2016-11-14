@@ -1,13 +1,60 @@
 require 'rails_helper'
 
 RSpec.describe Report::Daily do
-  let(:recipient) { create(:account) }
-  let(:organization) { recipient.organization }
+  let(:organization) { create(:organization, :with_subscription, :with_account, :with_survey) }
+  let(:recipient) { organization.accounts.first }
   let(:report) { Report::Daily.new(recipient) }
 
   describe '#organization_name' do
     it "is the organization's name" do
       expect(report.organization_name).to eq(organization.name)
+    end
+  end
+
+  describe '#send?' do
+    before(:each) do
+      recipient.organization.subscription.update(state: 'active')
+    end
+    context 'when nothing has changed' do
+      it 'does not send' do
+        expect(report.send?).to eq(false)
+      end
+    end
+    context 'when there are new non-understood responses to inquiries' do
+      let(:question) { create(:choice_question, survey: organization.survey) }
+      let(:inquiry_message) { create(:message, user: recipient.user, direction: 'outbound-api') }
+      let(:inquiry) { create(:inquiry, question: question, message: inquiry_message) }
+      let(:message) { create(:message, direction: 'inbound', body: question.choice_question_options.first.letter, user: recipient.user) }
+      context 'that occured in the last day' do
+        before(:each) do
+          message
+          NotUnderstoodHandler.notify(recipient.user, inquiry)
+        end
+        context 'without a candidate attached to the user' do
+          it 'does not send' do
+            expect(report.send?).to eq(false)
+          end
+        end
+        context 'with a candidate attached to the user' do
+          let!(:candidate) { create(:candidate, user: recipient.user) }
+          it 'does not send' do
+            expect(report.send?).to eq(true)
+          end
+          context 'with a later accepted valid answer' do
+            let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
+            it 'sends' do
+              expect(report.send?).to eq(true)
+            end
+          end
+        end
+      end
+      context 'that occurred over a day ago' do
+        it 'does not send' do
+          message.update!(external_created_at: 2.days.ago)
+          NotUnderstoodHandler.notify(recipient.user, inquiry)
+          expect(report.send?).to eq(false)
+        end
+      end
     end
   end
 

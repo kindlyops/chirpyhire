@@ -1,4 +1,5 @@
 class Organization < ApplicationRecord
+  include Stageable
   phony_normalize :phone_number, default_country_code: 'US'
 
   has_many :users
@@ -14,12 +15,13 @@ class Organization < ApplicationRecord
   has_one :location
   has_one :subscription
 
-  accepts_nested_attributes_for :location, :stages
+  accepts_nested_attributes_for :location
   delegate :count, to: :messages, prefix: true
   delegate :latitude, :longitude, to: :location
   delegate :trial_remaining_messages_count, :reached_monthly_message_limit?,
-           :inactive?, :active?, :finished_trial?, :trialing?, :plan_name,
-           :trial_percentage_remaining, :over_message_limit?, to: :subscription
+           :good_standing?, :active?, :finished_trial?, :trialing?,
+           :plan_name, :trial_percentage_remaining, :over_message_limit?,
+           to: :subscription
   delegate :price, :state, to: :subscription, prefix: true
 
   def send_message(to:, body:, from: phone_number)
@@ -63,23 +65,6 @@ class Organization < ApplicationRecord
     stages.ordered
   end
 
-  # There should only ever be one of each default type for an organization
-  def bad_fit_stage
-    stages.bad_fit.first
-  end
-
-  def potential_stage
-    stages.potential.first
-  end
-
-  def qualified_stage
-    stages.qualified.first
-  end
-
-  def hired_stage
-    stages.hired.first
-  end
-
   def bad_fit_candidate_activities
     candidate_activities.for_stage(bad_fit_stage)
   end
@@ -119,6 +104,17 @@ class Organization < ApplicationRecord
 
   before_create do |organization|
     StageDefaults.populate(organization)
+  end
+
+  def recent_unread_messages_by_user(since_date_time)
+    Message.joins(user: :candidate)
+           .order(external_created_at: :desc)
+           .where("users.organization_id = ?
+              AND users.has_unread_messages = TRUE
+              AND messages.direction = 'inbound'
+              AND messages.external_created_at > ?",
+                  id, since_date_time)
+           .group_by(&:user_id).map { |g| g[1].first }
   end
 
   private

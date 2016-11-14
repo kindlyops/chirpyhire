@@ -2,7 +2,7 @@ namespace :reports do
   desc 'Sends weekly summary report'
   task weekly: :environment do |_task|
     if Rails.env.production? && Date.current.monday?
-      Reporter.new(Account, Report::Weekly, :weekly).report
+      Reporter.new(Account, Report::Weekly).report
     end
   end
 end

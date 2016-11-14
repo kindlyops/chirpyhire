@@ -34,8 +34,8 @@ class Subscription < ApplicationRecord
     finished_trial? || reached_monthly_message_limit?
   end
 
-  def inactive?
-    canceled? || INACTIVE_STATUSES.include?(status)
+  def good_standing?
+    !canceled? && INACTIVE_STATUSES.exclude?(status)
   end
 
   def finished_trial?
