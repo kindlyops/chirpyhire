@@ -3,7 +3,8 @@ class Constraint::OptOut
   OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze
 
   def matches?(request)
-    cleaned_body = cleaned_request_body(request)
-    OPT_OUT_RESPONSES.include?(cleaned_body)
+    @request = request
+    
+    OPT_OUT_RESPONSES.include?(cleaned_request_body)
   end
 end

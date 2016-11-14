@@ -1,11 +1,40 @@
 module Constraint::ConstraintHelper
-  def cleaned_request_body(request)
-    clean(body(request))
+
+  attr_reader :request
+
+  def candidate_present?
+    organization.present? && user&.candidate.present?
   end
 
-  private
+  def cleaned_request_body
+    clean(body)
+  end
 
-  def body(request)
+  def candidate
+    user.candidate
+  end
+
+  def outstanding_inquiry
+    user.outstanding_inquiry
+  end
+
+  def user
+    organization.users.find_by(phone_number: from)
+  end
+
+  def organization
+    Organization.find_by(phone_number: to)
+  end
+
+  def to
+    request.request_parameters['To']
+  end
+
+  def from
+    request.request_parameters['From']
+  end
+
+  def body
     request.request_parameters['Body']
   end
 
