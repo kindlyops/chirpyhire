@@ -236,6 +236,8 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
+    pretender (0.2.1)
+      actionpack
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -349,7 +351,7 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.0.beta2)
       tilt (~> 2.0)
-    skylight (0.10.6)
+    skylight (1.0.0)
       activesupport (>= 3.0.0)
     slim (3.0.7)
       temple (~> 0.7.6)
@@ -445,6 +447,7 @@ DEPENDENCIES
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
+  pretender (~> 0.2.1)
   pry-byebug
   pry-rails
   public_activity (~> 1.5.0)
@@ -462,7 +465,7 @@ DEPENDENCIES
   shoulda-matchers (~> 2.8.0)
   sidekiq (~> 4.0.0)
   sinatra (~> 2.0.0.beta2)
-  skylight (~> 0.10.4)
+  skylight (~> 1.0)
   slim-rails (~> 3.1.0)
   spring
   stripe (~> 1.49.0)

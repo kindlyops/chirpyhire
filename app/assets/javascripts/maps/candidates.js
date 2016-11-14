@@ -137,20 +137,24 @@ $(document).on("turbolinks:load", function() {
             initMap(candidatesGeoData);
           }
         };
-
-      zipcodes.forEach(function(zipcode) {
-        if (!getItem(zipcode)) {
-          $.get({
-            url: "/zipcode/" + zipcode,
-            dataType: "text",
-            success: function(featureJson) {
-              setItem(zipcode, featureJson);
-            }
-          }).always(checkFinishedFetchingData);
-        } else {
-          checkFinishedFetchingData();
-        }
-      })
+      if (zipcodesToFetch > 0) {
+        zipcodes.forEach(function(zipcode) {
+          if (!getItem(zipcode)) {
+            $.get({
+              url: "/zipcode/" + zipcode,
+              dataType: "text",
+              success: function(featureJson) {
+                setItem(zipcode, featureJson);
+              }
+            }).always(checkFinishedFetchingData);
+          } else {
+            checkFinishedFetchingData();
+          }
+        })
+      }
+      else {
+        initMap(candidatesGeoData);
+      }
     }
 
     function getLayerIds(stage_name) {

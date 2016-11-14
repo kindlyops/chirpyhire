@@ -9,6 +9,8 @@ FactoryGirl.define do
       longitude nil
       zipcode nil
       address_zipcode nil
+      subscribed nil
+      message_count nil
     end
 
     trait :with_subscription do
@@ -43,6 +45,16 @@ FactoryGirl.define do
       after(:create) do |candidate|
         referrer = create(:referrer)
         candidate.referrals.create(referrer: referrer)
+      end
+    end
+
+    trait :with_message do
+      after(:create) do |candidate, evaluator|
+        if evaluator.message_count
+          create_list(:message, evaluator.message_count, user: candidate.user)
+        else
+          create(:message, user: candidate.user)
+        end
       end
     end
   end

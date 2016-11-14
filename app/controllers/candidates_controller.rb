@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class CandidatesController < ApplicationController
   decorates_assigned :candidates, :candidate
 
@@ -49,12 +50,15 @@ class CandidatesController < ApplicationController
   private
 
   def zipcodes
+    @zipcodes ||= build_zipcodes
+  end
+
+  def build_zipcodes
     zipcode_feature_zips = recent_candidates.map(&:zipcode)
     address_feature_zips = recent_candidates.map { |c| c.address&.zipcode }
     zips = zipcode_feature_zips.concat(address_feature_zips).compact
                                .map { |f| f[0..4] }
-                               .uniq
-                               .sort
+                               .uniq.select { |f| f != '' }.sort
     [CandidateFeature::ALL_ZIPCODES_CODE].concat(zips)
   end
 
@@ -94,11 +98,12 @@ class CandidatesController < ApplicationController
   end
 
   def zipcode
-    cookied_query_param(
+    value = cookied_query_param(
       :zipcode,
       :candidate_zipcode_filter,
       CandidateFeature::ALL_ZIPCODES_CODE
     )
+    zipcodes.include?(value) ? value : CandidateFeature::ALL_ZIPCODES_CODE
   end
 
   def cookied_query_param(param_sym, cookie_sym, default)
@@ -115,3 +120,4 @@ class CandidatesController < ApplicationController
     { value: value }
   end
 end
+# rubocop:enable Metrics/ClassLength

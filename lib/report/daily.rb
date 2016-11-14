@@ -34,7 +34,7 @@ class Report::Daily < Report::Report
 
   def qualified_count
     organization.qualified_candidate_activities.where(
-      created_at: date.beginning_of_day..date.end_of_day
+      created_at: (DateTime.current - 24.hours)..DateTime.current
     ).count
   end
 

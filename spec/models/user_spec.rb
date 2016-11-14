@@ -58,16 +58,6 @@ RSpec.describe User, type: :model do
         user.receive_message(body: 'Foo')
       }.to change { FakeMessaging.messages.count }.by(1)
     end
-
-    context 'with prior messages' do
-      let!(:message) { create(:message, user: user, created_at: Date.yesterday) }
-      let!(:most_recent_message) { create(:message, user: user) }
-
-      it 'sets the new message as the child on the most recent message' do
-        message = user.receive_message(body: 'Foo')
-        expect(user.messages.by_recency.second.child).to eq(message)
-      end
-    end
   end
 
   describe '#last_answer' do

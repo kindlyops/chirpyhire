@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe NotUnderstoodHandler do
   describe '.notify' do
     let(:organization) { create(:organization) }
-    let(:survey) { create(:survey, organization: organization) }
+    let!(:survey) { create(:survey, organization: organization) }
     let(:question) { create(:question, survey: survey) }
     let(:user) { create(:user, organization: organization) }
     context 'with a not_understood_count beneath the threshold' do
@@ -17,6 +17,11 @@ RSpec.describe NotUnderstoodHandler do
         expect {
           NotUnderstoodHandler.notify(user, inquiry)
         }.to change { user.messages.count }.by(1)
+      end
+      it 'marks the user as having unread messages' do
+        expect {
+          NotUnderstoodHandler.notify(user, inquiry)
+        }.to change { user.has_unread_messages }.to(true)
       end
     end
 

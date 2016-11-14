@@ -62,7 +62,6 @@ class User < ApplicationRecord
     message = organization.send_message(to: phone_number, body: body)
     message.user = self
     message.save
-    Threader.new(message).call
 
     message
   end

@@ -40,6 +40,10 @@ template
     choice_question_options.sort_by(&:letter)
   end
 
+  def options
+    choice_question_options
+  end
+
   private
 
   def choice_options_letters_sentence

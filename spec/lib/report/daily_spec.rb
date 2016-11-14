@@ -77,11 +77,18 @@ RSpec.describe Report::Daily do
     end
 
     context 'with candidates qualified' do
+      let(:count) { rand(1..10) }
       context 'on the date passed' do
-        let(:count) { rand(1..10) }
         let!(:candidates) { create_list(:candidate, count, stage: organization.qualified_stage, organization: organization) }
         it 'is the count of candidates' do
           expect(report.qualified_count).to eq(count)
+        end
+
+        context 'on the date prior but within 24 hours' do
+          let!(:users) { create_list(:user, count, :with_candidate, organization: organization, created_at: DateTime.current - 23.hours) }
+          it 'is the count of candidates' do
+            expect(report.qualified_count).to eq(count)
+          end
         end
       end
 

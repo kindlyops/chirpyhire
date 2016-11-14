@@ -2,6 +2,7 @@ class Report::Report
   def initialize(recipient, date: Date.current)
     @recipient = recipient
     @date = date
+    @now = DateTime.current
   end
 
   def organization
@@ -14,5 +15,5 @@ class Report::Report
 
   protected
 
-  attr_reader :recipient, :date
+  attr_reader :recipient, :date, :now
 end

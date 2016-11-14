@@ -5,7 +5,6 @@ class Message < ApplicationRecord
   has_one :inquiry
   has_one :answer
   has_one :notification
-  belongs_to :child, class_name: 'Message'
   delegate :organization, to: :user
 
   def self.by_recency
@@ -25,10 +24,6 @@ class Message < ApplicationRecord
 
   def self.by_read_status
     joins(:user).merge(User.by_having_unread_messages)
-  end
-
-  def self.conversations
-    where(child: nil)
   end
 
   def media

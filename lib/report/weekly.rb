@@ -21,33 +21,33 @@ class Report::Weekly < Report::Report
   def hired_count
     organization
       .hired_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def qualified_count
     organization
       .qualified_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def potential_count
     organization
       .potential_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def bad_fit_count
     organization
       .bad_fit_candidate_activities
-      .where('candidates.created_at BETWEEN ?::date - 7 AND ?::date - 1',
-             date,
-             date).count
+      .where('candidates.created_at BETWEEN ? AND ?',
+             now - 7.days,
+             now).count
   end
 
   def recipient_email
