@@ -1,17 +1,20 @@
-= form_for survey do |f|
+= form_tag("/surveys/reorder", method: "put", :html => {:'data-type' => 'json'}) do
   h1 Edit Survey
   p Change the order questions are asked.
   hr
   - render partial: "common/validation_errors", locals: { model: survey }
   ul.survey--questions
-    = f.fields_for :questions, survey.questions.by_priority do |q|
-      li.survey--question.drag-and-drop
-        = q.hidden_field :id
-        .drag-and-drop-text
-          .field
-            strong.survey--question-priority.sortable-number = "#{q.object.priority}. "
-            strong.survey--question-label = "#{q.object.label}"
-            = q.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
+    - @survey.questions.by_priority.each do |question|
+      = fields_for 'questions[]', question do |question_fields|
+        li.survey--question.drag-and-drop class=(question.active? ? '' : 'inactive')
+          = question_fields.hidden_field :id
+          .drag-and-drop-text
+            .field
+              strong.survey--question-priority.sortable-number = "#{question.priority}. "
+              strong.survey--question-label = "#{question.label}"
+              - if question.inactive?
+                comment Inactive
+              = question_fields.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
   .actions
-    = f.submit "Save"
+    = submit_tag("Save")
 

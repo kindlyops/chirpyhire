@@ -1,12 +1,26 @@
 .survey, .survey-edit {
   @include outer-container;
   padding: 1em;
+  
+  comment {
+    padding: 0 0.5em;
+    color: $medium-gray;
+  }
 }
 
 .survey.edit {
   @include media ($large-screen) {
     @include span-columns(6);
     @include shift(3);
+  }
+
+  .survey--question {
+    &.inactive {
+      background-color: #e7e7e7;
+      &:hover, &:focus {
+        background-color: #e1e1e1;
+      }
+    }
   }
 }
 
@@ -62,11 +76,6 @@
     .card-header {
       display: flex;
       justify-content: space-between;
-
-      comment {
-        padding: 0 0.5em;
-        color: $medium-gray;
-      }
     }
 
     #map {

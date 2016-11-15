@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :subscriptions
 
   resource :survey, only: [:show, :edit, :update]
+  put 'surveys/reorder' => 'surveys#reorder'
   resources :yes_no_questions, except: :destroy
   resources :address_questions, except: :destroy
   resources :document_questions, except: :destroy
