@@ -9,10 +9,6 @@ class Constraint::ConstraintBase
     clean(body)
   end
 
-  delegate :candidate, to: :user
-
-  delegate :outstanding_inquiry, to: :user
-
   def user
     organization.users.find_by(phone_number: from)
   end
