@@ -1,14 +1,9 @@
-class Constraint::OptOut
+class Constraint::OptOut < Constraint::ConstraintBase
   OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze
 
   def matches?(request)
-    cleaned_body = body(request).gsub(/[^a-z0-9\s]/i, '').strip.upcase
-    OPT_OUT_RESPONSES.include?(cleaned_body)
-  end
+    @request = request
 
-  private
-
-  def body(request)
-    request.request_parameters['Body']
+    OPT_OUT_RESPONSES.include?(cleaned_request_body)
   end
 end

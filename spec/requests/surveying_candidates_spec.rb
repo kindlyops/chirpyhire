@@ -8,8 +8,9 @@ RSpec.feature 'Surveying Candidates', type: :request do
   let!(:plan) { create(:plan) }
 
   let!(:registrar) { Registrar.new(account).register }
-  let(:alice) { create(:candidate, organization: organization) }
-  let(:start_message) { FakeMessaging.inbound_message(alice, organization, 'START', format: :text) }
+  let(:sender_object) { Struct.new(:phone_number) }
+  let(:alice_sender_object) { sender_object.new('+12222222222') }
+  let(:start_message) { FakeMessaging.inbound_message(alice_sender_object, organization, 'START', format: :text) }
   let(:start_message_params) do
     {
       'To' => start_message.to,
@@ -25,8 +26,9 @@ RSpec.feature 'Surveying Candidates', type: :request do
     end
 
     context 'and another candidate for the agency has texted START', vcr: { cassette_name: 'surveying-multiple-candidates' } do
-      let(:snarf) { create(:candidate, organization: organization) }
-      let(:snarf_start_message) { FakeMessaging.inbound_message(snarf, organization, 'START', format: :text) }
+      let(:snarf_sender_object) { sender_object.new('+133333333333') }
+
+      let(:snarf_start_message) { FakeMessaging.inbound_message(snarf_sender_object, organization, 'START', format: :text) }
       let(:snarf_start_message_params) do
         {
           'To' => snarf_start_message.to,
@@ -39,10 +41,11 @@ RSpec.feature 'Surveying Candidates', type: :request do
       before(:each) do
         post '/twilio/text', params: snarf_start_message_params
       end
+      let(:snarf) { create(:candidate, organization: organization) }
 
       context 'and the first candidate has responded with an invalid zipcode' do
         let(:body) { '99999' }
-        let(:address_message) { FakeMessaging.inbound_message(alice, organization, body, format: :text) }
+        let(:address_message) { FakeMessaging.inbound_message(alice_sender_object, organization, body, format: :text) }
         let(:address_message_params) do
           {
             'To' => address_message.to,
@@ -58,7 +61,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
 
         context 'and the second candidate has responded with a valid zipcode' do
           let(:snarf_body) { location.zipcode }
-          let(:snarf_address_message) { FakeMessaging.inbound_message(snarf, organization, snarf_body, format: :text) }
+          let(:snarf_address_message) { FakeMessaging.inbound_message(snarf_sender_object, organization, snarf_body, format: :text) }
           let(:snarf_address_message_params) do
             {
               'To' => snarf_address_message.to,
@@ -75,7 +78,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
           it 'sends the next question to the second candidate' do
             last_message = organization.messages.by_recency.first
             expect(last_message.inquiry.present?).to be(true)
-            expect(last_message.user).to eq(snarf.user)
+            expect(last_message.user).to eq(User.find_by(phone_number: snarf_sender_object.phone_number))
             expect(last_message.inbound?).to eq(false)
           end
         end
@@ -83,7 +86,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
     end
 
     context 'and has submitted an address answer to the first address question' do
-      let(:address_message) { FakeMessaging.inbound_message(alice, organization, body, format: :text) }
+      let(:address_message) { FakeMessaging.inbound_message(alice_sender_object, organization, body, format: :text) }
       let(:address_message_params) do
         {
           'To' => address_message.to,
