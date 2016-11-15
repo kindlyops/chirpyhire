@@ -1,4 +1,4 @@
-module Constraint::ConstraintHelper
+class Constraint::ConstraintBase
   attr_reader :request
 
   def candidate_present?

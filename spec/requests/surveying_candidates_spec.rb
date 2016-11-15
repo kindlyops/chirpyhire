@@ -8,13 +8,8 @@ RSpec.feature 'Surveying Candidates', type: :request do
   let!(:plan) { create(:plan) }
 
   let!(:registrar) { Registrar.new(account).register }
-  let(:alice_sender_object) do
-    alice = Object.new
-    def alice.phone_number
-      '+12222222222'
-    end
-    alice
-  end
+  let(:sender_object) { Struct.new(:phone_number) }
+  let(:alice_sender_object) { sender_object.new('+12222222222') }
   let(:start_message) { FakeMessaging.inbound_message(alice_sender_object, organization, 'START', format: :text) }
   let(:start_message_params) do
     {
@@ -31,13 +26,7 @@ RSpec.feature 'Surveying Candidates', type: :request do
     end
 
     context 'and another candidate for the agency has texted START', vcr: { cassette_name: 'surveying-multiple-candidates' } do
-      let(:snarf_sender_object) do
-        snarf = Object.new
-        def snarf.phone_number
-          '+13333333333'
-        end
-        snarf
-      end
+      let(:snarf_sender_object) { sender_object.new('+133333333333') }
 
       let(:snarf_start_message) { FakeMessaging.inbound_message(snarf_sender_object, organization, 'START', format: :text) }
       let(:snarf_start_message_params) do

@@ -1,5 +1,4 @@
-class Constraint::OptIn
-  include Constraint::ConstraintHelper
+class Constraint::OptIn < Constraint::ConstraintBase
   OPT_IN_RESPONSES = %w(START).freeze
 
   def matches?(request)

@@ -1,5 +1,4 @@
-class Constraint::OptOut
-  include Constraint::ConstraintHelper
+class Constraint::OptOut < Constraint::ConstraintBase
   OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze
 
   def matches?(request)
