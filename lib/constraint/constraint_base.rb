@@ -1,6 +1,8 @@
 class Constraint::ConstraintBase
   attr_reader :request
 
+  delegate :outstanding_inquiry, to: :user
+
   def candidate_present?
     organization.present? && user&.candidate.present?
   end
