@@ -56,9 +56,9 @@ RSpec.describe Survey, type: :model do
         end
 
         it 'fails validation' do
-          survey.save
-          expect(survey.valid?).to eq(false)
-          expect(survey.errors).to include(:question_priorities)
+          expect {
+            survey.save
+          }.to raise_error(ActiveRecord::RecordNotUnique)
         end
       end
     end

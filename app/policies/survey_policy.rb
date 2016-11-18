@@ -1,10 +1,10 @@
 class SurveyPolicy < ApplicationPolicy
-  def update?
-    show?
+  def reorder?
+    update?
   end
 
-  def permitted_attributes
-    [questions_attributes: [:id, :priority]]
+  def update?
+    show?
   end
 
   class Scope < ApplicationPolicy::Scope

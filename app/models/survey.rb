@@ -15,8 +15,6 @@ class Survey < ApplicationRecord
   accepts_nested_attributes_for :questions,
                                 reject_if: :all_blank, allow_destroy: false
 
-  validate :unique_priorities, on: :update
-
   def perform(user)
     CandidateAdvancer.call(user)
   end
@@ -35,15 +33,5 @@ class Survey < ApplicationRecord
       .where.not(id: ids)
       .where(status: Question.statuses[:active])
       .order(:priority).first
-  end
-
-  private
-
-  def unique_priorities
-    active_questions = questions.select(&:active?)
-    unique_priorities = active_questions.map(&:priority).uniq
-    unless unique_priorities.count == active_questions.count
-      errors[:question_priorities] << 'Each question priority must be unique.'
-    end
   end
 end

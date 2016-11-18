@@ -28,47 +28,26 @@ RSpec.describe SurveysController, type: :controller do
     end
   end
 
-  describe 'PUT #update' do
+  describe 'PUT #reorder' do
     let!(:first_question) { create(:document_question, survey: survey, priority: 1) }
     let!(:second_question) { create(:document_question, survey: survey, priority: 2) }
 
     context 'with valid params' do
-      let(:new_attributes) {
-        { questions_attributes: [{ id: first_question.id, priority: 2 }, { id: second_question.id, priority: 1 }] }
+      let(:params) {
+        { questions: { first_question.id.to_s => { priority: 2 }, second_question.id.to_s => { priority: 1 } } }
       }
 
       it 'updates the requested survey' do
         expect {
           expect {
-            put :update, params: { id: survey.to_param, survey: new_attributes }
+            put :reorder, params: params
           }.to change { first_question.reload.priority }.to(2)
         }.to change { second_question.reload.priority }.to(1)
       end
 
-      it 'assigns the requested survey as @survey' do
-        put :update, params: { id: survey.to_param, survey: valid_attributes }
-        expect(assigns(:survey)).to eq(survey)
-      end
-
       it 'redirects to the survey path' do
-        put :update, params: { id: survey.to_param, survey: valid_attributes }
+        put :reorder, params: params
         expect(response).to redirect_to(survey_path)
-      end
-    end
-
-    context 'with invalid params' do
-      let(:invalid_attributes) {
-        { questions_attributes: [{ id: first_question.id, priority: 1 }, { id: second_question.id, priority: 1 }] }
-      }
-
-      it 'assigns the survey as @survey' do
-        put :update, params: { id: survey.to_param, survey: invalid_attributes }
-        expect(assigns(:survey)).to eq(survey)
-      end
-
-      it "re-renders the 'edit' template" do
-        put :update, params: { id: survey.to_param, survey: invalid_attributes }
-        expect(response).to render_template('edit')
       end
     end
   end

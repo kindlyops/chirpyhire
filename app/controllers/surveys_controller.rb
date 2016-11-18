@@ -1,14 +1,11 @@
 class SurveysController < ApplicationController
   decorates_assigned :survey
 
-  def update
+  def reorder
     @survey = authorize(current_organization.survey)
-
-    if @survey.update(permitted_attributes(Survey))
-      redirect_to survey_url, notice: 'Nice! Order saved.'
-    else
-      render :edit
-    end
+    QuestionOrderer.new(@survey)
+                   .reorder(params[:questions])
+    redirect_to survey_url, notice: 'Nice! Order saved.'
   end
 
   def edit
