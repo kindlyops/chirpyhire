@@ -22,10 +22,10 @@ RSpec.describe ReportMailer do
           create(:candidate, stage: recipient.organization.qualified_stage, user: create(:user, organization: recipient.organization))
         end
 
-        it 'does send an email' do
+        it 'does not send an email' do
           expect {
             ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
-          }.to change { ReportMailer.deliveries.count }.by(1)
+          }.not_to change { ReportMailer.deliveries.count }
         end
 
         describe 'trial accounts' do
@@ -33,10 +33,10 @@ RSpec.describe ReportMailer do
             recipient.organization.subscription.update(state: 'trialing')
           end
 
-          it 'does send an email to the trialing accounts' do
+          it 'does not send an email to the trialing accounts' do
             expect {
               ReportMailer.send_report(Report::Daily.new(recipient)).deliver_now
-            }.to change { ReportMailer.deliveries.count }.by(1)
+            }.not_to change { ReportMailer.deliveries.count }
           end
         end
       end
@@ -49,10 +49,10 @@ RSpec.describe ReportMailer do
         recipient.organization.subscription.update(state: 'active')
       end
 
-      it 'does send an email' do
+      it 'does not send an email' do
         expect {
           ReportMailer.send_report(Report::Weekly.new(recipient)).deliver_now
-        }.to change { ReportMailer.deliveries.count }
+        }.not_to change { ReportMailer.deliveries.count }
       end
     end
 
@@ -61,10 +61,10 @@ RSpec.describe ReportMailer do
         recipient.organization.subscription.update(state: 'trialing')
       end
 
-      it 'does send an email to the trialing accounts' do
+      it 'does not send an email to the trialing accounts' do
         expect {
           ReportMailer.send_report(Report::Weekly.new(recipient)).deliver_now
-        }.to change { ReportMailer.deliveries.count }.by(1)
+        }.not_to change { ReportMailer.deliveries.count }
       end
     end
   end
