@@ -38,12 +38,12 @@ RSpec.describe Report::Daily do
         context 'with a candidate attached to the user' do
           let!(:candidate) { create(:candidate, user: recipient.user) }
           it 'does not send' do
-            expect(report.send?).to eq(true)
+            expect(report.send?).to eq(false)
           end
           context 'with a later accepted valid answer' do
             let!(:answer) { create(:answer, inquiry: inquiry, message: message) }
-            it 'sends' do
-              expect(report.send?).to eq(true)
+            it 'does not send' do
+              expect(report.send?).to eq(false)
             end
           end
         end

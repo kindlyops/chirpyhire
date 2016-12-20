@@ -9,8 +9,9 @@ class Report::Report
     @organization ||= recipient.organization
   end
 
+  # Turn off all reports
   def send?
-    organization.good_standing?
+    false
   end
 
   protected
