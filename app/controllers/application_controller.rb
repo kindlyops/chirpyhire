@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
   helper_method :current_organization
+  helper_method :impersonating?
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
@@ -58,5 +59,9 @@ class ApplicationController < ActionController::Base
   end
 
   def user_for_paper_trail
+  end
+
+  def impersonating?
+    current_account != true_account
   end
 end

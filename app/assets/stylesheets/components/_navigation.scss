@@ -25,6 +25,16 @@ header.navigation {
   width: 100%;
   z-index: 999;
 
+  &.impersonating {
+    background: repeating-linear-gradient(
+      135deg,
+      darken($error, 60%),
+      darken($error, 60%) 10px,
+      darken($alert, 60%) 10px,
+      darken($alert, 60%) 20px
+    );
+  }
+
   .desktop {
     display: none;
   }
