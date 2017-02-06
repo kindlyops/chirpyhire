@@ -1,4 +1,4 @@
-header.navigation role="banner"
+header.navigation class=('impersonating' if impersonating?) role="banner"
   .navigation-wrapper
     nav.left role="navigation"
       = link_to root_path, class: "app-title desktop" do
@@ -48,8 +48,12 @@ header.navigation role="banner"
           = link_to "Candidate Stages", stages_path
         li.nav-link
           = link_to "Invite an Admin", new_account_invitation_path
-        li.nav-link
-          = link_to "Sign out", destroy_account_session_path, method: :delete
+        - if impersonating?
+          li.nav-link
+            = link_to "Stop Impersonating", stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.name}"
+        - else
+          li.nav-link
+            = link_to "Sign out", destroy_account_session_path, method: :delete
     nav.right.desktop role="navigation"
       ul.navigation-menu.show
         li.nav-link

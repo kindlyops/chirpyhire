@@ -1,21 +1,4 @@
 GIT
-  remote: git://github.com/hwhelchel/administrate.git
-  revision: 085028c9613036fda0125c2e16d9cbda8ce296ad
-  branch: rails5
-  specs:
-    administrate (0.2.1)
-      autoprefixer-rails (~> 6.0)
-      datetime_picker_rails (~> 0.0.7)
-      jquery-rails (~> 4.0)
-      kaminari (~> 0.17)
-      momentjs-rails (~> 2.8)
-      neat (~> 1.1)
-      normalize-rails (~> 4.1)
-      rails (>= 4.0, < 5.1)
-      sass-rails (~> 5.0)
-      selectize-rails (~> 0.6)
-
-GIT
   remote: git://github.com/integrallis/stripe_event.git
   revision: 1da7ed881af66db8b970539271a996a51b592c3a
   ref: 1da7ed8
@@ -129,13 +112,18 @@ GEM
     cliver (0.3.2)
     cocoon (1.2.9)
     coderay (1.1.1)
+    coffee-rails (4.2.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.2.x)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
-    datetime_picker_rails (0.0.7)
-      momentjs-rails (>= 2.8.1)
     debug_inspector (0.0.2)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -173,6 +161,8 @@ GEM
     geocoder (1.3.7)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    haml (4.0.7)
+      tilt
     hashdiff (0.3.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -185,6 +175,8 @@ GEM
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (5.0.5)
+      railties (>= 3.2.16)
     json (1.8.3)
     jwt (1.5.6)
     kaminari (0.17.0)
@@ -204,8 +196,6 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
-    momentjs-rails (2.15.1)
-      railties (>= 3.1)
     multi_json (1.12.1)
     multi_xml (0.5.5)
     mustermann (1.0.0.beta2)
@@ -213,6 +203,7 @@ GEM
     neat (1.8.0)
       sass (>= 3.3)
       thor (~> 0.19)
+    nested_form (0.3.2)
     netrc (0.11.0)
     nio4r (1.2.1)
     nokogiri (1.6.8)
@@ -259,6 +250,9 @@ GEM
       pundit (~> 1.0, >= 1.0.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.1)
+    rack-pjax (1.0.0)
+      nokogiri (~> 1.5)
+      rack (>= 1.1)
     rack-protection (2.0.0.beta2)
       rack
     rack-test (0.6.3)
@@ -287,6 +281,19 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
+    rails_admin (1.1.1)
+      builder (~> 3.1)
+      coffee-rails (~> 4.0)
+      font-awesome-rails (>= 3.0, < 5)
+      haml (~> 4.0)
+      jquery-rails (>= 3.0, < 5)
+      jquery-ui-rails (~> 5.0)
+      kaminari (~> 0.14)
+      nested_form (~> 0.3)
+      rack-pjax (>= 0.7)
+      rails (>= 4.0, < 6)
+      remotipart (~> 1.3)
+      sass-rails (>= 4.0, < 6)
     rails_serve_static_assets (0.0.5)
     rails_stdout_logging (0.0.5)
     railties (5.0.0.1)
@@ -298,6 +305,7 @@ GEM
     rainbow (2.1.0)
     rake (11.3.0)
     redis (3.3.1)
+    remotipart (1.3.1)
     request_store (1.3.1)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
@@ -339,7 +347,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    selectize-rails (0.12.3)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
     sidekiq (4.0.2)
@@ -415,7 +422,6 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 4.11.0)
   activemodel-serializers-xml!
-  administrate!
   autoprefixer-rails (~> 6.4.0)
   aws-sdk (~> 2)
   better_errors
@@ -458,6 +464,7 @@ DEPENDENCIES
   rails (~> 5.0.0)
   rails-controller-testing
   rails_12factor (~> 0.0.3)
+  rails_admin (~> 1.1.1)
   rollbar (~> 2.12.0)
   rspec-rails (~> 3.5.1)
   rubocop (~> 0.42.0)

@@ -41,39 +41,13 @@ Rails.application.routes.draw do
   mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
+  resources :accounts, only: [] do
+    post :stop_impersonating, on: :collection
+  end
 
   authenticate :account, ->(a) { a.super_admin? } do
     mount Sidekiq::Web => '/sidekiq'
-    namespace :admin do
-      resources :accounts
-      resources :actionables
-      resources :template_actionables
-      resources :survey_actionables
-      resources :address_questions
-      resources :document_questions
-      resources :choice_questions
-      resources :choice_question_options
-      resources :address_question_options
-      resources :yes_no_questions
-      resources :answers
-      resources :candidates
-      resources :candidate_features
-      resources :surveys
-      resources :inquiries
-      resources :locations
-      resources :media_instances
-      resources :messages
-      resources :notifications
-      resources :organizations
-      resources :questions
-      resources :referrals
-      resources :referrers
-      resources :rules
-      resources :templates
-      resources :users
-
-      root to: 'accounts#index'
-    end
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
   root 'candidates#index'
