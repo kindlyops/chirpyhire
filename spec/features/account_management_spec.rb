@@ -5,19 +5,14 @@ RSpec.feature 'Account Management', type: :feature, js: true do
     let!(:plan) { create(:plan) }
     let(:first_name) { Faker::Name.first_name }
     let(:last_name) { Faker::Name.last_name }
-    let(:name) { 'Orn, Beer and Schaden' }
     context 'with valid credentials' do
       let(:password) { Faker::Internet.password }
 
-      before do
-        allow(TwilioProvisionerJob).to receive(:perform_later)
-      end
-
-      scenario 'User progresses to invitation screen' do
+      scenario 'User progresses to invitation screen', vcr: { cassette_name: 'TwilioProvisioner-call' } do
         visit '/accounts/sign_up'
 
         fill_in 'Name', with: "#{first_name} #{last_name}"
-        fill_in 'Organization Name', with: name
+        fill_in 'Organization Name', with: Faker::Company.name
         fill_in 'Organization Address', with: '1000 E. Market St. 22902'
         fill_in 'Email', with: Faker::Internet.email
         fill_in 'Password', with: password
