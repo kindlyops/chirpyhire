@@ -242,8 +242,6 @@ GEM
       railties (>= 3.0.0)
     public_suffix (2.0.5)
     puma (3.4.0)
-    puma-heroku (1.0.0)
-      puma (~> 3.0)
     pundit-matchers (1.0.2)
       pundit (~> 1.0, >= 1.0.0)
       rspec-rails (>= 3.0.0)
@@ -457,7 +455,6 @@ DEPENDENCIES
   pry-rails
   public_activity (~> 1.5.0)
   puma (~> 3.4.0)
-  puma-heroku (~> 1.0.0)
   pundit!
   pundit-matchers (~> 1.0.2)
   rails (~> 5.0.1)
