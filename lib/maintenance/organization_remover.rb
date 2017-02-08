@@ -8,8 +8,8 @@ class Maintenance::OrganizationRemover
 
   def delete_organization(confirmed: false)
     unless confirmed
-      raise "This is irreversible, and will delete all data for the organization\
-      . Are you sure you want to delete #{organization.name}? \
+      raise 'This is irreversible, and will delete all data for the'\
+      " organization. Are you sure you want to delete #{organization.name}? \
       If so, pass in 'confirmed: true' to this method."
     end
 
