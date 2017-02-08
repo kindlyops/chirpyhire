@@ -1,23 +1,4 @@
 GIT
-  remote: git://github.com/integrallis/stripe_event.git
-  revision: 1da7ed881af66db8b970539271a996a51b592c3a
-  ref: 1da7ed8
-  specs:
-    stripe_event (1.5.0)
-      activesupport (>= 3.1)
-      stripe (~> 1.6)
-
-GIT
-  remote: git://github.com/rails/activemodel-serializers-xml.git
-  revision: 570ee7ed33d60e44ca1f3ccbec3d1fbf61d52cbf
-  specs:
-    activemodel-serializers-xml (1.0.1)
-      activemodel (> 5.x)
-      activerecord (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
-
-GIT
   remote: git@github.com:DockYard/capybara-email.git
   revision: c30c5f0a211d32ad489bc3070cbb4a9cc809d20c
   ref: c30c5f0
@@ -33,6 +14,24 @@ GIT
   specs:
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+
+GIT
+  remote: https://github.com/integrallis/stripe_event.git
+  revision: 1da7ed881af66db8b970539271a996a51b592c3a
+  ref: 1da7ed8
+  specs:
+    stripe_event (1.5.0)
+      activesupport (>= 3.1)
+      stripe (~> 1.6)
+
+GIT
+  remote: https://github.com/rails/activemodel-serializers-xml.git
+  revision: dd9c0acf26aab111ebc647cd8deb99ebc6946531
+  specs:
+    activemodel-serializers-xml (1.0.1)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
 
 GEM
   remote: https://rubygems.org/
