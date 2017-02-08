@@ -2,27 +2,25 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.twilio.com/2010-04-01/Accounts.json
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts.json
     body:
       encoding: US-ASCII
-      string: FriendlyName=Wuckert+Inc
+      string: FriendlyName=Orn%2C+Beer+and+Schaden
     headers:
       Accept:
       - application/json
       Accept-Charset:
       - utf-8
       User-Agent:
-      - twilio-ruby/4.11.1 (ruby/x86_64-darwin16 2.4.0-p0)
+      - twilio-ruby/4.11.1 (ruby/x86_64-darwin15 2.3.1-p112)
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Authorization:
-      - Basic QUMzMjQyNDcwNGEyNGYxZDFkMzdmYWY4ZTE5NWU2YzM1ZTo5NjU4NDcwNzgxOGZkNTVlZGVkZDQ5MWJhYjJiZTZjZQ==
       Content-Type:
       - application/x-www-form-urlencoded
   response:
     status:
-      code: 403
-      message: FORBIDDEN
+      code: 201
+      message: CREATED
     headers:
       Access-Control-Allow-Credentials:
       - 'true'
@@ -38,24 +36,286 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 08 Feb 2017 00:35:08 GMT
+      - Sat, 13 Aug 2016 18:31:01 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
       Twilio-Request-Duration:
-      - '0.042'
+      - '0.343'
       Twilio-Request-Id:
-      - RQd6b503d203834197b6499903a2ac351b
+      - RQ1a4935f38edb42a58c2fa3331a4d8d1f
       X-Powered-By:
       - AT-5000
       X-Shenanigans:
       - none
       Content-Length:
-      - '155'
+      - '2080'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"code": 20008, "message": "Resource not accessible with Test Account
-        Credentials", "more_info": "https://www.twilio.com/docs/errors/20008", "status":
-        403}'
-    http_version: 
-  recorded_at: Wed, 08 Feb 2017 00:35:08 GMT
+      string: '{"sid": "AC247f06db42231ee110eae4fb6657af30", "owner_account_sid":
+        "TWILIO_TEST_ACCOUNT_SID", "friendly_name": "Orn, Beer and Schaden",
+        "status": "active", "date_created": "Sat, 13 Aug 2016 18:31:01 +0000", "date_updated":
+        "Sat, 13 Aug 2016 18:31:01 +0000", "auth_token": "11737a02443bdc9e5a757e72cfa561e9",
+        "type": "Full", "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30.json",
+        "subresource_uris": {"applications": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Applications.json",
+        "authorized_connect_apps": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AuthorizedConnectApps.json",
+        "available_phone_numbers": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers.json",
+        "calls": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Calls.json",
+        "conferences": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Conferences.json",
+        "connect_apps": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/ConnectApps.json",
+        "incoming_phone_numbers": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers.json",
+        "media": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Media.json",
+        "messages": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Messages.json",
+        "notifications": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Notifications.json",
+        "outgoing_caller_ids": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/OutgoingCallerIds.json",
+        "queues": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Queues.json",
+        "recordings": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Recordings.json",
+        "sandbox": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Sandbox.json",
+        "sip": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/SIP.json",
+        "sms_messages": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/SMS/Messages.json",
+        "transcriptions": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Transcriptions.json",
+        "usage": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/Usage.json"}}'
+    http_version:
+  recorded_at: Sat, 13 Aug 2016 18:31:01 GMT
+- request:
+    method: get
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InRegion=CA&NearLatLong=37.870842,-122.501366
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - twilio-ruby/4.11.1 (ruby/x86_64-darwin15 2.3.1-p112)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 13 Aug 2016 18:31:02 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Request-Duration:
+      - '0.163'
+      Twilio-Request-Id:
+      - RQ7a6ece9957dd486b83c5c3462a421d6e
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '10020'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"available_phone_numbers": [{"friendly_name": "(434) 495-5125", "phone_number":
+        "+14344955125", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5181", "phone_number":
+        "+14344955181", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5281", "phone_number":
+        "+14344955281", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3757", "phone_number":
+        "+14344953757", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3755", "phone_number":
+        "+14344953755", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5319", "phone_number":
+        "+14344955319", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5059", "phone_number":
+        "+14344955059", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5241", "phone_number":
+        "+14344955241", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5390", "phone_number":
+        "+14344955390", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3762", "phone_number":
+        "+14344953762", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5139", "phone_number":
+        "+14344955139", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3780", "phone_number":
+        "+14344953780", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5150", "phone_number":
+        "+14344955150", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5154", "phone_number":
+        "+14344955154", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5022", "phone_number":
+        "+14344955022", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 442-2358", "phone_number":
+        "+14344422358", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3752", "phone_number":
+        "+14344953752", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5156", "phone_number":
+        "+14344955156", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 442-5718", "phone_number":
+        "+14344425718", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5142", "phone_number":
+        "+14344955142", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5025", "phone_number":
+        "+14344955025", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 442-4751", "phone_number":
+        "+14344424751", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5250", "phone_number":
+        "+14344955250", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3750", "phone_number":
+        "+14344953750", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5067", "phone_number":
+        "+14344955067", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-1277", "phone_number":
+        "+14344951277", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-1241", "phone_number":
+        "+14344951241", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5286", "phone_number":
+        "+14344955286", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-5148", "phone_number":
+        "+14344955148", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}, {"friendly_name": "(434) 495-3772", "phone_number":
+        "+14344953772", "lata": "438", "rate_center": "CHARLOTTESVILLE", "latitude": "33.830000",
+        "longitude": "-84.370000", "region": "VA", "postal_code": "22902", "iso_country":
+        "US", "address_requirements": "none", "beta": false, "capabilities": {"voice":
+        true, "SMS": true, "MMS": true}}], "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/AvailablePhoneNumbers/US/Local.json?InRegion=CA&NearLatLong=37.870842,-122.501366"}'
+    http_version:
+  recorded_at: Sat, 13 Aug 2016 18:31:02 GMT
+- request:
+    method: post
+    uri: https://TWILIO_TEST_ACCOUNT_SID:TWILIO_TEST_AUTH_TOKEN@api.twilio.com/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers.json
+    body:
+      encoding: US-ASCII
+      string: PhoneNumber=%2B14344955125
+    headers:
+      Accept:
+      - application/json
+      Accept-Charset:
+      - utf-8
+      User-Agent:
+      - twilio-ruby/4.11.1 (ruby/x86_64-darwin15 2.3.1-p112)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Sat, 13 Aug 2016 18:31:03 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Request-Duration:
+      - '0.860'
+      Twilio-Request-Id:
+      - RQ70bb4e214732432c99fe78002eff0a2f
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '955'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"sid": "PN7528bc768bb53f5f74cce9a39432f318", "account_sid": "AC247f06db42231ee110eae4fb6657af30",
+        "friendly_name": "(434) 495-5125", "phone_number": "+14344955125", "voice_url":
+        null, "voice_method": "POST", "voice_fallback_url": null, "voice_fallback_method":
+        "POST", "voice_caller_id_lookup": false, "date_created": "Sat, 13 Aug 2016
+        18:31:02 +0000", "date_updated": "Sat, 13 Aug 2016 18:31:02 +0000", "sms_url":
+        "https://app.chirpyhire.com/twilio/text", "sms_method": "POST", "sms_fallback_url": "",
+        "sms_fallback_method": "POST", "address_requirements": "none", "beta": false,
+        "capabilities": {"voice": false, "sms": true, "mms": true}, "status_callback": "",
+        "status_callback_method": "POST", "api_version": "2010-04-01", "voice_application_sid": null,
+        "sms_application_sid": "", "trunk_sid": null, "emergency_status": "Inactive", "emergency_address_sid":
+        null, "uri": "/2010-04-01/Accounts/AC247f06db42231ee110eae4fb6657af30/IncomingPhoneNumbers/PN7528bc768bb53f5f74cce9a39432f318.json"}'
+    http_version:
+  recorded_at: Sat, 13 Aug 2016 18:31:03 GMT
 recorded_with: VCR 3.0.3

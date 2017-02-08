@@ -22,7 +22,8 @@ class FakeMessaging
     )
   end
 
-  def initialize(_account_sid, _auth_token); end
+  def initialize(_account_sid, _auth_token)
+  end
 
   def messages
     self

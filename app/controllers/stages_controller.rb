@@ -1,7 +1,8 @@
 class StagesController < ApplicationController
   before_action :setup_stages
 
-  def index; end
+  def index
+  end
 
   def create
     new_stage = current_organization
