@@ -7,18 +7,22 @@ class Maintenance::OrganizationRemover
   end
 
   def delete_organization(confirmed: false)
-    raise "This is irreversible, and will delete all data for the organization\
-    . Are you sure you want to delete #{organization.name}? \
-    If so, pass in 'confirmed: true' to this method." unless confirmed
+    unless confirmed
+      raise "This is irreversible, and will delete all data for the organization\
+      . Are you sure you want to delete #{organization.name}? \
+      If so, pass in 'confirmed: true' to this method."
+    end
 
     twilio_provisioner.close_account
     delete_organization_internal
   end
 
   def close_organization(confirmed: false)
-    raise "This is irreversible. \
-    Are you sure you want to close the account for #{organization.name}? \
-    If so, pass in 'confirmed: true' to this method." unless confirmed
+    unless confirmed
+      raise "This is irreversible. \
+      Are you sure you want to close the account for #{organization.name}? \
+      If so, pass in 'confirmed: true' to this method."
+    end
 
     twilio_provisioner.close_account
   end
