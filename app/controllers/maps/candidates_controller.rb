@@ -16,7 +16,7 @@ class Maps::CandidatesController < ApplicationController
   private
 
   def set_stage_filter_cookie
-    stage_name = Stage.find_by_id(params[:stage_id])&.name
+    stage_name = Stage.find_by(id: params[:stage_id])&.name
 
     if stage_name.present?
       cookies[:candidate_stage_filter] = { value: stage_name }
