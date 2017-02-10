@@ -12,4 +12,6 @@ RailsAdmin.config do |config|
     delete
     impersonate
   end
+
+  config.default_items_per_page = 100
 end
