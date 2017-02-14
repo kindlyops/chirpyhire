@@ -6,8 +6,33 @@
   bottom: 0;
   left: 0;
   z-index: 1000;
-  padding: 20px;
+  padding: 20px 0;
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #c5d6de;
+
+  .nav-item {
+    &:hover {
+      span {
+        color: $gray-dark;
+      }
+      background-color: $gray-lightest;
+    }
+  }
+
+  span {
+    color: $gray-light;
+  }
+
+  .fa-users {
+    color: $purple;
+  }
+
+  .fa-bolt {
+    color: $yellow;
+  }
+
+  .fa-comments {
+    color: $blue;
+  }
 }
