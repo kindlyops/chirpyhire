@@ -1,0 +1,18 @@
+.conversation {
+  .fa-circle {
+    color: $blue;
+  }
+
+  &:hover {
+    background-color: $gray-lightest;
+  }
+
+  a {
+    color: $gray-dark;
+
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
