@@ -18,13 +18,15 @@ class MessagesController < ApplicationController
   def create
     @message = scoped_messages.build
 
-    if authorize @message
-      @message = send_message
-      redirect_to user_messages_url(message_user), notice: 'Message sent!'
-    end
+    create_message if authorize @message
   end
 
   private
+
+  def create_message
+    @message = send_message
+    redirect_to user_messages_url(message_user), notice: 'Message sent!'
+  end
 
   def send_message
     @sent_message ||= begin
@@ -39,14 +41,13 @@ class MessagesController < ApplicationController
   end
 
   def message_user
-    @user ||= begin
-      message_user = User.find(params[:user_id])
-      if UserPolicy.new(current_organization, message_user).show?
-        message_user
-      else
-        raise Pundit::NotAuthorizedError
-      end
-    end
+    @user ||= fetch_message_user
+  end
+
+  def fetch_message_user
+    user = User.find(params[:user_id])
+    return user if UserPolicy.new(current_organization, user).show?
+    raise Pundit::NotAuthorizedError
   end
 
   def message_not_authorized

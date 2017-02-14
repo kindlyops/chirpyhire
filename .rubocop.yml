@@ -29,6 +29,11 @@ Metrics/LineLength:
     - 'spec/**/*'
     - 'config/**/*'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'config/**/*'
+    - 'spec/**/*'
+
 Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
@@ -44,3 +49,8 @@ Style/NumericPredicate:
 
 Style/TrailingCommaInLiteral:
   Enabled: false
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_sql
+    - find_by_invitation_token

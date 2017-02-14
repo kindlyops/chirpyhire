@@ -26,6 +26,10 @@ class Subscription < ApplicationRecord
     end
   end
 
+  def in_stripe?
+    stripe_id.present?
+  end
+
   def refresh(stripe_subscription:)
     update(stripe_properties(stripe_subscription))
   end

@@ -108,7 +108,9 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
             find('#add-question', match: :first).trigger('click')
             expect {
               within(find('#address-type')) do
-                click_link('Add Question')
+                # binding.pry
+                find('a', text: 'Add Question', match: :first).trigger('click')
+                # click_link('Add Question')
               end
             }.not_to change { page }
           end
@@ -288,7 +290,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
       it 'works' do
         visit survey_path
         find('#add-question', match: :first).trigger('click')
-        find('#choice-type').find('.button').trigger('click')
+        find('#choice-type').find('.btn').trigger('click')
 
         fill_in 'choice_question_label', with: 'Fancy Choice Label'
         fill_in 'choice_question_text', with: 'Fancy Choice Text'
@@ -326,7 +328,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
         visit survey_path
         find('#edit-question', match: :first).trigger('click')
         choice = find('.nested-fields', match: :first)
-        choice_text = choice.find('.field input').value
+        choice_text = choice.find('.form-group input').value
         within(choice) do
           find('.remove_fields', match: :first).trigger('click')
         end
@@ -380,7 +382,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
     it 'adds a question successfully' do
       visit survey_path
       find('#add-question', match: :first).trigger('click')
-      find('#zipcode-type').find('.button').trigger('click')
+      find('#zipcode-type').find('.btn').trigger('click')
 
       fill_in 'zipcode_question_label', with: 'Fancy Zipcode Label'
       fill_in 'zipcode_question_text', with: 'Fancy Zipcode Text'
@@ -434,7 +436,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
           visit survey_path
           find('#edit-question', match: :first).trigger('click')
           option = find('.nested-fields', match: :first)
-          option_text = option.find('.field input').value
+          option_text = option.find('.form-group input').value
 
           within(option) do
             find('.remove_fields', match: :first).trigger('click')

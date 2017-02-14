@@ -32,7 +32,7 @@ RSpec.describe Candidate, type: :model do
       context 'not changing the stage' do
         it 'does not create an activity' do
           expect {
-            candidate.touch
+            candidate.update(nickname: 'Foo')
           }.not_to change { PublicActivity::Activity.count }
         end
       end

@@ -23,9 +23,12 @@ class ZipcodeQuestion < Question
     all_zipcodes = zipcode_question_options.all? do |option|
       (option.text =~ /^\d{5}$/) == 0
     end
-    if !all_zipcodes
-      errors.add(:zipcode_question_options, 'must be five digits')
-    end
+
+    errors.add(:zipcode_question_options, error_message) if !all_zipcodes
+  end
+
+  def error_message
+    'must be five digits'
   end
 
   def options

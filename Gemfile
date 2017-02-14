@@ -37,7 +37,7 @@ group :test do
   gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', '~> 1.12.0'
   gem 'shoulda-matchers', '~> 2.8.0'
-  gem 'rubocop', '~> 0.42.0'
+  gem 'rubocop', '~> 0.47.1'
 end
 
 group :development do

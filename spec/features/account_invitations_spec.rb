@@ -34,7 +34,7 @@ RSpec.feature 'Account Invitations', type: :feature, js: true do
       fill_in 'Name', with: "#{first_name} #{last_name}"
       fill_in 'Password', with: 'password'
 
-      click_button 'Sign up'
+      click_button 'Sign Up'
       expect(page).to have_text('Candidates')
       expect(User.last.first_name).to eq(first_name)
       expect(User.last.last_name).to eq(last_name)

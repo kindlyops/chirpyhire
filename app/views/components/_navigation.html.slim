@@ -23,7 +23,7 @@ nav.navbar.navbar-light.top.fixed-top
         = link_to stages_path, class: 'dropdown-item' do
             i.fa.fa-filter
             span.ml-2 Candidate Stages
-        = link_to new_account_invitation_path, class: 'dropdown-item' do
+        = link_to new_account_invitation_path, id: 'invite-admin', class: 'dropdown-item' do
             i.fa.fa-paper-plane
             span.ml-2 Invite an Admin
         - if impersonating?
@@ -31,6 +31,6 @@ nav.navbar.navbar-light.top.fixed-top
               i.fa.fa-step-backward
               span.ml-2 Stop Impersonating
         - else
-          = link_to destroy_account_session_path, method: :delete, class: 'dropdown-item' do
+          = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
             i.fa.fa-sign-out
             span.ml-2 Sign out

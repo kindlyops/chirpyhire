@@ -43,7 +43,7 @@ RSpec.feature 'Stage Management', type: :feature, js: true do
       it 'works' do
         visit stages_path
 
-        within(all('li.stage').last) do
+        within(all('.stage').last) do
           click_on '×'
         end
 

@@ -79,9 +79,11 @@ class SubscriptionsController < ApplicationController
   end
 
   def ensure_new_subscription
-    unless trialing? && authorized_subscription.stripe_id.blank?
-      redirect_to edit_subscription_path(authorized_subscription)
-    end
+    redirect_to_edit unless trialing? && !authorized_subscription.in_stripe?
+  end
+
+  def redirect_to_edit
+    redirect_to edit_subscription_path(authorized_subscription)
   end
 
   def stripe_token?

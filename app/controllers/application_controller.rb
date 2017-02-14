@@ -53,9 +53,11 @@ class ApplicationController < ActionController::Base
   end
 
   def block_invalid_subscriptions
-    unless current_organization.good_standing?
-      redirect_to(subscription_path(current_organization.subscription))
-    end
+    redirect_to_current_subscription unless current_organization.good_standing?
+  end
+
+  def redirect_to_current_subscription
+    redirect_to(subscription_path(current_organization.subscription))
   end
 
   def user_for_paper_trail; end
