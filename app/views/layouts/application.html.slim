@@ -5,9 +5,9 @@ html
   body
     = render "components/navigation"
     = render partial: "subscriptions/ribbon"
-    = render partial: "layouts/alerts"
     .container-fluid
       .row
         = render "components/sidebar"
         main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.application
+          = render partial: "layouts/alerts"
           = yield

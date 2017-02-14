@@ -4,8 +4,8 @@ html
     = render partial: "layouts/head"
   body
     = render "components/guest_navigation"
-    = render partial: "layouts/alerts"
     .container-fluid
       .row
         main.col
+          .mt-3 = render partial: "layouts/alerts"
           = yield
