@@ -1,4 +1,5 @@
 .sidebar {
+  background-color: white;
   padding-left: 0;
   padding-right: 0;
   position: fixed;
@@ -21,7 +22,7 @@
         color: darken($purple, 3%);
       }
 
-      .fa-bolt {
+      .fa-pencil-square-o {
         color: darken($yellow, 3%);
       }
 
@@ -41,7 +42,7 @@
     color: $purple;
   }
 
-  .fa-bolt {
+  .fa-pencil-square-o {
     color: $yellow;
   }
 
