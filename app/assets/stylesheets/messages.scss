@@ -1,0 +1,28 @@
+.messages {
+  .load_more {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-align: center;
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+  }
+  .bubble {
+    white-space: pre-line;
+    border-radius: 5px;
+
+    &.inbound {
+      color: $white;
+      background-color: $blue;
+      align-self: flex-start;
+    }
+    &.outbound-api {
+      color: $gray-dark;
+      background-color: $gray-lighter;
+      align-self: flex-end;
+    }
+  }
+}
