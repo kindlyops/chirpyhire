@@ -103,7 +103,7 @@ RSpec.describe MessagesController, type: :controller do
 
         it 'provides a helpful alert message' do
           post :create, params: message_params
-          expect(flash[:alert]).to eq("Unfortunately they are unsubscribed! You can't text unsubscribed candidates using Chirpyhire.")
+          expect(flash[:alert]).to eq("Unfortunately they are unsubscribed! You can't text unsubscribed candidates using ChirpyHire.")
         end
 
         it 'does not create a new message' do

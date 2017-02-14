@@ -4,14 +4,7 @@ class AnswerHandler
   end
 
   def call
-    if inquiry.unanswered?
-      if well_formed_answer?
-        update_or_create_candidate_feature
-        AutomatonJob.perform_later(sender, 'answer')
-      else
-        NotUnderstoodHandler.notify(sender, inquiry)
-      end
-    end
+    handle_answer if inquiry.unanswered?
   end
 
   def initialize(sender, inquiry, message)
@@ -24,6 +17,15 @@ class AnswerHandler
 
   attr_reader :inquiry, :sender, :message
   delegate :label, to: :inquiry
+
+  def handle_answer
+    if well_formed_answer?
+      update_or_create_candidate_feature
+      AutomatonJob.perform_later(sender, 'answer')
+    else
+      NotUnderstoodHandler.notify(sender, inquiry)
+    end
+  end
 
   def update_or_create_candidate_feature
     feature = candidate.candidate_features.find_or_initialize_by(label: label)

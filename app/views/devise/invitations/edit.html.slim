@@ -1,24 +1,24 @@
-= title "Welcome! | Chirpyhire"
+= title "Welcome! | ChirpyHire"
 
-.invitations
-  h3 Accept Invitation
-
-  = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put, role: "form" } do |f|
-    = devise_error_messages!
-    = f.hidden_field :agreed_to_terms, value: true
-    = f.hidden_field :invitation_token
-    = f.fields_for :user do |user_form|
-      .field
-        = user_form.label :name
-        = user_form.text_field :name, required: true
-    - if f.object.class.require_password_on_accepting
-      .field
-        = f.label :password
-        = f.password_field :password, required: true, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum"
-    p.tos-links
-      ' By clicking Sign up, you agree to our
-      a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
-      '  and accept our
-      a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
-    .actions
-      = f.submit "Sign up"
+.card.mt-3
+  h3.card-header Accept Invitation
+  .card-block
+    = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put, role: "form" } do |f|
+      = devise_error_messages!
+      = f.hidden_field :agreed_to_terms, value: true
+      = f.hidden_field :invitation_token
+      = f.fields_for :user do |user_form|
+        .form-group
+          = user_form.label :name, class: "col-form-label"
+          = user_form.text_field :name, required: true, class: "form-control"
+      - if f.object.class.require_password_on_accepting
+        .form-group
+          = f.label :password, class: "col-form-label"
+          = f.password_field :password, required: true, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum", class: "form-control"
+      p.tos-links
+        ' By clicking Sign up, you agree to our
+        a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
+        '  and accept our
+        a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
+      .form-group
+        = f.submit "Sign Up", class: "btn btn-primary"

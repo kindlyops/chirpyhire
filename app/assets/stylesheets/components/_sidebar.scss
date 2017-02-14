@@ -1,0 +1,52 @@
+.sidebar {
+  background-color: white;
+  padding-left: 0;
+  padding-right: 0;
+  position: fixed;
+  top: 71px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-right: 1px solid #c5d6de;
+
+  .nav-item {
+    &:hover {
+      span {
+        color: $gray-dark;
+      }
+
+      .fa-users {
+        color: darken($purple, 3%);
+      }
+
+      .fa-pencil-square-o {
+        color: darken($yellow, 3%);
+      }
+
+      .fa-comments {
+        color: darken($blue, 3%);
+      }
+
+      background-color: $gray-lightest;
+    }
+  }
+
+  span {
+    color: $gray-light;
+  }
+
+  .fa-users {
+    color: $purple;
+  }
+
+  .fa-pencil-square-o {
+    color: $yellow;
+  }
+
+  .fa-comments {
+    color: $blue;
+  }
+}

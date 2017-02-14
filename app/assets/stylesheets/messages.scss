@@ -1,88 +1,28 @@
 .messages {
-  $base-font-color: $dark-gray !default;
-  $large-screen: 53.75em !default;
-  $horizontal-bar-mode: $large-screen;
-
-  $white: #fff;
-  $bg: #f8f8f8;
-  $light: #e6e6e6;
-
-  display: flex;
-  flex-direction: column;
-
-  .top {
-    width: 100%;
-    padding: 0.9em 1em;
-    @include media ($horizontal-bar-mode) {
-      padding: 0.9em 4em;
-    }
-
-    background-color: #eceff1;
-    span.phone-number {
-      color: $base-font-color;
-    }
-  }
-
   .load_more {
-    padding: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     text-align: center;
-    border-bottom: 1px solid $light;
+    border-bottom: 1px solid $gray-lighter;
   }
 
   .chat {
     display: flex;
     flex-direction: column;
-    padding: 1em 1em;
+  }
+  .bubble {
+    white-space: pre-line;
+    border-radius: 5px;
 
-    @include media ($horizontal-bar-mode) {
-      padding: 1em 3.75em 1em 3.75em;
+    &.inbound {
+      color: $white;
+      background-color: $blue;
+      align-self: flex-start;
     }
-
-    .bubble {
-      white-space: pre-line;
-      font-size: 1em;
-      margin-bottom: 8px;
-      padding: 0.9em 0.9em;
-      vertical-align: top;
-      border-radius: 5px;
-      &.inbound {
-        color: $white;
-        background-color: $blue;
-        align-self: flex-start;
-      }
-      &.outbound-api {
-        color: $base-font-color;
-        background-color: #eceff1;
-        align-self: flex-end;
-      }
+    &.outbound-api {
+      color: $gray-dark;
+      background-color: $gray-lighter;
+      align-self: flex-end;
     }
   }
-
-  .write {
-    border-top: 1px solid $light;
-    width: 100%;
-    margin-bottom: 3em;
-
-    @include media ($horizontal-bar-mode) {
-      margin-bottom: 0;
-    }
-
-    textarea {
-      margin: 1em auto;
-      font-size: 1em;
-      width: 90%;
-      color: $base-font-color;
-      border: 0;
-      outline: none;
-      border: 1px solid $light;
-      background-color: #eceff1;
-    }
-
-    button {
-      display: block;
-      width: 90%;
-      margin: 0.75em auto;
-    }
-  }
-
 }

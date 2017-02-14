@@ -66,6 +66,6 @@ class Report::Daily < Report::Report
   end
 
   def subject_suffix(message)
-    "#{message} - Chirpyhire"
+    "#{message} - ChirpyHire"
   end
 end

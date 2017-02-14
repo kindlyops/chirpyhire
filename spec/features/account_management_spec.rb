@@ -104,12 +104,12 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         visit '/accounts/password/new'
 
         fill_in 'Email', with: account.email
-        click_button 'Reset password'
+        click_button 'Reset Password'
         open_email(account.email)
-        current_email.click_link('Change my password')
+        current_email.click_link('Change My Password')
         fill_in 'New password', with: 's3cr$t$$'
         fill_in 'Confirm new password', with: 's3cr$t$$'
-        click_button 'Change my password'
+        click_button 'Change My Password'
         expect(page).to have_text('Your password has been changed successfully. You are now signed in.')
       end
     end
@@ -118,7 +118,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       visit '/accounts/password/new'
 
       fill_in 'Email', with: Faker::Internet.email
-      click_button 'Reset password'
+      click_button 'Reset Password'
       expect(page).to have_text('receive a password recovery link')
     end
   end
@@ -134,8 +134,8 @@ RSpec.feature 'Account Management', type: :feature, js: true do
     scenario 'it progresses to the sign in page' do
       visit '/'
 
-      find('#desktop-settings').trigger('click')
-      click_link 'Sign out'
+      find('#settingsDropdown').trigger('click')
+      find('#sign-out').trigger('click')
       expect(page).to have_text('Sign in or sign up before continuing.')
     end
   end

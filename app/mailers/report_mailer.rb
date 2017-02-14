@@ -3,13 +3,17 @@ class ReportMailer < ActionMailer::Base
           bcc: 'team@chirpyhire.com'
 
   def send_report(report)
-    if report.send?
-      @report = report
-      mail(
-        to: report.recipient_email,
-        subject: report.subject,
-        template_name: report.template_name
-      )
-    end
+    mail_report if report.send?
+  end
+
+  private
+
+  def mail_report
+    @report = report
+    mail(
+      to: report.recipient_email,
+      subject: report.subject,
+      template_name: report.template_name
+    )
   end
 end

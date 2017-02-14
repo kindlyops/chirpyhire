@@ -116,7 +116,7 @@ class Seeder
     unless org.survey.present?
       @bad_fit = Template.create(organization: org, name: "Bad Fit", body: "Thank you very much for your interest. Unfortunately, we don't "\
         "have a good fit for you at this time. If anything changes we will let you know.")
-      @welcome = Template.create(organization: org, name: "Welcome", body: "Hello this is Chirpyhire. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
+      @welcome = Template.create(organization: org, name: "Welcome", body: "Hello this is ChirpyHire. We're so glad you are interested in learning about opportunities here. We have a few questions to ask you via text message.")
       @thank_you = Template.create(organization: org, name: "Thank You", body: "Thanks for your interest! Please give us a call at 404-867-5309 during the week between 9am - 5pm for next steps.")
       @not_understood = Template.create(organization: org, name: "Not Understood", body: "We didn't quite get that. Please try "\
       'again, or a staff member will get back to you as soon as possible.')

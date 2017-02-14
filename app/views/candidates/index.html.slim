@@ -1,35 +1,34 @@
-= title "Candidates | Chirpyhire"
+= title "Candidates | ChirpyHire"
 
 .candidates
-  .controls
-    .dropdowns
-      .dropdown
-        .label
-          ' Stage:
-        select.stage name="stage_name"
-          = options_for_select(current_organization.ordered_stages.map {|st| [st.name, st.name]}, cookies[:candidate_stage_filter])
-      .dropdown
-        .label
-          ' Recency:
-        = select_tag "created_in", options_for_select(CandidateFilterable::CREATED_IN_OPTIONS.values, cookies[:candidate_created_in_filter])
-      .dropdown
-        .label
-          ' Zipcode:
-        = select_tag "zipcode", options_for_select(@zipcodes, cookies[:candidate_zipcode_filter])
-    .button-group
-      label
-        i.fa.fa-th-large.button-group-item selected=true
-      label
-        = link_to maps_candidates_path, class: "button-group-item" do
-          i.fa.fa-map-o
-  .cards
-    - candidates.each do |candidate|
-      - if @candidate&.id != candidate.id
-        = render partial: "candidates/card_front",
-          locals: { candidate: candidate }
-      - else
-        = render partial: "candidates/card_back",
-          locals: { candidate: candidate }
-  = paginate @candidates
+  .card
+    .card-block
+      .dropdowns.form-inline.mb-4
+        .dropdown.mr-3
+          span.label
+            ' Stage:
+          select.custom-select.stage name="stage_name"
+            = options_for_select(current_organization.ordered_stages.map {|st| [st.name, st.name]}, cookies[:candidate_stage_filter])
+        .dropdown.mr-3
+          span.label
+            ' Recency:
+          = select_tag "created_in", options_for_select(CandidateFilterable::CREATED_IN_OPTIONS.values, cookies[:candidate_created_in_filter]), class: 'custom-select'
+        .dropdown.mr-3
+          span.label
+            ' Zipcode:
+          = select_tag "zipcode", options_for_select(@zipcodes, cookies[:candidate_zipcode_filter]), class: 'custom-select'
+      table.table.table-responsive.table-hover
+        thead.thead-active
+          tr
+            th Nickname (internal)
+            th Phone Number
+            th Created
+        tbody
+          - candidates.each do |candidate|
+            tr
+              td = candidate.handle
+              td = candidate.user_phone_number
+              td = "#{time_ago_in_words(candidate.created_at)} ago"
+      = paginate @candidates
 
 

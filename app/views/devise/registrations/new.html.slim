@@ -1,33 +1,34 @@
-.registrations
-  h2
+.card.mt-3
+  h3.card-header
     | Sign up
-  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-    = f.hidden_field :agreed_to_terms, value: true
-    = devise_error_messages!
-    = f.fields_for :user do |u|
-      .field
-        = u.label :name
-        = u.text_field :name, required: true, autofocus: true
-    .field
-      = f.label :email
-      = f.email_field :email, required: true
-    .field
-      = f.label :password
-      = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum"
-    = f.fields_for :user do |u|
-      = u.fields_for :organization do |o|
-        .field
-          = o.label :name, "Organization Name"
-          = o.text_field :name, required: true
-        = o.fields_for :location do |l|
-          .field
-            = l.label :full_street_address, "Organization Address"
-            = l.text_field :full_street_address, required: true, placeholder: "Street and zipcode"
-    p.tos-links
-      ' By clicking Sign up, you agree to our
-      a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
-      '  and accept our
-      a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
-    .actions
-      = f.submit "Sign up"
-  = render "devise/shared/links"
+  .card-block
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      = f.hidden_field :agreed_to_terms, value: true
+      = devise_error_messages!
+      = f.fields_for :user do |u|
+        .form-group
+          = u.label :name, class: "col-form-label"
+          = u.text_field :name, required: true, autofocus: true, class: "form-control"
+      .form-group
+        = f.label :email, class: "col-form-label"
+        = f.email_field :email, required: true, class: "form-control"
+      .form-group
+        = f.label :password, class: "col-form-label"
+        = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum", class: "form-control"
+      = f.fields_for :user do |u|
+        = u.fields_for :organization do |o|
+          .form-group
+            = o.label :name, "Organization Name", class: "col-form-label"
+            = o.text_field :name, required: true, class: "form-control"
+          = o.fields_for :location do |l|
+            .form-group
+              = l.label :full_street_address, "Organization Address", class: "col-form-label"
+              = l.text_field :full_street_address, required: true, placeholder: "Street and zipcode", class: "form-control"
+      p.tos-links
+        ' By clicking Sign up, you agree to our
+        a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
+        '  and accept our
+        a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
+      .form-group
+        = f.submit "Sign up", class: "btn btn-primary"
+    = render "devise/shared/links"

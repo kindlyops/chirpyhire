@@ -1,12 +1,13 @@
-.passwords
-  h2
+.card.mt-3
+  h3.card-header
     | Forgot your password?
-  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-    = devise_error_messages!
-    .field
-      = f.label :email
-      br
-      = f.email_field :email, autofocus: true
-    .actions
-      = f.submit "Reset password"
-  = render "devise/shared/links"
+  .card-block
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+      = devise_error_messages!
+      .form-group
+        = f.label :email, class: "col-form-label"
+        br
+        = f.email_field :email, autofocus: true, class: "form-control"
+      .form-group
+        = f.submit "Reset Password", class: "btn btn-primary"
+    = render "devise/shared/links"

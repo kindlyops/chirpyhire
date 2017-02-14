@@ -1,11 +1,13 @@
-= link_to user_messages_path(conversation.user), id: "conversation-#{conversation.id}" do
-  .conversation
-    - if conversation.user.has_unread_messages?
-      .conversation-status
-        i.fa.fa-circle
-    .conversation-content
-      p.conversation-detail
-        = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
-      h1 = conversation.user_phone_number
-      span.handle = conversation.user_handle
-      = render partial: "conversations/#{conversation.contents}", locals: { conversation: conversation }
+.card.mb-2.conversation
+  .card-block
+    = link_to user_messages_path(conversation.user), id: "conversation-#{conversation.id}" do
+      .float-right
+        span.conversation-detail
+          = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
+        - if conversation.user.has_unread_messages?
+          span.conversation-status.ml-1
+            i.fa.fa-circle
+      .conversation-content
+        h4.handle = conversation.user_handle
+        span = conversation.user_phone_number
+        = render partial: "conversations/#{conversation.contents}", locals: { conversation: conversation }

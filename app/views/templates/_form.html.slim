@@ -1,13 +1,13 @@
-h1
-  ' Edit
-  = template.name.titlecase
-p = template.info
-hr
-= form_for template.object do |f|
-  - render partial: "common/validation_errors", locals: { model: template}
-  .field
-    = f.label :body, "Message"
-    = f.text_area :body, required: true, autofocus: true, rows: 5
-  .actions
-    = f.submit "Save"
+.card
+  h3.card-header
+    ' Edit
+    = template.name.titlecase
+  .card-block
+    p.card-title = template.info
+    = form_for template.object do |f|
+      - render partial: "common/validation_errors", locals: { model: template}
+      .form-group
+        = f.label :body, "Message", class: "col-form-label"
+        = f.text_area :body, required: true, autofocus: true, rows: 5, class: "form-control"
+      = f.submit "Save", class: "btn btn-primary"
 

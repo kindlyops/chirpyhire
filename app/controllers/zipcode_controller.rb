@@ -35,12 +35,18 @@ class ZipcodeController < ApplicationController
   end
 
   def source_stream
-    relative_file_path = "geo_json_data/zipcodes/#{params[:zipcode]}.json"
-    if Rails.env.development?
-      File.open("#{Rails.root}/lib/#{relative_file_path}")
-    else
-      S3_BUCKET.object(relative_file_path.to_s).get.body
+    with_aws_protection do
+      relative_file_path = "geo_json_data/zipcodes/#{params[:zipcode]}.json"
+      if Rails.env.development?
+        File.open(Rails.root.join('lib', relative_file_path.to_s))
+      else
+        S3_BUCKET.object(relative_file_path.to_s).get.body
+      end
     end
+  end
+
+  def with_aws_protection
+    yield
   rescue Errno::ENOENT, Aws::S3::Errors::AccessDenied
     Logging::Logger.log("No zipcode data for #{params[:zipcode]}")
     nil

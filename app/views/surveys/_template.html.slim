@@ -1,10 +1,10 @@
-.card.survey-question id==id
+.card id==id
   .card-header
     - if number.present?
       = "#{number}. "
     = template.name
-    .submenu
+    .float-right
       = link_to edit_template_path(template), id: "edit-template" do
           i.fa.fa-pencil
-  .card-copy
-    p = template.body
+  .card-block
+    p.card-text = template.body

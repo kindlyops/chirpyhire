@@ -1,63 +1,36 @@
-header.navigation class=('impersonating' if impersonating?) role="banner"
-  .navigation-wrapper
-    nav.left role="navigation"
-      = link_to root_path, class: "app-title desktop" do
-          h1 Chirpyhire
-      ul.navigation-menu.show.left
-        li.nav-link
-          a href="/candidates"
-            span.desktop Candidates
-            i.mobile.fa.fa-user.fa-2x
-        li.nav-link
-          a href="/messages"
-            span.desktop
-              ' Messages
-              - unless current_organization.users\
-                                            .with_unread_messages\
-                                            .count\
-                                            .zero?
-                .unread.unread-desktop
-                  = current_organization.users.with_unread_messages.count
-            - if current_organization.users.with_unread_messages.count.zero?
-              i.mobile.fa.fa-commenting.fa-2x
-            - else
-              span.fa-stack.mobile-message-icon
-                i.mobile.fa.fa-comment.fa-2x
-                div.users-unread-message-count.unread
-                  = current_organization.users\
-                                        .with_unread_messages\
-                                        .count
-        li.nav-link
-          = link_to survey_path do
-            span.desktop Survey
-            i.mobile.fa.fa-bolt.fa-2x
-        li.nav-link.mobile
-          a.js-mobile-menu.navigation-menu-button href="javascript:void(0)"
-            i.fa.fa-cog.fa-2x
-      ul#js-navigation-menu.navigation-menu.submenu
+nav.navbar.navbar-light.top.fixed-top
+  ul.nav.nav-pills
+    li.nav-link.ch-logo
+      = link_to root_path, class: 'navbar-brand' do
+        = inline_svg 'inverse_logo.svg'
+    li.nav-link.dropdown.ml-auto
+      button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+        i.fa.fa-user-circle-o
+      .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
         - if current_organization.persisted_subscription?
-          li.nav-link
-            = link_to "Subscription", subscription_path(current_organization.subscription)
+          = link_to subscription_path(current_organization.subscription), class: 'dropdown-item' do
+              i.fa.fa-usd
+              span.ml-2 Subscription
         - elsif current_organization.new_subscription?
-          li.nav-link
-            = link_to "Subscription", new_subscription_path(current_organization.subscription)
+          = link_to new_subscription_path(current_organization.subscription), class: 'dropdown-item' do
+              i.fa.fa-usd
+              span.ml-2 Subscription
         - else
-          li.nav-link
-            = link_to "Subscription", new_subscription_path(current_organization.build_subscription)
-        li.nav-link
-          = link_to "Candidate Stages", stages_path
-        li.nav-link
-          = link_to "Invite an Admin", new_account_invitation_path
-        - if impersonating?
-          li.nav-link
-            = link_to "Stop Impersonating", stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.name}"
-        - else
-          li.nav-link
-            = link_to "Sign out", destroy_account_session_path, method: :delete
-    nav.right.desktop role="navigation"
-      ul.navigation-menu.show
-        li.nav-link
-          span.safari-hack
-          a#desktop-settings.js-mobile-menu.navigation-menu-button href="javascript:void(0)"
-            i.fa.fa-cog.fa-2x
+          = link_to new_subscription_path(current_organization.build_subscription), class: 'dropdown-item' do
+              i.fa.fa-usd
+              span.ml-2 Subscription
 
+        = link_to stages_path, class: 'dropdown-item' do
+            i.fa.fa-filter
+            span.ml-2 Candidate Stages
+        = link_to new_account_invitation_path, id: 'invite-admin', class: 'dropdown-item' do
+            i.fa.fa-paper-plane
+            span.ml-2 Invite an Admin
+        - if impersonating?
+          = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.name}", class: 'dropdown-item' do
+              i.fa.fa-step-backward
+              span.ml-2 Stop Impersonating
+        - else
+          = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
+            i.fa.fa-sign-out
+            span.ml-2 Sign out

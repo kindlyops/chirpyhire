@@ -43,7 +43,7 @@ module Nicknames
     attr_reader :candidate, :organization
   end
 
-  CONFIG = YAML.load_file("#{Rails.root}/lib/.nicknames.yml")
+  CONFIG = YAML.load_file(Rails.root.join('lib', '.nicknames.yml'))
   ANIMALS = CONFIG['Animals']
   ADJECTIVES = CONFIG['Adjectives']
 

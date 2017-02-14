@@ -1,0 +1,14 @@
+nav.col-sm-3.col-md-2.hidden-xs-down.sidebar
+  ul.nav.nav-pills.flex-column
+    li.nav-item
+      = link_to candidates_path, class: 'nav-link ml-3' do
+        i.fa.fa-users.fa-2x.align-middle
+        span.ml-3.align-middle Candidates
+    li.nav-item
+      = link_to messages_path, class: 'nav-link ml-3' do
+        i.fa.fa-comments.fa-2x.align-middle
+        span.ml-3.align-middle Messages
+    li.nav-item
+      = link_to survey_path, class: 'nav-link ml-3' do
+        i.fa.fa-pencil-square-o.fa-2x.align-middle
+        span.ml-3.align-middle Survey

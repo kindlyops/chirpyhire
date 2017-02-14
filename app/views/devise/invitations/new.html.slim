@@ -1,11 +1,12 @@
-= title "Invitations | Chirpyhire"
-.invitations
+= title "Invitations | ChirpyHire"
+.card.mt-3
   = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
-    h3 Send Invitation
-    .field
-      = f.label :email
-      = f.text_field :email, required: true
-    .actions
-      = submit_tag "Invite", class: "action"
-      - if current_organization.created_at > 60.seconds.ago
-        = link_to "Skip to Recruiting Survey", survey_path(current_account.survey), class: "action button"
+    h3.card-header Send Invitation
+    .card-block
+      .form-group
+        = f.label :email, class: "col-form-label"
+        = f.text_field :email, required: true, class: "form-control"
+      .form-group
+        = submit_tag "Invite", class: "action btn btn-primary"
+        - if current_organization.created_at > 60.seconds.ago
+          = link_to "Skip to Recruiting Survey", survey_path(current_account.survey), class: "action btn btn-default"

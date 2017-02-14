@@ -8,7 +8,7 @@ class TemplateDecorator < Draper::Decorator
       thank_you: 'Let the candidate know you think they might be a good fit.'\
       " Let them know you'll be reaching out or include a next step for "\
       'them e.g. calling the office.',
-      bad_fit: 'This message is sent to candidates when Chirpyhire '\
+      bad_fit: 'This message is sent to candidates when ChirpyHire '\
       'determines they are a bad fit. Let the candidate know and thank them '\
       'for their interest.'
 

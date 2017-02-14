@@ -54,12 +54,21 @@ class CandidatesController < ApplicationController
   end
 
   def build_zipcodes
-    zipcode_feature_zips = recent_candidates.map(&:zipcode)
-    address_feature_zips = recent_candidates.map { |c| c.address&.zipcode }
-    zips = zipcode_feature_zips.concat(address_feature_zips).compact
-                               .map { |f| f[0..4] }
-                               .uniq.select { |f| f != '' }.sort
-    [CandidateFeature::ALL_ZIPCODES_CODE].concat(zips)
+    [CandidateFeature::ALL_ZIPCODES_CODE].concat(magic_zips)
+  end
+
+  def magic_zips
+    zipcode_feature_zips.concat(address_feature_zips).compact
+                        .map { |f| f[0..4] }
+                        .uniq.select { |f| f != '' }.sort
+  end
+
+  def zipcode_feature_zips
+    recent_candidates.map(&:zipcode)
+  end
+
+  def address_feature_zips
+    recent_candidates.map(&:zipcode)
   end
 
   def filtered_and_paged_candidates
