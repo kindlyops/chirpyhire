@@ -41,7 +41,7 @@ RSpec.feature 'Messages', type: :feature, js: true do
           fill_in 'message_body', with: new_message
           click_button 'Send'
           expect(find_field('message_body').text).to eq('')
-          expect(page).to have_text("Unfortunately they are unsubscribed! You can't text unsubscribed candidates using Chirpyhire.")
+          expect(page).to have_text("Unfortunately they are unsubscribed! You can't text unsubscribed candidates using ChirpyHire.")
         end
       end
     end

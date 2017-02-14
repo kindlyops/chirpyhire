@@ -55,6 +55,6 @@ class Report::Weekly < Report::Report
   end
 
   def subject
-    'Weekly Activity Report - Chirpyhire'
+    'Weekly Activity Report - ChirpyHire'
   end
 end

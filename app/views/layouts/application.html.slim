@@ -4,7 +4,7 @@ html
     meta content="IE=edge" http-equiv="X-UA-Compatible"
     meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"
     meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
-    title= content_for?(:title) ? content_for(:title) : "Recruitment Marketing Platform for Home Care | Chirpyhire"
+    title= content_for?(:title) ? content_for(:title) : "Recruitment Marketing Platform for Home Care | ChirpyHire"
     - if content_for?(:disable_turbolinks_caching)
         = content_for(:disable_turbolinks_caching)
     = csrf_meta_tags
@@ -38,5 +38,9 @@ html
       p.flash-alert
         = alert
         '  Need Help?
-        a href="mailto:john@chirpyhire.com?subject=Chirpyhire Question" Message Us
-    = yield
+        a href="mailto:hello@chirpyhire.com?subject=ChirpyHire Question" Message Us
+    .container-fluid
+      .row
+        = render "components/sidebar"
+        main.col-sm-9.offset-sm-3.col-md-10.offset-md-2
+          = yield

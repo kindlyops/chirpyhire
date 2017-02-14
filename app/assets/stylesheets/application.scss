@@ -1,26 +1,11 @@
-@import "normalize-rails";
-@import "bourbon";
-@import "neat";
-@import "base/base";
-@import "base-custom/base";
+@import "bootstrap";
 @import "font-awesome";
 @import "mapbox-gl";
 @import "tipsy";
 
-@import "components";
-@import "candidates";
-@import "conversations";
-@import "messages";
-@import "sessions";
-@import "registrations";
-@import "passwords";
-@import "invitations";
-@import "survey";
-@import "stages";
-@import "subscription";
-@import "question";
-@import "template";
-@import "common_question";
-@import "address_question";
-@import "maps";
-@import "sortable";
+@import "components/navigation";
+@import "components/sidebar";
+
+main {
+  padding-top: 90px;
+}

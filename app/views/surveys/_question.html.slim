@@ -4,7 +4,7 @@
     = question.label
     .submenu
       - if question.inactive?
-        comment title="Chirpyhire is currently not asking about #{question.label}" inactive
+        comment title="ChirpyHire is currently not asking about #{question.label}" inactive
       = link_to edit_question_path(question), id: "edit-question" do
           i.fa.fa-pencil
   .card-copy

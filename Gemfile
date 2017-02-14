@@ -7,10 +7,7 @@ gem 'rails', '~> 5.0.1'
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.5'
-gem 'normalize-rails', '~> 4.1.1'
-gem 'bourbon', '5.0.0.beta.6'
-gem 'neat'
-gem 'autoprefixer-rails', '~> 6.4.0'
+gem 'bootstrap', '~> 4.0.0.alpha6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -81,7 +78,7 @@ gem 'twilio-ruby', '~> 4.11.0'
 gem 'sidekiq', '~> 4.0.0'
 gem 'sinatra', '~> 2.0.0.beta2'
 gem 'puma', '~> 3.4.0'
-gem 'font-awesome-rails', '~> 4.6.0'
+gem 'font-awesome-rails', '~> 4.7.0'
 gem 'draper', '~> 3.0.0.pre1'
 gem 'geocoder', '~> 1.3.6'
 gem 'rails_admin', '~> 1.1.1'
@@ -95,3 +92,9 @@ gem 'stripe_event', github: 'integrallis/stripe_event', ref: '1da7ed8'
 gem 'public_activity', '~> 1.5.0'
 gem 'aws-sdk', '~> 2'
 gem 'json', '~> 2.0.2'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.3.3'
+end
+
+gem 'inline_svg'

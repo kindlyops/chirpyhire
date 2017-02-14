@@ -12,7 +12,8 @@
 //
 
 //= require Sortable.min
-//= require jquery2
+//= require jquery
+//= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
 //= require mapbox-gl

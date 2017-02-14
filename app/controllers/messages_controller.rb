@@ -52,6 +52,6 @@ class MessagesController < ApplicationController
   def message_not_authorized
     redirect_to user_messages_url(message_user), alert: 'Unfortunately '\
     "they are unsubscribed! You can't text unsubscribed candidates "\
-    'using Chirpyhire.'
+    'using ChirpyHire.'
   end
 end
