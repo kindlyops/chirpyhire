@@ -97,4 +97,4 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
 end
 
-gem 'inline_svg'
+gem 'inline_svg', '~> 0.11.1'

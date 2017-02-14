@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="189px" height="37px" viewBox="0 0 210 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>ChirpyHire</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
-            <stop stop-color="#2BA373" offset="0%"></stop>
-            <stop stop-color="#75D0AB" offset="100%"></stop>
-        </linearGradient>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="36" font-family="OpenSans-Bold, Open Sans" font-weight="bold">
-        <text id="ChirpyHire" fill="url(#linearGradient-1)">
-            <tspan x="-1.95019531" y="28">ChirpyHire</tspan>
-        </text>
-    </g>
-</svg>
+<svg width="189" height="37" viewBox="0 0 210 37" xmlns="http://www.w3.org/2000/svg"><title>ChirpyHire</title><defs><linearGradient x1="0%" y1="100%" y2="0%" id="a"><stop stop-color="#2BA373" offset="0%"/><stop stop-color="#75D0AB" offset="100%"/></linearGradient></defs><text fill="url(#a)" fill-rule="evenodd" font-size="36" font-family="OpenSans-Bold, Open Sans" font-weight="bold"><tspan x="-1.95" y="28">ChirpyHire</tspan></text></svg>

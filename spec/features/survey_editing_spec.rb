@@ -108,9 +108,7 @@ RSpec.feature 'SurveyEditing', type: :feature, js: true do
             find('#add-question', match: :first).trigger('click')
             expect {
               within(find('#address-type')) do
-                # binding.pry
                 find('a', text: 'Add Question', match: :first).trigger('click')
-                # click_link('Add Question')
               end
             }.not_to change { page }
           end
