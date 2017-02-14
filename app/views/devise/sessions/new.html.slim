@@ -1,19 +1,18 @@
-.sessions
-  h2
+.card.mt-3
+  h3.card-header
     | Sign in
-  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    .field
-      = f.label :email
-      br
-      = f.email_field :email, autofocus: true
-    .field
-      = f.label :password
-      br
-      = f.password_field :password, autocomplete: "off"
-    - if devise_mapping.rememberable?
-      .field
-        = f.label :remember_me, class: "remember-me"
-        = f.check_box :remember_me
-    .actions
-      = f.submit "Sign in"
-  = render "devise/shared/links"
+  .card-block
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-group
+        = f.label :email, class: "col-form-label"
+        = f.email_field :email, autofocus: true, class: "form-control"
+      .form-group
+        = f.label :password, class: "col-form-label"
+        = f.password_field :password, autocomplete: "off", class: "form-control"
+      - if devise_mapping.rememberable?
+        .form-group
+          = f.label :remember_me, "Remember Me", class: "remember-me col-form-label"
+          = f.check_box :remember_me, class: "ml-2"
+      .form-group
+        = f.submit "Sign in", class: "btn btn-primary"
+    = render "devise/shared/links"

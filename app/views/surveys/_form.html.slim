@@ -17,6 +17,6 @@
               - if question.inactive?
                 comment Inactive
               = question_fields.hidden_field :priority, required: true, class: "survey--question-hidden-priority"
-  .actions.mt-2
+  .form-group.mt-2
     = submit_tag("Save", class: "btn btn-primary")
 

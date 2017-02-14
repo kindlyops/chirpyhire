@@ -1,4 +1,5 @@
 nav.navbar.navbar-light.top
   ul.nav.nav-pills
-    li.nav-link
-      = link_to "ChirpyHire", root_path, class: 'navbar-brand'
+    li.nav-link.ch-logo
+      = link_to root_path, class: 'navbar-brand' do
+        = inline_svg 'inverse_logo.svg'

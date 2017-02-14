@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    = render partial: "layouts/head"
+  body
+    = render "components/guest_navigation"
+    = render partial: "layouts/alerts"
+    .container-fluid
+      .row
+        main.col
+          = yield

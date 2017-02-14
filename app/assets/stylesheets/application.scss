@@ -10,11 +10,12 @@
 
 @import "survey";
 @import "questions";
+@import "stages";
 
 body {
   background-color: #ECEFF4;
 }
 
-main {
+main.application {
   padding-top: 90px;
 }

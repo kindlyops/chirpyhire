@@ -1,6 +1,5 @@
 a, button {
-  // Cocoon class conventions use underscore
-  &.remove_fields, &.remove-field, &.add-field {
+  &.remove_fields {
     float: right;
     padding: 0 0.75em;
     color: $gray-light;
