@@ -1,19 +1,18 @@
 = title "Survey | ChirpyHire"
 
 .survey
-  .header
-    h1 Recruiting Survey
-    .settings
-      = link_to edit_survey_path, title: "Change Question Order", class: "button", id: "edit-survey" do
-        i.fa.fa-sort
-      = link_to new_question_path, title: "Add Question", class: "button", id: "add-question" do
-        i.fa.fa-plus
-  .cards
+  .card
+    .card-block
+      h4.card-title.d-inline Recruiting Survey
+      .settings.float-right
+        = link_to edit_survey_path, title: "Change Question Order", class: "btn btn-primary card-link", id: "edit-survey" do
+          i.fa.fa-sort
+          span.ml-2 Change Order
+        = link_to new_question_path, title: "Add Question", class: "btn btn-primary card-link", id: "add-question" do
+          i.fa.fa-plus
+          span.ml-2 Add Question
+  .card-columns.mt-3
     = render partial: "surveys/template", locals: { id: "welcome", number: 1, template: @survey.welcome }
     = render partial: "surveys/question", collection: @survey.questions.by_priority
     = render partial: "surveys/template", locals: { id: "thank-you", number: @survey.questions.count + 2, template: @survey.thank_you }
     = render partial: "surveys/template", locals: { id: "bad-fit", number: nil, template: @survey.bad_fit }
-  .attribution
-    a href='https://www.mapbox.com/map-feedback/' © Mapbox
-    '
-    a href='http://www.openstreetmap.org/copyright' © OpenStreetMap

@@ -1,11 +1,11 @@
-.card.survey-question
+.card
   .card-header
     = "#{question_counter + 2}. "
     = question.label
-    .submenu
+    .float-right
       - if question.inactive?
         comment title="ChirpyHire is currently not asking about #{question.label}" inactive
       = link_to edit_question_path(question), id: "edit-question" do
           i.fa.fa-pencil
-  .card-copy
-    = render partial: "#{question.type.pluralize.underscore}/question", locals: { question: question }
+  .card-block
+    p.card-text = render partial: "#{question.type.pluralize.underscore}/question", locals: { question: question }
