@@ -1,0 +1,21 @@
+.question {
+  i.fa {
+    font-size: 7em;
+  }
+
+  .fa-map-marker, .fa-bullseye {
+    color: $red;
+  }
+
+  .fa-share-alt {
+    color: $orange;
+  }
+
+  .fa-picture-o {
+    color: $blue;
+  }
+
+  .fa-list {
+    color: $purple;
+  }
+}

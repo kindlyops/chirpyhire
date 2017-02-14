@@ -8,4 +8,4 @@
       = link_to edit_question_path(question), id: "edit-question" do
           i.fa.fa-pencil
   .card-block
-    p.card-text = render partial: "#{question.type.pluralize.underscore}/question", locals: { question: question }
+    = render partial: "#{question.type.pluralize.underscore}/question", locals: { question: question }

@@ -1,7 +1,7 @@
-.nested-fields
+.nested-fields.form-inline
   = f.hidden_field :letter, class: "letter"
-  .field
-    = f.label :text, "#{f.object.letter})", class: "letter-label"
-    = f.text_field :text, required: true
+  .form-group
+    = f.label :text, "#{f.object.letter})", class: "letter-label col-form-label mr-2"
+    = f.text_field :text, required: true, class: "form-control"
   = link_to_remove_association f do
       | &times;

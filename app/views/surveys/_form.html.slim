@@ -11,7 +11,7 @@
         .card.mt-2.survey--question.drag-and-drop class=(question.active? ? '' : 'inactive')
           = question_fields.hidden_field :id
           .card-block.drag-and-drop-text
-            .field
+            .form-group
               strong.survey--question-priority.sortable-number = "#{question.priority}. "
               strong.survey--question-label = "#{question.label}"
               - if question.inactive?

@@ -1,67 +1,73 @@
 .question
-  h1 Ask a New Question
-
-  p
-    ' Select the type of question that works best.
-  hr
-
-  .cards.question-types
+  .card
+    hr
+    .card-block
+      h4.card-title Ask a New Question
+      p.card-subtitle Select the type of question that works best.
+  .card-columns.mt-3
     - if current_organization.survey.address_question?
       #address-type.card.disabled.tipsy-needed-s title='You already have an address question in your survey.'
-        .card-image
-          i.fa.fa-map-marker
         .card-header
           ' Address
-        .card-copy
-          p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+        .card-img-top.d-flex.justify-content-center
+          i.mt-3.fa.fa-map-marker
+        hr
+        .card-block
+          p.card-text Ask candidates for their address. Optionally filter candidates that live outside your service area.
           = new_question_link(new_address_question_path, "disabled")
     - else
       #address-type.card
-        .card-image
-          i.fa.fa-map-marker
         .card-header
           ' Address
-        .card-copy
-          p Ask candidates for their address. Optionally filter candidates that live outside your service area.
+        .card-img-top.d-flex.justify-content-center
+          i.mt-3.fa.fa-map-marker
+        hr
+        .card-block
+          p.card-text Ask candidates for their address. Optionally filter candidates that live outside your service area.
           = new_question_link(new_address_question_path)
     - if current_organization.survey.zipcode_question?
       #zipcode-type.card.disabled.tipsy-needed-s title='You already have a zipcode question in your survey.'
-        .card-image
-          i.fa.fa-bullseye
         .card-header
           ' Zipcode
-        .card-copy
-          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+        .card-img-top.d-flex.justify-content-center
+          i.mt-3.fa.fa-bullseye
+        hr
+        .card-block
+          p.card-text Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
           = new_question_link(new_zipcode_question_path, "disabled")
     - else
       #zipcode-type.card
-        .card-image
-          i.fa.fa-bullseye
         .card-header
           ' Zipcode
-        .card-copy
-          p Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
+        .card-img-top.d-flex.justify-content-center
+          i.mt-3.fa.fa-bullseye
+        hr
+        .card-block
+          p.card-text Ask candidates for their zipcode, filtering based on a custom list of acceptable zipcodes.
           = new_question_link(new_zipcode_question_path)
     #yes-no-type.card
-      .card-image
-        i.fa.fa-share-alt
       .card-header Yes / No Question
-      .card-copy
-        p Ask a simple yes no question. Filters candidates that answer no.
+      .card-img-top.d-flex.justify-content-center
+        i.mt-3.fa.fa-share-alt
+      hr
+      .card-block
+        p.card-text Ask a simple yes no question. Filters candidates that answer no.
         = new_question_link(new_yes_no_question_path)
     #choice-type.card
-      .card-image
-        i.fa.fa-list
       .card-header
         ' Multiple Choice
-      .card-copy
-        p Ask candidates any question with multiple choices.
+      .card-img-top.d-flex.justify-content-center
+        i.mt-3.fa.fa-list
+      hr
+      .card-block
+        p.card-text Ask candidates any question with multiple choices.
         = new_question_link(new_choice_question_path)
     #image-type.card
-      .card-image
-        i.fa.fa-picture-o
       .card-header
         ' Image
-      .card-copy
-        p Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
+      .card-img-top.d-flex.justify-content-center
+        i.mt-3.fa.fa-picture-o
+      hr
+      .card-block
+        p.card-text Ask candidates for a photo. Useful to verify exams, licenses, and other documents.
         = new_question_link(new_document_question_path)
