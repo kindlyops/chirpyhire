@@ -98,6 +98,42 @@ class Candidate < ApplicationRecord
     features(YesNoQuestion)
   end
 
+  def availability
+    feature = choice_features.find { |f| f.label == 'Availability' }
+    return unless feature
+    feature.properties['choice_option']
+  end
+
+  def transportation
+    feature = yes_no_features.find { |f| f.label == 'Transportation' }
+    return unless feature
+    feature.properties['yes_no_option']
+  end
+
+  def experience
+    feature = choice_features.find { |f| f.label == 'Experience' }
+    return unless feature
+    feature.properties['choice_option']
+  end
+
+  def certification
+    feature = choice_features.find { |f| f.label == 'Certification' }
+    return unless feature
+    feature.properties['choice_option']
+  end
+
+  def cpr
+    feature = choice_features.find { |f| f.label == 'CPR / 1st Aid' }
+    return unless feature
+    feature.properties['choice_option']
+  end
+
+  def skin_test
+    feature = choice_features.find { |f| f.label == 'Skin Test' }
+    return unless feature
+    feature.properties['choice_option']
+  end
+
   private
 
   def features(question_class)

@@ -38,6 +38,10 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'app/models/candidate.rb'
+
 Style/ClassAndModuleChildren:
   Enabled: false
 
