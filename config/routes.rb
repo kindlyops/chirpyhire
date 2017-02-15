@@ -4,7 +4,7 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
 
-  resources :candidates, only: [:index, :update, :show, :edit]
+  resources :candidates, only: :index
   get 'messages' => 'conversations#index'
 
   resources :users, only: [] do
