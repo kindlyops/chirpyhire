@@ -17,11 +17,6 @@ class TwilioProvisioner
     organization.subscription.cancel
   end
 
-  def self.close_account_by_sid(sid)
-    account = master_client.accounts.get(sid)
-    account.update(status: 'closed')
-  end
-
   private
 
   def phone_number_attributes

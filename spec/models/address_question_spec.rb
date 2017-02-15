@@ -95,22 +95,6 @@ RSpec.describe AddressQuestion, type: :model do
     end
   end
 
-  describe '#distance_in_miles' do
-    context 'with geofence' do
-      let!(:address_question_option) { create(:address_question_option, address_question: question) }
-
-      it 'is the distance' do
-        expect(question.distance_in_miles).to eq(address_question_option.distance)
-      end
-    end
-
-    context 'without geofence' do
-      it 'is nil' do
-        expect(question.distance_in_miles).to eq(nil)
-      end
-    end
-  end
-
   describe '#coordinates' do
     context 'with geofence' do
       let(:latitude) { 12.345678 }

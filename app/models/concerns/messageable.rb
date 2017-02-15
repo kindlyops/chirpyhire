@@ -9,10 +9,6 @@ module Messageable
     delegate :direction, :body, to: :message
   end
 
-  def attachments
-    message.media_instances
-  end
-
   def sender
     @sender ||= begin
       if direction == 'outbound-api'

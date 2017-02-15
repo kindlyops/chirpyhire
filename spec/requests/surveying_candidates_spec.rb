@@ -79,7 +79,6 @@ RSpec.feature 'Surveying Candidates', type: :request do
             last_message = organization.messages.by_recency.first
             expect(last_message.inquiry.present?).to be(true)
             expect(last_message.user).to eq(User.find_by(phone_number: snarf_sender_object.phone_number))
-            expect(last_message.inbound?).to eq(false)
           end
         end
       end
@@ -124,7 +123,6 @@ RSpec.feature 'Surveying Candidates', type: :request do
         it 'does not ask the next question' do
           last_message = organization.messages.by_recency.first
           expect(last_message.inquiry.present?).to be(false)
-          expect(last_message.inbound?).to be(false)
           expect(last_message.body).to(
             eq(organization.survey.not_understood.body)
           )

@@ -86,10 +86,6 @@ class SubscriptionsController < ApplicationController
     redirect_to edit_subscription_path(authorized_subscription)
   end
 
-  def stripe_token?
-    params[:stripe_token].present?
-  end
-
   def trialing?
     authorized_subscription.trialing?
   end

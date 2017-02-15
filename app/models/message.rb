@@ -32,10 +32,6 @@ class Message < ApplicationRecord
 
   delegate :images, to: :media_instances
 
-  def inbound?
-    direction == 'inbound'
-  end
-
   def images?
     return media_instances.any?(&:image?) unless persisted?
     media_instances.images.present?

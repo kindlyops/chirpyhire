@@ -48,7 +48,6 @@ RSpec.describe CandidateDecorator do
       end
 
       it 'is an array of documents' do
-        expect(candidate.documents.first.first_page).to eq(url0)
         expect(candidate.documents.first.label).to eq(question.label)
       end
     end

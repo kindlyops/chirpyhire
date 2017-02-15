@@ -24,11 +24,6 @@ class AddressQuestion < Question
     address_question_option.present?
   end
 
-  def distance_in_miles
-    return unless geofenced?
-    address_question_option.distance
-  end
-
   def coordinates
     return [] unless geofenced?
     [address_question_option.latitude, address_question_option.longitude]

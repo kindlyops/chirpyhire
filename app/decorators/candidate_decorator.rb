@@ -16,10 +16,6 @@ class CandidateDecorator < Draper::Decorator
     @documents ||= make_feature_view_model(document_features, Document)
   end
 
-  def call_to_actions
-    %w(change_stage message)
-  end
-
   private
 
   def make_feature_view_model(features, view_class)

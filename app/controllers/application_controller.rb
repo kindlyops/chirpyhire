@@ -60,8 +60,6 @@ class ApplicationController < ActionController::Base
     redirect_to(subscription_path(current_organization.subscription))
   end
 
-  def user_for_paper_trail; end
-
   def impersonating?
     current_account != true_account
   end

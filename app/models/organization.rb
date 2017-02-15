@@ -53,10 +53,6 @@ class Organization < ApplicationRecord
     messaging_client.messages.get(sid)
   end
 
-  def get_media(sid)
-    messaging_client.media.get(sid)
-  end
-
   def inquiries
     survey.questions.map(&:inquiries).flatten
   end
