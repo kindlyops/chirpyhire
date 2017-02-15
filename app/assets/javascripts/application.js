@@ -22,6 +22,8 @@
 //= require cocoon
 //= require jquery.card
 //= require jquery.tipsy
+//= require jquery.dataTables.min
+//= require dataTables.bootstrap4.min
 
 //= require init
 //= require map
