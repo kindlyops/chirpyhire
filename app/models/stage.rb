@@ -15,6 +15,10 @@ class Stage < ApplicationRecord
     hired: Stage::HIRED
   }
 
+  def to_s
+    name
+  end
+
   def self.ordered
     order(:order)
   end

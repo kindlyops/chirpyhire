@@ -1,8 +1,0 @@
-- if candidate.stage_id != stage.id
-  .stage-item
-      = form_for candidate do |f|
-        = f.hidden_field(:stage_id, value: stage.id)
-        button type='submit' = stage.name
-- else
-  .stage-item.inactive
-    button type='button' = stage.name
