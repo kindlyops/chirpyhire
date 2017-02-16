@@ -30,6 +30,8 @@ class ApplicationController < ActionController::Base
     @current_organization ||= current_user.organization
   end
 
+  def user_for_paper_trail; end
+
   def current_user
     @current_user ||= current_account.user
   end
