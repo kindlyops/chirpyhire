@@ -2,7 +2,8 @@
   .card.cover
     h3 Ideal Candidate
   .card.profile.justify-content-center
-    i.fa.fa-user-md.mx-auto
+    = inline_svg 'bird.svg', class: 'mx-auto'
+    a.sr-only href="http://www.freepik.com/free-photos-vectors/bird">Bird vector created by Freepik
   .card.mb-4.availability
     h4.card-header
       i.fa.fa-calendar-check-o.mr-2
@@ -20,6 +21,9 @@
         span.mr-3.btn.btn-secondary
           | Live-In
           i.fa.fa-home.ml-2
+        span.mr-3.btn.btn-outline-secondary
+          | None
+          i.fa.fa-hourglass-o.ml-2
   .card.mb-4.transportation
     h4.card-header
       i.fa.fa-road.mr-2
@@ -34,7 +38,7 @@
         span.mr-3.btn.btn-secondary
           | Personal
           i.fa.fa-car.ml-2
-        span.mr-3.btn.btn-secondary
+        span.mr-3.btn.btn-outline-secondary
           | None
           i.fa.fa-thumbs-o-up.ml-2
   .card.mb-4.experience
@@ -47,13 +51,16 @@
       div
         span.mr-3.btn.btn-secondary
           | Less than 1 year
-          i.fa.fa-battery-empty.ml-2
+          i.fa.fa-battery-quarter.ml-2
         span.mr-3.btn.btn-secondary
           | 1 - 5 years
           i.fa.fa-battery-half.ml-2
         span.mr-3.btn.btn-secondary
           | 6+ years
           i.fa.fa-battery-full.ml-2
+        span.mr-3.btn.btn-outline-secondary
+          | None
+          i.fa.fa-battery-empty.ml-2
   .card.mb-4.qualifications
     h4.card-header
       i.fa.fa-graduation-cap.mr-2
@@ -77,6 +84,9 @@
         span.mr-3.btn.btn-secondary
           | Skin / TB Test
           i.fa.fa-newspaper-o.ml-2
+        span.mr-3.btn.btn-outline-secondary
+          | None
+          i.fa.fa-graduation-cap.ml-2
   .card.mb-4.location
     h4.card-header
       i.fa.fa-map-marker.mr-3.ml-1

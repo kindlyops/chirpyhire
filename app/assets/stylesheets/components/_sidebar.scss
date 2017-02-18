@@ -18,27 +18,11 @@
         color: $gray-dark;
       }
 
-      .fa-users {
-        color: darken($blue, 3%);
-      }
-
-      .fa-tachometer {
-        color: darken($red, 3%);
-      }
-
       background-color: $gray-lightest;
     }
   }
 
   span {
     color: $gray-light;
-  }
-
-  .fa-users {
-    color: $blue;
-  }
-
-  .fa-tachometer {
-    color: $red;
   }
 }

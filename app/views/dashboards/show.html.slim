@@ -16,7 +16,7 @@
                 th Created
                 th
             tbody
-              - @candidacies.each do |candidate|
+              - @dashboard.candidates.each do |candidate|
                 tr
                   td = candidate.handle
                   td = candidate.stage
