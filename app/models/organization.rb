@@ -33,6 +33,10 @@ class Organization < ApplicationRecord
     create_message(recipient, sent_message)
   end
 
+  def get_message(sid)
+    messaging_client.messages.get(sid)
+  end
+
   private
 
   def create_message(recipient, message)
