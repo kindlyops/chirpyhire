@@ -1,9 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
-
   def new
-    super do |account|
-      account.build_organization
-    end
+    super(&:build_organization)
   end
 
   def create
@@ -20,8 +17,8 @@ class RegistrationsController < Devise::RegistrationsController
     account_attributes.push(organization_attributes: organization_attributes)
   end
 
-  def after_sign_up_path_for(resource)
-    new_invitation_path(resource)
+  def after_sign_up_path_for(*)
+    candidate_path
   end
 
   def account_attributes

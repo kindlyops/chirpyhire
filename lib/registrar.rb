@@ -8,7 +8,7 @@ class Registrar
       # Seed example candidate
       create_ideal_candidate
       create_subscription
-      # TwilioProvisionerJob.perform_later(organization)
+      PhoneNumberProvisionerJob.perform_later(organization)
     end
   end
 
@@ -18,7 +18,7 @@ class Registrar
 
   def create_ideal_candidate
     organization.create_ideal_candidate!(
-      zip_codes_attributes: [{value: organization.zip_code}]
+      zip_codes_attributes: [{ value: organization.zip_code }]
     )
   end
 
@@ -42,7 +42,7 @@ class Registrar
     Plan.create!(
       amount: Plan::DEFAULT_PRICE_IN_DOLLARS * 100,
       interval: 'month',
-      stripe_id: ENV.fetch("TEST_STRIPE_PLAN_ID", "1"), name: 'Basic'
+      stripe_id: ENV.fetch('TEST_STRIPE_PLAN_ID', '1'), name: 'Basic'
     )
   end
 end

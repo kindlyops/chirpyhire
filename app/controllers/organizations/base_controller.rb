@@ -3,20 +3,15 @@ class Organizations::BaseController < ActionController::Base
   after_action :set_header
 
   def unsolicited_message
-    UnsolicitedMessageHandlerJob.perform_later(sender, params['MessageSid'])
+    UnsolicitedMessageHandlerJob.perform_later(person, params['MessageSid'])
 
     head :ok
   end
 
   private
 
-  def sender
-    @sender ||= begin
-      UserFinder.find(
-        attributes: { phone_number: params['From'] },
-        organization: organization
-      )
-    end
+  def person
+    @person ||= Person.find_or_create_by(phone_number: params['From'])
   end
 
   def organization
