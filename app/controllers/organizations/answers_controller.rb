@@ -1,4 +1,4 @@
-class Organizations::AnswersController < Organizations::BaseController
+class Organizations::AnswersController < Organizations::MessagesController
   def create
     if outstanding_inquiry.present?
       AnswerHandlerJob.perform_later(
@@ -8,7 +8,7 @@ class Organizations::AnswersController < Organizations::BaseController
       )
       head :ok
     else
-      unsolicited_message
+      super
     end
   end
 

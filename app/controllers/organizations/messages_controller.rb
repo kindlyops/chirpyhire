@@ -1,8 +1,8 @@
-class Organizations::BaseController < ActionController::Base
+class Organizations::MessagesController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
-  def unsolicited_message
+  def create
     UnsolicitedMessageHandlerJob.perform_later(person, params['MessageSid'])
 
     head :ok
