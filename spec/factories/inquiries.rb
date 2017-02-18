@@ -1,5 +1,4 @@
 FactoryGirl.define do
-  factory :lead do
-    
+  factory :inquiry do
   end
 end
