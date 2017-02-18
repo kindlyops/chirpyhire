@@ -1,5 +1,4 @@
 class Survey
-
   def initialize(candidacy)
     @candidacy = candidacy
   end

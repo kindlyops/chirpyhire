@@ -1,11 +1,10 @@
 class Surveyor
-
   def initialize(subscriber)
     @subscriber = subscriber
   end
 
   def call
-    return thank_person if candidacy.surveying?
+    return thank_person if candidacy.surveyed?
 
     lock_candidacy
     survey.ask

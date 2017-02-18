@@ -3,7 +3,7 @@ class Question::Availability < Question::Base
     <<~BODY
       What is your availability?
 
-      a) Live-in
+      a) Live-In
       b) Full-Time
       c) Part-Time
       d) All the above
