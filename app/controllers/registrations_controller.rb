@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
   def with_rate_limit_protection
     yield
   rescue Geocoder::OverQueryLimitError => e
-    Rollbar.debug(e.message)
+    Rails.logger.debug(e.message)
     flash[:alert] = "Sorry but we're a little overloaded right now and can't "\
     'find addresses. Please try again in a few minutes.'
 
