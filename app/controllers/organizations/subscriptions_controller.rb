@@ -2,17 +2,17 @@ class Organizations::SubscriptionsController < Organizations::BaseController
   before_action :sync_message
 
   def create
-    if person.lead_at?(organization)
+    if person.subscribed_to?(organization)
       AlreadySubscribedJob.perform_later(person, organization)
     else
-      person.leads.create!(organization: organization)
+      person.subscribers.create!(organization: organization)
     end
     head :ok
   end
 
   def destroy
-    if person.lead_at?(organization)
-      person.lead_at(organization).unsubscribe!
+    if person.subscribed_to?(organization)
+      person.subscribed_to(organization).unsubscribe!
     else
       NotSubscribedJob.perform_later(person, organization)
     end

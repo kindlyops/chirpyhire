@@ -14,8 +14,8 @@ RSpec.describe Constraint::Answer do
       let(:person) { create(:person) }
       let(:parameters) { { 'From' => person.phone_number, 'To' => organization.phone_number } }
 
-      context 'with lead present' do
-        let!(:lead) { create(:lead, person: person, organization: organization) }
+      context 'with subscriber present' do
+        let!(:subscriber) { create(:subscriber, person: person, organization: organization) }
 
         context 'without outstanding inquiry present' do
           it 'is false' do
@@ -33,14 +33,14 @@ RSpec.describe Constraint::Answer do
         end
       end
 
-      context 'without lead present' do
+      context 'without subscriber present' do
         it 'is false' do
           expect(constraint.matches?(request)).to eq(false)
         end
       end
     end
 
-    context 'without lead present' do
+    context 'without subscriber present' do
       let(:parameters) { { 'From' => '+14041111111', 'To' => organization.phone_number } }
 
       it 'is false' do

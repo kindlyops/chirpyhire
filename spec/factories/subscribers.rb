@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :lead do
+  factory :subscriber do
   end
 end

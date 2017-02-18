@@ -1,4 +1,4 @@
-class Lead < ApplicationRecord
+class Subscriber < ApplicationRecord
   belongs_to :person
   belongs_to :organization
 

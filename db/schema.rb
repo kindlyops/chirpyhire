@@ -96,17 +96,6 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   end
 
-  create_table "leads", force: :cascade do |t|
-    t.integer  "person_id",                      null: false
-    t.integer  "organization_id",                null: false
-    t.boolean  "subscribed",      default: true, null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.index ["organization_id"], name: "index_leads_on_organization_id", using: :btree
-    t.index ["person_id", "organization_id"], name: "index_leads_on_person_id_and_organization_id", unique: true, using: :btree
-    t.index ["person_id"], name: "index_leads_on_person_id", using: :btree
-  end
-
   create_table "messages", force: :cascade do |t|
     t.string   "sid",                 null: false
     t.text     "body"
@@ -154,6 +143,17 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true, using: :btree
   end
 
+  create_table "subscribers", force: :cascade do |t|
+    t.integer  "person_id",                      null: false
+    t.integer  "organization_id",                null: false
+    t.boolean  "subscribed",      default: true, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["organization_id"], name: "index_subscribers_on_organization_id", using: :btree
+    t.index ["person_id", "organization_id"], name: "index_subscribers_on_person_id_and_organization_id", unique: true, using: :btree
+    t.index ["person_id"], name: "index_subscribers_on_person_id", using: :btree
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
     t.string   "stripe_customer_id"
@@ -199,10 +199,10 @@ ActiveRecord::Schema.define(version: 20170218161728) do
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "inquiries", "candidacies"
   add_foreign_key "inquiries", "messages"
-  add_foreign_key "leads", "organizations"
-  add_foreign_key "leads", "people"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people"
+  add_foreign_key "subscribers", "organizations"
+  add_foreign_key "subscribers", "people"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "zip_codes", "ideal_candidates"

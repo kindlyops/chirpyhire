@@ -1,15 +1,19 @@
 class Constraint::Answer < Constraint::Base
   def matches?(request)
     @request = request
-    lead_present? && outstanding_inquiry.present?
+    subscriber_present? && outstanding_inquiry.present?
   end
 
   private
 
   delegate :outstanding_inquiry, to: :person
 
-  def lead_present?
-    organization.present? && person.present? && person.lead_at?(organization)
+  def subscriber_present?
+    communicators_present? && person.subscribed_to?(organization)
+  end
+
+  def communicators_present?
+    organization.present? && person.present?
   end
 
   def organization

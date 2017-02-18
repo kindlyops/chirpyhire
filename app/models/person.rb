@@ -1,7 +1,7 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_one :candidacy
-  has_many :leads
+  has_many :subscribers
   has_many :messages
 
   before_create :add_nickname
@@ -9,12 +9,12 @@ class Person < ApplicationRecord
 
   delegate :outstanding_inquiry, to: :candidacy
 
-  def lead_at?(organization)
-    leads.where(organization: organization).exists?
+  def subscribed_to?(organization)
+    subscribers.where(organization: organization).exists?
   end
 
-  def lead_at(organization)
-    leads.find_by(organization: organization)
+  def subscribed_to(organization)
+    subscribers.find_by(organization: organization)
   end
 
   def add_nickname
