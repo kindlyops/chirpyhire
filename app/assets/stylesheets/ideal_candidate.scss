@@ -9,6 +9,18 @@
     }
   }
 
+  .fa-battery-full {
+    color: $green;
+  }
+
+  .fa-battery-half {
+    color: $orange;
+  }
+
+  .fa-heart-o, .fa-heart, .fa-heartbeat, .fa-medkit, .fa-battery-empty {
+    color: $red;
+  }
+
   .availability {
     margin-top: 4rem !important;
   }
