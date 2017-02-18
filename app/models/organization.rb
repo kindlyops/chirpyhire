@@ -5,6 +5,8 @@ class Organization < ApplicationRecord
   has_many :people, through: :subscribers, class_name: 'Person'
   has_one :subscription
   has_one :ideal_candidate
+  has_one :location
+
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
   has_many :messages
 

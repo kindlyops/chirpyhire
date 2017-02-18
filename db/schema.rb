@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218161728) do
+ActiveRecord::Schema.define(version: 20170218181324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,22 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.datetime "updated_at",   null: false
     t.index ["candidacy_id"], name: "index_inquiries_on_candidacy_id", using: :btree
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.float    "latitude",            null: false
+    t.float    "longitude",           null: false
+    t.string   "full_street_address", null: false
+    t.string   "city",                null: false
+    t.string   "state",               null: false
+    t.string   "state_code"
+    t.string   "postal_code",         null: false
+    t.string   "country",             null: false
+    t.string   "country_code"
+    t.integer  "organization_id",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["organization_id"], name: "index_locations_on_organization_id", using: :btree
   end
 
   create_table "messages", force: :cascade do |t|
@@ -199,6 +215,7 @@ ActiveRecord::Schema.define(version: 20170218161728) do
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "inquiries", "candidacies"
   add_foreign_key "inquiries", "messages"
+  add_foreign_key "locations", "organizations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people"
   add_foreign_key "subscribers", "organizations"

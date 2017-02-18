@@ -25,3 +25,11 @@ class Organizations::SubscriptionsController < Organizations::BaseController
     MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
   end
 end
+
+# Validate Phone Provisioned
+# Subscribe
+# Validate Subscriber Created
+# Subscribe
+# Unsubscribe
+# Validate Subscriber Deactivated
+# Unsubscribe

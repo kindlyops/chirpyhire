@@ -15,9 +15,10 @@
         .form-group
           = o.label :name, "Agency Name", class: "col-form-label"
           = o.text_field :name, required: true, class: "form-control"
-        .form-group
-          = o.label :zip_code, "Agency Zip Code", class: "col-form-label"
-          = o.text_field :zip_code, required: true, class: "form-control", maxlength: 5, minlength: 5
+          = o.fields_for :location, o.build_location do |l|
+            .form-group
+              = l.label :full_street_address, "Agency Address", class: "col-form-label"
+              = l.text_field :full_street_address, required: true, placeholder: "Street and Zip Code", class: "form-control"
       p.tos-links
         ' By clicking Sign up, you agree to our
         a target="_blank" href="https://chirpyhire.com/terms-of-service" Terms
