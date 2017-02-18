@@ -14,7 +14,7 @@ RSpec.describe 'AddressFinder' do
 
     describe '#address' do
       it do
-        expect(finder.address).to eq('Mount Lee Drive, McNeil, CA 90068, United States of America')
+        expect(finder.address).to eq('Mount Lee Drive, Los Angeles, CA 90068, United States of America')
       end
     end
 
@@ -38,7 +38,7 @@ RSpec.describe 'AddressFinder' do
 
     describe '#city' do
       it do
-        expect(finder.city).to eq('McNeil')
+        expect(finder.city).to eq('Los Angeles')
       end
     end
 

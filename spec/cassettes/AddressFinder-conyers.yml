@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.opencagedata.com/geocode/v1/json?countrycode=us&key=OPENCAGE_KEY&language=en&min_confidence=8&no_annotations=1&q=Conyers%2030012
+    uri: https://api.opencagedata.com/geocode/v1/json?countrycode=us&key=e314288a9a878aa078550bce7e4a1309&language=en&min_confidence=8&no_annotations=1&q=Conyers%2030012
     body:
       encoding: US-ASCII
       string: ''
@@ -19,17 +19,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 28 Jul 2016 13:38:18 GMT
+      - Sat, 18 Feb 2017 18:36:06 GMT
       Server:
-      - Apache/2.4.7 (Ubuntu)
+      - Apache/2.4.18 (Ubuntu)
       Access-Control-Allow-Origin:
       - "*"
       X-Ratelimit-Limit:
       - '2500'
       X-Ratelimit-Remaining:
-      - '2494'
+      - '2497'
       X-Ratelimit-Reset:
-      - '1469750400'
+      - '1487462400'
       Transfer-Encoding:
       - chunked
       Content-Type:
@@ -38,11 +38,11 @@ http_interactions:
       - max-age=31536000; includeSubDomains
     body:
       encoding: UTF-8
-      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2494,"reset":1469750400},"results":[{"components":{"_type":"city","country":"United
-        States","country_code":"us","state":"GA","town":"Conyers"},"confidence":10,"formatted":"Conyers,
+      string: '{"documentation":"https://geocoder.opencagedata.com/api","licenses":[{"name":"CC-BY-SA","url":"http://creativecommons.org/licenses/by-sa/3.0/"},{"name":"ODbL","url":"http://opendatacommons.org/licenses/odbl/summary/"}],"rate":{"limit":2500,"remaining":2497,"reset":1487462400},"results":[{"components":{"_type":"city","country":"United
+        States of America","country_code":"us","state":"GA","town":"Conyers"},"confidence":10,"formatted":"Conyers,
         GA, United States of America","geometry":{"lat":33.719178,"lng":-84.002061}}],"status":{"code":200,"message":"OK"},"stay_informed":{"blog":"http://blog.opencagedata.com","twitter":"https://twitter.com/opencagedata"},"thanks":"For
-        using an OpenCage Data API","timestamp":{"created_http":"Thu, 28 Jul 2016
-        13:38:18 GMT","created_unix":1469713098},"total_results":1}'
+        using an OpenCage Data API","timestamp":{"created_http":"Sat, 18 Feb 2017
+        18:36:06 GMT","created_unix":1487442966},"total_results":1}'
     http_version: 
-  recorded_at: Thu, 28 Jul 2016 13:30:50 GMT
+  recorded_at: Sat, 18 Feb 2017 18:36:06 GMT
 recorded_with: VCR 3.0.3

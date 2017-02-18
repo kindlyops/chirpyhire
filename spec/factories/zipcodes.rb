@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :zip_code do
+  factory :zipcode do
   end
 end

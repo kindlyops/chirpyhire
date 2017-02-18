@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170218181324) do
     t.boolean  "skin_test"
     t.integer  "availability"
     t.integer  "transportation"
-    t.string   "zip_code"
+    t.string   "zipcode"
     t.integer  "cpr_first_aid"
     t.integer  "certification"
     t.integer  "person_id",      null: false
@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(version: 20170218181324) do
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",               null: false
-    t.string   "zip_code",           null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
     t.string   "phone_number"
@@ -197,13 +196,13 @@ ActiveRecord::Schema.define(version: 20170218181324) do
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, using: :btree
   end
 
-  create_table "zip_codes", force: :cascade do |t|
+  create_table "zipcodes", force: :cascade do |t|
     t.string   "value",              null: false
     t.integer  "ideal_candidate_id", null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["ideal_candidate_id", "value"], name: "index_zip_codes_on_ideal_candidate_id_and_value", unique: true, using: :btree
-    t.index ["ideal_candidate_id"], name: "index_zip_codes_on_ideal_candidate_id", using: :btree
+    t.index ["ideal_candidate_id", "value"], name: "index_zipcodes_on_ideal_candidate_id_and_value", unique: true, using: :btree
+    t.index ["ideal_candidate_id"], name: "index_zipcodes_on_ideal_candidate_id", using: :btree
   end
 
   add_foreign_key "accounts", "organizations"
@@ -222,5 +221,5 @@ ActiveRecord::Schema.define(version: 20170218181324) do
   add_foreign_key "subscribers", "people"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
-  add_foreign_key "zip_codes", "ideal_candidates"
+  add_foreign_key "zipcodes", "ideal_candidates"
 end

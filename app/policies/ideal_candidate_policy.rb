@@ -4,7 +4,7 @@ class IdealCandidatePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [zip_codes_attributes: [:zip_code, :id, :_destroy]]
+    [zipcodes_attributes: [:zipcode, :id, :_destroy]]
   end
 
   class Scope < ApplicationPolicy::Scope
