@@ -2,5 +2,5 @@
 if [ "$RACK_ENV" == "development" ]; then
   bundle exec puma -w 1
 else
-  bin/start-stunnel bundle exec puma -C config/puma.rb
+  bundle exec puma -C config/puma.rb
 fi
