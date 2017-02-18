@@ -1,12 +1,12 @@
 form {
   .remove_fields {
     float: right;
-    padding: 0 0.75em;
+    padding: 0 0.5rem;
     color: $gray-light;
 
     position: relative;
     bottom: 3px;
-    font-size: 2em;
+    font-size: 2rem;
 
     &:focus, &:hover {
       background: none;
