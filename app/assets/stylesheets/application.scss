@@ -2,11 +2,6 @@
 @import "font-awesome";
 @import "dataTables.bootstrap4.min";
 
-@import "components/navigation";
-@import "components/sidebar";
-@import "components/form";
-
-
 body {
   background-color: #ECEFF4;
 }
@@ -14,3 +9,9 @@ body {
 main.application {
   padding-top: 85px;
 }
+
+@import "components/navigation";
+@import "components/sidebar";
+@import "components/form";
+
+@import "ideal_candidate";

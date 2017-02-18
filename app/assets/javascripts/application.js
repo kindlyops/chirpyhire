@@ -19,6 +19,7 @@
 //= require cocoon
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
+//= require trianglify.min.js
 //= require_tree .
 
 

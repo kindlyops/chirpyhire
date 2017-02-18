@@ -1,0 +1,30 @@
+.ideal-candidate {
+  position: relative;
+
+  .cover {
+    h3 {
+      position: absolute;
+      top: 275px;
+      left: 318px;
+    }
+  }
+
+  .availability {
+    margin-top: 4rem !important;
+  }
+
+  .profile {
+    position: absolute;
+    top: 6rem;
+    width: 16rem;
+    height: 16rem;
+    left: 3rem;
+    z-index: 3;
+
+    border: 2px solid $gray;
+
+    i {
+      font-size: 13rem;
+    }
+  }
+}

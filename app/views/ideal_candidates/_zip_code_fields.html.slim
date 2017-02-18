@@ -2,5 +2,5 @@
   .form-group
     = f.label :zip_code, class: "sr-only col-form-label"
     = f.text_field :zip_code, required: true, class: "form-control"
-  = link_to_remove_association f, role: "button" do
+  = link_to_remove_association f, role: "button", "aria-label" => "Close" do
       | &times;
