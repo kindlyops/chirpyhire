@@ -1,2 +1,0 @@
-class YesNoQuestionPolicy < QuestionPolicy
-end

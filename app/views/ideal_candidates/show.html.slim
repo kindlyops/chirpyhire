@@ -1,0 +1,11 @@
+.card.mt-3
+  h3.card-header
+    | Ideal Candidate
+  .card-block
+    = form_for @candidate do |f|
+      #zip_codes
+        = f.fields_for :zip_codes do |zip_code|
+          = render 'zip_code_fields', f: zip_code
+      .form-group.mt-2
+        = f.submit "Save", class: "btn btn-primary mr-2", role: "button"
+        = link_to_add_association 'Add Zip Code', f, :zip_codes, class: "btn btn-secondary"

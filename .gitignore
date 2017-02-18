@@ -14,16 +14,3 @@
 /tags
 .env
 spec/examples.txt
-**/*.orig
-**/*REMOTE*
-**/*BACKUP*
-**/*LOCAL*
-
-# Ignore Redis dumps
-*.rdb
-
-# Ignore large zipcode data files
-lib/geo_json_data
-
-biscayne.sublime-workspace
-biscayne.sublime-project

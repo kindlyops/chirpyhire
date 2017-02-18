@@ -11,33 +11,14 @@
 // about supported directives.
 //
 
-//= require Sortable.min
 //= require jquery
 //= require tether
 //= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
-//= require mapbox-gl
-//= require lodash
 //= require cocoon
-//= require jquery.card
-//= require jquery.tipsy
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
+//= require_tree .
 
-//= require init
-//= require map
-//= require components/navigation
-//= require candidates
-//= require choice_question_options
-//= require address_question_option
-//= require maps/maps_common.js
-//= require maps/candidates
-//= require maps/candidate
-//= require stages
-//= require survey
-//= require survey.edit
-//= require payment
-//= require subscription
-//= require flash
-//= require sortable
+

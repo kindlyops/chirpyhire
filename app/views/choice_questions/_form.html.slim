@@ -1,6 +1,0 @@
-#choice-question-options.multi-option-question
-  = f.fields_for :choice_question_options do |option|
-    = render 'choice_questions/choice_question_option_fields', f: option
-  .links
-    = link_to_add_association 'Add choice', f, :choice_question_options, class: "button", partial: "choice_questions/choice_question_option_fields"
-

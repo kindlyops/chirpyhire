@@ -1,14 +1,11 @@
 class Account < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :user
-
-  delegate :first_name, :last_name, :name, :organization, to: :user
-  delegate :survey, to: :organization
-  accepts_nested_attributes_for :user
+  belongs_to :organization
+  accepts_nested_attributes_for :organization, reject_if: :all_blank
+  has_one :user
 
   def self.active
     where(invitation_token: nil)

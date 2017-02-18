@@ -1,19 +1,11 @@
 @import "bootstrap";
 @import "font-awesome";
-@import "mapbox-gl";
-@import "tipsy";
 @import "dataTables.bootstrap4.min";
 
 @import "components/navigation";
 @import "components/sidebar";
-@import "components/checkbox";
-@import "components/button";
+@import "components/form";
 
-@import "survey";
-@import "questions";
-@import "stages";
-@import "conversations";
-@import "messages";
 
 body {
   background-color: #ECEFF4;

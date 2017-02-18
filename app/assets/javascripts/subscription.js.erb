@@ -1,25 +1,25 @@
-$(document).on("turbolinks:load", function() {
-  if($(".subscription").length) {
-    $("#new_subscription").card({
-      container: '.credit-card-wrapper',
-      formSelectors: {
-          numberInput: '.credit-card-fields input#number',
-          expiryInput: '.credit-card-fields input#expiry',
-          cvcInput: '.credit-card-fields input#cvc',
-          nameInput: '.credit-card-fields input#name'
-      }
-    });
+// $(document).on("turbolinks:load", function() {
+//   if($(".subscription").length) {
+//     $("#new_subscription").card({
+//       container: '.credit-card-wrapper',
+//       formSelectors: {
+//           numberInput: '.credit-card-fields input#number',
+//           expiryInput: '.credit-card-fields input#expiry',
+//           cvcInput: '.credit-card-fields input#cvc',
+//           nameInput: '.credit-card-fields input#name'
+//       }
+//     });
 
-    $(".quantity input[type='range']").on("change", function(e) {
-      var $tier = $(this);
-      var quantity = parseInt($tier.val());
-      var newQuantityAmount = quantity * <%= Plan.messages_per_quantity %>;
-      var quantityLineItem = $(".monthly-message-limit");
-      quantityLineItem.text(newQuantityAmount.toLocaleString());
+//     $(".quantity input[type='range']").on("change", function(e) {
+//       var $tier = $(this);
+//       var quantity = parseInt($tier.val());
+//       var newQuantityAmount = quantity * <%= Plan.messages_per_quantity %>;
+//       var quantityLineItem = $(".monthly-message-limit");
+//       quantityLineItem.text(newQuantityAmount.toLocaleString());
 
-      var newFeeAmount = quantity * <%= Plan::DEFAULT_PRICE_IN_DOLLARS %>;
-      var feeLineItem = $(".monthly-fee");
-      feeLineItem.text("$" + newFeeAmount.toLocaleString());
-    });
-  };
-});
+//       var newFeeAmount = quantity * <%= Plan::DEFAULT_PRICE_IN_DOLLARS %>;
+//       var feeLineItem = $(".monthly-fee");
+//       feeLineItem.text("$" + newFeeAmount.toLocaleString());
+//     });
+//   };
+// });

@@ -1,0 +1,29 @@
+= title "Candidates | ChirpyHire"
+
+.candidates
+  .card
+    h3.card-header Candidates
+    .card-block
+      .row
+        .col-md-9
+          table.table.table-responsive.table-hover.table-bordered
+            thead.thead-active
+              tr
+                th Nickname (internal)
+                th Stage
+                th Location
+                th Phone Number
+                th Created
+                th
+            tbody
+              - @candidacies.each do |candidate|
+                tr
+                  td = candidate.handle
+                  td = candidate.stage
+                  td = candidate.zipcode
+                  td = candidate.user_phone_number
+                  td = "#{time_ago_in_words(candidate.created_at)} ago"
+                  td
+                    = link_to user_messages_path(candidate.user), class: "btn btn-primary" do
+                      i.fa.fa-commenting-o
+

@@ -1,45 +1,24 @@
-## README
+# README
 
-### Zero to Green
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-0. Install [rbenv](https://github.com/rbenv/rbenv#homebrew-on-mac-os-x) and [ruby-build](https://github.com/rbenv/ruby-build#installing-with-homebrew-for-os-x-users) to manage ruby versions.
+Things you may want to cover:
 
-1. Get `.env` file from a developer. You can use dummy keys to help run tests.
-2. Install native dependencies if necessary.
-```bash
-brew install postgres 
-brew install redis
-brew install phantomjs
-rbenv install 2.3.1
-```
-For more information on [Postgres](https://gorails.com/setup/osx/10.11-el-capitan), especially if "No such file found" when trying
-to create DB. You'll likely need to change the [template](https://gist.github.com/amolkhanorkar/8706915), too. For redis, you may need to ensure the server is running with `redis-server &`.
-3. Install [QT55 bindings](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit)
-4. Download libraries, migrate database, run tests.
-```ruby
-bundle install
-rails db:create
-rails db:migrate
-rspec
-```
+* Ruby version
 
-### Twilio Development
+* System dependencies
 
-Use ngrok tunnel For Twilio Webhook:  
-`ngrok http 3000`  
-Login to Twilio and set SMS Webhook URL to the Dynamic ngrok URL. [More info](https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html)  
+* Configuration
 
-### Stripe Development
+* Database creation
 
-Use test keys and test environment.
+* Database initialization
 
-### Demoing App
+* How to run the test suite
 
-Ensure you have a clean install:  
-`rails db:drop && rails db:create && rails db:migrate`  
-Localizes seed data to prospects area. Makes it easier for them to "Get it".  
-`rails db:seed latitude=$latitude longitude=$longitude`  
-Start Local Server:  
-`foreman s`  
-Tunnel For Twilio Webhook:  
-`ngrok http 3000`  
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...

@@ -3,40 +3,21 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 
 Rails.application.routes.draw do
   resource :health, only: :show
+  resource :dashboard, only: :show
+  resource :ideal_candidate, only: [:show, :update]
+  resources :leads, only: :index
 
-  resources :candidates, only: :index
-  get 'messages' => 'conversations#index'
-
-  resources :users, only: [] do
-    resources :messages, only: [:index, :create], shallow: true
+  resources :people, only: :index do
+    resource :conversation, only: [:show]
+    resources :messages, only: [:create]
   end
 
   resources :subscriptions
 
-  resource :survey, only: [:show, :edit, :update]
-  put 'surveys/reorder' => 'surveys#reorder'
-  resources :yes_no_questions, except: :destroy
-  resources :address_questions, except: :destroy
-  resources :document_questions, except: :destroy
-  resources :choice_questions, except: :destroy
-  resources :zipcode_questions, except: :destroy
-  resources :questions, only: [:edit, :new]
-  resources :templates, only: [:edit, :update]
-  put 'stages/reorder' => 'stages#reorder'
-  resources :stages, only: [:index, :create, :destroy, :edit, :update]
-  post 'impersonate/' => 'impersonation#impersonate'
-
-  get 'zipcode/:zipcode' => 'zipcode#geo_json'
-
-  namespace :maps do
-    resources :candidates, only: [:index, :show]
-  end
-
-  post 'twilio/text', to: 'sms/referrals#create', constraints: Constraint::Vcard.new
-  post 'twilio/text', to: 'sms/subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'sms/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'sms/answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'sms/base#unsolicited_message'
+  post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
+  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
+  post 'twilio/text' => 'organizations/base#unsolicited_message'
 
   mount StripeEvent::Engine, at: '/stripe/events'
 
@@ -50,5 +31,5 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
-  root 'candidates#index'
+  root 'dashboards#show'
 end

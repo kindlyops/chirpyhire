@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  skip_before_action :block_invalid_subscriptions
+  # skip_before_action :block_invalid_subscriptions
   before_action :ensure_new_subscription, only: [:new, :create]
 
   def new

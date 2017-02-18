@@ -1,2 +1,0 @@
-class YesNoQuestionsController < QuestionsController
-end

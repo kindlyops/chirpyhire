@@ -19,15 +19,11 @@
       }
 
       .fa-users {
-        color: darken($purple, 3%);
-      }
-
-      .fa-pencil-square-o {
-        color: darken($yellow, 3%);
-      }
-
-      .fa-comments {
         color: darken($blue, 3%);
+      }
+
+      .fa-tachometer {
+        color: darken($red, 3%);
       }
 
       background-color: $gray-lightest;
@@ -39,14 +35,10 @@
   }
 
   .fa-users {
-    color: $purple;
-  }
-
-  .fa-pencil-square-o {
-    color: $yellow;
-  }
-
-  .fa-comments {
     color: $blue;
+  }
+
+  .fa-tachometer {
+    color: $red;
   }
 }
