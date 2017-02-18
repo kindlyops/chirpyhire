@@ -27,5 +27,4 @@ class Constraint::Answer < Constraint::Base
   def from
     request.request_parameters['From']
   end
-
 end
