@@ -8,6 +8,8 @@ class Organization < ApplicationRecord
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
   has_many :messages
 
+  validates :zip_code, length: { is: 5 }
+
   def candidates
     people.joins(:candidacy)
   end
