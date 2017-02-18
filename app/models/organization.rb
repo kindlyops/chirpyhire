@@ -26,7 +26,7 @@ class Organization < ApplicationRecord
   end
 
   def message(recipient:, body:)
-    sent_message = message_client.send_message(
+    sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )
 
@@ -50,7 +50,7 @@ class Organization < ApplicationRecord
     )
   end
 
-  def message_client
-    @message_client ||= Messaging::Client.new(self)
+  def messaging_client
+    @messaging_client ||= Messaging::Client.new(self)
   end
 end
