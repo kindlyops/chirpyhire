@@ -6,5 +6,7 @@ class CreateLeads < ActiveRecord::Migration[5.0]
       t.boolean :subscribed, null: false, default: true
       t.timestamps
     end
+
+    add_index :leads, [:person_id, :organization_id], unique: true
   end
 end

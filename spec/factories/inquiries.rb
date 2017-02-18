@@ -1,4 +1,5 @@
 FactoryGirl.define do
-  factory :ideal_candidate do
+  factory :inquiry do
+    
   end
 end

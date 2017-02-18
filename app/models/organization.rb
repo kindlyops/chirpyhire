@@ -6,6 +6,7 @@ class Organization < ApplicationRecord
   has_one :subscription
   has_one :ideal_candidate
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
+  has_many :messages
 
   def candidates
     people.joins(:candidacy)
@@ -17,5 +18,30 @@ class Organization < ApplicationRecord
 
   def new_subscription?
     subscription.present? && subscription.new_record?
+  end
+
+  def message(recipient:, body:)
+    sent_message = message_client.send_message(
+      to: recipient.phone_number, from: phone_number, body: body
+    )
+
+    create_message(recipient, sent_message)
+  end
+
+  private
+
+  def create_message(recipient, message)
+    messages.create(
+      person: recipient,
+      sid: message.sid,
+      body: message.body,
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      direction: message.direction
+    )
+  end
+
+  def message_client
+    @message_client ||= Messaging::Client.new(self)
   end
 end

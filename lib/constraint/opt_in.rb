@@ -1,13 +1,11 @@
-class Constraint::OptIn < Constraint::ConstraintBase
+class Constraint::OptIn < Constraint::Base
   OPT_IN_RESPONSES = %w(START).freeze
 
   def matches?(request)
     @request = request
-    return false if candidate_present?
 
-    cleaned_body = cleaned_request_body
     match = OPT_IN_RESPONSES.detect do |opt_in|
-      cleaned_body.include?(opt_in)
+      cleaned_request_body.include?(opt_in)
     end
     match.present?
   end

@@ -10,8 +10,16 @@ AllCops:
     - 'script/**/*'
     - 'bin/**/*'
 
+Style/Documentation:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
 
 Metrics/BlockLength:
   Exclude:
@@ -24,6 +32,10 @@ Style/BlockDelimiters:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Rails/Output:
+  Exclude:
+    - 'lib/seeder.rb'
 
 Rails/DynamicFindBy:
   Whitelist:

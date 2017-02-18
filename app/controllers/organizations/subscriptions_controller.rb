@@ -1,33 +1,27 @@
 class Organizations::SubscriptionsController < Organizations::BaseController
+  before_action :sync_message
+
   def create
-    if sender.subscribed?
-      MessageHandlerJob.perform_now(sender, params['MessageSid'])
-      sender.receive_message(body: already_subscribed)
+    if person.lead_at?(organization)
+      AlreadySubscribedJob.perform_later(person, organization)
     else
-      OrganizationsSubscribeJob.perform_later(sender, params['MessageSid'])
+      person.leads.create!(organization: organization)
     end
     head :ok
   end
 
   def destroy
-    MessageHandlerJob.perform_now(sender, params['MessageSid'])
-    if sender.unsubscribed?
-      sender.receive_message(body: not_subscribed)
+    if person.lead_at?(organization)
+      person.lead_at(organization).unsubscribe!
     else
-      sender.update!(subscribed: false)
+      NotSubscribedJob.perform_later(person, organization)
     end
     head :ok
   end
 
   private
 
-  def already_subscribed
-    'You are already subscribed. '\
-    "Thanks for your interest in #{organization.name}."
-  end
-
-  def not_subscribed
-    'You were not subscribed to '\
-    "#{organization.name}. To subscribe reply with 'START'."
+  def sync_message
+    MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
   end
 end
