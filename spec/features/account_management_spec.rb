@@ -16,7 +16,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         visit '/accounts/sign_up'
 
         fill_in 'Agency Name', with: name
-        fill_in 'Agency Zip Code', with: '30342'
+        fill_in 'Agency Location', with: '1000 E. Market St. 22902'
         fill_in 'Email', with: email
         fill_in 'Password', with: password
 

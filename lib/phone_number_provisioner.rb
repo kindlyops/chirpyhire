@@ -45,7 +45,11 @@ class PhoneNumberProvisioner
   def available_local_phone_numbers
     @available_local_phone_numbers ||= begin
       local_numbers = sub_account.available_phone_numbers.get('US').local
-      local_numbers.list(in_zip_code: organization.zip_code)
+      lat_long = "#{location.latitude},#{location.longitude}"
+      local_numbers.list(
+        near_lat_long: lat_long,
+        in_region: location.state.to_s
+      )
     end
   end
 
@@ -68,4 +72,6 @@ class PhoneNumberProvisioner
   end
 
   attr_reader :organization
+
+  delegate :location, to: :organization
 end

@@ -87,6 +87,7 @@ gem 'stripe_event', github: 'integrallis/stripe_event', ref: '1da7ed8'
 gem 'json', '~> 2.0.2'
 gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
+gem 'geocoder', '~> 1.4.3'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

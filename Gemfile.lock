@@ -154,6 +154,7 @@ GEM
     ffi (1.9.17)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
+    geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     haml (4.0.7)
@@ -424,6 +425,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.7.0)
+  geocoder (~> 1.4.3)
   inline_svg (~> 0.11.1)
   jquery-rails
   json (~> 2.0.2)

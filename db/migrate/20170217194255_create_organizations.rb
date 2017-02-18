@@ -2,7 +2,6 @@ class CreateOrganizations < ActiveRecord::Migration[5.0]
   def change
     create_table :organizations do |t|
       t.string :name, null: false
-      t.string :zip_code, null: false
       t.string :twilio_account_sid
       t.string :twilio_auth_token
       t.string :phone_number

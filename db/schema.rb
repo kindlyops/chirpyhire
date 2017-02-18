@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218161728) do
+ActiveRecord::Schema.define(version: 20170218181324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.boolean  "skin_test"
     t.integer  "availability"
     t.integer  "transportation"
-    t.string   "zip_code"
+    t.string   "zipcode"
     t.integer  "cpr_first_aid"
     t.integer  "certification"
     t.integer  "person_id",      null: false
@@ -96,6 +96,22 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.index ["message_id"], name: "index_inquiries_on_message_id", using: :btree
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.float    "latitude",            null: false
+    t.float    "longitude",           null: false
+    t.string   "full_street_address", null: false
+    t.string   "city",                null: false
+    t.string   "state",               null: false
+    t.string   "state_code"
+    t.string   "postal_code",         null: false
+    t.string   "country",             null: false
+    t.string   "country_code"
+    t.integer  "organization_id",     null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["organization_id"], name: "index_locations_on_organization_id", using: :btree
+  end
+
   create_table "messages", force: :cascade do |t|
     t.string   "sid",                 null: false
     t.text     "body"
@@ -113,7 +129,6 @@ ActiveRecord::Schema.define(version: 20170218161728) do
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",               null: false
-    t.string   "zip_code",           null: false
     t.string   "twilio_account_sid"
     t.string   "twilio_auth_token"
     t.string   "phone_number"
@@ -181,13 +196,13 @@ ActiveRecord::Schema.define(version: 20170218161728) do
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, using: :btree
   end
 
-  create_table "zip_codes", force: :cascade do |t|
+  create_table "zipcodes", force: :cascade do |t|
     t.string   "value",              null: false
     t.integer  "ideal_candidate_id", null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["ideal_candidate_id", "value"], name: "index_zip_codes_on_ideal_candidate_id_and_value", unique: true, using: :btree
-    t.index ["ideal_candidate_id"], name: "index_zip_codes_on_ideal_candidate_id", using: :btree
+    t.index ["ideal_candidate_id", "value"], name: "index_zipcodes_on_ideal_candidate_id_and_value", unique: true, using: :btree
+    t.index ["ideal_candidate_id"], name: "index_zipcodes_on_ideal_candidate_id", using: :btree
   end
 
   add_foreign_key "accounts", "organizations"
@@ -199,11 +214,12 @@ ActiveRecord::Schema.define(version: 20170218161728) do
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "inquiries", "candidacies"
   add_foreign_key "inquiries", "messages"
+  add_foreign_key "locations", "organizations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people"
   add_foreign_key "subscribers", "organizations"
   add_foreign_key "subscribers", "people"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
-  add_foreign_key "zip_codes", "ideal_candidates"
+  add_foreign_key "zipcodes", "ideal_candidates"
 end

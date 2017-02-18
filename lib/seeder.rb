@@ -26,10 +26,10 @@ class Seeder
 
   def seed_organization
     @organization = find_or_create_organization
-
+    FactoryGirl.create(:location, organization: organization)
     organization.create_subscription(plan: plan, trial_message_limit: 1000)
     organization.create_ideal_candidate!(
-      zip_codes_attributes: [{ value: organization.zip_code }]
+      zipcodes_attributes: [{ value: organization.zipcode }]
     )
     puts 'Created Organization'
   end
@@ -40,8 +40,7 @@ class Seeder
       twilio_account_sid: ENV.fetch('TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('TWILIO_AUTH_TOKEN'),
       phone_number: ENV.fetch('TEST_ORG_PHONE'),
-      stripe_customer_id: ENV.fetch('TEST_STRIPE_CUSTOMER_ID'),
-      zip_code: '30342'
+      stripe_customer_id: ENV.fetch('TEST_STRIPE_CUSTOMER_ID')
     )
   end
 
