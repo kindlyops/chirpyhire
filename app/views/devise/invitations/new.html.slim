@@ -9,4 +9,4 @@
       .form-group
         = submit_tag "Invite", class: "action btn btn-primary"
         - if current_organization.created_at > 60.seconds.ago
-          = link_to "Skip to Ideal Candidate", ideal_candidate_path, class: "action btn btn-default"
+          = link_to "Skip to Ideal Candidate", candidate_path, class: "action btn btn-default"

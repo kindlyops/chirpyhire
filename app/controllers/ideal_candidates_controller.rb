@@ -1,13 +1,14 @@
 class IdealCandidatesController < ApplicationController
   def show
     @candidate = authorized_candidate
+    @suggestion = current_organization.suggestions.build
   end
 
   def update
     @candidate = authorized_candidate
 
     if @candidate.update(permitted_attributes(IdealCandidate))
-      redirect_to ideal_candidate_path, notice: 'Nice! Ideal Candidate saved.'
+      redirect_to candidate_path, notice: 'Nice! Ideal Candidate saved.'
     else
       render :show
     end

@@ -18,7 +18,7 @@ class Registrar
 
   def create_ideal_candidate
     organization.create_ideal_candidate!(
-      zip_codes_attributes: [{zip_code: organization.zip_code}]
+      zip_codes_attributes: [{value: organization.zip_code}]
     )
   end
 

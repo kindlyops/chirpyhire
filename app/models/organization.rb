@@ -5,6 +5,7 @@ class Organization < ApplicationRecord
   has_many :people, through: :leads, class_name: 'Person'
   has_one :subscription
   has_one :ideal_candidate
+  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
 
   def candidates
     people.joins(:candidacy)

@@ -4,7 +4,8 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
   resource :dashboard, only: :show
-  resource :ideal_candidate, only: [:show, :update]
+  resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
+  resources :ideal_candidate_suggestions, only: :create
   resources :leads, only: :index
 
   resources :people, only: :index do

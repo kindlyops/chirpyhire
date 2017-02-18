@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218030122) do
+ActiveRecord::Schema.define(version: 20170218133128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 20170218030122) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
+  end
+
+  create_table "ideal_candidate_suggestions", force: :cascade do |t|
+    t.integer  "organization_id", null: false
+    t.text     "value",           null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_ideal_candidate_suggestions_on_organization_id", using: :btree
   end
 
   create_table "ideal_candidates", force: :cascade do |t|
@@ -153,16 +161,17 @@ ActiveRecord::Schema.define(version: 20170218030122) do
   end
 
   create_table "zip_codes", force: :cascade do |t|
-    t.string   "zip_code",           null: false
+    t.string   "value",              null: false
     t.integer  "ideal_candidate_id", null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["ideal_candidate_id", "zip_code"], name: "index_zip_codes_on_ideal_candidate_id_and_zip_code", unique: true, using: :btree
+    t.index ["ideal_candidate_id", "value"], name: "index_zip_codes_on_ideal_candidate_id_and_value", unique: true, using: :btree
     t.index ["ideal_candidate_id"], name: "index_zip_codes_on_ideal_candidate_id", using: :btree
   end
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "candidacies", "people"
+  add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "leads", "organizations"
   add_foreign_key "leads", "people"

@@ -1,3 +1,4 @@
+
 class SubscriptionsController < ApplicationController
   # skip_before_action :block_invalid_subscriptions
   before_action :ensure_new_subscription, only: [:new, :create]
@@ -7,7 +8,8 @@ class SubscriptionsController < ApplicationController
   end
 
   def edit
-    @subscription = authorized_subscription
+    @subscription = authorized_subsc
+    ription
   end
 
   def show
