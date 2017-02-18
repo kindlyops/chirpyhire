@@ -7,6 +7,7 @@ class CreateSubscribers < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    add_column :candidacies, :subscriber_id, :integer, index: true, foreign_key: true
     add_index :subscribers, [:person_id, :organization_id], unique: true
   end
 end

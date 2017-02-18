@@ -5,7 +5,7 @@ class Organizations::SubscriptionsController < Organizations::BaseController
     if person.subscribed_to?(organization)
       AlreadySubscribedJob.perform_later(person, organization)
     else
-      person.subscribers.create!(organization: organization)
+      SurveyorJob.perform_later(subscriber)
     end
     head :ok
   end
@@ -20,6 +20,10 @@ class Organizations::SubscriptionsController < Organizations::BaseController
   end
 
   private
+
+  def subscriber
+    person.subscribers.create!(organization: organization)
+  end
 
   def sync_message
     MessageSyncerJob.perform_later(person, organization, params['MessageSid'])

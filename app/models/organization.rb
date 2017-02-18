@@ -11,7 +11,7 @@ class Organization < ApplicationRecord
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
   has_many :messages
 
-  delegate :zipcode, to: :location
+  delegate :zipcode, :city, to: :location
 
   def candidates
     people.joins(:candidacy)

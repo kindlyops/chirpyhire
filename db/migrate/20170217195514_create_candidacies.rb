@@ -9,6 +9,7 @@ class CreateCandidacies < ActiveRecord::Migration[5.0]
       t.integer :cpr_first_aid
       t.integer :certification
       t.belongs_to :person, null: false, index: true, foreign_key: true
+      t.integer :inquiry
       t.timestamps
     end
   end

@@ -1,10 +1,13 @@
 class Candidacy < ApplicationRecord
   belongs_to :person
+  belongs_to :subscriber, optional: true
 
-  has_many :inquiries
-  has_many :answers
+  enum inquiry: {
+    experience: 0, skin_test: 1, availability: 2, transportation: 3,
+    zipcode: 4, cpr_first_aid: 5, certification: 6
+  }
 
-  def outstanding_inquiry
-    inquiries.unanswered.first
+  def surveying?
+    subscriber.present?
   end
 end
