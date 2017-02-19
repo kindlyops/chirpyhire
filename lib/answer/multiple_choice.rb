@@ -18,7 +18,7 @@ class Answer::MultipleChoice < Answer::Base
   private
 
   def choice(message)
-    MULTIPLE_CHOICE_REGEXP.match(clean_body(message))[1]
+    MULTIPLE_CHOICE_REGEXP.match(clean_body(message))[1].to_sym
   end
 
   def clean_body(message)
