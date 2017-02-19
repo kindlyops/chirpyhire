@@ -14,4 +14,8 @@ class Question::Transportation < Question::MultipleChoice
   def inquiry
     :transportation
   end
+
+  def answer
+    Answer::Transportation.new(self)
+  end
 end

@@ -13,7 +13,8 @@ class Surveyor
   def consider_answer(message)
     return survey.complete if survey.complete?(message)
     return survey.restate unless survey.answer.valid?(message)
-    # update candidacy
+
+    candidacy.update!(survey.answer.attribute(message))
     survey.ask
   end
 

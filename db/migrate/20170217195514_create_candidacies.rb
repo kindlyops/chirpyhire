@@ -2,7 +2,7 @@ class CreateCandidacies < ActiveRecord::Migration[5.0]
   def change
     create_table :candidacies do |t|
       t.integer :experience
-      t.boolean :skin_test
+      t.integer :skin_test
       t.integer :availability
       t.integer :transportation
       t.string :zipcode
