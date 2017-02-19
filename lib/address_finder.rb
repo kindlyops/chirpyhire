@@ -11,7 +11,11 @@ class AddressFinder
            :city, :postal_code, to: :result
 
   def found?
-    naive_match? && result.present? && text.include?(result.postal_code)
+    naive_match? && result.present? && postal_code_found?
+  end
+
+  def postal_code_found?
+    result.postal_code.present? && text.include?(result.postal_code)
   end
 
   def naive_match?

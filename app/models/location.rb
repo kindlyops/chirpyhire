@@ -3,6 +3,7 @@ class Location < ApplicationRecord
 
   validates :state, length: { is: 2 }
   validates :state_code, length: { is: 2 }
+  validates :postal_code, length: { minimum: 5 }
 
   def zipcode
     postal_code
