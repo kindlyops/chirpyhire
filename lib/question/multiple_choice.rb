@@ -12,19 +12,19 @@ class Question::MultipleChoice < Question::Base
   end
 
   def has?(choice)
-    choices.keys.include?(choice)
+    choices.keys.include?(choice.to_sym)
   end
 
   def answer
     Answer::MultipleChoice.new(self)
   end
 
-  private
-
   def postlude
     "#{POSTLUDE_BASE} #{choices_sentence}."
   end
   alias restated postlude
+
+  private
 
   def choices_sentence
     choices.keys.to_sentence(

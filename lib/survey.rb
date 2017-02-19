@@ -6,6 +6,8 @@ class Survey
   end
 
   def ask
+    return if candidacy.certification?
+
     candidacy.update!(inquiry: next_question.inquiry)
     send_message(next_question.body)
   end
@@ -20,7 +22,7 @@ class Survey
   end
 
   def complete?(message)
-    answer.valid?(message) && last_question?
+    last_question? && answer.valid?(message)
   end
 
   delegate :answer, to: :current_question
@@ -36,11 +38,11 @@ class Survey
   end
 
   def current_question
-    questions[candidacy.inquiry]
+    @current_question ||= questions[candidacy.inquiry]
   end
 
   def next_question
-    question_after[candidacy.inquiry]
+    @next_question ||= question_after[candidacy.inquiry]
   end
 
   def question_after
@@ -52,7 +54,7 @@ class Survey
       transportation: zipcode,
       zipcode: cpr_first_aid,
       cpr_first_aid: certification
-    }
+    }.with_indifferent_access
   end
 
   def questions
@@ -64,7 +66,7 @@ class Survey
       zipcode: zipcode,
       cpr_first_aid: cpr_first_aid,
       certification: certification
-    }
+    }.with_indifferent_access
   end
 
   def experience

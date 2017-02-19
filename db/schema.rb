@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 20170218181324) do
     t.string   "sid",                 null: false
     t.text     "body"
     t.string   "direction",           null: false
-    t.datetime "sent_at",             null: false
-    t.datetime "external_created_at", null: false
+    t.datetime "sent_at"
+    t.datetime "external_created_at"
     t.integer  "organization_id",     null: false
     t.integer  "person_id",           null: false
     t.datetime "created_at",          null: false
