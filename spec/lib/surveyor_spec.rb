@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Surveyor do
-
   let(:subscriber) { create(:subscriber) }
   let(:thank_you) { Notification::ThankYou.new(subscriber) }
   let(:candidacy) { subscriber.person.candidacy }

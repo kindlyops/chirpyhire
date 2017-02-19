@@ -60,10 +60,19 @@ class RegistrationsController < Devise::RegistrationsController
     yield
   rescue Geocoder::OverQueryLimitError => e
     Rails.logger.debug(e.message)
-    flash[:alert] = "Sorry but we're a little overloaded right now and can't "\
-    'find addresses. Please try again in a few minutes.'
+    flash[:alert] = rate_limit_message
     set_minimum_password_length
     render :new
+  end
+
+  def rate_limit_message
+    "Sorry but we're a little overloaded right now and can't "\
+        'find addresses. Please try again in a few minutes.'
+  end
+
+  def fetch_address_message
+    "We couldn't find that address. Please provide the"\
+            " city, state, and zipcode if you haven't yet."
   end
 
   def populate_location_attributes
@@ -79,8 +88,7 @@ class RegistrationsController < Devise::RegistrationsController
       if finder.found?
         populate_location_attributes
       else
-        flash[:alert] = "We couldn't find that address. Please provide the"\
-        " city, state, and zipcode if you haven't yet."
+        flash[:alert] = fetch_address_message
         set_minimum_password_length
         render :new
       end
