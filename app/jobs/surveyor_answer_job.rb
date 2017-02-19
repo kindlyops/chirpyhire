@@ -1,4 +1,4 @@
-class SurveyorJob < ApplicationJob
+class SurveyorAnswerJob < ApplicationJob
   def perform(subscriber, message_sid)
     message = MessageSyncer.new(
       subscriber.person,

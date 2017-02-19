@@ -3,7 +3,7 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    UnsolicitedMessageHandlerJob.perform_later(person, params['MessageSid'])
+    MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
 
     head :ok
   end

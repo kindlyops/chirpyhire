@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::AnswersController, type: :controller do
+RSpec.describe Organizations::MessagesController, type: :controller do
   let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:person) { create(:person) }
 
@@ -14,10 +14,10 @@ RSpec.describe Organizations::AnswersController, type: :controller do
   end
 
   describe '#create' do
-    it 'creates a SurveyorAnswerJob' do
+    it 'creates a MessageSyncerJob' do
       expect {
         post :create, params: params
-      }.to have_enqueued_job(SurveyorAnswerJob)
+      }.to have_enqueued_job(MessageSyncerJob)
     end
   end
 end
