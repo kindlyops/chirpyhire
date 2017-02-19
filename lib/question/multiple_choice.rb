@@ -12,7 +12,7 @@ class Question::MultipleChoice < Question::Base
   end
 
   def has?(choice)
-    choices.keys.include?(choice.to_sym)
+    choices.keys.include?(choice)
   end
 
   def answer

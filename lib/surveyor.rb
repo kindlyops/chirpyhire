@@ -11,10 +11,10 @@ class Surveyor
   end
 
   def consider_answer(message)
-    return survey.complete if survey.complete?(message)
+    return complete_survey(message) if survey.complete?(message)
     return survey.restate unless survey.answer.valid?(message)
 
-    update_candidacy
+    update_candidacy(message)
     survey.ask
   end
 
@@ -24,11 +24,16 @@ class Surveyor
 
   private
 
+  def complete_survey(message)
+    update_candidacy(message)
+    survey.complete
+  end
+
   def send_message(message)
     organization.message(recipient: person, body: message)
   end
 
-  def update_candidacy
+  def update_candidacy(message)
     candidacy.update!(survey.answer.attribute(message))
   end
 
