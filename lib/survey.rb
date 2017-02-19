@@ -30,7 +30,7 @@ class Survey
   private
 
   def last_question?
-    LAST_QUESTION == current_question.inquiry
+    current_question.inquiry == LAST_QUESTION
   end
 
   def send_message(message)
