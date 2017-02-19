@@ -25,8 +25,4 @@ class Question::Experience < Question::MultipleChoice
   def inquiry
     :experience
   end
-
-  def answer
-    Answer::Experience.new(self)
-  end
 end

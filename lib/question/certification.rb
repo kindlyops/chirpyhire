@@ -15,8 +15,4 @@ class Question::Certification < Question::MultipleChoice
   def inquiry
     :certification
   end
-
-  def answer
-    Answer::Certification.new(self)
-  end
 end

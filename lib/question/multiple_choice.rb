@@ -15,6 +15,10 @@ class Question::MultipleChoice < Question::Base
     choices.keys.include?(choice)
   end
 
+  def answer
+    Answer::MultipleChoice.new(self)
+  end
+
   private
 
   def postlude

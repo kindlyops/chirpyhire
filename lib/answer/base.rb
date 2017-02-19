@@ -3,7 +3,7 @@ class Answer::Base
     @question = question
   end
 
-  def valid?(_message)
+  def valid?(*)
     false
   end
 
