@@ -14,7 +14,10 @@ class Answer::Zipcode < Answer::Base
   private
 
   def fetch_zipcode(message)
-    ZIPCODE_REGEXP.match(clean_body(message))[1]
+    result = ZIPCODE_REGEXP.match(clean_body(message))
+    return unless result.present?
+
+    result[1]
   end
 
   def clean_body(message)
