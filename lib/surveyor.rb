@@ -18,14 +18,18 @@ class Surveyor
     survey.ask
   end
 
+  def survey
+    @survey ||= Survey.new(candidacy)
+  end
+
   private
+
+  def send_message(message)
+    organization.message(recipient: person, body: message)
+  end
 
   def update_candidacy
     candidacy.update!(survey.answer.attribute(message))
-  end
-
-  def survey
-    Survey.new(candidacy)
   end
 
   def lock_candidacy
@@ -33,7 +37,7 @@ class Surveyor
   end
 
   def thank_person
-    organization.message(recipient: person, body: thank_you.body)
+    send_message(thank_you.body)
   end
 
   def thank_you
