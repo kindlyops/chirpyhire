@@ -8,27 +8,19 @@ class Candidacy < ApplicationRecord
   }
 
   enum experience: {
-    less_than_one: 0, one_to_five: 1, six_or_more: 2, none: 3
-  }
-
-  enum skin_test: {
-    yes: 0, no: 1
+    less_than_one: 0, one_to_five: 1, six_or_more: 2, no_experience: 3
   }
 
   enum availability: {
     live_in: 0, full_time: 1, part_time: 2, flexible: 3
   }
 
-  enum cpr_first_aid: {
-    yes: 0, no: 1
-  }
-
   enum transportation: {
-    personal: 0, public: 1, none: 2
+    personal_transportation: 0, public_transportation: 1, no_transportation: 2
   }
 
   enum certification: {
-    pca: 0, cna: 1, other: 2, none: 3
+    pca: 0, cna: 1, other_certification: 2, no_certification: 3
   }
 
   def surveying?

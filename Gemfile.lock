@@ -466,7 +466,7 @@ DEPENDENCIES
   vcr (~> 3.0.0)
   web-console (~> 3.1.0)
   webmock (~> 2.3.2)
-  zip-codes
+  zip-codes (~> 0.2.1)
 
 RUBY VERSION
    ruby 2.4.0p0

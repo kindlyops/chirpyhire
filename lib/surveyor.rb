@@ -14,11 +14,15 @@ class Surveyor
     return survey.complete if survey.complete?(message)
     return survey.restate unless survey.answer.valid?(message)
 
-    candidacy.update!(survey.answer.attribute(message))
+    update_candidacy
     survey.ask
   end
 
   private
+
+  def update_candidacy
+    candidacy.update!(survey.answer.attribute(message))
+  end
 
   def survey
     Survey.new(candidacy)

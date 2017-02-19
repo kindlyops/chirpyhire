@@ -13,4 +13,8 @@ class Question::CprFirstAid < Question::MultipleChoice
   def inquiry
     :cpr_first_aid
   end
+
+  def answer
+    Answer::CprFirstAid.new(self)
+  end
 end

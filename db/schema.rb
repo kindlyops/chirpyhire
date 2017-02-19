@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170218181324) do
     t.integer  "availability"
     t.integer  "transportation"
     t.string   "zipcode"
-    t.integer  "cpr_first_aid"
+    t.boolean  "cpr_first_aid"
     t.integer  "certification"
     t.integer  "person_id",      null: false
     t.integer  "inquiry"

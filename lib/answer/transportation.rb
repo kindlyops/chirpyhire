@@ -1,9 +1,9 @@
 class Answer::Transportation < Answer::MultipleChoice
   def choice_map
     {
-      'I have personal transportation.' => :personal,
-      'I use public transportation.' => :public,
-      'I do not have reliable transportation.' => :none
+      'I have personal transportation.' => :personal_transportation,
+      'I use public transportation.' => :public_transportation,
+      'I do not have reliable transportation.' => :no_transportation
     }
   end
 

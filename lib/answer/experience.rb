@@ -4,7 +4,7 @@ class Answer::Experience < Answer::MultipleChoice
       '0 - 1' => :less_than_one,
       '1 - 5' => :one_to_five,
       '6 or more' => :six_or_more,
-      "I'm new to caregiving" => :none
+      "I'm new to caregiving" => :no_experience
     }
   end
 
