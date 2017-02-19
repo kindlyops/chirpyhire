@@ -62,7 +62,7 @@ class RegistrationsController < Devise::RegistrationsController
     Rails.logger.debug(e.message)
     flash[:alert] = "Sorry but we're a little overloaded right now and can't "\
     'find addresses. Please try again in a few minutes.'
-
+    set_minimum_password_length
     render :new
   end
 
@@ -81,6 +81,7 @@ class RegistrationsController < Devise::RegistrationsController
       else
         flash[:alert] = "We couldn't find that address. Please provide the"\
         " city, state, and zipcode if you haven't yet."
+        set_minimum_password_length
         render :new
       end
     end
