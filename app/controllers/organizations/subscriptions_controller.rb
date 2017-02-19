@@ -1,11 +1,11 @@
-class Organizations::SubscriptionsController < Organizations::BaseController
+class Organizations::SubscriptionsController < Organizations::MessagesController
   before_action :sync_message
 
   def create
     if person.subscribed_to?(organization)
       AlreadySubscribedJob.perform_later(person, organization)
     else
-      person.subscribers.create!(organization: organization)
+      SurveyorJob.perform_later(subscriber)
     end
     head :ok
   end

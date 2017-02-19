@@ -6,9 +6,10 @@ class CreateCandidacies < ActiveRecord::Migration[5.0]
       t.integer :availability
       t.integer :transportation
       t.string :zipcode
-      t.integer :cpr_first_aid
+      t.boolean :cpr_first_aid
       t.integer :certification
       t.belongs_to :person, null: false, index: true, foreign_key: true
+      t.integer :inquiry
       t.timestamps
     end
   end

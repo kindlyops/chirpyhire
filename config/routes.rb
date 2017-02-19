@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'organizations/base#unsolicited_message'
+  post 'twilio/text' => 'organizations/messages#create'
 
   mount StripeEvent::Engine, at: '/stripe/events'
 

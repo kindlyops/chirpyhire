@@ -17,18 +17,41 @@ RSpec.describe Constraint::Answer do
       context 'with subscriber present' do
         let!(:subscriber) { create(:subscriber, person: person, organization: organization) }
 
-        context 'without outstanding inquiry present' do
+        context 'tied to the candidacy' do
+          before do
+            person.candidacy.update(subscriber: subscriber)
+          end
+
+          context 'without inquiry' do
+            it 'is false' do
+              expect(constraint.matches?(request)).to eq(false)
+            end
+          end
+
+          context 'with inquiry' do
+            before do
+              person.candidacy.update(inquiry: :experience)
+            end
+
+            it 'is true' do
+              expect(constraint.matches?(request)).to eq(true)
+            end
+          end
+        end
+
+        context 'candidacy tied to another subscriber' do
+          before do
+            person.candidacy.update(subscriber: create(:subscriber, person: person))
+          end
+
           it 'is false' do
             expect(constraint.matches?(request)).to eq(false)
           end
         end
 
-        context 'with outstanding inquiry' do
-          let(:message) { create(:message, person: person, organization: organization) }
-          let!(:inquiry) { create(:inquiry, candidacy: person.candidacy, message: message) }
-
-          it 'is true' do
-            expect(constraint.matches?(request)).to eq(true)
+        context 'candidacy not tied to a subscriber' do
+          it 'is false' do
+            expect(constraint.matches?(request)).to eq(false)
           end
         end
       end

@@ -7,7 +7,7 @@ class Person < ApplicationRecord
   before_create :add_nickname
   after_create :create_candidacy
 
-  delegate :outstanding_inquiry, to: :candidacy
+  delegate :inquiry, to: :candidacy
 
   def subscribed_to?(organization)
     subscribers.where(organization: organization).exists?
