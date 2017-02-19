@@ -1,13 +1,21 @@
-class Question::Transportation < Question::Base
-  def to_s
-    <<~BODY
-      Do you have reliable transportation?
+class Question::Transportation < Question::MultipleChoice
+  def question
+    'Do you have reliable transportation?'
+  end
 
-      a) I have personal transportation.
-      b) I use public transportation.
-      c) I do not have reliable transportation.
+  def choices
+    {
+      a: 'I have personal transportation.',
+      b: 'I use public transportation.',
+      c: 'I do not have reliable transportation.'
+    }
+  end
 
-      Please reply with just the letter a, b, or c.
-    BODY
+  def inquiry
+    :transportation
+  end
+
+  def answer
+    Answer::Transportation.new(self)
   end
 end

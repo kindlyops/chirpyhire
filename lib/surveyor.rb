@@ -3,10 +3,17 @@ class Surveyor
     @subscriber = subscriber
   end
 
-  def call
-    return thank_person if candidacy.surveyed?
+  def start
+    return thank_person if candidacy.surveying?
 
     lock_candidacy
+    survey.ask
+  end
+
+  def consider_answer(message)
+    return survey.complete if survey.complete?(message)
+    return survey.restate unless survey.answer.valid?(message)
+    # update candidacy
     survey.ask
   end
 
@@ -21,11 +28,11 @@ class Surveyor
   end
 
   def thank_person
-    organization.message(recipient: person, body: thank_you)
+    organization.message(recipient: person, body: thank_you.body)
   end
 
   def thank_you
-    Question::ThankYou.new(subscriber).to_s
+    Notification::ThankYou.new(subscriber)
   end
 
   attr_reader :subscriber

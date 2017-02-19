@@ -1,14 +1,22 @@
-class Question::Availability < Question::Base
-  def to_s
-    <<~BODY
-      What is your availability?
+class Question::Availability < Question::MultipleChoice
+  def question
+    'What is your availability?'
+  end
 
-      a) Live-In
-      b) Full-Time
-      c) Part-Time
-      d) All the above
+  def choices
+    {
+      a: 'Live-In',
+      b: 'Full-Time',
+      c: 'Part-Time',
+      d: 'All the above'
+    }
+  end
 
-      Please reply with just the letter a, b, c, or d.
-    BODY
+  def inquiry
+    :availability
+  end
+
+  def answer
+    Answer::Availability.new(self)
   end
 end

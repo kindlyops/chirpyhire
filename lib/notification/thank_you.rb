@@ -1,5 +1,5 @@
-class Question::ThankYou < Question::Base
-  def to_s
+class Notification::ThankYou < Notification::Base
+  def body
     <<~BODY
       Thanks for your interest in #{organization.name}!
 

@@ -7,7 +7,7 @@ class Candidacy < ApplicationRecord
     zipcode: 4, cpr_first_aid: 5, certification: 6
   }
 
-  def surveyed?
+  def surveying?
     subscriber.present?
   end
 end

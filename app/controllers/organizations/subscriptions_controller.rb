@@ -21,10 +21,6 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
 
   private
 
-  def subscriber
-    person.subscribers.create!(organization: organization)
-  end
-
   def sync_message
     MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
   end

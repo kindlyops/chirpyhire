@@ -10,6 +10,10 @@ class Organizations::MessagesController < ActionController::Base
 
   private
 
+  def subscriber
+    person.subscribers.find_or_create_by(organization: organization)
+  end
+
   def person
     @person ||= Person.find_or_create_by(phone_number: params['From'])
   end

@@ -1,20 +1,5 @@
 class Organizations::AnswersController < Organizations::MessagesController
   def create
-    if outstanding_inquiry.present?
-      AnswerHandlerJob.perform_later(
-        sender,
-        outstanding_inquiry,
-        params['MessageSid']
-      )
-      head :ok
-    else
-      super
-    end
-  end
-
-  private
-
-  def outstanding_inquiry
-    @outstanding_inquiry ||= sender.outstanding_inquiry
+    SurveyorAnswerJob.perform_later(subscriber, params['MessageSid'])
   end
 end

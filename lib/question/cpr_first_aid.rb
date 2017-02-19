@@ -1,9 +1,20 @@
-class Question::CprFirstAid < Question::Base
-  def to_s
-    <<~BODY
-      Is your CPR / First Aid certification up to date?
+class Question::CprFirstAid < Question::MultipleChoice
+  def question
+    'Is your CPR / First Aid certification up to date?'
+  end
 
-      Please reply with just Yes or No.
-    BODY
+  def choices
+    {
+      a: 'Yes',
+      b: 'No'
+    }
+  end
+
+  def inquiry
+    :cpr_first_aid
+  end
+
+  def answer
+    Answer::CprFirstAid.new(self)
   end
 end
