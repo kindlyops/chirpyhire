@@ -1,0 +1,136 @@
+.conversation {
+
+  .profile {
+    li {
+      flex-flow: column;
+    }
+  }
+
+  .read-messages {
+    overflow-y: scroll;
+    height: 55vh;
+  }
+
+  .write-message {
+    position: relative;
+
+    textarea {
+      resize: none;
+      border: none;
+      height: 60px;
+      padding-right: 45px;
+      padding-top: 13px;
+      width: 765px;
+      height: 80px;
+    }
+  }
+
+  .from-container, .to-container {
+    display: table;
+
+    &:hover {
+      .avatar {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0.1s;
+      }
+
+      .messages {
+        .time-ago {
+          visibility: visible;
+          opacity: 1;
+          transition-delay: 0.1s;
+        }
+      }
+    }
+
+    .avatar {
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s linear 0.5s,opacity 0.5s linear;
+
+      vertical-align: bottom;
+      padding-right: 10px;
+
+      svg, img {
+        width: 32px;
+        height: 32px;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    .messages {
+      display: table-cell;
+
+      .time-ago {
+        vertical-align: middle;
+        font-size: .875rem;
+        color: #adb7be;
+        padding-left: 10px;
+        display: table-cell;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s linear 0.5s,opacity 0.5s linear;
+      }
+
+      .message {
+        display: table-cell;
+        width: 100%;
+        div {
+          background: $gray-lighter;
+          display: inline-block;
+          padding: 10px;
+          border-radius: 22px;
+          font-size: .95rem;
+        }
+      }
+
+      ul {
+        list-style: none;
+        width: 100%;
+        display: table;
+
+        li {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .to-container {
+    ul {
+      padding-left: 5px;
+    }
+  }
+
+  .from-container {
+    .avatar {
+      padding-right: 0;
+      padding-left: 10px;
+    }
+
+    .messages {
+      .time-ago {
+        padding-right: 10px;
+      }
+
+      .message {
+        div {
+          background: $blue;
+          color: $white;
+        }
+      }
+    }
+
+    ul {
+      float: right;
+
+      li {
+        float: right;
+      }
+    }
+  }
+}

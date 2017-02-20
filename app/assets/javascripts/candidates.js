@@ -4,7 +4,10 @@ $(document).on('turbolinks:load', function() {
     var newCandidateTables = $('.candidates table:not([loaded])');
     newCandidateTables.DataTable({
       pageLength: 9,
-      lengthChange: false
+      lengthChange: false,
+      columnDefs: [
+        { orderable: false, targets: 4 }
+      ]
     });
     newCandidateTables.attr('loaded', true);
   }
