@@ -1,7 +1,6 @@
 class Account < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  validate_on_invite
 
   belongs_to :organization
   accepts_nested_attributes_for :organization, reject_if: :all_blank

@@ -11,10 +11,6 @@ class InvitationsController < Devise::InvitationsController
 
   delegate :organization, to: :current_inviter
 
-  def invite_resource(&block)
-    organization.accounts.invite!(invite_params, current_inviter, &block)
-  end
-
   def invite_params
     super.merge(organization: organization)
   end
