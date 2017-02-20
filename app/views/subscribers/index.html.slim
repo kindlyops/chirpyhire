@@ -1,0 +1,23 @@
+= title "Subscribers | ChirpyHire"
+
+.subscribers
+  .card
+    h3.card-header Subscribers
+    .card-block
+      .row
+        .col-md-9
+          table.table.table-responsive.table-hover.table-bordered
+            thead.thead-active
+              tr
+                th Nickname (internal)
+                th Location
+                th Phone Number
+                th Created
+            tbody
+              - @subscribers.each do |subscriber|
+                tr
+                  td = subscriber.handle
+                  td = subscriber.zipcode
+                  td = subscriber.phone_number.phony_formatted
+                  td = "#{time_ago_in_words(subscriber.created_at)} ago"
+
