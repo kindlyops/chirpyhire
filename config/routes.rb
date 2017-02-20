@@ -9,10 +9,7 @@ Rails.application.routes.draw do
 
   resources :subscribers, only: :index do
     resource :conversation, only: :show
-  end
-
-  resources :people, only: :index do
-    resources :messages, only: [:create]
+    resources :messages, only: :create
   end
 
   resources :subscriptions
