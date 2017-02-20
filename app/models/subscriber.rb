@@ -2,7 +2,7 @@ class Subscriber < ApplicationRecord
   belongs_to :person
   belongs_to :organization
 
-  delegate :candidacy, to: :person
+  delegate :candidacy, :handle, :zipcode, :phone_number, to: :person
 
   def unsubscribe!
     update!(subscribed: false)
