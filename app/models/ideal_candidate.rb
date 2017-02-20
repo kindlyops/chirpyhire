@@ -5,4 +5,8 @@ class IdealCandidate < ApplicationRecord
                                 reject_if: :all_blank, allow_destroy: true
 
   validates :zipcodes, presence: true
+
+  def zipcode?(zipcode)
+    zipcodes.pluck(:value).include?(zipcode)
+  end
 end
