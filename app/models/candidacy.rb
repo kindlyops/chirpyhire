@@ -26,4 +26,44 @@ class Candidacy < ApplicationRecord
   def surveying?
     subscriber.present?
   end
+
+  def ideal?(ideal_candidate)
+    complete? && ideal_candidate.zipcode?(zipcode) &&
+      other_attributes_ideal?
+  end
+
+  def complete?
+    surveying? && attributes_present?
+  end
+
+  private
+
+  def other_attributes_ideal?
+    transportable? && experienced? && certified? && skin_test && cpr_first_aid
+  end
+
+  def attributes_present?
+    enum_attributes_present? && boolean_attributes_present?
+  end
+
+  def enum_attributes_present?
+    experience.present? && availability.present? && transportation.present? &&
+      zipcode.present? && certification.present?
+  end
+
+  def boolean_attributes_present?
+    !cpr_first_aid.nil? && !skin_test.nil?
+  end
+
+  def transportable?
+    transportation.present? && transportation != 'no_transportation'
+  end
+
+  def experienced?
+    experience.present? && experience != 'no_experience'
+  end
+
+  def certified?
+    certification.present? && certification != 'no_certification'
+  end
 end
