@@ -20,6 +20,9 @@
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
 //= require trianglify.min.js
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 
