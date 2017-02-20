@@ -6,6 +6,8 @@ class Account < ApplicationRecord
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   has_one :user
 
+  validates :email, uniqueness: true
+
   def self.active
     where(invitation_token: nil)
   end

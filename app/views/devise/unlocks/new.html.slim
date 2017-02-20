@@ -3,7 +3,6 @@
     | Resend unlock instructions
   .card-block
     = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
-      = devise_error_messages!
       .form-group
         = f.label :email, class: "col-form-label"
         = f.email_field :email, autofocus: true, class: "form-control"

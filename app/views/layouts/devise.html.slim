@@ -7,5 +7,7 @@ html
     .container-fluid
       .row
         main.col
-          .mt-3 = render partial: "layouts/alerts"
+          .mt-3
+            = render partial: "layouts/alerts"
+            = devise_error_messages!
           = yield
