@@ -20,10 +20,6 @@
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
 //= require trianglify.min.js
-//= require react
-//= require react_ujs
-//= require react-rails-form-helpers.es6
-//= require components
 //= require_tree .
 
 

@@ -38,5 +38,96 @@
               | 30342
               i.fa.fa-map-marker.ml-2
     .col-md-9
-      = react_component('Conversation', avatar: inline_svg('bird.svg'))
+      .card
+        .card-block.text-center
+          h5 Wayne Henderson
+          p.card-text
+            small.text-muted Last reply 2 days ago at 4:59 pm
+        ul.list-group.list-group-flush
+          li.list-group-item.read-messages
+            .from-container
+              .messages
+                ul
+                  li
+                    .time-ago 1:26
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  li
+                    .time-ago 1:30
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+              .avatar data-toggle="tooltip" data-placement="top" title="ChirpyHire"
+                = inline_svg 'bird.svg'
+            .to-container
+              .avatar data-toggle="tooltip" data-placement="top" title="Wayne Henderson"
+                = inline_svg 'bird.svg'
+              .messages
+                ul
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    .time-ago 1:26
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+                    .time-ago 1:30
+            .from-container
+              .messages
+                ul
+                  li
+                    .time-ago 1:26
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  li
+                    .time-ago 1:30
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+              .avatar data-toggle="tooltip" data-placement="top" title="ChirpyHire"
+                = inline_svg 'bird.svg'
+            .to-container
+              .avatar data-toggle="tooltip" data-placement="top" title="Wayne Henderson"
+                = inline_svg 'bird.svg'
+              .messages
+                ul
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    .time-ago 1:26
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+                    .time-ago 1:30
+            .from-container
+              .messages
+                ul
+                  li
+                    .time-ago 1:26
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  li
+                    .time-ago 1:30
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+              .avatar data-toggle="tooltip" data-placement="top" title="ChirpyHire"
+                = inline_svg 'bird.svg'
+            .to-container
+              .avatar data-toggle="tooltip" data-placement="top" title="Wayne Henderson"
+                = inline_svg 'bird.svg'
+              .messages
+                ul
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    .time-ago 1:26
+                  li
+                    .message
+                      div Lorem Ipsum is simply dummy text...
+                    .time-ago 1:30
+          li.list-group-item.write-message
+            form.chat
+              .form-group
+                textarea.form-control autofocus="true" rows="1" placeholder="Type a message"
+                button.btn.btn-primary type="submit"
+                  span Message
+                  i.fa.fa-paper-plane.white.ml-2
 

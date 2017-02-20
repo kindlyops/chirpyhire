@@ -89,7 +89,6 @@ gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
 gem 'geocoder', '~> 1.4.3'
 gem 'zip-codes', '~> 0.2.1'
-gem 'react-rails', '~> 1.10.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
