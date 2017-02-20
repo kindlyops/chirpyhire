@@ -13,15 +13,4 @@ class Account < ApplicationRecord
   def send_reset_password_instructions
     super if invitation_token.nil?
   end
-
-  def self.accept_invitation!(attributes = {})
-    original_token = attributes.delete(:invitation_token)
-    invitable = find_by_invitation_token(original_token, false)
-    if invitable.errors.empty?
-      invitable.user.assign_attributes(attributes.delete(:user_attributes))
-      invitable.assign_attributes(attributes)
-      invitable.accept_invitation!
-    end
-    invitable
-  end
 end

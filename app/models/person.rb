@@ -7,7 +7,7 @@ class Person < ApplicationRecord
   before_create :add_nickname
   after_create :create_candidacy
 
-  delegate :inquiry, to: :candidacy
+  delegate :inquiry, :zipcode, to: :candidacy
 
   def subscribed_to?(organization)
     subscribers.where(organization: organization).exists?
@@ -16,6 +16,12 @@ class Person < ApplicationRecord
   def subscribed_to(organization)
     subscribers.find_by(organization: organization)
   end
+
+  def handle
+    full_name || nickname
+  end
+
+  private
 
   def add_nickname
     self.nickname = Nickname::Generator.new(self).generate

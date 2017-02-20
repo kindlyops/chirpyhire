@@ -7,10 +7,9 @@
       = devise_error_messages!
       = f.hidden_field :agreed_to_terms, value: true
       = f.hidden_field :invitation_token
-      = f.fields_for :user do |user_form|
-        .form-group
-          = user_form.label :name, class: "col-form-label"
-          = user_form.text_field :name, required: true, class: "form-control"
+      .form-group
+        = f.label :email, class: "col-form-label"
+        = f.email_field :email, required: true, class: "form-control"
       - if f.object.class.require_password_on_accepting
         .form-group
           = f.label :password, class: "col-form-label"
@@ -21,4 +20,4 @@
         '  and accept our
         a target="_blank" href="https://chirpyhire.com/privacy-policy" Privacy Policy.
       .form-group
-        = f.submit "Sign Up", class: "btn btn-primary"
+        = f.submit "Sign Up", role: "button", class: "btn btn-primary"

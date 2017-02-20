@@ -4,7 +4,7 @@ RSpec.describe Constraint::OptOut do
   let(:request) { ActionDispatch::Request.new({}) }
   let(:constraint) { Constraint::OptOut.new }
 
-  before(:each) do
+  before do
     allow(request).to receive(:request_parameters).and_return(parameters)
   end
 
