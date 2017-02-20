@@ -1,36 +1,32 @@
 class InvitationsController < Devise::InvitationsController
-  before_action :add_user_params, only: :update
+  before_action :add_account_params, only: :update
 
   def edit
-    set_minimum_password_length if respond_to? :set_minimum_password_length
+    set_minimum_password_length
     resource.invitation_token = params[:invitation_token]
-    resource.user
     render :edit
   end
 
   private
+
+  delegate :organization, to: :current_inviter
 
   def invite_resource(&block)
     organization.accounts.invite!(invite_params, current_inviter, &block)
   end
 
   def invite_params
-    super.merge(user_attributes: { organization: organization })
+    super.merge(organization: organization)
   end
 
-  def after_invite_path_for(_inviter)
-    survey_path
+  def after_invite_path_for(*)
+    candidate_path
   end
 
-  def organization
-    current_inviter.organization
-  end
-
-  def add_user_params
+  def add_account_params
     devise_parameter_sanitizer.permit(
       :accept_invitation,
-      keys: [:agreed_to_terms,
-             user_attributes: [:name]]
+      keys: [:agreed_to_terms, :email]
     )
   end
 end

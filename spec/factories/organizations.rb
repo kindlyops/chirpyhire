@@ -4,6 +4,7 @@ FactoryGirl.define do
 
     after(:create) do |organization|
       create(:location, organization: organization)
+      create(:ideal_candidate, organization: organization)
     end
 
     trait :with_subscription do

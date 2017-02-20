@@ -5,7 +5,7 @@ RSpec.describe Constraint::Answer do
   let(:constraint) { Constraint::Answer.new }
   let(:organization) { create(:organization) }
 
-  before(:each) do
+  before do
     allow(request).to receive(:request_parameters).and_return(parameters)
   end
 

@@ -10,20 +10,14 @@
             thead.thead-active
               tr
                 th Nickname (internal)
-                th Stage
                 th Location
                 th Phone Number
                 th Created
-                th
             tbody
               - @dashboard.candidates.each do |candidate|
                 tr
                   td = candidate.handle
-                  td = candidate.stage
                   td = candidate.zipcode
-                  td = candidate.user_phone_number
+                  td = candidate.phone_number.phony_formatted
                   td = "#{time_ago_in_words(candidate.created_at)} ago"
-                  td
-                    = link_to user_messages_path(candidate.user), class: "btn btn-primary" do
-                      i.fa.fa-commenting-o
 
