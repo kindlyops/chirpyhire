@@ -1,13 +1,6 @@
-.card.mb-2.conversation
-  .card-block
-    = link_to user_messages_path(conversation.user), id: "conversation-#{conversation.id}" do
-      .float-right
-        span.conversation-detail
-          = "#{time_ago_in_words(conversation.created_at, locale: :en_abbrev)}"
-        - if conversation.user.has_unread_messages?
-          span.conversation-status.ml-1
-            i.fa.fa-circle
-      .conversation-content
-        h4.handle = conversation.user_handle
-        span = conversation.user_phone_number
-        = render partial: "conversations/#{conversation.contents}", locals: { conversation: conversation }
+.card
+  = render partial: 'conversations/header', locals: { conversation: conversation }
+  ul.list-group.list-group-flush
+    = render partial: 'conversations/messages', locals: { conversation: conversation }
+    = render partial: 'conversations/composer', locals: { conversation: conversation }
+

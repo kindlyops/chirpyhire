@@ -8,6 +8,10 @@ class Subscriber < ApplicationRecord
     where(subscribed: true)
   end
 
+  def messages
+    person.messages.where(organization: organization)
+  end
+
   def unsubscribe!
     update!(subscribed: false)
   end

@@ -1,0 +1,7 @@
+li.list-group-item.write-message
+  = form_for [conversation.subscriber, conversation.messages.build] do |f|
+    .form-group
+      = f.text_area :body, autofocus: true, rows: 1, placeholder: 'Type a message', class: 'form-control'
+      = button_tag type: 'submit', role: 'button', class: 'btn btn-primary' do
+        span Message
+        i.fa.fa-paper-plane.white.ml-2

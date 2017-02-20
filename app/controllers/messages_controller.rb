@@ -7,14 +7,14 @@ class MessagesController < ApplicationController
     if authorize @message
       create_message
     else
-      render :new
+      render 'conversations/show'
     end
   end
 
   private
 
   def create_message
-    current_organization.message(recipient: subscriber.person, body: body)
+    current_organization.message(recipient: conversation.person, body: body)
     notice = 'Message sent!'
     redirect_to subscriber_conversation_path(subscriber), notice: notice
   end
@@ -25,13 +25,15 @@ class MessagesController < ApplicationController
 
   def scoped_messages
     policy_scope(Message).where(
-      person: subscriber.person,
+      person: conversation.person,
       organization: current_organization
     )
   end
 
-  def subscriber
-    @subscriber ||= authorize(Subscriber.find(params[:subscriber_id]))
+  def conversation
+    @conversation ||= begin
+      authorize Conversation.new(Subscriber.find(params[:subscriber_id]))
+    end
   end
 
   def message_not_authorized
@@ -39,7 +41,7 @@ class MessagesController < ApplicationController
   end
 
   def error_message
-    "Unfortunately #{subscriber.handle} has unsubscribed! You can't text them "\
-    'using ChirpyHire.'
+    "Unfortunately #{conversation.person_handle} has unsubscribed! You can't "\
+    'text them using ChirpyHire.'
   end
 end
