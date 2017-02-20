@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
   def with_rate_limit_protection
     yield
   rescue Geocoder::OverQueryLimitError => e
-    Rails.logger.debug(e.message)
+    Rollbar.debug(e.message)
     flash[:alert] = rate_limit_message
     set_minimum_password_length
     render :new

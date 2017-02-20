@@ -26,7 +26,7 @@ class Person < ApplicationRecord
   def add_nickname
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
-    Rails.logger.debug(e)
+    Rollbar.debug(e)
     self.nickname = 'Anonymous'
   end
 end
