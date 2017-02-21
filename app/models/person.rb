@@ -7,9 +7,7 @@ class Person < ApplicationRecord
   before_create :add_nickname
   after_create :create_candidacy
 
-  delegate :inquiry, :zipcode, :available?, :availability,
-           :transportable?, :transportation,
-           to: :candidacy
+  delegate :inquiry, :zipcode, to: :candidacy
 
   def subscribed_to?(organization)
     subscribers.where(organization: organization).exists?

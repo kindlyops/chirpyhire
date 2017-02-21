@@ -6,14 +6,13 @@ class Conversation
   end
 
   def message_groups
-    messages.by_recency.chunk(&:direction).map(&method(:group)).reverse
+    messages.by_recency.chunk(&:author).map(&method(:group)).reverse
   end
 
   attr_reader :subscriber
 
   delegate :id, :person, :messages, to: :subscriber
-  delegate :handle, :available?, :availability,
-           :transportable?, :transportation, to: :person, prefix: true
+  delegate :handle, to: :person, prefix: true
   delegate :last_reply_at, to: :messages
 
   def recently_replied?

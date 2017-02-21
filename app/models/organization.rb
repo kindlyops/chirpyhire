@@ -25,12 +25,12 @@ class Organization < ApplicationRecord
     subscription.present? && subscription.new_record?
   end
 
-  def message(recipient:, body:)
+  def message(recipient:, body:, manual: false)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    create_message(recipient, sent_message)
+    create_message(recipient, sent_message, manual)
   end
 
   def get_message(sid)
@@ -39,14 +39,15 @@ class Organization < ApplicationRecord
 
   private
 
-  def create_message(recipient, message)
+  def create_message(recipient, message, manual)
     messages.create(
       person: recipient,
       sid: message.sid,
       body: message.body,
       sent_at: message.date_sent,
       external_created_at: message.date_created,
-      direction: message.direction
+      direction: message.direction,
+      manual: manual
     )
   end
 

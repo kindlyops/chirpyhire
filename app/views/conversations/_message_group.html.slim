@@ -1,4 +1,4 @@
-- if message_group.inbound?
+- if message_group.person?
   .message-group.inbound
     .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
       = inline_svg 'caregiver_bird.svg'
@@ -9,8 +9,8 @@
             .message.d-inline
               div = message.body
             .time-ago.d-inline = message.time_ago
-- else
-  .message-group.outbound
+- elsif message_group.bot?
+  .message-group.outbound.bot
     .messages.mr-5
       ul
         - message_group.messages.each do |message|
@@ -19,4 +19,15 @@
             .message.d-inline
               div = message.body
     .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
-      = inline_svg 'agency_bird.svg'
+      = inline_svg 'chirpyhire_bird.svg'
+- else
+  .message-group.outbound.organization
+    .messages.mr-5
+      ul
+        - message_group.messages.each do |message|
+          li
+            .time-ago.d-inline = message.time_ago
+            .message.d-inline
+              div = message.body
+    .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
+      i.fa.fa-home.fa-2x

@@ -5,8 +5,16 @@ class Conversation::MessageGroup
     @group = group
   end
 
-  def inbound?
-    group[0] == 'inbound'
+  def person?
+    group[0] == :person
+  end
+
+  def bot?
+    group[0] == :bot
+  end
+
+  def organization?
+    group[0] == :organization
   end
 
   def messages
@@ -22,7 +30,8 @@ class Conversation::MessageGroup
   end
 
   def avatar_title
-    return person.handle if inbound?
+    return person.handle if person?
+    return 'ChirpyHire' if bot?
     organization.name
   end
 end

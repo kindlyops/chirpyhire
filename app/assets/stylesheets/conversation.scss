@@ -52,6 +52,18 @@
         padding-left: 10px;
       }
 
+      &.bot {
+        .messages .message div {
+          background: $blue;
+        }
+      }
+
+      &.organization {
+        .messages .message div {
+          background: $green;
+        }
+      }
+
       .messages {
         .time-ago {
           padding-right: 10px;
@@ -59,7 +71,6 @@
 
         .message {
           div {
-            background: $blue;
             color: $white;
           }
         }

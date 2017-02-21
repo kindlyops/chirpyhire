@@ -10,6 +10,20 @@ class Message < ApplicationRecord
     where(direction: 'inbound')
   end
 
+  def author
+    return :organization if outbound? && manual?
+    return :bot if outbound?
+    :person
+  end
+
+  def outbound?
+    !inbound?
+  end
+
+  def inbound?
+    direction == 'inbound'
+  end
+
   def self.last_reply_at
     replies.by_recency.first.created_at
   end

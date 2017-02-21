@@ -14,7 +14,11 @@ class MessagesController < ApplicationController
   private
 
   def create_message
-    current_organization.message(recipient: conversation.person, body: body)
+    current_organization.message(
+      recipient: conversation.person,
+      body: body,
+      manual: true
+    )
     notice = 'Message sent!'
     redirect_to subscriber_conversation_path(subscriber), notice: notice
   end
