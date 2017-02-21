@@ -8,7 +8,12 @@ class FakeMessage
   attr_reader :body, :to, :from
 
   def sid
-    "MESSAGE_SID_#{Message.last.id + 1}"
+    "MESSAGE_SID_#{sid_sequence}"
+  end
+
+  def sid_sequence
+    return 1 unless Message.last.present?
+    Message.last.id + 1
   end
 
   def date_sent

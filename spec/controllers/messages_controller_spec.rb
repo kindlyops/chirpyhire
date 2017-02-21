@@ -22,18 +22,18 @@ RSpec.describe MessagesController do
     context 'and the subscriber is active' do
       it 'creates a message' do
         expect {
-          post :create, params: params
+          post :create, params: params, xhr: true
         }.to change { organization.messages.count }.by(1)
       end
 
       it 'is a manual message' do
-        post :create, params: params
+        post :create, params: params, xhr: true
         expect(organization.messages.last.manual?).to eq(true)
       end
 
       it 'sends a message' do
         expect {
-          post :create, params: params
+          post :create, params: params, xhr: true
         }.to change { FakeMessaging.messages.count }.by(1)
       end
     end
@@ -45,18 +45,18 @@ RSpec.describe MessagesController do
 
       it 'does not create a message' do
         expect {
-          post :create, params: params
+          post :create, params: params, xhr: true
         }.not_to change { organization.messages.count }
       end
 
       it 'does not send a message' do
         expect {
-          post :create, params: params
+          post :create, params: params, xhr: true
         }.not_to change { FakeMessaging.messages.count }
       end
 
       it 'lets the user know why' do
-        post :create, params: params
+        post :create, params: params, xhr: true
         expect(flash[:alert]).to include('unsubscribed')
       end
     end
