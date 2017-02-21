@@ -2,16 +2,26 @@
   color: $gray-light;
 }
 
-.fa-usd, .fa-battery-full {
+.fa-usd, .fa-battery-full, .fa-check-circle {
   color: $green;
 }
 
-.fa-bus {
+.fa-bus, .fa-trophy {
   color: $yellow;
 }
 
 .fa-id-card, .fa-car {
   color: $purple;
+}
+
+.fa-mobile {
+  &.subscribed {
+    color: $green;
+  }
+
+  &.unsubscribed {
+    color: $gray;
+  }
 }
 
 .fa-sign-out, .fa-users, .fa-map-marker {

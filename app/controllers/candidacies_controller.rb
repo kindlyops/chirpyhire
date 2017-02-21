@@ -1,4 +1,5 @@
 class CandidaciesController < ApplicationController
+  decorates_assigned :candidacies
 
   def index
     @candidacies = policy_scope(Candidacy)
