@@ -5,32 +5,32 @@
   ul.list-group.list-group-flush
     li.list-group-item
       h6.card-text Availability
-      span.mb-2.btn class==conversation.button_class(:available?)
-        = conversation.availability
-        i.fa.ml-2 class==conversation.icon_class(:availability)
+      span.mb-2.btn class==conversation.availability.button_class
+        = conversation.availability.label
+        i.fa.ml-2 class==conversation.availability.icon_class
     li.list-group-item
       h6.card-text Transportation
-      span.mb-2.btn class==conversation.button_class(:transportable?)
-        = conversation.transportation
-        i.fa.ml-2 class==conversation.icon_class(:transportation)
+      span.mb-2.btn class==conversation.transportation.button_class
+        = conversation.transportation.label
+        i.fa.ml-2 class==conversation.transportation.icon_class
     li.list-group-item
       h6.card-text Experience
-      span.mb-2.btn class==conversation.button_class(:experienced?)
-        = conversation.experience
-        i.fa.ml-2 class==conversation.icon_class(:experience)
+      span.mb-2.btn class==conversation.experience.button_class
+        = conversation.experience.label
+        i.fa.ml-2 class==conversation.experience.icon_class
     li.list-group-item
       h6.card-text Qualifications
       - if conversation.qualifications.present?
         - conversation.qualifications.each do |qualification|
-          span.mb-2.btn.btn-secondary
-            = conversation.humanize_attribute(qualification)
-            i.fa.ml-2 class==conversation.icon_class(qualification)
+          span.mb-2.btn class==qualification.button_class
+            = qualification.label
+            i.fa.ml-2 class==qualification.icon_class
       - else
         span.btn.btn-outline-secondary
           | Unknown
           i.fa.fa-question.ml-2
     li.list-group-item
       h6.card-text Location
-      span.mb-2.btn class==conversation.button_class(:locatable?)
-        = conversation.location
-        i.fa.ml-2 class==conversation.icon_class(:location)
+      span.mb-2.btn class==conversation.zipcode.button_class
+        = conversation.zipcode.label
+        i.fa.ml-2 class==conversation.zipcode.icon_class
