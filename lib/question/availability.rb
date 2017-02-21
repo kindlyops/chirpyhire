@@ -8,7 +8,8 @@ class Question::Availability < Question::MultipleChoice
       a: 'Live-In',
       b: 'Full-Time',
       c: 'Part-Time',
-      d: 'Flexible'
+      d: 'Flexible',
+      e: 'None'
     }
   end
 

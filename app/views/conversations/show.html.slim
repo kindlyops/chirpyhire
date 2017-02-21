@@ -1,41 +1,6 @@
 .conversation
   .row
     .col-md-3
-      .card.mb-4.profile
-        h4.card-header
-          i.fa.fa-user.mr-2
-          | Profile
-        ul.list-group.list-group-flush
-          li.list-group-item
-            h6.card-text Availability
-            span.mb-2.btn.btn-secondary
-              | Full-Time
-              i.fa.fa-hourglass.ml-2
-          li.list-group-item
-            h6.card-text Transportation
-            span.mb-2.btn.btn-secondary
-              | Public
-              i.fa.fa-bus.ml-2
-          li.list-group-item
-            h6.card-text Experience
-            span.mb-2.btn.btn-secondary
-              | 1 - 5 years
-              i.fa.fa-battery-half.ml-2
-          li.list-group-item
-            h6.card-text Qualifications
-            span.mb-2.btn.btn-secondary
-              | CNA
-              i.fa.fa-heart.ml-2
-            span.mb-2.btn.btn-secondary
-              | CPR / 1st Aid
-              i.fa.fa-medkit.ml-2
-            span.mb-2.btn.btn-secondary
-              | Skin / TB Test
-              i.fa.fa-newspaper-o.ml-2
-          li.list-group-item
-            h6.card-text Location
-            span.mb-2.btn.btn-secondary
-              | 30342
-              i.fa.fa-map-marker.ml-2
+      = render partial: 'conversations/profile', locals: { conversation: conversation }
     .col-md-9
       = render partial: 'conversations/conversation', locals: { conversation: conversation }

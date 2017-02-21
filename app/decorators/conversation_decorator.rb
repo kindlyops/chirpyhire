@@ -1,5 +1,10 @@
 class ConversationDecorator < Draper::Decorator
   delegate_all
+  decorates_association :person
+
+  delegate :button_class, :icon_class, :availability,
+  :transportation, :experience, :qualifications,
+  :location, :humanize_attribute, to: :person
 
   def last_reply
     return 'The conversation is just beginning!' if messages.empty?

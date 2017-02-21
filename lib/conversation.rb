@@ -12,7 +12,8 @@ class Conversation
   attr_reader :subscriber
 
   delegate :id, :person, :messages, to: :subscriber
-  delegate :handle, to: :person, prefix: true
+  delegate :handle, :available?, :availability,
+  :transportable?, :transportation, to: :person, prefix: true
   delegate :last_reply_at, to: :messages
 
   def recently_replied?

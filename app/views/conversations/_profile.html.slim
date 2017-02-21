@@ -1,0 +1,36 @@
+.card.mb-4.profile
+  h4.card-header
+    i.fa.fa-user.mr-2
+    | Profile
+  ul.list-group.list-group-flush
+    li.list-group-item
+      h6.card-text Availability
+      span.mb-2.btn class==conversation.button_class(:available?)
+        = conversation.availability
+        i.fa.ml-2 class==conversation.icon_class(:availability)
+    li.list-group-item
+      h6.card-text Transportation
+      span.mb-2.btn class==conversation.button_class(:transportable?)
+        = conversation.transportation
+        i.fa.ml-2 class==conversation.icon_class(:transportation)
+    li.list-group-item
+      h6.card-text Experience
+      span.mb-2.btn class==conversation.button_class(:experienced?)
+        = conversation.experience
+        i.fa.ml-2 class==conversation.icon_class(:experience)
+    li.list-group-item
+      h6.card-text Qualifications
+      - if conversation.qualifications.present?
+        - conversation.qualifications.each do |qualification|
+          span.mb-2.btn.btn-secondary
+            = conversation.humanize_attribute(qualification)
+            i.fa.ml-2 class==conversation.icon_class(qualification)
+      - else
+        span.btn.btn-outline-secondary
+          | Unknown
+          i.fa.fa-question.ml-2
+    li.list-group-item
+      h6.card-text Location
+      span.mb-2.btn class==conversation.button_class(:locatable?)
+        = conversation.location
+        i.fa.ml-2 class==conversation.icon_class(:location)
