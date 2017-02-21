@@ -36,9 +36,12 @@ class MessagesController < ApplicationController
 
   def conversation
     @conversation ||= begin
-      authorize Conversation.new(Subscriber.find(params[:subscriber_id]))
+      conversation = Conversation.new(Subscriber.find(params[:subscriber_id]))
+      authorize conversation, :show?
     end
   end
+
+  delegate :subscriber, to: :conversation
 
   def message_not_authorized
     redirect_to subscriber_conversation_path(subscriber), alert: error_message
