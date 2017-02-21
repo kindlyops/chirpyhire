@@ -5,6 +5,10 @@ class Conversation
     @subscriber = subscriber
   end
 
+  def message_groups
+    messages.by_recency.chunk(&:direction).map(&method(:group)).reverse
+  end
+
   attr_reader :subscriber
 
   delegate :id, :person, :messages, to: :subscriber
@@ -13,5 +17,11 @@ class Conversation
 
   def recently_replied?
     last_reply_at > 24.hours.ago
+  end
+
+  private
+
+  def group(group)
+    Conversation::MessageGroup.new(group)
   end
 end

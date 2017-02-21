@@ -13,4 +13,8 @@ class Message < ApplicationRecord
   def self.last_reply_at
     replies.by_recency.first.created_at
   end
+
+  def time_ago
+    external_created_at.strftime('%I:%M')
+  end
 end

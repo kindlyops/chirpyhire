@@ -1,0 +1,22 @@
+- if message_group.inbound?
+  .message-group.inbound
+    .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
+      = inline_svg 'bird.svg'
+    .messages.ml-5
+      ul
+        - message_group.messages.each do |message|
+          li
+            .message.d-inline
+              div = message.body
+            .time-ago.d-inline = message.time_ago
+- else
+  .message-group.outbound
+    .messages.mr-5
+      ul
+        - message_group.messages.each do |message|
+          li
+            .time-ago.d-inline = message.time_ago
+            .message.d-inline
+              div = message.body
+    .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
+      = inline_svg 'bird.svg'
