@@ -1,7 +1,7 @@
 - if message_group.inbound?
   .message-group.inbound
     .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
-      = inline_svg 'bird.svg'
+      = inline_svg 'caregiver_bird.svg'
     .messages.ml-5
       ul
         - message_group.messages.each do |message|
@@ -19,4 +19,4 @@
             .message.d-inline
               div = message.body
     .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
-      = inline_svg 'bird.svg'
+      = inline_svg 'agency_bird.svg'

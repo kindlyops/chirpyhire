@@ -7,9 +7,18 @@
     }
   }
 
+  .empty-messages, .read-messages {
+    height: 55vh;
+  }
+
+  .empty-messages {
+    .fa-commenting {
+      font-size: 5em;
+    }
+  }
+
   .read-messages {
     overflow-y: scroll;
-    height: 55vh;
   }
 
   .write-message {
