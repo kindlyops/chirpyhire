@@ -4,10 +4,10 @@ class MessagesController < ApplicationController
   def create
     @message = scoped_messages.build
 
-    if authorize @message
-      create_message
-    else
-      render 'conversations/show'
+    create_message if authorize @message
+
+    respond_to do |format|
+      format.js {}
     end
   end
 

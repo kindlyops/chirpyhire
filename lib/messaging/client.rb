@@ -1,7 +1,6 @@
 class Messaging::Client
   cattr_accessor :client
   cattr_accessor :master
-  self.client = Twilio::REST::Client
 
   def initialize(context)
     @account_sid = context.twilio_account_sid
