@@ -8,8 +8,8 @@ class Person < ApplicationRecord
   after_create :create_candidacy
 
   delegate :inquiry, :zipcode, :available?, :availability,
-  :transportable?, :transportation,
-   to: :candidacy
+           :transportable?, :transportation,
+           to: :candidacy
 
   def subscribed_to?(organization)
     subscribers.where(organization: organization).exists?

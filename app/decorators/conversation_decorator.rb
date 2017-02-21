@@ -23,12 +23,12 @@ class ConversationDecorator < Draper::Decorator
 
   def last_reply
     return 'The conversation is just beginning!' if messages.empty?
-    "Last reply #{conversation.last_reply_at}"
+    "Last reply #{last_reply_at}"
   end
 
   def empty_state_message
     'To start the conversation, type your message in the box below '\
-    "and then click 'Message'. We hope #{conversation.person_handle} "\
+    "and then click 'Message'. We hope #{person_handle} "\
     'is a great fit!'
   end
 

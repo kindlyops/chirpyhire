@@ -3,7 +3,7 @@ class Candidacy::Qualifications < Candidacy::Attribute
     [
       Candidacy::Certification.new(candidacy),
       Candidacy::SkinTest.new(candidacy),
-      Candidacy::CprFirstAid.new(candidacy),
+      Candidacy::CprFirstAid.new(candidacy)
     ]
   end
 

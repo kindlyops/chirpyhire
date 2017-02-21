@@ -13,7 +13,7 @@ class Conversation
 
   delegate :id, :person, :messages, to: :subscriber
   delegate :handle, :available?, :availability,
-  :transportable?, :transportation, to: :person, prefix: true
+           :transportable?, :transportation, to: :person, prefix: true
   delegate :last_reply_at, to: :messages
 
   def recently_replied?
