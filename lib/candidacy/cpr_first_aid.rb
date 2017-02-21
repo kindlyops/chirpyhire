@@ -8,7 +8,7 @@ class Candidacy::CprFirstAid < Candidacy::Attribute
   end
 
   def icon_class
-    return 'fa-question' unless candidacy.cpr_first_aid.present?
+    return 'fa-question' if candidacy.cpr_first_aid.nil?
 
     'fa-medkit'
   end

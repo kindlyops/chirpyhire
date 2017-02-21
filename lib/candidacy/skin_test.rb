@@ -8,7 +8,7 @@ class Candidacy::SkinTest < Candidacy::Attribute
   end
 
   def icon_class
-    return 'fa-question' unless candidacy.skin_test.present?
+    return 'fa-question' if candidacy.skin_test.nil?
 
     'fa-newspaper-o'
   end
