@@ -12,7 +12,7 @@ class Candidacy < ApplicationRecord
   }
 
   enum availability: {
-    live_in: 0, full_time: 1, part_time: 2, flexible: 3
+    live_in: 0, full_time: 1, part_time: 2, flexible: 3, no_availability: 4
   }
 
   enum transportation: {
@@ -36,6 +36,27 @@ class Candidacy < ApplicationRecord
     surveying? && attributes_present?
   end
 
+  def transportable?
+    transportation.present? && transportation != 'no_transportation'
+  end
+
+  def experienced?
+    experience.present? && experience != 'no_experience'
+  end
+
+  def certified?
+    certification.present? && certification != 'no_certification'
+  end
+
+  def available?
+    availability.present?
+  end
+
+  def locatable?
+    zipcode.present?
+  end
+  alias_attribute :location, :zipcode
+
   private
 
   def other_attributes_ideal?
@@ -53,17 +74,5 @@ class Candidacy < ApplicationRecord
 
   def boolean_attributes_present?
     !cpr_first_aid.nil? && !skin_test.nil?
-  end
-
-  def transportable?
-    transportation.present? && transportation != 'no_transportation'
-  end
-
-  def experienced?
-    experience.present? && experience != 'no_experience'
-  end
-
-  def certified?
-    certification.present? && certification != 'no_certification'
   end
 end

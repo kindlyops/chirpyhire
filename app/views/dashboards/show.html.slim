@@ -13,6 +13,7 @@
                 th Location
                 th Phone Number
                 th Created
+                th
             tbody
               - @dashboard.candidates.each do |candidate|
                 tr
@@ -20,4 +21,7 @@
                   td = candidate.zipcode
                   td = candidate.phone_number.phony_formatted
                   td = "#{time_ago_in_words(candidate.created_at)} ago"
+                  td
+                    = link_to subscriber_conversation_path(candidate.subscribed_to(current_organization)), class: "btn btn-primary" do
+                      i.fa.fa-commenting-o
 

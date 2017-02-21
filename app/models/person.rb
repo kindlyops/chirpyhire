@@ -13,6 +13,10 @@ class Person < ApplicationRecord
     subscribers.where(organization: organization).exists?
   end
 
+  def actively_subscribed_to?(organization)
+    subscribers.active.where(organization: organization).exists?
+  end
+
   def subscribed_to(organization)
     subscribers.find_by(organization: organization)
   end

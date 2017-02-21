@@ -6,11 +6,15 @@
   color: $green;
 }
 
-.fa-id-card {
+.fa-bus {
+  color: $yellow;
+}
+
+.fa-id-card, .fa-car {
   color: $purple;
 }
 
-.fa-sign-out, .fa-users {
+.fa-sign-out, .fa-users, .fa-map-marker {
   color: $blue;
 
   &.black {

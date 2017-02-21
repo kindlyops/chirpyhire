@@ -4,6 +4,14 @@ class Subscriber < ApplicationRecord
 
   delegate :candidacy, :handle, :zipcode, :phone_number, to: :person
 
+  def self.active
+    where(subscribed: true)
+  end
+
+  def messages
+    person.messages.where(organization: organization)
+  end
+
   def unsubscribe!
     update!(subscribed: false)
   end
