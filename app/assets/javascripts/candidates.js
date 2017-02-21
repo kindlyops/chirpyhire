@@ -11,23 +11,33 @@ $(document).on('turbolinks:load', function() {
       smartDisplay: true,
       mobileResponsive: true,
       columns: [{
-          field: 'contact_information',
-          title: 'Contact Info',
+          field: 'contact',
+          title: 'Contact',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.handle.button_class + ' mb-2">' +
                       value.handle.label +
                   '<i class="fa '+ value.handle.icon_class + ' ml-2"></i>' +
                   '</span>' +
-                  '<span class="d-block btn ' + value.phone_number.button_class + '">' +
-                      value.phone_number.label +
-                  '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
-                  '</span>';
+                  '<a role="button" href="/subscribers/' + value.phone_number.subscriber_id + '/conversation" class="btn ' + value.phone_number.button_class + '">'
+                    + value.phone_number.label +
+                    '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
+                  '</a>';
           }
       }, {
           field: 'location',
           title: 'Location',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.button_class + ' mb-2">' +
                       value.label +
@@ -38,6 +48,11 @@ $(document).on('turbolinks:load', function() {
           field: 'availability',
           title: 'Availability',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.availability.button_class + ' mb-2">' +
                       value.availability.label +
@@ -52,6 +67,11 @@ $(document).on('turbolinks:load', function() {
           field: 'experience',
           title: 'Experience',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.button_class + ' mb-2">' +
                       value.label +
@@ -62,6 +82,11 @@ $(document).on('turbolinks:load', function() {
           field: 'qualifications',
           title: 'Qualifications',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.certification.button_class + ' mb-2">' +
                       value.certification.label +
@@ -77,23 +102,22 @@ $(document).on('turbolinks:load', function() {
                   '</span>';
           }
       }, {
-          field: 'subscribed',
-          title: 'Subscribed',
-          sortable: true,
-          formatter: function(value, row, index) {
-            return '<span class="d-block btn ' + value.button_class + ' mb-2">' +
-                      value.label +
-                  '<i class="fa '+ value.icon_class + ' ml-2"></i>' +
-                  '</span>';
-          }
-      }, {
           field: 'status',
           title: 'Status',
           sortable: true,
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          },
           formatter: function(value, row, index) {
-            return '<span class="d-block btn ' + value.button_class + ' mb-2">' +
-                      value.label +
-                  '<i class="fa '+ value.icon_class + ' ml-2"></i>' +
+            return '<span class="d-block btn ' + value.subscribed.button_class + ' mb-2">' +
+                      value.subscribed.label +
+                  '<i class="fa '+ value.subscribed.icon_class + ' ml-2"></i>' +
+                  '</span>' +
+                  '<span class="d-block btn ' + value.status.button_class + ' mb-2">' +
+                      value.status.label +
+                  '<i class="fa '+ value.status.icon_class + ' ml-2"></i>' +
                   '</span>';
           }
       }],

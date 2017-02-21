@@ -6,6 +6,10 @@ class Candidacy::Subscribed < Candidacy::Attribute
 
   attr_reader :organization
 
+  def id
+    candidacy.subscribed_to(organization).id
+  end
+
   def label
     humanize_attribute(candidacy.subscribed_to?(organization)) || 'Unknown'
   end

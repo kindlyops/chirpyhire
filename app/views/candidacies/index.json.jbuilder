@@ -1,5 +1,5 @@
 json.array! candidacies do |candidacy|
-  json.contact_information do
+  json.contact do
     json.handle do
       json.label candidacy.handle.label
       json.icon_class candidacy.handle.icon_class
@@ -10,6 +10,7 @@ json.array! candidacies do |candidacy|
       json.label candidacy.phone_number.label
       json.icon_class candidacy.phone_number.icon_class
       json.button_class candidacy.phone_number.button_class
+      json.subscriber_id candidacy.subscribed.id
     end
   end
 
@@ -59,15 +60,17 @@ json.array! candidacies do |candidacy|
     end
   end
 
-  json.subscribed do
-    json.label candidacy.subscribed.label
-    json.icon_class candidacy.subscribed.icon_class
-    json.button_class candidacy.subscribed.button_class
-  end
-
   json.status do
-    json.label candidacy.status.label
-    json.icon_class candidacy.status.icon_class
-    json.button_class candidacy.status.button_class
+    json.subscribed do
+      json.label candidacy.subscribed.label
+      json.icon_class candidacy.subscribed.icon_class
+      json.button_class candidacy.subscribed.button_class
+    end
+
+    json.status do
+      json.label candidacy.status.label
+      json.icon_class candidacy.status.icon_class
+      json.button_class candidacy.status.button_class
+    end
   end
 end

@@ -3,7 +3,7 @@
 @import "bootstrap-table";
 
 body {
-  background-color: #ECEFF4;
+  background-color: $gray-lighter;
 }
 
 main.application {
@@ -18,4 +18,6 @@ main.application {
 
 @import "ideal_candidate";
 @import "conversation";
+@import "dashboard";
+
 

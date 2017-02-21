@@ -3,6 +3,12 @@
 
   .table {
     background-color: $white;
+
+    @media(max-width: 562px) {
+      tr {
+        border-bottom: 4px solid $gray-lighter;
+      }
+    }
   }
 
   .fixed-table-container.table-no-bordered {

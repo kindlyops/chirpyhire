@@ -8,4 +8,8 @@ class Candidacy::PhoneNumber < Candidacy::Attribute
 
     'fa-phone'
   end
+
+  def button_class
+    'btn-primary'
+  end
 end
