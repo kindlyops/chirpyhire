@@ -2,6 +2,8 @@ class Candidacy < ApplicationRecord
   belongs_to :person
   belongs_to :subscriber, optional: true
 
+  delegate :subscribed_to?, :handle, :phone_number, to: :person
+
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
     zipcode: 4, cpr_first_aid: 5, certification: 6
@@ -25,6 +27,11 @@ class Candidacy < ApplicationRecord
 
   def surveying?
     subscriber.present?
+  end
+
+  def status_for(organization)
+    return :ideal if ideal?(organization.ideal_candidate)
+    :promising
   end
 
   def ideal?(ideal_candidate)

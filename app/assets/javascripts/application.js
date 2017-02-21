@@ -17,9 +17,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require cocoon
-//= require jquery.dataTables.min
-//= require dataTables.bootstrap4.min
 //= require trianglify.min.js
+//= require bootstrap-table
+//= require extensions/bootstrap-table-mobile
 //= require_tree .
 
 

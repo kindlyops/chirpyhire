@@ -1,0 +1,12 @@
+.bootstrap-table {
+  $bootstrap-table-gray: #dddddd;
+
+  .table {
+    background-color: $white;
+  }
+
+  .fixed-table-container.table-no-bordered {
+      border: 1px solid $bootstrap-table-gray;
+  }
+}
+

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: :show
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resources :ideal_candidate_suggestions, only: :create
+  resources :candidacies, only: :index
 
   resources :subscribers, only: :index do
     resource :conversation, only: :show

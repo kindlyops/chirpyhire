@@ -1,6 +1,6 @@
 @import "bootstrap";
 @import "font-awesome";
-@import "dataTables.bootstrap4.min";
+@import "bootstrap-table";
 
 body {
   background-color: #ECEFF4;
@@ -14,6 +14,7 @@ main.application {
 @import "components/sidebar";
 @import "components/form";
 @import "components/icon";
+@import "components/bootstrap_table";
 
 @import "ideal_candidate";
 @import "conversation";
