@@ -19,8 +19,7 @@ class MessagesController < ApplicationController
       body: body,
       manual: true
     )
-    notice = 'Message sent!'
-    redirect_to subscriber_conversation_path(subscriber), notice: notice
+    redirect_to subscriber_conversation_path(subscriber)
   end
 
   def body

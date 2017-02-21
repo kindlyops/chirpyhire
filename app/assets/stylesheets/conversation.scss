@@ -65,6 +65,11 @@
       }
 
       .messages {
+        ul {
+          display: flex;
+          flex-flow: column;
+        }
+
         .time-ago {
           padding-right: 10px;
         }

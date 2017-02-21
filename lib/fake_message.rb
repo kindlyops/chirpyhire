@@ -8,7 +8,7 @@ class FakeMessage
   attr_reader :body, :to, :from
 
   def sid
-    'MESSAGE_SID'
+    "MESSAGE_SID_#{Message.last.id + 1}"
   end
 
   def date_sent

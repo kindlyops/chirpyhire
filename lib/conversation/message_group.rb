@@ -18,7 +18,7 @@ class Conversation::MessageGroup
   end
 
   def messages
-    group[1]
+    group[1].sort_by(&:external_created_at).sort_by(&:id)
   end
 
   def person
