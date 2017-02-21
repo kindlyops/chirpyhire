@@ -111,13 +111,6 @@
     }
 
     .messages {
-
-      @media (max-width: 1499px) {
-        ul {
-          width: 100%;
-        }
-      }
-
       .time-ago {
         vertical-align: middle;
         font-size: .875rem;
@@ -144,9 +137,6 @@
 
       ul {
         list-style: none;
-        width: 100%;
-
-
         li {
           margin-bottom: 5px;
         }
