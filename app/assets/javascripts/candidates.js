@@ -3,6 +3,10 @@ $(document).on('turbolinks:load', function() {
   var candidates = $('.candidates:not([loaded])');
 
   if(candidates.length) {
+    function compareProperty(a, b) {
+      return (a || b) ? (!a ? -1 : !b ? 1 : a.localeCompare(b)) : 0;
+    }
+
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
       search: true,
@@ -14,6 +18,10 @@ $(document).on('turbolinks:load', function() {
           field: 'contact',
           title: 'Contact',
           sortable: true,
+          sorter: function(first, second) {
+            return compareProperty(first.handle.label, second.handle.label) ||
+                   compareProperty(first.phone_number.label, second.phone_number.label);
+          },
           cellStyle: function(value, row, index, field) {
             return {
               classes: 'text-center'
@@ -53,6 +61,10 @@ $(document).on('turbolinks:load', function() {
               classes: 'text-center'
             };
           },
+          sorter: function(first, second) {
+            return compareProperty(first.availability.label, second.availability.label) ||
+                   compareProperty(first.transportation.label, second.transportation.label);
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.availability.button_class + ' mb-2">' +
                       value.availability.label +
@@ -87,6 +99,11 @@ $(document).on('turbolinks:load', function() {
               classes: 'text-center'
             };
           },
+          sorter: function(first, second) {
+            return compareProperty(first.certification.label, second.certification.label) ||
+                   compareProperty(first.skin_test.label, second.skin_test.label) ||
+                   compareProperty(first.cpr_first_aid.label, second.cpr_first_aid.label)
+          },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.certification.button_class + ' mb-2">' +
                       value.certification.label +
@@ -109,6 +126,10 @@ $(document).on('turbolinks:load', function() {
             return {
               classes: 'text-center'
             };
+          },
+          sorter: function(first, second) {
+            return compareProperty(first.subscribed.label, second.subscribed.label) ||
+                   compareProperty(first.status.label, second.status.label);
           },
           formatter: function(value, row, index) {
             return '<span class="d-block btn ' + value.subscribed.button_class + ' mb-2">' +
