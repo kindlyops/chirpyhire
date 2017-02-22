@@ -5,14 +5,13 @@ $(document).on('turbolinks:load', function() {
   if(candidates.length) {
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
-      iconsPrefix: 'fa',
       smartDisplay: true,
       pagination: true,
       paginationNextText: 'Next &rsaquo;',
       paginationPreText: '&lsaquo; Prev',
       sidePagination: 'server',
       mobileResponsive: true,
-      showHeader: true,
+      url: '/candidacies.json',
       columns: [{
           field: 'contact',
           title: 'Contact',
@@ -134,8 +133,7 @@ $(document).on('turbolinks:load', function() {
                 '</a>'
             ].join('');
           }
-      }],
-      url: '/candidacies.json'
+      }]
     });
 
     candidates.attr('loaded', true);
