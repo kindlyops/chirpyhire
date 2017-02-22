@@ -16,13 +16,12 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
+//= require ramda
 //= require cocoon
 //= require trianglify.min.js
 //= require bootstrap-table
 //= require extensions/bootstrap-table-mobile
-//= require jquery.base64.js
-//= require tableExport.js
-//= require extensions/bootstrap-table-export
+//= require export_table
 //= require_tree .
 
 

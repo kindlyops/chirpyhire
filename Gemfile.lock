@@ -17,8 +17,8 @@ GIT
 
 GIT
   remote: https://github.com/hwhelchel/bootstrap-table-rails.git
-  revision: 62e7991de0f88c942d59cf6b44c0be8625fe4806
-  branch: single-table-export
+  revision: 54e127d944b0d52fa782c2f58a64e647b71d2b40
+  branch: 1.11.1
   specs:
     bootstrap-table-rails (1.11.1)
 
@@ -125,6 +125,8 @@ GEM
     connection_pool (2.2.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    csv_shaper (1.3.0)
+      activesupport (>= 3.0.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.2.0)
@@ -169,7 +171,7 @@ GEM
     hashdiff (0.3.2)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
-    i18n (0.8.0)
+    i18n (0.8.1)
     inline_svg (0.11.1)
       activesupport (>= 4.0)
       loofah (>= 2.0)
@@ -259,6 +261,7 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.1)
       sprockets-rails (>= 2.0.0)
+    rails-assets-ramda (0.23.0)
     rails-assets-tether (1.4.0)
     rails-controller-testing (1.0.1)
       actionpack (~> 5.x)
@@ -378,7 +381,7 @@ GEM
       rest-client (>= 1.4, < 3.0)
     temple (0.7.7)
     thor (0.19.4)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (2.0.6)
     timecop (0.8.1)
     turbolinks (5.0.1)
@@ -429,6 +432,7 @@ DEPENDENCIES
   capybara-email!
   capybara-webkit (~> 1.12.0)
   cocoon (~> 1.2.9)
+  csv_shaper (~> 1.3.0)
   database_cleaner (~> 1.5.0)
   devise (~> 4.2.0)
   devise_invitable (~> 1.6.0)
@@ -455,6 +459,7 @@ DEPENDENCIES
   pundit!
   pundit-matchers (~> 1.0.2)
   rails (~> 5.0.1)
+  rails-assets-ramda (~> 0.23.0)!
   rails-assets-tether (>= 1.3.3)!
   rails-controller-testing
   rails_12factor (~> 0.0.3)

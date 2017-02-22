@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resources :ideal_candidate_suggestions, only: :create
   resources :candidacies, only: :index
+  post 'candidacies', to: 'candidacies#index'
 
   resources :subscribers, only: :index do
     resource :conversation, only: :show

@@ -1,6 +1,21 @@
 .bootstrap-table {
   $bootstrap-table-gray: #dddddd;
 
+  .fixed-table-toolbar {
+    .export {
+      .export-selected {
+        i {
+          color: $green;
+        }
+      }
+      .export-all {
+        i {
+          color: $orange;
+        }
+      }
+    }
+  }
+
   .table {
     background-color: $white;
 
