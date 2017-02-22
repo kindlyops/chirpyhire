@@ -17,6 +17,7 @@ gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
+gem 'jbuilder'
 gem 'turbolinks', '~> 5.0.0'
 
 group :development, :test do
@@ -89,6 +90,8 @@ gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
 gem 'geocoder', '~> 1.4.3'
 gem 'zip-codes', '~> 0.2.1'
+gem 'bootstrap-table-rails', github: 'hwhelchel/bootstrap-table-rails', branch: '1.11.1'
+gem 'kaminari', '~> 0.17.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

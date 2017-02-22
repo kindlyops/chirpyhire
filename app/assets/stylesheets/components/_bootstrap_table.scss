@@ -1,0 +1,52 @@
+.bootstrap-table {
+  $bootstrap-table-gray: #dddddd;
+
+  .table {
+    background-color: $white;
+
+    @media(max-width: 562px) {
+      tr {
+        border-bottom: 4px solid $gray-lighter;
+      }
+    }
+  }
+
+  .fixed-table-container.table-no-bordered {
+      border: 1px solid $bootstrap-table-gray;
+  }
+
+  .fixed-table-loading {
+    top: 50px !important;
+  }
+
+  .fixed-table-pagination {
+    background-color: $white;
+
+    .pagination-detail {
+      @extend .ml-3;
+    }
+
+    .pagination {
+      @extend .mr-2;
+
+      li {
+        @extend .page-item;
+
+        a {
+          @extend .page-link;
+        }
+      }
+    }
+  }
+
+  li[role='menuitem'] {
+    @extend .dropdown-item;
+
+    &.active {
+      a {
+        color: $white;
+      }
+    }
+  }
+}
+

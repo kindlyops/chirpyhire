@@ -6,7 +6,7 @@ class Candidacy::Attribute
   attr_reader :candidacy
 
   def humanize_attribute(attribute)
-    return unless attribute
+    return if attribute.nil?
 
     humanize_attributes[attribute]
   end

@@ -1,9 +1,10 @@
 @import "bootstrap";
 @import "font-awesome";
-@import "dataTables.bootstrap4.min";
+@import "bootstrap-table";
+@import "polyfill/bootstrap3";
 
 body {
-  background-color: #ECEFF4;
+  background-color: $gray-lighter;
 }
 
 main.application {
@@ -14,7 +15,10 @@ main.application {
 @import "components/sidebar";
 @import "components/form";
 @import "components/icon";
+@import "components/bootstrap_table";
 
 @import "ideal_candidate";
 @import "conversation";
+@import "dashboard";
+
 

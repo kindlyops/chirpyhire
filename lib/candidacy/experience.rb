@@ -1,7 +1,7 @@
 class Candidacy::Experience < Candidacy::Attribute
   def humanize_attributes
     {
-      less_than_one: 'Less than 1 year',
+      less_than_one: '0 - 1 years',
       one_to_five: '1 - 5 years',
       six_or_more: '6+ years',
       no_experience: 'None'

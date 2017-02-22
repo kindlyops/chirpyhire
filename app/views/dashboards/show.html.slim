@@ -1,27 +1,9 @@
-= title "Candidates | ChirpyHire"
+= title "Dashboard | ChirpyHire"
 
-.candidates
-  .card
-    h3.card-header Candidates
-    .card-block
-      .row
-        .col-md-9
-          table.table.table-responsive.table-hover.table-bordered
-            thead.thead-active
-              tr
-                th Nickname (internal)
-                th Location
-                th Phone Number
-                th Created
-                th
-            tbody
-              - @dashboard.candidates.each do |candidate|
-                tr
-                  td = candidate.handle
-                  td = candidate.zipcode
-                  td = candidate.phone_number.phony_formatted
-                  td = "#{time_ago_in_words(candidate.created_at)} ago"
-                  td
-                    = link_to subscriber_conversation_path(candidate.subscribed_to(current_organization)), class: "btn btn-primary" do
-                      i.fa.fa-commenting-o
+.dashboard
+  .candidates
+    .card.mb-2
+      .card-block
+        h1.card-text Candidates
+    table
 
