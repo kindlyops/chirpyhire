@@ -11,11 +11,15 @@ class Candidacy::Subscribed < Candidacy::Attribute
   end
 
   def label
-    humanize_attribute(candidacy.subscribed_to?(organization)) || 'Unknown'
+    humanize_attribute(actively_subscribed?) || 'Unknown'
   end
 
   def icon_class
-    icon_classes[candidacy.subscribed_to?(organization)] || 'fa-question'
+    icon_classes[actively_subscribed?] || 'fa-question'
+  end
+
+  def actively_subscribed?
+    candidacy.actively_subscribed_to?(organization)
   end
 
   def button_class
