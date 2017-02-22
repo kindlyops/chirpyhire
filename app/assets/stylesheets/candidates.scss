@@ -1,0 +1,12 @@
+.candidates {
+  table {
+    .btn-outline-secondary, .btn-secondary {
+      border: none;
+
+      &:hover {
+        border: none;
+      }
+    }
+  }
+}
+

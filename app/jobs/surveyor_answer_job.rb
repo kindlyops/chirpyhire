@@ -1,11 +1,11 @@
 class SurveyorAnswerJob < ApplicationJob
-  def perform(subscriber, message_sid)
+  def perform(contact, message_sid)
     message = MessageSyncer.new(
-      subscriber.person,
-      subscriber.organization,
+      contact.person,
+      contact.organization,
       message_sid
     ).call
 
-    Surveyor.new(subscriber).consider_answer(message)
+    Surveyor.new(contact).consider_answer(message)
   end
 end

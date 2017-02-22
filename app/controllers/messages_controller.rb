@@ -19,7 +19,7 @@ class MessagesController < ApplicationController
       body: body,
       manual: true
     )
-    redirect_to subscriber_conversation_path(subscriber)
+    redirect_to contact_conversation_path(contact)
   end
 
   def body
@@ -35,15 +35,15 @@ class MessagesController < ApplicationController
 
   def conversation
     @conversation ||= begin
-      conversation = Conversation.new(Subscriber.find(params[:subscriber_id]))
+      conversation = Conversation.new(Contact.find(params[:contact_id]))
       authorize conversation, :show?
     end
   end
 
-  delegate :subscriber, to: :conversation
+  delegate :contact, to: :conversation
 
   def message_not_authorized
-    redirect_to subscriber_conversation_path(subscriber), alert: error_message
+    redirect_to contact_conversation_path(contact), alert: error_message
   end
 
   def error_message

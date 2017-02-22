@@ -4,8 +4,8 @@ FactoryGirl.define do
 
     trait :with_subscribed_candidacy do
       after(:create) do |person|
-        subscriber = create(:subscriber, person: person)
-        person.candidacy.update(subscriber: subscriber)
+        contact = create(:contact, person: person)
+        person.candidacy.update(contact: contact)
       end
     end
   end

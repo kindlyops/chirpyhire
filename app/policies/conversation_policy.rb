@@ -1,6 +1,6 @@
 class ConversationPolicy < ApplicationPolicy
   def scope
-    Subscriber
+    Contact
   end
 
   class Scope < ApplicationPolicy::Scope

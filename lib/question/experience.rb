@@ -21,7 +21,7 @@ class Question::Experience < Question::MultipleChoice
   end
 
   def welcome
-    Notification::Welcome.new(subscriber).body
+    Notification::Welcome.new(contact).body
   end
 
   def answer

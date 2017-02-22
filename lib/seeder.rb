@@ -29,7 +29,7 @@ class Seeder
     FactoryGirl.create(:location, organization: organization)
     organization.create_subscription(plan: plan, trial_message_limit: 1000)
     organization.create_ideal_candidate!(
-      zipcodes_attributes: [{ value: organization.zipcode }]
+      zipcodes_attributes: [{ value: '30342' }]
     )
     puts 'Created Organization'
   end

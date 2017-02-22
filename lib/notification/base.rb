@@ -1,8 +1,8 @@
 class Notification::Base
-  def initialize(subscriber)
-    @subscriber = subscriber
+  def initialize(contact)
+    @contact = contact
   end
 
-  attr_reader :subscriber
-  delegate :organization, to: :subscriber
+  attr_reader :contact
+  delegate :organization, to: :contact
 end

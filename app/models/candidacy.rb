@@ -1,7 +1,7 @@
 class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
-  belongs_to :subscriber, optional: true
+  belongs_to :contact, optional: true
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, to: :person
@@ -28,7 +28,7 @@ class Candidacy < ApplicationRecord
   }
 
   def surveying?
-    subscriber.present?
+    contact.present?
   end
 
   def status_for(organization)

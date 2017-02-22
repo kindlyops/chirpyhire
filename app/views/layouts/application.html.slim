@@ -6,7 +6,6 @@ html
     = render "components/navigation"
     .container-fluid
       .row
-        = render "components/sidebar"
-        main.col-sm-9.offset-sm-3.col-md-10.offset-md-2.application
+        main.col.application
           = render partial: "layouts/alerts"
           = yield

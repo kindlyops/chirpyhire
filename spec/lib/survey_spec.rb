@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Survey do
   let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-  let(:subscriber) { candidacy.subscriber }
+  let(:contact) { candidacy.contact }
   subject { Survey.new(candidacy) }
 
   describe '#ask' do
     context 'first question' do
-      let(:experience) { Question::Experience.new(subscriber) }
+      let(:experience) { Question::Experience.new(contact) }
 
       it 'sets the inquiry to experience' do
         allow(subject).to receive(:send_message).with(experience.body)
@@ -24,7 +24,7 @@ RSpec.describe Survey do
     end
 
     context 'in the middle of the survey' do
-      let(:skin_test) { Question::SkinTest.new(subscriber) }
+      let(:skin_test) { Question::SkinTest.new(contact) }
 
       before do
         candidacy.update(inquiry: :experience)
@@ -64,7 +64,7 @@ RSpec.describe Survey do
   end
 
   describe '#restate' do
-    let(:experience) { Question::Experience.new(subscriber) }
+    let(:experience) { Question::Experience.new(contact) }
 
     before do
       candidacy.update(inquiry: :experience)
@@ -82,7 +82,7 @@ RSpec.describe Survey do
       candidacy.update(inquiry: :certification)
     end
 
-    let(:thank_you) { Notification::ThankYou.new(subscriber) }
+    let(:thank_you) { Notification::ThankYou.new(contact) }
 
     it 'sets the candidacy inquiry to nil' do
       allow(subject).to receive(:send_message).with(thank_you.body)

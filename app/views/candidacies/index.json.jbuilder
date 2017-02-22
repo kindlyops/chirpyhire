@@ -63,7 +63,7 @@ json.rows do
     end
 
     json.message do
-      json.subscriber_id candidacy.subscribed.id
+      json.contact_id candidacy.subscribed.id
     end
 
     json.status do

@@ -1,7 +1,7 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_one :candidacy
-  has_many :subscribers
+  has_many :contacts
   has_many :messages
 
   before_create :add_nickname
@@ -10,15 +10,15 @@ class Person < ApplicationRecord
   delegate :inquiry, :zipcode, to: :candidacy
 
   def subscribed_to?(organization)
-    subscribers.where(organization: organization).exists?
+    contacts.where(organization: organization).exists?
   end
 
   def actively_subscribed_to?(organization)
-    subscribers.active.where(organization: organization).exists?
+    contacts.active.where(organization: organization).exists?
   end
 
   def subscribed_to(organization)
-    subscribers.find_by(organization: organization)
+    contacts.find_by(organization: organization)
   end
 
   def handle

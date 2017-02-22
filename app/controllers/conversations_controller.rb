@@ -8,6 +8,6 @@ class ConversationsController < ApplicationController
   private
 
   def fetch_conversation
-    Conversation.new(Subscriber.find(params[:subscriber_id]))
+    Conversation.new(Contact.find(params[:contact_id]))
   end
 end

@@ -23,16 +23,16 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
     context 'with a person' do
       let!(:person) { create(:person, phone_number: phone_number) }
 
-      context 'without a subscriber' do
-        it 'creates a subscribed subscriber' do
+      context 'without a contact' do
+        it 'creates a subscribed contact' do
           expect {
             post :create, params: params
-          }.to change { person.subscribers.count }.by(1)
+          }.to change { person.contacts.count }.by(1)
         end
       end
 
-      context 'with a subscriber' do
-        let!(:subscriber) { create(:subscriber, person: person, organization: organization) }
+      context 'with a contact' do
+        let!(:contact) { create(:contact, person: person, organization: organization) }
         it 'creates an AlreadySubscribedJob' do
           expect {
             post :create, params: params
@@ -75,7 +75,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
     context 'with a person' do
       let!(:person) { create(:person, phone_number: phone_number) }
 
-      context 'without a subscriber' do
+      context 'without a contact' do
         it 'creates an NotSubscribedJob' do
           expect {
             delete :destroy, params: params
@@ -83,12 +83,12 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         end
       end
 
-      context 'with a subscribed subscriber' do
-        let!(:subscriber) { create(:subscriber, person: person, organization: organization) }
-        it 'unsubscribes the subscriber' do
+      context 'with a subscribed contact' do
+        let!(:contact) { create(:contact, person: person, organization: organization) }
+        it 'unsubscribes the contact' do
           expect {
             delete :destroy, params: params
-          }.to change { subscriber.reload.subscribed? }.from(true).to(false)
+          }.to change { contact.reload.subscribed? }.from(true).to(false)
         end
       end
     end

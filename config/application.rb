@@ -24,9 +24,9 @@ module Congaree
     config.autoload_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('lib')
     config.action_controller.per_form_csrf_tokens = true
-    config.action_controller.include_all_helpers = false
     config.action_controller.forgery_protection_origin_check = false
     config.active_job.queue_adapter = :sidekiq
+    config.nav_lynx.selected_class = 'active'
 
     config.cache_store = :memory_store
   end

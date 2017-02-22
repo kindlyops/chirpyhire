@@ -1,5 +1,5 @@
 class SurveyorJob < ApplicationJob
-  def perform(subscriber)
-    Surveyor.new(subscriber).start
+  def perform(contact)
+    Surveyor.new(contact).start
   end
 end

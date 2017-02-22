@@ -1,3 +1,4 @@
+@import "base/custom";
 @import "bootstrap";
 @import "font-awesome";
 @import "bootstrap-table";
@@ -12,13 +13,12 @@ main.application {
 }
 
 @import "components/navigation";
-@import "components/sidebar";
 @import "components/form";
 @import "components/icon";
 @import "components/bootstrap_table";
 
 @import "ideal_candidate";
 @import "conversation";
-@import "dashboard";
+@import "candidates";
 
 

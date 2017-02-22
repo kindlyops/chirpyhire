@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Answer::Zipcode do
-  let(:subscriber) { create(:subscriber) }
-  let(:question) { Question::Zipcode.new(subscriber) }
+  let(:contact) { create(:contact) }
+  let(:question) { Question::Zipcode.new(contact) }
   subject { Answer::Zipcode.new(question) }
 
   describe '#valid?' do

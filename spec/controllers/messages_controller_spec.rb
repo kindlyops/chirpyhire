@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe MessagesController do
   describe '#create' do
-    let(:subscriber) { create(:subscriber) }
-    let(:organization) { subscriber.organization }
+    let(:contact) { create(:contact) }
+    let(:organization) { contact.organization }
     let(:account) { create(:account, organization: organization) }
 
     let(:params) do
       {
-        subscriber_id: subscriber.id,
+        contact_id: contact.id,
         message: {
           body: 'BODY'
         }
@@ -19,7 +19,7 @@ RSpec.describe MessagesController do
       sign_in(account)
     end
 
-    context 'and the subscriber is active' do
+    context 'and the contact is active' do
       it 'creates a message' do
         expect {
           post :create, params: params, xhr: true
@@ -38,9 +38,9 @@ RSpec.describe MessagesController do
       end
     end
 
-    context 'and the subscriber is not active' do
+    context 'and the contact is not active' do
       before do
-        subscriber.update(subscribed: false)
+        contact.update(subscribed: false)
       end
 
       it 'does not create a message' do

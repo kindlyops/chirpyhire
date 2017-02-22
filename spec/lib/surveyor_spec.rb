@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Surveyor do
-  subject { Surveyor.new(subscriber) }
+  subject { Surveyor.new(contact) }
 
   describe '#start' do
-    let(:subscriber) { create(:subscriber) }
-    let(:thank_you) { Notification::ThankYou.new(subscriber) }
-    let(:candidacy) { subscriber.person.candidacy }
+    let(:contact) { create(:contact) }
+    let(:thank_you) { Notification::ThankYou.new(contact) }
+    let(:candidacy) { contact.person.candidacy }
 
-    context 'candidacy has a subscriber already' do
+    context 'candidacy has a contact already' do
       before do
-        candidacy.update(subscriber: subscriber)
+        candidacy.update(contact: contact)
       end
 
       it 'sends the thank you message' do
@@ -20,8 +20,8 @@ RSpec.describe Surveyor do
       end
     end
 
-    context 'candidacy does not have a subscriber' do
-      it 'locks the candidacy to the subscriber' do
+    context 'candidacy does not have a contact' do
+      it 'locks the candidacy to the contact' do
         allow(subject.survey).to receive(:ask)
 
         expect {
@@ -39,7 +39,7 @@ RSpec.describe Surveyor do
 
   describe '#consider_answer' do
     let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-    let(:subscriber) { candidacy.subscriber }
+    let(:contact) { candidacy.contact }
 
     describe 'completed survey' do
       let(:message) { create(:message, body: 'a') }

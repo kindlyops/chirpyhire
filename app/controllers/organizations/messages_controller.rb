@@ -10,8 +10,8 @@ class Organizations::MessagesController < ActionController::Base
 
   private
 
-  def subscriber
-    person.subscribers.find_or_create_by(organization: organization)
+  def contact
+    person.contacts.find_or_create_by(organization: organization)
   end
 
   def person

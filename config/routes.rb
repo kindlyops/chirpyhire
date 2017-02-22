@@ -3,13 +3,13 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 
 Rails.application.routes.draw do
   resource :health, only: :show
-  resource :dashboard, only: :show
+  get '/candidates' => 'candidates#index', path: 'candidates'
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resources :ideal_candidate_suggestions, only: :create
   resources :candidacies, only: :index
   post 'candidacies.csv', to: 'candidacies#index'
 
-  resources :subscribers, only: :index do
+  resources :contacts, only: :index do
     resource :conversation, only: :show
     resources :messages, only: :create
   end
@@ -33,5 +33,5 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
-  root 'dashboards#show'
+  root 'candidates#index'
 end

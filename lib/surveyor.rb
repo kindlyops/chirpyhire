@@ -1,6 +1,6 @@
 class Surveyor
-  def initialize(subscriber)
-    @subscriber = subscriber
+  def initialize(contact)
+    @contact = contact
   end
 
   def start
@@ -38,7 +38,7 @@ class Surveyor
   end
 
   def lock_candidacy
-    candidacy.update!(subscriber: subscriber)
+    candidacy.update!(contact: contact)
   end
 
   def thank_person
@@ -46,11 +46,11 @@ class Surveyor
   end
 
   def thank_you
-    Notification::ThankYou.new(subscriber)
+    Notification::ThankYou.new(contact)
   end
 
-  attr_reader :subscriber
+  attr_reader :contact
 
-  delegate :person, :organization, to: :subscriber
+  delegate :person, :organization, to: :contact
   delegate :candidacy, to: :person
 end

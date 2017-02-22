@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :subscriber do
+  factory :contact do
     person
     organization
   end
