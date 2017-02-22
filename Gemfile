@@ -92,8 +92,10 @@ gem 'geocoder', '~> 1.4.3'
 gem 'zip-codes', '~> 0.2.1'
 gem 'bootstrap-table-rails', github: 'hwhelchel/bootstrap-table-rails', branch: '1.11.1'
 gem 'kaminari', '~> 0.17.0'
+gem 'csv_shaper', '~> 1.3.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
+  gem 'rails-assets-ramda', '~> 0.23.0'
 end
 

@@ -11,8 +11,22 @@ $(document).on('turbolinks:load', function() {
       paginationPreText: '&lsaquo; Prev',
       sidePagination: 'server',
       mobileResponsive: true,
+      iconsPrefix: 'fa',
+      checkboxHeader: true,
+      icons: {
+        paginationSwitchDown:'fa-arrow-circle-o-down',
+        paginationSwitchUp:'fa-arrow-circle-o-up',
+        refresh: 'fa-refresh',
+        toggle: 'fa-toggle-on',
+        columns: 'fa-th-list',
+        export: 'fa-cloud-download'
+      },
+      showExport: true,
       url: '/candidacies.json',
       columns: [{
+          field: 'select',
+          checkbox: true
+        },{
           field: 'contact',
           title: 'Contact',
           sortable: true,

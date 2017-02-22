@@ -1,5 +1,7 @@
 json.rows do
   json.array! candidacies do |candidacy|
+    json.id candidacy.id
+
     json.contact do
       json.handle do
         json.label candidacy.handle.label
