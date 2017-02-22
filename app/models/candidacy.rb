@@ -1,4 +1,5 @@
 class Candidacy < ApplicationRecord
+  paginates_per 10
   belongs_to :person
   belongs_to :subscriber, optional: true
 

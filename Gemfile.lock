@@ -16,6 +16,13 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: https://github.com/hwhelchel/bootstrap-table-rails.git
+  revision: 54e127d944b0d52fa782c2f58a64e647b71d2b40
+  branch: 1.11.1
+  specs:
+    bootstrap-table-rails (1.11.1)
+
+GIT
   remote: https://github.com/integrallis/stripe_event.git
   revision: 1da7ed881af66db8b970539271a996a51b592c3a
   ref: 1da7ed8
@@ -91,7 +98,6 @@ GEM
     bootstrap (4.0.0.alpha6)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
-    bootstrap-table-rails (1.11.0)
     brakeman (3.3.5)
     builder (3.2.3)
     byebug (9.0.6)
@@ -417,7 +423,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap (~> 4.0.0.alpha6)
-  bootstrap-table-rails (~> 1.11.0)
+  bootstrap-table-rails!
   brakeman (~> 3.3.0)
   capybara (~> 2.7.0)
   capybara-email!
@@ -436,6 +442,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   json (~> 2.0.2)
+  kaminari (~> 0.17.0)
   launchy (~> 2.4.3)
   listen (~> 3.0.5)
   pg (~> 0.15)
