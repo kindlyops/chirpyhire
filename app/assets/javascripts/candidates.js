@@ -5,7 +5,6 @@ $(document).on('turbolinks:load', function() {
   if(candidates.length) {
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
-      search: true,
       iconsPrefix: 'fa',
       smartDisplay: true,
       pagination: true,
@@ -13,6 +12,7 @@ $(document).on('turbolinks:load', function() {
       paginationPreText: '&lsaquo; Prev',
       sidePagination: 'server',
       mobileResponsive: true,
+      showHeader: true,
       columns: [{
           field: 'contact',
           title: 'Contact',
@@ -128,8 +128,9 @@ $(document).on('turbolinks:load', function() {
           title: '',
           formatter: function(value, row, index) {
             return [
-                '<a role="button" href="/subscribers/' + value.subscriber_id + '/conversation" class="btn btn-primary">',
-                  '<i class="fa fa-commenting"></i>',
+                '<a role="button" href="/subscribers/', value.subscriber_id,
+                '/conversation" class="btn btn-primary">',
+                '<i class="fa fa-commenting"></i>',
                 '</a>'
             ].join('');
           }

@@ -19,6 +19,26 @@
     top: 50px !important;
   }
 
+  .fixed-table-pagination {
+    background-color: $white;
+
+    .pagination-detail {
+      @extend .ml-3;
+    }
+
+    .pagination {
+      @extend .mr-2;
+
+      li {
+        @extend .page-item;
+
+        a {
+          @extend .page-link;
+        }
+      }
+    }
+  }
+
   li[role='menuitem'] {
     @extend .dropdown-item;
 
