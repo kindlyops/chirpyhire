@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :candidacies, only: :index
   post 'candidacies.csv', to: 'candidacies#index'
 
-  resources :subscribers, only: :index do
+  resources :contacts, only: :index do
     resource :conversation, only: :show
     resources :messages, only: :create
   end

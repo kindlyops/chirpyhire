@@ -5,7 +5,7 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
     if person.subscribed_to?(organization)
       AlreadySubscribedJob.perform_later(person, organization)
     else
-      SurveyorJob.perform_later(subscriber)
+      SurveyorJob.perform_later(contact)
     end
     head :ok
   end

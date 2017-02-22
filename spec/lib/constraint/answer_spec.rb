@@ -14,12 +14,12 @@ RSpec.describe Constraint::Answer do
       let(:person) { create(:person) }
       let(:parameters) { { 'From' => person.phone_number, 'To' => organization.phone_number } }
 
-      context 'with subscriber present' do
-        let!(:subscriber) { create(:subscriber, person: person, organization: organization) }
+      context 'with contact present' do
+        let!(:contact) { create(:contact, person: person, organization: organization) }
 
         context 'tied to the candidacy' do
           before do
-            person.candidacy.update(subscriber: subscriber)
+            person.candidacy.update(contact: contact)
           end
 
           context 'without inquiry' do
@@ -39,9 +39,9 @@ RSpec.describe Constraint::Answer do
           end
         end
 
-        context 'candidacy tied to another subscriber' do
+        context 'candidacy tied to another contact' do
           before do
-            person.candidacy.update(subscriber: create(:subscriber, person: person))
+            person.candidacy.update(contact: create(:contact, person: person))
           end
 
           it 'is false' do
@@ -49,21 +49,21 @@ RSpec.describe Constraint::Answer do
           end
         end
 
-        context 'candidacy not tied to a subscriber' do
+        context 'candidacy not tied to a contact' do
           it 'is false' do
             expect(constraint.matches?(request)).to eq(false)
           end
         end
       end
 
-      context 'without subscriber present' do
+      context 'without contact present' do
         it 'is false' do
           expect(constraint.matches?(request)).to eq(false)
         end
       end
     end
 
-    context 'without subscriber present' do
+    context 'without contact present' do
       let(:parameters) { { 'From' => '+14041111111', 'To' => organization.phone_number } }
 
       it 'is false' do

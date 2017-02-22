@@ -1,0 +1,23 @@
+= title "Contacts | ChirpyHire"
+
+.contacts
+  .card
+    h3.card-header Contacts
+    .card-block
+      .row
+        .col-md-9
+          table.table.table-responsive.table-hover.table-bordered
+            thead.thead-active
+              tr
+                th Nickname (internal)
+                th Location
+                th Phone Number
+                th Created
+            tbody
+              - @contacts.each do |contact|
+                tr
+                  td = contact.handle
+                  td = contact.zipcode
+                  td = contact.phone_number.phony_formatted
+                  td = "#{time_ago_in_words(contact.created_at)} ago"
+

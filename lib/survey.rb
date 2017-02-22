@@ -70,38 +70,38 @@ class Survey
   end
 
   def experience
-    Question::Experience.new(subscriber)
+    Question::Experience.new(contact)
   end
 
   def skin_test
-    Question::SkinTest.new(subscriber)
+    Question::SkinTest.new(contact)
   end
 
   def availability
-    Question::Availability.new(subscriber)
+    Question::Availability.new(contact)
   end
 
   def transportation
-    Question::Transportation.new(subscriber)
+    Question::Transportation.new(contact)
   end
 
   def zipcode
-    Question::Zipcode.new(subscriber)
+    Question::Zipcode.new(contact)
   end
 
   def cpr_first_aid
-    Question::CprFirstAid.new(subscriber)
+    Question::CprFirstAid.new(contact)
   end
 
   def certification
-    Question::Certification.new(subscriber)
+    Question::Certification.new(contact)
   end
 
   def thank_you
-    Notification::ThankYou.new(subscriber)
+    Notification::ThankYou.new(contact)
   end
 
   attr_reader :candidacy
-  delegate :subscriber, to: :candidacy
-  delegate :person, :organization, to: :subscriber
+  delegate :contact, to: :candidacy
+  delegate :person, :organization, to: :contact
 end

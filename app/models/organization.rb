@@ -1,8 +1,8 @@
 class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts
-  has_many :subscribers
-  has_many :people, through: :subscribers, class_name: 'Person'
+  has_many :contacts
+  has_many :people, through: :contacts, class_name: 'Person'
   has_one :subscription
   has_one :ideal_candidate
   has_one :location

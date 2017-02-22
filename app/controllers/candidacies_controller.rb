@@ -33,7 +33,7 @@ class CandidaciesController < ApplicationController
   end
 
   def ordered_candidacies
-    policy_scope(Candidacy).joins(person: :subscribers).order(order)
+    policy_scope(Candidacy).joins(person: :contacts).order(order)
   end
 
   def limit
@@ -69,7 +69,7 @@ class CandidaciesController < ApplicationController
       'availability' => "availability #{direction}",
       'experience' => "experience #{direction}",
       'qualifications' => "certification #{direction}",
-      'status' => "subscribers.subscribed #{direction}"
+      'status' => "contacts.subscribed #{direction}"
     }
   end
 end

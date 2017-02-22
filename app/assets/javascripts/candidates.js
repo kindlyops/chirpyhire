@@ -28,7 +28,7 @@ $(document).on('turbolinks:load', function() {
           checkbox: true
         },{
           field: 'contact',
-          title: 'Contact',
+          title: 'Candidate',
           sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
@@ -141,7 +141,7 @@ $(document).on('turbolinks:load', function() {
           title: '',
           formatter: function(value, row, index) {
             return [
-                '<a role="button" href="/subscribers/', value.subscriber_id,
+                '<a role="button" href="/contacts/', value.contact_id,
                 '/conversation" class="btn btn-primary">',
                 '<i class="fa fa-commenting"></i>',
                 '</a>'

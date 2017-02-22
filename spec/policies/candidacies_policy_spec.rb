@@ -4,7 +4,7 @@ RSpec.describe CandidacyPolicy do
   subject { CandidacyPolicy.new(organization, candidacy) }
 
   let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-  let(:organization) { candidacy.subscriber.organization }
+  let(:organization) { candidacy.contact.organization }
 
   let(:resolved_scope) { CandidacyPolicy::Scope.new(organization, Candidacy.all).resolve }
 

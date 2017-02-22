@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221142320) do
+ActiveRecord::Schema.define(version: 20170222215406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,8 +59,19 @@ ActiveRecord::Schema.define(version: 20170221142320) do
     t.integer  "inquiry"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "subscriber_id"
+    t.integer  "contact_id"
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.integer  "person_id",                      null: false
+    t.integer  "organization_id",                null: false
+    t.boolean  "subscribed",      default: true, null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
+    t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true, using: :btree
+    t.index ["person_id"], name: "index_contacts_on_person_id", using: :btree
   end
 
   create_table "ideal_candidate_suggestions", force: :cascade do |t|
@@ -141,17 +152,6 @@ ActiveRecord::Schema.define(version: 20170221142320) do
     t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true, using: :btree
   end
 
-  create_table "subscribers", force: :cascade do |t|
-    t.integer  "person_id",                      null: false
-    t.integer  "organization_id",                null: false
-    t.boolean  "subscribed",      default: true, null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.index ["organization_id"], name: "index_subscribers_on_organization_id", using: :btree
-    t.index ["person_id", "organization_id"], name: "index_subscribers_on_person_id_and_organization_id", unique: true, using: :btree
-    t.index ["person_id"], name: "index_subscribers_on_person_id", using: :btree
-  end
-
   create_table "subscriptions", force: :cascade do |t|
     t.string   "stripe_id"
     t.string   "stripe_customer_id"
@@ -190,13 +190,13 @@ ActiveRecord::Schema.define(version: 20170221142320) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "candidacies", "people"
+  add_foreign_key "contacts", "organizations"
+  add_foreign_key "contacts", "people"
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "locations", "organizations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people"
-  add_foreign_key "subscribers", "organizations"
-  add_foreign_key "subscribers", "people"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "zipcodes", "ideal_candidates"
