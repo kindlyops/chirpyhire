@@ -4,7 +4,7 @@ class Candidacy < ApplicationRecord
   belongs_to :subscriber, optional: true
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
-  :phone_number, to: :person
+           :phone_number, to: :person
 
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
