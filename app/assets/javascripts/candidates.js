@@ -22,7 +22,6 @@ $(document).on('turbolinks:load', function() {
         export: 'fa-cloud-download'
       },
       showExport: true,
-      exportDataType: 'selected',
       url: '/candidacies.json',
       columns: [{
           field: 'select',
