@@ -11,8 +11,18 @@
     }
   }
 
-  .fixed-table-container.table-no-bordered {
+  .fixed-table-container {
+    tbody td {
+      transition: all 0.2s ease-in-out;
+    }
+
+    tbody .selected span {
+      background-color: #f5f5f5;
+    }
+
+    .table-no-bordered {
       border: 1px solid $bootstrap-table-gray;
+    }
   }
 
   .fixed-table-loading {

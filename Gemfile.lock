@@ -17,8 +17,8 @@ GIT
 
 GIT
   remote: https://github.com/hwhelchel/bootstrap-table-rails.git
-  revision: 54e127d944b0d52fa782c2f58a64e647b71d2b40
-  branch: 1.11.1
+  revision: 62e7991de0f88c942d59cf6b44c0be8625fe4806
+  branch: single-table-export
   specs:
     bootstrap-table-rails (1.11.1)
 

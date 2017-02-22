@@ -20,6 +20,9 @@
 //= require trianglify.min.js
 //= require bootstrap-table
 //= require extensions/bootstrap-table-mobile
+//= require jquery.base64.js
+//= require tableExport.js
+//= require extensions/bootstrap-table-export
 //= require_tree .
 
 

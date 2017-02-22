@@ -90,7 +90,7 @@ gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
 gem 'geocoder', '~> 1.4.3'
 gem 'zip-codes', '~> 0.2.1'
-gem 'bootstrap-table-rails', github: 'hwhelchel/bootstrap-table-rails', branch: '1.11.1'
+gem 'bootstrap-table-rails', github: 'hwhelchel/bootstrap-table-rails', branch: 'single-table-export'
 gem 'kaminari', '~> 0.17.0'
 
 source 'https://rails-assets.org' do
