@@ -14,5 +14,19 @@
   .fixed-table-container.table-no-bordered {
       border: 1px solid $bootstrap-table-gray;
   }
+
+  .fixed-table-loading {
+    top: 50px !important;
+  }
+
+  li[role='menuitem'] {
+    @extend .dropdown-item;
+
+    &.active {
+      a {
+        color: $white;
+      }
+    }
+  }
 }
 

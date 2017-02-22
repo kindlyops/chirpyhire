@@ -11,7 +11,6 @@ json.rows do
         json.label candidacy.phone_number.label
         json.icon_class candidacy.phone_number.icon_class
         json.button_class candidacy.phone_number.button_class
-        json.subscriber_id candidacy.subscribed.id
       end
     end
 
@@ -59,6 +58,10 @@ json.rows do
         json.icon_class candidacy.cpr_first_aid.icon_class
         json.button_class candidacy.cpr_first_aid.button_class
       end
+    end
+
+    json.message do
+      json.subscriber_id candidacy.subscribed.id
     end
 
     json.status do

@@ -1,6 +1,7 @@
 @import "bootstrap";
 @import "font-awesome";
 @import "bootstrap-table";
+@import "polyfill/bootstrap3";
 
 body {
   background-color: $gray-lighter;

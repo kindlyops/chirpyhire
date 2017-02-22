@@ -27,10 +27,10 @@ $(document).on('turbolinks:load', function() {
                       value.handle.label +
                   '<i class="fa '+ value.handle.icon_class + ' ml-2"></i>' +
                   '</span>' +
-                  '<a role="button" href="/subscribers/' + value.phone_number.subscriber_id + '/conversation" class="btn ' + value.phone_number.button_class + '">'
-                    + value.phone_number.label +
+                  '<span class="btn ' + value.phone_number.button_class + '">' +
+                    value.phone_number.label +
                     '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
-                  '</a>';
+                  '</span>';
           }
       }, {
           field: 'zipcode',
@@ -122,6 +122,16 @@ $(document).on('turbolinks:load', function() {
                       value.status.label +
                   '<i class="fa '+ value.status.icon_class + ' ml-2"></i>' +
                   '</span>';
+          }
+      }, {
+          field: 'message',
+          title: '',
+          formatter: function(value, row, index) {
+            return [
+                '<a role="button" href="/subscribers/' + value.subscriber_id + '/conversation" class="btn btn-primary">',
+                  '<i class="fa fa-commenting"></i>',
+                '</a>'
+            ].join('');
           }
       }],
       url: '/candidacies.json'
