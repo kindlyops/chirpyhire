@@ -3,11 +3,8 @@
   var sprintf = $.fn.bootstrapTable.utils.sprintf;
 
   $.extend($.fn.bootstrapTable.defaults, {
-    showExport: false,
-        exportDataType: 'basic', // basic, all, selected
-        // exportOptions: {}
-      });
-  $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales);
+    showExport: false
+  });
 
   var BootstrapTable = $.fn.bootstrapTable.Constructor,
   _initToolbar = BootstrapTable.prototype.initToolbar;

@@ -23,10 +23,6 @@ $(document).on('turbolinks:load', function() {
       },
       showExport: true,
       exportDataType: 'selected',
-      exportTypes: ['csv'],
-      exportOptions: {
-        ignoreColumn: [0, 7]
-      },
       url: '/candidacies.json',
       columns: [{
           field: 'select',
