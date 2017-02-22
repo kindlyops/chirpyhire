@@ -2,6 +2,19 @@ nav.navbar.top {
   border-bottom: 1px solid #c5d6de;
   background-color: white;
 
+  .nav-link {
+    .fa-users, .fa-tasks {
+      font-size: 21px;
+      color: $green;
+    }
+
+    &.active {
+      .fa-users, .fa-tasks {
+        color: $white;
+      }
+    }
+  }
+
   .ch-logo {
     padding-bottom: 0;
 

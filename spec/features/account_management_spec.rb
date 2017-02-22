@@ -33,7 +33,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       let(:organization) { create(:organization,  :with_account, :with_subscription) }
       let(:account) { organization.accounts.first }
 
-      scenario 'it progresses to the dashboard' do
+      scenario 'it progresses to the candidates' do
         visit '/accounts/sign_in'
 
         fill_in 'Email', with: account.email

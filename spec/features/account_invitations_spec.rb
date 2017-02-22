@@ -23,7 +23,7 @@ RSpec.describe 'Account Invitations', type: :feature, js: true do
       logout(:account)
     end
 
-    it 'accepting the invitation takes the new account to the dashboard' do
+    it 'accepting the invitation takes the new account to the candidates' do
       open_email(email)
       current_email.click_link('Accept invitation')
       fill_in 'Password', with: 'password'
