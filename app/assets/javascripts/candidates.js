@@ -3,13 +3,20 @@ $(document).on('turbolinks:load', function() {
   var candidates = $('.candidates:not([loaded])');
 
   if(candidates.length) {
-    candidates.on('click', 'a.pre-screened', function() {
+    candidates.on('click', 'a.pre-screened:not(.marking-pre-screened)', function() {
       var $button = $(this);
 
       $button
         .addClass('marking-pre-screened')
-        .removeAttr('role')
         .attr('title', $button.data('handle') + ' has been Pre-Screened!');
+    });
+
+    candidates.on('click', 'a.pre-screened.marking-pre-screened', function() {
+      var $button = $(this);
+
+      $button
+        .removeClass('marking-pre-screened')
+        .attr('title', 'Mark ' + $button.data('handle') + ' as Pre-Screened!');
     });
 
     candidates.find('table').bootstrapTable({
