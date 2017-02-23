@@ -8,7 +8,7 @@ $(document).on('turbolinks:load', function() {
 
       $button
         .addClass('marking-pre-screened')
-        .attr('title', $button.data('handle') + ' has been Pre-Screened!');
+        .attr('title', $button.data('handle') + ' has been Screened!');
     });
 
     candidates.on('click', 'a.pre-screened.marking-pre-screened', function() {
@@ -16,7 +16,7 @@ $(document).on('turbolinks:load', function() {
 
       $button
         .removeClass('marking-pre-screened')
-        .attr('title', 'Mark ' + $button.data('handle') + ' as Pre-Screened!');
+        .attr('title', 'Mark ' + $button.data('handle') + ' as Screened!');
     });
 
     candidates.find('table').bootstrapTable({
@@ -159,12 +159,12 @@ $(document).on('turbolinks:load', function() {
             return [
                 '<a role="button" data-handle="', value.contact_handle,
                 '" title="Mark ', value.contact_handle, ' as',
-                ' Pre-Screened!"',' class="d-block btn btn-secondary ',
+                ' Screened!"',' class="d-block btn btn-secondary ',
                 'pre-screened mb-2"><i class="fa fa-check-circle fa-2x"></i>',
                 '</a>',
                 '<a role="button" href="/contacts/', value.contact_id,
                 '/conversation" title="Message ', value.contact_handle,
-                '" class="d-block btn btn-primary">',
+                '" class="d-block btn btn-success">',
                 '<i class="fa fa-commenting"></i>',
                 '</a>'
             ].join('');
