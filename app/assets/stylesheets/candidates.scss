@@ -10,7 +10,6 @@
 
     .pre-screened {
       position: relative;
-      transition: border-color 0.4s ease-in;
 
       &:hover {
         .fa-check-circle {
@@ -20,37 +19,37 @@
 
       &.marked-pre-screened, &.marking-pre-screened {
         @extend .btn-outline-primary;
+        animation: 1s marked-pre-screened;
+        animation-timing-function: ease-in-out;
 
         &:hover {
           border-color: darken($green, 10%);
           background-color: $white;
-          .fa-certificate, .fa-bookmark, .fa-check-circle {
-            color: darken($green, 10%);
-            transition: color 0.2s;
-          }
         }
 
-        .fa-certificate, .fa-bookmark, .fa-check-circle {
+        .fa-check-circle {
           color: $green;
           animation: 1s marked-pre-screened;
           animation-timing-function: ease-in-out;
-          transition: color 0.2s;
         }
       }
 
-      .fa-certificate, .fa-bookmark, .fa-check-circle {
+      .fa-check-circle {
         color: $ch-table-gray;
       }
 
       @keyframes marked-pre-screened {
         from {
             color: $green;
+            border-color: $green;
         }
         50% {
             color: lighten($green, 25%);
+            border-color: lighten($green, 25%);
         }
         to {
             color: $green;
+            border-color: $green;
         }
       }
 
