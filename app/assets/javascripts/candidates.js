@@ -3,6 +3,10 @@ $(document).on('turbolinks:load', function() {
   var candidates = $('.candidates:not([loaded])');
 
   if(candidates.length) {
+    candidates.on('click', 'a.pre-screened', function() {
+      $(this).addClass('marking-pre-screened');
+    });
+
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
       smartDisplay: true,
