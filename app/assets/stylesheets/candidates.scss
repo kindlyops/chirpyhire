@@ -10,37 +10,47 @@
 
     .pre-screened {
       position: relative;
-      transition: background-color 0.4s ease-in;
+      transition: border-color 0.4s ease-in;
 
-      &.marked-pre-screened, &.marking-pre-screened {
-        @extend .btn-primary;
-
-        .fa-certificate, .fa-bookmark {
-          color: $yellow;
-          animation: 1s marked-pre-screened;
-          animation-timing-function: ease-in-out;
-          transition: color 0.2s;
-
-          &:hover {
-            color: lighten($yellow, 25%);
-            transition: color 0.2s;
-          }
+      &:hover {
+        .fa-check-circle {
+          color: darken($ch-table-gray, 10%);
         }
       }
 
-      .fa-certificate, .fa-bookmark {
+      &.marked-pre-screened, &.marking-pre-screened {
+        @extend .btn-outline-primary;
+
+        &:hover {
+          border-color: darken($green, 10%);
+          background-color: $white;
+          .fa-certificate, .fa-bookmark, .fa-check-circle {
+            color: darken($green, 10%);
+            transition: color 0.2s;
+          }
+        }
+
+        .fa-certificate, .fa-bookmark, .fa-check-circle {
+          color: $green;
+          animation: 1s marked-pre-screened;
+          animation-timing-function: ease-in-out;
+          transition: color 0.2s;
+        }
+      }
+
+      .fa-certificate, .fa-bookmark, .fa-check-circle {
         color: $ch-table-gray;
       }
 
       @keyframes marked-pre-screened {
         from {
-            color: $yellow;
+            color: $green;
         }
         50% {
-            color: lighten($yellow, 25%);
+            color: lighten($green, 25%);
         }
         to {
-            color: $yellow;
+            color: $green;
         }
       }
 

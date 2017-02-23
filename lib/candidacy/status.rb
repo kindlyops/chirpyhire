@@ -28,7 +28,7 @@ class Candidacy::Status < Candidacy::Attribute
   def icon_classes
     {
       ideal: 'fa-trophy',
-      promising: 'fa-check-circle'
+      promising: 'fa-star-half-o'
     }
   end
 end
