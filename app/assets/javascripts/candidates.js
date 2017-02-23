@@ -141,8 +141,9 @@ $(document).on('turbolinks:load', function() {
           title: '',
           formatter: function(value, row, index) {
             return [
-                '<a role="button" title="Mark ', value.contact_handle, ' as Pre-Screened!" class="d-block btn btn-secondary pre-screened mb-2">',
-                '<i class="fa fa-certificate"></i>',
+                '<a role="button" title="Mark ', value.contact_handle, ' as',
+                ' Pre-Screened!"',' class="d-block btn btn-secondary ',
+                'pre-screened mb-2"><i class="fa fa-certificate"></i>',
                 '<i class="fa fa-bookmark"></i>',
                 '</a>',
                 '<a role="button" href="/contacts/', value.contact_id,

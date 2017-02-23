@@ -13,6 +13,30 @@
 
       .fa-certificate, .fa-bookmark {
         color: $gray-light;
+        animation: 2s marked-pre-screened;
+        animation-timing-function: cubic-bezier(0.785, 0.135, 0.150, 0.860);
+        color: $blue;
+
+        &.marked-pre-screened, &.marking-pre-screened {
+          background-color: $green;
+          color: $blue;
+        }
+
+        &.marking-pre-screened {
+          animation: 3s marked-pre-screened;
+        }
+      }
+
+      @keyframes marked-pre-screened {
+        from {
+            color: $gray-light;
+        }
+        50% {
+            color: $yellow;
+        }
+        to {
+            color: $blue;
+        }
       }
 
       .fa-certificate {
