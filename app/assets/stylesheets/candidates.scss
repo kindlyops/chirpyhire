@@ -19,6 +19,12 @@
           color: $yellow;
           animation: 2s marked-pre-screened;
           animation-timing-function: ease-in-out;
+          transition: color 0.2s;
+
+          &:hover {
+            color: lighten($yellow, 22%);
+            transition: color 0.2s;
+          }
         }
       }
 

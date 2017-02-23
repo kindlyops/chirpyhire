@@ -4,7 +4,12 @@ $(document).on('turbolinks:load', function() {
 
   if(candidates.length) {
     candidates.on('click', 'a.pre-screened', function() {
-      $(this).addClass('marking-pre-screened');
+      var $button = $(this);
+
+      $button
+        .addClass('marking-pre-screened')
+        .removeAttr('role')
+        .attr('title', $button.data('handle') + ' has been Pre-Screened!');
     });
 
     candidates.find('table').bootstrapTable({
@@ -145,7 +150,8 @@ $(document).on('turbolinks:load', function() {
           title: '',
           formatter: function(value, row, index) {
             return [
-                '<a role="button" title="Mark ', value.contact_handle, ' as',
+                '<a role="button" data-handle="', value.contact_handle,
+                '" title="Mark ', value.contact_handle, ' as',
                 ' Pre-Screened!"',' class="d-block btn btn-secondary ',
                 'pre-screened mb-2"><i class="fa fa-certificate"></i>',
                 '<i class="fa fa-bookmark"></i>',
