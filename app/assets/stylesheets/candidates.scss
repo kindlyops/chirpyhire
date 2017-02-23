@@ -13,7 +13,7 @@
       transition: background-color 0.5s ease-in;
 
       &.marked-pre-screened, &.marking-pre-screened {
-        background-color: $brand-primary;
+        @extend .btn-primary;
 
         .fa-certificate, .fa-bookmark {
           color: $yellow;
