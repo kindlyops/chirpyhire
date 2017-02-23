@@ -1,10 +1,32 @@
 .candidates {
   table {
-    .btn-outline-secondary, .btn-secondary {
+    .btn-outline-secondary, .btn-secondary:not(.pre-screened) {
       border: none;
 
       &:hover {
         border: none;
+      }
+    }
+
+    .pre-screened {
+      position: relative;
+
+      .fa-certificate, .fa-bookmark {
+        color: $gray-light;
+      }
+
+      .fa-certificate {
+        position: relative;
+        bottom: 2px;
+        left: 4px;
+        z-index: 5;
+      }
+
+      .fa-bookmark {
+        position: relative;
+        top: 5px;
+        right: 6.5px;
+        font-size: 10.5px;
       }
     }
   }

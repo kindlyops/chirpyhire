@@ -64,6 +64,7 @@ json.rows do
 
     json.message do
       json.contact_id candidacy.subscribed.id
+      json.contact_handle candidacy.handle.label
     end
 
     json.status do
