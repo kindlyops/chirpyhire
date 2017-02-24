@@ -1,6 +1,6 @@
 csv.headers :handle, :phone_number, :location, :availability,
 :transportation, :experience, :certification, :skin_test,
-:cpr_first_aid, :subscribed, :status
+:cpr_first_aid, :subscribed, :status, :screened
 
 csv.rows candidacies do |csv, candidacy|
   csv.cell :handle, candidacy.handle.label
@@ -14,4 +14,5 @@ csv.rows candidacies do |csv, candidacy|
   csv.cell :cpr_first_aid, candidacy.cpr_first_aid.label
   csv.cell :subscribed, candidacy.subscribed.label
   csv.cell :status, candidacy.status.label
+  csv.cell :screened, candidacy.screened.label
 end

@@ -69,7 +69,8 @@ class CandidaciesController < ApplicationController
       'availability' => "availability #{direction}",
       'experience' => "experience #{direction}",
       'qualifications' => "certification #{direction}",
-      'status' => "contacts.subscribed #{direction}"
+      'status' => "contacts.subscribed #{direction}",
+      'screened' => "contacts.screened #{direction}"
     }
   end
 end

@@ -62,9 +62,10 @@ json.rows do
       end
     end
 
-    json.message do
+    json.screened do
       json.contact_id candidacy.subscribed.id
       json.contact_handle candidacy.handle.label
+      json.contact_screened candidacy.screened.label
     end
 
     json.status do

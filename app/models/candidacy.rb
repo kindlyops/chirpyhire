@@ -36,6 +36,11 @@ class Candidacy < ApplicationRecord
     :promising
   end
 
+  def screened_at(organization)
+    return true if subscribed_to(organization).screened?
+    false
+  end
+
   def ideal?(ideal_candidate)
     complete? && ideal_candidate.zipcode?(zipcode) &&
       other_attributes_ideal?

@@ -3,20 +3,44 @@ $(document).on('turbolinks:load', function() {
   var candidates = $('.candidates:not([loaded])');
 
   if(candidates.length) {
-    candidates.on('click', 'a.pre-screened:not(.marking-pre-screened)', function() {
+    var screenedClass = function(isScreened) {
+      if (isScreened) {
+        return 'active';
+      } else {
+        return '';
+      }
+    };
+
+    candidates.on('click', 'a.screened:not(.active)', function() {
       var $button = $(this);
 
-      $button
-        .addClass('marking-pre-screened')
-        .attr('title', $button.data('handle') + ' has been Screened!');
+      $.ajax({
+        url: '/contacts/' + $button.data('contact-id'),
+        type: 'PUT',
+        data: { contact: { screened: true } },
+        success: function() {
+          $button
+            .addClass('active activating')
+            .attr('title', $button.data('handle') + ' has been Screened!');
+        },
+        dataType: 'json'
+      });
     });
 
-    candidates.on('click', 'a.pre-screened.marking-pre-screened', function() {
+    candidates.on('click', 'a.screened.active', function() {
       var $button = $(this);
 
-      $button
-        .removeClass('marking-pre-screened')
-        .attr('title', 'Mark ' + $button.data('handle') + ' as Screened!');
+      $.ajax({
+        url: '/contacts/' + $button.data('contact-id'),
+        type: 'PUT',
+        data: { contact: {  screened: false } },
+        success: function() {
+          $button
+            .removeClass('active activating')
+            .attr('title', $button.data('handle') + ' has been Screened!');
+        },
+        dataType: 'json'
+      });
     });
 
     candidates.find('table').bootstrapTable({
@@ -153,19 +177,17 @@ $(document).on('turbolinks:load', function() {
                   '</span>';
           }
       }, {
-          field: 'message',
-          title: '',
+          field: 'screened',
+          title: 'Screened',
+          sortable: true,
           formatter: function(value, row, index) {
             return [
-                '<a role="button" data-handle="', value.contact_handle,
+                '<a role="button" data-contact-id="', value.contact_id,
+                '" data-handle="', value.contact_handle,
                 '" title="Mark ', value.contact_handle, ' as',
                 ' Screened!"',' class="d-block btn btn-secondary ',
-                'pre-screened mb-2"><i class="fa fa-check-circle fa-2x"></i>',
-                '</a>',
-                '<a role="button" href="/contacts/', value.contact_id,
-                '/conversation" title="Message ', value.contact_handle,
-                '" class="d-block btn btn-success">',
-                '<i class="fa fa-commenting"></i>',
+                screenedClass(value.contact_screened),
+                ' screened mr-2 ml-2"><i class="fa fa-check-circle fa-2x"></i>',
                 '</a>'
             ].join('');
           }
