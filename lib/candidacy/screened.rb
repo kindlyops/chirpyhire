@@ -7,6 +7,7 @@ class Candidacy::Screened < Candidacy::Attribute
   attr_reader :organization
 
   def label
-    candidacy.screened_at(organization)
+    return 'Screened' if candidacy.screened_at(organization)
+    'Unscreened'
   end
 end

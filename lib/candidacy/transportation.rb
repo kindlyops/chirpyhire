@@ -3,7 +3,7 @@ class Candidacy::Transportation < Candidacy::Attribute
     {
       personal_transportation: 'Personal',
       public_transportation: 'Public',
-      no_transportation: 'None'
+      no_transportation: 'No Transportation'
     }.with_indifferent_access
   end
 

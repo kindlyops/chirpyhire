@@ -14,47 +14,19 @@ module Contact::Searchable
                     additional_attributes: search_attributes,
                     if: :complete?
 
-    def decorated_candidacy
-      @decorated_candidacy ||= person.candidacy.decorate
-    end
-
-    %i(availability experience certification skin_test cpr_first_aid subscribed
-    status screened).each do |method|
-      define_method(method) do
-        decorated_candidacy.send(method).label
+    %i(availability experience certification
+    skin_test cpr_first_aid).each do |method|
+      define_method("#{method}_label") do
+        candidacy_trait = "Candidacy::#{method.to_s.camelize}".constantize
+        candidacy_trait.new(person.candidacy).label
       end
     end
 
-    def availability_label
-      decorated_candidacy.availability.label
-    end
-
-    def experience_label
-      decorated_candidacy.experience.label
-    end
-
-    def certification_label
-      decorated_candidacy.certification.label
-    end
-
-    def skin_test_label
-      decorated_candidacy.skin_test.label
-    end
-
-    def cpr_first_aid_label
-      decorated_candidacy.cpr_first_aid.label
-    end
-
-    def subscribed_label
-      decorated_candidacy.subscribed.label
-    end
-
-    def status_label
-      decorated_candidacy.status.label
-    end
-
-    def screened_label
-      decorated_candidacy.screened.label
+    %i(subscribed status screened).each do |method|
+      define_method("#{method}_label") do
+        candidacy_trait = "Candidacy::#{method.to_s.camelize}".constantize
+        candidacy_trait.new(person.candidacy, organization).label
+      end
     end
   end
 end

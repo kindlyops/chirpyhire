@@ -4,7 +4,7 @@ class Candidacy::Availability < Candidacy::Attribute
       live_in: 'Live-In',
       hourly: 'Hourly',
       both: 'Both',
-      no_availability: 'None'
+      no_availability: 'No Availability'
     }.with_indifferent_access
   end
 

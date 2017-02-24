@@ -4,7 +4,7 @@ class Candidacy::Experience < Candidacy::Attribute
       less_than_one: '0 - 1 years',
       one_to_five: '1 - 5 years',
       six_or_more: '6+ years',
-      no_experience: 'None'
+      no_experience: 'No Experience'
     }.with_indifferent_access
   end
 
