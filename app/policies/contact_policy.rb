@@ -1,5 +1,4 @@
 class ContactPolicy < ApplicationPolicy
-
   def update?
     show?
   end
