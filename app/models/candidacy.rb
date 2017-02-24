@@ -27,6 +27,18 @@ class Candidacy < ApplicationRecord
     pca: 0, cna: 1, other_certification: 2, no_certification: 3
   }
 
+  def self.finished_survey
+    where(inquiry: nil).where.not(
+      experience: nil,
+      skin_test: nil,
+      availability: nil,
+      transportation: nil,
+      zipcode: nil,
+      cpr_first_aid: nil,
+      certification: nil
+    )
+  end
+
   def surveying?
     contact.present?
   end
