@@ -1,6 +1,4 @@
 .bootstrap-table {
-  $bootstrap-table-gray: #dddddd;
-
   .fixed-table-toolbar {
     .export {
       .export-selected {
@@ -36,7 +34,7 @@
     }
 
     .table-no-bordered {
-      border: 1px solid $bootstrap-table-gray;
+      border: 1px solid $ch-table-gray;
     }
   }
 

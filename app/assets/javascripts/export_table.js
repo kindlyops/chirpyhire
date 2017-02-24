@@ -112,14 +112,23 @@
           e.preventDefault();
           var ids = R.pluck('id')(that.getAllSelections());
           var params = R.merge(that.queryParams(), { 'id[]': ids });
-          $.post('/candidacies.csv', params, function(data) {
-            var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + data);
-            var link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', 'candidacies-'+ Date.now() +'.csv');
-            document.body.appendChild(link);
-            link.click();
-          }, 'text');
+          $.ajax({
+            headers: {
+              Accept : "text/csv;charset=utf-8",
+              "Content-Type": "text/csv;charset=utf-8"
+            },
+            url: '/candidacies.csv',
+            data: params,
+            dataType: 'text',
+            success: function(data) {
+              var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + data);
+              var link = document.createElement('a');
+              link.setAttribute('href', encodedUri);
+              link.setAttribute('download', 'candidacies-'+ Date.now() +'.csv');
+              document.body.appendChild(link);
+              link.click();
+            }
+          });
         });
 
         $export.find('.export-all').click(function(e) {

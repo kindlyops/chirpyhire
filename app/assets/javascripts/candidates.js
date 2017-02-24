@@ -3,6 +3,46 @@ $(document).on('turbolinks:load', function() {
   var candidates = $('.candidates:not([loaded])');
 
   if(candidates.length) {
+    var screenedClass = function(isScreened) {
+      if (isScreened) {
+        return 'active';
+      } else {
+        return '';
+      }
+    };
+
+    candidates.on('click', 'a.screened:not(.active)', function() {
+      var $button = $(this);
+
+      $.ajax({
+        url: '/contacts/' + $button.data('contact-id'),
+        type: 'PUT',
+        data: { contact: { screened: true } },
+        success: function() {
+          $button
+            .addClass('active activating')
+            .attr('title', $button.data('handle') + ' has been Screened!');
+        },
+        dataType: 'json'
+      });
+    });
+
+    candidates.on('click', 'a.screened.active', function() {
+      var $button = $(this);
+
+      $.ajax({
+        url: '/contacts/' + $button.data('contact-id'),
+        type: 'PUT',
+        data: { contact: {  screened: false } },
+        success: function() {
+          $button
+            .removeClass('active activating')
+            .attr('title', $button.data('handle') + ' has been Screened!');
+        },
+        dataType: 'json'
+      });
+    });
+
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
       smartDisplay: true,
@@ -137,13 +177,17 @@ $(document).on('turbolinks:load', function() {
                   '</span>';
           }
       }, {
-          field: 'message',
-          title: '',
+          field: 'screened',
+          title: 'Screened',
+          sortable: true,
           formatter: function(value, row, index) {
             return [
-                '<a role="button" href="/contacts/', value.contact_id,
-                '/conversation" class="btn btn-primary">',
-                '<i class="fa fa-commenting"></i>',
+                '<a role="button" data-contact-id="', value.contact_id,
+                '" data-handle="', value.contact_handle,
+                '" title="Mark ', value.contact_handle, ' as',
+                ' Screened!"',' class="d-block btn btn-secondary ',
+                screenedClass(value.contact_screened),
+                ' screened mr-2 ml-2"><i class="fa fa-check-circle fa-2x"></i>',
                 '</a>'
             ].join('');
           }

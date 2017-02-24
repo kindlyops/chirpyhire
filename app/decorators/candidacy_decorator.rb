@@ -29,14 +29,6 @@ class CandidacyDecorator < Draper::Decorator
     Candidacy::Zipcode.new(object)
   end
 
-  def status
-    Candidacy::Status.new(object, h.current_organization)
-  end
-
-  def subscribed
-    Candidacy::Subscribed.new(object, h.current_organization)
-  end
-
   def certification
     Candidacy::Certification.new(object)
   end
@@ -47,5 +39,17 @@ class CandidacyDecorator < Draper::Decorator
 
   def cpr_first_aid
     Candidacy::CprFirstAid.new(object)
+  end
+
+  def status
+    Candidacy::Status.new(object, h.current_organization)
+  end
+
+  def subscribed
+    Candidacy::Subscribed.new(object, h.current_organization)
+  end
+
+  def screened
+    Candidacy::Screened.new(object, h.current_organization)
   end
 end
