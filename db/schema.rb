@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223160528) do
+ActiveRecord::Schema.define(version: 20170224220539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,17 @@ ActiveRecord::Schema.define(version: 20170223160528) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text     "content"
+    t.string   "searchable_type"
+    t.integer  "searchable_id"
+    t.integer  "organization_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_pg_search_documents_on_organization_id", using: :btree
+    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
+  end
+
   create_table "plans", force: :cascade do |t|
     t.integer  "amount",            null: false
     t.string   "interval",          null: false
@@ -198,6 +209,7 @@ ActiveRecord::Schema.define(version: 20170223160528) do
   add_foreign_key "locations", "organizations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people"
+  add_foreign_key "pg_search_documents", "organizations"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "zipcodes", "ideal_candidates"

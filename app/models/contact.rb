@@ -1,8 +1,13 @@
 class Contact < ApplicationRecord
+  include PgSearch
+  include Contact::Searchable
+
   belongs_to :person
   belongs_to :organization
 
-  delegate :candidacy, :handle, :zipcode, :phone_number, to: :person
+  delegate :handle, :phone_number, :zipcode, :availability,
+           :experience, :certification, :skin_test,
+           :cpr_first_aid, :complete?, to: :person
 
   def self.active
     where(subscribed: true)
@@ -17,7 +22,7 @@ class Contact < ApplicationRecord
   end
 
   def ideal?
-    candidacy.ideal?(organization.ideal_candidate)
+    person.ideal?(organization.ideal_candidate)
   end
 
   def promising?
