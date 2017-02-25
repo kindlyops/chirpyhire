@@ -4,7 +4,7 @@ class Contact::Subscribed < Contact::Attribute
   end
 
   def label
-    humanize_attribute(actively_subscribed?) || 'Unknown'
+    'Subscribed'
   end
 
   def search_label
@@ -12,28 +12,21 @@ class Contact::Subscribed < Contact::Attribute
   end
 
   def icon_class
-    icon_classes[actively_subscribed?] || 'fa-question'
+    return 'fa-question' if contact.subscribed.nil?
+    'fa-mobile'
+  end
+
+  def button_class
+    return 'btn-secondary' if contact.send(attribute).present?
+
+    'btn-outline-secondary'
   end
 
   def actively_subscribed?
     contact.subscribed?
   end
 
-  def button_class
-    'btn-secondary'
-  end
-
   def humanize_attributes
-    {
-      true => 'Subscribed',
-      false => 'Unsubscribed'
-    }
-  end
-
-  def icon_classes
-    {
-      true => 'fa-mobile subscribed',
-      false => 'fa-mobile unsubscribed'
-    }
+    label
   end
 end
