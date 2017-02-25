@@ -15,7 +15,7 @@ module Contact::Searchable
                     if: :complete?
 
     %i(availability experience certification
-    skin_test cpr_first_aid).each do |method|
+       skin_test cpr_first_aid).each do |method|
       define_method("#{method}_label") do
         candidacy_trait = "Candidacy::#{method.to_s.camelize}".constantize
         candidacy_trait.new(person.candidacy).label

@@ -2,7 +2,7 @@ class CandidaciesController < ApplicationController
   decorates_assigned :candidacies
 
   def index
-    @candidacies = selected(paginate(ordered_candidacies))
+    @candidacies = found_candidacies
 
     respond_to do |format|
       format.json
@@ -11,6 +11,14 @@ class CandidaciesController < ApplicationController
   end
 
   private
+
+  def found_candidacies
+    if params[:search].present?
+      selected(paginate(policy_scope(PgSearch.multisearch(params[:search])))).map { |c| c.person.candidacy }
+    else
+      selected(paginate(ordered_candidacies))
+    end
+  end
 
   def filename
     "candidacies-#{DateTime.current.to_i}.csv"

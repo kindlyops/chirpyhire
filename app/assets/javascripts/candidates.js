@@ -52,6 +52,7 @@ $(document).on('turbolinks:load', function() {
       sidePagination: 'server',
       mobileResponsive: true,
       iconsPrefix: 'fa',
+      search: true,
       checkboxHeader: true,
       icons: {
         paginationSwitchDown:'fa-arrow-circle-o-down',
