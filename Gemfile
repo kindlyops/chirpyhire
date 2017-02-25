@@ -96,6 +96,7 @@ gem 'kaminari', '~> 0.17.0'
 gem 'csv_shaper', '~> 1.3.0'
 gem 'nav_lynx', '~> 1.1.1'
 gem 'pg_search', '~> 2.0.1'
+gem 'hairtrigger', '~> 0.2.18'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

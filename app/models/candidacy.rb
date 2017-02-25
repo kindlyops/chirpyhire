@@ -2,6 +2,7 @@ class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
   belongs_to :contact, optional: true
+  after_save :set_contacts_content
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
@@ -100,5 +101,9 @@ class Candidacy < ApplicationRecord
 
   def boolean_attributes_present?
     !cpr_first_aid.nil? && !skin_test.nil?
+  end
+
+  def set_contacts_content
+    contacts.candidate.find_each(&:update_content)
   end
 end

@@ -4,7 +4,7 @@ class Contact::PhoneNumber < Contact::Attribute
   end
 
   def search_label
-    person.phone_number
+    person.phone_number[2..-1]
   end
 
   def icon_class
