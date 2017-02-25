@@ -1,4 +1,4 @@
-class Candidacy::Experience < Candidacy::Attribute
+class Contact::Experience < Contact::Attribute
   def humanize_attributes
     {
       less_than_one: '0 - 1 years',

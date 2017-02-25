@@ -1,4 +1,4 @@
-class Candidacy::Certification < Candidacy::Attribute
+class Contact::Certification < Contact::Attribute
   def humanize_attributes
     {
       pca: 'PCA',

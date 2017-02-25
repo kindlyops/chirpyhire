@@ -1,4 +1,4 @@
-class Candidacy::Handle < Candidacy::Attribute
+class Contact::Handle < Contact::Attribute
   def label
     candidacy.handle
   end

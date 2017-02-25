@@ -1,4 +1,4 @@
-class Candidacy::Transportation < Candidacy::Attribute
+class Contact::Transportation < Contact::Attribute
   def humanize_attributes
     {
       personal_transportation: 'Personal',

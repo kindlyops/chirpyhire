@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get '/candidates', to: 'candidates#index'
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resources :ideal_candidate_suggestions, only: :create
-  resources :candidacies, only: :index
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 
   resources :contacts, only: [:index, :update] do

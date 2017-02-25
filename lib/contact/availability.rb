@@ -1,4 +1,4 @@
-class Candidacy::Availability < Candidacy::Attribute
+class Contact::Availability < Contact::Attribute
   def humanize_attributes
     {
       live_in: 'Live-In',

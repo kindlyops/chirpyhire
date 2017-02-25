@@ -1,13 +1,15 @@
 class Contact < ApplicationRecord
-  include PgSearch
   include Contact::Searchable
-
   belongs_to :person
   belongs_to :organization
 
   delegate :handle, :phone_number, :zipcode, :availability,
            :experience, :certification, :skin_test,
-           :cpr_first_aid, :complete?, to: :person
+           :cpr_first_aid, to: :person
+
+  def self.candidate
+    where(candidate: true)
+  end
 
   def self.active
     where(subscribed: true)

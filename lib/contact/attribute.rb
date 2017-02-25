@@ -1,9 +1,11 @@
-class Candidacy::Attribute
-  def initialize(candidacy)
-    @candidacy = candidacy
+class Contact::Attribute
+  def initialize(contact)
+    @contact = contact
   end
 
-  attr_reader :candidacy
+  attr_reader :contact
+  delegate :person, :organization, to: :contact
+  delegate :candidacy, to: :person
 
   def humanize_attribute(attribute)
     return if attribute.nil?
@@ -18,6 +20,7 @@ class Candidacy::Attribute
   def label
     humanize_attribute(candidacy.send(attribute)) || 'Unknown'
   end
+  alias search_label label
 
   def icon_class
     icon_classes[candidacy.send(attribute)] || 'fa-question'

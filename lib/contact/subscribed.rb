@@ -1,11 +1,4 @@
-class Candidacy::Subscribed < Candidacy::Attribute
-  def initialize(candidacy, organization)
-    @candidacy = candidacy
-    @organization = organization
-  end
-
-  attr_reader :organization
-
+class Contact::Subscribed < Contact::Attribute
   def id
     candidacy.subscribed_to(organization).id
   end
@@ -14,12 +7,16 @@ class Candidacy::Subscribed < Candidacy::Attribute
     humanize_attribute(actively_subscribed?) || 'Unknown'
   end
 
+  def search_label
+    return 'Subscribed' if actively_subscribed?
+  end
+
   def icon_class
     icon_classes[actively_subscribed?] || 'fa-question'
   end
 
   def actively_subscribed?
-    candidacy.actively_subscribed_to?(organization)
+    contact.subscribed?
   end
 
   def button_class

@@ -4,7 +4,7 @@ class Candidacy < ApplicationRecord
   belongs_to :contact, optional: true
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
-           :phone_number, to: :person
+           :phone_number, :contacts, to: :person
 
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
@@ -43,11 +43,6 @@ class Candidacy < ApplicationRecord
     contact.present?
   end
 
-  def status_for(organization)
-    return :ideal if ideal?(organization.ideal_candidate)
-    :promising
-  end
-
   def screened_at(organization)
     return true if subscribed_to(organization).screened?
     false
@@ -76,6 +71,11 @@ class Candidacy < ApplicationRecord
 
   def available?
     availability.present?
+  end
+
+  def status_for(organization)
+    return :ideal if ideal?(organization.ideal_candidate)
+    :promising
   end
 
   def locatable?

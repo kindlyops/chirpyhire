@@ -29,5 +29,6 @@ module Congaree
     config.nav_lynx.selected_class = 'active'
 
     config.cache_store = :memory_store
+    # config.active_record.schema_format = :sql
   end
 end

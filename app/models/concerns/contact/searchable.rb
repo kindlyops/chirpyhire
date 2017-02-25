@@ -2,30 +2,34 @@ module Contact::Searchable
   extend ActiveSupport::Concern
 
   included do
-    search_attributes = lambda do |contact|
-      { organization_id: contact.organization_id }
+    include PgSearch
+    pg_search_scope :search, against: :content,
+    using: { tsearch: {
+      negation: true,
+      prefix: true,
+      tsvector_column: 'tsvector_content_tsearch'
+    } }
+    before_save :set_content, if: :candidate?
+
+    def build_content
+      <<~CONTENT.squish.chomp
+        #{handle} #{phone_number} #{zipcode} #{availability_search_label} \
+#{experience_search_label} #{certification_search_label} \
+#{skin_test_search_label} #{cpr_first_aid_search_label} \
+#{subscribed_search_label} #{status_search_label} \
+#{screened_search_label}
+      CONTENT
     end
 
-    multisearchable against: [:handle, :phone_number, :zipcode,
-                              :availability_label, :experience_label,
-                              :certification_label, :skin_test_label,
-                              :cpr_first_aid_label, :subscribed_label,
-                              :status_label, :screened_label],
-                    additional_attributes: search_attributes,
-                    if: :complete?
+    def set_content
+      self.content = build_content
+    end
 
     %i(availability experience certification
-       skin_test cpr_first_aid).each do |method|
-      define_method("#{method}_label") do
-        candidacy_trait = "Candidacy::#{method.to_s.camelize}".constantize
-        candidacy_trait.new(person.candidacy).label
-      end
-    end
-
-    %i(subscribed status screened).each do |method|
-      define_method("#{method}_label") do
-        candidacy_trait = "Candidacy::#{method.to_s.camelize}".constantize
-        candidacy_trait.new(person.candidacy, organization).label
+       skin_test cpr_first_aid subscribed status screened).each do |method|
+      define_method("#{method}_search_label") do
+        contact_trait = "Contact::#{method.to_s.camelize}".constantize
+        contact_trait.new(self).search_label
       end
     end
   end

@@ -7,7 +7,7 @@ class Person < ApplicationRecord
   before_create :add_nickname
   after_create :create_candidacy
 
-  delegate :inquiry, :zipcode, :complete?, :availability, :experience,
+  delegate :inquiry, :zipcode, :availability, :experience,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
 
   def subscribed_to?(organization)

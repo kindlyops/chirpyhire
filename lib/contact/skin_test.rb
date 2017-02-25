@@ -1,10 +1,14 @@
-class Candidacy::SkinTest < Candidacy::Attribute
+class Contact::SkinTest < Contact::Attribute
   def label
     'Skin / TB Test'
   end
 
   def humanize_attribute(*)
-    'Skin / TB Test'
+    label
+  end
+
+  def search_label
+    label if candidacy.skin_test.present?
   end
 
   def icon_class
