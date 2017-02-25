@@ -6,11 +6,16 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { @candidates = fetch_candidates }
-      format.csv { @filename = filename }
+      format.csv { index_csv }
     end
   end
 
   private
+
+  def index_csv
+    @candidates = fetch_candidates
+    @filename = filename
+  end
 
   def fetch_candidates
     if params[:search].present?

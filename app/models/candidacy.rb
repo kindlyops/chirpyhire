@@ -44,6 +44,11 @@ class Candidacy < ApplicationRecord
     contact.present?
   end
 
+  def status_for(organization)
+    return :ideal if ideal?(organization.ideal_candidate)
+    :promising
+  end
+
   def screened_at(organization)
     return true if subscribed_to(organization).screened?
     false
@@ -72,11 +77,6 @@ class Candidacy < ApplicationRecord
 
   def available?
     availability.present?
-  end
-
-  def status_for(organization)
-    return :ideal if ideal?(organization.ideal_candidate)
-    :promising
   end
 
   def locatable?
