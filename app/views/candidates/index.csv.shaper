@@ -10,9 +10,9 @@ csv.rows candidates do |csv, candidate|
   csv.cell :transportation, candidate.transportation.label
   csv.cell :experience, candidate.experience.label
   csv.cell :certification, candidate.certification.label
-  csv.cell :skin_test, candidate.skin_test.label
-  csv.cell :cpr_first_aid, candidate.cpr_first_aid.label
-  csv.cell :subscribed, candidate.subscribed.label
+  csv.cell :skin_test, candidate.skin_test
+  csv.cell :cpr_first_aid, candidate.cpr_first_aid
+  csv.cell :subscribed, candidate.subscribed
   csv.cell :status, candidate.status.label
-  csv.cell :screened, candidate.screened.label
+  csv.cell :screened, candidate.screened
 end

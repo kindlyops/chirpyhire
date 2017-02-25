@@ -3,12 +3,16 @@ class Contact::Subscribed < Contact::Attribute
     candidacy.subscribed_to(organization).id
   end
 
+  def to_s
+    contact.subscribed?.to_s
+  end
+
   def label
     'Subscribed'
   end
 
   def search_label
-    return 'Subscribed' if actively_subscribed?
+    label if contact.subscribed?
   end
 
   def icon_class
@@ -17,13 +21,9 @@ class Contact::Subscribed < Contact::Attribute
   end
 
   def button_class
-    return 'btn-secondary' if contact.send(attribute).present?
+    return 'btn-secondary' if contact.subscribed?
 
     'btn-outline-secondary'
-  end
-
-  def actively_subscribed?
-    contact.subscribed?
   end
 
   def humanize_attributes

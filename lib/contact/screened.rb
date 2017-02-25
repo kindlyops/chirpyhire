@@ -1,9 +1,13 @@
 class Contact::Screened < Contact::Attribute
   def label
-    contact.screened?
+    'Screened'
+  end
+
+  def to_s
+    candidacy.cpr_first_aid.present?.to_s
   end
 
   def search_label
-    return 'Screened' if contact.screened.present?
+    label if contact.screened.present?
   end
 end

@@ -7,6 +7,10 @@ class Contact::CprFirstAid < Contact::Attribute
     label if candidacy.cpr_first_aid.present?
   end
 
+  def to_s
+    candidacy.cpr_first_aid.present?.to_s
+  end
+
   def humanize_attribute(*)
     label
   end
