@@ -336,7 +336,8 @@ CREATE TABLE organizations (
     phone_number character varying,
     stripe_customer_id character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    candidates_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -816,7 +817,7 @@ CREATE INDEX index_candidacies_on_person_id ON candidacies USING btree (person_i
 -- Name: index_contacts_on_content_tsearch; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_contacts_on_content_tsearch ON contacts USING gin (content_tsearch);
+CREATE INDEX index_contacts_on_content_tsearch ON contacts USING gin (content_tsearch) WHERE (candidate = true);
 
 
 --
@@ -1081,6 +1082,8 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170223160528'),
 ('20170224220539'),
 ('20170225171500'),
-('20170225200724');
+('20170225200724'),
+('20170225215404'),
+('20170225221058');
 
 

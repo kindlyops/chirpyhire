@@ -38,7 +38,7 @@ class CandidatesController < ApplicationController
   end
 
   def ordered(scope)
-    scope.joins(person: :candidacy).order(order)
+    scope.includes(person: :candidacy).order(order)
   end
 
   def ordered_candidates

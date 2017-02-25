@@ -53,6 +53,7 @@ group :development do
   gem 'brakeman', '~> 3.3.0'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'meta_request', '~> 0.4.0'
 end
 
 group :production do
