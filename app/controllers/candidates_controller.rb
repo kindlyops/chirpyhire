@@ -5,7 +5,7 @@ class CandidatesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { @candidates = fetch_candidates }
+      format.json { @candidates = selected(paginated(ordered_candidates)) }
       format.csv { index_csv }
     end
   end
@@ -13,23 +13,15 @@ class CandidatesController < ApplicationController
   private
 
   def index_csv
-    @candidates = fetch_candidates
+    @candidates = selected(paginated(ordered_candidates))
     @filename = filename
-  end
-
-  def fetch_candidates
-    if params[:search].present?
-      selected(paginate(policy_scope(searched_candidates)))
-    else
-      selected(paginate(ordered_candidates))
-    end
   end
 
   def filename
     "candidates-#{DateTime.current.to_i}.csv"
   end
 
-  def paginate(scope)
+  def paginated(scope)
     if params[:offset].present? && params[:limit].present?
       scope.page(page).per(limit)
     else
@@ -45,16 +37,20 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def searched_candidates
-    scoped_contacts.search(params[:search])
+  def ordered(scope)
+    scope.joins(person: :candidacy).order(order)
   end
 
   def ordered_candidates
-    policy_scope(scoped_contacts).joins(person: :candidacy).order(order)
+    ordered(policy_scope(scoped_contacts))
   end
 
   def scoped_contacts
-    Contact.candidate
+    if params[:search].present?
+      Contact.candidate.search(params[:search])
+    else
+      Contact.candidate
+    end
   end
 
   def limit
