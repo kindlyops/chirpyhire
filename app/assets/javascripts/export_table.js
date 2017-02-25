@@ -104,8 +104,7 @@
 
         $export = $([
           '<div class="export btn-group">',
-          exportButton.bind(this)('selected', 'Export Selected'),
-          exportButton.bind(this)('all', 'Export All'),
+          exportButton.bind(this)('selected', 'Export'),
           '</div>'].join('')).appendTo($btnGroup);
 
         $export.find('.export-selected').click(function(e) {
