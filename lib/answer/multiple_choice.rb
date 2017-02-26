@@ -6,7 +6,7 @@ class Answer::MultipleChoice < Answer::Base
   delegate :choices, to: :question
 
   def valid?(message)
-    has?(choice(message)) || approximate_choice?(message)
+    choice?(choice(message)) || approximate_choice?(message)
   end
 
   def attribute(message)
@@ -17,7 +17,7 @@ class Answer::MultipleChoice < Answer::Base
 
   private
 
-  def has?(option)
+  def choice?(option)
     choices.keys.include?(option)
   end
 
