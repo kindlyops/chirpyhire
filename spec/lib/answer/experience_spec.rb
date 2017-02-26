@@ -9,8 +9,8 @@ RSpec.describe Answer::Experience do
     context 'new to caregiving' do
       let(:message) { create(:message, body: 'new to caregiving') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
   end
@@ -19,8 +19,8 @@ RSpec.describe Answer::Experience do
     context 'new to caregiving' do
       let(:message) { create(:message, body: 'new to caregiving') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:experience]).to eq(:no_experience)
+      it 'is nil' do
+        expect(subject.attribute(message)[:experience]).to eq(nil)
       end
     end
   end

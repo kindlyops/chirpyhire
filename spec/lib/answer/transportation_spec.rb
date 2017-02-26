@@ -9,24 +9,24 @@ RSpec.describe Answer::Transportation do
     context 'personal transportation' do
       let(:message) { create(:message, body: 'personal transportation') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
 
     context 'public transportation' do
       let(:message) { create(:message, body: 'public transportation') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
 
     context 'do not have reliable transportation' do
       let(:message) { create(:message, body: 'do not have reliable transportation') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
   end
@@ -35,24 +35,24 @@ RSpec.describe Answer::Transportation do
     context 'personal transportation' do
       let(:message) { create(:message, body: 'personal transportation') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:transportation]).to eq(:personal_transportation)
+      it 'is nil' do
+        expect(subject.attribute(message)[:transportation]).to eq(nil)
       end
     end
 
     context 'public transportation' do
       let(:message) { create(:message, body: 'public transportation') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:transportation]).to eq(:public_transportation)
+      it 'is nil' do
+        expect(subject.attribute(message)[:transportation]).to eq(nil)
       end
     end
 
     context 'do not have reliable transportation' do
       let(:message) { create(:message, body: 'do not have reliable transportation') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:transportation]).to eq(:no_transportation)
+      it 'is nil' do
+        expect(subject.attribute(message)[:transportation]).to eq(nil)
       end
     end
   end

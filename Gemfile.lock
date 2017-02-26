@@ -40,6 +40,12 @@ GIT
       activesupport (> 5.x)
       builder (~> 3.1)
 
+GIT
+  remote: https://github.com/rlue/fuzzy_match.git
+  revision: cbc2185452dff9ec80d58d1906d0343000cdc9f7
+  specs:
+    fuzzy_match (2.1.0)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -166,7 +172,6 @@ GEM
     ffi (1.9.17)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
-    fuzzy_match (2.1.0)
     geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -469,7 +474,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.7.0)
-  fuzzy_match (~> 2.1.0)
+  fuzzy_match!
   geocoder (~> 1.4.3)
   hairtrigger (~> 0.2.18)
   inline_svg (~> 0.11.1)

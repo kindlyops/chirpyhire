@@ -21,7 +21,14 @@ class Answer::MultipleChoice < Answer::Base
 
   def approximate_choice?(message)
     body = clean(message.body)
-    fuzzy_match.find(body, threshold: THRESHOLD).present?
+    result = fuzzy_match.find(body, threshold: THRESHOLD)
+
+    log_result(message, result) if result.present?
+    false
+  end
+
+  def log_result(message, result)
+    Rollbar.info('Answer::MultipleChoice Approximate: ', message.body, result)
   end
 
   def fuzzy_match
@@ -29,12 +36,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def fetch_attribute(message)
-    choices[choice(message)] || approximate_choice(message)
-  end
-
-  def approximate_choice(message)
-    body = clean(message.body)
-    fuzzy_match.find(body, threshold: THRESHOLD)
+    choices[choice(message)]
   end
 
   def choice(message)

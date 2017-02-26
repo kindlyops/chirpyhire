@@ -9,8 +9,8 @@ RSpec.describe Answer::CprFirstAid do
     context 'yes' do
       let(:message) { create(:message, body: 'yes') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
 
@@ -25,8 +25,8 @@ RSpec.describe Answer::CprFirstAid do
     context 'no' do
       let(:message) { create(:message, body: 'no') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
   end
@@ -35,16 +35,16 @@ RSpec.describe Answer::CprFirstAid do
     context 'yes' do
       let(:message) { create(:message, body: 'yes') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:cpr_first_aid]).to eq(true)
+      it 'is nil' do
+        expect(subject.attribute(message)[:cpr_first_aid]).to eq(nil)
       end
     end
 
     context 'no' do
       let(:message) { create(:message, body: 'no') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:cpr_first_aid]).to eq(false)
+      it 'is nil' do
+        expect(subject.attribute(message)[:cpr_first_aid]).to eq(nil)
       end
     end
   end

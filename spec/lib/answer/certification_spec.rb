@@ -9,16 +9,16 @@ RSpec.describe Answer::Certification do
     context 'pca' do
       let(:message) { create(:message, body: 'pca') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
 
     context 'cna' do
       let(:message) { create(:message, body: 'cna') }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+      it 'is false' do
+        expect(subject.valid?(message)).to eq(false)
       end
     end
   end
@@ -27,16 +27,16 @@ RSpec.describe Answer::Certification do
     context 'pca' do
       let(:message) { create(:message, body: 'pca') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:certification]).to eq(:pca)
+      it 'is nil' do
+        expect(subject.attribute(message)[:certification]).to eq(nil)
       end
     end
 
     context 'cna' do
       let(:message) { create(:message, body: 'cna') }
 
-      it 'is true' do
-        expect(subject.attribute(message)[:certification]).to eq(:cna)
+      it 'is nil' do
+        expect(subject.attribute(message)[:certification]).to eq(nil)
       end
     end
   end
