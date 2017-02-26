@@ -84,6 +84,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
+    amatch (0.3.0)
+      tins (~> 1.0)
     arel (7.1.4)
     ast (2.3.0)
     autoprefixer-rails (6.7.3)
@@ -164,6 +166,7 @@ GEM
     ffi (1.9.17)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
+    fuzzy_match (2.1.0)
     geocoder (1.4.3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
@@ -407,6 +410,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.6)
     timecop (0.8.1)
+    tins (1.13.2)
     turbolinks (5.0.1)
       turbolinks-source (~> 5)
     turbolinks-source (5.0.0)
@@ -446,6 +450,7 @@ PLATFORMS
 DEPENDENCIES
   aasm (~> 4.11.1)
   activemodel-serializers-xml!
+  amatch (~> 0.3.0)
   better_errors
   binding_of_caller
   bootstrap (~> 4.0.0.alpha6)
@@ -464,6 +469,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.7.0)
+  fuzzy_match (~> 2.1.0)
   geocoder (~> 1.4.3)
   hairtrigger (~> 0.2.18)
   inline_svg (~> 0.11.1)

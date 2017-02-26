@@ -7,10 +7,4 @@ class Answer::Experience < Answer::MultipleChoice
       "I'm new to caregiving" => :no_experience
     }
   end
-
-  def attribute(message)
-    attribute = choice_map[question.choices[choice(message)]]
-
-    { question.inquiry => attribute }
-  end
 end

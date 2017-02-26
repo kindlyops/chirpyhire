@@ -11,10 +11,6 @@ class Question::MultipleChoice < Question::Base
     BODY
   end
 
-  def has?(choice)
-    choices.keys.include?(choice)
-  end
-
   def answer
     Answer::MultipleChoice.new(self)
   end

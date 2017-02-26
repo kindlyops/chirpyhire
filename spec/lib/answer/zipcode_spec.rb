@@ -31,4 +31,16 @@ RSpec.describe Answer::Zipcode do
       end
     end
   end
+
+  describe '#attribute' do
+    context '5 digits' do
+      context 'valid zip code' do
+        let(:message) { create(:message, body: '30342') }
+
+        it 'is true' do
+          expect(subject.attribute(message)[:zipcode]).to eq('30342')
+        end
+      end
+    end
+  end
 end
