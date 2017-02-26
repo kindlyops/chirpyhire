@@ -31,7 +31,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def fetch_attribute(message)
-    option = fetch_option(message)
+    option = choice(message) || approximate_choice(message)
     return unless option.present?
 
     choices[option]
@@ -39,14 +39,6 @@ class Answer::MultipleChoice < Answer::Base
       .parameterize
       .underscore
       .to_sym
-  end
-
-  def fetch_option(message)
-    if choice(message).present?
-      choice(message)
-    else
-      approximate_choice(message)
-    end
   end
 
   def approximate_choice(message)
