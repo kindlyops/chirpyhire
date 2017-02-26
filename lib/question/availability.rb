@@ -15,4 +15,8 @@ class Question::Availability < Question::MultipleChoice
   def inquiry
     :availability
   end
+
+  def answer
+    Answer::Availability.new(self)
+  end
 end
