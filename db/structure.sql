@@ -336,8 +336,7 @@ CREATE TABLE organizations (
     phone_number character varying,
     stripe_customer_id character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    candidates_count integer DEFAULT 0 NOT NULL
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -1083,7 +1082,6 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170224220539'),
 ('20170225171500'),
 ('20170225200724'),
-('20170225215404'),
 ('20170225221058');
 
 
