@@ -7,10 +7,4 @@ class Answer::Certification < Answer::MultipleChoice
       'No' => :no_certification
     }
   end
-
-  def attribute(message)
-    attribute = choice_map[question.choices[choice(message)]]
-
-    { question.inquiry => attribute }
-  end
 end

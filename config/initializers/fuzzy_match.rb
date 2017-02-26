@@ -1,0 +1,1 @@
+FuzzyMatch.engine = :amatch

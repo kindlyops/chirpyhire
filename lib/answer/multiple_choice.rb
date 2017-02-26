@@ -1,8 +1,6 @@
 class Answer::MultipleChoice < Answer::Base
   MULTIPLE_CHOICE_REGEXP = /\A([a-z]){1}\)?\z/
-  THRESHOLD = 0.75
-  BLOCK_SIZE = 1
-  MAX_DISTANCE = 4
+  THRESHOLD = 0.49
   delegate :choices, to: :question
 
   def valid?(message)
@@ -10,7 +8,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def attribute(message)
-    attribute = fetch_attribute(message)
+    attribute = choice_map[fetch_attribute(message)]
 
     { question.inquiry => attribute }
   end
@@ -23,37 +21,29 @@ class Answer::MultipleChoice < Answer::Base
 
   def approximate_choice?(message)
     body = clean(message.body)
+    fuzzy_match.find(body, threshold: THRESHOLD).present?
+  end
 
-    choices.values.any? do |value|
-      value = clean(value)
-      similarity(canonical: value, variant: body) >= THRESHOLD
-    end
+  def fuzzy_match
+    FuzzyMatch.new(choices.values)
   end
 
   def fetch_attribute(message)
-    option = choice(message) || approximate_choice(message)
-    return unless option.present?
-
-    choices[option]
-      .downcase
-      .parameterize
-      .underscore
-      .to_sym
+    choices[choice(message)] || approximate_choice(message)
   end
 
   def approximate_choice(message)
     body = clean(message.body)
-
-    choice = choices.find do |_option, value|
-      value = clean(value)
-      similarity(canonical: value, variant: body) >= THRESHOLD
-    end
-
-    choice.first if choice.present?
+    fuzzy_match.find(body, threshold: THRESHOLD)
   end
 
   def choice(message)
-    MULTIPLE_CHOICE_REGEXP.match(clean(message.body))[1].to_sym
+    return unless match(message).present?
+    match(message)[1].to_sym
+  end
+
+  def match(message)
+    MULTIPLE_CHOICE_REGEXP.match(clean(message.body))
   end
 
   def similarity(canonical:, variant:)
