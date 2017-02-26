@@ -6,8 +6,10 @@ class Person < ApplicationRecord
 
   before_create :add_nickname
   after_create :create_candidacy
+  after_save :set_contacts_content
 
-  delegate :inquiry, :zipcode, to: :candidacy
+  delegate :inquiry, :zipcode, :availability, :experience,
+           :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
 
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?
@@ -32,5 +34,9 @@ class Person < ApplicationRecord
   rescue Nickname::OutOfNicknames => e
     Rollbar.debug(e)
     self.nickname = 'Anonymous'
+  end
+
+  def set_contacts_content
+    contacts.candidate.find_each(&:save)
   end
 end

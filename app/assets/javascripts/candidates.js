@@ -15,7 +15,7 @@ $(document).on('turbolinks:load', function() {
       var $button = $(this);
 
       $.ajax({
-        url: '/contacts/' + $button.data('contact-id'),
+        url: '/contacts/' + $button.data('candidate-id'),
         type: 'PUT',
         data: { contact: { screened: true } },
         success: function() {
@@ -31,7 +31,7 @@ $(document).on('turbolinks:load', function() {
       var $button = $(this);
 
       $.ajax({
-        url: '/contacts/' + $button.data('contact-id'),
+        url: '/contacts/' + $button.data('candidate-id'),
         type: 'PUT',
         data: { contact: {  screened: false } },
         success: function() {
@@ -52,6 +52,7 @@ $(document).on('turbolinks:load', function() {
       sidePagination: 'server',
       mobileResponsive: true,
       iconsPrefix: 'fa',
+      search: true,
       checkboxHeader: true,
       icons: {
         paginationSwitchDown:'fa-arrow-circle-o-down',
@@ -62,12 +63,12 @@ $(document).on('turbolinks:load', function() {
         export: 'fa-cloud-download'
       },
       showExport: true,
-      url: '/candidacies.json',
+      url: '/candidates.json',
       columns: [{
           field: 'select',
           checkbox: true
         },{
-          field: 'contact',
+          field: 'person',
           title: 'Candidate',
           sortable: true,
           cellStyle: function(value, row, index, field) {
@@ -182,11 +183,11 @@ $(document).on('turbolinks:load', function() {
           sortable: true,
           formatter: function(value, row, index) {
             return [
-                '<a role="button" data-contact-id="', value.contact_id,
-                '" data-handle="', value.contact_handle,
-                '" title="Mark ', value.contact_handle, ' as',
+                '<a role="button" data-candidate-id="', value.candidate_id,
+                '" data-handle="', value.candidate_handle,
+                '" title="Mark ', value.candidate_handle, ' as',
                 ' Screened!"',' class="d-block btn btn-secondary ',
-                screenedClass(value.contact_screened),
+                screenedClass(value.candidate_screened),
                 ' screened mr-2 ml-2"><i class="fa fa-check-circle fa-2x"></i>',
                 '</a>'
             ].join('');

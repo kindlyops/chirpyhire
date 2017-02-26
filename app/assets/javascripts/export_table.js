@@ -104,8 +104,7 @@
 
         $export = $([
           '<div class="export btn-group">',
-          exportButton.bind(this)('selected', 'Export Selected'),
-          exportButton.bind(this)('all', 'Export All'),
+          exportButton.bind(this)('selected', 'Export'),
           '</div>'].join('')).appendTo($btnGroup);
 
         $export.find('.export-selected').click(function(e) {
@@ -117,14 +116,14 @@
               Accept : "text/csv;charset=utf-8",
               "Content-Type": "text/csv;charset=utf-8"
             },
-            url: '/candidacies.csv',
+            url: '/candidates.csv',
             data: params,
             dataType: 'text',
             success: function(data) {
               var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + data);
               var link = document.createElement('a');
               link.setAttribute('href', encodedUri);
-              link.setAttribute('download', 'candidacies-'+ Date.now() +'.csv');
+              link.setAttribute('download', 'candidates-'+ Date.now() +'.csv');
               document.body.appendChild(link);
               link.click();
             }
@@ -146,7 +145,7 @@
           }
 
           var params = filterWithKeys(notLimitOrOffset, that.queryParams());
-          window.location.href = '/candidacies.csv?' + $.param(params);
+          window.location.href = '/candidates.csv?' + $.param(params);
         });
       }
     }

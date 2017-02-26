@@ -1,5 +1,11 @@
 .candidates {
   table {
+    .btn-outline-secondary {
+      .fa-mobile, .fa-medkit {
+        color: $ch-table-gray;
+      }
+    }
+
     .btn-outline-secondary, .btn-secondary:not(.screened) {
       border: none;
 

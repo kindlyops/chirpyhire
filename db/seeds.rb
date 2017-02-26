@@ -4,3 +4,4 @@ if Rails.env.development?
 end
 
 puts "Seed completed"
+

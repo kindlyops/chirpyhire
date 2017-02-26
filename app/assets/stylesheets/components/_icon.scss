@@ -15,13 +15,7 @@
 }
 
 .fa-mobile {
-  &.subscribed {
-    color: $green;
-  }
-
-  &.unsubscribed {
-    color: $gray;
-  }
+  color: $green;
 }
 
 .fa-sign-out, .fa-users, .fa-map-marker {

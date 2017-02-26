@@ -18,6 +18,7 @@ class Survey
 
   def complete
     candidacy.update!(inquiry: nil)
+    candidacy.contacts.find_each { |contact| contact.update(candidate: true) }
     send_message(thank_you.body)
   end
 

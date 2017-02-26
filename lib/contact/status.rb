@@ -1,14 +1,8 @@
-class Candidacy::Status < Candidacy::Attribute
-  def initialize(candidacy, organization)
-    @candidacy = candidacy
-    @organization = organization
-  end
-
-  attr_reader :organization
-
+class Contact::Status < Contact::Attribute
   def label
     humanize_attribute(candidacy.status_for(organization)) || 'Unknown'
   end
+  alias search_label label
 
   def icon_class
     icon_classes[candidacy.status_for(organization)] || 'fa-question'

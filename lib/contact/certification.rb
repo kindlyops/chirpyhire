@@ -1,10 +1,10 @@
-class Candidacy::Certification < Candidacy::Attribute
+class Contact::Certification < Contact::Attribute
   def humanize_attributes
     {
       pca: 'PCA',
       cna: 'CNA',
       other_certification: 'RN, LPN, Other',
-      no_certification: 'None'
+      no_certification: 'No Certification'
     }.with_indifferent_access
   end
 
