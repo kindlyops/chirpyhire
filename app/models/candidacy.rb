@@ -104,6 +104,6 @@ class Candidacy < ApplicationRecord
   end
 
   def set_contacts_content
-    contacts.candidate.find_each(&:update_content)
+    contacts.candidate.find_each(&:save)
   end
 end

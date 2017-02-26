@@ -70,9 +70,12 @@ class CandidatesController < ApplicationController
   end
 
   def order
-    return { id: :asc } unless params[:sort].present?
-    return { id: :asc } unless whitelist_orders[params[:sort]].present?
+    return { id: :asc } unless sorting?
     "#{whitelist_orders[params[:sort]]}#{stabilizer}"
+  end
+
+  def sorting?
+    params[:sort].present? && whitelist_orders[params[:sort]].present?
   end
 
   def stabilizer

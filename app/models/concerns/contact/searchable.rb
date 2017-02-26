@@ -21,10 +21,6 @@ module Contact::Searchable
       CONTENT
     end
 
-    def update_content
-      update(content: build_content)
-    end
-
     def set_content
       self.content = build_content
     end
