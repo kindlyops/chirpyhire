@@ -48,14 +48,6 @@ class Answer::MultipleChoice < Answer::Base
     MULTIPLE_CHOICE_REGEXP.match(clean(message.body))
   end
 
-  def similarity(canonical:, variant:)
-    1.0 / distance(canonical: canonical, variant: variant)
-  end
-
-  def distance(canonical:, variant:)
-    DamerauLevenshtein.distance(canonical, variant, BLOCK_SIZE, MAX_DISTANCE)
-  end
-
   def clean(string)
     string.downcase.gsub(/[^a-z0-9\s]/i, '').squish
   end
