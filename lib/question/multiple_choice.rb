@@ -1,8 +1,5 @@
 class Question::MultipleChoice < Question::Base
   POSTLUDE_BASE = 'Please reply with just the letter'.freeze
-  THRESHOLD = 0.75
-  BLOCK_SIZE = 1
-  MAX_DISTANCE = 4
 
   def body
     <<~BODY
@@ -12,12 +9,6 @@ class Question::MultipleChoice < Question::Base
 
       #{postlude}
     BODY
-  end
-
-  def choice?(message)
-    body = clean(message.body)
-
-    has?(choice(body)) || close?(body)
   end
 
   def answer
@@ -30,33 +21,6 @@ class Question::MultipleChoice < Question::Base
   alias restated postlude
 
   private
-
-  def has?(letter_choice)
-    choices.keys.include?(letter_choice)
-  end
-
-  def choice(message)
-    MULTIPLE_CHOICE_REGEXP.match(message)[1].to_sym
-  end
-
-  def close?(body)
-    choices.values.any? do |value|
-      value = clean(value)
-      similarity(canonical: value, variant: body) >= THRESHOLD
-    end
-  end
-
-  def similarity(canonical:, variant:)
-    1.0 / distance(canonical: canonical, variant: variant)
-  end
-
-  def distance(canonical:, variant:)
-    DamerauLevenshtein.distance(canonical, variant, BLOCK_SIZE, MAX_DISTANCE)
-  end
-
-  def clean(string)
-    string.downcase.gsub(/[^a-z0-9\s]/i, '').squish
-  end
 
   def choices_sentence
     choices.keys.to_sentence(
