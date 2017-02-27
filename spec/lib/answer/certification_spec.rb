@@ -18,7 +18,7 @@ RSpec.describe Answer::Certification do
       end
     end
 
-    ['rcabdef', 'another', 'bother', 'notoreity', 'yarn'].each do |body|
+    %w(rcabdef another bother notoreity yarn).each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 

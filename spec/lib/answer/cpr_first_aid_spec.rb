@@ -6,8 +6,7 @@ RSpec.describe Answer::CprFirstAid do
   subject { Answer::CprFirstAid.new(question) }
 
   describe '#valid?' do
-    ['yes', 'Yes I have a update cpr', 'no',
-     "I'm not cpr certified", 'N', 'Y', 'Yez', 'Yea',
+    ['yes', 'Yes I have a update cpr', 'no', 'N', 'Y', 'Yez', 'Yea',
      'Yed', 'Yeah', 'Yup', 'Nope', 'Nah'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }

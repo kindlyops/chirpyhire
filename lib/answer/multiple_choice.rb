@@ -1,9 +1,12 @@
 class Answer::MultipleChoice < Answer::Base
-  MULTIPLE_CHOICE_REGEXP = /\A([a-z]){1}\)?\z/
   delegate :choices, to: :question
 
+  def multiple_choice_regexp
+    Regexp.new("\\A([#{choices.keys.join(',')}])(\\z|[\\W]+.*\\z)")
+  end
+
   def valid?(message)
-    choice?(message)
+    choice?(message) || regular_choice?(message)
   end
 
   def attribute(message)
@@ -13,6 +16,10 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   private
+
+  def regular_choice?(message)
+    (answer_regexp =~ clean(message.body)).present?
+  end
 
   def choice?(message)
     choices.keys.include?(choice(message))
@@ -28,10 +35,14 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def match(message)
-    MULTIPLE_CHOICE_REGEXP.match(clean(message.body))
+    multiple_choice_regexp.match(clean(message.body))
   end
 
   def clean(string)
-    string.downcase.gsub(/[^a-z0-9\s]/i, '').squish
+    string.downcase.squish
+  end
+
+  def choice_variants
+    choice_map.keys.map { |variant| Regexp.escape(variant.downcase) }
   end
 end

@@ -7,4 +7,20 @@ class Answer::Experience < Answer::MultipleChoice
       "I'm new to caregiving" => :no_experience
     }
   end
+
+  def no_variants
+    %w(no)
+  end
+
+  def positive_variants
+    ['\d\s?-\s?\d', '\d', 'new to caregiving'].concat(choice_variants)
+  end
+
+  def variants
+    "#{positive_variants.join('|')}|#{no_variants.join('|')}"
+  end
+
+  def answer_regexp
+    Regexp.new("\\A(#{variants})\\s?(?:experience)?\\z")
+  end
 end
