@@ -28,7 +28,7 @@ RSpec.describe Answer::CprFirstAid do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     ['yes', 'Yes I have a update cpr', 'Y', 'Yez',
      'Yea', 'Yed', 'Yeah', 'Yup'].each do |body|
       context body do
@@ -40,7 +40,7 @@ RSpec.describe Answer::CprFirstAid do
       end
     end
 
-    ['N', 'no', "I'm not cpr certified", 'Nope', 'Nah'].each do |body|
+    %w(N no Nope Nah).each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 

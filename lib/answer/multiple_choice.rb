@@ -10,7 +10,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def attribute(message)
-    attribute = choice_map[fetch_attribute(message)]
+    attribute = fetch_attribute(message)
 
     { question.inquiry => attribute }
   end
@@ -26,7 +26,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def fetch_attribute(message)
-    choices[choice(message)]
+    choice_map[choices[choice(message)]] || regular_attribute(message)
   end
 
   def choice(message)
@@ -42,7 +42,7 @@ class Answer::MultipleChoice < Answer::Base
     string.downcase.squish
   end
 
-  def choice_variants
+  def regular_variants
     choice_map.keys.map { |variant| Regexp.escape(variant.downcase) }
   end
 

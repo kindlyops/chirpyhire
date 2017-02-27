@@ -8,7 +8,7 @@ class Question::Certification < Question::MultipleChoice
       a: 'Yes, PCA',
       b: 'Yes, CNA',
       c: 'Yes, Other (MA, LPN, RN, etc.)',
-      d: 'No'
+      d: 'No Certification'
     }
   end
 

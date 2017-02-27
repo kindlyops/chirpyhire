@@ -19,38 +19,38 @@ RSpec.describe Answer::Transportation do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     context 'personal_transportation' do
       ['A personal', 'personal', 'A)', 'A.',
-       "A\nJazz", "A.\nJazz", 'Live-In'].each do |body|
+       "A\nJazz", "A.\nJazz", 'I have personal transportation'].each do |body|
 
         let(:message) { create(:message, body: body) }
 
         it 'is personal_transportation' do
-          expect(subject.attribute(message)[:certification]).to eq(:personal_transportation)
+          expect(subject.attribute(message)[:transportation]).to eq(:personal_transportation)
         end
       end
     end
 
     context 'public_transportation' do
       ['B public transportation', 'Public', 'B)', 'B.',
-       "B\nJazz", "B.\nJazz"].each do |body|
+       "B\nJazz", "B.\nJazz", 'I use public transportation'].each do |body|
 
         let(:message) { create(:message, body: body) }
 
         it 'is public_transportation' do
-          expect(subject.attribute(message)[:certification]).to eq(:public_transportation)
+          expect(subject.attribute(message)[:transportation]).to eq(:public_transportation)
         end
       end
     end
 
     context 'no_transportation' do
       ['C no transportation', 'No', 'C)', 'C.',
-       "C\nJazz", "C.\nJazz"].each do |body|
+       "C\nJazz", "C.\nJazz", 'I do not have reliable transportation'].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no_transportation' do
-          expect(subject.attribute(message)[:certification]).to eq(:no_transportation)
+          expect(subject.attribute(message)[:transportation]).to eq(:no_transportation)
         end
       end
     end

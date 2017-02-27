@@ -19,4 +19,17 @@ class Answer::Availability < Answer::MultipleChoice
   def answer_regexp
     Regexp.new("\\A(#{variants})\\s?(?:availability)?\\z")
   end
+
+  def regular_attribute(message)
+    case answer_regexp.match(clean(message.body))[1]
+    when 'live in', 'live-in'
+      :live_in
+    when 'hourly'
+      :hourly
+    when 'both'
+      :both
+    when *no_variants.concat(no_variants.map { |v| "#{v} availability" })
+      :no_availability
+    end
+  end
 end

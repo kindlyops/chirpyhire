@@ -29,7 +29,7 @@ RSpec.describe Answer::Certification do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     context 'pca' do
       ['Yes, PCA', 'A PCA', 'pca', 'A)', 'A.',
        "A\nJazz", "A.\nJazz"].each do |body|
@@ -55,7 +55,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'other' do
-      %w(other ma hha lpn rn rca).each do |body|
+      %w(other ma hha lpn rn rca).push('Yes, Other (MA, LPN, RN, etc.)').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is other' do
@@ -65,7 +65,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'no' do
-      ['no', 'nope', 'N', 'nah', 'no i dont have a license'].each do |body|
+      %w(no nope N nah).push('No Certification').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do

@@ -17,7 +17,7 @@ RSpec.describe Answer::Experience do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     context '0 - 1' do
       ['1', '0- 1', '0 -1', '0-1', '0 - 1', 'A.', "A\nJazz"].each do |body|
         let(:message) { create(:message, body: body) }
@@ -29,7 +29,7 @@ RSpec.describe Answer::Experience do
     end
 
     context '1 - 5' do
-      ['B)', 'B 2 years', '2', '3', '4', '5'].each do |body|
+      ['B)', 'B 2 years', '2', '3', '4', '5', '1 - 5'].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is one_to_five' do
@@ -39,7 +39,7 @@ RSpec.describe Answer::Experience do
     end
 
     context '6 or more' do
-      ['C)', 'C 12 years', '30', '7', '10', '11'].each do |body|
+      ['C)', 'C 12 years', '30', '7', '10', '11', '6 or more'].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is six_or_more' do
@@ -49,7 +49,7 @@ RSpec.describe Answer::Experience do
     end
 
     context 'New to caregiving' do
-      ['0', 'D.', "D\nJazz"].each do |body|
+      ['0', 'D.', "D\nJazz", "I'm new to caregiving"].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no_experience' do

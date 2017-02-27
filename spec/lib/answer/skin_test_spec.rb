@@ -28,7 +28,7 @@ RSpec.describe Answer::SkinTest do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     %w(yes Y Yez
        Yea Yed Yeah Yup).each do |body|
       context body do

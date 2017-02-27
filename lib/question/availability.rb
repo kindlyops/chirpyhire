@@ -8,7 +8,7 @@ class Question::Availability < Question::MultipleChoice
       a: 'Live-In',
       b: 'Hourly',
       c: 'Both',
-      d: 'None'
+      d: 'No Availability'
     }
   end
 

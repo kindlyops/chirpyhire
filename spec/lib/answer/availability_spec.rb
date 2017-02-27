@@ -18,7 +18,7 @@ RSpec.describe Answer::Availability do
     end
   end
 
-  describe 'attribute' do
+  describe '#attribute' do
     context 'live_in' do
       ['A live in', 'live in', 'A)', 'A.',
        "A\nJazz", "A.\nJazz", 'Live-In'].each do |body|
@@ -26,7 +26,7 @@ RSpec.describe Answer::Availability do
         let(:message) { create(:message, body: body) }
 
         it 'is live_in' do
-          expect(subject.attribute(message)[:certification]).to eq(:live_in)
+          expect(subject.attribute(message)[:availability]).to eq(:live_in)
         end
       end
     end
@@ -38,7 +38,7 @@ RSpec.describe Answer::Availability do
         let(:message) { create(:message, body: body) }
 
         it 'is hourly' do
-          expect(subject.attribute(message)[:certification]).to eq(:hourly)
+          expect(subject.attribute(message)[:availability]).to eq(:hourly)
         end
       end
     end
@@ -49,18 +49,18 @@ RSpec.describe Answer::Availability do
         let(:message) { create(:message, body: body) }
 
         it 'is both' do
-          expect(subject.attribute(message)[:certification]).to eq(:both_certification)
+          expect(subject.attribute(message)[:availability]).to eq(:both)
         end
       end
     end
 
     context 'no availability' do
       ['no', 'nope', 'N', 'nah', 'D both', 'Both', 'D)', 'D.',
-       "D\nJazz", "D.\nJazz"].each do |body|
+       "D\nJazz", "D.\nJazz", 'No Availability'].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do
-          expect(subject.attribute(message)[:certification]).to eq(:no_certification)
+          expect(subject.attribute(message)[:availability]).to eq(:no_availability)
         end
       end
     end

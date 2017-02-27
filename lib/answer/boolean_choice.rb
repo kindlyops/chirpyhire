@@ -13,4 +13,13 @@ class Answer::BooleanChoice < Answer::MultipleChoice
       'No' => false
     }
   end
+
+  def regular_attribute(message)
+    case answer_regexp.match(clean(message.body))[1]
+    when 'y', 'yeah', 'ya', 'yup', /\Aye[a-z]{1}\z/, /\Ayes\s.*\z/
+      true
+    when 'nah', 'nope', 'no', 'n'
+      false
+    end
+  end
 end
