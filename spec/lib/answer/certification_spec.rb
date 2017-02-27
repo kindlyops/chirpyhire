@@ -8,7 +8,7 @@ RSpec.describe Answer::Certification do
   describe '#valid?' do
     ['pca', 'cna', 'other', 'no', 'nah', 'nope', 'Yes, PCA', 'A PCA',
      'pca', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'other', 'ma', 'hha',
-     'lpn', 'rn', 'rca', 'C... MA and HHA'].each do |body|
+     'lpn', 'rn', 'rca', 'C... MA and HHA', 'D just certificate'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -65,7 +65,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'no' do
-      %w(no nope N nah).push('No Certification').each do |body|
+      %w(no nope N nah).push('No Certification', 'D just certificate').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do

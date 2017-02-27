@@ -22,14 +22,10 @@ class Answer::BooleanChoice < Answer::MultipleChoice
     }
   end
 
-  def match(message)
-    answer_regexp.match(clean(message.body))
-  end
-
   def regular_attribute(message)
-    return unless match(message).present?
+    return unless regular_match(message).present?
 
-    case match(message)[1]
+    case regular_match(message)[1]
     when Regexp.new("\\A(#{yes_variants.join('|')})#{space_or_end_of_string}")
       true
     when Regexp.new("\\A(#{no_variants.join('|')})#{space_or_end_of_string}")

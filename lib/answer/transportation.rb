@@ -20,7 +20,9 @@ class Answer::Transportation < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    case answer_regexp.match(clean(message.body))[1]
+    return unless regular_match(message).present?
+
+    case regular_match(message)[1]
     when 'personal', 'I have personal transportation'.downcase
       :personal_transportation
     when 'public', 'I use public transportation'.downcase

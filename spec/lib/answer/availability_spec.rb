@@ -7,12 +7,22 @@ RSpec.describe Answer::Availability do
 
   describe '#valid?' do
     ['Live in', 'Live-In', 'hourly', 'both', 'no', 'nah', 'nope', 'A Live in',
-     'C bothe', 'A)', 'A.', "A\nJazz", "A.\nJazz"].each do |body|
+     'C bothe', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'B hourly part time'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
         it 'is true' do
           expect(subject.valid?(message)).to eq(true)
+        end
+      end
+    end
+
+    ['Definitely, what location are you all hiring for?'].each do |body|
+      context body do
+        let(:message) { create(:message, body: body) }
+
+        it 'is false' do
+          expect(subject.valid?(message)).to eq(false)
         end
       end
     end
@@ -32,7 +42,7 @@ RSpec.describe Answer::Availability do
     end
 
     context 'hourly' do
-      ['B hourly', 'Hourly', 'B)', 'B.',
+      ['B hourly', 'Hourly', 'B)', 'B.', 'B hourly part time',
        "B\nJazz", "B.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
@@ -61,6 +71,18 @@ RSpec.describe Answer::Availability do
 
         it 'is no' do
           expect(subject.attribute(message)[:availability]).to eq(:no_availability)
+        end
+      end
+    end
+
+    context 'invalid' do
+      ['Definitely, what location are you all hiring for?'].each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
+
+          it 'is nil' do
+            expect(subject.attribute(message)[:availability]).to eq(nil)
+          end
         end
       end
     end

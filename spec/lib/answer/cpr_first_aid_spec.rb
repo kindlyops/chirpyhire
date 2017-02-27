@@ -18,7 +18,8 @@ RSpec.describe Answer::CprFirstAid do
       end
     end
 
-    ['yesterday...', 'nowhere man'].each do |body|
+    ['yesterday...', 'nowhere man', 'I can get them in the matter of days',
+     'not sure I will like', 'OK talk soon'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -52,7 +53,8 @@ RSpec.describe Answer::CprFirstAid do
     end
 
     context 'invalid' do
-      %w(nobody yesterday).each do |body|
+      %w(nobody yesterday)
+        .push('Im willing to travel', 'I can get them in the matter of days').each do |body|
         context body do
           let(:message) { create(:message, body: body) }
 

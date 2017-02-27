@@ -21,7 +21,9 @@ class Answer::Certification < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    case answer_regexp.match(clean(message.body))[1]
+    return unless regular_match(message).present?
+
+    case regular_match(message)[1]
     when 'pca', 'yes, pca'
       :pca
     when 'cna', 'yes, cna'

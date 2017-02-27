@@ -38,6 +38,10 @@ class Answer::MultipleChoice < Answer::Base
     multiple_choice_regexp.match(clean(message.body))
   end
 
+  def regular_match(message)
+    answer_regexp.match(clean(message.body))
+  end
+
   def clean(string)
     string.downcase.squish
   end

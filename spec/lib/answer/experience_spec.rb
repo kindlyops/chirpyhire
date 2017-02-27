@@ -6,13 +6,25 @@ RSpec.describe Answer::Experience do
   subject { Answer::Experience.new(question) }
 
   describe '#valid?' do
-    ['0', '3', '6', '2', 'new to caregiving', '0-1', '0 - 1',
-     '6 or more', '0- 1', '0 -1', 'A.', "A\nJazz",
-     'B)', 'B 2 years'].each do |body|
-      let(:message) { create(:message, body: body) }
+    context 'true' do
+      ['0', '3', '6', '2', 'new to caregiving', '0-1', '0 - 1',
+       '6 or more', '0- 1', '0 -1', 'A.', "A\nJazz",
+       'B)', 'B 2 years'].each do |body|
+        let(:message) { create(:message, body: body) }
 
-      it 'is true' do
-        expect(subject.valid?(message)).to eq(true)
+        it 'is true' do
+          expect(subject.valid?(message)).to eq(true)
+        end
+      end
+    end
+
+    context 'false' do
+      ['Carol m hines'].each do |body|
+        let(:message) { create(:message, body: body) }
+
+        it 'is false' do
+          expect(subject.valid?(message)).to eq(false)
+        end
       end
     end
   end
