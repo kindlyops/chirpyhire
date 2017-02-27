@@ -6,8 +6,9 @@ RSpec.describe Answer::CprFirstAid do
   subject { Answer::CprFirstAid.new(question) }
 
   describe '#valid?' do
-    ['yes', 'Yes I have a update cpr', 'no', 'N', 'Y', 'Yez', 'Yea',
-     'Yed', 'Yeah', 'Yup', 'Nope', 'Nah'].each do |body|
+    ['yes', 'Yes I have a update cpr', 'yup i have my cpr',
+     'nope i do not have my cpr', 'no', 'N', 'Y', 'Yez',
+     'Yea', 'Yed', 'Yeah', 'Yup', 'Nope', 'Nah'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -29,7 +30,7 @@ RSpec.describe Answer::CprFirstAid do
   end
 
   describe '#attribute' do
-    ['yes', 'Yes I have a update cpr', 'Y', 'Yez',
+    ['yes', 'Yes I have a update cpr', 'yup i have my cpr', 'Y', 'Yez',
      'Yea', 'Yed', 'Yeah', 'Yup'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
@@ -40,12 +41,24 @@ RSpec.describe Answer::CprFirstAid do
       end
     end
 
-    %w(N no Nope Nah).each do |body|
+    %w(N no Nope Nah).push('nope i do not have my cpr').each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
         it 'is false' do
           expect(subject.attribute(message)[:cpr_first_aid]).to eq(false)
+        end
+      end
+    end
+
+    context 'invalid' do
+      %w(nobody yesterday).each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
+
+          it 'is nil' do
+            expect(subject.attribute(message)[:cpr_first_aid]).to eq(nil)
+          end
         end
       end
     end
