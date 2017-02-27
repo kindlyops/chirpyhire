@@ -4,7 +4,11 @@ class Contact::Screened < Contact::Attribute
   end
 
   def to_s
-    candidacy.cpr_first_aid.present?.to_s
+    value.to_s
+  end
+
+  def value
+    contact.screened.present?
   end
 
   def search_label
