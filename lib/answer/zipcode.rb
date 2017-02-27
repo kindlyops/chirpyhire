@@ -1,6 +1,4 @@
 class Answer::Zipcode < Answer::Base
-  ZIPCODE_REGEXP = /\A(\d{5})\z/
-
   def valid?(message)
     zipcode = fetch_zipcode(message)
 
@@ -13,8 +11,12 @@ class Answer::Zipcode < Answer::Base
 
   private
 
+  def zipcode_regexp
+    /\A(\d{5})\z/
+  end
+
   def fetch_zipcode(message)
-    result = ZIPCODE_REGEXP.match(clean_body(message))
+    result = zipcode_regexp.match(clean_body(message))
     return unless result.present?
 
     result[1]

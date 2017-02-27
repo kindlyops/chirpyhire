@@ -8,9 +8,41 @@ class Answer::Experience < Answer::MultipleChoice
     }
   end
 
-  def attribute(message)
-    attribute = choice_map[question.choices[choice(message)]]
+  def no_variants
+    %w(no)
+  end
 
-    { question.inquiry => attribute }
+  def positive_variants
+    ['0\s?-\s?1', '1\s?-\s?5', '\d{1,2}', 'new to caregiving']
+      .concat(regular_variants)
+  end
+
+  def variants
+    "#{positive_variants.join('|')}|#{no_variants.join('|')}"
+  end
+
+  def answer_regexp
+    Regexp.new("\\A(#{variants})\\s?(?:experience)?\\z")
+  end
+
+  def regular_attribute(message)
+    return unless regular_match(message).present?
+
+    case regular_match(message)[1]
+    when /\A0\s?-\s?1\z/, '0'
+      :less_than_one
+    when /\A1\s?-\s?5\z/, '1', '2', '3', '4', '5'
+      :one_to_five
+    when '6', '6 or more', /\A\d{1,2}\z/
+      :six_or_more
+    when *no_case_variants
+      :no_experience
+    end
+  end
+
+  def no_case_variants
+    no_variants
+      .concat(no_variants.map { |v| "#{v} experience" })
+      .push("I'm new to caregiving".downcase)
   end
 end

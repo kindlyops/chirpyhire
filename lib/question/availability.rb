@@ -8,11 +8,15 @@ class Question::Availability < Question::MultipleChoice
       a: 'Live-In',
       b: 'Hourly',
       c: 'Both',
-      d: 'None'
+      d: 'No Availability'
     }
   end
 
   def inquiry
     :availability
+  end
+
+  def answer
+    Answer::Availability.new(self)
   end
 end

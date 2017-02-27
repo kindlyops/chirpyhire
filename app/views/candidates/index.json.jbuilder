@@ -65,7 +65,7 @@ json.rows do
     json.screened do
       json.candidate_id candidate.subscribed.id
       json.candidate_handle candidate.handle.label
-      json.candidate_screened candidate.screened.label
+      json.candidate_screened candidate.screened.value
     end
 
     json.status do

@@ -5,9 +5,9 @@ class Question::Transportation < Question::MultipleChoice
 
   def choices
     {
-      a: 'I have personal transportation.',
-      b: 'I use public transportation.',
-      c: 'I do not have reliable transportation.'
+      a: 'I have personal transportation',
+      b: 'I use public transportation',
+      c: 'I do not have reliable transportation'
     }
   end
 

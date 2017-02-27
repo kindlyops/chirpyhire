@@ -1,27 +1,56 @@
 class Answer::MultipleChoice < Answer::Base
-  MULTIPLE_CHOICE_REGEXP = /\A([a-z]){1}\)?\z/
+  delegate :choices, to: :question
+
+  def multiple_choice_regexp
+    Regexp.new("\\A([#{choices.keys.join(',')}])(\\z|[\\W]+.*\\z)")
+  end
 
   def valid?(message)
-    question.has?(choice(message))
+    choice?(message) || regular_choice?(message)
   end
 
   def attribute(message)
-    attribute = question.choices[choice(message)]
-                        .downcase
-                        .parameterize
-                        .underscore
-                        .to_sym
+    attribute = fetch_attribute(message)
 
     { question.inquiry => attribute }
   end
 
   private
 
-  def choice(message)
-    MULTIPLE_CHOICE_REGEXP.match(clean_body(message))[1].to_sym
+  def regular_choice?(message)
+    (answer_regexp =~ clean(message.body)).present?
   end
 
-  def clean_body(message)
-    message.body.strip.downcase
+  def choice?(message)
+    choices.keys.include?(choice(message))
+  end
+
+  def fetch_attribute(message)
+    choice_map[choices[choice(message)]] || regular_attribute(message)
+  end
+
+  def choice(message)
+    return unless match(message).present?
+    match(message)[1].to_sym
+  end
+
+  def match(message)
+    multiple_choice_regexp.match(clean(message.body))
+  end
+
+  def regular_match(message)
+    answer_regexp.match(clean(message.body))
+  end
+
+  def clean(string)
+    string.downcase.squish
+  end
+
+  def regular_variants
+    choice_map.keys.map { |variant| Regexp.escape(variant.downcase) }
+  end
+
+  def no_variants
+    %w(nah nope no n)
   end
 end
