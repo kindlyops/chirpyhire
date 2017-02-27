@@ -8,10 +8,6 @@ class Answer::Availability < Answer::MultipleChoice
     }
   end
 
-  def no_variants
-    %w(nah nope no n)
-  end
-
   def positive_variants
     ['live in', 'live-in', 'hourly', 'both']
   end

@@ -1,8 +1,4 @@
 class Answer::BooleanChoice < Answer::MultipleChoice
-  def no_variants
-    %w(nah nope no n)
-  end
-
   def yes_variants
     %w(yes y yeah ya yup ye[a-z]{1}).push('yes\s.*')
   end

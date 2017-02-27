@@ -13,7 +13,8 @@ class Answer::Experience < Answer::MultipleChoice
   end
 
   def positive_variants
-    ['\d\s?-\s?\d', '\d', 'new to caregiving'].concat(choice_variants)
+    ['0\s?-\s?1', '1\s?-\s?5', '\d', 'new to caregiving']
+      .concat(choice_variants)
   end
 
   def variants

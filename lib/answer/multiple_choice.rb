@@ -45,4 +45,8 @@ class Answer::MultipleChoice < Answer::Base
   def choice_variants
     choice_map.keys.map { |variant| Regexp.escape(variant.downcase) }
   end
+
+  def no_variants
+    %w(nah nope no n)
+  end
 end

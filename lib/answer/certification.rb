@@ -8,10 +8,6 @@ class Answer::Certification < Answer::MultipleChoice
     }
   end
 
-  def no_variants
-    %w(nah nope no n)
-  end
-
   def positive_variants
     %w(pca cna other ma lpn rn cna rca hha).concat(choice_variants)
   end
