@@ -27,7 +27,10 @@ class Answer::Experience < Answer::MultipleChoice
 
   def regular_attribute(message)
     return unless regular_match(message).present?
+    regular_case(message)
+  end
 
+  def regular_case(message)
     case regular_match(message)[1]
     when /\A0\s?-\s?1\z/, '0'
       :less_than_one

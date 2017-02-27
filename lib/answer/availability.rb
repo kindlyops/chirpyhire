@@ -23,6 +23,10 @@ class Answer::Availability < Answer::MultipleChoice
   def regular_attribute(message)
     return unless regular_match(message).present?
 
+    regular_case(message)
+  end
+
+  def regular_case(message)
     case regular_match(message)[1]
     when 'live in', 'live-in'
       :live_in

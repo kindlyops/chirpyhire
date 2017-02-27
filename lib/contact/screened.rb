@@ -3,9 +3,7 @@ class Contact::Screened < Contact::Attribute
     'Screened'
   end
 
-  def to_s
-    value.to_s
-  end
+  delegate :to_s, to: :value
 
   def value
     contact.screened.present?
