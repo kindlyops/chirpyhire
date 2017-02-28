@@ -25,8 +25,7 @@ $(document).on('turbolinks:load.conversation', function() {
     },
 
     clearComposer: function() {
-      var composer = $('.write-message textarea');
-      composer.val('');
+      $('.write-message textarea').val('');;
     },
 
     received: function(data) {
