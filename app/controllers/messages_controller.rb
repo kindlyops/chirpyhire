@@ -4,6 +4,8 @@ class MessagesController < ApplicationController
   def create
     @message = scoped_messages.build
     create_message if authorize @message
+
+    head :ok
   end
 
   private
@@ -14,8 +16,6 @@ class MessagesController < ApplicationController
       body: body,
       manual: true
     )
-
-    head :ok
   end
 
   def body
