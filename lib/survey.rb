@@ -35,12 +35,7 @@ class Survey
   end
 
   def send_message(message)
-    message = organization.message(recipient: person, body: message)
-    MessagesChannel.broadcast_to(contact, render_message(message))
-  end
-
-  def render_message(message)
-    Conversation.new(contact).render(message)
+    organization.message(recipient: person, body: message)
   end
 
   def current_question

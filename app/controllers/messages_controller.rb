@@ -10,12 +10,12 @@ class MessagesController < ApplicationController
   private
 
   def create_message
-    message = current_organization.message(
+    current_organization.message(
       recipient: conversation.person,
       body: body,
       manual: true
     )
-    MessagesChannel.broadcast_to(contact, render_message(message))
+
     head :ok
   end
 
@@ -44,10 +44,6 @@ class MessagesController < ApplicationController
     respond_to do |format|
       format.js {}
     end
-  end
-
-  def render_message(message)
-    conversation.render(message)
   end
 
   def error_message

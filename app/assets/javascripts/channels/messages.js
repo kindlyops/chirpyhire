@@ -1,4 +1,5 @@
 $(document).on('turbolinks:load.conversation', function() {
+  debugger;
   var collection = $("[data-channel='messages']");
   var contactId = collection.data('contact-id');
 

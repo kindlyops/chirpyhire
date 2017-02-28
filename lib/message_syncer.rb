@@ -8,7 +8,9 @@ class MessageSyncer
   def call
     existing_message = person.messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
-    broadcast(sync_message)
+    message = sync_message
+    MessageBroadcaster.new(message).broadcast
+    message
   end
 
   private
@@ -28,16 +30,5 @@ class MessageSyncer
       external_created_at: external_message.date_created,
       organization: organization
     )
-  end
-
-  def broadcast(message)
-    contact = organization.contacts.find_by(person: person)
-    rendered_message = render_message(contact, message)
-    MessagesChannel.broadcast_to(contact, rendered_message)
-    message
-  end
-
-  def render_message(contact, message)
-    Conversation.new(contact).render(message)
   end
 end

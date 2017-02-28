@@ -25,12 +25,13 @@ class Organization < ApplicationRecord
     subscription.present? && subscription.new_record?
   end
 
-  def message(recipient:, body:, manual: false)
+  def message(recipient:, body:, manual: false, broadcast: true)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    create_message(recipient, sent_message, manual)
+    message = create_message(recipient, sent_message, manual)
+    MessageBroadcaster.new(message).broadcast if broadcast
   end
 
   def get_message(sid)
