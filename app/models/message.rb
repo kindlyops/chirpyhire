@@ -3,7 +3,7 @@ class Message < ApplicationRecord
   belongs_to :organization
 
   def self.by_recency
-    order(external_created_at: :desc, id: :desc)
+    order(:external_created_at, :id)
   end
 
   def self.replies
@@ -25,7 +25,7 @@ class Message < ApplicationRecord
   end
 
   def self.last_reply_at
-    replies.by_recency.first.created_at
+    replies.by_recency.last.created_at
   end
 
   def time_ago

@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
       body: body,
       manual: true
     )
-    ActionCable.server.broadcast_to(contact, message)
+    MessagesChannel.broadcast_to(contact, render_message(message))
     head :ok
   end
 
@@ -44,6 +44,10 @@ class MessagesController < ApplicationController
     respond_to do |format|
       format.js {}
     end
+  end
+
+  def render_message(message)
+    conversation.render(message)
   end
 
   def error_message

@@ -1,10 +1,10 @@
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
-    contact = Contact.find(params[:contact_id])
+    contact = contacts.find(params[:contact_id])
     stream_for contact
   end
 
-  def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
-  end
+  private
+
+  delegate :contacts, to: :current_organization
 end

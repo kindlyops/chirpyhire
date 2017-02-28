@@ -31,8 +31,12 @@ class MessageSyncer
   end
 
   def broadcast(message)
-    person.contacts.each do |contact|
-      ActionCable.server.broadcast_to(contact, message)
-    end
+    contact = organization.contacts.find_by(person: person)
+    rendered_message = render_message(contact, message)
+    MessagesChannel.broadcast_to(contact, rendered_message)
+  end
+
+  def render_message(contact, message)
+    Conversation.new(contact).render(message)
   end
 end
