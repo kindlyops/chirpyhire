@@ -34,6 +34,7 @@ class MessageSyncer
     contact = organization.contacts.find_by(person: person)
     rendered_message = render_message(contact, message)
     MessagesChannel.broadcast_to(contact, rendered_message)
+    message
   end
 
   def render_message(contact, message)
