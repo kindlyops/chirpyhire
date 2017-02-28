@@ -8,7 +8,7 @@ class MessageSyncer
   def call
     existing_message = person.messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
-    sync_message
+    broadcast(sync_message)
   end
 
   private
@@ -28,5 +28,11 @@ class MessageSyncer
       external_created_at: external_message.date_created,
       organization: organization
     )
+  end
+
+  def broadcast(message)
+    person.contacts.each do |contact|
+      ActionCable.server.broadcast_to(contact, message)
+    end
   end
 end
