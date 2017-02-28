@@ -3,7 +3,6 @@ class MessagesController < ApplicationController
 
   def create
     @message = scoped_messages.build
-
     create_message if authorize @message
   end
 
@@ -40,10 +39,7 @@ class MessagesController < ApplicationController
   delegate :contact, to: :conversation
 
   def message_not_authorized
-    flash[:alert] = error_message
-    respond_to do |format|
-      format.js {}
-    end
+    redirect_to contact_conversation_path(contact), alert: error_message
   end
 
   def error_message
