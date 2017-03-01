@@ -12,6 +12,7 @@ Rollbar.configure do |config|
     config.js_options = {
       accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
       captureUncaught: true,
+      captureUnhandledRejections: true,
       payload: {
         environment: 'production'
       }
