@@ -1,5 +1,9 @@
 .bootstrap-table {
   .fixed-table-toolbar {
+    button[name="refresh"] {
+      cursor: pointer;
+    }
+
     .export {
       .export-selected {
         i {
