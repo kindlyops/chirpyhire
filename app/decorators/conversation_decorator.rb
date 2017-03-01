@@ -1,12 +1,12 @@
 class ConversationDecorator < Draper::Decorator
   delegate_all
 
-  def candidacy
-    @candidacy ||= person.candidacy.decorate
+  def contact
+    @contact ||= object.contact.decorate
   end
 
   delegate :availability, :transportation, :experience, :qualifications,
-           :zipcode, to: :candidacy
+           :zipcode, to: :contact
 
   def last_reply
     return 'The conversation is just beginning!' if messages.empty?

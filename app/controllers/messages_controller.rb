@@ -3,12 +3,9 @@ class MessagesController < ApplicationController
 
   def create
     @message = scoped_messages.build
-
     create_message if authorize @message
 
-    respond_to do |format|
-      format.js {}
-    end
+    head :ok
   end
 
   private
@@ -19,7 +16,6 @@ class MessagesController < ApplicationController
       body: body,
       manual: true
     )
-    redirect_to contact_conversation_path(contact)
   end
 
   def body

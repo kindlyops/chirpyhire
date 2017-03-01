@@ -8,7 +8,9 @@ class MessageSyncer
   def call
     existing_message = person.messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
-    sync_message
+    message = sync_message
+    MessageBroadcaster.new(message).broadcast
+    message
   end
 
   private

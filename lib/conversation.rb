@@ -6,7 +6,13 @@ class Conversation
   end
 
   def message_groups
-    messages.by_recency.chunk(&:author).map(&method(:group)).reverse
+    messages.by_recency.chunk(&:author).map(&method(:group))
+  end
+
+  def render(message)
+    return render_message_group if new_message_group?(message)
+
+    render_message(message)
   end
 
   attr_reader :contact
@@ -21,7 +27,23 @@ class Conversation
 
   private
 
+  def new_message_group?(message)
+    message_groups.last.messages == [message]
+  end
+
   def group(group)
     Conversation::MessageGroup.new(group)
+  end
+
+  def render_message_group
+    MessagesController.render partial: 'conversations/message_group', locals: {
+      message_group: message_groups.last
+    }
+  end
+
+  def render_message(message)
+    MessagesController.render partial: 'conversations/message', locals: {
+      message: message, inbound: message.inbound?
+    }
   end
 end
