@@ -4,14 +4,36 @@ class Contact::Temperature
   end
 
   def label
-    'Hot'
+    return 'Hot' if hot?
+    return 'Warm' if warm?
+    'Cool'
   end
 
   def icon_class
-    'fa-thermometer-full'
+    return 'fa-thermometer-full' if hot?
+    return 'fa-thermometer-half' if warm?
+    'fa-thermometer-quarter'
   end
 
   def badge_class
-    'badge-danger'
+    return 'badge-danger' if hot?
+    return 'badge-warning' if warm?
+    'badge-success'
+  end
+
+  private
+
+  attr_reader :contact
+
+  def last_activity_at
+    Contact::LastActivityAt.new(contact).to_datetime
+  end
+
+  def hot?
+    last_activity_at > 24.hours.ago
+  end
+
+  def warm?
+    last_activity_at > 7.days.ago
   end
 end

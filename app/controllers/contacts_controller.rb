@@ -83,16 +83,13 @@ class ContactsController < ApplicationController
   end
 
   def whitelist_orders
-    # {
-    #   'zipcode' => "candidacies.zipcode #{direction}",
-    #   'contact' =>  "people.phone_number #{direction}",
-    #   'availability' => "candidacies.availability #{direction}",
-    #   'experience' => "candidacies.experience #{direction}",
-    #   'qualifications' => "candidacies.certification #{direction}",
-    #   'status' => "subscribed #{direction}",
-    #   'screened' => "screened #{direction}"
-    # }
-    {}
+    {
+      'nickname' => "people.nickname #{direction}",
+      'first_activity_at' => "first_activity_at #{direction}",
+      'survey_progress' => "candidacies.progress #{direction}",
+      'last_activity_at' => "last_activity_at #{direction}",
+      'temperature' => "last_activity_at #{direction}"
+    }
   end
 
   def html?
