@@ -2,6 +2,10 @@ nav.navbar.top {
   border-bottom: 1px solid #c5d6de;
   background-color: white;
 
+  .organization-phone-number {
+    font-size: 1.25em;
+  }
+
   .nav-link {
     .fa-users, .fa-tasks {
       font-size: 21px;
