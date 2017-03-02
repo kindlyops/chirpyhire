@@ -7,7 +7,7 @@ class Contact < ApplicationRecord
            :experience, :certification, :skin_test,
            :cpr_first_aid, :nickname, to: :person
 
-  before_create :set_activity_at
+  before_create :set_last_activity_at
 
   def self.candidate
     where(candidate: true)
@@ -37,7 +37,7 @@ class Contact < ApplicationRecord
     !ideal?
   end
 
-  def set_activity_at
+  def set_last_activity_at
     self.last_activity_at = DateTime.current
   end
 end
