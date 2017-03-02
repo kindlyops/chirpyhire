@@ -5,7 +5,7 @@ class Contact < ApplicationRecord
 
   delegate :handle, :phone_number, :zipcode, :availability,
            :experience, :certification, :skin_test,
-           :cpr_first_aid, to: :person
+           :cpr_first_aid, :nickname, to: :person
 
   def self.candidate
     where(candidate: true)

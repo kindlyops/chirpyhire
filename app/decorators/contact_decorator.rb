@@ -1,6 +1,22 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
 
+  def first_activity_at
+    Contact::FirstActivityAt.new(object).to_s
+  end
+
+  def last_activity_at
+    Contact::LastActivityAt.new(object).to_s
+  end
+
+  def survey_progress
+    Contact::SurveyProgress.new(object).to_f
+  end
+
+  def temperature
+    Contact::Temperature.new(object)
+  end
+
   def handle
     Contact::Handle.new(object)
   end

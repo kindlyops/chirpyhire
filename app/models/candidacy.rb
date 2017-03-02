@@ -84,7 +84,18 @@ class Candidacy < ApplicationRecord
   end
   alias_attribute :location, :zipcode
 
+  def progress
+    progressable_attributes.count { |a| !a.nil? } /
+      progressable_attributes.count.to_f * 100.0
+  end
+
   private
+
+  def progressable_attributes
+    [experience, skin_test, availability,
+     transportation, zipcode, cpr_first_aid,
+     certification]
+  end
 
   def other_attributes_ideal?
     transportable? && experienced? && certified? && skin_test && cpr_first_aid
