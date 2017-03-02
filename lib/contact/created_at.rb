@@ -14,6 +14,7 @@ class Contact::CreatedAt
   end
 
   def to_json
+    return unless to_csv.present?
     to_csv.strftime('%-m/%-d/%y %I:%M%P')
   end
 end

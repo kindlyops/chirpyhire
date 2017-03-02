@@ -1006,6 +1006,14 @@ ALTER TABLE ONLY accounts
 
 
 --
+-- Name: contacts fk_rails_29a08acb61; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY contacts
+    ADD CONSTRAINT fk_rails_29a08acb61 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
 -- Name: subscriptions fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1054,11 +1062,11 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: contacts fk_rails_885008c105; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts fk_rails_b7db93c1c3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
-    ADD CONSTRAINT fk_rails_885008c105 FOREIGN KEY (person_id) REFERENCES people(id);
+    ADD CONSTRAINT fk_rails_b7db93c1c3 FOREIGN KEY (organization_id) REFERENCES organizations(id);
 
 
 --
@@ -1067,14 +1075,6 @@ ALTER TABLE ONLY contacts
 
 ALTER TABLE ONLY ideal_candidates
     ADD CONSTRAINT fk_rails_c7a0339d90 FOREIGN KEY (organization_id) REFERENCES organizations(id);
-
-
---
--- Name: contacts fk_rails_d2a970fc50; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY contacts
-    ADD CONSTRAINT fk_rails_d2a970fc50 FOREIGN KEY (organization_id) REFERENCES organizations(id);
 
 
 --

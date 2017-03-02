@@ -31,7 +31,7 @@ class Contact::Temperature
   delegate :last_activity_at, to: :contact
 
   def hot?
-    last_activity_at > 24.hours.ago
+    last_activity_at.blank? || last_activity_at > 24.hours.ago
   end
 
   def warm?
