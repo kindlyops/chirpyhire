@@ -5,10 +5,16 @@ class Contact < ApplicationRecord
 
   delegate :handle, :phone_number, :zipcode, :availability,
            :experience, :certification, :skin_test,
-           :cpr_first_aid, to: :person
+           :cpr_first_aid, :nickname, to: :person
+
+  before_create :set_last_reply_at
 
   def self.candidate
     where(candidate: true)
+  end
+
+  def self.not_ready
+    where(candidate: false)
   end
 
   def self.active
@@ -29,5 +35,9 @@ class Contact < ApplicationRecord
 
   def promising?
     !ideal?
+  end
+
+  def set_last_reply_at
+    self.last_reply_at = DateTime.current
   end
 end

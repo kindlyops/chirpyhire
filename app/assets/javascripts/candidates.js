@@ -63,6 +63,7 @@ $(document).on('turbolinks:load', function() {
         columns: 'fa-th-list',
         export: 'fa-cloud-download'
       },
+      exportUrl: '/candidates.csv',
       showExport: true,
       url: '/candidates.json',
       columns: [{

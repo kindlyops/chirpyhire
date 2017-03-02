@@ -1,23 +1,8 @@
-= title "Contacts | ChirpyHire"
+= title "Not Ready | ChirpyHire"
 
-.contacts
-  .card
-    h3.card-header Contacts
+.contacts.mb-3
+  .card.mb-2
     .card-block
-      .row
-        .col-md-9
-          table.table.table-responsive.table-hover.table-bordered
-            thead.thead-active
-              tr
-                th Nickname (internal)
-                th Location
-                th Phone Number
-                th Created
-            tbody
-              - @contacts.each do |contact|
-                tr
-                  td = contact.handle
-                  td = contact.zipcode
-                  td = contact.phone_number.phony_formatted
-                  td = "#{time_ago_in_words(contact.created_at)} ago"
+      h1.card-text Not Ready
+  table
 

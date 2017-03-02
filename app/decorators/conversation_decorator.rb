@@ -27,6 +27,6 @@ class ConversationDecorator < Draper::Decorator
   end
 
   def last_reply_at_clock_time
-    object.last_reply_at.strftime('%I:%M %P')
+    object.last_reply_at.strftime('%I:%M%P')
   end
 end

@@ -39,7 +39,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         fill_in 'Email', with: account.email
         fill_in 'Password', with: 'password'
         click_button 'Sign in'
-        expect(page).to have_text('Candidates')
+        expect(page).to have_text('Ready')
       end
     end
   end

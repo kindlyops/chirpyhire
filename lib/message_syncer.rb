@@ -9,6 +9,7 @@ class MessageSyncer
     existing_message = person.messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
     message = sync_message
+    update_contact(message)
     MessageBroadcaster.new(message).broadcast
     message
   end
@@ -30,5 +31,10 @@ class MessageSyncer
       external_created_at: external_message.date_created,
       organization: organization
     )
+  end
+
+  def update_contact(message)
+    contact = person.contacts.find_by(organization: organization)
+    contact.update(last_reply_at: message.created_at)
   end
 end

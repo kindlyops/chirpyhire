@@ -34,7 +34,9 @@ class Surveyor
   end
 
   def update_candidacy(message)
-    candidacy.update!(survey.answer.attribute(message))
+    candidacy.assign_attributes(survey.answer.attribute(message))
+    candidacy.progress = candidacy.current_progress
+    candidacy.save!
   end
 
   def lock_candidacy

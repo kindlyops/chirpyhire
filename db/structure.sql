@@ -2,12 +2,17 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.6.2
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -39,12 +44,26 @@ END;
 $$;
 
 
+--
+-- Name: not_ready_contacts_before_insert_update_row_tr(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION not_ready_contacts_before_insert_update_row_tr() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    new.not_ready_content_tsearch := to_tsvector('pg_catalog.simple', coalesce(new.not_ready_content,''));
+    RETURN NEW;
+END;
+$$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: accounts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: accounts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE accounts (
@@ -95,7 +114,7 @@ ALTER SEQUENCE accounts_id_seq OWNED BY accounts.id;
 
 
 --
--- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ar_internal_metadata (
@@ -107,7 +126,7 @@ CREATE TABLE ar_internal_metadata (
 
 
 --
--- Name: candidacies; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: candidacies; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE candidacies (
@@ -123,7 +142,8 @@ CREATE TABLE candidacies (
     inquiry integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    contact_id integer
+    contact_id integer,
+    progress double precision DEFAULT 0.0 NOT NULL
 );
 
 
@@ -147,7 +167,7 @@ ALTER SEQUENCE candidacies_id_seq OWNED BY candidacies.id;
 
 
 --
--- Name: contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE contacts (
@@ -160,7 +180,10 @@ CREATE TABLE contacts (
     screened boolean DEFAULT false NOT NULL,
     content text,
     content_tsearch tsvector,
-    candidate boolean DEFAULT false NOT NULL
+    candidate boolean DEFAULT false NOT NULL,
+    last_reply_at timestamp without time zone,
+    not_ready_content text,
+    not_ready_content_tsearch tsvector
 );
 
 
@@ -184,7 +207,7 @@ ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
 
 
 --
--- Name: ideal_candidate_suggestions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ideal_candidate_suggestions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ideal_candidate_suggestions (
@@ -216,7 +239,7 @@ ALTER SEQUENCE ideal_candidate_suggestions_id_seq OWNED BY ideal_candidate_sugge
 
 
 --
--- Name: ideal_candidates; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ideal_candidates; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ideal_candidates (
@@ -247,7 +270,7 @@ ALTER SEQUENCE ideal_candidates_id_seq OWNED BY ideal_candidates.id;
 
 
 --
--- Name: locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: locations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE locations (
@@ -287,7 +310,7 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 
 
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: messages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE messages (
@@ -325,7 +348,7 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 
 --
--- Name: organizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE organizations (
@@ -360,7 +383,7 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 
 --
--- Name: people; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: people; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE people (
@@ -393,7 +416,7 @@ ALTER SEQUENCE people_id_seq OWNED BY people.id;
 
 
 --
--- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pg_search_documents (
@@ -427,7 +450,7 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
--- Name: plans; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: plans; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE plans (
@@ -463,7 +486,7 @@ ALTER SEQUENCE plans_id_seq OWNED BY plans.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -472,7 +495,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: subscriptions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: subscriptions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE subscriptions (
@@ -521,7 +544,7 @@ ALTER SEQUENCE subscriptions_id_seq OWNED BY subscriptions.id;
 
 
 --
--- Name: zipcodes; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: zipcodes; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE zipcodes (
@@ -553,98 +576,98 @@ ALTER SEQUENCE zipcodes_id_seq OWNED BY zipcodes.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts ALTER COLUMN id SET DEFAULT nextval('accounts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: candidacies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies ALTER COLUMN id SET DEFAULT nextval('candidacies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ideal_candidate_suggestions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions ALTER COLUMN id SET DEFAULT nextval('ideal_candidate_suggestions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ideal_candidates id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates ALTER COLUMN id SET DEFAULT nextval('ideal_candidates_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: people id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pg_search_documents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_search_documents_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: plans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY plans ALTER COLUMN id SET DEFAULT nextval('plans_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: subscriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions ALTER COLUMN id SET DEFAULT nextval('subscriptions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: zipcodes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes ALTER COLUMN id SET DEFAULT nextval('zipcodes_id_seq'::regclass);
 
 
 --
--- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts
@@ -652,7 +675,7 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -660,7 +683,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: candidacies_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: candidacies candidacies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies
@@ -668,7 +691,7 @@ ALTER TABLE ONLY candidacies
 
 
 --
--- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
@@ -676,7 +699,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: ideal_candidate_suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ideal_candidate_suggestions ideal_candidate_suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions
@@ -684,7 +707,7 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
--- Name: ideal_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ideal_candidates ideal_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates
@@ -692,7 +715,7 @@ ALTER TABLE ONLY ideal_candidates
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -700,7 +723,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -708,7 +731,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations
@@ -716,7 +739,7 @@ ALTER TABLE ONLY organizations
 
 
 --
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: people people_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY people
@@ -724,7 +747,7 @@ ALTER TABLE ONLY people
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -732,7 +755,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: plans plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY plans
@@ -740,7 +763,7 @@ ALTER TABLE ONLY plans
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schema_migrations
@@ -748,7 +771,7 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
--- Name: subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: subscriptions subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -756,7 +779,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: zipcodes zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes
@@ -764,196 +787,210 @@ ALTER TABLE ONLY zipcodes
 
 
 --
--- Name: index_accounts_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_accounts_on_email ON accounts USING btree (email);
 
 
 --
--- Name: index_accounts_on_invitation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_invitation_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_accounts_on_invitation_token ON accounts USING btree (invitation_token);
 
 
 --
--- Name: index_accounts_on_invitations_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_invitations_count; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_accounts_on_invitations_count ON accounts USING btree (invitations_count);
 
 
 --
--- Name: index_accounts_on_invited_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_invited_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_accounts_on_invited_by_id ON accounts USING btree (invited_by_id);
 
 
 --
--- Name: index_accounts_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_accounts_on_organization_id ON accounts USING btree (organization_id);
 
 
 --
--- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_accounts_on_reset_password_token ON accounts USING btree (reset_password_token);
 
 
 --
--- Name: index_candidacies_on_person_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_candidacies_on_person_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_candidacies_on_person_id ON candidacies USING btree (person_id);
 
 
 --
--- Name: index_contacts_on_content_tsearch; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_contacts_on_content_tsearch; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_contacts_on_content_tsearch ON contacts USING gin (content_tsearch) WHERE (candidate = true);
 
 
 --
--- Name: index_contacts_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_contacts_on_not_ready_content_tsearch; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contacts_on_not_ready_content_tsearch ON contacts USING gin (not_ready_content_tsearch) WHERE (candidate = false);
+
+
+--
+-- Name: index_contacts_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_contacts_on_organization_id ON contacts USING btree (organization_id);
 
 
 --
--- Name: index_contacts_on_person_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_contacts_on_person_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_contacts_on_person_id ON contacts USING btree (person_id);
 
 
 --
--- Name: index_contacts_on_person_id_and_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_contacts_on_person_id_and_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_contacts_on_person_id_and_organization_id ON contacts USING btree (person_id, organization_id);
 
 
 --
--- Name: index_ideal_candidate_suggestions_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_ideal_candidate_suggestions_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_ideal_candidate_suggestions_on_organization_id ON ideal_candidate_suggestions USING btree (organization_id);
 
 
 --
--- Name: index_ideal_candidates_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_ideal_candidates_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_ideal_candidates_on_organization_id ON ideal_candidates USING btree (organization_id);
 
 
 --
--- Name: index_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_locations_on_organization_id ON locations USING btree (organization_id);
 
 
 --
--- Name: index_messages_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_messages_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_messages_on_organization_id ON messages USING btree (organization_id);
 
 
 --
--- Name: index_messages_on_person_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_messages_on_person_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_messages_on_person_id ON messages USING btree (person_id);
 
 
 --
--- Name: index_messages_on_sid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_messages_on_sid; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_messages_on_sid ON messages USING btree (sid);
 
 
 --
--- Name: index_organizations_on_phone_number; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_organizations_on_phone_number; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_organizations_on_phone_number ON organizations USING btree (phone_number);
 
 
 --
--- Name: index_pg_search_documents_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pg_search_documents_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pg_search_documents_on_organization_id ON pg_search_documents USING btree (organization_id);
 
 
 --
--- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON pg_search_documents USING btree (searchable_type, searchable_id);
 
 
 --
--- Name: index_plans_on_stripe_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_plans_on_stripe_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_plans_on_stripe_id ON plans USING btree (stripe_id);
 
 
 --
--- Name: index_subscriptions_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_subscriptions_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_subscriptions_on_organization_id ON subscriptions USING btree (organization_id);
 
 
 --
--- Name: index_subscriptions_on_plan_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_subscriptions_on_plan_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_subscriptions_on_plan_id ON subscriptions USING btree (plan_id);
 
 
 --
--- Name: index_subscriptions_on_stripe_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_subscriptions_on_stripe_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_subscriptions_on_stripe_id ON subscriptions USING btree (stripe_id);
 
 
 --
--- Name: index_zipcodes_on_ideal_candidate_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_zipcodes_on_ideal_candidate_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_zipcodes_on_ideal_candidate_id ON zipcodes USING btree (ideal_candidate_id);
 
 
 --
--- Name: index_zipcodes_on_ideal_candidate_id_and_value; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_zipcodes_on_ideal_candidate_id_and_value; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_zipcodes_on_ideal_candidate_id_and_value ON zipcodes USING btree (ideal_candidate_id, value);
 
 
 --
--- Name: contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
+-- Name: contacts contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER contacts_before_insert_update_row_tr BEFORE INSERT OR UPDATE ON contacts FOR EACH ROW EXECUTE PROCEDURE contacts_before_insert_update_row_tr();
 
 
 --
--- Name: fk_rails_01a916123b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts not_ready_contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER not_ready_contacts_before_insert_update_row_tr BEFORE INSERT OR UPDATE ON contacts FOR EACH ROW EXECUTE PROCEDURE not_ready_contacts_before_insert_update_row_tr();
+
+
+--
+-- Name: candidacies fk_rails_01a916123b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies
@@ -961,7 +998,7 @@ ALTER TABLE ONLY candidacies
 
 
 --
--- Name: fk_rails_1ceb778440; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: accounts fk_rails_1ceb778440; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts
@@ -969,15 +1006,7 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: fk_rails_29a08acb61; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY contacts
-    ADD CONSTRAINT fk_rails_29a08acb61 FOREIGN KEY (person_id) REFERENCES people(id);
-
-
---
--- Name: fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: subscriptions fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -985,7 +1014,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: fk_rails_41c70a97c6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: messages fk_rails_41c70a97c6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -993,7 +1022,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: fk_rails_63d3df128b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: subscriptions fk_rails_63d3df128b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -1001,7 +1030,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: fk_rails_76d371f451; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidate_suggestions fk_rails_76d371f451; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions
@@ -1009,7 +1038,7 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
--- Name: fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -1017,7 +1046,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: fk_rails_84778edc55; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: locations fk_rails_84778edc55; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -1025,15 +1054,15 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: fk_rails_b7db93c1c3; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts fk_rails_885008c105; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
-    ADD CONSTRAINT fk_rails_b7db93c1c3 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+    ADD CONSTRAINT fk_rails_885008c105 FOREIGN KEY (person_id) REFERENCES people(id);
 
 
 --
--- Name: fk_rails_c7a0339d90; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidates fk_rails_c7a0339d90; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates
@@ -1041,7 +1070,15 @@ ALTER TABLE ONLY ideal_candidates
 
 
 --
--- Name: fk_rails_eda88ce3b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts fk_rails_d2a970fc50; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY contacts
+    ADD CONSTRAINT fk_rails_d2a970fc50 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: pg_search_documents fk_rails_eda88ce3b8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -1049,7 +1086,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: zipcodes fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes
@@ -1060,7 +1097,7 @@ ALTER TABLE ONLY zipcodes
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES
 ('20170217192655'),
@@ -1082,6 +1119,10 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170224220539'),
 ('20170225171500'),
 ('20170225200724'),
-('20170225221058');
+('20170225221058'),
+('20170302191131'),
+('20170302203723'),
+('20170302203823'),
+('20170302203927');
 
 
