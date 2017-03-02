@@ -1,9 +1,9 @@
 json.rows do
   json.array! contacts do |contact|
     json.nickname contact.nickname
-    json.first_activity_at contact.first_activity_at
-    json.survey_progress contact.survey_progress
-    json.last_activity_at contact.last_activity_at
+    json.created_at contact.created_at.to_json
+    json.survey_progress contact.survey_progress.to_json
+    json.last_activity_at contact.last_activity_at.to_json
     json.temperature do
       json.label contact.temperature.label
       json.icon_class contact.temperature.icon_class

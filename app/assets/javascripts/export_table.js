@@ -116,14 +116,16 @@
               Accept : "text/csv;charset=utf-8",
               "Content-Type": "text/csv;charset=utf-8"
             },
-            url: '/candidates.csv',
+            url: that.options.exportUrl,
             data: params,
             dataType: 'text',
             success: function(data) {
+              var namePattern = /\/(\w+)\.\w+/;
               var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + data);
               var link = document.createElement('a');
               link.setAttribute('href', encodedUri);
-              link.setAttribute('download', 'candidates-'+ Date.now() +'.csv');
+              var name = namePattern.exec(that.options.exportUrl)[1];
+              link.setAttribute('download', name + '-' + Date.now() +'.csv');
               document.body.appendChild(link);
               link.click();
             }

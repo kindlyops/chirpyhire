@@ -85,10 +85,10 @@ class ContactsController < ApplicationController
   def whitelist_orders
     {
       'nickname' => "people.nickname #{direction}",
-      'first_activity_at' => "first_activity_at #{direction}",
+      'created_at' => "contacts.created_at #{direction}",
       'survey_progress' => "candidacies.progress #{direction}",
-      'last_activity_at' => "last_activity_at #{direction}",
-      'temperature' => "last_activity_at #{direction}"
+      'last_activity_at' => "contacts.last_activity_at #{direction}",
+      'temperature' => "contacts.last_activity_at #{direction}"
     }
   end
 

@@ -166,7 +166,6 @@ CREATE TABLE contacts (
     content text,
     content_tsearch tsvector,
     candidate boolean DEFAULT false NOT NULL,
-    first_activity_at timestamp without time zone,
     last_activity_at timestamp without time zone
 );
 

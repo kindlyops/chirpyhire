@@ -1,4 +1,4 @@
-class Contact::LastActivityAt
+class Contact::CreatedAt
   def initialize(contact)
     @contact = contact
   end
@@ -6,7 +6,7 @@ class Contact::LastActivityAt
   attr_reader :contact
 
   def to_csv
-    contact.last_activity_at
+    contact.created_at
   end
 
   def to_json

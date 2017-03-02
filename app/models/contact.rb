@@ -39,6 +39,5 @@ class Contact < ApplicationRecord
 
   def set_activity_at
     self.last_activity_at = DateTime.current
-    self.first_activity_at = DateTime.current
   end
 end

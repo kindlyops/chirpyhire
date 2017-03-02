@@ -3,7 +3,11 @@ class Contact::SurveyProgress
     @contact = contact
   end
 
-  def to_f
+  def to_csv
+    person.candidacy.progress
+  end
+
+  def to_json
     return 3.0 unless person.candidacy.progress.positive?
     person.candidacy.progress
   end

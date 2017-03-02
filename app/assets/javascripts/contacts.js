@@ -23,6 +23,7 @@ $(document).on('turbolinks:load', function() {
         columns: 'fa-th-list',
         export: 'fa-cloud-download'
       },
+      exportUrl: '/contacts.csv',
       showExport: true,
       url: '/contacts.json',
       columns: [{
@@ -38,8 +39,8 @@ $(document).on('turbolinks:load', function() {
             };
           }
         },{
-          field: 'first_activity_at',
-          title: 'First Activity',
+          field: 'created_at',
+          title: 'Created',
           sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
@@ -64,7 +65,7 @@ $(document).on('turbolinks:load', function() {
           }
         },{
           field: 'last_activity_at',
-          title: 'Last Activity',
+          title: 'Last Reply',
           sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
