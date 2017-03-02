@@ -79,7 +79,7 @@ class CandidatesController < ApplicationController
   end
 
   def stabilizer
-    ',id ASC'
+    ',contacts.id ASC'
   end
 
   def whitelist_orders
