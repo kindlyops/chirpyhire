@@ -2,8 +2,8 @@ class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
   belongs_to :contact, optional: true
-  after_save :set_contacts_content
-  before_save :set_progress
+  after_save :set_search_content
+  before_save :set_progress, unless: :candidate?
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
@@ -119,8 +119,8 @@ class Candidacy < ApplicationRecord
     !cpr_first_aid.nil? && !skin_test.nil?
   end
 
-  def set_contacts_content
-    contacts.candidate.find_each(&:save)
+  def set_search_content
+    contacts.find_each(&:save)
   end
 
   def set_progress
