@@ -3,9 +3,15 @@ class Candidacy < ApplicationRecord
   belongs_to :person
   belongs_to :contact, optional: true
   after_save :set_contacts_content
+  before_save :set_progress
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
+
+  validates :progress, numericality: {
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100
+  }
 
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
@@ -84,7 +90,7 @@ class Candidacy < ApplicationRecord
   end
   alias_attribute :location, :zipcode
 
-  def progress
+  def build_progress
     progressable_attributes.count { |a| !a.nil? } /
       progressable_attributes.count.to_f * 100.0
   end
@@ -116,5 +122,9 @@ class Candidacy < ApplicationRecord
 
   def set_contacts_content
     contacts.candidate.find_each(&:save)
+  end
+
+  def set_progress
+    self.progress = build_progress
   end
 end

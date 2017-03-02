@@ -24,10 +24,7 @@ class Contact::Temperature
   private
 
   attr_reader :contact
-
-  def last_activity_at
-    Contact::LastActivityAt.new(contact).to_datetime
-  end
+  delegate :last_activity_at, to: :contact
 
   def hot?
     last_activity_at > 24.hours.ago
