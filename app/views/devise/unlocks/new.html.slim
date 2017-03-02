@@ -7,5 +7,5 @@
         = f.label :email, class: "col-form-label"
         = f.email_field :email, autofocus: true, class: "form-control"
       .form-group
-        = f.submit "Resend Unlock Instructions", class: "btn btn-primary"
+        = f.submit "Resend Unlock Instructions", class: "btn btn-primary", role: 'button'
     = render "devise/shared/links"
