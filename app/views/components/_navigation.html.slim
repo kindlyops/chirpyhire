@@ -13,7 +13,7 @@ nav.navbar.navbar-light.top.fixed-top
         i.fa.fa-tasks.ml-2.align-middle
     - if current_organization.phone_number.present?
       li.nav-item.ml-auto
-        span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title='Encourage caregivers to text START to this phone number unique to #{current_organization.name}.' = current_organization.phone_number.phony_formatted
+        span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to this phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
     li.nav-link.dropdown
       button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
         i.fa.fa-user-circle-o
