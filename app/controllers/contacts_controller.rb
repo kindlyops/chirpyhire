@@ -47,7 +47,7 @@ class ContactsController < ApplicationController
 
   def scoped_contacts
     if params[:search].present?
-      Contact.not_ready.search(params[:search])
+      Contact.not_ready.search_not_ready(params[:search])
     else
       Contact.not_ready
     end

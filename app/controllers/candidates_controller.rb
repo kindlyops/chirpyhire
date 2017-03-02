@@ -47,7 +47,7 @@ class CandidatesController < ApplicationController
 
   def scoped_contacts
     if params[:search].present?
-      Contact.candidate.search(params[:search])
+      Contact.candidate.search_candidates(params[:search])
     else
       Contact.candidate
     end

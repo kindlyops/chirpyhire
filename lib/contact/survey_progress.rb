@@ -7,6 +7,10 @@ class Contact::SurveyProgress
     person.candidacy.progress
   end
 
+  def search_label
+    to_csv.round
+  end
+
   def to_json
     return 3.0 unless person.candidacy.progress.positive?
     person.candidacy.progress

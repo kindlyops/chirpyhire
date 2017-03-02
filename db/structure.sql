@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.3
--- Dumped by pg_dump version 9.5.3
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -38,6 +39,20 @@ CREATE FUNCTION contacts_before_insert_update_row_tr() RETURNS trigger
     AS $$
 BEGIN
     new.content_tsearch := to_tsvector('pg_catalog.simple', coalesce(new.content,''));
+    RETURN NEW;
+END;
+$$;
+
+
+--
+-- Name: not_ready_contacts_before_insert_update_row_tr(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION not_ready_contacts_before_insert_update_row_tr() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    new.not_ready_content_tsearch := to_tsvector('pg_catalog.simple', coalesce(new.not_ready_content,''));
     RETURN NEW;
 END;
 $$;
@@ -166,7 +181,9 @@ CREATE TABLE contacts (
     content text,
     content_tsearch tsvector,
     candidate boolean DEFAULT false NOT NULL,
-    last_activity_at timestamp without time zone
+    last_activity_at timestamp without time zone,
+    not_ready_content text,
+    not_ready_content_tsearch tsvector
 );
 
 
@@ -559,98 +576,98 @@ ALTER SEQUENCE zipcodes_id_seq OWNED BY zipcodes.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts ALTER COLUMN id SET DEFAULT nextval('accounts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: candidacies id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies ALTER COLUMN id SET DEFAULT nextval('candidacies_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ideal_candidate_suggestions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions ALTER COLUMN id SET DEFAULT nextval('ideal_candidate_suggestions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ideal_candidates id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates ALTER COLUMN id SET DEFAULT nextval('ideal_candidates_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: people id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY people ALTER COLUMN id SET DEFAULT nextval('people_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pg_search_documents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_search_documents_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: plans id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY plans ALTER COLUMN id SET DEFAULT nextval('plans_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: subscriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions ALTER COLUMN id SET DEFAULT nextval('subscriptions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: zipcodes id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes ALTER COLUMN id SET DEFAULT nextval('zipcodes_id_seq'::regclass);
 
 
 --
--- Name: accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts
@@ -658,7 +675,7 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ar_internal_metadata
@@ -666,7 +683,7 @@ ALTER TABLE ONLY ar_internal_metadata
 
 
 --
--- Name: candidacies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: candidacies candidacies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies
@@ -674,7 +691,7 @@ ALTER TABLE ONLY candidacies
 
 
 --
--- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
@@ -682,7 +699,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: ideal_candidate_suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidate_suggestions ideal_candidate_suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions
@@ -690,7 +707,7 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
--- Name: ideal_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidates ideal_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates
@@ -698,7 +715,7 @@ ALTER TABLE ONLY ideal_candidates
 
 
 --
--- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -706,7 +723,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -714,7 +731,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations
@@ -722,7 +739,7 @@ ALTER TABLE ONLY organizations
 
 
 --
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: people people_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY people
@@ -730,7 +747,7 @@ ALTER TABLE ONLY people
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -738,7 +755,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: plans plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY plans
@@ -746,7 +763,7 @@ ALTER TABLE ONLY plans
 
 
 --
--- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schema_migrations
@@ -754,7 +771,7 @@ ALTER TABLE ONLY schema_migrations
 
 
 --
--- Name: subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: subscriptions subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -762,7 +779,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: zipcodes zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes
@@ -823,6 +840,13 @@ CREATE INDEX index_candidacies_on_person_id ON candidacies USING btree (person_i
 --
 
 CREATE INDEX index_contacts_on_content_tsearch ON contacts USING gin (content_tsearch) WHERE (candidate = true);
+
+
+--
+-- Name: index_contacts_on_not_ready_content_tsearch; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_contacts_on_not_ready_content_tsearch ON contacts USING gin (not_ready_content_tsearch) WHERE (candidate = false);
 
 
 --
@@ -952,14 +976,21 @@ CREATE UNIQUE INDEX index_zipcodes_on_ideal_candidate_id_and_value ON zipcodes U
 
 
 --
--- Name: contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
+-- Name: contacts contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
 CREATE TRIGGER contacts_before_insert_update_row_tr BEFORE INSERT OR UPDATE ON contacts FOR EACH ROW EXECUTE PROCEDURE contacts_before_insert_update_row_tr();
 
 
 --
--- Name: fk_rails_01a916123b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts not_ready_contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER not_ready_contacts_before_insert_update_row_tr BEFORE INSERT OR UPDATE ON contacts FOR EACH ROW EXECUTE PROCEDURE not_ready_contacts_before_insert_update_row_tr();
+
+
+--
+-- Name: candidacies fk_rails_01a916123b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies
@@ -967,7 +998,7 @@ ALTER TABLE ONLY candidacies
 
 
 --
--- Name: fk_rails_1ceb778440; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: accounts fk_rails_1ceb778440; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY accounts
@@ -975,7 +1006,7 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: subscriptions fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -983,7 +1014,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: fk_rails_41c70a97c6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: messages fk_rails_41c70a97c6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -991,7 +1022,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: fk_rails_63d3df128b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: subscriptions fk_rails_63d3df128b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY subscriptions
@@ -999,7 +1030,7 @@ ALTER TABLE ONLY subscriptions
 
 
 --
--- Name: fk_rails_76d371f451; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidate_suggestions fk_rails_76d371f451; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions
@@ -1007,7 +1038,7 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
--- Name: fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
@@ -1015,7 +1046,7 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: fk_rails_84778edc55; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: locations fk_rails_84778edc55; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY locations
@@ -1023,7 +1054,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- Name: fk_rails_885008c105; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts fk_rails_885008c105; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
@@ -1031,7 +1062,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: fk_rails_c7a0339d90; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidates fk_rails_c7a0339d90; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidates
@@ -1039,7 +1070,7 @@ ALTER TABLE ONLY ideal_candidates
 
 
 --
--- Name: fk_rails_d2a970fc50; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: contacts fk_rails_d2a970fc50; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
@@ -1047,7 +1078,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: fk_rails_eda88ce3b8; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: pg_search_documents fk_rails_eda88ce3b8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -1055,7 +1086,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: zipcodes fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY zipcodes
@@ -1089,6 +1120,9 @@ INSERT INTO schema_migrations (version) VALUES
 ('20170225171500'),
 ('20170225200724'),
 ('20170225221058'),
-('20170302191131');
+('20170302191131'),
+('20170302203723'),
+('20170302203823'),
+('20170302203927');
 
 

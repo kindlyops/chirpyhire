@@ -9,6 +9,10 @@ class Contact::Temperature
     'Cool'
   end
 
+  def search_label
+    label
+  end
+
   def icon_class
     return 'fa-thermometer-full' if hot?
     return 'fa-thermometer-half' if warm?

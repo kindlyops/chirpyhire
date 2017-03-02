@@ -46,9 +46,8 @@ class Candidacy < ApplicationRecord
     )
   end
 
-  def surveying?
-    contact.present?
-  end
+  delegate :present?, to: :contact, prefix: true
+  alias surveying? contact_present?
 
   def status_for(organization)
     return :ideal if ideal?(organization.ideal_candidate)

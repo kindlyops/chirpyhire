@@ -5,6 +5,10 @@ class Contact::LastActivityAt
 
   attr_reader :contact
 
+  def search_label
+    to_json
+  end
+
   def to_csv
     contact.last_activity_at
   end

@@ -5,6 +5,10 @@ class Contact::CreatedAt
 
   attr_reader :contact
 
+  def search_label
+    to_json
+  end
+
   def to_csv
     contact.created_at
   end
