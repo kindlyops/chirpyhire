@@ -56,8 +56,7 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return ['<div class="progress">', '<div data-toggle="tooltip" ',
-            'title="75%" data-placement="right" class="progress-bar',
+            return ['<div class="progress">', '<div class="progress-bar',
             ' progress-bar-striped bg-warning" ',
             'role="progressbar" aria-valuenow="75" aria-valuemin="0" ',
             'aria-valuemax="100" style="width: 75%;"></div></div>'].join('');
