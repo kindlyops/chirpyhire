@@ -11,6 +11,10 @@ class Contact < ApplicationRecord
     where(candidate: true)
   end
 
+  def self.not_ready
+    where(candidate: false)
+  end
+
   def self.active
     where(subscribed: true)
   end
