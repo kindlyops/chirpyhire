@@ -87,8 +87,8 @@ class ContactsController < ApplicationController
       'nickname' => "people.nickname #{direction}",
       'created_at' => "contacts.created_at #{direction}",
       'survey_progress' => "candidacies.progress #{direction}",
-      'last_activity_at' => "contacts.last_activity_at #{direction}",
-      'temperature' => "contacts.last_activity_at #{direction}"
+      'last_reply_at' => "contacts.last_reply_at #{direction}",
+      'temperature' => "contacts.last_reply_at #{direction}"
     }
   end
 

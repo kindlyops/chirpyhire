@@ -5,6 +5,6 @@ csv.rows contacts do |csv, contact|
   csv.cell :nickname, contact.nickname
   csv.cell :created, contact.created_at.to_csv
   csv.cell :survey_progress, contact.survey_progress.to_csv
-  csv.cell :last_activity, contact.last_activity_at.to_csv
+  csv.cell :last_activity, contact.last_reply_at.to_csv
   csv.cell :temperature, contact.temperature.label
 end

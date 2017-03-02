@@ -9,9 +9,7 @@ class Contact::Temperature
     'Cool'
   end
 
-  def search_label
-    label
-  end
+  alias search_label label
 
   def icon_class
     return 'fa-thermometer-full' if hot?
@@ -28,13 +26,13 @@ class Contact::Temperature
   private
 
   attr_reader :contact
-  delegate :last_activity_at, to: :contact
+  delegate :last_reply_at, to: :contact
 
   def hot?
-    last_activity_at.blank? || last_activity_at > 24.hours.ago
+    last_reply_at.blank? || last_reply_at > 24.hours.ago
   end
 
   def warm?
-    last_activity_at > 7.days.ago
+    last_reply_at > 7.days.ago
   end
 end

@@ -64,7 +64,7 @@ $(document).on('turbolinks:load', function() {
             '%;"></div></div>'].join('');
           }
         },{
-          field: 'last_activity_at',
+          field: 'last_reply_at',
           title: 'Last Reply',
           sortable: true,
           cellStyle: function(value, row, index, field) {

@@ -3,7 +3,6 @@ class Candidacy < ApplicationRecord
   belongs_to :person
   belongs_to :contact, optional: true
   after_save :set_search_content
-  before_save :set_progress, unless: :candidate?
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
@@ -89,7 +88,7 @@ class Candidacy < ApplicationRecord
   end
   alias_attribute :location, :zipcode
 
-  def build_progress
+  def current_progress
     progressable_attributes.count { |a| !a.nil? } /
       progressable_attributes.count.to_f * 100.0
   end
@@ -121,9 +120,5 @@ class Candidacy < ApplicationRecord
 
   def set_search_content
     contacts.find_each(&:save)
-  end
-
-  def set_progress
-    self.progress = build_progress
   end
 end

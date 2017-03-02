@@ -14,7 +14,7 @@ module Contact::NotReady::Searchable
     def build_not_ready_content
       <<~CONTENT.squish.chomp
         #{nickname} #{created_at_search_label} #{survey_progress_search_label} \
-#{last_activity_at_search_label} #{temperature_search_label}
+#{last_reply_at_search_label} #{temperature_search_label}
       CONTENT
     end
 

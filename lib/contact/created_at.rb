@@ -5,10 +5,6 @@ class Contact::CreatedAt
 
   attr_reader :contact
 
-  def search_label
-    to_json
-  end
-
   def to_csv
     contact.created_at
   end
@@ -17,4 +13,6 @@ class Contact::CreatedAt
     return unless to_csv.present?
     to_csv.strftime('%-m/%-d/%y %I:%M%P')
   end
+
+  alias search_label to_json
 end

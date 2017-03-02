@@ -1,7 +1,7 @@
 class AddsNotReadyColumns < ActiveRecord::Migration[5.0]
   def change
     change_table :contacts do |t|
-      t.datetime :last_activity_at
+      t.datetime :last_reply_at
     end
 
     change_table :candidacies do |t|

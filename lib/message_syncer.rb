@@ -35,6 +35,6 @@ class MessageSyncer
 
   def update_contact(message)
     contact = person.contacts.find_by(organization: organization)
-    contact.update(last_activity_at: message.created_at)
+    contact.update(last_reply_at: message.created_at)
   end
 end

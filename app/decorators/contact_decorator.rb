@@ -5,8 +5,8 @@ class ContactDecorator < Draper::Decorator
     Contact::CreatedAt.new(object)
   end
 
-  def last_activity_at
-    Contact::LastActivityAt.new(object)
+  def last_reply_at
+    Contact::LastReplyAt.new(object)
   end
 
   def survey_progress
