@@ -6,11 +6,11 @@ nav.navbar.navbar-light.top.fixed-top
     li.nav-item
       = nav_link_to candidates_path, { class: 'nav-link' }, url_segment: 1 do
         span Ready to Call
-        i.fa.fa-users.ml-2.align-middle
+        i.fa.fa-phone.ml-2.align-middle
     li.nav-item
       = nav_link_to contacts_path, { class: 'nav-link' }, url_segment: 1 do
         span Not Ready to Call
-        i.fa.fa-tasks.ml-2.align-middle
+        i.fa.fa-comments.ml-2.align-middle
     - if current_organization.phone_number.present?
       li.nav-item.ml-auto
         span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to this phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
