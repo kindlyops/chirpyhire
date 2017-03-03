@@ -1,8 +1,23 @@
 .contacts {
   .table {
+    .progress-bar {
+      transition-duration: 0.5s;
+    }
+
     .temperature {
       span {
         font-size: 1.25em;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .last-reply, .temperature {
+      .new {
+        animation: fadeIn 1.5s;
       }
     }
 

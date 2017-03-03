@@ -10,7 +10,7 @@ class MessageSyncer
     return existing_message if existing_message.present?
     message = sync_message
     update_contact(message)
-    MessageBroadcaster.new(message).broadcast
+    Broadcaster::Message.new(message).broadcast
     message
   end
 
@@ -36,5 +36,7 @@ class MessageSyncer
   def update_contact(message)
     contact = person.contacts.find_by(organization: organization)
     contact.update(last_reply_at: message.created_at)
+    Broadcaster::LastReply.new(contact).broadcast
+    Broadcaster::Temperature.new(contact).broadcast
   end
 end

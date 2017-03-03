@@ -58,10 +58,11 @@ $(document).on('turbolinks:load', function() {
           },
           formatter: function(value, row, index) {
             return ['<div class="progress">', '<div class="progress-bar',
-            ' progress-bar-striped bg-warning" ',
-            'role="progressbar" aria-valuenow="', value, '" aria-valuemin="3" ',
-            'aria-valuemax="100" style="width: ', value,
-            '%;"></div></div>'].join('');
+            ' progress-bar-striped bg-warning"',
+            ' data-channel="candidacy-progress" data-contact-id="',
+            value.contact_id, '" role="progressbar" aria-valuenow="',
+            value.progress, '" aria-valuemin="3" ', 'aria-valuemax="100" ',
+            'style="width: ', value.progress, '%;"></div></div>'].join('');
           }
         },{
           field: 'last_reply_at',
@@ -69,8 +70,12 @@ $(document).on('turbolinks:load', function() {
           sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
-              classes: 'text-center'
+              classes: 'text-center last-reply'
             };
+          },
+          formatter: function(value, row, index) {
+            return ['<span data-channel="last-reply" data-contact-id="',
+            value.contact_id,'">', value.last_reply_at, '</span>'].join('');
           }
         },{
           field: 'temperature',
@@ -82,8 +87,10 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return ['<span class="badge ', value.badge_class, '">',
-                    value.label, ' ', '<i class="fa ', value.icon_class,
+            return ['<span class="badge ', value.badge_class, '" ',
+            'data-channel="temperature" data-contact-id="',
+            value.contact_id,'">', value.label, ' ',
+            '<i class="fa ', value.icon_class,
                     '"></i></span>'].join('');
           }
         },{
