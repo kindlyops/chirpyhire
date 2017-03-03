@@ -13,22 +13,17 @@ $(document).on('load-success.bs.table', function() {
       App['lastReply' + contactId] = App.cable.subscriptions.create(
         channel, {
           model: function() {
-            return this._model;
-          },
-          setModel: function(model) {
-            this._model = model;
+            return $('[data-channel="last-reply"]' +
+                     '[data-contact-id="' + contactId + '"]');
           },
           received: function(data) {
             var $data = $(data);
 
             if($data.text() !== this.model().text()) {
               this.model().replaceWith($data);
-              this.setModel($data);
             }
           }
         });
-
-      App['lastReply' + contactId].setModel($contact);
 
       $contact.attr('loaded', true);
     }, collection);

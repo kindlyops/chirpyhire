@@ -13,7 +13,7 @@ class Contact::SurveyProgress
 
   def to_json
     return 3.0 unless person.candidacy.progress.positive?
-    person.candidacy.progress
+    person.candidacy.progress.round
   end
 
   attr_reader :contact

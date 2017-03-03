@@ -26,7 +26,13 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def fetch_attribute(message)
-    choice_map[choices[choice(message)]] || regular_attribute(message)
+    return regular_attribute(message) if choice_attribute(message).nil?
+
+    choice_attribute(message)
+  end
+
+  def choice_attribute(message)
+    choice_map[choices[choice(message)]]
   end
 
   def choice(message)

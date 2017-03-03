@@ -4,14 +4,10 @@ class Broadcaster::CandidacyProgress
   end
 
   def broadcast
-    CandidacyProgressesChannel.broadcast_to(candidacy, render_progress)
+    CandidacyProgressesChannel.broadcast_to(candidacy, candidacy.progress.round)
   end
 
   private
 
   attr_reader :candidacy
-
-  def render_progress
-    { progress: candidacy.progress }
-  end
 end

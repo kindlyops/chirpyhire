@@ -13,11 +13,12 @@ $(document).on('load-success.bs.table', function() {
       App['candidacyProgress' + contactId] = App.cable.subscriptions.create(
         channel, {
           model: function() {
-            return $contact;
+            return $('[data-channel="candidacy-progress"]' +
+                     '[data-contact-id="' + contactId + '"]');
           },
           received: function(data) {
-            this.model().css({ width: data.progress + '%' });
-            this.model().attr('aria-valuenow', data.progress);
+            this.model().css('width', data + '%');
+            this.model().attr('aria-valuenow', data);
           }
         });
 

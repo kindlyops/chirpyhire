@@ -30,7 +30,7 @@ RSpec.describe Answer::SkinTest do
 
   describe '#attribute' do
     %w(yes Y Yez
-       Yea Yed Yeah Yup).each do |body|
+       Yea Yed Yeah Yup A).each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -40,7 +40,7 @@ RSpec.describe Answer::SkinTest do
       end
     end
 
-    %w(N no Nope Nah).each do |body|
+    %w(N no Nope Nah B).each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
