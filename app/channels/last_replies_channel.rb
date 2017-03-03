@@ -1,0 +1,2 @@
+class LastRepliesChannel < CandidaciesChannel
+end

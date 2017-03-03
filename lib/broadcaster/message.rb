@@ -1,4 +1,4 @@
-class MessageBroadcaster
+class Broadcaster::Message
   def initialize(message)
     @message = message
   end

@@ -37,6 +37,7 @@ class Surveyor
     candidacy.assign_attributes(survey.answer.attribute(message))
     candidacy.progress = candidacy.current_progress
     candidacy.save!
+    Broadcaster::CandidacyProgress.new(candidacy).broadcast
   end
 
   def lock_candidacy

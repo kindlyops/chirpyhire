@@ -15,4 +15,5 @@ class Contact::LastReplyAt
   end
 
   alias search_label to_json
+  alias to_s to_json
 end
