@@ -2,5 +2,5 @@
 if [ "$RACK_ENV" == "development" ]; then
   bundle exec sidekiq
 else
-  bundle exec sidekiq
+  bin/start-stunnel bundle exec sidekiq
 fi

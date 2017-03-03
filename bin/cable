@@ -2,5 +2,5 @@
 if [ "$RACK_ENV" == "development" ]; then
   bundle exec puma -w 1 -p 28080 cable/config.ru
 else
-  bundle exec puma -C config/cable/puma.rb -p 28080 cable/config.ru
+  bin/start-stunnel bundle exec puma -C config/cable/puma.rb -p 28080 cable/config.ru
 fi
