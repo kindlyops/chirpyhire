@@ -17,8 +17,8 @@ class Middleware::Sabayon
     end
 
     data.each do |e|
-      if env["PATH_INFO"] == "/.well-known/acme-challenge/#{e[:token]}"
-        return [200, { "Content-Type" => "text/plain" }, [e[:key]]]
+      if env['PATH_INFO'] == "/.well-known/acme-challenge/#{e[:token]}"
+        return [200, { 'Content-Type' => 'text/plain' }, [e[:key]]]
       end
     end
 

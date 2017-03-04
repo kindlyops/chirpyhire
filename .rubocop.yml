@@ -9,6 +9,7 @@ AllCops:
     - 'db/**/*'
     - 'script/**/*'
     - 'bin/**/*'
+    - 'lib/middleware/sabayon.rb'
 
 Style/Documentation:
   Enabled: false
