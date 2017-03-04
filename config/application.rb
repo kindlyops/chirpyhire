@@ -32,5 +32,6 @@ module Congaree
 
     config.cache_store = :memory_store
     config.active_record.schema_format = :sql
+    config.middleware.insert_before 0, 'Middleware::Sabayon'
   end
 end
