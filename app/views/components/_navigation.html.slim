@@ -25,7 +25,7 @@ nav.navbar.navbar-light.top.fixed-top
             i.fa.fa-paper-plane
             span.ml-2 Invite an Admin
         - if impersonating?
-          = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.name}", class: 'dropdown-item' do
+          = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}", class: 'dropdown-item' do
               i.fa.fa-step-backward
               span.ml-2 Stop Impersonating
         - else
