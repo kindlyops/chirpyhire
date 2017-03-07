@@ -62,7 +62,7 @@ class CandidatesController < ApplicationController
   end
 
   def page
-    offset / limit
+    ((offset / limit) + 1).round
   end
 
   def direction
