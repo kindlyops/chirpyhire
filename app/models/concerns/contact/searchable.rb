@@ -6,7 +6,7 @@ module Contact::Searchable
     include Contact::Candidate::Searchable
     include Contact::NotReady::Searchable
 
-    %i(availability experience certification phone_number
+    %i(availability experience certification phone_number transportation
        skin_test cpr_first_aid subscribed status screened
        created_at survey_progress last_reply_at temperature).each do |method|
       define_method("#{method}_search_label") do
