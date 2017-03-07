@@ -10,7 +10,20 @@ class ContactsController < ApplicationController
     end
   end
 
+  def update
+    @contact = authorized_contact
+    @contact.update(permitted_attributes(Contact))
+
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
+
   private
+
+  def authorized_contact
+    authorize Contact.find(params[:id])
+  end
 
   def index_csv
     @contacts = selected(paginated(ordered_contacts))
