@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
   before_action :require_super_admin!
-  # skip_after_action :verify_authorized
+  skip_after_action :verify_authorized
 
   def stop_impersonating
     stop_impersonating_account
