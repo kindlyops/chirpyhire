@@ -16,7 +16,7 @@ class Seeder
   end
 
   def seed_candidate_contacts
-    complete_contacts unless organization.contacts.candidate.exists?
+    candidate_contacts unless organization.contacts.candidate.exists?
   end
 
   def not_ready_contacts
@@ -27,7 +27,7 @@ class Seeder
     contacts.each(&method(:seed_messages))
   end
 
-  def complete_contacts
+  def candidate_contacts
     contacts = FactoryGirl.create_list(
       :contact, 400, :candidate,
       organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
@@ -37,8 +37,7 @@ class Seeder
 
   def seed_messages(contact)
     seed_start(contact)
-    seed_questions(contact) &&
-      seed_thank_you(contact)
+    seed_questions(contact) && seed_thank_you(contact)
   end
 
   def seed_questions(contact)
