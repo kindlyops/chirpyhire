@@ -16,7 +16,7 @@ FactoryGirl.define do
       contact.person = person
     end
 
-    trait :with_incomplete_candidacy do
+    trait :not_ready do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
 
@@ -52,7 +52,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_complete_candidacy do
+    trait :candidate do
       after(:create) do |contact|
         contact.update(
           subscribed: [true, false].sample,

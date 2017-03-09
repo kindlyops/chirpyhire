@@ -3,25 +3,25 @@ class Seeder
     seed_plan
     seed_organization
     seed_account
-    seed_incomplete_contacts
-    seed_complete_contacts
+    seed_not_ready_contacts
+    seed_candidate_contacts
   end
 
   private
 
   attr_reader :plan, :organization, :account
 
-  def seed_incomplete_contacts
-    incomplete_contacts unless organization.contacts.not_ready.exists?
+  def seed_not_ready_contacts
+    not_ready_contacts unless organization.contacts.not_ready.exists?
   end
 
-  def seed_complete_contacts
+  def seed_candidate_contacts
     complete_contacts unless organization.contacts.candidate.exists?
   end
 
-  def incomplete_contacts
+  def not_ready_contacts
     contacts = FactoryGirl.create_list(
-      :contact, 400, :with_incomplete_candidacy,
+      :contact, 400, :not_ready,
       organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
     )
     contacts.each(&method(:seed_messages))
@@ -29,7 +29,7 @@ class Seeder
 
   def complete_contacts
     contacts = FactoryGirl.create_list(
-      :contact, 400, :with_complete_candidacy,
+      :contact, 400, :candidate,
       organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
     )
     contacts.each(&method(:seed_messages))
