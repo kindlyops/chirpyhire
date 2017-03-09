@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :contact do
     organization
 
+    transient do
+      phone_number nil
+    end
+
     before(:create) do |contact, evaluator|
       person = if evaluator.phone_number
         create(:person, phone_number: evaluator.phone_number)
