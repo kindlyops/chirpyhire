@@ -1,6 +1,6 @@
 #!/bin/sh
-if [ "$RACK_ENV" == "development" ]; then
-  bundle exec sidekiq
-else
+if [ "$RACK_ENV" == "production" ]; then
   bin/start-stunnel bundle exec sidekiq
+else
+  bundle exec sidekiq
 fi
