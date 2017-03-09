@@ -20,12 +20,15 @@ gem 'jquery-rails'
 gem 'jbuilder'
 gem 'turbolinks', '~> 5.0.0'
 
+group :development, :test, :demo do
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'faker', '~> 1.6.0'
+end
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.5.1'
-  gem 'factory_girl_rails', '~> 4.0'
-  gem 'faker', '~> 1.6.0'
   gem 'dotenv-rails', '~> 2.1.0'
 end
 
