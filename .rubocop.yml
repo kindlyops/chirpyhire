@@ -17,6 +17,10 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/seeder.rb'
+
 Metrics/LineLength:
   Exclude:
     - 'spec/**/*'

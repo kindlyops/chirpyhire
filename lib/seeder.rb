@@ -11,6 +11,92 @@ class Seeder
 
   attr_reader :plan, :organization, :account
 
+  def seed_incomplete_contacts
+    contacts = FactoryGirl.create_list(
+      :contact, 50, :with_incomplete_candidacy,
+      organization: organization
+    )
+    contacts.each(&method(:seed_messages))
+  end
+
+  def seed_complete_contacts
+    contacts = FactoryGirl.create_list(
+      :contact, 50, :with_complete_candidacy,
+      organization: organization
+    )
+    contacts.each(&method(:seed_messages))
+  end
+
+  def seed_messages(contact)
+    seed_question_and_answer(contact, 'Experience')
+    seed_question_and_answer(contact, 'SkinTest')
+    seed_question_and_answer(contact, 'Availability')
+    seed_question_and_answer(contact, 'Transportation')
+    seed_question_and_answer(contact, 'Zipcode')
+    seed_question_and_answer(contact, 'CprFirstAid')
+    seed_thank_you(contact)
+  end
+
+  def seed_question_and_answer(contact, category)
+    person = contact.person
+    seed_question(person, "Question::#{category}".constantize.new(contact))
+    seed_answer(person, category)
+  end
+
+  def seed_question(person, question)
+    body = question.body
+    person.messages.create(
+      body: body,
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'outbound-api',
+      organization: organization
+    )
+  end
+
+  def seed_thank_you(contact)
+    return unless contact.candidate?
+    body = Notification::ThankYou.new(contact).body
+    contact.person.messages.create(
+      body: body,
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'outbound-api',
+      organization: organization
+    )
+  end
+
+  def seed_answer(person, category)
+    choice = person.candidacy.send(category.underscore.to_sym)
+    return if choice.nil?
+    choice = choice.to_sym if choice.respond_to?(:to_sym)
+    answer = "Answer::#{category}".constantize.new({})
+
+    body = answer_body(answer, choice, category)
+    create_answer(person, body)
+  end
+
+  def answer_body(answer, choice, category)
+    if category != 'Zipcode'
+      answer.choice_map.invert[choice]
+    else
+      ZipCodes.db.keys.sample
+    end
+  end
+
+  def create_answer(person, body)
+    person.messages.create(
+      body: body,
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'inbound',
+      organization: organization
+    )
+  end
+
   def seed_plan
     @plan = Plan.first || create_plan
 
@@ -52,10 +138,10 @@ class Seeder
 
   def find_or_create_organization
     Organization.find_or_create_by!(
-      name: 'Happy Home Care',
+      name: ENV.fetch('DEMO_ORGANIZATION_NAME'),
       twilio_account_sid: ENV.fetch('TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('TWILIO_AUTH_TOKEN'),
-      phone_number: ENV.fetch('DEMO_ORG_PHONE')
+      phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
     )
   end
 

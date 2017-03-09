@@ -30,8 +30,8 @@ VCR.configure do |c|
     ENV['DEMO_EMAIL']
   end
 
-  c.filter_sensitive_data('DEMO_ORG_PHONE') do
-    ENV['DEMO_ORG_PHONE']
+  c.filter_sensitive_data('DEMO_ORGANIZATION_PHONE') do
+    ENV['DEMO_ORGANIZATION_PHONE']
   end
 
   c.filter_sensitive_data('STRIPE_SECRET_KEY') do

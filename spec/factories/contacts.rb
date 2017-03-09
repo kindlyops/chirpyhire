@@ -8,8 +8,9 @@ FactoryGirl.define do
         contact.person.candidacy.update(
           contact: contact,
           experience: Candidacy.experiences.keys.sample,
-          availability: Candidacy.availabilities.keys.sample,
           skin_test: [true, false].sample,
+          availability: Candidacy.availabilities.keys.sample,
+          transportation: Candidacy.transportations.keys.sample,
           zipcode: %w(30342 22902 30327 22903 90210).sample
         )
       end
