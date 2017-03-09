@@ -12,7 +12,7 @@ FactoryGirl.define do
           skin_test: [true, false].sample,
           availability: Candidacy.availabilities.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
-          zipcode: %w(30342 22902 30327 22903 90210).sample
+          zipcode: ZipCodes.db.keys.sample
         )
 
         candidacy.update(
@@ -39,7 +39,7 @@ FactoryGirl.define do
           transportation: Candidacy.transportations.keys.sample,
           certification: Candidacy.certifications.keys.sample,
           skin_test: [true, false].sample,
-          zipcode: %w(30342 22902 30327 22903 90210).sample,
+          zipcode: ZipCodes.db.keys.sample,
           cpr_first_aid: [true, false].sample
         )
 
