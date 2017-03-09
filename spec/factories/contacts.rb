@@ -1,19 +1,16 @@
 FactoryGirl.define do
   factory :contact do
     organization
+    person
 
     transient do
       phone_number nil
     end
 
-    before(:create) do |contact, evaluator|
-      person = if evaluator.phone_number
-                 create(:person, phone_number: evaluator.phone_number)
-               else
-                 create(:person)
-               end
-
-      contact.person = person
+    after(:create) do |contact, evaluator|
+      if evaluator.phone_number.present?
+        contact.person.update(phone_number: evaluator.phone_number)
+      end
     end
 
     trait :not_ready do
