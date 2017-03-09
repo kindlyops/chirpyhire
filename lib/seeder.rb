@@ -28,7 +28,7 @@ class Seeder
   end
 
   def seed_messages(contact)
-    seed_start(contact)
+    seed_start(contact) &&
     seed_question_and_answer(contact, 'Experience') &&
     seed_question_and_answer(contact, 'SkinTest') &&
     seed_question_and_answer(contact, 'Availability') &&
