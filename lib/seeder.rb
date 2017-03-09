@@ -42,7 +42,7 @@ class Seeder
 
   def seed_questions(contact)
     %w(Experience SkinTest Availability
-       Transportation ZipCode CprFirstAid Certification).each do |category|
+       Transportation Zipcode CprFirstAid Certification).each do |category|
       result = seed_question_and_answer(contact, category)
       break unless result.present?
     end
