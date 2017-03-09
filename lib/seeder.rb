@@ -29,9 +29,11 @@ class Seeder
   end
 
   def seed_demo_contact
+    person = FactoryGirl.create(:person, nickname: ENV.fetch('DEMO_NICKNAME'))
     contact = FactoryGirl.create(
       :contact,
       :not_ready,
+      person: person,
       organization: organization,
       phone_number: ENV.fetch('DEMO_PHONE')
     )
