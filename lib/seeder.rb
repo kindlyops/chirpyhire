@@ -28,6 +28,7 @@ class Seeder
   end
 
   def seed_messages(contact)
+    seed_start(contact)
     seed_question_and_answer(contact, 'Experience') &&
     seed_question_and_answer(contact, 'SkinTest') &&
     seed_question_and_answer(contact, 'Availability') &&
@@ -42,6 +43,18 @@ class Seeder
     person = contact.person
     seed_question(person, "Question::#{category}".constantize.new(contact))
     seed_answer(person, category)
+  end
+
+  def seed_start(contact)
+    person = contact.person
+    person.messages.create(
+      body: 'Start',
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'inbound',
+      organization: organization
+    )
   end
 
   def seed_question(person, question)
