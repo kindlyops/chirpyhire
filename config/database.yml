@@ -85,7 +85,5 @@ production:
   password: <%= ENV['CONGAREE_DATABASE_PASSWORD'] %>
 
 demo:
-  <<: *default
+  <<: *production
   database: congaree_demo
-  username: congaree
-  password: <%= ENV['CONGAREE_DATABASE_PASSWORD'] %>

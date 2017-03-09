@@ -20,4 +20,4 @@ production:
   :concurrency: 7
 
 demo:
-  :concurrency: 7
+  <<: *production
