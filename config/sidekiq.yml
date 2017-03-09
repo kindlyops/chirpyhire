@@ -16,7 +16,7 @@
   - default
 
 # you can override concurrency based on environment
-production:
+production: &production
   :concurrency: 7
 
 demo:
