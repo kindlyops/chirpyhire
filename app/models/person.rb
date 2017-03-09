@@ -30,6 +30,7 @@ class Person < ApplicationRecord
   private
 
   def add_nickname
+    return if self.nickname.present?
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
     Rollbar.debug(e)
