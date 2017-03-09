@@ -12,6 +12,14 @@ class Seeder
   attr_reader :plan, :organization, :account
 
   def seed_incomplete_contacts
+    incomplete_contacts unless organization.contacts.not_ready.exists?
+  end
+
+  def seed_complete_contacts
+    complete_contacts unless organization.contacts.candidate.exists?
+  end
+
+  def incomplete_contacts
     contacts = FactoryGirl.create_list(
       :contact, 400, :with_incomplete_candidacy,
       organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
@@ -19,7 +27,7 @@ class Seeder
     contacts.each(&method(:seed_messages))
   end
 
-  def seed_complete_contacts
+  def complete_contacts
     contacts = FactoryGirl.create_list(
       :contact, 400, :with_complete_candidacy,
       organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
@@ -28,15 +36,17 @@ class Seeder
   end
 
   def seed_messages(contact)
-    seed_start(contact) &&
-    seed_question_and_answer(contact, 'Experience') &&
-    seed_question_and_answer(contact, 'SkinTest') &&
-    seed_question_and_answer(contact, 'Availability') &&
-    seed_question_and_answer(contact, 'Transportation') &&
-    seed_question_and_answer(contact, 'Zipcode') &&
-    seed_question_and_answer(contact, 'CprFirstAid') &&
-    seed_question_and_answer(contact, 'Certification') &&
-    seed_thank_you(contact)
+    seed_start(contact)
+    seed_questions(contact) &&
+      seed_thank_you(contact)
+  end
+
+  def seed_questions(contact)
+    %w(Experience SkinTest Availability
+       Transportation ZipCode CprFirstAid Certification).each do |category|
+      result = seed_question_and_answer(contact, category)
+      break unless result.present?
+    end
   end
 
   def seed_question_and_answer(contact, category)

@@ -8,10 +8,10 @@ FactoryGirl.define do
 
     before(:create) do |contact, evaluator|
       person = if evaluator.phone_number
-        create(:person, phone_number: evaluator.phone_number)
-      else
-        create(:person)
-      end
+                 create(:person, phone_number: evaluator.phone_number)
+               else
+                 create(:person)
+               end
 
       contact.person = person
     end
