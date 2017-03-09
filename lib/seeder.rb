@@ -14,7 +14,7 @@ class Seeder
   def seed_incomplete_contacts
     contacts = FactoryGirl.create_list(
       :contact, 400, :with_incomplete_candidacy,
-      organization: organization
+      organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
     )
     contacts.each(&method(:seed_messages))
   end
@@ -22,7 +22,7 @@ class Seeder
   def seed_complete_contacts
     contacts = FactoryGirl.create_list(
       :contact, 400, :with_complete_candidacy,
-      organization: organization
+      organization: organization, phone_number: ENV.fetch('DEMO_PHONE')
     )
     contacts.each(&method(:seed_messages))
   end

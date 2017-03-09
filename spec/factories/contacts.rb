@@ -1,7 +1,16 @@
 FactoryGirl.define do
   factory :contact do
-    person
     organization
+
+    before(:create) do |contact, evaluator|
+      person = if evaluator.phone_number
+        create(:person, phone_number: evaluator.phone_number)
+      else
+        create(:person)
+      end
+
+      contact.person = person
+    end
 
     trait :with_incomplete_candidacy do
       after(:create) do |contact|
