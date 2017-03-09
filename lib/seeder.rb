@@ -37,7 +37,7 @@ class Seeder
 
   def seed_messages(contact)
     seed_start(contact)
-    seed_questions(contact) && seed_thank_you(contact)
+    seed_thank_you(contact) if seed_questions(contact)
   end
 
   def seed_questions(contact)
