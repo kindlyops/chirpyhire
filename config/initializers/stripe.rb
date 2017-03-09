@@ -1,10 +1,5 @@
-if Rails.env.production?
-  Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
-  StripeEvent.authentication_secret = ENV.fetch('STRIPE_WEBHOOK_SECRET')
-else
-  Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY', 'DEV_TOKEN')
-  StripeEvent.authentication_secret = ENV.fetch('STRIPE_WEBHOOK_SECRET', 'DEV_TOKEN')
-end
+Stripe.api_key = ENV.fetch('STRIPE_SECRET_KEY')
+StripeEvent.authentication_secret = ENV.fetch('STRIPE_WEBHOOK_SECRET')
 
 StripeEvent.configure do |events|
   events.subscribe 'customer.subscription.' do |event|
