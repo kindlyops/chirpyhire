@@ -28,12 +28,13 @@ class Seeder
   end
 
   def seed_messages(contact)
-    seed_question_and_answer(contact, 'Experience')
-    seed_question_and_answer(contact, 'SkinTest')
-    seed_question_and_answer(contact, 'Availability')
-    seed_question_and_answer(contact, 'Transportation')
-    seed_question_and_answer(contact, 'Zipcode')
-    seed_question_and_answer(contact, 'CprFirstAid')
+    seed_question_and_answer(contact, 'Experience') &&
+    seed_question_and_answer(contact, 'SkinTest') &&
+    seed_question_and_answer(contact, 'Availability') &&
+    seed_question_and_answer(contact, 'Transportation') &&
+    seed_question_and_answer(contact, 'Zipcode') &&
+    seed_question_and_answer(contact, 'CprFirstAid') &&
+    seed_question_and_answer(contact, 'Certification') &&
     seed_thank_you(contact)
   end
 

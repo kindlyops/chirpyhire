@@ -6,18 +6,36 @@ FactoryGirl.define do
     trait :with_incomplete_candidacy do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
-        candidacy.update(
+
+        just_started = {
+          contact: contact,
+          experience: Candidacy.experiences.keys.sample,
+          inquiry: :skin_test
+        }
+
+        midway = {
+          contact: contact,
+          experience: Candidacy.experiences.keys.sample,
+          skin_test: [true, false].sample,
+          availability: Candidacy.availabilities.keys.sample,
+          inquiry: :transportation
+        }
+
+        almost_finished = {
           contact: contact,
           experience: Candidacy.experiences.keys.sample,
           skin_test: [true, false].sample,
           availability: Candidacy.availabilities.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
-          zipcode: ZipCodes.db.keys.sample
-        )
+          zipcode: ZipCodes.db.keys.sample,
+          inquiry: :cpr_first_aid
+        }
 
-        candidacy.update(
-          progress: candidacy.current_progress
-        )
+        statuses = [just_started, midway, almost_finished]
+
+        candidacy.assign_attributes(statuses.sample)
+        candidacy.progress = candidacy.current_progress
+        candidacy.save
       end
     end
 
@@ -31,7 +49,7 @@ FactoryGirl.define do
 
         candidacy = contact.person.candidacy
 
-        candidacy.update(
+        candidacy.assign_attributes(
           contact: contact,
           inquiry: nil,
           experience: Candidacy.experiences.keys.sample,
@@ -42,10 +60,8 @@ FactoryGirl.define do
           zipcode: ZipCodes.db.keys.sample,
           cpr_first_aid: [true, false].sample
         )
-
-        candidacy.update(
-          progress: candidacy.current_progress
-        )
+        candidacy.progress = candidacy.current_progress
+        candidacy.save
       end
     end
   end
