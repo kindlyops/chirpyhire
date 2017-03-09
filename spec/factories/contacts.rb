@@ -37,7 +37,7 @@ FactoryGirl.define do
           skin_test: [true, false].sample,
           availability: Candidacy.availabilities.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
-          zipcode: ZipCodes.db.keys.sample,
+          zipcode: ZipCodes.db.select { |k, v| v[:state_code] == "GA" }.keys.sample,
           inquiry: :cpr_first_aid
         }
 
@@ -67,7 +67,7 @@ FactoryGirl.define do
           transportation: Candidacy.transportations.keys.sample,
           certification: Candidacy.certifications.keys.sample,
           skin_test: [true, false].sample,
-          zipcode: ZipCodes.db.keys.sample,
+          zipcode: ZipCodes.db.select { |k, v| v[:state_code] == "GA" }.keys.sample,
           cpr_first_aid: [true, false].sample
         )
         candidacy.progress = candidacy.current_progress

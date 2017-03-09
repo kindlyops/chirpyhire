@@ -105,7 +105,7 @@ class Seeder
     if category != 'Zipcode'
       answer.choice_map.invert[choice]
     else
-      ZipCodes.db.keys.sample
+      ZipCodes.db.select { |k, v| v[:state_code] == "GA" }.keys.sample
     end
   end
 
