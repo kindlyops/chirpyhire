@@ -1,21 +1,55 @@
 FactoryGirl.define do
   factory :contact do
-    person
     organization
+    person
 
-    trait :with_incomplete_candidacy do
-      after(:create) do |contact|
-        contact.person.candidacy.update(
-          contact: contact,
-          experience: Candidacy.experiences.keys.sample,
-          availability: Candidacy.availabilities.keys.sample,
-          skin_test: [true, false].sample,
-          zipcode: %w(30342 22902 30327 22903 90210).sample
-        )
+    transient do
+      phone_number nil
+    end
+
+    after(:create) do |contact, evaluator|
+      if evaluator.phone_number.present?
+        contact.person.update(phone_number: evaluator.phone_number)
       end
     end
 
-    trait :with_complete_candidacy do
+    trait :not_ready do
+      after(:create) do |contact|
+        candidacy = contact.person.candidacy
+
+        just_started = {
+          contact: contact,
+          experience: Candidacy.experiences.keys.sample,
+          inquiry: :skin_test
+        }
+
+        midway = {
+          contact: contact,
+          experience: Candidacy.experiences.keys.sample,
+          skin_test: [true, false].sample,
+          availability: Candidacy.availabilities.keys.sample,
+          inquiry: :transportation
+        }
+
+        almost_finished = {
+          contact: contact,
+          experience: Candidacy.experiences.keys.sample,
+          skin_test: [true, false].sample,
+          availability: Candidacy.availabilities.keys.sample,
+          transportation: Candidacy.transportations.keys.sample,
+          zipcode: ZipCodes.db.keys.sample,
+          inquiry: :cpr_first_aid
+        }
+
+        statuses = [just_started, midway, almost_finished]
+
+        candidacy.assign_attributes(statuses.sample)
+        candidacy.progress = candidacy.current_progress
+        candidacy.save
+      end
+    end
+
+    trait :candidate do
       after(:create) do |contact|
         contact.update(
           subscribed: [true, false].sample,
@@ -23,7 +57,9 @@ FactoryGirl.define do
           candidate: true
         )
 
-        contact.person.candidacy.update(
+        candidacy = contact.person.candidacy
+
+        candidacy.assign_attributes(
           contact: contact,
           inquiry: nil,
           experience: Candidacy.experiences.keys.sample,
@@ -31,9 +67,11 @@ FactoryGirl.define do
           transportation: Candidacy.transportations.keys.sample,
           certification: Candidacy.certifications.keys.sample,
           skin_test: [true, false].sample,
-          zipcode: %w(30342 22902 30327 22903 90210).sample,
+          zipcode: ZipCodes.db.keys.sample,
           cpr_first_aid: [true, false].sample
         )
+        candidacy.progress = candidacy.current_progress
+        candidacy.save
       end
     end
   end

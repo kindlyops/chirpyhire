@@ -6,12 +6,12 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.configure_rspec_metadata!
 
-  c.filter_sensitive_data('TWILIO_TEST_AUTH_TOKEN') do
-    ENV['TWILIO_TEST_AUTH_TOKEN']
+  c.filter_sensitive_data('TWILIO_AUTH_TOKEN') do
+    ENV['TWILIO_AUTH_TOKEN']
   end
 
-  c.filter_sensitive_data('TWILIO_TEST_ACCOUNT_SID') do
-    ENV['TWILIO_TEST_ACCOUNT_SID']
+  c.filter_sensitive_data('TWILIO_ACCOUNT_SID') do
+    ENV['TWILIO_ACCOUNT_SID']
   end
 
   c.filter_sensitive_data('ROLLBAR_ACCESS_TOKEN') do
@@ -22,16 +22,16 @@ VCR.configure do |c|
     ENV['SMTP_PASSWORD']
   end
 
-  c.filter_sensitive_data('DEV_PHONE') do
-    ENV['DEV_PHONE']
+  c.filter_sensitive_data('DEMO_PHONE') do
+    ENV['DEMO_PHONE']
   end
 
-  c.filter_sensitive_data('DEV_EMAIL') do
-    ENV['DEV_EMAIL']
+  c.filter_sensitive_data('DEMO_EMAIL') do
+    ENV['DEMO_EMAIL']
   end
 
-  c.filter_sensitive_data('TEST_ORG_PHONE') do
-    ENV['TEST_ORG_PHONE']
+  c.filter_sensitive_data('DEMO_ORGANIZATION_PHONE') do
+    ENV['DEMO_ORGANIZATION_PHONE']
   end
 
   c.filter_sensitive_data('STRIPE_SECRET_KEY') do

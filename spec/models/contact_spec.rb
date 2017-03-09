@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Contact do
   describe '#content' do
     context 'candidate' do
-      subject { create(:contact, :with_complete_candidacy) }
+      subject { create(:contact, :candidate) }
 
       context 'handle' do
         it 'includes the handle' do
