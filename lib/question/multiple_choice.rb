@@ -25,7 +25,7 @@ class Question::MultipleChoice < Question::Base
   private
 
   def choices_sentence
-    choices.keys.to_sentence(
+    choices.keys.map(&:upcase).to_sentence(
       last_word_connector: ' or ',
       two_words_connector: ' or '
     )

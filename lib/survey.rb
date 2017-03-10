@@ -6,7 +6,7 @@ class Survey
   end
 
   def ask
-    return if candidacy.certification?
+    return unless candidacy.skin_test.nil?
 
     candidacy.update!(inquiry: next_question.inquiry)
     send_message(next_question.body)

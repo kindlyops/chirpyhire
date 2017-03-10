@@ -46,7 +46,7 @@ RSpec.describe Survey do
 
     context 'last question' do
       before do
-        candidacy.update(inquiry: :certification)
+        candidacy.update(inquiry: nil, skin_test: true)
       end
 
       it 'does not change the inquiry' do
@@ -79,7 +79,7 @@ RSpec.describe Survey do
 
   describe '#complete' do
     before do
-      candidacy.update(inquiry: :certification)
+      candidacy.update(inquiry: :skin_test)
     end
 
     let(:thank_you) { Notification::ThankYou.new(contact) }
@@ -88,7 +88,7 @@ RSpec.describe Survey do
       allow(subject).to receive(:send_message).with(thank_you.body)
       expect {
         subject.complete
-      }.to change { candidacy.reload.inquiry }.from('certification').to(nil)
+      }.to change { candidacy.reload.inquiry }.from('skin_test').to(nil)
     end
 
     it 'sends the thank you message' do
