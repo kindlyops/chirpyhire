@@ -184,11 +184,13 @@ class Seeder
 
   def seed_account
     unless organization.accounts.present?
-      organization.accounts.create!(
+      account = organization.accounts.create!(
         password: ENV.fetch('DEMO_PASSWORD'),
+        name: ENV.fetch('DEMO_NAME'),
         email: ENV.fetch('DEMO_EMAIL'),
         super_admin: true
       )
+      organization.update(recruiter: account)
     end
 
     puts 'Created Account'
