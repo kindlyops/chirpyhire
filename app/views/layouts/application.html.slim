@@ -4,7 +4,7 @@ html
     = render partial: "layouts/head"
   body
     = render "components/navigation"
-    .container-fluid
+    div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
       .row
         main.col.application
           = render partial: "layouts/alerts"
