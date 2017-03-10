@@ -8,6 +8,6 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(name email avatar)
+    %i(name email avatar password current_password password_confirmation)
   end
 end
