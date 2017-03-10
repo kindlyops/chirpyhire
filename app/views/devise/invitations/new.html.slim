@@ -9,7 +9,7 @@
         small.text-muted Recruiting caregivers is better with company. Invite as many team members as you'd like at no additional charge.
       .form-group
         = f.label :email, class: "col-form-label"
-        = f.text_field :email, required: true, class: "form-control"
+        = f.email_field :email, required: true, class: "form-control"
       .form-group
         = button_tag type: "submit", role: "button", class: "btn btn-primary" do
           span Invite

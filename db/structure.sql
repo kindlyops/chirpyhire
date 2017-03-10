@@ -86,7 +86,11 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    name character varying
+    name character varying,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -1137,6 +1141,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170302203823'),
 ('20170302203927'),
 ('20170310141555'),
-('20170310144756');
+('20170310144756'),
+('20170310203734');
 
 
