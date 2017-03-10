@@ -1,6 +1,6 @@
 class Question::Certification < Question::MultipleChoice
   def question
-    'Are you currently licensed or certified?'
+    'Are you certified?'
   end
 
   def choices
@@ -8,7 +8,7 @@ class Question::Certification < Question::MultipleChoice
       a: 'Yes, PCA',
       b: 'Yes, CNA',
       c: 'Yes, Other (MA, LPN, RN, etc.)',
-      d: 'No Certification'
+      d: 'Not Yet, but I want to be!'
     }
   end
 

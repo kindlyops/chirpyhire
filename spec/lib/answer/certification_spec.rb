@@ -65,7 +65,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'no' do
-      %w(no nope N nah).push('No Certification', 'D just certificate').each do |body|
+      %w(no nope N nah).push('Not Yet', 'D just certificate').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do
