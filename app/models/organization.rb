@@ -3,6 +3,7 @@ class Organization < ApplicationRecord
   has_many :accounts
   has_many :contacts
   has_many :people, through: :contacts, class_name: 'Person'
+  belongs_to :recruiter, class_name: 'Account'
   has_one :subscription
   has_one :ideal_candidate
   has_one :location

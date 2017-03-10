@@ -1,13 +1,18 @@
 class Notification::Welcome < Notification::Base
   def body
     <<~BODY
-      Hello, this is #{organization.name}.
-      We are hiring for multiple job openings!
-      We are so glad you're interested in immediate
-      work opportunities in the #{organization.city} area.
-
-      We have a few questions to ask you via text message.
-      We will give you a call to confirm at our earliest opportunity!
+      Hey there! #{sender_notice}
+      Want to join a team of "Chirpy" Caregivers? Well, let's get started. \
+Please tell us more about yourself.
     BODY
+  end
+
+  def sender_notice
+    return recruiter_notice if recruiter.first_name.present?
+    "This is #{organization.name}."
+  end
+
+  def recruiter_notice
+    "This is #{recruiter.first_name} with #{organization.name}."
   end
 end
