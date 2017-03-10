@@ -1,6 +1,6 @@
 class Question::Certification < Question::MultipleChoice
   def question
-    <<~QUESTION
+    <<~QUESTION.strip
       #{welcome}
 
       Are you certified?

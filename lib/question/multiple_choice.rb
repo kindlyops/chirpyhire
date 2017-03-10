@@ -4,6 +4,7 @@ class Question::MultipleChoice < Question::Base
   def body
     <<~BODY.strip
       #{question}
+
       #{choices_body}
       #{postlude}
     BODY
