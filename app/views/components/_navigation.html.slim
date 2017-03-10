@@ -24,6 +24,10 @@ nav.navbar.navbar-light.top.fixed-top
         = link_to new_account_invitation_path, id: 'invite-admin', class: 'dropdown-item' do
             i.fa.fa-paper-plane
             span.ml-2 Invite an Admin
+        hr
+        = link_to settings_profile_path, class: 'dropdown-item' do
+          i.fa.fa-gear
+          span.ml-2 Settings
         - if impersonating?
           = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}", class: 'dropdown-item' do
               i.fa.fa-step-backward

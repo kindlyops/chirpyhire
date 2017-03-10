@@ -13,6 +13,20 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
+  namespace :settings do
+    resource :profile, only: [:show, :update]
+    resource :account, only: [:show, :update]
+  end
+
+  namespace :organization do
+    resources :people, only: [:index]
+
+    namespace :settings do
+      resource :profile, only: [:show, :update]
+      resource :billing, only: [:show, :update]
+    end
+  end
+
   resources :subscriptions
 
   post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new

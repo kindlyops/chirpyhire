@@ -1,12 +1,13 @@
 class ApplicationPolicy
-  attr_reader :organization, :record
+  attr_reader :organization, :account, :record
 
-  def initialize(organization, record)
-    unless organization.present?
+  def initialize(account, record)
+    unless account.present?
       raise Pundit::NotAuthorizedError, 'must be logged in'
     end
 
-    @organization = organization
+    @account = account
+    @organization = account.organization
     @record = record
   end
 
