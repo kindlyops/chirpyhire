@@ -1,10 +1,6 @@
 class Question::Experience < Question::MultipleChoice
   def question
-    <<~QUESTION
-      #{welcome}
-
-      How many years of private duty or home-care experience do you have?
-    QUESTION
+    'How many years of private duty or home-care experience do you have?'
   end
 
   def choices
@@ -18,10 +14,6 @@ class Question::Experience < Question::MultipleChoice
 
   def inquiry
     :experience
-  end
-
-  def welcome
-    Notification::Welcome.new(contact).body
   end
 
   def answer

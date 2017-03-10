@@ -22,7 +22,7 @@ class Seeder
   def not_ready_contacts
     seed_demo_contact
     contacts = FactoryGirl.create_list(
-      :contact, 300, :not_ready,
+      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :not_ready,
       organization: organization
     )
     contacts.each(&method(:seed_messages))
@@ -42,7 +42,7 @@ class Seeder
 
   def candidate_contacts
     contacts = FactoryGirl.create_list(
-      :contact, 300, :candidate,
+      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :candidate,
       organization: organization
     )
     contacts.each(&method(:seed_messages))

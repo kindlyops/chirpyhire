@@ -5,7 +5,7 @@ class Registrar
 
   def register
     Organization.transaction do
-      # Seed example candidate
+      organization.update(recruiter: account)
       create_ideal_candidate
       create_subscription
       PhoneNumberProvisionerJob.perform_later(organization)

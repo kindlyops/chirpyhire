@@ -44,7 +44,7 @@ RSpec.describe Surveyor do
     describe 'completed survey' do
       let(:message) { create(:message, body: 'a') }
       before do
-        candidacy.update(inquiry: :certification)
+        candidacy.update(inquiry: :skin_test)
       end
 
       it 'completes the survey' do

@@ -1,6 +1,10 @@
 class Question::Certification < Question::MultipleChoice
   def question
-    'Are you currently licensed or certified?'
+    <<~QUESTION
+      #{welcome}
+
+      Are you certified?
+    QUESTION
   end
 
   def choices
@@ -8,7 +12,7 @@ class Question::Certification < Question::MultipleChoice
       a: 'Yes, PCA',
       b: 'Yes, CNA',
       c: 'Yes, Other (MA, LPN, RN, etc.)',
-      d: 'No Certification'
+      d: 'Not Yet, but I want to be!'
     }
   end
 
@@ -18,5 +22,9 @@ class Question::Certification < Question::MultipleChoice
 
   def answer
     Answer::Certification.new(self)
+  end
+
+  def welcome
+    Notification::Welcome.new(contact).body
   end
 end

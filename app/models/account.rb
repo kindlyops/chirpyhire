@@ -11,6 +11,11 @@ class Account < ApplicationRecord
     where(invitation_token: nil)
   end
 
+  def first_name
+    return unless name.present?
+    name.split(' ', 2)
+  end
+
   def send_reset_password_instructions
     super if invitation_token.nil?
   end

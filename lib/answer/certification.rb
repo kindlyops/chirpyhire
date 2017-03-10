@@ -4,7 +4,7 @@ class Answer::Certification < Answer::MultipleChoice
       'Yes, PCA' => :pca,
       'Yes, CNA' => :cna,
       'Yes, Other (MA, LPN, RN, etc.)' => :other_certification,
-      'No Certification' => :no_certification
+      'Not Yet, but I want to be!' => :no_certification
     }
   end
 
@@ -14,6 +14,10 @@ class Answer::Certification < Answer::MultipleChoice
 
   def variants
     "#{positive_variants.join('|')}|#{no_variants.join('|')}"
+  end
+
+  def no_variants
+    super.push('not yet')
   end
 
   def answer_regexp
