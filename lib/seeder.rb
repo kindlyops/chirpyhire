@@ -54,16 +54,15 @@ class Seeder
   end
 
   def seed_questions(contact)
-    %w(Experience SkinTest Availability
-       Transportation Zipcode CprFirstAid Certification).each do |category|
-      result = seed_question_and_answer(contact, category)
+    Survey.new(contact.person.candidacy).questions.each do |category, question|
+      result = seed_question_and_answer(contact, category, question)
       break unless result.present?
     end
   end
 
-  def seed_question_and_answer(contact, category)
+  def seed_question_and_answer(contact, category, question)
     person = contact.person
-    seed_question(person, "Question::#{category}".constantize.new(contact))
+    seed_question(person, question)
     seed_answer(person, category)
   end
 
@@ -105,17 +104,17 @@ class Seeder
   end
 
   def seed_answer(person, category)
-    choice = person.candidacy.send(category.underscore.to_sym)
+    choice = person.candidacy.send(category.to_sym)
     return if choice.nil?
     choice = choice.to_sym if choice.respond_to?(:to_sym)
-    answer = "Answer::#{category}".constantize.new({})
+    answer = "Answer::#{category.camelcase}".constantize.new({})
 
     body = answer_body(answer, choice, category)
     create_answer(person, body)
   end
 
   def answer_body(answer, choice, category)
-    if category != 'Zipcode'
+    if category != 'zipcode'
       answer.choice_map.invert[choice]
     else
       %w(30002 30030 30032 30033 30303 30305 30306 30307 30308 30309 30310

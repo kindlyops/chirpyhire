@@ -28,6 +28,18 @@ class Survey
 
   delegate :answer, to: :current_question
 
+  def questions
+    {
+      experience: experience,
+      skin_test: skin_test,
+      availability: availability,
+      transportation: transportation,
+      zipcode: zipcode,
+      cpr_first_aid: cpr_first_aid,
+      certification: certification
+    }.with_indifferent_access
+  end
+
   private
 
   def last_question?
@@ -55,18 +67,6 @@ class Survey
       transportation: zipcode,
       zipcode: cpr_first_aid,
       cpr_first_aid: skin_test
-    }.with_indifferent_access
-  end
-
-  def questions
-    {
-      experience: experience,
-      skin_test: skin_test,
-      availability: availability,
-      transportation: transportation,
-      zipcode: zipcode,
-      cpr_first_aid: cpr_first_aid,
-      certification: certification
     }.with_indifferent_access
   end
 
