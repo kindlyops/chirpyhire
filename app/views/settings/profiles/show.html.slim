@@ -1,12 +1,6 @@
 .settings
   .row.profile
-    .col-3
-      .card
-        .card-header Personal Settings
-        ul.list-group.list-group-flush
-          li.list-group-item.list-group-item-action Profile
-          li.list-group-item.list-group-item-action Password
-          li.list-group-item.list-group-item-action Organization
+    = render "settings/sidebar"
     .col-9
       .card
         h3.card-header Profile

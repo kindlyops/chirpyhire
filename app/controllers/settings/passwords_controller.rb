@@ -1,0 +1,28 @@
+class Settings::PasswordsController < RegistrationsController
+  prepend_before_action :set_minimum_password_length, only: :show
+
+  def show
+    self.resource = authorize(current_account)
+  end
+
+  def update
+    self.resource = authorize(current_account)
+
+    resource_updated = update_resource(resource, account_update_params)
+
+    if resource_updated
+      bypass_sign_in resource, scope: resource_name
+      redirect_to settings_password_path, notice: 'Password updated!'
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      render :show
+    end
+  end
+
+  private
+
+  def devise_mapping
+    Devise.mappings[:account]
+  end
+end
