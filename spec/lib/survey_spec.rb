@@ -7,38 +7,38 @@ RSpec.describe Survey do
 
   describe '#ask' do
     context 'first question' do
-      let(:experience) { Question::Experience.new(contact) }
+      let(:certification) { Question::Certification.new(contact) }
 
-      it 'sets the inquiry to experience' do
-        allow(subject).to receive(:send_message).with(experience.body)
+      it 'sets the inquiry to certification' do
+        allow(subject).to receive(:send_message).with(certification.body)
         expect {
           subject.ask
-        }.to change { candidacy.reload.inquiry }.from(nil).to('experience')
+        }.to change { candidacy.reload.inquiry }.from(nil).to('certification')
       end
 
-      it 'asks the experience question' do
-        expect(subject).to receive(:send_message).with(experience.body)
+      it 'asks the certification question' do
+        expect(subject).to receive(:send_message).with(certification.body)
 
         subject.ask
       end
     end
 
     context 'in the middle of the survey' do
-      let(:skin_test) { Question::SkinTest.new(contact) }
+      let(:transportation) { Question::Transportation.new(contact) }
 
       before do
         candidacy.update(inquiry: :experience)
       end
 
-      it 'sets the inquiry to skin_test' do
-        allow(subject).to receive(:send_message).with(skin_test.body)
+      it 'sets the inquiry to transportation' do
+        allow(subject).to receive(:send_message).with(transportation.body)
         expect {
           subject.ask
-        }.to change { candidacy.reload.inquiry }.from('experience').to('skin_test')
+        }.to change { candidacy.reload.inquiry }.from('experience').to('transportation')
       end
 
-      it 'asks the skin_test question' do
-        expect(subject).to receive(:send_message).with(skin_test.body)
+      it 'asks the transportation question' do
+        expect(subject).to receive(:send_message).with(transportation.body)
 
         subject.ask
       end
@@ -101,7 +101,7 @@ RSpec.describe Survey do
   describe '#complete?' do
     context 'last question' do
       before do
-        candidacy.update(inquiry: :certification)
+        candidacy.update(inquiry: :skin_test)
       end
 
       context 'invalid answer' do

@@ -8,7 +8,7 @@ class Notification::Welcome < Notification::Base
   end
 
   def sender_notice
-    return recruiter_notice if recruiter.first_name.present?
+    return recruiter_notice if recruiter && recruiter.first_name
     "This is #{organization.name}."
   end
 
