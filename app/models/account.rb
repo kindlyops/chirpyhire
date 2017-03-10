@@ -12,7 +12,7 @@ class Account < ApplicationRecord
   end
 
   def first_name
-    return '' unless name.present?
+    return unless name.present?
     name.split(' ', 2)
   end
 
