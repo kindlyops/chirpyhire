@@ -30,13 +30,13 @@ class Survey
 
   def questions
     {
-      experience: experience,
-      skin_test: skin_test,
+      certification: certification,
       availability: availability,
+      experience: experience,
       transportation: transportation,
       zipcode: zipcode,
       cpr_first_aid: cpr_first_aid,
-      certification: certification
+      skin_test: skin_test
     }.with_indifferent_access
   end
 

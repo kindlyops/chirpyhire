@@ -19,15 +19,15 @@ FactoryGirl.define do
 
         just_started = {
           contact: contact,
-          experience: Candidacy.experiences.keys.sample,
-          inquiry: :skin_test
+          certification: Candidacy.certifications.keys.sample,
+          inquiry: :availability
         }
 
         midway = {
           contact: contact,
-          experience: Candidacy.experiences.keys.sample,
-          skin_test: [true, false].sample,
+          certification: Candidacy.certifications.keys.sample,
           availability: Candidacy.availabilities.keys.sample,
+          experience: Candidacy.experiences.keys.sample,
           inquiry: :transportation
         }
 
@@ -37,12 +37,13 @@ FactoryGirl.define do
 
         almost_finished = {
           contact: contact,
-          experience: Candidacy.experiences.keys.sample,
-          skin_test: [true, false].sample,
+          certification: Candidacy.certifications.keys.sample,
           availability: Candidacy.availabilities.keys.sample,
+          experience: Candidacy.experiences.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
           zipcode: zipcode,
-          inquiry: :cpr_first_aid
+          cpr_first_aid: [true, false].sample,
+          inquiry: :skin_test
         }
 
         statuses = [just_started, midway, almost_finished]
