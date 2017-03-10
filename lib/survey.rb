@@ -1,5 +1,5 @@
 class Survey
-  LAST_QUESTION = :certification
+  LAST_QUESTION = :skin_test
 
   def initialize(candidacy)
     @candidacy = candidacy
@@ -48,13 +48,13 @@ class Survey
 
   def question_after
     {
-      nil => experience,
-      experience: skin_test,
-      skin_test: availability,
-      availability: transportation,
+      nil => certification,
+      certification: availability,
+      availability: experience,
+      experience: transportation,
       transportation: zipcode,
       zipcode: cpr_first_aid,
-      cpr_first_aid: certification
+      cpr_first_aid: skin_test
     }.with_indifferent_access
   end
 

@@ -1,9 +1,9 @@
 class Notification::Welcome < Notification::Base
   def body
-    <<~BODY
+    <<~BODY.strip
       Hey there! #{sender_notice}
-      Want to join a team of "Chirpy" Caregivers? Well, let's get started. \
-Please tell us more about yourself.
+      Want to join a team of "Chirpy" Caregivers? Well, let's get started.
+      Please tell us more about yourself.
     BODY
   end
 
