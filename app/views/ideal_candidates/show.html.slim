@@ -94,7 +94,7 @@
     .card-block
       p.card-text
         small.text-muted Location. Location. Location.
-      p.card-text Share zip codes your agency operates in and we'll mark caregivers from those zip codes as ideal.
+      p.card-text Share zip codes your organization operates in and we'll mark caregivers from those zip codes as ideal.
       = form_for @candidate, url: candidate_path do |f|
         #zipcodes
           = f.fields_for :zipcodes do |zipcode|

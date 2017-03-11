@@ -360,7 +360,11 @@ CREATE TABLE organizations (
     stripe_customer_id character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    recruiter_id integer
+    recruiter_id integer,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -1142,6 +1146,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170302203927'),
 ('20170310141555'),
 ('20170310144756'),
-('20170310203734');
+('20170310203734'),
+('20170310234243');
 
 
