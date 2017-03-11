@@ -19,9 +19,8 @@ Rails.application.routes.draw do
   end
 
   namespace :organizations do
-    resources :people, only: [:index]
-
     namespace :settings do
+      resources :people, only: [:index]
       resource :profile, only: [:show, :update]
       resource :billing, only: [:show]
     end
@@ -37,6 +36,9 @@ Rails.application.routes.draw do
   mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
+  devise_scope :accounts do
+    get 'organizations/settings/people/invitation/new', to: 'invitations#new'
+  end
   resources :accounts, only: [] do
     post :stop_impersonating, on: :collection
   end

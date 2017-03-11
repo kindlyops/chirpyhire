@@ -16,7 +16,7 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def after_invite_path_for(*)
-    candidate_path
+    organizations_settings_people_invitation_new_path
   end
 
   def add_account_params
@@ -24,5 +24,9 @@ class InvitationsController < Devise::InvitationsController
       :accept_invitation,
       keys: [:agreed_to_terms, :email]
     )
+  end
+
+  def devise_mapping
+    Devise.mappings[:account]
   end
 end
