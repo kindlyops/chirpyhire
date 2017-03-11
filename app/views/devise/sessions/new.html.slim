@@ -1,18 +1,27 @@
-.card.mt-3
-  h3.card-header
-    | Sign in
+.card.mt-5
   .card-block
+    h3.text-center.card-title Sign in to your team
+    p.text-center.card-subtitle Enter your email and password.
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
       .form-group
-        = f.label :email, class: "col-form-label"
+        strong = f.label :email, class: "col-form-label"
         = f.email_field :email, autofocus: true, class: "form-control"
       .form-group
-        = f.label :password, class: "col-form-label"
+        strong = f.label :password, class: "col-form-label"
         = f.password_field :password, autocomplete: "off", class: "form-control"
       - if devise_mapping.rememberable?
         .form-group
-          = f.label :remember_me, "Remember Me", class: "remember-me col-form-label"
+          strong = f.label :remember_me, "Remember Me", class: "remember-me col-form-label"
           = f.check_box :remember_me, class: "ml-2"
       .form-group
-        = f.submit "Sign in", class: "btn btn-primary", role: 'button'
-    = render "devise/shared/links"
+        = button_tag class: "btn btn-primary btn-lg btn-block", role: 'button', type: 'submit' do
+          span Continue
+          i.fa.fa-arrow-right.ml-2
+    .text-center.mt-4.mb-3
+      span Don't remember your password?
+      '
+      strong = link_to "Reset your password", new_password_path(resource_name)
+.text-center.mt-4
+  span Need to get your agency started on ChirpyHire?
+  '
+  strong = link_to "Create a new team", new_registration_path(resource_name)
