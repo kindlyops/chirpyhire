@@ -25,6 +25,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         click_button 'Sign up'
         expect(page).to have_text('Ideal Candidate')
         expect(Account.last.email).to eq(email)
+        expect(Account.last.name).to eq(name)
         expect(Organization.last.name).to eq(organization_name)
       end
     end
