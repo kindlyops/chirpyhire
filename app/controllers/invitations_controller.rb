@@ -1,5 +1,6 @@
 class InvitationsController < Devise::InvitationsController
-  before_action :add_account_params, only: :update
+  before_action :add_accept_params, only: :update
+  before_action :add_invite_params, only: :create
 
   def edit
     set_minimum_password_length
@@ -19,10 +20,17 @@ class InvitationsController < Devise::InvitationsController
     organizations_settings_people_invitation_new_path
   end
 
-  def add_account_params
+  def add_accept_params
     devise_parameter_sanitizer.permit(
       :accept_invitation,
-      keys: [:agreed_to_terms, :email]
+      keys: [:agreed_to_terms, :email, :name]
+    )
+  end
+
+  def add_invite_params
+    devise_parameter_sanitizer.permit(
+      :invite,
+      keys: [:email, :name]
     )
   end
 

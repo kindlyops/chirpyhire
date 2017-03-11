@@ -3,18 +3,15 @@
     = render "organizations/settings/sidebar"
     .col-9
       .card
-        h3.card-header People
         .card-block
+          h3.card-title.text-center.mb-4 People
+          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-right' do
+            span.ml-2 Invite team member
           ul.list-unstyled
-          - @people.each do |person|
-            li.media
-              = image_tag person.avatar.url(:thumb), class: 'd-flex mr-3 profile-picture'
-              .media-body
-                h5.mt-0.mb-1 = person.name
-                = person.email
-      hr
-      ul.nav.justify-content-end
-        li.nav-item = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary nav-link' do
-          i.fa.fa-paper-plane
-          span.ml-2 Invite member
+            - @people.each do |person|
+              li.media
+                = image_tag person.avatar.url(:thumb), class: 'd-flex mr-3 profile-picture'
+                .media-body
+                  h5.mt-0.mb-1 = person.name
+                  = person.email
 

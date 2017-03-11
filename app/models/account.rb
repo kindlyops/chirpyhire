@@ -12,6 +12,8 @@ class Account < ApplicationRecord
 
   validates :email, uniqueness: true
 
+  delegate :name, to: :organization, prefix: true
+
   def self.active
     where(invitation_token: nil)
   end

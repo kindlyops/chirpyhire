@@ -1,12 +1,11 @@
-.card.mt-3
-  h3.card-header
-    | Forgot your password?
+.card.mt-4
   .card-block
+    h3.text-center.card-title Reset your password
+    p.card-subtitle Enter your email and we will send you a password reset link.
     = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
       .form-group
-        = f.label :email, class: "col-form-label"
+        = f.label :email, class: "col-form-label sr-only"
         br
-        = f.email_field :email, autofocus: true, class: "form-control"
+        = f.email_field :email, autofocus: true, class: "form-control", placeholder: 'Enter your email address'
       .form-group
-        = f.submit "Reset Password", class: "btn btn-primary", role: 'button'
-    = render "devise/shared/links"
+        = f.submit "Send password reset email", class: "btn btn-primary btn-block btn-lg", role: 'button'

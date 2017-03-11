@@ -5,12 +5,13 @@
     .col-9
       .card
         = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
-          h3.card-header
-            i.fa.fa-users.black.mr-2
-            span.ml-1 Invite the Team
           .card-block
-            p.card-text
-              small.text-muted Recruiting caregivers is better with company. Invite as many team members as you'd like at no additional charge.
+            h3.card-title.text-center Invite team member
+            p.card-subtitle.text-center.mb-1 Recruiting caregivers is better with company.
+            p.card-subtitle.text-center.mb-3 Invite as many team members as you'd like at no additional charge.
+            .form-group
+              strong = f.label :name, class: "col-form-label"
+              = f.text_field :name, required: true, class: "form-control"
             .form-group
               strong = f.label :email, class: "col-form-label"
               = f.email_field :email, required: true, class: "form-control"
@@ -18,5 +19,3 @@
               = button_tag type: "submit", role: "button", class: "btn btn-primary" do
                 i.fa.fa-paper-plane.white.mr-2
                 span Invite
-              - if current_organization.created_at > 60.seconds.ago
-                = link_to "Skip to Ideal Candidate", candidate_path, class: "action btn btn-default"
