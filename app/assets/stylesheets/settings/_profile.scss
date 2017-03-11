@@ -1,0 +1,21 @@
+.settings .profile {
+  .profile-picture img {
+    width: 200px;
+  }
+
+  .list-group-item.active {
+    color: inherit;
+    background-color: inherit;
+    border-color: transparent;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 3px;
+      content: "";
+      background-color: $brand-primary;
+    }
+  }
+}

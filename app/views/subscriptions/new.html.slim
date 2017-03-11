@@ -2,7 +2,8 @@
   = form_for(@subscription, method: :post, url: subscriptions_path, html: { id: "new_subscription"}) do |f|
     h3.card-header Subscription
     .card-block
-      - render partial: "common/validation_errors", locals: { model: @subscription}
+      = content_for :validation_errors do
+        = render partial: "common/validation_errors", locals: { model: @subscription }
       = f.hidden_field :plan_id
       p Select a limit that meets your needs. Upgrade or downgrade at any time.
       p
