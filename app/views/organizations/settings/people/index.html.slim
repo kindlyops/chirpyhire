@@ -6,8 +6,7 @@
         .card-block
           h3.card-title.text-center.mb-4 People
           = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-right' do
-                    i.fa.fa-paper-plane
-                    span.ml-2 Invite member
+            span.ml-2 Invite team member
           ul.list-unstyled
             - @people.each do |person|
               li.media
