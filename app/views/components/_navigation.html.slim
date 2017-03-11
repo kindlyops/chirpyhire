@@ -14,6 +14,11 @@ nav.navbar.navbar-light.top.fixed-top
     - if current_organization.phone_number.present?
       li.nav-item.ml-auto
         span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
+    - else
+      li.nav-item.ml-auto
+        span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+          | Your phone number
+          i.fa.fa-mobile.ml-2.white
     li.nav-link.dropdown
       button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
         i.fa.fa-user-circle-o
@@ -33,3 +38,4 @@ nav.navbar.navbar-light.top.fixed-top
           = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
             i.fa.fa-sign-out
             span.ml-2 Sign out
+

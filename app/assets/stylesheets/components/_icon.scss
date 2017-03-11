@@ -20,10 +20,6 @@
 
 .fa-sign-out, .fa-users, .fa-map-marker {
   color: $blue;
-
-  &.black {
-    color: $black;
-  }
 }
 
 .fa-battery-half, .fa-battery-quarter {
@@ -33,8 +29,14 @@
 .fa-heart-o, .fa-heart, .fa-heartbeat, .fa-medkit, .fa-battery-empty,
 .fa-tachometer {
   color: $red;
+}
 
+.fa {
   &.white {
     color: $white;
+  }
+
+  &.black {
+    color: $black;
   }
 }
