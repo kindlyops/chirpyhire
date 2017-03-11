@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.feature 'Account Management', type: :feature, js: true do
   feature 'sign up' do
     let!(:plan) { create(:plan) }
-    let(:name) { 'Orn, Beer and Schaden' }
+    let(:organization_name) { 'Orn, Beer and Schaden' }
+    let(:name) { Faker::Name.name }
     let(:email) { Faker::Internet.email }
     context 'with valid credentials' do
       let(:password) { Faker::Internet.password }
@@ -15,15 +16,16 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       scenario 'User progresses to ideal candidate screen' do
         visit '/accounts/sign_up'
 
-        fill_in 'Agency Name', with: name
-        fill_in 'Agency Location', with: '1000 E. Market St. 22902'
+        fill_in 'Organization name', with: organization_name
+        fill_in 'Organization location', with: '1000 E. Market St. 22902'
         fill_in 'Email', with: email
+        fill_in 'Name', with: name
         fill_in 'Password', with: password
 
         click_button 'Sign up'
         expect(page).to have_text('Ideal Candidate')
         expect(Account.last.email).to eq(email)
-        expect(Organization.last.name).to eq(name)
+        expect(Organization.last.name).to eq(organization_name)
       end
     end
   end
