@@ -4,7 +4,7 @@
   .card.profile.justify-content-center
     = inline_svg 'caregiver_bird.svg', class: 'mx-auto'
     a.sr-only href="http://www.freepik.com/free-photos-vectors/bird">Bird vector created by Freepik
-  .card.mb-4.availability
+  .card.mb-4.profile-attributes
     .card-block
       h4.card-title
         i.fa.fa-calendar-check-o.mr-2
@@ -24,7 +24,6 @@
         span.mr-3.btn.btn-outline-secondary
           | No Availability
           i.fa.fa-hourglass-o.ml-2
-  .card.mb-4.transportation
     .card-block
       h4.card-title
         i.fa.fa-road.mr-2
@@ -41,7 +40,6 @@
         span.mr-3.btn.btn-outline-secondary
           | No Transportation
           i.fa.fa-thumbs-o-up.ml-2
-  .card.mb-4.experience
     .card-block
       h4.card-title
         i.fa.fa-level-up.mr-3.ml-1
@@ -61,7 +59,6 @@
         span.mr-3.btn.btn-outline-secondary
           | No Experience
           i.fa.fa-battery-empty.ml-2
-  .card.mb-4.qualifications
     .card-block
       h4.card-title
         i.fa.fa-graduation-cap.mr-2
@@ -87,21 +84,21 @@
         span.mr-3.btn.btn-secondary
           | Skin / TB Test
           i.fa.fa-newspaper-o.ml-2
-  .card.mb-4.location
     .card-block
-      h4.card-title
-        i.fa.fa-map-marker.mr-3.ml-1
-        | Location
-      p.card-text
-        small.text-muted Location. Location. Location.
-      p.card-text Share zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
       = form_for @candidate, url: candidate_path do |f|
+        h4.card-title
+          i.fa.fa-map-marker.mr-3.ml-1
+          | Location
+        p.card-text
+          small.text-muted Location. Location. Location.
+        p.card-text Add the zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
         #zipcodes
           = f.fields_for :zipcodes do |zipcode|
             = render 'zipcode_fields', f: zipcode
         .form-group.mt-2
-          = f.submit "Save locations", class: "btn btn-primary mr-2", role: "button"
           = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-secondary"
+        hr
+          = f.submit "Update ideal candidate", class: "btn btn-primary mr-2", role: "button"
   hr
   .card.mb-4.mt-4.suggestions
     .card-block
