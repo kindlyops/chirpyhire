@@ -1,3 +1,6 @@
 script src="https://cdn.smooch.io/smooch.min.js"
 javascript:
-  Smooch.init({appToken: "#{ENV.fetch('SMOOCH_TOKEN')}"});
+  var holder = $('#sk-holder');
+  if(!holder.length) {
+    Smooch.init({appToken: "#{ENV.fetch('SMOOCH_TOKEN')}"});
+  }
