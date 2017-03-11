@@ -18,12 +18,12 @@ Rails.application.routes.draw do
     resource :password, only: [:show, :update]
   end
 
-  namespace :organization do
+  namespace :organizations do
     resources :people, only: [:index]
 
     namespace :settings do
       resource :profile, only: [:show, :update]
-      resource :billing, only: [:show, :update]
+      resource :billing, only: [:show]
     end
   end
 

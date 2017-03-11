@@ -25,7 +25,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def account_attributes
-    %i(email password agreed_to_terms)
+    %i(email password agreed_to_terms name)
   end
 
   def organization_attributes_keys
