@@ -1,104 +1,110 @@
 .ideal-candidate
   .card.cover
-    h3 Ideal Candidate
   .card.profile.justify-content-center
     = inline_svg 'caregiver_bird.svg', class: 'mx-auto'
     a.sr-only href="http://www.freepik.com/free-photos-vectors/bird">Bird vector created by Freepik
   .card.mb-4.profile-attributes
-    .card-block
-      h4.card-title
-        i.fa.fa-calendar-check-o.mr-2
-        | Availability
-      p.card-text
-        small.text-muted I just met you. And this is crazy. I'm available. So call me maybe.
-      div
-        span.mr-3.btn.btn-secondary
-          | Live-In
-          i.fa.fa-home.ml-2
-        span.mr-3.btn.btn-secondary
-          | Hourly
-          i.fa.fa-clock-o.ml-2
-        span.mr-3.btn.btn-secondary
-          | Both
-          i.fa.fa-hourglass-half.ml-2
-        span.mr-3.btn.btn-outline-secondary
-          | No Availability
-          i.fa.fa-hourglass-o.ml-2
-    .card-block
-      h4.card-title
-        i.fa.fa-road.mr-2
-        | Transportation
-      p.card-text
-        small.text-muted Wherever you go, go with all your heart.
-      div
-        span.mr-3.btn.btn-secondary
-          | Public
-          i.fa.fa-bus.ml-2
-        span.mr-3.btn.btn-secondary
-          | Personal
-          i.fa.fa-car.ml-2
-        span.mr-3.btn.btn-outline-secondary
-          | No Transportation
-          i.fa.fa-thumbs-o-up.ml-2
-    .card-block
-      h4.card-title
-        i.fa.fa-level-up.mr-3.ml-1
-        | Experience
-      p.card-text
-        small.text-muted No person steps in the same river twice, for it's not the same river and they are not the same person.
-      div
-        span.mr-3.btn.btn-secondary
-          | 0 - 1 years
-          i.fa.fa-battery-quarter.ml-2
-        span.mr-3.btn.btn-secondary
-          | 1 - 5 years
-          i.fa.fa-battery-half.ml-2
-        span.mr-3.btn.btn-secondary
-          | 6+ years
-          i.fa.fa-battery-full.ml-2
-        span.mr-3.btn.btn-outline-secondary
-          | No Experience
-          i.fa.fa-battery-empty.ml-2
-    .card-block
-      h4.card-title
-        i.fa.fa-graduation-cap.mr-2
-        | Qualifications
-      p.card-text
-        small.text-muted Intelligence plus character - that is the goal of true education.
-      div
-        span.mr-3.btn.btn-secondary
-          | PCA
-          i.fa.fa-heart-o.ml-2
-        span.mr-3.btn.btn-secondary
-          | CNA
-          i.fa.fa-heart.ml-2
-        span.mr-3.btn.btn-secondary
-          | RN, LPN, Other
-          i.fa.fa-heartbeat.ml-2
-        span.mr-3.btn.btn-outline-secondary
-          | No Certification
-          i.fa.fa-graduation-cap.ml-2
-        span.mr-3.btn.btn-secondary
-          | CPR / 1st Aid
-          i.fa.fa-medkit.ml-2
-        span.mr-3.btn.btn-secondary
-          | Skin / TB Test
-          i.fa.fa-newspaper-o.ml-2
-    .card-block
-      = form_for @candidate, url: candidate_path do |f|
-        h4.card-title
-          i.fa.fa-map-marker.mr-3.ml-1
-          | Location
-        p.card-text
-          small.text-muted Location. Location. Location.
-        p.card-text Add the zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
-        #zipcodes
-          = f.fields_for :zipcodes do |zipcode|
-            = render 'zipcode_fields', f: zipcode
-        .form-group.mt-2
-          = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-secondary"
-        hr
-          = f.submit "Update ideal candidate", class: "btn btn-primary mr-2", role: "button"
+    ul.list-group.list-group-flush
+      li.list-group-item
+        .card-block
+          h3.card-title.text-center Ideal Candidate
+          p.card-subtitle.text-center.mb-2 If you could clone your best caregivers, what traits would they have?
+          p.card-subtitle.text-center View the caregiver traits ChirpyHire will source from your candidates automatically.
+      li.list-group-item
+        .card-block
+          h4.card-title
+            i.fa.fa-calendar-check-o.mr-2
+            | Availability
+          p.card-text
+            small.text-muted I just met you. And this is crazy. I'm available. So call me maybe.
+          div
+            span.mr-3.btn.btn-secondary
+              | Live-In
+              i.fa.fa-home.ml-2
+            span.mr-3.btn.btn-secondary
+              | Hourly
+              i.fa.fa-clock-o.ml-2
+            span.mr-3.btn.btn-secondary
+              | Both
+              i.fa.fa-hourglass-half.ml-2
+            span.mr-3.btn.btn-outline-secondary
+              | No Availability
+              i.fa.fa-hourglass-o.ml-2
+        .card-block
+          h4.card-title
+            i.fa.fa-road.mr-2
+            | Transportation
+          p.card-text
+            small.text-muted Wherever you go, go with all your heart.
+          div
+            span.mr-3.btn.btn-secondary
+              | Public
+              i.fa.fa-bus.ml-2
+            span.mr-3.btn.btn-secondary
+              | Personal
+              i.fa.fa-car.ml-2
+            span.mr-3.btn.btn-outline-secondary
+              | No Transportation
+              i.fa.fa-thumbs-o-up.ml-2
+        .card-block
+          h4.card-title
+            i.fa.fa-level-up.mr-3.ml-1
+            | Experience
+          p.card-text
+            small.text-muted No person steps in the same river twice, for it's not the same river and they are not the same person.
+          div
+            span.mr-3.btn.btn-secondary
+              | 0 - 1 years
+              i.fa.fa-battery-quarter.ml-2
+            span.mr-3.btn.btn-secondary
+              | 1 - 5 years
+              i.fa.fa-battery-half.ml-2
+            span.mr-3.btn.btn-secondary
+              | 6+ years
+              i.fa.fa-battery-full.ml-2
+            span.mr-3.btn.btn-outline-secondary
+              | No Experience
+              i.fa.fa-battery-empty.ml-2
+        .card-block
+          h4.card-title
+            i.fa.fa-graduation-cap.mr-2
+            | Qualifications
+          p.card-text
+            small.text-muted Intelligence plus character - that is the goal of true education.
+          div
+            span.mr-3.btn.btn-secondary
+              | PCA
+              i.fa.fa-heart-o.ml-2
+            span.mr-3.btn.btn-secondary
+              | CNA
+              i.fa.fa-heart.ml-2
+            span.mr-3.btn.btn-secondary
+              | RN, LPN, Other
+              i.fa.fa-heartbeat.ml-2
+            span.mr-3.btn.btn-outline-secondary
+              | No Certification
+              i.fa.fa-graduation-cap.ml-2
+            span.mr-3.btn.btn-secondary
+              | CPR / 1st Aid
+              i.fa.fa-medkit.ml-2
+            span.mr-3.btn.btn-secondary
+              | Skin / TB Test
+              i.fa.fa-newspaper-o.ml-2
+        .card-block
+          = form_for @candidate, url: candidate_path do |f|
+            h4.card-title
+              i.fa.fa-map-marker.mr-3.ml-1
+              | Location
+            p.card-text
+              small.text-muted Location. Location. Location.
+            p.card-text Add the zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
+            #zipcodes
+              = f.fields_for :zipcodes do |zipcode|
+                = render 'zipcode_fields', f: zipcode
+            .form-group.mt-2
+              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-secondary"
+            hr
+              = f.submit "Update ideal candidate", class: "btn btn-primary mr-2", role: "button"
   hr
   .card.mb-4.mt-4.suggestions
     .card-block
