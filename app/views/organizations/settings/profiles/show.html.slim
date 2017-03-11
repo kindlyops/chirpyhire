@@ -3,8 +3,8 @@
     = render "organizations/settings/sidebar"
     .col-9
       .card
-        h3.card-header Organization profile
         .card-block
+          h3.card-title.text-center.mb-4 Organization profile
           .row
             .col-8
               = form_for @profile, url: organizations_settings_profile_path do |f|

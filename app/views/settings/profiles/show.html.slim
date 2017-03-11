@@ -3,8 +3,8 @@
     = render "settings/sidebar"
     .col-9
       .card
-        h3.card-header Profile
         .card-block
+          h3.card-title.text-center.mb-4 Profile
           .row
             .col-8
               = form_for @profile, url: settings_profile_path do |f|
