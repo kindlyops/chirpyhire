@@ -2,5 +2,7 @@
   .card
     .card-header Organization settings
     .list-group.list-group-flush
-      = nav_link_to "Profile", organizations_settings_profile_path, class: "list-group-item list-group-item-action"
-      = nav_link_to "Billing", organizations_settings_billing_path, class: "list-group-item list-group-item-action"
+      = nav_link_to "Profile", organizations_settings_profile_path, { class: "list-group-item list-group-item-action" }, url_segment: 3
+      = nav_link_to "People", organizations_settings_people_path, { class: "list-group-item list-group-item-action" }, url_segment: 3
+      = nav_link_to "Billing", organizations_settings_billing_path, { class: "list-group-item list-group-item-action" }, url_segment: 3
+

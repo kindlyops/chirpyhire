@@ -22,6 +22,10 @@ main.application {
 @import "candidates";
 @import "contacts";
 
+@import "settings/base";
 @import "settings/profile";
+@import "organizations/settings/people";
+
+
 
 
