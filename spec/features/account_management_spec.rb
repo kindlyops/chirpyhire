@@ -22,7 +22,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         fill_in 'Name', with: name
         fill_in 'Password', with: password
 
-        click_button 'Sign up'
+        click_button 'Create an account'
         expect(page).to have_text('Ideal Candidate')
         expect(Account.last.email).to eq(email)
         expect(Account.last.name).to eq(name)
@@ -41,7 +41,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
 
         fill_in 'Email', with: account.email
         fill_in 'Password', with: 'password'
-        click_button 'Sign in'
+        click_button 'sign-in'
         expect(page).to have_text('Ready')
       end
     end
@@ -56,7 +56,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         visit '/accounts/password/new'
 
         fill_in 'Email', with: account.email
-        click_button 'Reset Password'
+        click_button 'Send password reset email'
         open_email(account.email)
         current_email.click_link('Change My Password')
         fill_in 'New password', with: 's3cr$t$$'
@@ -70,7 +70,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       visit '/accounts/password/new'
 
       fill_in 'Email', with: Faker::Internet.email
-      click_button 'Reset Password'
+      click_button 'Send password reset email'
       expect(page).to have_text('receive a password recovery link')
     end
   end

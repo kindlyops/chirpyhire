@@ -14,7 +14,7 @@
           strong = f.label :remember_me, "Remember Me", class: "remember-me col-form-label"
           = f.check_box :remember_me, class: "ml-2"
       .form-group
-        = button_tag class: "btn btn-primary btn-lg btn-block", role: 'button', type: 'submit' do
+        = button_tag id: 'sign-in', class: "btn btn-primary btn-lg btn-block", role: 'button', type: 'submit' do
           span Continue
           i.fa.fa-arrow-right.ml-2
     .text-center.mt-4.mb-3
