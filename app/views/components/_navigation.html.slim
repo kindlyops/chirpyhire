@@ -1,44 +1,47 @@
-nav.navbar.navbar-light.top.fixed-top
-  ul.container.nav.nav-pills.align-items-center
-    li.nav-link.ch-logo
-      = link_to root_path, class: 'navbar-brand' do
-        = inline_svg 'inverse_logo.svg'
-    li.nav-item
-      = nav_link_to candidates_path, { class: 'nav-link' }, url_segment: 1 do
-        span Ready to Call
-        i.fa.fa-phone.ml-2.align-middle
-    li.nav-item
-      = nav_link_to contacts_path, { class: 'nav-link' }, url_segment: 1 do
-        span Not Ready to Call
-        i.fa.fa-comments.ml-2.align-middle
-    - if current_organization.phone_number.present?
-      li.nav-item.ml-auto
-        span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
-    - else
-      li.nav-item.ml-auto
-        span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
-          | Your phone number
-          i.fa.fa-mobile.ml-2.white
-    li.nav-link.dropdown
-      button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
-        i.fa.fa-user-circle-o
-      .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
-        = link_to recruiting_ad_path, class: 'dropdown-item' do
-            i.fa.fa-magnet.mr-1
-            span.ml-2 Recruiting Ad
-        = link_to candidate_path, class: 'dropdown-item' do
-            i.fa.fa-id-card
-            span.ml-2 Ideal Candidate
-        hr
-        = link_to settings_profile_path, class: 'dropdown-item' do
-          i.fa.fa-gear
-          span.ml-2 Settings
-        - if impersonating?
-          = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}", class: 'dropdown-item' do
-              i.fa.fa-step-backward
-              span.ml-2 Stop Impersonating
-        - else
-          = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
-            i.fa.fa-sign-out
-            span.ml-2 Sign out
+nav.navbar.navbar-light.top.fixed-top.navbar-toggleable-md
+  button.navbar-toggler.navbar-toggler-right aria-controls="appnav" aria-expanded="false" aria-label=("Toggle navigation") data-target="#appnav" data-toggle="collapse" type="button"
+    span.navbar-toggler-icon
+  .collapse.navbar-collapse#appnav
+    ul.container.navbar-nav.nav-pills.align-items-center
+      li.nav-item.ch-logo
+        = link_to root_path, class: 'navbar-brand nav-link' do
+          = inline_svg 'inverse_logo.svg'
+      li.nav-item
+        = nav_link_to candidates_path, { class: 'nav-link' }, url_segment: 1 do
+          span Ready to Call
+          i.fa.fa-phone.ml-2.align-middle
+      li.nav-item
+        = nav_link_to contacts_path, { class: 'nav-link' }, url_segment: 1 do
+          span Not Ready to Call
+          i.fa.fa-comments.ml-2.align-middle
+      - if current_organization.phone_number.present?
+        li.nav-item.ml-auto
+          span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
+      - else
+        li.nav-item.ml-auto
+          span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+            | Your phone number
+            i.fa.fa-mobile.ml-2.white
+      li.nav-link.dropdown
+        button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+          i.fa.fa-user-circle-o
+        .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
+          = link_to recruiting_ad_path, class: 'dropdown-item' do
+              i.fa.fa-magnet.mr-1
+              span.ml-2 Recruiting Ad
+          = link_to candidate_path, class: 'dropdown-item' do
+              i.fa.fa-id-card
+              span.ml-2 Ideal Candidate
+          hr
+          = link_to settings_profile_path, class: 'dropdown-item' do
+            i.fa.fa-gear
+            span.ml-2 Settings
+          - if impersonating?
+            = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}", class: 'dropdown-item' do
+                i.fa.fa-step-backward
+                span.ml-2 Stop Impersonating
+          - else
+            = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
+              i.fa.fa-sign-out
+              span.ml-2 Sign out
 
