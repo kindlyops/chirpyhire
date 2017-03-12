@@ -1,4 +1,15 @@
 nav.navbar.top {
+  @media (max-width: 576px) {
+    .container {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  .navbar-brand {
+    margin-top: 0.75rem;
+  }
+
   border-bottom: 1px solid #c5d6de;
   background-color: white;
 
@@ -20,22 +31,6 @@ nav.navbar.top {
     .fa-phone {
       position: relative;
       top: -1px;
-    }
-
-    &.active {
-      .fa-phone, .fa-comments {
-        color: $white;
-      }
-    }
-  }
-
-  .ch-logo {
-    padding-bottom: 0;
-
-    a {
-      padding-bottom: 0;
-      position: relative;
-      top: 1px;
     }
   }
 }
