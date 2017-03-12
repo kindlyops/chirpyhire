@@ -23,12 +23,12 @@ nav.navbar.navbar-light.top.fixed-top
       button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
         i.fa.fa-user-circle-o
       .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
-        = link_to candidate_path, class: 'dropdown-item' do
-            i.fa.fa-id-card
-            span.ml-2 Ideal Candidate
         = link_to recruiting_ad_path, class: 'dropdown-item' do
             i.fa.fa-magnet.mr-1
             span.ml-2 Recruiting Ad
+        = link_to candidate_path, class: 'dropdown-item' do
+            i.fa.fa-id-card
+            span.ml-2 Ideal Candidate
         hr
         = link_to settings_profile_path, class: 'dropdown-item' do
           i.fa.fa-gear
