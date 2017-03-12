@@ -1,11 +1,12 @@
 = title "Invitations | ChirpyHire"
 .settings
   .row.people.invite
-    = render "organizations/settings/sidebar"
-    .col-9
+    .col
       .card
-        = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
-          .card-block
+        .card-header
+          = render "organizations/settings/navigation"
+        .card-block
+          = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
             h3.card-title.text-center Invite team member
             p.card-subtitle.text-center.mb-1 Recruiting caregivers is better with company.
             p.card-subtitle.text-center.mb-3 Invite as many team members as you'd like at no additional charge.
