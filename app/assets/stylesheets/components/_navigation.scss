@@ -6,6 +6,12 @@ nav.navbar.top {
     }
   }
 
+  @media (max-width: 991px) {
+    li.dropdown {
+      margin-top: 0.5rem;
+    }
+  }
+
   .navbar-brand {
     margin-top: 0.75rem;
   }
