@@ -6,6 +6,7 @@ class Organization < ApplicationRecord
   belongs_to :recruiter, class_name: 'Account'
   has_one :subscription
   has_one :ideal_candidate
+  has_one :recruiting_ad
   has_one :location
   accepts_nested_attributes_for :location, reject_if: :all_blank
 

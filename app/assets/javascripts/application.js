@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
+//= require clipboard
 //= require ramda
 //= require cocoon
 //= require trianglify.min.js

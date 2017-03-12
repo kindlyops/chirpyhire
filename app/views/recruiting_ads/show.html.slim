@@ -1,0 +1,18 @@
+.recruiting-ad
+  .row
+    .col
+      .card
+        .card-block
+          h2.card-title
+            i.fa.fa-magnet.mr-2
+            span Recruiting Ad
+          p.card-subtitle Keep a copy of your recruiting ad here for easy posting in the future.
+          = form_for @recruiting_ad do |f|
+            .form-group.mt-3
+              = f.label :body, class: "sr-only col-form-label"
+              = f.text_area :body, rows: 10, required: true, class: "form-control"
+            = f.submit "Update recruiting ad", class: "btn-lg btn btn-primary", role: "button"
+            button.btn.btn-secondary.btn-lg.ml-2.clipboard role="button" type="button" data-clipboard-target="#recruiting_ad_body"
+              i.fa.fa-clipboard.mr-2
+              span Copy to clipboard
+

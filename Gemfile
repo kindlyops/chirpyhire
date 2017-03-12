@@ -106,5 +106,6 @@ gem 'aws-sdk', '~> 2.8.5'
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
   gem 'rails-assets-ramda', '~> 0.23.0'
+  gem 'rails-assets-clipboard', '~> 1.6.1'
 end
 
