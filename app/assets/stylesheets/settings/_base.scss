@@ -1,16 +1,8 @@
 .settings {
   .nav-link {
-    position: relative;
+    border-top: 3px solid transparent;
     &.active {
-      &:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        background: $brand-primary;
-        width: 3px;
-      }
+      border-top: 3px solid $brand-primary;
     }
   }
 }

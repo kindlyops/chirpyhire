@@ -1,8 +1,9 @@
 .settings
   .row.people
-    = render "organizations/settings/sidebar"
-    .col-9
+    .col
       .card
+        .card-header
+          = render "organizations/settings/navigation"
         .card-block
           h3.card-title.text-center.mb-4 People
           = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-right' do

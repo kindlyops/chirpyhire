@@ -1,8 +1,9 @@
 .settings
   .row.profile
-    = render "organizations/settings/sidebar"
-    .col-9
+    .col
       .card
+        .card-header
+          = render "organizations/settings/navigation"
         .card-block
           h3.card-title.text-center.mb-4 Organization profile
           .row
