@@ -4,12 +4,10 @@ class Registrar
   end
 
   def register
-    Organization.transaction do
-      organization.update(recruiter: account)
-      create_ideal_candidate
-      provision_phone_number
-      create_recruiting_ad
-    end
+    organization.update(recruiter: account)
+    create_ideal_candidate
+    provision_phone_number
+    create_recruiting_ad
   end
 
   private
