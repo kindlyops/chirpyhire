@@ -1,17 +1,8 @@
 .settings {
-  .list-group-item.active {
-    color: inherit;
-    background-color: inherit;
-    border-color: transparent;
-
-    &:before {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      width: 3px;
-      content: "";
-      background-color: $brand-primary;
+  .nav-link {
+    border-top: 3px solid transparent;
+    &.active {
+      border-top: 3px solid $brand-primary;
     }
   }
 }

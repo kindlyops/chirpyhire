@@ -1,24 +1,24 @@
+= title "Reset Password | ChirpyHire"
 .settings
   .row.profile
-    = render "settings/sidebar"
-    .col-9
+    .col
       .card
+        .card-header
+          = render "settings/navigation"
         .card-block
           h3.card-title.text-center.mb-4 Change password
-          .row
-            .col-8
-              = form_for(resource, url: settings_password_path, html: { method: :put }) do |f|
-                .form-group
-                  strong = f.label :current_password, "Old password", class: "col-form-label"
-                  = f.password_field :current_password, required: true, autocomplete: "off", class: "form-control"
-                  small.form-text.text-muted We need your current password to confirm your changes.
-                .form-group
-                  strong = f.label :password, "New password", class: "col-form-label"
-                  = f.password_field :password, required: true, autocomplete: "off", class: "form-control"
-                  small.form-text.text-muted Pick a strong password with at least 8 characters.
-                .form-group
-                  strong = f.label :password_confirmation, "Confirm new password", class: "col-form-label"
-                  = f.password_field :password_confirmation, autocomplete: "off", required: true, class: "form-control"
-                .form-group
-                  = f.submit "Update password", class: 'btn btn-secondary mr-3', role: 'button'
+          = form_for(resource, url: settings_password_path, html: { method: :put }) do |f|
+            .form-group
+              strong = f.label :current_password, "Old password", class: "col-form-label"
+              = f.password_field :current_password, required: true, autocomplete: "off", class: "form-control"
+              small.form-text.text-muted We need your current password to confirm your changes.
+            .form-group
+              strong = f.label :password, "New password", class: "col-form-label"
+              = f.password_field :password, required: true, autocomplete: "off", class: "form-control"
+              small.form-text.text-muted Pick a strong password with at least 8 characters.
+            .form-group
+              strong = f.label :password_confirmation, "Confirm new password", class: "col-form-label"
+              = f.password_field :password_confirmation, autocomplete: "off", required: true, class: "form-control"
+            .form-group
+              = f.submit "Update password", class: 'btn btn-secondary mr-3', role: 'button'
 

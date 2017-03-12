@@ -1,12 +1,14 @@
+= title "Profile | ChirpyHire"
 .settings
   .row.profile
-    = render "settings/sidebar"
-    .col-9
+    .col
       .card
+        .card-header
+          = render "settings/navigation"
         .card-block
           h3.card-title.text-center.mb-4 Profile
           .row
-            .col-8
+            .col-md-8
               = form_for @profile, url: settings_profile_path do |f|
                 = content_for :validation_errors do
                   = render partial: "common/validation_errors", locals: { model: @profile }
@@ -20,7 +22,7 @@
                   small.form-text.text-muted Use your email address to login into ChirpyHire. Any valid email address will work great!
                 .form-group
                   = f.submit "Update profile", class: 'btn btn-secondary', role: 'button'
-            .col-4
+            .col-md-4
               = form_for @profile, url: settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
                 .form-group
                   h6 = f.label :avatar, "Profile picture"
