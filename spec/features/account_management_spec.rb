@@ -10,7 +10,9 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       let(:password) { Faker::Internet.password }
 
       before do
-        allow(PhoneNumberProvisionerJob).to receive(:perform_later)
+        allow(PhoneNumberProvisioner).to receive(:provision) do |organization|
+          organization.update(phone_number: Faker::PhoneNumber.cell_phone)
+        end
       end
 
       scenario 'User progresses to recruiting ad' do
