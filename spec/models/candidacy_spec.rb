@@ -6,7 +6,7 @@ RSpec.describe Candidacy do
   describe '#ideal?' do
     let(:ideal_candidate) { create(:ideal_candidate) }
     context 'complete' do
-      context 'and ideal candidate does not have the zip code' do
+      context 'and ideal candidate does not have the zipcode' do
         before do
           subject.update(zipcode: '22902')
         end

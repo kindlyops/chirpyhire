@@ -7,7 +7,7 @@ RSpec.describe Answer::Zipcode do
 
   describe '#valid?' do
     context '5 digits' do
-      context 'valid zip code' do
+      context 'valid zipcode' do
         let(:message) { create(:message, body: '30342') }
 
         it 'is true' do
@@ -15,7 +15,7 @@ RSpec.describe Answer::Zipcode do
         end
       end
 
-      context 'not a zip code' do
+      context 'not a zipcode' do
         let(:message) { create(:message, body: '11111') }
         it 'is false' do
           expect(subject.valid?(message)).to eq(false)
@@ -34,7 +34,7 @@ RSpec.describe Answer::Zipcode do
 
   describe '#attribute' do
     context '5 digits' do
-      context 'valid zip code' do
+      context 'valid zipcode' do
         let(:message) { create(:message, body: '30342') }
 
         it 'is true' do
