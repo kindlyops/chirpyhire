@@ -1,8 +1,12 @@
 .settings
   .row.profile
-    = render "settings/sidebar"
-    .col-9
+    .col
       .card
+        .card-header
+          ul.nav.nav-tabs.card-header-tabs
+            li.nav-item = nav_link_to "Profile", settings_profile_path, class: "nav-link"
+            li.nav-item = nav_link_to "Password", settings_password_path, class: "nav-link"
+            li.nav-item = nav_link_to "Organization", organizations_settings_profile_path, class: "nav-link"
         .card-block
           h3.card-title.text-center.mb-4 Profile
           .row

@@ -1,4 +1,10 @@
 .recruiting-ad {
+  @media (max-width: 524px) {
+    .clipboard {
+      margin-top: 0.5rem;
+    }
+  }
+
   .channels {
     .card-text {
       min-height: 96px;
