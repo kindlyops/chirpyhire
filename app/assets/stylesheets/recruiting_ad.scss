@@ -1,0 +1,11 @@
+.recruiting-ad {
+  .channels {
+    .card-text {
+      min-height: 96px;
+
+      &.taller {
+        min-height: 120px;
+      }
+    }
+  }
+}
