@@ -1,6 +1,14 @@
 .ideal-candidate {
   position: relative;
 
+  .btn-outline-secondary, .btn-secondary:not(.screened) {
+    border: none;
+
+    &:hover {
+      border: none;
+    }
+  }
+
   .cover {
     h3 {
       position: absolute;

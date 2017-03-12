@@ -1,5 +1,13 @@
 .conversation {
 
+  .btn-outline-secondary, .btn-secondary:not(.screened) {
+    border: none;
+
+    &:hover {
+      border: none;
+    }
+  }
+
   .profile {
     li {
       flex-flow: column;
