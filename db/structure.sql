@@ -496,6 +496,38 @@ ALTER SEQUENCE plans_id_seq OWNED BY plans.id;
 
 
 --
+-- Name: recruiting_ads; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE recruiting_ads (
+    id integer NOT NULL,
+    organization_id integer NOT NULL,
+    body text NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: recruiting_ads_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE recruiting_ads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: recruiting_ads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE recruiting_ads_id_seq OWNED BY recruiting_ads.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -663,6 +695,13 @@ ALTER TABLE ONLY plans ALTER COLUMN id SET DEFAULT nextval('plans_id_seq'::regcl
 
 
 --
+-- Name: recruiting_ads id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY recruiting_ads ALTER COLUMN id SET DEFAULT nextval('recruiting_ads_id_seq'::regclass);
+
+
+--
 -- Name: subscriptions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -770,6 +809,14 @@ ALTER TABLE ONLY pg_search_documents
 
 ALTER TABLE ONLY plans
     ADD CONSTRAINT plans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recruiting_ads recruiting_ads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY recruiting_ads
+    ADD CONSTRAINT recruiting_ads_pkey PRIMARY KEY (id);
 
 
 --
@@ -958,6 +1005,13 @@ CREATE UNIQUE INDEX index_plans_on_stripe_id ON plans USING btree (stripe_id);
 
 
 --
+-- Name: index_recruiting_ads_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_recruiting_ads_on_organization_id ON recruiting_ads USING btree (organization_id);
+
+
+--
 -- Name: index_subscriptions_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1052,6 +1106,14 @@ ALTER TABLE ONLY messages
 
 ALTER TABLE ONLY subscriptions
     ADD CONSTRAINT fk_rails_63d3df128b FOREIGN KEY (plan_id) REFERENCES plans(id);
+
+
+--
+-- Name: recruiting_ads fk_rails_6b5e156a02; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY recruiting_ads
+    ADD CONSTRAINT fk_rails_6b5e156a02 FOREIGN KEY (organization_id) REFERENCES organizations(id);
 
 
 --
@@ -1152,6 +1214,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170310141555'),
 ('20170310144756'),
 ('20170310203734'),
-('20170310234243');
+('20170310234243'),
+('20170312162833');
 
 

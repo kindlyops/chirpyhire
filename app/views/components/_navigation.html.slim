@@ -26,6 +26,9 @@ nav.navbar.navbar-light.top.fixed-top
         = link_to candidate_path, class: 'dropdown-item' do
             i.fa.fa-id-card
             span.ml-2 Ideal Candidate
+        = link_to recruiting_ad_path, class: 'dropdown-item' do
+            i.fa.fa-magnet.mr-1
+            span.ml-2 Recruiting Ad
         hr
         = link_to settings_profile_path, class: 'dropdown-item' do
           i.fa.fa-gear

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :health, only: :show
   get '/candidates', to: 'candidates#index'
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
+  resource :recruiting_ad, only: [:show, :update, :create]
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 

@@ -1,0 +1,68 @@
+.recruiting-ad
+  .row
+    .col
+      .card
+        .card-block
+          h2.card-title
+            i.fa.fa-magnet.mr-2
+            span Recruiting Ad
+          p.card-subtitle Keep a copy of your recruiting ad here for easy posting in the future.
+          = form_for @recruiting_ad, url: recruiting_ad_path do |f|
+            .form-group.mt-3
+              = f.label :body, class: "sr-only col-form-label"
+              = f.text_area :body, rows: 10, required: true, class: "form-control"
+            = f.submit "Save recruiting ad", class: "btn-lg btn btn-primary", role: "button"
+            button.btn.btn-secondary.btn-lg.ml-2.clipboard role="button" type="button" data-clipboard-target="#recruiting_ad_body"
+              i.fa.fa-clipboard.mr-2
+              span Copy to clipboard
+      .card.mt-3.channels
+        .card-block
+          h2.card-title
+            i.fa.fa-globe.mr-2
+            span Recruiting Channels
+          p.card-subtitle Use these popular recruiting channels to promote your agency and find your next caregiver.
+          .card-deck.mt-3
+            .card
+              .card-block
+                h4.card-title Craigslist
+                p.card-text.taller One of the best sources for free and low-cost job postings. Posting a "job" requires a small fee while posting a "gig" is free.
+                a.btn.btn-success role="button" target="_blank" href="https://post.craigslist.org/"
+                  span Post on Craigslist
+                  i.fa.fa-external-link.ml-2
+            .card
+              .card-block
+                h4.card-title Facebook
+                p.card-text.taller Has over 200 million US users, precision audience targeting, and new ad types specifically designed for recruiting. There is a huge opportunity in this nascent recruiting channel.
+                a.btn.btn-success role="button" target="_blank" href="https://www.facebook.com/jobs/"
+                  span Post on Facebook
+                  i.fa.fa-external-link.ml-2
+            .card
+              .card-block
+                h4.card-title Indeed
+                p.card-text.taller Helps people all over the world hire and get hired. Advertised as the world's #1 job site, with over 200 million unique visitors every month.
+                a.btn.btn-success role="button" target="_blank" href="https://www.indeed.com/hire"
+                  span Post on Indeed
+                  i.fa.fa-external-link.ml-2
+          .card-deck.mt-3
+            .card
+              .card-block
+                h4.card-title Job.com
+                p.card-text Every month, Job.com adds 200,000 job seekers and nearly 20,000 resumes making their services a tremendous resource for recruiting.
+                a.btn.btn-success role="button" target="_blank" href="http://employer.job.com/"
+                  span Post on Job.com
+                  i.fa.fa-external-link.ml-2
+            .card
+              .card-block
+                h4.card-title MyCNAJobs
+                p.card-text Job board exclusively working with Certified Nursing Assistants. #1 Rated Recruitment ROI in Senior Care with trusted partners nationwide.
+                a.btn.btn-success role="button" target="_blank" href="https://www.mycnajobs.com/hire/"
+                  span Post on MyCNAJobs
+                  i.fa.fa-external-link.ml-2
+            .card
+              .card-block
+                h4.card-title Monster
+                p.card-text Monster allows you to easily source candidates matching your needs, from their expansive talent database.
+                a.btn.btn-success role="button" target="_blank" href="http://hiring.monster.com/"
+                  span Post on Monster
+                  i.fa.fa-external-link.ml-2
+
