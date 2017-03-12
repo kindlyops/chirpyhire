@@ -8,7 +8,8 @@ class Registrar
       organization.update(recruiter: account)
       create_ideal_candidate
       create_subscription
-      PhoneNumberProvisionerJob.perform_later(organization)
+      provision_phone_number
+      create_recruiting_ad
     end
   end
 
@@ -28,6 +29,14 @@ class Registrar
       state: 'trialing',
       trial_message_limit: Plan::TRIAL_MESSAGE_LIMIT
     )
+  end
+
+  def create_recruiting_ad
+    organization.create_recruiting_ad(body: RecruitingAd.body(organization))
+  end
+
+  def provision_phone_number
+    PhoneNumberProvisioner.provision(organization)
   end
 
   def organization
