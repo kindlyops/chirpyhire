@@ -21,7 +21,7 @@ class PhoneNumberProvisioner
   private
 
   def create_recruiting_ad
-    organization.create_recruiting_ad!(body: RecruitingAd.body(organization))
+    organization.create_recruiting_ad(body: RecruitingAd.body(organization))
   end
 
   def phone_number_attributes
