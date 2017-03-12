@@ -7,7 +7,7 @@
         .card-block
           h3.card-title.text-center.mb-4 Organization profile
           .row
-            .col-8
+            .col-md-8
               = form_for @profile, url: organizations_settings_profile_path do |f|
                 = content_for :validation_errors do
                   = render partial: "common/validation_errors", locals: { model: @profile }
@@ -21,7 +21,7 @@
                   small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your agency's screening process.
                 .form-group
                   = f.submit "Update profile", class: 'btn btn-secondary', role: 'button'
-            .col-4
+            .col-md-4
               = form_for @profile, url: organizations_settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
                 .form-group
                   h6 = f.label :avatar, "Profile picture"

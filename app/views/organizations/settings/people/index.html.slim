@@ -6,7 +6,7 @@
           = render "organizations/settings/navigation"
         .card-block
           h3.card-title.text-center.mb-4 People
-          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-right' do
+          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-md-right mb-3' do
             span.ml-2 Invite team member
           ul.list-unstyled
             - @people.each do |person|
