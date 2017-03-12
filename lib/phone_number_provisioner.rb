@@ -8,6 +8,7 @@ class PhoneNumberProvisioner
 
     sub_account.incoming_phone_numbers.create(phone_number_attributes)
     organization.update(update_params)
+    create_recruiting_ad unless organization.recruiting_ad.present?
   end
 
   def deprovision
@@ -18,6 +19,10 @@ class PhoneNumberProvisioner
   end
 
   private
+
+  def create_recruiting_ad
+    organization.create_recruiting_ad!(body: RecruitingAd.body(organization))
+  end
 
   def phone_number_attributes
     {

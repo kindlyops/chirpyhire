@@ -1,5 +1,13 @@
 class RecruitingAdPolicy < ApplicationPolicy
   def update?
+    scope.where(id: record.id).exists?
+  end
+
+  def show?
+    record.new_record? || update?
+  end
+
+  def create?
     show?
   end
 

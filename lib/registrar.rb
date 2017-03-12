@@ -7,7 +7,6 @@ class Registrar
     Organization.transaction do
       organization.update(recruiter: account)
       create_ideal_candidate
-      create_recruiting_ad
       create_subscription
       PhoneNumberProvisionerJob.perform_later(organization)
     end
@@ -21,10 +20,6 @@ class Registrar
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: organization.zipcode }]
     )
-  end
-
-  def create_recruiting_ad
-    organization.create_recruiting_ad!(body: RecruitingAd.body(organization))
   end
 
   def create_subscription

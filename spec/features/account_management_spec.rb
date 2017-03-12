@@ -13,7 +13,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         allow(PhoneNumberProvisionerJob).to receive(:perform_later)
       end
 
-      scenario 'User progresses to ideal candidate screen' do
+      scenario 'User progresses to recruiting ad' do
         visit '/accounts/sign_up'
 
         fill_in 'Organization name', with: organization_name
@@ -23,7 +23,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         fill_in 'Password', with: password
 
         click_button 'Create an account'
-        expect(page).to have_text('Ideal Candidate')
+        expect(page).to have_text('Recruiting Ad')
         expect(Account.last.email).to eq(email)
         expect(Account.last.name).to eq(name)
         expect(Organization.last.name).to eq(organization_name)
