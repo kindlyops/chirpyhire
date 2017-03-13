@@ -1,5 +1,11 @@
 .conversation {
 
+  .conversations-profile {
+    @media (max-width: 992px) {
+      margin-top: 1rem;
+    }
+  }
+
   .btn-outline-secondary, .btn-secondary:not(.screened) {
     border: none;
 
@@ -13,6 +19,10 @@
       flex-flow: column;
       align-items: stretch;
     }
+  }
+
+  .new_message {
+    min-width: 100%;
   }
 
   .empty-messages, .read-messages {
@@ -35,10 +45,8 @@
     textarea {
       resize: none;
       border: none;
-      height: 60px;
-      padding-right: 45px;
+      box-sizing: border-box;
       padding-top: 13px;
-      width: 765px;
       height: 80px;
     }
   }

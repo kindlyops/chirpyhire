@@ -2,7 +2,7 @@
 
 .conversation
   .row
-    .col-md-3
-      = render partial: 'conversations/profile', locals: { conversation: conversation }
-    .col-md-9
+    .col-lg-9
       = render partial: 'conversations/conversation', locals: { conversation: conversation }
+    .col-lg-3.conversations-profile
+      = render partial: 'conversations/profile', locals: { conversation: conversation }
