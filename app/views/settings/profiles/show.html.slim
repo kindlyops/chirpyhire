@@ -23,12 +23,12 @@
                   = f.email_field :email, required: true, class: "form-control"
                   small.form-text.text-muted Use your email address to login into ChirpyHire. Any valid email address will work great!
                 .form-group
-                  = f.submit "Update profile", class: 'btn btn-block btn-lg btn-secondary', role: 'button'
+                  = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
             .col-md-4
               = form_for @profile, url: settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
                 .form-group
                   h6 = f.label :avatar, "Profile picture"
                   .profile-picture.text-center = image_tag @profile.avatar.url(:medium)
-                  a.btn.btn-secondary.btn-block#upload.mt-4 role="button" href="#" Upload new picture
+                  a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new picture
                   = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 

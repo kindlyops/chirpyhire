@@ -119,7 +119,7 @@
               = f.fields_for :zipcodes do |zipcode|
                 = render 'zipcode_fields', f: zipcode
             .form-group.mt-2
-              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-secondary"
+              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-success"
         li.list-group-item
           = f.submit "Update ideal candidate", class: "btn btn-lg btn-block btn-primary mr-2", role: "button"
   hr
@@ -136,4 +136,4 @@
           = f.label :suggestion, class: "col-form-label"
           = f.text_area :value, class: "form-control", required: true
         .form-group
-          = f.submit "Submit", class: "btn btn-secondary mr-2", role: "button"
+          = f.submit "Submit", class: "btn btn-success mr-2", role: "button"
