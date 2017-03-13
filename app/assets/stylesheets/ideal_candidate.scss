@@ -1,13 +1,20 @@
 .ideal-candidate {
   position: relative;
 
-  .btn-outline-secondary, .btn-secondary {
-    &.trait {
-      border: none;
+  .trait {
+    @extend .btn;
+    border: none;
 
-      &:hover {
-        border: none;
-      }
+    &:hover {
+      border: none;
+    }
+
+    &.inline-trait {
+      @extend .btn-secondary;
+    }
+
+    &.outline-trait {
+      @extend .btn-outline-secondary;
     }
   }
 
