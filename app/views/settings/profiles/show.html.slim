@@ -6,7 +6,9 @@
         .card-header
           = render "settings/navigation"
         .card-block
-          h3.card-title.text-center.mb-4 Profile
+          h2.card-title.mb-4
+            i.fa.fa-user.mr-3
+            span Profile
           .row
             .col-md-8
               = form_for @profile, url: settings_profile_path do |f|
@@ -21,7 +23,7 @@
                   = f.email_field :email, required: true, class: "form-control"
                   small.form-text.text-muted Use your email address to login into ChirpyHire. Any valid email address will work great!
                 .form-group
-                  = f.submit "Update profile", class: 'btn btn-secondary', role: 'button'
+                  = f.submit "Update profile", class: 'btn btn-block btn-lg btn-secondary', role: 'button'
             .col-md-4
               = form_for @profile, url: settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
                 .form-group

@@ -6,7 +6,9 @@
         .card-header
           = render "settings/navigation"
         .card-block
-          h3.card-title.text-center.mb-4 Change password
+          h2.card-title.mb-4
+            i.fa.fa-key.mr-2
+            span Change password
           = form_for(resource, url: settings_password_path, html: { method: :put }) do |f|
             .form-group
               strong = f.label :current_password, "Old password", class: "col-form-label"
@@ -20,5 +22,5 @@
               strong = f.label :password_confirmation, "Confirm new password", class: "col-form-label"
               = f.password_field :password_confirmation, autocomplete: "off", required: true, class: "form-control"
             .form-group
-              = f.submit "Update password", class: 'btn btn-secondary mr-3', role: 'button'
+              = f.submit "Update password", class: 'btn btn-block btn-lg btn-secondary mr-3', role: 'button'
 
