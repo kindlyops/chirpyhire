@@ -6,7 +6,7 @@ html
     = render "components/guest_navigation"
     div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
       .row
-        main.col-6.offset-3
+        main.col-md-6.offset-md-3
           .mt-3 = render partial: "layouts/alerts"
           = yield
     = render "layouts/script"
