@@ -10,15 +10,17 @@
       ul.list-group.list-group-flush
         li.list-group-item
           .card-block
-            h3.card-title.text-center Ideal Candidate
-            p.card-text.text-center
+            h2.card-title
+              i.fa.fa-id-card.mr-3
+              span Ideal Candidate
+            p.card-text
               q cite="Peter Schutz" Hire character. Train skill.
-            p.card-subtitle.text-center.mb-2
+            p.card-subtitle.mb-2
               ' View the caregiver traits ChirpyHire
               strong
                 ' automatically
               | determines for you.
-            p.card-subtitle.text-center
+            p.card-subtitle
              strong
               ' Personalize
              | your ideal candidate based on current case needs.
@@ -30,16 +32,16 @@
             p.card-text
               small.text-muted I just met you. And this is crazy. I'm available. So call me maybe.
             div
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Live-In
                 i.fa.fa-home.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Hourly
                 i.fa.fa-clock-o.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Both
                 i.fa.fa-hourglass-half.ml-2
-              span.mr-3.btn.btn-outline-secondary
+              span.mr-3.trait.outline-trait
                 | No Availability
                 i.fa.fa-hourglass-o.ml-2
         li.list-group-item
@@ -50,13 +52,13 @@
             p.card-text
               small.text-muted Wherever you go, go with all your heart.
             div
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Public
                 i.fa.fa-bus.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Personal
                 i.fa.fa-car.ml-2
-              span.mr-3.btn.btn-outline-secondary
+              span.mr-3.trait.outline-trait
                 | No Transportation
                 i.fa.fa-thumbs-o-up.ml-2
         li.list-group-item
@@ -67,16 +69,16 @@
             p.card-text
               small.text-muted No person steps in the same river twice, for it's not the same river and they are not the same person.
             div
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | 0 - 1 years
                 i.fa.fa-battery-quarter.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | 1 - 5 years
                 i.fa.fa-battery-half.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | 6+ years
                 i.fa.fa-battery-full.ml-2
-              span.mr-3.btn.btn-outline-secondary
+              span.mr-3.trait.outline-trait
                 | No Experience
                 i.fa.fa-battery-empty.ml-2
         li.list-group-item
@@ -87,22 +89,22 @@
             p.card-text
               small.text-muted Intelligence plus character - that is the goal of true education.
             div
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | PCA
                 i.fa.fa-heart-o.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | CNA
                 i.fa.fa-heart.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | RN, LPN, Other
                 i.fa.fa-heartbeat.ml-2
-              span.mr-3.btn.btn-outline-secondary
+              span.mr-3.trait.outline-trait
                 | No Certification
                 i.fa.fa-graduation-cap.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | CPR / 1st Aid
                 i.fa.fa-medkit.ml-2
-              span.mr-3.btn.btn-secondary
+              span.mr-3.trait.inline-trait
                 | Skin / TB Test
                 i.fa.fa-newspaper-o.ml-2
         li.list-group-item
@@ -117,7 +119,7 @@
               = f.fields_for :zipcodes do |zipcode|
                 = render 'zipcode_fields', f: zipcode
             .form-group.mt-2
-              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-secondary"
+              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-success"
         li.list-group-item
           = f.submit "Update ideal candidate", class: "btn btn-lg btn-block btn-primary mr-2", role: "button"
   hr
@@ -134,4 +136,4 @@
           = f.label :suggestion, class: "col-form-label"
           = f.text_area :value, class: "form-control", required: true
         .form-group
-          = f.submit "Submit", class: "btn btn-secondary mr-2", role: "button"
+          = f.submit "Submit", class: "btn btn-success mr-2", role: "button"

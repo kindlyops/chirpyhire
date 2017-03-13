@@ -6,9 +6,9 @@
         .card-header
           = render "organizations/settings/navigation"
         .card-block
-          h3.card-title.text-center.mb-4 People
-          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary float-md-right mb-3' do
-            span.ml-2 Invite team member
+          h2.card-title.mb-4
+            i.fa.fa-users.mr-3.ml-2
+            span People
           ul.list-unstyled
             - @people.each do |person|
               li.media
@@ -16,4 +16,7 @@
                 .media-body
                   h5.mt-0.mb-1 = person.name
                   = person.email
-
+        .card-block
+          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary btn-lg btn-block' do
+            i.fa.fa-user-plus.mr-1.white
+            span.ml-2 Invite team member

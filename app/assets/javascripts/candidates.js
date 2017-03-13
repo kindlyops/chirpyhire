@@ -55,6 +55,7 @@ $(document).on('turbolinks:load', function() {
       search: true,
       showRefresh: true,
       checkboxHeader: true,
+      buttonsClass: 'success',
       icons: {
         paginationSwitchDown:'fa-arrow-circle-o-down',
         paginationSwitchUp:'fa-arrow-circle-o-up',

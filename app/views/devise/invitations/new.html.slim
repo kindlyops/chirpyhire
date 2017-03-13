@@ -7,9 +7,11 @@
           = render "organizations/settings/navigation"
         .card-block
           = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
-            h3.card-title.text-center Invite team member
-            p.card-subtitle.text-center.mb-1 Recruiting caregivers is better with company.
-            p.card-subtitle.text-center.mb-3 Invite as many team members as you'd like at no additional charge.
+            h3.card-title
+              i.fa.fa-user-plus.mr-2
+              span Invite team member
+            p.card-subtitle.mb-1 Recruiting caregivers is better with company.
+            p.card-subtitle.mb-3 Invite as many team members as you'd like at no additional charge.
             .form-group
               strong = f.label :name, class: "col-form-label"
               = f.text_field :name, required: true, class: "form-control"
@@ -17,6 +19,6 @@
               strong = f.label :email, class: "col-form-label"
               = f.email_field :email, required: true, class: "form-control"
             .form-group
-              = button_tag type: "submit", role: "button", class: "btn btn-primary" do
+              = button_tag type: "submit", role: "button", class: "btn btn-lg btn-block btn-primary" do
                 i.fa.fa-paper-plane.white.mr-2
                 span Invite

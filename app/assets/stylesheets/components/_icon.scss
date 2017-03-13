@@ -1,12 +1,9 @@
-.fa-user-circle-o {
+.fa-user-circle-o, .fa-users, .fa-user, .fa-user-plus,
+.fa-home, .fa-credit-card, .fa-gear {
   color: $gray-light;
 }
 
-.fa-usd, .fa-battery-full, .fa-check-circle {
-  color: $green;
-}
-
-.fa-bus, .fa-trophy, .fa-star-half-o {
+.fa-bus, .fa-trophy, .fa-star-half-o, .fa-key {
   color: $yellow;
 }
 
@@ -14,11 +11,11 @@
   color: $purple;
 }
 
-.fa-mobile {
+.fa-mobile, .fa-phone, .fa-comments, .fa-usd, .fa-battery-full, .fa-check-circle {
   color: $green;
 }
 
-.fa-sign-out, .fa-users, .fa-map-marker, .fa-globe {
+.fa-sign-out, .fa-map-marker, .fa-globe {
   color: $blue;
 }
 
