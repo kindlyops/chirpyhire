@@ -25,6 +25,7 @@ $(document).on('turbolinks:load', function() {
       },
       exportUrl: '/contacts.csv',
       showExport: true,
+      buttonsClass: 'success',
       url: '/contacts.json',
       columns: [{
           field: 'select',
