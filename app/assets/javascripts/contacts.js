@@ -41,7 +41,7 @@ $(document).on('turbolinks:load', function() {
           }
         },{
           field: 'created_at',
-          title: 'Created',
+          title: 'First Response',
           sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
