@@ -40,18 +40,15 @@ class ApplicationPolicy
   end
 
   def scope
-    Pundit.policy_scope!(organization, record.class)
-  end
-
-  def user
-    organization
+    Pundit.policy_scope!(account, record.class)
   end
 
   class Scope
-    attr_reader :organization, :scope
+    attr_reader :account, :scope, :organization
 
-    def initialize(organization, scope)
-      @organization = organization
+    def initialize(account, scope)
+      @account = account
+      @organization = account.organization
       @scope = scope
     end
 

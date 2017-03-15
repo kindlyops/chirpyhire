@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe CandidacyPolicy do
-  subject { CandidacyPolicy.new(organization, candidacy) }
+  subject { CandidacyPolicy.new(account, candidacy) }
 
   let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
   let(:organization) { candidacy.contact.organization }
+  let(:account) { create(:account, organization: organization) }
 
-  let(:resolved_scope) { CandidacyPolicy::Scope.new(organization, Candidacy.all).resolve }
+  let(:resolved_scope) { CandidacyPolicy::Scope.new(account, Candidacy.all).resolve }
 
   context 'not finished survey' do
     it 'excludes candidacy in resolved scope' do
