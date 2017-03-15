@@ -4,7 +4,8 @@ $(document).on('turbolinks:load', function() {
     var cover = $('.cover');
     var pattern = Trianglify({
         width: cover.innerWidth(),
-        height: 315
+        height: 315,
+        x_colors: 'RdYlGn'
     });
     cover.append(pattern.svg());
     idealCandidate.attr('loaded', true);
