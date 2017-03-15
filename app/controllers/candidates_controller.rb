@@ -47,6 +47,7 @@ class CandidatesController < ApplicationController
   end
 
   def ordered_candidates
+    logger.debug "scoped_contacts: #{scoped_contacts.count}"
     logger.debug "policy_candidates: #{policy_scope(scoped_contacts).count}"
     logger.debug "ordered_candidates: #{ordered(policy_scope(scoped_contacts)).count}"
     ordered(policy_scope(scoped_contacts))
