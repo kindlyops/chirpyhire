@@ -5,10 +5,7 @@ class CandidatesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json do
-        logger.debug "index.json: #{selected(paginated(ordered_candidates)).count}"
-        @candidates = selected(paginated(ordered_candidates))
-      end
+      format.json { @candidates = selected(paginated(ordered_candidates)) }
       format.csv { index_csv }
     end
   end
@@ -26,7 +23,6 @@ class CandidatesController < ApplicationController
 
   def paginated(scope)
     if params[:offset].present? && params[:limit].present?
-      logger.debug "paginated: #{scope.page(page).per(limit).count}"
       scope.page(page).per(limit)
     else
       scope
@@ -37,7 +33,6 @@ class CandidatesController < ApplicationController
     if params[:id].present?
       scope.where(id: params[:id])
     else
-      logger.debug "selected: #{scope}"
       scope
     end
   end
@@ -47,9 +42,6 @@ class CandidatesController < ApplicationController
   end
 
   def ordered_candidates
-    logger.debug "scoped_contacts: #{scoped_contacts.count}"
-    logger.debug "policy_candidates: #{policy_scope(scoped_contacts).count}"
-    logger.debug "ordered_candidates: #{ordered(policy_scope(scoped_contacts)).count}"
     ordered(policy_scope(scoped_contacts))
   end
 
@@ -57,7 +49,6 @@ class CandidatesController < ApplicationController
     if params[:search].present?
       Contact.candidate.search_candidates(params[:search])
     else
-      logger.debug 'in Contact.candidate scoped_contacts'
       Contact.candidate
     end
   end
