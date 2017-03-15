@@ -6,7 +6,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        logger.debug "index.json: #{selected(paginated(ordered_candidates))}"
+        logger.debug "index.json: #{selected(paginated(ordered_candidates)).count}"
         @candidates = selected(paginated(ordered_candidates))
       end
       format.csv { index_csv }
@@ -26,7 +26,7 @@ class CandidatesController < ApplicationController
 
   def paginated(scope)
     if params[:offset].present? && params[:limit].present?
-      logger.debug "paginated: #{scope.page(page).per(limit)}"
+      logger.debug "paginated: #{scope.page(page).per(limit).count}"
       scope.page(page).per(limit)
     else
       scope
@@ -47,8 +47,8 @@ class CandidatesController < ApplicationController
   end
 
   def ordered_candidates
-    logger.debug "policy_candidates: #{policy_scope(scoped_contacts)}"
-    logger.debug "ordered_candidates: #{ordered(policy_scope(scoped_contacts))}"
+    logger.debug "policy_candidates: #{policy_scope(scoped_contacts).count}"
+    logger.debug "ordered_candidates: #{ordered(policy_scope(scoped_contacts)).count}"
     ordered(policy_scope(scoped_contacts))
   end
 
