@@ -31,7 +31,7 @@ class Survey
   end
 
   def just_finished?(message)
-    return false unless candidacy.in_progress?
+    return unless candidacy.in_progress?
 
     last_question? && answer.valid?(message)
   end
