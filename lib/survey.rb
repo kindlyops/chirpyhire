@@ -6,7 +6,7 @@ class Survey
   end
 
   def ask
-    return unless candidacy.skin_test.nil?
+    return unless candidacy.in_progress?
 
     candidacy.update!(inquiry: next_question.inquiry)
     send_message(next_question.body)
