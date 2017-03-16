@@ -29,10 +29,6 @@ Use ngrok tunnel For Twilio Webhook:
 `ngrok http 3000`
 Login to Twilio and set SMS Webhook URL to the Dynamic ngrok URL. [More info](https://www.twilio.com/blog/2013/10/test-your-webhooks-locally-with-ngrok.html)
 
-### Stripe Development
-
-Use test keys and test environment.
-
 ### Demoing App
 
 Ensure you have a clean install:

@@ -4,7 +4,6 @@ class Organization < ApplicationRecord
   has_many :contacts
   has_many :people, through: :contacts, class_name: 'Person'
   belongs_to :recruiter, class_name: 'Account'
-  has_one :subscription
   has_one :ideal_candidate
   has_one :recruiting_ad
   has_one :location
@@ -22,14 +21,6 @@ class Organization < ApplicationRecord
 
   def candidates
     people.joins(:candidacy)
-  end
-
-  def persisted_subscription?
-    subscription.present? && subscription.persisted?
-  end
-
-  def new_subscription?
-    subscription.present? && subscription.new_record?
   end
 
   def message(recipient:, body:, manual: false)

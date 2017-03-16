@@ -18,7 +18,6 @@ class PhoneNumberProvisioner
     return if organization.phone_number.blank?
 
     sub_account.update(status: 'closed')
-    organization.subscription.cancel
   end
 
   private
