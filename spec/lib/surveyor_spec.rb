@@ -78,6 +78,32 @@ RSpec.describe Surveyor do
           subject.consider_answer(inquiry, message)
         end
 
+        context 'last question' do
+          before do
+            candidacy.update(inquiry: Survey::LAST_QUESTION)
+          end
+
+          context 'and another valid answer has already come in' do
+            let(:first_message) { create(:message, body: 'Y') }
+            let(:second_message) { create(:message, body: 'A') }
+
+            before do
+              first_surveyor = Surveyor.new(contact)
+              allow(first_surveyor.survey).to receive(:send_message)
+
+              first_surveyor.consider_answer(Survey::LAST_QUESTION, first_message)
+            end
+
+            it 'does not raise an error' do
+              allow(subject.survey).to receive(:ask)
+
+              expect {
+                subject.consider_answer(Survey::LAST_QUESTION, second_message)
+              }.not_to raise_error
+            end
+          end
+        end
+
         context 'attributes' do
           let(:message) { create(:message, body: body) }
 
