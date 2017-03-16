@@ -13,22 +13,28 @@ class Survey
   end
 
   def not_on?(inquiry)
-    return unless candidacy.in_progress?
+    return true unless candidacy.in_progress?
 
     candidacy.inquiry != inquiry
   end
 
   def restate
+    return unless candidacy.in_progress?
+
     send_message(current_question.restated)
   end
 
   def complete
+    return unless candidacy.in_progress?
+
     candidacy.update!(inquiry: nil, state: :complete)
     candidacy.contacts.find_each { |contact| contact.update(candidate: true) }
     send_message(thank_you.body)
   end
 
   def just_finished?(message)
+    return false unless candidacy.in_progress?
+
     last_question? && answer.valid?(message)
   end
 
