@@ -6,6 +6,7 @@ class Contact < ApplicationRecord
   delegate :handle, :phone_number, :zipcode, :availability,
            :experience, :certification, :skin_test,
            :cpr_first_aid, :nickname, :candidacy, to: :person
+  delegate :inquiry, to: :person, prefix: true
 
   before_create :set_last_reply_at
 

@@ -6,6 +6,10 @@ RSpec.describe Candidacy do
   describe '#ideal?' do
     let(:ideal_candidate) { create(:ideal_candidate) }
     context 'complete' do
+      before do
+        subject.update(state: :complete)
+      end
+
       context 'and ideal candidate does not have the zipcode' do
         before do
           subject.update(zipcode: '22902')
@@ -19,6 +23,16 @@ RSpec.describe Candidacy do
       context 'no transportation' do
         before do
           subject.update(transportation: :no_transportation)
+        end
+
+        it 'is false' do
+          expect(subject.ideal?(ideal_candidate)).to eq(false)
+        end
+      end
+
+      context 'no availability' do
+        before do
+          subject.update(availability: :no_availability)
         end
 
         it 'is false' do

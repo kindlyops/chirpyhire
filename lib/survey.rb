@@ -6,23 +6,33 @@ class Survey
   end
 
   def ask
-    return unless candidacy.skin_test.nil?
+    return unless candidacy.in_progress?
 
     candidacy.update!(inquiry: next_question.inquiry)
     send_message(next_question.body)
   end
 
+  def on?(inquiry)
+    candidacy.in_progress? && candidacy.inquiry == inquiry.to_s
+  end
+
   def restate
+    return unless candidacy.in_progress?
+
     send_message(current_question.restated)
   end
 
   def complete
-    candidacy.update!(inquiry: nil)
+    return unless candidacy.in_progress?
+
+    candidacy.update!(inquiry: nil, state: :complete)
     candidacy.contacts.find_each { |contact| contact.update(candidate: true) }
     send_message(thank_you.body)
   end
 
-  def complete?(message)
+  def just_finished?(message)
+    return unless candidacy.in_progress?
+
     last_question? && answer.valid?(message)
   end
 

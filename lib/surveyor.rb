@@ -4,14 +4,16 @@ class Surveyor
   end
 
   def start
-    return thank_person if candidacy.surveying?
+    return thank_person unless candidacy.pending?
 
     lock_candidacy
     survey.ask
   end
 
-  def consider_answer(message)
-    return complete_survey(message) if survey.complete?(message)
+  def consider_answer(inquiry, message)
+    return unless survey.on?(inquiry)
+
+    return complete_survey(message) if survey.just_finished?(message)
     return survey.restate unless survey.answer.valid?(message)
 
     update_candidacy(message)
@@ -41,7 +43,7 @@ class Surveyor
   end
 
   def lock_candidacy
-    candidacy.update!(contact: contact)
+    candidacy.update!(contact: contact, state: :in_progress)
   end
 
   def thank_person

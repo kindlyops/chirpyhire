@@ -148,7 +148,8 @@ CREATE TABLE candidacies (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     contact_id integer,
-    progress double precision DEFAULT 0.0 NOT NULL
+    progress double precision DEFAULT 0.0 NOT NULL,
+    state integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1056,6 +1057,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170310203734'),
 ('20170310234243'),
 ('20170312162833'),
-('20170316123919');
+('20170316123919'),
+('20170316150805');
 
 
