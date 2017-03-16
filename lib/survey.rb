@@ -12,10 +12,8 @@ class Survey
     send_message(next_question.body)
   end
 
-  def not_on?(inquiry)
-    return true unless candidacy.in_progress?
-
-    candidacy.inquiry != inquiry.to_s
+  def on?(inquiry)
+    candidacy.in_progress? && candidacy.inquiry == inquiry.to_s
   end
 
   def restate

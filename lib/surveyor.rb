@@ -11,7 +11,7 @@ class Surveyor
   end
 
   def consider_answer(inquiry, message)
-    return if survey.not_on?(inquiry)
+    return unless survey.on?(inquiry)
 
     return complete_survey(message) if survey.just_finished?(message)
     return survey.restate unless survey.answer.valid?(message)
