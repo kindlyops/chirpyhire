@@ -8,9 +8,9 @@ RSpec.describe Surveyor do
     let(:thank_you) { Notification::ThankYou.new(contact) }
     let(:candidacy) { contact.person.candidacy }
 
-    context 'candidacy has a contact already' do
+    context 'candidacy already in progress' do
       before do
-        candidacy.update(contact: contact)
+        candidacy.update(contact: contact, state: :in_progress)
       end
 
       it 'sends the thank you message' do
@@ -29,6 +29,14 @@ RSpec.describe Surveyor do
         }.to change { candidacy.reload.surveying? }.from(false).to(true)
       end
 
+      it 'sets the candidacy to in progress' do
+        allow(subject.survey).to receive(:ask)
+
+        expect {
+          subject.start
+        }.to change { candidacy.reload.state }.from('pending').to('in_progress')
+      end
+
       it 'asks the next question in the survey' do
         expect(subject.survey).to receive(:ask)
 
@@ -43,20 +51,22 @@ RSpec.describe Surveyor do
 
     describe 'completed survey' do
       let(:message) { create(:message, body: 'a') }
+      let(:inquiry) { 'skin_test' }
       before do
-        candidacy.update(inquiry: :skin_test)
+        candidacy.update(inquiry: inquiry)
       end
 
       it 'completes the survey' do
         expect(subject.survey).to receive(:complete)
 
-        subject.consider_answer(message)
+        subject.consider_answer(inquiry, message)
       end
     end
 
     describe 'incomplete survey' do
+      let(:inquiry) { 'experience' }
       before do
-        candidacy.update(inquiry: :experience)
+        candidacy.update(inquiry: inquiry)
       end
 
       describe 'valid answer' do
@@ -65,7 +75,7 @@ RSpec.describe Surveyor do
         it 'asks the next question' do
           expect(subject.survey).to receive(:ask)
 
-          subject.consider_answer(message)
+          subject.consider_answer(inquiry, message)
         end
 
         context 'attributes' do
@@ -73,84 +83,93 @@ RSpec.describe Surveyor do
 
           context 'experience' do
             let(:body) { 'a' }
+            let(:inquiry) { 'experience' }
+
             before do
-              candidacy.update(inquiry: 'experience')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the experience' do
               allow(subject.survey).to receive(:ask)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.experience }.to('less_than_one')
             end
           end
 
           context 'availability' do
             let(:body) { 'b' }
+            let(:inquiry) { 'availability' }
+
             before do
-              candidacy.update(inquiry: 'availability')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the value' do
               allow(subject.survey).to receive(:ask)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.availability }.to('hourly')
             end
           end
 
           context 'transportation' do
             let(:body) { 'c' }
+            let(:inquiry) { 'transportation' }
             before do
-              candidacy.update(inquiry: 'transportation')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the value' do
               allow(subject.survey).to receive(:ask)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.transportation }.to('no_transportation')
             end
           end
 
           context 'skin_test' do
             let(:body) { 'a' }
+            let(:inquiry) { 'skin_test' }
             before do
-              candidacy.update(inquiry: 'skin_test')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the value' do
               allow(subject.survey).to receive(:ask)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.skin_test }.to(true)
             end
           end
 
           context 'zipcode' do
             let(:body) { '30342' }
+            let(:inquiry) { 'zipcode' }
+
             before do
-              candidacy.update(inquiry: 'zipcode')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the value' do
               allow(subject.survey).to receive(:ask)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.zipcode }.to('30342')
             end
           end
 
           context 'certification' do
             let(:body) { 'a' }
+            let(:inquiry) { 'certification' }
             before do
-              candidacy.update(inquiry: 'certification')
+              candidacy.update(inquiry: inquiry)
             end
 
             it 'updates the value' do
               allow(subject.survey).to receive(:complete)
               expect {
-                subject.consider_answer(message)
+                subject.consider_answer(inquiry, message)
               }.to change { candidacy.reload.certification }.to('pca')
             end
           end
@@ -159,11 +178,12 @@ RSpec.describe Surveyor do
 
       describe 'invalid answer' do
         let(:message) { create(:message, body: 'q') }
+        let(:inquiry) { 'skin_test' }
 
         it 'restates the question' do
           expect(subject.survey).to receive(:restate)
 
-          subject.consider_answer(message)
+          subject.consider_answer(inquiry, message)
         end
       end
     end
