@@ -13,7 +13,7 @@ class Survey
   end
 
   def not_on?(inquiry)
-    return if candidacy.complete?
+    return unless candidacy.in_progress?
 
     candidacy.inquiry != inquiry
   end
