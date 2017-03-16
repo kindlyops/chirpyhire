@@ -12,12 +12,16 @@ class Survey
     send_message(next_question.body)
   end
 
+  def not_on?(inquiry)
+    candidacy.complete? || candidacy.inquiry != inquiry
+  end
+
   def restate
     send_message(current_question.restated)
   end
 
   def complete
-    candidacy.update!(inquiry: nil)
+    candidacy.update!(inquiry: nil, state: :complete)
     candidacy.contacts.find_each { |contact| contact.update(candidate: true) }
     send_message(thank_you.body)
   end

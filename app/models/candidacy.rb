@@ -12,6 +12,10 @@ class Candidacy < ApplicationRecord
     less_than_or_equal_to: 100
   }
 
+  enum state: {
+    pending: 0, in_progress: 1, complete: 2
+  }
+
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
     zipcode: 4, cpr_first_aid: 5, certification: 6
@@ -46,7 +50,7 @@ class Candidacy < ApplicationRecord
   end
 
   delegate :present?, to: :contact, prefix: true
-  alias surveying? contact_present?
+  alias surveying? in_progress?
 
   def status_for(organization)
     return :ideal if ideal?(organization.ideal_candidate)
