@@ -7,12 +7,6 @@ FactoryGirl.define do
       create(:ideal_candidate, organization: organization)
     end
 
-    trait :with_subscription do
-      after(:create) do |organization|
-        create(:subscription, organization: organization)
-      end
-    end
-
     trait :with_account do
       after(:create) do |organization|
         create(:account, organization: organization)

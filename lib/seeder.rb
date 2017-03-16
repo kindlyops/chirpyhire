@@ -1,6 +1,5 @@
 class Seeder
   def seed
-    seed_plan
     seed_organization
     seed_account
     seed_not_ready_contacts
@@ -9,7 +8,7 @@ class Seeder
 
   private
 
-  attr_reader :plan, :organization, :account
+  attr_reader :organization, :account
 
   def seed_not_ready_contacts
     not_ready_contacts unless organization.contacts.not_ready.exists?
@@ -134,25 +133,9 @@ class Seeder
     )
   end
 
-  def seed_plan
-    @plan = Plan.first || create_plan
-
-    puts 'Created Plan'
-  end
-
-  def create_plan
-    Plan.create(
-      amount: Plan::DEFAULT_PRICE_IN_DOLLARS * 100,
-      interval: 'month',
-      stripe_id: ENV.fetch('TEST_STRIPE_PLAN_ID', '1'),
-      name: 'Basic'
-    )
-  end
-
   def seed_organization
     @organization = find_or_create_organization
     seed_location
-    organization.create_subscription(plan: plan, trial_message_limit: 1000)
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: '30341' }]
     )

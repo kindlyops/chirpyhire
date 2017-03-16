@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.feature 'Account Management', type: :feature, js: true do
   feature 'sign up' do
-    let!(:plan) { create(:plan) }
     let(:organization_name) { 'Orn, Beer and Schaden' }
     let(:name) { Faker::Name.name }
     let(:email) { Faker::Internet.email }
@@ -35,7 +34,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
 
   feature 'sign in' do
     context 'with an account' do
-      let(:organization) { create(:organization,  :with_account, :with_subscription) }
+      let(:organization) { create(:organization,  :with_account) }
       let(:account) { organization.accounts.first }
 
       scenario 'it progresses to the candidates' do
@@ -51,7 +50,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
 
   feature 'forgot password' do
     context 'with an account' do
-      let(:organization) { create(:organization,  :with_account, :with_subscription) }
+      let(:organization) { create(:organization,  :with_account) }
       let(:account) { organization.accounts.first }
 
       scenario 'it sends an email with a password reset link that can reset the password' do
@@ -78,7 +77,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
   end
 
   feature 'sign out' do
-    let(:organization) { create(:organization, :with_subscription, :with_account) }
+    let(:organization) { create(:organization, :with_account) }
     let(:account) { organization.accounts.first }
 
     background(:each) do

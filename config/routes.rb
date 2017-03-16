@@ -27,14 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :subscriptions
-
   post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'organizations/messages#create'
-
-  mount StripeEvent::Engine, at: '/stripe/events'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
   devise_scope :accounts do

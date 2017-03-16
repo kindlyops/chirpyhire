@@ -362,7 +362,6 @@ CREATE TABLE organizations (
     twilio_account_sid character varying,
     twilio_auth_token character varying,
     phone_number character varying,
-    stripe_customer_id character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     recruiter_id integer,
@@ -460,42 +459,6 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
--- Name: plans; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE plans (
-    id integer NOT NULL,
-    amount integer NOT NULL,
-    "interval" character varying NOT NULL,
-    name character varying NOT NULL,
-    stripe_id character varying NOT NULL,
-    interval_count integer,
-    trial_period_days integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: plans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE plans_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: plans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE plans_id_seq OWNED BY plans.id;
-
-
---
 -- Name: recruiting_ads; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -534,55 +497,6 @@ ALTER SEQUENCE recruiting_ads_id_seq OWNED BY recruiting_ads.id;
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
 );
-
-
---
--- Name: subscriptions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE subscriptions (
-    id integer NOT NULL,
-    stripe_id character varying,
-    stripe_customer_id character varying,
-    application_fee_percent double precision,
-    cancel_at_period_end boolean,
-    canceled_at timestamp without time zone,
-    stripe_created_at timestamp without time zone,
-    current_period_end timestamp without time zone,
-    current_period_start timestamp without time zone,
-    ended_at timestamp without time zone,
-    quantity integer,
-    start timestamp without time zone,
-    status character varying,
-    tax_percent double precision,
-    trial_end timestamp without time zone,
-    trial_start timestamp without time zone,
-    plan_id integer NOT NULL,
-    organization_id integer NOT NULL,
-    state integer DEFAULT 0 NOT NULL,
-    trial_message_limit integer DEFAULT 0 NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE subscriptions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE subscriptions_id_seq OWNED BY subscriptions.id;
 
 
 --
@@ -688,24 +602,10 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 
 
 --
--- Name: plans id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY plans ALTER COLUMN id SET DEFAULT nextval('plans_id_seq'::regclass);
-
-
---
 -- Name: recruiting_ads id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY recruiting_ads ALTER COLUMN id SET DEFAULT nextval('recruiting_ads_id_seq'::regclass);
-
-
---
--- Name: subscriptions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY subscriptions ALTER COLUMN id SET DEFAULT nextval('subscriptions_id_seq'::regclass);
 
 
 --
@@ -804,14 +704,6 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: plans plans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY plans
-    ADD CONSTRAINT plans_pkey PRIMARY KEY (id);
-
-
---
 -- Name: recruiting_ads recruiting_ads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -825,14 +717,6 @@ ALTER TABLE ONLY recruiting_ads
 
 ALTER TABLE ONLY schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
--- Name: subscriptions subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY subscriptions
-    ADD CONSTRAINT subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -998,38 +882,10 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
--- Name: index_plans_on_stripe_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_plans_on_stripe_id ON plans USING btree (stripe_id);
-
-
---
 -- Name: index_recruiting_ads_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_recruiting_ads_on_organization_id ON recruiting_ads USING btree (organization_id);
-
-
---
--- Name: index_subscriptions_on_organization_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_subscriptions_on_organization_id ON subscriptions USING btree (organization_id);
-
-
---
--- Name: index_subscriptions_on_plan_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_subscriptions_on_plan_id ON subscriptions USING btree (plan_id);
-
-
---
--- Name: index_subscriptions_on_stripe_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_subscriptions_on_stripe_id ON subscriptions USING btree (stripe_id);
 
 
 --
@@ -1085,27 +941,11 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: subscriptions fk_rails_364213cc3e; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY subscriptions
-    ADD CONSTRAINT fk_rails_364213cc3e FOREIGN KEY (organization_id) REFERENCES organizations(id);
-
-
---
 -- Name: messages fk_rails_41c70a97c6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY messages
     ADD CONSTRAINT fk_rails_41c70a97c6 FOREIGN KEY (organization_id) REFERENCES organizations(id);
-
-
---
--- Name: subscriptions fk_rails_63d3df128b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY subscriptions
-    ADD CONSTRAINT fk_rails_63d3df128b FOREIGN KEY (plan_id) REFERENCES plans(id);
 
 
 --
@@ -1215,6 +1055,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170310144756'),
 ('20170310203734'),
 ('20170310234243'),
-('20170312162833');
+('20170312162833'),
+('20170316123919');
 
 
