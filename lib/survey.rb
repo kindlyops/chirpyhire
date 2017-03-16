@@ -13,7 +13,9 @@ class Survey
   end
 
   def not_on?(inquiry)
-    candidacy.complete? || candidacy.inquiry != inquiry
+    return if candidacy.complete?
+
+    candidacy.inquiry != inquiry
   end
 
   def restate
@@ -26,7 +28,7 @@ class Survey
     send_message(thank_you.body)
   end
 
-  def complete?(message)
+  def just_finished?(message)
     last_question? && answer.valid?(message)
   end
 

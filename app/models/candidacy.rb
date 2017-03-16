@@ -49,9 +49,6 @@ class Candidacy < ApplicationRecord
     )
   end
 
-  delegate :present?, to: :contact, prefix: true
-  alias surveying? in_progress?
-
   def status_for(organization)
     return :ideal if ideal?(organization.ideal_candidate)
     :promising
@@ -67,10 +64,6 @@ class Candidacy < ApplicationRecord
       other_attributes_ideal?
   end
 
-  def complete?
-    surveying? && attributes_present?
-  end
-
   def transportable?
     transportation.present? && transportation != 'no_transportation'
   end
@@ -84,7 +77,7 @@ class Candidacy < ApplicationRecord
   end
 
   def available?
-    availability.present?
+    availability.present? && availability != 'no_availability'
   end
 
   def locatable?
@@ -107,19 +100,6 @@ class Candidacy < ApplicationRecord
 
   def other_attributes_ideal?
     transportable? && experienced? && certified? && skin_test && cpr_first_aid
-  end
-
-  def attributes_present?
-    enum_attributes_present? && boolean_attributes_present?
-  end
-
-  def enum_attributes_present?
-    experience.present? && availability.present? && transportation.present? &&
-      zipcode.present? && certification.present?
-  end
-
-  def boolean_attributes_present?
-    !cpr_first_aid.nil? && !skin_test.nil?
   end
 
   def set_search_content

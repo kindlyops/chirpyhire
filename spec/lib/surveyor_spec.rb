@@ -26,7 +26,7 @@ RSpec.describe Surveyor do
 
         expect {
           subject.start
-        }.to change { candidacy.reload.surveying? }.from(false).to(true)
+        }.to change { candidacy.reload.contact }.from(nil).to(contact)
       end
 
       it 'sets the candidacy to in progress' do

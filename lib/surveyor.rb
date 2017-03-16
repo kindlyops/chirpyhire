@@ -4,7 +4,7 @@ class Surveyor
   end
 
   def start
-    return thank_person if candidacy.surveying?
+    return thank_person unless candidacy.pending?
 
     lock_candidacy
     survey.ask
@@ -13,7 +13,7 @@ class Surveyor
   def consider_answer(inquiry, message)
     return if survey.not_on?(inquiry)
 
-    return complete_survey(message) if survey.complete?(message)
+    return complete_survey(message) if survey.just_finished?(message)
     return survey.restate unless survey.answer.valid?(message)
 
     update_candidacy(message)
