@@ -15,7 +15,7 @@ class Survey
   def not_on?(inquiry)
     return true unless candidacy.in_progress?
 
-    candidacy.inquiry != inquiry
+    candidacy.inquiry != inquiry.to_s
   end
 
   def restate

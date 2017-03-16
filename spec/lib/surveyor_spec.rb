@@ -106,6 +106,12 @@ RSpec.describe Surveyor do
                   subject.consider_answer(Survey::LAST_QUESTION, second_message)
                 }.not_to raise_error
               end
+
+              it 'does not send a message' do
+                expect(subject.survey).not_to receive(:send_message)
+
+                subject.consider_answer(Survey::LAST_QUESTION, second_message)
+              end
             end
           end
 
@@ -125,6 +131,34 @@ RSpec.describe Surveyor do
                 expect {
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.experience }.to('less_than_one')
+              end
+
+              context 'and another valid answer has already come in' do
+                let(:first_message) { create(:message, body: 'A') }
+                let(:second_message) { create(:message, body: 'A') }
+
+                before do
+                  first_surveyor = Surveyor.new(contact)
+                  allow(first_surveyor.survey).to receive(:send_message)
+
+                  first_surveyor.consider_answer(inquiry, first_message)
+                end
+
+                it 'does not raise an error' do
+                  allow(subject.survey).to receive(:ask)
+
+                  expect {
+                    subject.consider_answer(inquiry, second_message)
+                  }.not_to raise_error
+                end
+
+                it 'does not update the experience' do
+                  allow(subject.survey).to receive(:ask)
+
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.not_to change { candidacy.reload.experience }
+                end
               end
             end
 
