@@ -21,7 +21,7 @@
                 .form-group
                   strong = f.label :recruiter_id, class: "col-form-label"
                   = f.collection_select(:recruiter_id, @profile.accounts, :id, :name, { required: true }, { class: "form-control" })
-                  small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your agency's screening process.
+                  small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your organization's screening process.
                 .form-group
                   = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
             .col-md-4
