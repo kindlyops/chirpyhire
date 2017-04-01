@@ -1,5 +1,16 @@
 .candidates {
   table {
+    .handle {
+      max-width: 190px;
+    }
+    &.table-no-bordered {
+      border: none !important;
+
+      th, td {
+        border-top: none !important;
+      }
+    }
+
     .btn-outline-secondary {
       .fa-mobile, .fa-medkit {
         color: $ch-table-gray;

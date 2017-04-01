@@ -22,20 +22,8 @@ nav.navbar.top {
   .organization-phone-number {
     font-size: 1.25em;
   }
+}
 
-  .nav-link {
-    .fa-phone, .fa-comments {
-      font-size: 21px;
-    }
-
-    .fa-comments {
-      position: relative;
-      top: -2px;
-    }
-
-    .fa-phone {
-      position: relative;
-      top: -1px;
-    }
-  }
+.turbolinks-progress-bar {
+  background-color: $green;
 }

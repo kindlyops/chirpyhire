@@ -32,11 +32,11 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return '<span class="btn ' + value.phone_number.button_class + '">' +
+            return '<span>' +
                     value.phone_number.label +
                     '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
                   '</span>' +
-                  '<span class="d-block btn ' + value.handle.button_class + ' mb-2">' +
+                  '<span class="d-block handle mx-auto">' +
                       value.handle.label +
                   '<i class="fa '+ value.handle.icon_class + ' ml-2"></i>' +
                   '</span>';
@@ -63,7 +63,7 @@ $(document).on('turbolinks:load', function() {
           }
       },{
           field: 'message',
-          title: 'Message',
+          title: 'Chat',
           cellStyle: function(value, row, index, field) {
             return {
               classes: 'text-center message-caregiver'
