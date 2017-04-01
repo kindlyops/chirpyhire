@@ -32,7 +32,7 @@ $(document).on('turbolinks:load', function() {
         checkbox: true
       },{
           field: 'person',
-          title: 'Candidate',
+          title: 'Nickname (internal)',
           cellStyle: function(value, row, index, field) {
             return {
               classes: 'text-center'
