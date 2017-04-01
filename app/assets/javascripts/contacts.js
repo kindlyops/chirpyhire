@@ -16,8 +16,8 @@ $(document).on('turbolinks:load', function() {
       showRefresh: true,
       checkboxHeader: true,
       icons: {
-        paginationSwitchDown:'fa-arrow-circle-o-down',
-        paginationSwitchUp:'fa-arrow-circle-o-up',
+        paginationSwitchDown: 'fa-arrow-circle-o-down',
+        paginationSwitchUp: 'fa-arrow-circle-o-up',
         refresh: 'fa-refresh',
         toggle: 'fa-toggle-on',
         columns: 'fa-th-list',
@@ -25,7 +25,7 @@ $(document).on('turbolinks:load', function() {
       },
       exportUrl: '/contacts.csv',
       showExport: true,
-      buttonsClass: 'success',
+      buttonsClass: 'primary',
       url: '/contacts.json',
       columns: [{
           field: 'select',
@@ -104,7 +104,7 @@ $(document).on('turbolinks:load', function() {
           },
           formatter: function(value, row, index) {
             return ['<a class="btn btn-primary btn-block" href="/contacts/',
-            value.id, '/conversation"><i class="fa fa-commenting-o"></i>',
+            value.id, '/conversation"><i class="fa fa-commenting fa-2x"></i>',
             '</a>'].join('');
           }
         }]

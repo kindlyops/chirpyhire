@@ -12,28 +12,20 @@ $(document).on('turbolinks:load', function() {
       sidePagination: 'server',
       mobileResponsive: true,
       iconsPrefix: 'fa',
-      search: true,
-      showRefresh: true,
-      checkboxHeader: true,
-      buttonsClass: 'success',
+      buttonsClass: 'primary',
       icons: {
-        paginationSwitchDown:'fa-arrow-circle-o-down',
-        paginationSwitchUp:'fa-arrow-circle-o-up',
+        paginationSwitchDown: 'fa-arrow-circle-o-down',
+        paginationSwitchUp: 'fa-arrow-circle-o-up',
         refresh: 'fa-refresh',
         toggle: 'fa-toggle-on',
         columns: 'fa-th-list',
         export: 'fa-cloud-download'
       },
       exportUrl: '/candidates.csv',
-      showExport: true,
       url: '/candidates.json',
       columns: [{
-          field: 'select',
-          checkbox: true
-        },{
           field: 'person',
           title: 'Candidate',
-          sortable: true,
           cellStyle: function(value, row, index, field) {
             return {
               classes: 'text-center'
@@ -50,46 +42,31 @@ $(document).on('turbolinks:load', function() {
                   '</span>';
           }
       }, {
-          field: 'zipcode',
-          title: 'Location',
-          sortable: true,
+          field: 'created_at',
+          title: 'First Seen',
+          cellStyle: function(value, row, index, field) {
+            return {
+              classes: 'text-center'
+            };
+          }
+      }, {
+          field: 'last_reply_at',
+          title: 'Last Reply',
           cellStyle: function(value, row, index, field) {
             return {
               classes: 'text-center'
             };
           },
           formatter: function(value, row, index) {
-            return '<span class="d-block btn ' + value.button_class + ' mb-2">' +
-                      value.label +
-                  '<i class="fa '+ value.icon_class + ' ml-2"></i>' +
-                  '</span>';
+            return ['<span data-channel="last-reply" data-contact-id="',
+            value.contact_id,'">', value.last_reply_at, '</span>'].join('');
           }
-      }, {
-          field: 'availability',
-          title: 'Availability',
-          sortable: true,
+      },{
+          field: 'message',
+          title: 'Message',
           cellStyle: function(value, row, index, field) {
             return {
-              classes: 'text-center'
-            };
-          },
-          formatter: function(value, row, index) {
-            return '<span class="d-block btn ' + value.availability.button_class + ' mb-2">' +
-                      value.availability.label +
-                  '<i class="fa '+ value.availability.icon_class + ' ml-2"></i>' +
-                  '</span>' +
-                  '<span class="d-block btn ' + value.transportation.button_class + '">' +
-                      value.transportation.label +
-                  '<i class="fa '+ value.transportation.icon_class + ' ml-2"></i>' +
-                  '</span>';
-          }
-      }, {
-          field: 'experience',
-          title: 'Experience',
-          sortable: true,
-          cellStyle: function(value, row, index, field) {
-            return {
-              classes: 'text-center'
+              classes: 'text-center message-caregiver'
             };
           },
           formatter: function(value, row, index) {
