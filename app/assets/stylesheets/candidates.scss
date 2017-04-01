@@ -1,14 +1,8 @@
 .candidates {
   table {
-    .handle {
-      max-width: 190px;
-    }
-    &.table-no-bordered {
-      border: none !important;
-
-      th, td {
-        border-top: none !important;
-      }
+    .person {
+      padding: 0.5rem 1rem;
+      line-height: 1.25;
     }
 
     .btn-outline-secondary {

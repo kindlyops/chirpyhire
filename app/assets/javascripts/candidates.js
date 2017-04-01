@@ -13,6 +13,10 @@ $(document).on('turbolinks:load', function() {
       mobileResponsive: true,
       iconsPrefix: 'fa',
       buttonsClass: 'primary',
+      search: true,
+      showRefresh: true,
+      checkboxHeader: true,
+      showExport: true,
       icons: {
         paginationSwitchDown: 'fa-arrow-circle-o-down',
         paginationSwitchUp: 'fa-arrow-circle-o-up',
@@ -24,6 +28,9 @@ $(document).on('turbolinks:load', function() {
       exportUrl: '/candidates.csv',
       url: '/candidates.json',
       columns: [{
+        field: 'select',
+        checkbox: true
+      },{
           field: 'person',
           title: 'Candidate',
           cellStyle: function(value, row, index, field) {
@@ -32,11 +39,11 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return '<span>' +
+            return '<span class="person">' +
                     value.phone_number.label +
                     '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
                   '</span>' +
-                  '<span class="d-block handle mx-auto">' +
+                  '<span class="d-block person">' +
                       value.handle.label +
                   '<i class="fa '+ value.handle.icon_class + ' ml-2"></i>' +
                   '</span>';
