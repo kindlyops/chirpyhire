@@ -75,7 +75,7 @@ class CandidatesController < ApplicationController
   end
 
   def filter_options
-    [:location, :availability, :certification, :experience, :transportation]
+    [:zipcode, :availability, :certification, :experience, :transportation]
   end
 
   def filtered_order
@@ -89,7 +89,7 @@ class CandidatesController < ApplicationController
 
       combinations.each_with_index do |combination, c_index|
         combination.each_with_index do |filter, f_index|
-          filter_fragment = " candidacies.#{filter}=#{params[filter]}"
+          filter_fragment = " candidacies.#{filter}='#{filter_mapping(filter)}'"
           if f_index < combination.count - 1
             filter_fragment << " AND"
           elsif f_index == (combination.count - 1) && (c_index < combinations.count - 1)
@@ -102,9 +102,16 @@ class CandidatesController < ApplicationController
         end
       end
 
-      when_fragment << " ELSE #{time + 1} END" if time == (filters.count - 1)
+      when_fragment << " ELSE #{time + 1} END as match" if time == (filters.count - 1)
       case_clause << when_fragment
     end
+
+
+  end
+
+  def filter_mapping(filter)
+    return params[filter] if filter == :zipcode
+    Candidacy.send(filter.to_s.pluralize)[params[filter]]
   end
 
   def sorting?
