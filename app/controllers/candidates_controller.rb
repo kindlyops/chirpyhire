@@ -74,6 +74,39 @@ class CandidatesController < ApplicationController
     "#{whitelist_orders[params[:sort]]}#{stabilizer}"
   end
 
+  def filter_options
+    [:location, :availability, :certification, :experience, :transportation]
+  end
+
+  def filtered_order
+    filters = filter_options.select { |f| params[f].present? }
+    return { id: :asc } unless filters.present?
+
+    case_clause = "CASE"
+    filters.count.times do |time|
+      when_fragment = " WHEN ("
+      combinations = filters.combination(filters.count - time)
+
+      combinations.each_with_index do |combination, c_index|
+        combination.each_with_index do |filter, f_index|
+          filter_fragment = " candidacies.#{filter}=#{params[filter]}"
+          if f_index < combination.count - 1
+            filter_fragment << " AND"
+          elsif f_index == (combination.count - 1) && (c_index < combinations.count - 1)
+            filter_fragment << ") OR ("
+          else
+            filter_fragment << ") THEN #{time}"
+          end
+
+          when_fragment << filter_fragment
+        end
+      end
+
+      when_fragment << " ELSE #{time + 1} END" if time == (filters.count - 1)
+      case_clause << when_fragment
+    end
+  end
+
   def sorting?
     params[:sort].present? && whitelist_orders[params[:sort]].present?
   end
