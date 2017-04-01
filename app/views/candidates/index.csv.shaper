@@ -1,10 +1,12 @@
-csv.headers :handle, :phone_number, :location, :availability,
-:transportation, :experience, :certification, :skin_test,
-:cpr_first_aid, :subscribed, :status, :screened
+csv.headers :handle, :phone_number, :first_seen, :last_reply,
+:location, :availability, :transportation, :experience, :certification, 
+:skin_test, :cpr_first_aid
 
 csv.rows candidates do |csv, candidate|
   csv.cell :handle, candidate.handle.label
   csv.cell :phone_number, candidate.phone_number.label
+  csv.cell :first_seen, candidate.created_at.to_csv
+  csv.cell :last_reply, candidate.last_reply_at.to_csv
   csv.cell :location, candidate.zipcode.label
   csv.cell :availability, candidate.availability.label
   csv.cell :transportation, candidate.transportation.label
@@ -12,7 +14,4 @@ csv.rows candidates do |csv, candidate|
   csv.cell :certification, candidate.certification.label
   csv.cell :skin_test, candidate.skin_test
   csv.cell :cpr_first_aid, candidate.cpr_first_aid
-  csv.cell :subscribed, candidate.subscribed
-  csv.cell :status, candidate.status.label
-  csv.cell :screened, candidate.screened
 end
