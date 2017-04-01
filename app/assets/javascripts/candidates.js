@@ -17,6 +17,7 @@ $(document).on('turbolinks:load', function() {
       showRefresh: true,
       checkboxHeader: true,
       showExport: true,
+      toolbar: '#toolbar',
       icons: {
         paginationSwitchDown: 'fa-arrow-circle-o-down',
         paginationSwitchUp: 'fa-arrow-circle-o-up',
