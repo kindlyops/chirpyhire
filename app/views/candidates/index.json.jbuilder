@@ -9,16 +9,15 @@ json.rows do
     json.created_at candidate.created_at.to_json
 
     json.person do
+      json.id candidate.id
+      
       json.handle do
         json.label candidate.handle.label
         json.icon_class candidate.handle.icon_class
-        json.button_class candidate.handle.button_class
       end
 
       json.phone_number do
         json.label candidate.phone_number.label
-        json.icon_class candidate.phone_number.icon_class
-        json.button_class candidate.phone_number.button_class
       end
     end
 

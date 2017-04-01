@@ -39,14 +39,19 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return '<span class="person">' +
-                    value.phone_number.label +
-                    '<i class="fa '+ value.phone_number.icon_class + ' ml-2"></i>' +
-                  '</span>' +
-                  '<span class="d-block person">' +
-                      value.handle.label +
-                  '<i class="fa '+ value.handle.icon_class + ' ml-2"></i>' +
-                  '</span>';
+            return '<p>'+
+            '<a class="btn btn-secondary btn-block" data-toggle="collapse" '+
+            'href="#showPhone'+ value.id + '" aria-expanded="false" '+
+            'aria-controls="showPhone'+ value.id + '">' +
+            '<span>' +
+                value.handle.label +
+            '<i class="fa '+ value.handle.icon_class + ' ml-2"></i></span>' +
+            '</a></p>' +
+            '<div class="collapse" id="showPhone'+ value.id + '">' +
+              '<span>' +
+                value.phone_number.label +
+              '</span>' +
+            '</div>';
           }
       }, {
           field: 'created_at',
@@ -55,6 +60,9 @@ $(document).on('turbolinks:load', function() {
             return {
               classes: 'text-center'
             };
+          },
+          formatter: function(value, row, index) {
+            return ['<p>', value, '</p>'].join('');
           }
       }, {
           field: 'last_reply_at',
@@ -65,8 +73,8 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return ['<span data-channel="last-reply" data-contact-id="',
-            value.contact_id,'">', value.last_reply_at, '</span>'].join('');
+            return ['<p data-channel="last-reply" data-contact-id="',
+            value.contact_id,'">', value.last_reply_at, '</p>'].join('');
           }
       },{
           field: 'message',
@@ -77,9 +85,9 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return ['<a class="btn btn-primary btn-block" href="/contacts/',
+            return ['<p>', '<a class="btn btn-primary btn-block" href="/contacts/',
             value.id, '/conversation"><i class="fa fa-commenting fa-2x"></i>',
-            '</a>'].join('');
+            '</a>', '</p>'].join('');
           }
         }]
     });
