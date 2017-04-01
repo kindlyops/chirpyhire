@@ -1,27 +1,39 @@
 nav.navbar.top {
-  @media (max-width: 576px) {
-    .container {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
+  padding: 0 1rem;
 
-  @media (max-width: 991px) {
-    li.dropdown {
-      margin-top: 0.5rem;
+  &.top-secondary {
+    &.fixed-top {
+      z-index: 1029;
     }
+
+    padding: 0 1rem;
+    li {
+      padding: 0;
+
+      a {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+
+        &.active {
+          color: $green;
+          border-bottom: 3px solid $green;
+        }
+      }
+    }
+    margin-top: 4rem;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
   }
 
   .navbar-brand {
     margin-top: 0.75rem;
   }
 
-  border-bottom: 1px solid #c5d6de;
   background-color: white;
 
   .organization-phone-number {
     font-size: 1.25em;
   }
+}
 
   .nav-link {
     .fa-phone, .fa-comments {
