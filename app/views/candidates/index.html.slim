@@ -10,29 +10,17 @@
       #toolbar.mb-3
         .btn-group.filters
           .dropdown.mr-2
-            button#location.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
-              span Location
-              i.fa.fa-map-marker.fa-fw
-            .dropdown-menu aria-labelledby="location"
+            select.form-control
+              option Location
               - current_organization.locations.each do |location|
-                a href="#" class="dropdown-item" data-type="location" data-value==location = location
+                option.dropdown-item data-type="location" value=location = location
           .dropdown.mr-2
-            button#availability.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
-              span Availability
-              i.fa.fa-calendar-check-o.ml-1.fa-fw
-            .dropdown-menu aria-labelledby="availability"
-              a.dropdown-item data-type="availability" data-value="live-in" href="#"
-                span Live-In
-                i.fa.fa-home.fa-fw.ml-2
-              a.dropdown-item data-type="availability" data-value="hourly" href="#"
-                span Hourly
-                i.fa.fa-clock-o.ml-2
-              a.dropdown-item data-type="availability" data-value="both" href="#"
-                span Both
-                i.fa.fa-hourglass-half.ml-2
-              a.dropdown-item data-type="availability" data-value="both" href="#"
-                span No availability
-                i.fa.fa-hourglass-o.ml-2
+            select.form-control
+              option Availability
+              option.dropdown-item data-type="availability" value="live-in" Live-In
+              option.dropdown-item data-type="availability" value="hourly" Hourly
+              option.dropdown-item data-type="availability" value="both" Both
+              option.dropdown-item data-type="availability" value="no_availability" No Availability
           .dropdown.mr-2
             button#certification.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
               span Certification
