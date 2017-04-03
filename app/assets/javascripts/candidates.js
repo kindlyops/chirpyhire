@@ -18,6 +18,10 @@ $(document).on('turbolinks:load', function() {
       checkboxHeader: true,
       showExport: true,
       toolbar: '#toolbar',
+      queryParams: function(params) {
+        // return $.extend(params, deparam(location.search.substring(1)));
+        return params;
+      },
       icons: {
         paginationSwitchDown: 'fa-arrow-circle-o-down',
         paginationSwitchUp: 'fa-arrow-circle-o-up',
@@ -91,6 +95,39 @@ $(document).on('turbolinks:load', function() {
             '</a>', '</p>'].join('');
           }
         }]
+    });
+
+    var highlightFilter = function($filter) {
+      var filterString = 'a[data-type="' + $filter.data('type') + '"]';
+      var filters = $('.candidates').find(filterString);
+      filters.removeClass('filtered');
+      $filter.addClass('filtered');
+    };
+
+    var updateDropdownTitle = function() {
+      var filters = $('#toolbar .filtered');
+      if(summary) {
+        $('#filter-summary').append(['<p>', summary ,'</p>'].join(''));
+      } else {
+        $('#filter-summary').empty(); 
+      }
+    };
+
+    var updateClearButton = function() {
+      // show clear button if filters active
+      // hide clear button if no filters active
+    };
+    // TODO disable individual filter!!!
+    var filterDropdown = '.candidates #toolbar .filters .dropdown-item';
+    $(document).on('click', filterDropdown, function(e) {
+      e.preventDefault();
+      var $table = candidates.find('table');
+      var $filter = $(this);
+
+      highlightFilter($filter);
+      updateDropdownTitle();
+      updateClearButton();
+      $table.bootstrapTable('refresh');
     });
 
     candidates.attr('loaded', true);
