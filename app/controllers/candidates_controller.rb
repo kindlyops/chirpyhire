@@ -38,7 +38,7 @@ class CandidatesController < ApplicationController
   end
 
   def ordered(scope)
-    scope.includes(person: :candidacy).order(order)
+    scope.joins(person: :candidacy).order(order)
   end
 
   def ordered_candidates
@@ -65,73 +65,8 @@ class CandidatesController < ApplicationController
     ((offset / limit) + 1).round
   end
 
-  def direction
-    params[:order]
-  end
-
   def order
-    return { id: :asc } unless sorting?
-    "#{whitelist_orders[params[:sort]]}#{stabilizer}"
-  end
-
-  def filter_options
-    [:zipcode, :availability, :certification, :experience, :transportation]
-  end
-
-  def filtered_order
-    filters = filter_options.select { |f| params[f].present? }
-    return { id: :asc } unless filters.present?
-
-    case_clause = "CASE"
-    filters.count.times do |time|
-      when_fragment = " WHEN ("
-      combinations = filters.combination(filters.count - time)
-
-      combinations.each_with_index do |combination, c_index|
-        combination.each_with_index do |filter, f_index|
-          filter_fragment = " candidacies.#{filter}='#{filter_mapping(filter)}'"
-          if f_index < combination.count - 1
-            filter_fragment << " AND"
-          elsif f_index == (combination.count - 1) && (c_index < combinations.count - 1)
-            filter_fragment << ") OR ("
-          else
-            filter_fragment << ") THEN #{time}"
-          end
-
-          when_fragment << filter_fragment
-        end
-      end
-
-      when_fragment << " ELSE #{time + 1} END as match" if time == (filters.count - 1)
-      case_clause << when_fragment
-    end
-
-
-  end
-
-  def filter_mapping(filter)
-    return params[filter] if filter == :zipcode
-    Candidacy.send(filter.to_s.pluralize)[params[filter]]
-  end
-
-  def sorting?
-    params[:sort].present? && whitelist_orders[params[:sort]].present?
-  end
-
-  def stabilizer
-    ',contacts.id ASC'
-  end
-
-  def whitelist_orders
-    {
-      'zipcode' => "candidacies.zipcode #{direction}",
-      'contact' =>  "people.phone_number #{direction}",
-      'availability' => "candidacies.availability #{direction}",
-      'experience' => "candidacies.experience #{direction}",
-      'qualifications' => "candidacies.certification #{direction}",
-      'status' => "subscribed #{direction}",
-      'screened' => "screened #{direction}"
-    }
+    Contact::Filterer.new(params).order
   end
 
   def html?
