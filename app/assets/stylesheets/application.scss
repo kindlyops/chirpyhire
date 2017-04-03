@@ -18,10 +18,12 @@ main.application {
 @import "components/bootstrap_table";
 @import "components/autocomplete";
 @import "components/dropdown";
+@import "components/svg-uri";
 
 @import "ideal_candidate";
 @import "conversation";
 @import "contacts";
+@import "candidates";
 
 @import "settings/base";
 @import "settings/profile";
