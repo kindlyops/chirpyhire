@@ -64,3 +64,5 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-secondary
   ul.navbar-nav
     li.nav-item
       = nav_link_to 'My Caregivers', candidates_path, { class: 'nav-link' }, controller_segment: 1
+- if content_for?(:sub_navigation) 
+  = content_for(:sub_navigation)

@@ -6,6 +6,10 @@
 
 main.application {
   padding-top: 130px;
+
+  &.sub-navigation {
+    padding-top: 170px;
+  }
 }
 
 @import "components/navigation";
@@ -17,7 +21,6 @@ main.application {
 
 @import "ideal_candidate";
 @import "conversation";
-@import "candidates";
 @import "contacts";
 
 @import "settings/base";

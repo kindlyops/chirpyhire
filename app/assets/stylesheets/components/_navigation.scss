@@ -1,6 +1,25 @@
 nav.navbar.top {
   padding: 0 1rem;
 
+  &.top-tertiary {
+    &.fixed-top {
+      z-index: 998;
+    }
+
+    margin-top: 107px;
+    border-bottom: 1px solid #c5d6de;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    .btn {
+      border: none;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+
   &.top-secondary {
     &.fixed-top {
       z-index: 999;
