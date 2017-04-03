@@ -3,7 +3,7 @@ nav.navbar.top {
 
   &.top-secondary {
     &.fixed-top {
-      z-index: 1029;
+      z-index: 999;
     }
 
     padding: 0 1rem;
@@ -33,7 +33,6 @@ nav.navbar.top {
   .organization-phone-number {
     font-size: 1.25em;
   }
-}
 
   .nav-link {
     .fa-phone, .fa-comments {

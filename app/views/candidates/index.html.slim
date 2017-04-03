@@ -1,33 +1,65 @@
 = title "Ready | ChirpyHire"
 = content_for :container_class, 'container-fluid'
+= content_for :sub_navigation do
+  nav
+    .btn-group
+      .dropdown.mr-3
+        button#availability.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+          i.fa.fa-calendar-check-o.mr-2
+          | Availability
+        .dropdown-menu aria-labelledby="availability" 
+          a.dropdown-item href="#"  Hourly
+          a.dropdown-item href="#"  Live-In
+          a.dropdown-item href="#"  Both
+          a.dropdown-item href="#"  No Availability
+      .dropdown.mr-3
+        button#experience.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+          i.fa.fa-level-up.mr-2.ml-1
+          | Experience
+        .dropdown-menu aria-labelledby="experience" 
+          a.dropdown-item href="#"  0 - 1 years
+          a.dropdown-item href="#"  1 - 5 years
+          a.dropdown-item href="#"  6+ years
+          a.dropdown-item href="#"  New to caregiving
+      .dropdown
+        button#transportation.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+          i.fa.fa-road.mr-2
+          | Transportation
+        .dropdown-menu aria-labelledby="transportation" 
+          a.dropdown-item href="#"  Personal Transportation
+          a.dropdown-item href="#"  Public Transportation
+          a.dropdown-item href="#"  No reliable transportation
 .candidates.mb-3
-  .row
+  .row.additional-filters
     .col
       .btn-group
         .dropdown.mr-3
-          button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button" 
+          button#availability.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-calendar-check-o.mr-2
             | Availability
-          .dropdown-menu aria-labelledby="dropdownMenuButton" 
+          .dropdown-menu aria-labelledby="availability" 
             a.dropdown-item href="#"  Hourly
             a.dropdown-item href="#"  Live-In
             a.dropdown-item href="#"  Both
             a.dropdown-item href="#"  No Availability
         .dropdown.mr-3
-          button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button" 
+          button#experience.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-level-up.mr-2.ml-1
             | Experience
-          .dropdown-menu aria-labelledby="dropdownMenuButton" 
+          .dropdown-menu aria-labelledby="experience" 
             a.dropdown-item href="#"  0 - 1 years
             a.dropdown-item href="#"  1 - 5 years
             a.dropdown-item href="#"  6+ years
             a.dropdown-item href="#"  New to caregiving
         .dropdown
-          button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button" 
+          button#transportation.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-road.mr-2
             | Transportation
-          .dropdown-menu aria-labelledby="dropdownMenuButton" 
+          .dropdown-menu aria-labelledby="transportation" 
             a.dropdown-item href="#"  Personal Transportation
             a.dropdown-item href="#"  Public Transportation
             a.dropdown-item href="#"  No reliable transportation
-  .row
+  .row.search-summary
     .col
       p.mt-4.lead 300+ Caregivers
   .row

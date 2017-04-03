@@ -3,14 +3,29 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top
     = inline_svg 'inverse_logo.svg'
   form.form-inline
     .input-group
-      input.form-control placeholder=("Location") type="text" /
+      input.form-control#location-autocomplete placeholder=("Anywhere") type="text" /
       span.input-group-btn
         .btn-group role="group"
-          button#btnGroupDrop1.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
-            | License
-          .dropdown-menu aria-labelledby="btnGroupDrop1"
-            a.dropdown-item href="#"  Dropdown link
-            a.dropdown-item href="#"  Dropdown link
+          button#certification.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-graduation-cap.fa-fw.mr-2
+            | Certification
+          .dropdown-menu aria-labelledby="certification"
+            a.dropdown-item href="#"  
+              span 
+                i.fa.fa-heart-o.fa-fw.mr-2
+                | PCA
+            a.dropdown-item href="#"  
+              span 
+                i.fa.fa-heart.fa-fw.mr-2
+                | CNA
+            a.dropdown-item href="#"  
+              span
+                i.fa.fa-heartbeat.fa-fw.mr-2
+                | RN, LPN, Other
+            a.dropdown-item href="#"
+              span 
+                i.fa.fa-graduation-cap.fa-fw.mr-2
+                | No certification
   ul.navbar-nav.mt-2.mt-md-0.ml-auto
     - if current_organization.phone_number.present?
       li.nav-item.mr-2.my-auto
@@ -48,4 +63,4 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top
 nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-secondary
   ul.navbar-nav
     li.nav-item
-      = nav_link_to 'Ready to Call', candidates_path, { class: 'nav-link' }, url_segment: 1
+      = nav_link_to 'My Caregivers', candidates_path, { class: 'nav-link' }, controller_segment: 1

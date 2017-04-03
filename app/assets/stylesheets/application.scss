@@ -4,10 +4,6 @@
 @import "bootstrap-table";
 @import "polyfill/bootstrap3";
 
-body {
-  background-color: $gray-lighter;
-}
-
 main.application {
   padding-top: 130px;
 }
@@ -16,6 +12,8 @@ main.application {
 @import "components/form";
 @import "components/icon";
 @import "components/bootstrap_table";
+@import "components/autocomplete";
+@import "components/dropdown";
 
 @import "ideal_candidate";
 @import "conversation";
@@ -28,7 +26,4 @@ main.application {
 
 @import "registrations";
 @import "recruiting_ad";
-
-
-
 

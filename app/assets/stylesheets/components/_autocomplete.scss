@@ -1,0 +1,12 @@
+.pac-container {
+  z-index: 1030;
+}
+
+#location-autocomplete {
+  width: 150px;
+  transition: all .5s ease;
+
+  &.expanded {
+    width: 300px;
+  }
+}
