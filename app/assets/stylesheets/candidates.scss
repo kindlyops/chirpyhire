@@ -1,6 +1,6 @@
 .candidates {
   .card-img-top {
-    height: 264px;
+    height: 125px;
     $background-color: #91d4b9;
 
     $patterns: (four-point-stars, anchors-away, architect, autumn, aztec, 
@@ -33,21 +33,21 @@
     }
 
     &.third {
-      $background-color: adjust-hue($background-color, 2 * 11.1%);
+      $background-color: adjust-hue($background-color, 4 * 11.1%);
       background-color: $background-color;
       $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.fourth {
-      $background-color: adjust-hue($background-color, 3 * 11.1%);
+      $background-color: adjust-hue($background-color, 7 * 11.1%);
       background-color: $background-color;
       $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.fifth {
-      $background-color: adjust-hue($background-color, 4 * 11.1%);
+      $background-color: adjust-hue($background-color, 3 * 11.1%);
       background-color: $background-color;
       $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
@@ -68,7 +68,7 @@
     }
 
     &.eighth {
-      $background-color: adjust-hue($background-color, 7 * 11.1%);
+      $background-color: adjust-hue($background-color, 2 * 11.1%);
       background-color: $background-color;
       $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);

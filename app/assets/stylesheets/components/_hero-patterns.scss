@@ -139,7 +139,7 @@
 }
 
 @mixin hp-floor-tile($foreground-color) {
-  background-image: svg-uri("<svg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><title>floor-tile</title><path d='M0 10h10v10H0V10zM10 0h10v10H10V0z' fill='#{$foreground-color}' fill-rule='evenodd'/></svg>");
+  background-image: svg-uri("<svg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path d='M0 10h10v10H0V10zM10 0h10v10H10V0z' fill='#{$foreground-color}' fill-opacity='0.4' fill-rule='evenodd'/></svg>");
 }
 
 @mixin hp-glamorous($foreground-color) {
