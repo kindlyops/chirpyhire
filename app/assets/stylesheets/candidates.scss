@@ -8,28 +8,6 @@
     height: 70px;
     $background-color: #91d4b9;
 
-    .message-link {
-      position: absolute;
-      right: 12px;
-      bottom: -14px;
-      color: #fff;
-      font-size: 3rem;
-
-      .fa-comment-o {
-        background-color: rgba(0, 0, 0, 0.45);
-        border-radius: 50%;
-        height: 1.3em;
-        width: 1.3em;
-        position: relative;
-
-        &:before {
-          position: absolute;
-          top: 8%;
-          left: 12%;
-        }
-      }
-    }
-
     $patterns: (four-point-stars, anchors-away, architect, autumn, aztec, 
       bamboo, bank-note, bathroom-floor, bevel-circle, boxes, brick-wall, 
       bubbles, cage, charlie-brown, church-on-sunday, circles-and-squares, 
