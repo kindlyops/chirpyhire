@@ -3,6 +3,7 @@ class Person < ApplicationRecord
   has_one :candidacy
   has_many :contacts
   has_many :messages
+  belongs_to :zipcode, optional: true
 
   before_create :add_nickname
   after_create :create_candidacy

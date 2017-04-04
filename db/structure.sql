@@ -434,7 +434,8 @@ CREATE TABLE people (
     nickname character varying NOT NULL,
     phone_number character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    zipcode_id integer
 );
 
 
@@ -533,6 +534,44 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: zipcodes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE zipcodes (
+    id integer NOT NULL,
+    zipcode character varying NOT NULL,
+    zipcode_type character varying,
+    default_city character varying,
+    county_fips character varying,
+    county_name character varying,
+    state_abbreviation character varying,
+    state character varying,
+    latitude double precision,
+    longitude double precision,
+    "precision" character varying
+);
+
+
+--
+-- Name: zipcodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE zipcodes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: zipcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE zipcodes_id_seq OWNED BY zipcodes.id;
+
+
+--
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -614,6 +653,13 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 --
 
 ALTER TABLE ONLY recruiting_ads ALTER COLUMN id SET DEFAULT nextval('recruiting_ads_id_seq'::regclass);
+
+
+--
+-- Name: zipcodes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY zipcodes ALTER COLUMN id SET DEFAULT nextval('zipcodes_id_seq'::regclass);
 
 
 --
@@ -726,6 +772,14 @@ ALTER TABLE ONLY recruiting_ads
 
 ALTER TABLE ONLY schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: zipcodes zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY zipcodes
+    ADD CONSTRAINT zipcodes_pkey PRIMARY KEY (id);
 
 
 --
@@ -883,6 +937,13 @@ CREATE INDEX index_organizations_on_recruiter_id ON organizations USING btree (r
 
 
 --
+-- Name: index_people_on_zipcode_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_people_on_zipcode_id ON people USING btree (zipcode_id);
+
+
+--
 -- Name: index_pg_search_documents_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -947,6 +1008,14 @@ ALTER TABLE ONLY accounts
 
 ALTER TABLE ONLY messages
     ADD CONSTRAINT fk_rails_41c70a97c6 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: people fk_rails_6b501a6402; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY people
+    ADD CONSTRAINT fk_rails_6b501a6402 FOREIGN KEY (zipcode_id) REFERENCES zipcodes(id);
 
 
 --
@@ -1059,6 +1128,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170312162833'),
 ('20170316123919'),
 ('20170316150805'),
-('20170404173405');
+('20170404173405'),
+('20170404174929');
 
 
