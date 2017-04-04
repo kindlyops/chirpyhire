@@ -1,6 +1,6 @@
 .candidates {
   .card-img-top {
-    height: 125px;
+    height: 40px;
     $background-color: #91d4b9;
 
     $patterns: (four-point-stars, anchors-away, architect, autumn, aztec, 
@@ -26,58 +26,58 @@
     }
 
     &.second {
-      $background-color: adjust-hue($background-color, 1 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $second-color: adjust-hue($background-color, 1 * 36%);
+      background-color: $second-color;
+      $foreground-color: darken(desaturate(adjust-hue($second-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.third {
-      $background-color: adjust-hue($background-color, 4 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $third-color: adjust-hue($background-color, 2 * 36%);
+      background-color: $third-color;
+      $foreground-color: darken(desaturate(adjust-hue($third-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.fourth {
-      $background-color: adjust-hue($background-color, 7 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $fourth-color: adjust-hue($background-color, 3 * 36%);
+      background-color: $fourth-color;
+      $foreground-color: darken(desaturate(adjust-hue($fourth-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.fifth {
-      $background-color: adjust-hue($background-color, 3 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $fifth-color: adjust-hue($background-color, 4 * 36%);
+      background-color: $fifth-color;
+      $foreground-color: darken(desaturate(adjust-hue($fifth-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.sixth {
-      $background-color: adjust-hue($background-color, 5 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $sixth-color: adjust-hue($background-color, 5 * 36%);
+      background-color: $sixth-color;
+      $foreground-color: darken(desaturate(adjust-hue($sixth-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.seventh {
-      $background-color: adjust-hue($background-color, 6 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $seventh-color: adjust-hue($background-color, 6 * 36%);
+      background-color: $seventh-color;
+      $foreground-color: darken(desaturate(adjust-hue($seventh-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.eighth {
-      $background-color: adjust-hue($background-color, 2 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $eigth-color: adjust-hue($background-color, 7 * 36%);
+      background-color: $eigth-color;
+      $foreground-color: darken(desaturate(adjust-hue($eigth-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
 
     &.nineth {
-      $background-color: adjust-hue($background-color, 8 * 11.1%);
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+      $nineth-color: adjust-hue($background-color, 8 * 36%);
+      background-color: $nineth-color;
+      $foreground-color: darken(desaturate(adjust-hue($nineth-color, -1deg), 2), 26);
       @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
     }
   }
