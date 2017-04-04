@@ -1,7 +1,7 @@
 = title "Ready | ChirpyHire"
 = content_for :container_class, 'container-fluid'
 = content_for :sub_navigation do
-  nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-tertiary
+  nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-secondary
     .btn-group
       .dropdown.mr-3
         button#availability.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
@@ -62,6 +62,19 @@
             span
               i.fa.mr-2.fa-thumbs-o-up
               | No reliable transportation
+      .dropdown
+        button#transportation.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+          i.fa.fa-handshake-o.mr-2
+          | Relationship
+        .dropdown-menu aria-labelledby="transportation" 
+          a.dropdown-item href="#"
+            span
+              i.fa.mr-2.fa-plug
+              | Connected
+          a.dropdown-item href="#"
+            span
+              i.fa.mr-2.fa-globe
+              | Network
 .candidates.mb-3
   .row
     .col
@@ -84,7 +97,7 @@
                 cite Being a Caregiver
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 3 mins ago
+              small.text-muted Last active 3 mins ago
               small.text-muted Joined Today
         .card
           .card-img-top.second
@@ -101,7 +114,7 @@
                 cite Their Strengths and Weaknesses
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 11 mins ago
+              small.text-muted Last active 11 mins ago
               small.text-muted Joined Yesterday
         .card
           .card-img-top.third
@@ -118,7 +131,7 @@
                 cite Favorite Thing About Caregiving
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 1 hour ago
+              small.text-muted Last active 1 hour ago
               small.text-muted Joined April 2017
   .row
     .col
@@ -136,7 +149,7 @@
                 cite Their Strengths and Weaknesses
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 2 hours ago
+              small.text-muted Last active 2 hours ago
               small.text-muted Joined March 2017
         .card
           .card-img-top.fifth
@@ -151,7 +164,7 @@
                 cite Favorite Thing About Caregiving
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 1 day ago
+              small.text-muted Last active 1 day ago
               small.text-muted Joined March 2017
         .card
           .card-img-top.sixth
@@ -166,7 +179,7 @@
                 cite Being a Caregiver
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 2 days ago
+              small.text-muted Last active 2 days ago
               small.text-muted Joined February 2017
 
   .row
@@ -185,7 +198,7 @@
                 cite Favorite Thing About Caregiving
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 5 days ago
+              small.text-muted Last active 5 days ago
               small.text-muted Joined December 2016
         .card
           .card-img-top.eighth
@@ -200,7 +213,7 @@
                 cite Being a Caregiver
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 1 week ago
+              small.text-muted Last active 1 week ago
               small.text-muted Joined November 2016
         .card
           .card-img-top.nineth
@@ -215,7 +228,7 @@
                 cite Their Strengths and Weaknesses
           .card-footer
             p.card-text.d-flex.justify-content-between
-              small.text-muted Last chat 1 month ago
+              small.text-muted Last active 1 month ago
               small.text-muted Joined November 2016
   hr.mt-4.mb-4
   nav aria-label="candidates navigation"

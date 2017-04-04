@@ -27,14 +27,10 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top
                 i.fa.fa-graduation-cap.fa-fw.mr-2
                 | No certification
   ul.navbar-nav.mt-2.mt-md-0.ml-auto
-    - if current_organization.phone_number.present?
-      li.nav-item.mr-2.my-auto
-        span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
-    - else
-      li.nav-item.mr-2.my-auto
-        span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
-          | Your phone number
-          i.fa.fa-mobile.ml-2.white
+    li.nav-item.mr-5.my-auto.messages-link
+      a href="#" 
+        span Messages
+      i.fa.fa-circle
     li.nav-item.dropdown
       button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" role="button"
         i.fa.fa-user-circle-o
@@ -60,9 +56,5 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top
           = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
             i.fa.fa-fw.fa-sign-out
             span.ml-2 Sign out
-nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-secondary
-  ul.navbar-nav
-    li.nav-item
-      = nav_link_to 'My Caregivers', candidates_path, { class: 'nav-link' }, controller_segment: 1
 - if content_for?(:sub_navigation) 
   = content_for(:sub_navigation)

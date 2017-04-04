@@ -1,12 +1,26 @@
 nav.navbar.top {
   padding: 0 1rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
 
-  &.top-tertiary {
+  .messages-link {
+    position: relative;
+
+    .fa-circle {
+      position: absolute;
+      top: 0;
+      right: -9px;
+      font-size: 0.2rem;
+      color: $blue;
+    }
+  }
+
+  &.top-secondary {
+    box-shadow: none !important;
     &.fixed-top {
       z-index: 998;
     }
 
-    margin-top: 107px;
+    margin-top: 65px;
     border-bottom: 1px solid #c5d6de;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -18,29 +32,6 @@ nav.navbar.top {
         box-shadow: none;
       }
     }
-  }
-
-  &.top-secondary {
-    &.fixed-top {
-      z-index: 999;
-    }
-
-    padding: 0 1rem;
-    li {
-      padding: 0;
-
-      a {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
-
-        &.active {
-          color: $green;
-          border-bottom: 3px solid $green;
-        }
-      }
-    }
-    margin-top: 4rem;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
   }
 
   .navbar-brand {
