@@ -245,6 +245,38 @@ ALTER SEQUENCE ideal_candidate_suggestions_id_seq OWNED BY ideal_candidate_sugge
 
 
 --
+-- Name: ideal_candidate_zipcodes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE ideal_candidate_zipcodes (
+    id integer NOT NULL,
+    value character varying NOT NULL,
+    ideal_candidate_id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: ideal_candidate_zipcodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE ideal_candidate_zipcodes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ideal_candidate_zipcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE ideal_candidate_zipcodes_id_seq OWNED BY ideal_candidate_zipcodes.id;
+
+
+--
 -- Name: ideal_candidates; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -501,38 +533,6 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: zipcodes; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE zipcodes (
-    id integer NOT NULL,
-    value character varying NOT NULL,
-    ideal_candidate_id integer NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: zipcodes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE zipcodes_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: zipcodes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE zipcodes_id_seq OWNED BY zipcodes.id;
-
-
---
 -- Name: accounts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -558,6 +558,13 @@ ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq':
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions ALTER COLUMN id SET DEFAULT nextval('ideal_candidate_suggestions_id_seq'::regclass);
+
+
+--
+-- Name: ideal_candidate_zipcodes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ideal_candidate_zipcodes ALTER COLUMN id SET DEFAULT nextval('ideal_candidate_zipcodes_id_seq'::regclass);
 
 
 --
@@ -610,13 +617,6 @@ ALTER TABLE ONLY recruiting_ads ALTER COLUMN id SET DEFAULT nextval('recruiting_
 
 
 --
--- Name: zipcodes id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY zipcodes ALTER COLUMN id SET DEFAULT nextval('zipcodes_id_seq'::regclass);
-
-
---
 -- Name: accounts accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -654,6 +654,14 @@ ALTER TABLE ONLY contacts
 
 ALTER TABLE ONLY ideal_candidate_suggestions
     ADD CONSTRAINT ideal_candidate_suggestions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ideal_candidate_zipcodes ideal_candidate_zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ideal_candidate_zipcodes
+    ADD CONSTRAINT ideal_candidate_zipcodes_pkey PRIMARY KEY (id);
 
 
 --
@@ -718,14 +726,6 @@ ALTER TABLE ONLY recruiting_ads
 
 ALTER TABLE ONLY schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
--- Name: zipcodes zipcodes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY zipcodes
-    ADD CONSTRAINT zipcodes_pkey PRIMARY KEY (id);
 
 
 --
@@ -820,6 +820,20 @@ CREATE INDEX index_ideal_candidate_suggestions_on_organization_id ON ideal_candi
 
 
 --
+-- Name: index_ideal_candidate_zipcodes_on_ideal_candidate_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ideal_candidate_zipcodes_on_ideal_candidate_id ON ideal_candidate_zipcodes USING btree (ideal_candidate_id);
+
+
+--
+-- Name: index_ideal_candidate_zipcodes_on_ideal_candidate_id_and_value; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_ideal_candidate_zipcodes_on_ideal_candidate_id_and_value ON ideal_candidate_zipcodes USING btree (ideal_candidate_id, value);
+
+
+--
 -- Name: index_ideal_candidates_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -887,20 +901,6 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 --
 
 CREATE INDEX index_recruiting_ads_on_organization_id ON recruiting_ads USING btree (organization_id);
-
-
---
--- Name: index_zipcodes_on_ideal_candidate_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_zipcodes_on_ideal_candidate_id ON zipcodes USING btree (ideal_candidate_id);
-
-
---
--- Name: index_zipcodes_on_ideal_candidate_id_and_value; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_zipcodes_on_ideal_candidate_id_and_value ON zipcodes USING btree (ideal_candidate_id, value);
 
 
 --
@@ -1014,10 +1014,10 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: zipcodes fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: ideal_candidate_zipcodes fk_rails_f350bdf885; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY zipcodes
+ALTER TABLE ONLY ideal_candidate_zipcodes
     ADD CONSTRAINT fk_rails_f350bdf885 FOREIGN KEY (ideal_candidate_id) REFERENCES ideal_candidates(id);
 
 
@@ -1058,6 +1058,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170310234243'),
 ('20170312162833'),
 ('20170316123919'),
-('20170316150805');
+('20170316150805'),
+('20170404173405');
 
 
