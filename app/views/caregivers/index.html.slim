@@ -1,50 +1,63 @@
 = title "Caregivers | ChirpyHire"
 = content_for :container_class, 'container-fluid'
 .caregivers.mb-3
-  .row
-    .col
-      p.mt-4.lead 
+  - if @candidates.total_count.positive?
+    .row
+      .col
+        p.mt-4.lead 
+          = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
+          '+
+          '
+          | Caregivers
+    - candidates.each_slice(3).with_index do |slice, i|
+      .row
+        .col
+          div class==(i == 0 ? 'card-deck' : 'card-deck mt-5')
+            - slice.each do |candidate|
+              .card
+                div class=="card-img-top #{candidate.hero_pattern_classes}"
+                .card-block
+                  = link_to contact_conversation_path(candidate), class: 'btn btn-success float-right', role: 'button' do
+                    span Message
+                    i.fa.fa-comment.ml-2
+                  h4.card-title = candidate.phone_number
+                  h6.card-subtitle.mb-2.text-muted = candidate.handle
+                .card-block
+                  p.card-text
+                    span = candidate.stats
+                .card-footer
+                  p.card-text.d-flex.justify-content-between
+                    small.text-muted 
+                      ' Last active
+                      = candidate.last_active_at
+                    small.text-muted
+                      ' Joined 
+                      = candidate.joined_at
+    hr.mt-4.mb-4
+    nav aria-label="candidates navigation"
+      p
+        = @candidates.offset_value + 1
+        '
+        ' -
+        '
+        = [@candidates.offset_value + @candidates.limit_value, @candidates.total_count].min
+        '
+        | of
+        '
         = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
         '+
         '
         | Caregivers
-  - candidates.each_slice(3).with_index do |slice, i|
-    .row
-      .col
-        div class==(i == 0 ? 'card-deck' : 'card-deck mt-5')
-          - slice.each do |candidate|
-            .card
-              div class=="card-img-top #{candidate.hero_pattern_classes}"
-              .card-block
-                = link_to contact_conversation_path(candidate), class: 'btn btn-success float-right', role: 'button' do
-                  span Message
-                  i.fa.fa-comment.ml-2
-                h4.card-title = candidate.phone_number
-                h6.card-subtitle.mb-2.text-muted = candidate.handle
-              .card-block
-                p.card-text
-                  span = candidate.stats
-              .card-footer
-                p.card-text.d-flex.justify-content-between
-                  small.text-muted 
-                    ' Last active
-                    = candidate.last_active_at
-                  small.text-muted
-                    ' Joined 
-                    = candidate.joined_at
-  hr.mt-4.mb-4
-  nav aria-label="candidates navigation"
-    p
-      = @candidates.offset_value + 1
-      '
-      ' -
-      '
-      = [@candidates.offset_value + @candidates.limit_value, @candidates.total_count].min
-      '
-      | of
-      '
-      = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
-      '+
-      '
-      | Caregivers
-    = paginate @candidates 
+      = paginate @candidates 
+  - else
+    .jumbotron.mt-4
+      .row.mb-5.mt-5
+        .col-4.offset-4
+          .text-center.mb-5
+            h3.text-muted.mt-5 No caregivers yet
+            blockquote.blockquote.mt-5
+              p.mb-0 Start by doing what's necessary
+              p.mb-0 then do what's possible
+              p.mb-0 and suddenly you are doing the impossible.
+              footer.mt-3.blockquote-footer
+                | St. Francis of Assisi
