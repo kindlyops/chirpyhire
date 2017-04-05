@@ -3,7 +3,7 @@ class CaregiversController < ApplicationController
   PAGE_LIMIT = 9
 
   def index
-    @candidates = paginated(filtered_candidates)
+    @candidates = paginated(filtered_candidates).order(id: :asc)
   end
 
   private
