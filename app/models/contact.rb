@@ -14,6 +14,11 @@ class Contact < ApplicationRecord
     where(candidate: true)
   end
 
+  def self.filter(filter_params)
+    includes(person: :candidacy)
+      .where(people: { 'candidacies' => filter_params.to_h })
+  end
+
   def self.not_ready
     where(candidate: false)
   end

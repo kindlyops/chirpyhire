@@ -6,7 +6,17 @@ $(document).on('turbolinks:load', function() {
     $(document).on('click', '.apply', function(e) {
       e.preventDefault();
       $form = $(this).closest('form');
-      Turbolinks.visit($form.attr('action') + '&' + $form.serialize());
+
+      var parser = document.createElement('a');
+      parser.href = $form.attr('action');
+
+      if (parser.search) {
+        var url = $form.attr('action') + '&' + $form.serialize();
+      } else {
+        var url = $form.attr('action') + '?' + $form.serialize();
+      }
+      
+      Turbolinks.visit(url);
     });
 
     $(document).on('click', '.cancel', function(e) {
