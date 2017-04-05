@@ -1,7 +1,152 @@
 = title "Caregivers | ChirpyHire"
 = content_for :container_class, 'container-fluid'
 = content_for :body_class, 'white'
-.caregivers.mb-3
+nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.top-secondary
+  .row
+    .col
+      .btn-group
+        .dropdown.certification.mr-3
+          .overlay
+          button#certification.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-graduation-cap.fa-fw.mr-2
+            | Certification
+          .dropdown-menu aria-labelledby="certification"
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text PCA          
+                  i.fa.fa-heart-o.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text CNA          
+                  i.fa.fa-heart.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text RN, LPN, Other          
+                  i.fa.fa-heartbeat.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text No certification          
+                  i.fa.fa-graduation-cap.fa-fw.ml-2
+            .dropdown-item.d-flex.justify-content-between
+              a.cancel href="#" Cancel
+              a.apply href="#" Apply
+        .dropdown.availability.mr-3
+          .overlay
+          button#availability.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-calendar-check-o.mr-2
+            | Availability
+          .dropdown-menu aria-labelledby="certification"
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text Hourly          
+                  i.fa.fa-clock-o.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text Live-In          
+                  i.fa.fa-home.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text Both         
+                  i.fa.fa-hourglass-half.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text No availability          
+                  i.fa.fa-hourglass-o.fa-fw.ml-2
+            .dropdown-item.d-flex.justify-content-between
+              a.cancel href="#" Cancel
+              a.apply href="#" Apply
+        .dropdown.experience.mr-3
+          .overlay
+          button#experience.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-level-up.mr-2.ml-1
+            | Experience
+          .dropdown-menu aria-labelledby="certification"
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text 0 - 1 years          
+                  i.fa.fa-battery-quarter.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text 1 - 5 years          
+                  i.fa.fa-battery-half.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text 6+ years        
+                  i.fa.fa-battery-full.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text New to caregiving         
+                  i.fa.fa-battery-empty.fa-fw.ml-2
+            .dropdown-item.d-flex.justify-content-between
+              a.cancel href="#" Cancel
+              a.apply href="#" Apply
+        .dropdown.transportation.mr-3
+          .overlay
+          button#transportation.btn.btn-secondary.dropdown-toggle aria-expanded="false" role="button" aria-haspopup="true" data-toggle="dropdown" type="button"
+            i.fa.fa-road.mr-2
+            | Transportation
+          .dropdown-menu aria-labelledby="certification"
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text Personal Transportation          
+                  i.fa.fa-car.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text Public Transportation          
+                  i.fa.fa-bus.fa-fw.ml-2
+            .dropdown-item
+              label.custom-control.custom-checkbox
+                input.custom-control-input type="checkbox" /
+                span.custom-control-indicator
+                span.custom-control-description
+                  span.description-text No reliable transportation      
+                  i.fa.fa-thumbs-o-up.fa-fw.ml-2
+            .dropdown-item.d-flex.justify-content-between
+              a.cancel href="#" Cancel
+              a.apply href="#" Apply
+.caregivers.mb-3.mt-5
   - if @candidates.total_count.positive?
     .row
       .col
