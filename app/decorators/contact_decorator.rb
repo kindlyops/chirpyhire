@@ -7,7 +7,6 @@ class ContactDecorator < Draper::Decorator
 
   def last_active_at
     Contact::LastActiveAt.new(object)
-    # '3 mins ago'
   end
 
   def stats
