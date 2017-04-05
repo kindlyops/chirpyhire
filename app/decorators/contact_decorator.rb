@@ -1,6 +1,19 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
 
+  def joined_at
+    Contact::JoinedAt.new(object)
+  end
+
+  def last_active_at
+    Contact::LastActiveAt.new(object)
+    # '3 mins ago'
+  end
+
+  def stats
+    Contact::Stats.new(object)
+  end
+
   def created_at
     Contact::CreatedAt.new(object)
   end

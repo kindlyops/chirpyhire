@@ -3,6 +3,10 @@ class Contact::Attribute
     @contact = contact
   end
 
+  def to_s
+    label
+  end
+
   attr_reader :contact
   delegate :person, :organization, to: :contact
   delegate :candidacy, to: :person

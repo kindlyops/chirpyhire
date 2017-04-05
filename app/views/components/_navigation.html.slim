@@ -26,21 +26,24 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
         button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" role="button"
           i.fa.fa-user-circle-o
         .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
+          = link_to caregivers_path, class: 'dropdown-item' do
+              i.fa.fa-fw.fa-search.mr-1
+              span.ml-2 Search
           = link_to recruiting_ad_path, class: 'dropdown-item' do
-              i.fa.fa-magnet.mr-1
+              i.fa.fa-fw.fa-magnet.mr-1
               span.ml-2 Recruiting Ad
           = link_to candidate_path, class: 'dropdown-item' do
-              i.fa.fa-id-card
+              i.fa.fa-fw.fa-id-card
               span.ml-2 Ideal Candidate
           hr
           = link_to settings_profile_path, class: 'dropdown-item' do
-            i.fa.fa-gear
+            i.fa.fa-fw.fa-gear
             span.ml-2 Settings
           - if impersonating?
             = link_to stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}", class: 'dropdown-item' do
-                i.fa.fa-step-backward
+                i.fa.fa-fw.fa-step-backward
                 span.ml-2 Stop Impersonating
           - else
             = link_to destroy_account_session_path, method: :delete, id: 'sign-out', class: 'dropdown-item' do
-              i.fa.fa-sign-out
+              i.fa.fa-fw.fa-sign-out
               span.ml-2 Sign out
