@@ -3,6 +3,14 @@
     background-color: $white;
   }
 
+  .card-deck {
+    @include media-breakpoint-down(sm) {
+      .card:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
   .card-img-top {
     position: relative;
     height: 50px;
