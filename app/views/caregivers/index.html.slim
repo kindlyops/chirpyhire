@@ -5,7 +5,7 @@
   - if @candidates.total_count.positive?
     .row
       .col
-        p.mt-4.lead 
+        p.lead 
           = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
           '+
           '
@@ -51,7 +51,7 @@
         | Caregivers
       = paginate @candidates 
   - else
-    .jumbotron.mt-4
+    .jumbotron
       .row.mb-5.mt-5
         .col-4.offset-4
           .text-center.mb-5
