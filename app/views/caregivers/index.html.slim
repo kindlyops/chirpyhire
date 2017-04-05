@@ -14,7 +14,7 @@
         div class==(i == 0 ? 'card-deck' : 'card-deck mt-5')
           - slice.each do |candidate|
             .card
-              .card-img-top.first
+              div class=="card-img-top #{candidate.hero_pattern_classes}"
               .card-block
                 = link_to contact_conversation_path(candidate), class: 'btn btn-success float-right', role: 'button' do
                   span Message

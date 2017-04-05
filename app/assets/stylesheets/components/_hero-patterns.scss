@@ -333,3 +333,38 @@
 @mixin hp-zig-zag($foreground-color) {
   background-image: svg-uri("<svg width='40' height='12' viewBox='0 0 40 12' xmlns='http://www.w3.org/2000/svg'><title>zig-zag</title><path d='M0 6.172L6.172 0h5.656L0 11.828V6.172zm40 5.656L28.172 0h5.656L40 6.172v5.656zM6.172 12l12-12h3.656l12 12h-5.656L20 3.828 11.828 12H6.172zm12 0L20 10.172 21.828 12h-3.656z' fill='#{$foreground-color}' fill-rule='evenodd'/></svg>");
 }
+
+$background-color: #91d4b9;
+
+$patterns: (four-point-stars, anchors-away, architect, autumn, aztec, 
+  bamboo, bank-note, bathroom-floor, bevel-circle, boxes, brick-wall, 
+  bubbles, cage, charlie-brown, church-on-sunday, circles-and-squares, 
+  circuit-board, connections, cork-screw, current, curtain, cutout, 
+  death-star, diagonal-lines, diagonal-stripes, dominos, endless-clouds, 
+  eyes, falling-triangles, fancy-rectangles, flipped-diamonds, 
+  floating-cogs, floor-tile, glamorous, graph-paper, groovy, 
+  happy-intersection, heavy-rain, hexagons, hideout, houndstooth, 
+  i-like-food, intersecting-circles, jupiter, kiwi, leaf, line-in-motion, 
+  lips, lisbon, melt, moroccan, morphing-diamonds, overlapping-circles, 
+  overlapping-diamonds, overlapping-hexagons, parkay-floor, piano-man, 
+  pie-factory, pixel-dots, plus, polka-dots, rails, rain, random-shapes, 
+  rounded-plus-connected, signal, slanted-stars, squares-in-squares,
+   squares, stamp-collection, steel-beams, stripes, temple, tic-tac-toe, 
+   tiny-checkers, volcano-lamp, wallpaper, wiggle, x-equals, yyy, zig-zag);
+
+$colors: (first: 1, second: 2, third: 3, fourth: 4, fifth: 5,
+          sixth: 6, seventh: 7, eighth: 8, nineth: 9);
+
+@each $class, $number in $colors {
+  .#{$class} {
+    $background-color: adjust-hue($background-color, ($number - 1) * 36%);
+    background-color: $background-color;
+    $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
+
+    @each $pattern in $patterns {
+      &.hp-#{$pattern} {
+        @include mixin("hp-#{$pattern}", $foreground-color);
+      }
+    }
+  }
+}
