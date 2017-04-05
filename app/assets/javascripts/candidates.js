@@ -10,10 +10,10 @@ $(document).on('turbolinks:load', function() {
         return '';
       }
     };
-    
+
     candidates.on('click', 'a.screened:not(.active)', function() {
       var $button = $(this);
-    
+
       $.ajax({
         url: '/contacts/' + $button.data('candidate-id'),
         type: 'PUT',
@@ -26,10 +26,10 @@ $(document).on('turbolinks:load', function() {
         dataType: 'json'
       });
     });
-    
+
     candidates.on('click', 'a.screened.active', function() {
       var $button = $(this);
-    
+
       $.ajax({
         url: '/contacts/' + $button.data('candidate-id'),
         type: 'PUT',
@@ -42,7 +42,7 @@ $(document).on('turbolinks:load', function() {
         dataType: 'json'
       });
     });
-    
+
     candidates.find('table').bootstrapTable({
       classes: 'table table-no-bordered',
       smartDisplay: true,
