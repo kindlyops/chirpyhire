@@ -1,4 +1,9 @@
 .caregivers {
+
+  @include media-breakpoint-down(sm) {
+    margin-top: 10rem !important;
+  }
+  
   .card-footer {
     background-color: $white;
   }

@@ -6,49 +6,6 @@ nav.navbar.top {
     }
   }
 
-  .dropdown {
-    span.description-text {
-      display: inline-block;
-    }
-
-    &.certification {
-      span.description-text {
-        width: 130px;
-      }
-    }
-
-    &.transportation {
-      span.description-text {
-        width: 200px;
-      }
-    }
-    
-    &.availability {
-      span.description-text {
-        width: 120px;
-      }
-    }
-
-    &.experience {
-      span.description-text {
-        width: 146px;
-      }
-    }
-
-    &.show {
-      .overlay {
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-        top: 140px;
-        left: 0;
-        right: 0;
-        z-index: 1;
-        background: rgba(255, 255, 255, 0.7);
-      }
-    }
-  }
-
   @media (max-width: 991px) {
     li.dropdown {
       margin-top: 0.5rem;
@@ -58,6 +15,56 @@ nav.navbar.top {
   &.top-secondary {
     a.cancel {
       color: $gray;
+    }
+
+    @include media-breakpoint-down(sm) {
+      .btn-group {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .dropdown {
+      span.description-text {
+        display: inline-block;
+      }
+
+      &.certification {
+        span.description-text {
+          width: 130px;
+        }
+      }
+
+      &.transportation {
+        span.description-text {
+          width: 200px;
+        }
+      }
+      
+      &.availability {
+        span.description-text {
+          width: 120px;
+        }
+      }
+
+      &.experience {
+        span.description-text {
+          width: 146px;
+        }
+      }
+
+      &.show {
+        .overlay {
+          position: fixed;
+          height: 100vh;
+          width: 100%;
+          top: 140px;
+          left: 0;
+          right: 0;
+          z-index: 1;
+          background: rgba(255, 255, 255, 0.7);
+        }
+      }
     }
 
     box-shadow: none !important;
