@@ -1,5 +1,5 @@
 class Contact::Experience < Contact::Attribute
-  def humanize_attributes
+  def self.humanize_attributes
     {
       less_than_one: '0 - 1 years',
       one_to_five: '1 - 5 years',
@@ -8,7 +8,7 @@ class Contact::Experience < Contact::Attribute
     }.with_indifferent_access
   end
 
-  def icon_classes
+  def self.icon_classes
     {
       less_than_one: 'fa-battery-quarter',
       one_to_five: 'fa-battery-half',

@@ -12,6 +12,10 @@
   }
 
   .dropdown {
+    span.dropdown-label {
+      margin-right: 5px;
+      display: inline-block;
+    }
     span.description-text {
       display: inline-block;
     }

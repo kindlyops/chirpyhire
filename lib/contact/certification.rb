@@ -1,5 +1,5 @@
 class Contact::Certification < Contact::Attribute
-  def humanize_attributes
+  def self.humanize_attributes
     {
       pca: 'PCA',
       cna: 'CNA',
@@ -8,7 +8,7 @@ class Contact::Certification < Contact::Attribute
     }.with_indifferent_access
   end
 
-  def icon_classes
+  def self.icon_classes
     {
       pca: 'fa-heart-o',
       cna: 'fa-heart',

@@ -35,4 +35,12 @@ class Contact::Attribute
 
     'btn-outline-secondary'
   end
+
+  def humanize_attributes
+    self.class.humanize_attributes
+  end
+
+  def icon_classes
+    self.class.icon_classes
+  end
 end

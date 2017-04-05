@@ -1,5 +1,5 @@
 class Contact::Availability < Contact::Attribute
-  def humanize_attributes
+  def self.humanize_attributes
     {
       live_in: 'Live-In',
       hourly: 'Hourly',
@@ -8,7 +8,7 @@ class Contact::Availability < Contact::Attribute
     }.with_indifferent_access
   end
 
-  def icon_classes
+  def self.icon_classes
     {
       live_in: 'fa-home',
       hourly: 'fa-clock-o',

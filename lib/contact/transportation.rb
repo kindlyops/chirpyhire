@@ -1,5 +1,5 @@
 class Contact::Transportation < Contact::Attribute
-  def humanize_attributes
+  def self.humanize_attributes
     {
       personal_transportation: 'Personal',
       public_transportation: 'Public',
@@ -7,7 +7,7 @@ class Contact::Transportation < Contact::Attribute
     }.with_indifferent_access
   end
 
-  def icon_classes
+  def self.icon_classes
     {
       personal_transportation: 'fa-car',
       public_transportation: 'fa-bus',
