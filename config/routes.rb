@@ -2,8 +2,13 @@ require 'sidekiq/web'
 Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 
 Rails.application.routes.draw do
+  concern :paginatable do
+    get '(page/:page)', action: :index, on: :collection, as: ''
+  end
+
   resource :health, only: :show
   get '/candidates', to: 'candidates#index'
+  resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resource :recruiting_ad, only: [:show, :update, :create]
   resources :ideal_candidate_suggestions, only: :create

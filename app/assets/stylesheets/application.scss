@@ -6,21 +6,30 @@
 
 body {
   background-color: $gray-lighter;
+
+  &.white {
+    background-color: $white;
+  }
 }
 
 main.application {
-  padding-top: 100px;
+  padding-top: 80px;
 }
 
 @import "components/navigation";
 @import "components/form";
 @import "components/icon";
 @import "components/bootstrap_table";
+@import "components/dropdown";
+@import "components/svg-uri";
+@import "components/hero-patterns";
+
 
 @import "ideal_candidate";
 @import "conversation";
-@import "candidates";
 @import "contacts";
+@import "candidates";
+@import "caregivers";
 
 @import "settings/base";
 @import "settings/profile";
@@ -28,7 +37,4 @@ main.application {
 
 @import "registrations";
 @import "recruiting_ad";
-
-
-
 
