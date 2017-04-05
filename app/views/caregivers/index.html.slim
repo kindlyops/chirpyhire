@@ -3,7 +3,11 @@
 .caregivers.mb-3
   .row
     .col
-      p.mt-4.lead 300+ Caregivers
+      p.mt-4.lead 
+        = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
+        '+
+        '
+        | Caregivers
   - candidates.each_slice(3).with_index do |slice, i|
     .row
       .col
@@ -30,19 +34,17 @@
                     = candidate.joined_at
   hr.mt-4.mb-4
   nav aria-label="candidates navigation"
-    p 289 - 306 of 300+ Caregivers
-    ul.pagination
-      li.page-item
-        a.page-link aria-label="Previous" href="#" 
-          span aria-hidden="true"  &laquo;
-          span.sr-only Previous
-      li.page-item
-        a.page-link href="#"  1
-      li.page-item
-        a.page-link href="#"  2
-      li.page-item.active
-        a.page-link href="#"  3
-      li.page-item
-        a.page-link aria-label="Next" href="#" 
-          span aria-hidden="true"  &raquo;
-          span.sr-only Next
+    p
+      = @candidates.offset_value + 1
+      '
+      ' -
+      '
+      = [@candidates.offset_value + @candidates.limit_value, @candidates.total_count].min
+      '
+      | of
+      '
+      = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
+      '+
+      '
+      | Caregivers
+    = paginate @candidates 
