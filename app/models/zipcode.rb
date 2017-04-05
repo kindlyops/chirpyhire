@@ -1,3 +1,0 @@
-class Zipcode < ApplicationRecord
-  
-end

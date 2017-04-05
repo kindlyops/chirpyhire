@@ -6,7 +6,7 @@ html
     = render "components/navigation"
     div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
       .row
-        main class==(content_for?(:sub_navigation) ? 'sub-navigation col application' : 'col application')
+        main.col.application
           = render partial: "layouts/alerts"
           = yield
     = render "layouts/script"

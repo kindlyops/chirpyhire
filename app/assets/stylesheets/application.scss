@@ -5,18 +5,13 @@
 @import "polyfill/bootstrap3";
 
 main.application {
-  padding-top: 90px;
-
-  &.sub-navigation {
-    padding-top: 130px;
-  }
+  padding-top: 80px;
 }
 
 @import "components/navigation";
 @import "components/form";
 @import "components/icon";
 @import "components/bootstrap_table";
-@import "components/autocomplete";
 @import "components/dropdown";
 @import "components/svg-uri";
 @import "components/hero-patterns";

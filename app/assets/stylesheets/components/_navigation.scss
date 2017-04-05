@@ -1,36 +1,14 @@
 nav.navbar.top {
-  padding: 0 1rem;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1) !important;
-
-  .messages-link {
-    position: relative;
-
-    .fa-circle {
-      position: absolute;
-      top: 0;
-      right: -9px;
-      font-size: 0.2rem;
-      color: $blue;
+  @media (max-width: 576px) {
+    .container {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
 
-  &.top-secondary {
-    box-shadow: none !important;
-    &.fixed-top {
-      z-index: 998;
-    }
-
-    margin-top: 65px;
-    border-bottom: 1px solid #c5d6de;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-
-    .btn {
-      border: none;
-
-      &:focus {
-        box-shadow: none;
-      }
+  @media (max-width: 991px) {
+    li.dropdown {
+      margin-top: 0.5rem;
     }
   }
 
@@ -38,6 +16,7 @@ nav.navbar.top {
     margin-top: 0.75rem;
   }
 
+  border-bottom: 1px solid #c5d6de;
   background-color: white;
 
   .organization-phone-number {
