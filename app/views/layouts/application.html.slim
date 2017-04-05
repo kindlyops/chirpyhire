@@ -2,7 +2,7 @@ doctype html
 html
   head
     = render partial: "layouts/head"
-  body
+  body class==(content_for?(:body_class) ? content_for(:body_class) : '')
     = render "components/navigation"
     div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
       .row

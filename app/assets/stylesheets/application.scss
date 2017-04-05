@@ -4,6 +4,14 @@
 @import "bootstrap-table";
 @import "polyfill/bootstrap3";
 
+body {
+  background-color: $gray-lighter;
+
+  &.white {
+    background-color: $white;
+  }
+}
+
 main.application {
   padding-top: 80px;
 }
