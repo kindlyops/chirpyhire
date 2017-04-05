@@ -21,6 +21,14 @@
   .table {
     background-color: $white;
 
+    &.table-no-bordered {
+      border: none !important;
+
+      th, td {
+        border-top: none !important;
+      }
+    }
+
     @media(max-width: 562px) {
       tr {
         border-bottom: 4px solid $gray-lighter;
@@ -29,10 +37,6 @@
   }
 
   .fixed-table-container {
-    tbody td {
-      transition: all 0.2s ease-in-out;
-    }
-
     th {
       text-align: center;
     }

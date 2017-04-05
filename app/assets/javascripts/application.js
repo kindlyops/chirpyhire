@@ -15,6 +15,7 @@
 //= require tether
 //= require bootstrap
 //= require jquery_ujs
+//= require jquery-deparam
 //= require turbolinks
 //= require clipboard
 //= require ramda

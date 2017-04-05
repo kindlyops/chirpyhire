@@ -10,6 +10,6 @@ class Contact::Handle < Contact::Attribute
   def icon_class
     return 'fa-question' unless candidacy.handle.present?
 
-    'fa-user'
+    'fa-phone'
   end
 end

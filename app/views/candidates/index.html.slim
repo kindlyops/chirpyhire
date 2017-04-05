@@ -4,7 +4,64 @@
   .card
     .card-block
       h2.card-title
-        i.fa.fa-phone.mr-3
         span Ready to Call
+        i.fa.fa-phone.fa-fw
+      #filter-summary
+      #toolbar.mb-3
+        .btn-group.filters
+          .dropdown.mr-2
+            select.form-control
+              option Location
+              - current_organization.locations.each do |location|
+                option.dropdown-item data-type="location" value=location = location
+          .dropdown.mr-2
+            select.form-control
+              option Availability
+              option.dropdown-item data-type="availability" value="live-in" Live-In
+              option.dropdown-item data-type="availability" value="hourly" Hourly
+              option.dropdown-item data-type="availability" value="both" Both
+              option.dropdown-item data-type="availability" value="no_availability" No Availability
+          .dropdown.mr-2
+            button#certification.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+              span Certification
+              i.fa.fa-graduation-cap.ml-2.fa-fw
+            .dropdown-menu aria-labelledby="certification"
+              a.dropdown-item data-type="certification" data-value="pca" href="#"
+                span PCA
+                i.fa.fa-heart-o.ml-2
+              a.dropdown-item data-type="certification" data-value="cna" href="#"
+                span CNA
+                i.fa.fa-heart.ml-2
+              a.dropdown-item data-type="certification" data-value="other" href="#"
+                span RN, LPN, Other
+                i.fa.fa-heartbeat.ml-2
+          .dropdown.mr-2
+            button#experience.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+              span Experience
+              i.fa.fa-level-up.fa-fw
+            .dropdown-menu aria-labelledby="experience"
+              a.dropdown-item data-type="experience" data-value="zero-to-one" href="#"
+                span 0 - 1 years
+                i.fa.fa-battery-quarter.ml-2
+              a.dropdown-item data-type="experience" data-value="one-to-five" href="#"
+                span 1 - 5 years
+                i.fa.fa-battery-half.ml-2
+              a.dropdown-item data-type="experience" data-value="six-or-more" href="#"
+                span 6+ years
+                i.fa.fa-battery-full.ml-2
+              a.dropdown-item data-type="experience" data-value="six-or-more" href="#"
+                span No experience
+                i.fa.fa-battery-empty.ml-2
+          .dropdown
+            button#transportation.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+              span Transportation
+              i.fa.fa-road.fa-fw.ml-1
+            .dropdown-menu aria-labelledby="transportation"
+              a.dropdown-item data-type="transportation" data-value="personal" href="#"
+                span Personal
+                i.fa.fa-car.ml-2
+              a.dropdown-item data-type="transportation" data-value="public" href="#"
+                span Public
+                i.fa.fa-bus.ml-2
       table
 

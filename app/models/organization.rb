@@ -3,6 +3,7 @@ class Organization < ApplicationRecord
   has_many :accounts
   has_many :contacts
   has_many :people, through: :contacts, class_name: 'Person'
+  has_many :candidacies, through: :people
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate
   has_one :recruiting_ad
@@ -18,6 +19,10 @@ class Organization < ApplicationRecord
   has_many :messages
 
   delegate :zipcode, :city, to: :location
+
+  def locations
+    candidacies.pluck('DISTINCT zipcode').compact.sort
+  end
 
   def candidates
     people.joins(:candidacy)
