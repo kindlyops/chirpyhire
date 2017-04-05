@@ -4,6 +4,7 @@ Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
 Rails.application.routes.draw do
   resource :health, only: :show
   get '/candidates', to: 'candidates#index'
+  resources :caregivers, only: :index
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resource :recruiting_ad, only: [:show, :update, :create]
   resources :ideal_candidate_suggestions, only: :create
@@ -45,5 +46,5 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
-  root 'candidates#index'
+  root 'caregivers#index'
 end

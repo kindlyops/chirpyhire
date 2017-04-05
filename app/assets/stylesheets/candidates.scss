@@ -1,89 +1,91 @@
 .candidates {
-  .card-footer {
-    background-color: $white;
-  }
-
-  .card-img-top {
-    position: relative;
-    height: 70px;
-    $background-color: #91d4b9;
-
-    $patterns: (four-point-stars, anchors-away, architect, autumn, aztec, 
-      bamboo, bank-note, bathroom-floor, bevel-circle, boxes, brick-wall, 
-      bubbles, cage, charlie-brown, church-on-sunday, circles-and-squares, 
-      circuit-board, connections, cork-screw, current, curtain, cutout, 
-      death-star, diagonal-lines, diagonal-stripes, dominos, endless-clouds, 
-      eyes, falling-triangles, fancy-rectangles, flipped-diamonds, 
-      floating-cogs, floor-tile, glamorous, graph-paper, groovy, 
-      happy-intersection, heavy-rain, hexagons, hideout, houndstooth, 
-      i-like-food, intersecting-circles, jupiter, kiwi, leaf, line-in-motion, 
-      lips, lisbon, melt, moroccan, morphing-diamonds, overlapping-circles, 
-      overlapping-diamonds, overlapping-hexagons, parkay-floor, piano-man, 
-      pie-factory, pixel-dots, plus, polka-dots, rails, rain, random-shapes, 
-      rounded-plus-connected, signal, skulls, slanted-stars, squares-in-squares,
-       squares, stamp-collection, steel-beams, stripes, temple, tic-tac-toe, 
-       tiny-checkers, volcano-lamp, wallpaper, wiggle, x-equals, yyy, zig-zag);
-    
-    &.first {
-      background-color: $background-color;
-      $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
+  table {
+    .btn-outline-secondary {
+      .fa-mobile, .fa-medkit {
+        color: $ch-table-gray;
+      }
     }
 
-    &.second {
-      $second-color: adjust-hue($background-color, 1 * 36%);
-      background-color: $second-color;
-      $foreground-color: darken(desaturate(adjust-hue($second-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
+    .btn-outline-secondary, .btn-secondary:not(.screened) {
+      border: none;
+
+      &:hover {
+        border: none;
+      }
     }
 
-    &.third {
-      $third-color: adjust-hue($background-color, 2 * 36%);
-      background-color: $third-color;
-      $foreground-color: darken(desaturate(adjust-hue($third-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+    .screened {
+      .fa-check-circle {
+        color: $ch-table-gray;
+      }
 
-    &.fourth {
-      $fourth-color: adjust-hue($background-color, 3 * 36%);
-      background-color: $fourth-color;
-      $foreground-color: darken(desaturate(adjust-hue($fourth-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+      &:hover {
+        .fa-check-circle {
+          color: darken($ch-table-gray, 10%);
+        }
+      }
 
-    &.fifth {
-      $fifth-color: adjust-hue($background-color, 4 * 36%);
-      background-color: $fifth-color;
-      $foreground-color: darken(desaturate(adjust-hue($fifth-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+      &.activating {
+        @extend .btn-outline-primary;
+        border-color: $green;
+        background-color: $white;
+        animation: 1s screened-active;
+        animation-timing-function: ease-in-out;
 
-    &.sixth {
-      $sixth-color: adjust-hue($background-color, 5 * 36%);
-      background-color: $sixth-color;
-      $foreground-color: darken(desaturate(adjust-hue($sixth-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+        .fa-check-circle {
+          color: $green;
+          animation: 1s screened-active;
+          animation-timing-function: ease-in-out;
+        }
+      }
 
-    &.seventh {
-      $seventh-color: adjust-hue($background-color, 6 * 36%);
-      background-color: $seventh-color;
-      $foreground-color: darken(desaturate(adjust-hue($seventh-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+      &.active {
+        @extend .btn-outline-primary;
+        border-color: $green;
+        background-color: $white;
 
-    &.eighth {
-      $eigth-color: adjust-hue($background-color, 7 * 36%);
-      background-color: $eigth-color;
-      $foreground-color: darken(desaturate(adjust-hue($eigth-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
-    }
+        &:hover {
+          border-color: darken($green, 10%);
+          background-color: $white;
 
-    &.nineth {
-      $nineth-color: adjust-hue($background-color, 8 * 36%);
-      background-color: $nineth-color;
-      $foreground-color: darken(desaturate(adjust-hue($nineth-color, -1deg), 2), 26);
-      @include mixin("hp-#{nth($patterns, random(82))}", $foreground-color);
+          .fa-check-circle {
+            color: darken($green, 10%);
+          }
+        }
+
+        .fa-check-circle {
+          color: $green;
+        }
+      }
+
+      @keyframes screened-active {
+        from {
+            color: $green;
+            border-color: $green;
+        }
+        50% {
+            color: lighten($green, 25%);
+            border-color: lighten($green, 25%);
+        }
+        to {
+            color: $green;
+            border-color: $green;
+        }
+      }
+
+      .fa-certificate {
+        position: relative;
+        bottom: 2px;
+        left: 4px;
+        z-index: 5;
+      }
+
+      .fa-bookmark {
+        position: relative;
+        top: 5px;
+        right: 6.5px;
+        font-size: 10.5px;
+      }
     }
   }
 }
