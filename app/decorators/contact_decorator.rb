@@ -85,41 +85,16 @@ class ContactDecorator < Draper::Decorator
     Contact::Screened.new(object)
   end
 
-  def number_class 
-    {
-      1 => 'first',
-      2 => 'second',
-      3 => 'third',
-      4 => 'fourth',
-      5 => 'fifth',
-      6 => 'sixth',
-      7 => 'seventh',
-      8 => 'eighth',
-      0 => 'nineth'
-    }
+  def number_class
+    Hash[(0..8).zip(number_classes)]
   end
 
+  def number_classes
+    %w(first second third fourth fifth sixth seventh eighth nineth)
+  end
+
+  PATTERNS = YAML.load_file(Rails.root.join('config', 'hero_patterns.yml'))
   def pattern_class
-    Hash[(0..80).zip(pattern_classes)]
-  end
-
-  def pattern_classes
-    %w(four-point-stars anchors-away architect autumn aztec 
-  bamboo bank-note bathroom-floor bevel-circle boxes brick-wall 
-  bubbles cage charlie-brown church-on-sunday circles-and-squares 
-  circuit-board connections cork-screw current curtain cutout 
-  death-star diagonal-lines diagonal-stripes dominos endless-clouds 
-  eyes falling-triangles fancy-rectangles flipped-diamonds 
-  floating-cogs floor-tile glamorous graph-paper groovy 
-  happy-intersection heavy-rain hexagons hideout houndstooth 
-  i-like-food intersecting-circles jupiter kiwi leaf line-in-motion 
-  lips lisbon melt moroccan morphing-diamonds overlapping-circles 
-  overlapping-diamonds overlapping-hexagons parkay-floor piano-man 
-  pie-factory pixel-dots plus polka-dots rails rain random-shapes 
-  rounded-plus-connected signal slanted-stars squares-in-squares,
-   squares stamp-collection steel-beams stripes temple tic-tac-toe 
-   tiny-checkers volcano-lamp wallpaper wiggle x-equals yyy zig-zag).map do |c|
-    "hp-#{c}"
-   end
+    Hash[(0..80).zip(PATTERNS)]
   end
 end
