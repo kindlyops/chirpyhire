@@ -1,0 +1,26 @@
+.pac-container {
+  z-index: 1030;
+}
+
+#location-autocomplete {
+  width: 150px;
+  transition: all .5s ease;
+
+  .input-group-addon {
+    background-color: $white;
+    transition: all .5s ease;
+  }
+
+  input {
+    transition: all .5s ease;
+    border-left: 0;
+  }
+
+  &.expanded {
+    .input-group-addon {
+      border-color: lighten($brand-primary, 25%);
+    }
+
+    width: 330px;
+  }
+}
