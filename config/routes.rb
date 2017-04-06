@@ -6,9 +6,12 @@ Rails.application.routes.draw do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end
 
-  resource :health, only: :show
-  get '/candidates', to: 'candidates#index'
   resources :caregivers, only: :index, concerns: :paginatable
+  get ':location/caregivers', to: 'caregivers#index'
+  get ':location/caregivers(/page/:page)', to: 'caregivers#index'
+
+  resource :health, only: :show
+  get 'candidates', to: 'candidates#index'
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resource :recruiting_ad, only: [:show, :update, :create]
   resources :ideal_candidate_suggestions, only: :create
