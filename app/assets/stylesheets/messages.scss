@@ -31,12 +31,19 @@
       padding: 0;
 
       li {
-        font-size: 0.95rem;
+        font-size: 0.875rem;
         line-height: 1.5rem;
         height: 1.5rem;
         margin-right: 1px;
         position: relative;
         clear: both;
+
+        &.unread {
+          a {
+            font-weight: 900;
+            color: $white;
+          }
+        }
 
         a {
           color: $blue-gray;
