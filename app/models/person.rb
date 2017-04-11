@@ -9,8 +9,9 @@ class Person < ApplicationRecord
   after_create :create_candidacy
   after_save :set_search_content
 
-  delegate :inquiry, :zipcode, :availability, :experience,
+  delegate :inquiry, :availability, :experience,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
+  delegate :zipcode, to: :candidacy, prefix: true
 
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?

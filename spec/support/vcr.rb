@@ -33,6 +33,14 @@ VCR.configure do |c|
   c.filter_sensitive_data('DEMO_ORGANIZATION_PHONE') do
     ENV['DEMO_ORGANIZATION_PHONE']
   end
+
+  c.filter_sensitive_data('SMARTY_AUTH_ID') do
+    ENV['SMARTY_AUTH_ID']
+  end
+
+  c.filter_sensitive_data('SMARTY_AUTH_TOKEN') do
+    ENV['SMARTY_AUTH_TOKEN']
+  end
 end
 
 RSpec.configure do |config|

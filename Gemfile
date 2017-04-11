@@ -101,7 +101,7 @@ gem 'pg_search', '~> 2.0.1'
 gem 'hairtrigger', '~> 0.2.18'
 gem 'paperclip', '~> 5.1.0'
 gem 'aws-sdk', '~> 2.8.5'
-gem 'smartystreets_ruby_sdk', '~> 2.0.2'
+gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch: 'rearchitect-gem'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

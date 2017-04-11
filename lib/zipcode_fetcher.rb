@@ -1,7 +1,3 @@
-require 'smartystreets_ruby_sdk/static_credentials'
-require 'smartystreets_ruby_sdk/us_zipcode/client_builder'
-require 'smartystreets_ruby_sdk/us_zipcode/lookup'
-
 class ZipcodeFetcher
   def self.call(person, zipcode_string)
     new(person, zipcode_string).call
@@ -31,7 +27,7 @@ class ZipcodeFetcher
 
   def created_zipcode
     @created_zipcode ||= begin
-      Zipcode.create!(response_zipcode.attributes.slice(zipcode_attributes))
+      Zipcode.create!(response_zipcode)
     end
   end
 
@@ -41,7 +37,13 @@ class ZipcodeFetcher
   end
 
   def response_zipcode
-    @response_zipcode ||= result.zipcodes.first
+    @response_zipcode ||= begin
+      first = result.zipcodes.first
+
+      Hash[zipcode_attributes.map do |method|
+        [method, first.send(method)]
+      end]
+    end
   end
 
   def result
@@ -49,7 +51,7 @@ class ZipcodeFetcher
   end
 
   def lookup
-    @lookup ||= USZipcode::Lookup.new
+    @lookup ||= Smartystreets::USZipcode::Lookup.new
   end
 
   def auth_id
@@ -61,10 +63,10 @@ class ZipcodeFetcher
   end
 
   def credentials
-    StaticCredentials.new(auth_id, auth_token)
+    Smartystreets::StaticCredentials.new(auth_id, auth_token)
   end
 
   def client
-    @client ||= USZipcode::ClientBuilder.new(credentials).build
+    @client ||= Smartystreets::USZipcode::ClientBuilder.new(credentials).build
   end
 end
