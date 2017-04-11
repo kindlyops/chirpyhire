@@ -7,5 +7,13 @@ class Answer::Base
     false
   end
 
+  def attribute(*)
+    {}
+  end
+
+  def format(message)
+    yield attribute(message)
+  end
+
   attr_reader :question
 end

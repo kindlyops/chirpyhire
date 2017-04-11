@@ -9,6 +9,6 @@ FactoryGirl.define do
     state { 'Georgia' }
     latitude { 33.89025 }
     longitude { -84.37299 }
-    precision { 'Zip5' }    
+    precision { 'Zip5' }
   end
 end

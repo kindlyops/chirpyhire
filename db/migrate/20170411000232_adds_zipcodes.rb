@@ -13,6 +13,8 @@ class AddsZipcodes < ActiveRecord::Migration[5.0]
       t.string :precision, null: false
     end
 
+    add_index :zipcodes, :zipcode, unique: true
+
     change_table :people do |t|
       t.belongs_to :zipcode, null: true, index: true, foreign_key: true
     end

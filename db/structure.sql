@@ -965,6 +965,13 @@ CREATE INDEX index_recruiting_ads_on_organization_id ON recruiting_ads USING btr
 
 
 --
+-- Name: index_zipcodes_on_zipcode; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_zipcodes_on_zipcode ON zipcodes USING btree (zipcode);
+
+
+--
 -- Name: contacts contacts_before_insert_update_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
