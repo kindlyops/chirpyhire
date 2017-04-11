@@ -1,7 +1,8 @@
 = title "Messages | ChirpyHire"
 = content_for :container_class, 'container-fluid'
+= content_for :body_class, 'chat'
 .row.messages
-  nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
+  nav.sidebar.d-flex.flex-column
     p.pl-3.mb-4 = current_organization.name
 
     ul.nav.nav-pills.flex-column
@@ -12,4 +13,13 @@
             a.nav-link href="#" 
               i.fa.fa-circle-o.fa-fw.mr-1
               = contact.handle
-
+  section.client
+    header.client-header
+      .channel-title
+        span Loving Dragonfly
+      .channel-header-info
+        span
+          i.fa.fa-circle-o.mr-1.fa-fw
+          ' away
+    section.client-body
+      h1 Body

@@ -1,11 +1,37 @@
 .messages {
-  $blue-gray: #91A3B0;
+  .client {
+    margin-left: 240px;
+    width: 100%;
+
+    .client-header {
+      padding: 0.5rem 1rem;
+      background-color: white;
+    }
+
+    .client-body {
+      overflow: hidden;
+
+      &:before {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 8px;
+        border-bottom: 1px solid #E8E8E8;
+        background: #fff;
+        content: '';
+        z-index: 200;
+      }
+    }
+  }
 
   .sidebar {
+    $blue-gray: #91A3B0;
     color: $white;
     background-color: darken($brand-success, 8%);
     position: fixed;
     top: 82px;
+    width: 240px;
     bottom: 0;
     left: 0;
     z-index: 1000;

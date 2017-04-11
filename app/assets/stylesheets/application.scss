@@ -10,10 +10,16 @@ body {
   &.white {
     background-color: $white;
   }
-}
 
-main.application {
-  padding-top: 80px;
+  main.application {
+    padding-top: 80px;
+  }
+
+  &.chat {
+    main.application {
+      padding-top: 59px;
+    }
+  }
 }
 
 @import "components/navigation";
