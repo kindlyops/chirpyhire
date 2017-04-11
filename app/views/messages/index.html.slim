@@ -1,0 +1,15 @@
+= title "Messages | ChirpyHire"
+= content_for :container_class, 'container-fluid'
+.row.messages
+  nav.col-sm-3.col-md-2.hidden-xs-down.bg-faded.sidebar
+    p.pl-3.mb-4 = current_organization.name
+
+    ul.nav.nav-pills.flex-column
+      small.pl-3.mb-2 CONVERSATIONS
+      - current_organization.contacts.recently_replied.limit(5).each do |contact|
+        small
+          li.nav-item.pl-3 role="button"
+            a.nav-link href="#" 
+              i.fa.fa-circle-o.fa-fw.mr-1
+              = contact.handle
+

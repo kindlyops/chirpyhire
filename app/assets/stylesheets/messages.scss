@@ -1,0 +1,57 @@
+.messages {
+  $blue-gray: #91A3B0;
+
+  .sidebar {
+    color: $white;
+    background-color: darken($brand-success, 8%);
+    position: fixed;
+    top: 82px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    border-right: 1px solid #eee;
+    padding-left: 0;
+    padding-right: 0;
+
+    .nav {
+      color: $blue-gray;
+      margin-bottom: 20px;
+
+      a {
+        color: $blue-gray;
+      }
+    }
+
+    .nav-item {
+      width: 100%;
+
+      &:hover {
+        background-color: darken($brand-success, 20%);
+      }
+
+      &.active {
+        background-color: #6698C8;
+
+        a, .fa-circle, .fa-circle-o {
+          color: $white;
+        }
+      }
+    }
+
+    .nav-item + .nav-item {
+      margin-left: 0;
+    }
+
+    .nav-link {
+      padding-left: 0;
+      border-radius: 0;
+
+      .fa-circle {
+        color: $brand-primary;
+      }
+    }
+  }
+}

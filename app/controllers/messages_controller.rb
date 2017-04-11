@@ -1,5 +1,9 @@
 class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
+  skip_after_action :verify_policy_scoped, only: :index
+
+  def index
+  end
 
   def create
     @message = scoped_messages.build

@@ -10,6 +10,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  def self.recently_replied
+    order(last_reply_at: :desc)
+  end
+
   def self.candidate
     where(candidate: true)
   end
