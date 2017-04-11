@@ -56,7 +56,7 @@ $(document).on('turbolinks:load', function() {
         Turbolinks.visit(url);
       });
 
-      $(document).on('focusout', input, function(e) {
+      $(input).on('focusout', function(e) {
         var searchRegex = /zipcode|city|state|county/;
         var isFiltered = window.location.search.match(searchRegex);
 

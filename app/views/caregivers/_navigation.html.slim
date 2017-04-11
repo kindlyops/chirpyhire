@@ -3,7 +3,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
   .btn-group
     .dropdown.certification.mr-3
       .overlay
-      = form_tag caregivers_path(params.permit(experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
         = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :certification, icon: 'fa-graduation-cap' }
         .dropdown-menu aria-labelledby="certification"
           .dropdown-item
@@ -39,7 +39,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
             a.apply href="#" Apply
     .dropdown.availability.mr-3
       .overlay
-      = form_tag caregivers_path(params.permit(experience: [], transportation: [], certification: [])), method: :get, enforce_utf8: false do |f|
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], transportation: [], certification: [])), method: :get, enforce_utf8: false do |f|
         = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :availability, icon: 'fa-calendar-check-o' }
         .dropdown-menu aria-labelledby="availability"
           .dropdown-item
@@ -75,7 +75,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
             a.apply href="#" Apply
     .dropdown.experience.mr-3
       .overlay
-      = form_tag caregivers_path(params.permit(transportation: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, transportation: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
         = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :experience, icon: 'fa-level-up' }
         .dropdown-menu aria-labelledby="experience"
           .dropdown-item
@@ -111,7 +111,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
             a.apply href="#" Apply
     .dropdown.transportation.mr-3
       .overlay
-      = form_tag caregivers_path(params.permit(experience: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
         = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :transportation, icon: 'fa-road' }
         .dropdown-menu aria-labelledby="transportation"
           .dropdown-item
