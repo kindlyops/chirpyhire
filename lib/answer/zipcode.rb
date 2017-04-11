@@ -27,10 +27,6 @@ class Answer::Zipcode < Answer::Base
     end
   end
 
-  def existing_zipcode?(message)
-    Zipcode.where(zipcode: fetch_zipcode(message)).exists?
-  end
-
   def zipcode_regexp
     /\A(\d{5})\z/
   end
