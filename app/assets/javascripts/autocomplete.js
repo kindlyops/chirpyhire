@@ -14,13 +14,13 @@ $(document).on('turbolinks:load', function() {
     });
 
     function initMap() {
-      var input = $('#location-autocomplete input')[0];
+      var input = $('#location-autocomplete input');
       var options = {
         componentRestrictions: { country: 'us' },
         types: ['(regions)']
       };
 
-      var autocomplete = new google.maps.places.Autocomplete(input, options);
+      var autocomplete = new google.maps.places.Autocomplete(input[0], options);
 
       autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
@@ -55,6 +55,18 @@ $(document).on('turbolinks:load', function() {
 
         Turbolinks.visit(url);
       });
+
+      $(document).on('focusout', input, function(e) {
+        var searchRegex = /zipcode|city|state|county/;
+        var isFiltered = window.location.search.match(searchRegex);
+
+        if($(e.target).val() === "" && isFiltered) {
+          e.preventDefault();
+          $form = $('form.location-autocomplete-form');
+
+          Turbolinks.visit($form.attr('action'));
+        }
+      }); 
     }
 
     initMap();
