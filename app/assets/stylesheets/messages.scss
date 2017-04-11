@@ -131,16 +131,16 @@
       }
     }
 
+    .section_holder {
+      margin: 1rem 0 2rem;
+    }
+
     .channels {
       color: $blue-gray;
       width: 220px;
       float: left;
       position: relative;
       flex-grow: 1;
-
-      &.section_holder {
-        margin: 1rem 0 2rem;
-      }
     }
   }
 }

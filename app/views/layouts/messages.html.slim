@@ -6,22 +6,27 @@ html
     = render "components/navigation"
     .messages
       .channels_container
-        .team_menu.mb-4
+        .team_menu
           .team_name_container
             span.team_name.overflow_ellipsis = current_organization.name
           .team_menu_user
             .presence_container
               i.presence.fa.fa-circle.fa-fw
             span.team_menu_user_name.overflow_ellipsis.current_user_name = current_account.first_name.downcase
-        .channels.section_holder
-          h2.channels_header Conversations
-          ul
-            - current_organization.contacts.recently_replied.limit(10).each do |contact|
-              li
-                a href="#" role="button"
-                  span
-                    i.fa.fa-circle.mr-2
-                    = contact.handle
+        .channels
+          .starred.section_holder
+            h2.channels_header 
+              i.fa.fa-star.mr-2
+              | Starred
+          .conversations.section_holder
+            h2.channels_header Conversations
+            ul
+              - current_organization.contacts.recently_replied.limit(10).each do |contact|
+                li
+                  a href="#" role="button"
+                    span
+                      i.fa.fa-circle.mr-2
+                      = contact.handle
 
       main.conversation
         = yield
