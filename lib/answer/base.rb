@@ -12,7 +12,7 @@ class Answer::Base
   end
 
   def format(message)
-    yield attribute(message)
+    yield attribute(message) if block_given?
   end
 
   attr_reader :question

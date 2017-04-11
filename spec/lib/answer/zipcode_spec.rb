@@ -43,4 +43,27 @@ RSpec.describe Answer::Zipcode do
       end
     end
   end
+
+  describe '#format' do
+    let(:person) { contact.person }
+    let!(:message) { create(:message, person: person, body: '30342') }
+
+    context 'zipcode present' do
+      let!(:zipcode) { create(:zipcode) }
+
+      it 'sets the zipcode on the person' do
+        expect {
+          subject.format(message)
+        }.to change { person.reload.zipcode }.from(nil).to(zipcode)
+      end
+    end
+
+    context 'zipcode not present' do
+      it 'calls the ZipcodeFetcherJob' do
+        expect {
+          subject.format(message)
+        }.to have_enqueued_job(ZipcodeFetcherJob)
+      end
+    end
+  end
 end
