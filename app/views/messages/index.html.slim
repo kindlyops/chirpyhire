@@ -1,25 +1,5 @@
 = title "Messages | ChirpyHire"
 = content_for :container_class, 'container-fluid'
 = content_for :body_class, 'chat'
-.row.messages
-  nav.sidebar.d-flex.flex-column
-    p.pl-3.mb-4 = current_organization.name
 
-    ul.nav.nav-pills.flex-column
-      small.pl-3.mb-2 CONVERSATIONS
-      - current_organization.contacts.recently_replied.limit(5).each do |contact|
-        small
-          li.nav-item.pl-3 role="button"
-            a.nav-link href="#" 
-              i.fa.fa-circle-o.fa-fw.mr-1
-              = contact.handle
-  section.client
-    header.client-header
-      .channel-title
-        span Loving Dragonfly
-      .channel-header-info
-        span
-          i.fa.fa-circle-o.mr-1.fa-fw
-          ' away
-    section.client-body
-      h1 Body
+h1 In Conversation

@@ -1,82 +1,145 @@
 .messages {
-  .client {
-    margin-left: 240px;
-    width: 100%;
+  $blue-gray: #91A3B0;
+  display: flex;
+  overflow: hidden;
+  margin-top: 82px;
+  min-height: calc(100vh - 82px);
 
-    .client-header {
-      padding: 0.5rem 1rem;
-      background-color: white;
-    }
-
-    .client-body {
-      overflow: hidden;
-
-      &:before {
-        box-sizing: border-box;
-        position: absolute;
-        left: 0;
-        right: 0;
-        height: 8px;
-        border-bottom: 1px solid #E8E8E8;
-        background: #fff;
-        content: '';
-        z-index: 200;
-      }
-    }
+  .fa-circle {
+    color: $brand-primary;
+    font-size: 0.75rem;
+    opacity: 0.98;
   }
 
-  .sidebar {
-    $blue-gray: #91A3B0;
-    color: $white;
+  .channels_container {
     background-color: darken($brand-success, 8%);
-    position: fixed;
-    top: 82px;
-    width: 240px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    border-right: 1px solid #eee;
-    padding-left: 0;
-    padding-right: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 220px;
+    flex-shrink: 0;
+    min-width: 1px;
+    max-width: 260px;
+    z-index: 201;
 
-    .nav {
+    ul {
+      list-style-type: none;
+      text-align: left;
       color: $blue-gray;
-      margin-bottom: 20px;
+      width: 204px;
+      max-width: calc(260px - 16px);
+      padding: 0;
 
-      a {
-        color: $blue-gray;
-      }
-    }
+      li {
+        font-size: 0.95rem;
+        line-height: 1.5rem;
+        height: 1.5rem;
+        margin-right: 1px;
+        position: relative;
+        clear: both;
 
-    .nav-item {
-      width: 100%;
+        a {
+          color: $blue-gray;
+          display: block;
+          height: 1.5rem;
+          padding: 0 .25rem 0 1rem;
+          border-top-right-radius: .25rem;
+          border-bottom-right-radius: .25rem;
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+          background-clip: padding-box;
+          text-decoration: none !important;
+          width: 100%;
+          text-align: left;
 
-      &:hover {
-        background-color: darken($brand-success, 20%);
-      }
+          &.active {
+            background: #6698C8;
+            opacity: 1;
+            color: #FFFFFF !important;
 
-      &.active {
-        background-color: #6698C8;
+            .fa-circle, .fa-circle-o, a {
+              color: $white;
+              opacity: 1;
+            }
+          }
 
-        a, .fa-circle, .fa-circle-o {
-          color: $white;
+          &:hover:not(.active) {
+            background-color: darken($brand-success, 20%);
+          }
         }
       }
     }
 
-    .nav-item + .nav-item {
-      margin-left: 0;
+    h2 {
+      text-align: left;
+      font-size: .8rem;
+      line-height: 1.25rem;
+      margin: 0 1rem .1rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: $blue-gray;
+      width: 165px;
+      position: relative;
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    .nav-link {
-      padding-left: 0;
-      border-radius: 0;
+    .team_menu {
+      color: $white;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 50;
+      flex-basis: 61px;
+      flex-shrink: 0;
 
-      .fa-circle {
-        color: $brand-primary;
+      .team_menu_user  {
+        position: relative;
+        margin-top: 2px;
+        font-size: .875rem;
+        font-weight: 400;
+        line-height: 1.5;
+        z-index: 1;
+
+        .presence_container {
+          float: left;
+          margin-left: -4px;
+          width: 20px;
+          height: 1.3125rem;
+          text-align: center;
+        }
+      }
+
+      .team_menu_user_name {
+        color: $white;
+        opacity: 0.6;
+      }
+
+      .team_name_container {
+        margin-bottom: -2px;
+        margin-top: .5625rem;
+        line-height: 1.075rem;
+
+        .team_name {
+          font-size: 1.125rem;
+          line-height: 1.375rem;
+          max-width: 11.12rem;
+        }
+      }
+    }
+
+    .channels {
+      color: $blue-gray;
+      width: 220px;
+      float: left;
+      position: relative;
+      flex-grow: 1;
+
+      &.section_holder {
+        margin: 1rem 0 2rem;
       }
     }
   }
