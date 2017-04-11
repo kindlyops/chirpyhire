@@ -36,10 +36,12 @@ class Surveyor
   end
 
   def update_candidacy(message)
-    candidacy.assign_attributes(survey.answer.attribute(message))
-    candidacy.progress = candidacy.current_progress
-    candidacy.save!
-    Broadcaster::CandidacyProgress.new(candidacy).broadcast
+    survey.answer.format(message) do |formatted_answer|
+      candidacy.assign_attributes(formatted_answer)
+      candidacy.progress = candidacy.current_progress
+      candidacy.save!
+      Broadcaster::CandidacyProgress.new(candidacy).broadcast
+    end
   end
 
   def lock_candidacy

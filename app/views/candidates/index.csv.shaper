@@ -5,7 +5,7 @@ csv.headers :handle, :phone_number, :location, :availability,
 csv.rows candidates do |csv, candidate|
   csv.cell :handle, candidate.handle.label
   csv.cell :phone_number, candidate.phone_number.label
-  csv.cell :location, candidate.zipcode.label
+  csv.cell :location, candidate.candidacy_zipcode.label
   csv.cell :availability, candidate.availability.label
   csv.cell :transportation, candidate.transportation.label
   csv.cell :experience, candidate.experience.label

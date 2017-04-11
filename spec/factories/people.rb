@@ -8,5 +8,12 @@ FactoryGirl.define do
         person.candidacy.update(contact: contact)
       end
     end
+
+    trait :with_zipcode do
+      after(:create) do |person|
+        zipcode = create(:zipcode)
+        person.update(zipcode: zipcode)
+      end
+    end
   end
 end

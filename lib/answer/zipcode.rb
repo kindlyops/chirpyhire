@@ -9,7 +9,23 @@ class Answer::Zipcode < Answer::Base
     { zipcode: fetch_zipcode(message) }
   end
 
+  def format(message)
+    super
+    after_format(message)
+  end
+
   private
+
+  def after_format(message)
+    zipcode_string = fetch_zipcode(message)
+    zipcode = ::Zipcode.find_by(zipcode: zipcode_string)
+
+    if zipcode.present?
+      message.person.update!(zipcode: zipcode)
+    else
+      ZipcodeFetcherJob.perform_later(message.person, zipcode_string)
+    end
+  end
 
   def zipcode_regexp
     /\A(\d{5})\z/

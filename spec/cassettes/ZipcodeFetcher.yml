@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://us-zipcode.api.smartystreets.com/lookup?auth-id=SMARTY_AUTH_ID&auth-token=SMARTY_AUTH_TOKEN
+    body:
+      encoding: UTF-8
+      string: '[{"city":null,"state":null,"zipcode":"30342"}]'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - smartystreets (sdk:ruby@2.0.2)
+      Host:
+      - us-zipcode.api.smartystreets.com
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 11 Apr 2017 01:17:59 GMT
+      Content-Length:
+      - '688'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '[{"input_index":0,"city_states":[{"city":"Atlanta","state_abbreviation":"GA","state":"Georgia","mailable_city":true},{"city":"Atl","state_abbreviation":"GA","state":"Georgia","mailable_city":false},{"city":"Sandy
+        Spgs","state_abbreviation":"GA","state":"Georgia","mailable_city":true},{"city":"Sandy
+        Springs","state_abbreviation":"GA","state":"Georgia","mailable_city":true},{"city":"Tuxedo","state_abbreviation":"GA","state":"Georgia","mailable_city":false}],"zipcodes":[{"zipcode":"30342","zipcode_type":"S","default_city":"Atlanta","county_fips":"13121","county_name":"Fulton","state_abbreviation":"GA","state":"Georgia","latitude":33.89025,"longitude":-84.37299,"precision":"Zip5"}]}]'
+    http_version: 
+  recorded_at: Tue, 11 Apr 2017 01:15:43 GMT
+recorded_with: VCR 3.0.3
