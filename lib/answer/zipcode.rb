@@ -18,7 +18,7 @@ class Answer::Zipcode < Answer::Base
 
   def after_format(message)
     zipcode_string = fetch_zipcode(message)
-    zipcode = Zipcode.find_by(zipcode: zipcode_string)
+    zipcode = ::Zipcode.find_by(zipcode: zipcode_string)
 
     if zipcode.present?
       message.person.update!(zipcode: zipcode)

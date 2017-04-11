@@ -17,9 +17,9 @@ json.rows do
     end
 
     json.zipcode do
-      json.label candidate.zipcode.label
-      json.icon_class candidate.zipcode.icon_class
-      json.button_class candidate.zipcode.button_class
+      json.label candidate.candidacy_zipcode.label
+      json.icon_class candidate.candidacy_zipcode.icon_class
+      json.button_class candidate.candidacy_zipcode.button_class
     end
 
     json.availability do

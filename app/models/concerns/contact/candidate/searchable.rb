@@ -12,7 +12,7 @@ module Contact::Candidate::Searchable
 
     def build_candidate_content
       <<~CONTENT.squish.chomp
-        #{handle} #{phone_number_search_label} #{zipcode} \
+        #{handle} #{phone_number_search_label} #{candidacy_zipcode} \
 #{availability_search_label} #{transportation_search_label} \
 #{screened_search_label} #{experience_search_label} \
 #{certification_search_label} #{skin_test_search_label} \
