@@ -3,6 +3,10 @@ class Contact::CandidacyZipcode < Contact::Attribute
     candidacy.zipcode
   end
 
+  def label
+    candidacy.zipcode || 'Unknown'
+  end
+
   def icon_class
     return 'fa-question' unless candidacy.zipcode.present?
 

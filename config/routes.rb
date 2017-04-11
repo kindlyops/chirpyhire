@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   end
 
   resources :caregivers, only: :index, concerns: :paginatable
-  get ':location/caregivers', to: 'caregivers#index'
-  get ':location/caregivers(/page/:page)', to: 'caregivers#index'
 
   resource :health, only: :show
   get 'candidates', to: 'candidates#index'
