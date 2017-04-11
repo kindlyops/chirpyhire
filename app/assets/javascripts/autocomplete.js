@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function() {
         if (isZipcode) {
           var location = 'zipcode=' + place.name;
         } else if (isState) { 
-          var location = 'state=' + place.name;
+          var location = 'state=' + place.address_components[0].short_name;
         } else if (isCounty) {
           var county = 'county=' + place.name.replace(/ County/, "");
           var state = '&state=' + place.address_components[1].short_name;

@@ -37,11 +37,10 @@ class CaregiversController < ApplicationController
   def zipcode_params
     z_params = permitted_params.to_h.slice(:state, :city, :county, :zipcode)
     z_params[:county_name] = z_params[:county] if z_params[:county]
+    z_params[:default_city] = z_params[:city] if z_params[:city]
     z_params[:state_abbreviation] = z_params[:state] if z_params[:state]
-    z_params.delete(:county)
-    z_params.delete(:state)
 
-    z_params
+    z_params.except(:county, :city, :state)
   end
 
   def paginated(scope)
