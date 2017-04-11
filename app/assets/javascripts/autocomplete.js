@@ -14,7 +14,7 @@ $(document).on('turbolinks:load', function() {
     });
 
     function initMap() {
-      var input = document.getElementById('location-autocomplete');
+      var input = $('#location-autocomplete input')[0];
       var options = {
         componentRestrictions: { country: 'us' },
         types: ['(regions)']
