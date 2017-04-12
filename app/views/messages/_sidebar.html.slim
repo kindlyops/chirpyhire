@@ -1,0 +1,22 @@
+.channels_container
+  .team_menu
+    .team_name_container
+      span.team_name.overflow_ellipsis = current_organization.name
+    .team_menu_user
+      .presence_container
+        i.presence.fa.fa-circle.fa-fw.active
+      span.team_menu_user_name.overflow_ellipsis.current_user_name = current_account.first_name.downcase
+  .channels
+    .starred.section_holder
+      h2.channels_header data-toggle="tooltip" data-placement="top" title="Star caregivers for easy access"
+        i.fa.fa-star.mr-2
+        | Starred
+    .conversations.section_holder
+      h2.channels_header data-toggle="tooltip" data-placement="top" title="Chat with a caregiver" Conversations
+      ul
+        - current_organization.contacts.recently_replied.limit(10).each do |contact|
+          li
+            a href="#" role="button"
+              span
+                i.fa.fa-circle.mr-2.presence.active
+                = contact.handle

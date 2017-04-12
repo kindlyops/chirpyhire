@@ -2,4 +2,10 @@
 = content_for :container_class, 'container-fluid'
 = content_for :body_class, 'chat'
 
-h1 In Conversation
+= render partial: "messages/header"
+.client_body
+  .client_messages
+    .footer
+      form.message
+        textarea.message-input.focus data-autoresize=true rows="1" autocomplete="off" autocorrect="off" spellcheck="true" placeholder="Message wayne"
+
