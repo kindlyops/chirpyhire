@@ -3,8 +3,7 @@ class MessagesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: :index
   layout 'messages', only: 'index'
 
-  def index
-  end
+  def index; end
 
   def create
     @message = scoped_messages.build

@@ -16,6 +16,8 @@ body {
   }
 
   &.chat {
+    background-color: $white;
+
     main.application {
       padding-top: 59px;
     }

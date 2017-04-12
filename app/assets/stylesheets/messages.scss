@@ -14,55 +14,11 @@
     background: 0 0;
     position: relative;
     color: #555459;
+    font-size: 0.75rem;
+    opacity: 0.98;
 
     &.active {
       color: #93cc93;
-    }
-  }
-
-  .client_body {
-    overflow: hidden;
-    display: flex;
-    flex: 1;
-
-    .client_messages {
-      margin-left: 0;
-      position: relative;
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      min-width: 1px;
-    }
-
-    form.message {
-      position: relative;
-      margin: 0 1.25rem;
-
-      .message-input {
-        overflow: scroll;
-        margin: 0;
-        width: 100%;
-        min-height: 42px;
-        height: 38px;
-        max-height: none;
-        border: 2px solid #E0E0E0;
-        border-radius: .375rem;
-        outline: 0;
-        background: $white;
-        resize: none;
-        box-shadow: none;
-        color: #3D3C40;
-        font-size: .9375rem;
-        line-height: 1.2rem;
-        user-select: auto;
-        padding: 9px 30px 10px 20px;
-
-        &.focus {
-          border-color: #bbbdbf;
-          outline: 0;
-          box-shadow: none;
-        }
-      }
     }
   }
 
@@ -72,19 +28,6 @@
     flex-direction: column;
     flex-grow: 1;
     min-width: 1px;
-
-    .messages-header {
-      display: flex;
-      flex: 1;
-      min-width: 1px;
-      color: #717274;
-    }
-
-    .channel-title {
-      flex: 1;
-      min-width: 1px;
-      margin-top: -2px;
-    }
 
     button.star {
       outline: 0;
@@ -103,14 +46,140 @@
         color: $yellow;
       }
     }
+
+    .chat-header {
+      color: #717274;
+      background: 0 0;
+      flex-basis: 53px;
+      z-index: 201;
+
+      .channel-header {
+        display: flex;
+        background: $white;
+        padding: .7rem 0 0;
+        height: 100%;
+
+        .messages-header {
+          display: flex;
+          flex: 1;
+          min-width: 1px;
+          color: #717274;
+
+          .channel-title {
+            flex: 1;
+            min-width: 1px;
+            margin-top: -2px;
+          }
+        }
+
+        .presence {
+          width: 11px;
+          height: auto;
+          position: static;
+          margin: auto;
+        }
+      }
+
+      .channel-header-item {
+        display: flex;
+        white-space: nowrap;
+        margin-right: .4rem;
+      }
+
+      .channel-name {
+        display: flex;
+        min-width: 1px;
+        user-select: text;
+        margin: 0 0 -2px;
+        line-height: 1.3;
+        font-size: 1.125rem;
+        font-weight: 600;
+        padding: 0 .1rem 0 1.3rem;
+        color: #2C2D30;
+        cursor: pointer;
+        align-items: baseline;
+
+        .away {
+          color: #717274;
+          font-style: italic;
+        }
+      }
+
+      .channel-status {
+        &:before {
+          padding-right: .4rem;
+          color: rgba(113,114,116,.5);
+          content: '|';
+        }
+
+        .channel-status-message {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-left: 4px;
+          line-height: 12px;
+        }
+      }
+
+      .channel-header-details {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+        padding-left: 1.3rem;
+        font-size: .8125rem;
+        font-weight: 400;
+        line-height: 1.16;
+      }
+    }
+
+    .client_body {
+      overflow: hidden;
+      display: flex;
+      flex: 1;
+
+      .client_messages {
+        margin-left: 0;
+        position: relative;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-width: 1px;
+      }
+
+      form.message {
+        position: relative;
+        margin: 0 1.25rem;
+
+        .message-input {
+          overflow: scroll;
+          margin: 0;
+          width: 100%;
+          min-height: 42px;
+          height: 38px;
+          max-height: none;
+          border: 2px solid #E0E0E0;
+          border-radius: .375rem;
+          outline: 0;
+          background: $white;
+          resize: none;
+          box-shadow: none;
+          color: #3D3C40;
+          font-size: .9375rem;
+          line-height: 1.2rem;
+          user-select: auto;
+          padding: 9px 30px 10px 20px;
+
+          &.focus {
+            border-color: #bbbdbf;
+            outline: 0;
+            box-shadow: none;
+          }
+        }
+      }
+    }
   }
 
-  .fa-circle {
-    font-size: 0.75rem;
-    opacity: 0.98;
-  }
-
-  .channels_container {
+  .conversations_container {
     background-color: darken($brand-success, 8%);
     position: relative;
     display: flex;
@@ -241,84 +310,12 @@
       margin: 1rem 0 2rem;
     }
 
-    .channels {
+    .conversations {
       color: $blue-gray;
       width: 220px;
       float: left;
       position: relative;
       flex-grow: 1;
-    }
-  }
-
-  .chat-header {
-    color: #717274;
-    background: 0 0;
-    flex-basis: 53px;
-    z-index: 201;
-
-    .channel-header {
-      display: flex;
-      background: $white;
-      padding: .7rem 0 0;
-      height: 100%;
-
-      .presence {
-        width: 11px;
-        height: auto;
-        position: static;
-        margin: auto;
-      }
-    }
-
-    .channel-header-item {
-      display: flex;
-      white-space: nowrap;
-      margin-right: .4rem;
-    }
-
-    .channel-name {
-      display: flex;
-      min-width: 1px;
-      user-select: text;
-      margin: 0 0 -2px;
-      line-height: 1.3;
-      font-size: 1.125rem;
-      font-weight: 600;
-      padding: 0 .1rem 0 1.3rem;
-      color: #2C2D30;
-      cursor: pointer;
-      align-items: baseline;
-
-      .away {
-        color: #717274;
-        font-style: italic;
-      }
-    }
-
-    .channel-status {
-      &:before {
-        padding-right: .4rem;
-        color: rgba(113,114,116,.5);
-        content: '|';
-      }
-
-      .channel-status-message {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        margin-left: 4px;
-        line-height: 12px;
-      }
-    }
-
-    .channel-header-details {
-      display: flex;
-      align-items: center;
-      margin-top: 5px;
-      padding-left: 1.3rem;
-      font-size: .8125rem;
-      font-weight: 400;
-      line-height: 1.16;
     }
   }
 }
