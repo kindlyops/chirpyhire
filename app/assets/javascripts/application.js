@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require turbolinks
+//= require jquery.textarea_autosize.js
 //= require clipboard
 //= require ramda
 //= require cocoon
