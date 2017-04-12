@@ -96,7 +96,6 @@
         font-weight: 600;
         padding: 0 .1rem 0 1.3rem;
         color: #2C2D30;
-        cursor: pointer;
         align-items: baseline;
 
         .away {
@@ -132,10 +131,219 @@
       }
     }
 
+    #messages_container {
+      overflow-y: hidden;
+      position: relative;
+    }
+
+    #msgs_div {
+      margin: 0;
+      clear: both;
+      padding: 0;
+
+      .day_container {
+        position: relative;
+
+        .day_msgs {
+          margin: -18px 0 0;
+          padding: 1.75rem 0 1.25rem;
+          border-top: 1px solid #E8E8E8;
+
+          .ts-message {
+            display: block;
+            width: 100%;
+            margin: 0 auto -.0625rem;
+            position: relative;
+            border-left: none;
+            border-right: none;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+            color: #2C2D30;
+            font-size: 15px;
+            line-height: 22px;
+            user-select: text;
+            word-wrap: break-word;
+            padding: 1px 40px 2px 0;
+
+            &:hover, &.first:hover {
+              background-color: #F9F9F9;
+            }
+
+            .message_icon {
+              display: none;
+            }
+
+            &.first {
+              background-color: $white;
+
+              .message_icon {
+                margin-top: 4px;
+                display: block;
+              }
+            }
+
+            .message_content {
+              margin-left: 72px;
+              margin-top: 1px;
+
+              .message_content_header {
+                display: flex;
+                align-items: baseline;
+
+                .message_content_header_left {
+                  flex: 1 1 auto;
+                }
+              }
+            }
+
+            .message_gutter {
+              width: 72px;
+              padding-right: 10px;
+              text-align: right;
+              position: absolute;
+              top: 0;
+              left: 0;
+
+              .member_image {
+                width: 36px;
+                height: 36px;
+                border-radius: .2rem;
+                background-size: 100%;
+                background-repeat: no-repeat;
+                display: inline-block;
+                position: relative;
+              }
+            }
+          }
+        }
+
+        .day_divider {
+          z-index: 200;
+          position: sticky;
+          top: 0;
+          margin: 0;
+          pointer-events: none;
+          padding: 0;
+          font-size: .9rem;
+          line-height: 1rem;
+          color: #2C2D30;
+          font-weight: 700;
+          text-align: center;
+          cursor: default;
+          clear: both;
+
+          .day_divider_label {
+            top: -6px;
+            background: #fff;
+            padding: .25rem .75rem;
+            display: inline-block;
+            margin: 0 auto;
+            position: relative;
+            opacity: 1;
+            border-radius: 1rem;
+            transition: opacity 250ms ease-out 0s;
+          }
+        }
+
+        .copy_only {
+          display: inline-block;
+          vertical-align: baseline;
+          width: 1px;
+          height: 0;
+          background-size: 0;
+          background-repeat: no-repeat;
+          font-size: 0;
+          color: transparent;
+          float: left;
+          text-rendering: auto;
+          user-select: none;
+        }
+      }
+    }
+
+    #end_div {
+      font-size: .8rem;
+      line-height: 1.2rem;
+      color: #666;
+      padding-top: 1rem;
+    }
+
+    #msgs_scroller_div {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      border-right: .25rem solid transparent;
+      outline: 0;
+    }
+
+    #end_display_div {
+      padding: 1rem;
+      margin: 1rem 0;
+
+      p {
+        color: #555459;
+        margin: 0 auto 1rem;
+      }
+
+      #end_display_meta {
+        padding: 0 1.1rem 0 0;
+        font-size: 1.1rem;
+        color: #717274;
+        line-height: 1.5rem;
+        max-width: 750px;
+      }
+
+      #end_display_status {
+        text-align: center;
+        color: #cecece;
+        font-style: italic;
+        padding: 1rem;
+        font-size: .8rem;
+        line-height: 1.2rem;
+      }
+
+      .dm_badge {
+        margin-bottom: 1.5rem;
+
+        .dm_badge_meta {
+          padding-top: 0;
+          font-size: 1rem;
+          line-height: 1.25rem;
+          margin-left: 0!important;
+          margin-bottom: 0!important;
+        }
+
+        .member_image {
+          float: left;
+          margin: 0 .75rem 0 0;
+          flex: none;
+          align-self: flex-start;
+          width: 72px;
+          height: 72px;
+          border-radius: .2rem;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          display: inline-block;
+          position: relative;
+        }
+      }
+    }
+
     .client_body {
       overflow: hidden;
       display: flex;
       flex: 1;
+
+      &:before {
+        box-sizing: border-box;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 8px;
+        border-bottom: 1px solid #E8E8E8;
+        background: #fff;
+        content: '';
+        z-index: 200;
+      }
 
       .client_messages {
         margin-left: 0;
@@ -144,35 +352,41 @@
         flex: 1;
         flex-direction: column;
         min-width: 1px;
-      }
+        
+        .footer {
+          order: 1;
+          flex-shrink: 0;
+          background-image: linear-gradient(to bottom,rgba(255,255,255,0),#fff 6px);
+          
+          form.message {
+            position: relative;
+            margin: 0 1.25rem;
 
-      form.message {
-        position: relative;
-        margin: 0 1.25rem;
+            .message-input {
+              overflow: scroll;
+              margin: 0;
+              width: 100%;
+              min-height: 42px;
+              height: 38px;
+              max-height: none;
+              border: 2px solid #E0E0E0;
+              border-radius: .375rem;
+              outline: 0;
+              background: $white;
+              resize: none;
+              box-shadow: none;
+              color: #3D3C40;
+              font-size: .9375rem;
+              line-height: 1.2rem;
+              user-select: auto;
+              padding: 9px 30px 10px 20px;
 
-        .message-input {
-          overflow: scroll;
-          margin: 0;
-          width: 100%;
-          min-height: 42px;
-          height: 38px;
-          max-height: none;
-          border: 2px solid #E0E0E0;
-          border-radius: .375rem;
-          outline: 0;
-          background: $white;
-          resize: none;
-          box-shadow: none;
-          color: #3D3C40;
-          font-size: .9375rem;
-          line-height: 1.2rem;
-          user-select: auto;
-          padding: 9px 30px 10px 20px;
-
-          &.focus {
-            border-color: #bbbdbf;
-            outline: 0;
-            box-shadow: none;
+              &.focus {
+                border-color: #bbbdbf;
+                outline: 0;
+                box-shadow: none;
+              }
+            }
           }
         }
       }
