@@ -17,6 +17,7 @@
         - current_organization.contacts.recently_replied.limit(10).each do |contact|
           li
             a href="#" role="button"
+              span.unread_count hidden=true 0
               span
                 i.fa.fa-circle.mr-2.presence.active
                 = contact.handle
