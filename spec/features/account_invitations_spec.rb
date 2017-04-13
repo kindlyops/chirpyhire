@@ -30,7 +30,7 @@ RSpec.describe 'Account Invitations', type: :feature, js: true do
       fill_in 'Password', with: 'password'
 
       click_button 'Accept invitation'
-      expect(page).to have_text('Ready')
+      expect(page).to have_text('My Caregivers')
       expect(Account.active).to include(Account.find_by(email: email))
     end
   end
