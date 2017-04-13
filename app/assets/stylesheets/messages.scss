@@ -165,16 +165,62 @@
             word-wrap: break-word;
             padding: 1px 40px 2px 0;
 
-            &:hover, &.first:hover {
+            .message-sender {
+              display: none;
+              word-break: break-word;
+              font-weight: 900;
+            }
+
+            &.first:hover {
               background-color: #F9F9F9;
+
+              .message_gutter .timestamp {
+                display: none;
+              }
+            }
+
+            &:hover {
+              background-color: #F9F9F9;
+              .message_gutter .timestamp {
+                display: inline;
+                opacity: 1;
+              }
             }
 
             .message_icon {
               display: none;
             }
 
+            .timestamp {
+              line-height: 18px;
+              opacity: 0;
+              color: #9e9ea6;
+              font-size: 12px;
+              white-space: nowrap;
+            }
+
+            .message_content .timestamp {
+              display: none;
+            }
+
+            .ts_tip {
+              position: relative;
+              z-index: 1;
+              display: inline-block;
+            }
+
             &.first {
               background-color: $white;
+
+              .message-sender {
+                display: inline;
+              }
+
+              .message_content .timestamp {
+                margin-right: .25rem;
+                opacity: 1;
+                display: inline;
+              }
 
               .message_icon {
                 margin-top: 4px;
