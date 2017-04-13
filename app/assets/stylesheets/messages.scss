@@ -5,6 +5,11 @@
   margin-top: 82px;
   min-height: calc(100vh - 82px);
 
+  .thumb_72 {
+    width: 72px;
+    height: 72px;
+  }
+
   .presence {
     width: 9px;
     height: 9px;
@@ -363,8 +368,6 @@
           margin: 0 .75rem 0 0;
           flex: none;
           align-self: flex-start;
-          width: 72px;
-          height: 72px;
           border-radius: .2rem;
           background-size: 100%;
           background-repeat: no-repeat;

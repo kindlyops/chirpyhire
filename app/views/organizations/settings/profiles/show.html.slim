@@ -28,7 +28,11 @@
               = form_for @profile, url: organizations_settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
                 .form-group
                   h6 = f.label :avatar, "Brand logo"
-                  .profile-picture.text-center = image_tag @profile.avatar.url(:medium)
+                  .profile-picture.text-center
+                    - if @profile.avatar.url.present?
+                      = image_tag @profile.avatar.url(:medium), class: 'profile-image'
+                    - else
+                      div class=="profile-image default #{@profile.decorate.hero_pattern_classes}"
                   a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
                   = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 

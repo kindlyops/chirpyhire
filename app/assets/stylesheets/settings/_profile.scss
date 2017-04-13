@@ -1,5 +1,12 @@
 .settings .profile {
-  .profile-picture img {
-    width: 200px;
+  .profile-picture {
+    .profile-image {
+      width: 200px;
+
+      &.default {
+        height: 200px;
+        display: inline-block;
+      }
+    }
   }
 }
