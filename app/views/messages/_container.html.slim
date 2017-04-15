@@ -1,0 +1,11 @@
+#messages_container role="main"
+  #msgs_scroller_div.message_pane_scroller
+    #end_div
+      #end_display_div
+        #end_display_padder
+        = render partial: "messages/end_display_meta"
+        #end_display_status hidden=true Retrieving history...
+    #msgs_div.msgs_holder
+      = render partial: "messages/day"
+      = render partial: "messages/day"
+      = render partial: "messages/day"

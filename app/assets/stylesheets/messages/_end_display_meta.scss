@@ -1,0 +1,33 @@
+.messages {
+  #end_display_meta {
+    padding: 0 1.1rem 0 0;
+    font-size: 1.1rem;
+    color: #717274;
+    line-height: 1.5rem;
+    max-width: 750px;
+
+    .dm_badge {
+      margin-bottom: 1.5rem;
+
+      .dm_badge_meta {
+        padding-top: 0;
+        font-size: 1rem;
+        line-height: 1.25rem;
+        margin-left: 0!important;
+        margin-bottom: 0!important;
+      }
+
+      .member_image {
+        float: left;
+        margin: 0 .75rem 0 0;
+        flex: none;
+        align-self: flex-start;
+        border-radius: .2rem;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        display: inline-block;
+        position: relative;
+      }
+    }
+  }
+}

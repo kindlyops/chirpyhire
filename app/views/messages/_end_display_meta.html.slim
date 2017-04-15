@@ -1,0 +1,19 @@
+#end_display_meta
+  #im_meta
+    .dm_badge.d-flex.align-items-center
+      - if current_account.avatar.url.present?
+        = image_tag current_account.avatar.url(:medium), class: 'member_image thumb_72'
+      - else
+        div class=="member_image thumb_72 #{current_account.decorate.hero_pattern_classes}"
+      p.dm_badge_meta
+        span.member_real_name
+          strong Wayne Henderson
+        i.fa.fa-circle.mr-2.presence.active.ml-2
+        span
+          a.member_preview_link.member_name
+            strong wayne
+        br
+    p.dm_explanation.mx-auto.text-left.clearfix
+      | This is the very beginning of your relationship with
+      '
+      strong wayne.
