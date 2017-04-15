@@ -23,6 +23,14 @@ GIT
     bootstrap-table-rails (1.11.1)
 
 GIT
+  remote: https://github.com/hwhelchel/sass.git
+  revision: bdee5ad4da1b0109e7f4ab1ffe31b8c98434b5ca
+  branch: dynamic_includes
+  specs:
+    sass (3.5.0.alpha)
+      sass-listen (~> 3.0.7)
+
+GIT
   remote: https://github.com/hwhelchel/smartystreets-ruby-sdk.git
   revision: 780cf0e5e3bb6e34a6ba0fe8b130e89ef8619954
   branch: rearchitect-gem
@@ -37,14 +45,6 @@ GIT
       activemodel (> 5.x)
       activesupport (> 5.x)
       builder (~> 3.1)
-
-GIT
-  remote: https://github.com/sass/sass.git
-  revision: c3a38aaccaeaf432f64773f23be9057077b4c5b3
-  branch: dynamic_includes
-  specs:
-    sass (3.5.0.alpha)
-      sass-listen (~> 3.0.7)
 
 GEM
   remote: https://rubygems.org/
@@ -531,7 +531,7 @@ DEPENDENCIES
   zip-codes (~> 0.2.1)
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.4.1p111
 
 BUNDLED WITH
    1.14.6
