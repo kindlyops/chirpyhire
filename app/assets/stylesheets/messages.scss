@@ -419,12 +419,15 @@
         flex: 1;
         flex-direction: column;
         min-width: 1px;
-        
+
         .footer {
           order: 1;
           flex-shrink: 0;
           background-image: linear-gradient(to bottom,rgba(255,255,255,0),#fff 6px);
-          
+          .spacer {
+            height: 1.375rem;
+          }
+
           form.message {
             position: relative;
             margin: 0 1.25rem;
