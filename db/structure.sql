@@ -435,8 +435,7 @@ CREATE TABLE people (
     phone_number character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer,
-    phone_number_id integer
+    zipcode_id integer
 );
 
 
@@ -938,10 +937,10 @@ CREATE INDEX index_organizations_on_recruiter_id ON organizations USING btree (r
 
 
 --
--- Name: index_people_on_phone_number_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_people_on_phone_number; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_people_on_phone_number_id ON people USING btree (phone_number_id);
+CREATE UNIQUE INDEX index_people_on_phone_number ON people USING btree (phone_number);
 
 
 --

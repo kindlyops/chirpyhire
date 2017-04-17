@@ -85,6 +85,7 @@ class CandidatesController < ApplicationController
   def whitelist_orders
     {
       'zipcode' => "candidacies.zipcode #{direction}",
+      'contact' =>  "people.phone_number #{direction}",
       'availability' => "candidacies.availability #{direction}",
       'experience' => "candidacies.experience #{direction}",
       'qualifications' => "candidacies.certification #{direction}",
