@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :person do
     phone_number { Faker::PhoneNumber.cell_phone }
 
+    trait :with_name do
+      name { Faker::Name.name }
+    end
+
     trait :with_candidacy do
       after(:create) do |person|
         person.candidacy || person.create_candidacy

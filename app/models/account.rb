@@ -2,7 +2,7 @@ class Account < ApplicationRecord
   devise :invitable, :rememberable, :database_authenticatable,
          :registerable, :recoverable, :trackable, :validatable
 
-  belongs_to :organization, inverse_of: :account
+  belongs_to :organization, inverse_of: :accounts
   belongs_to :person, inverse_of: :account
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
