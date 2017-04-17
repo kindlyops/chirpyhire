@@ -433,7 +433,7 @@ CREATE TABLE people (
     id integer NOT NULL,
     name character varying,
     nickname character varying NOT NULL,
-    phone_number character varying NOT NULL,
+    phone_number character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     zipcode_id integer,
@@ -1168,6 +1168,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417200205'),
 ('20170417220056'),
 ('20170417222301'),
-('20170417222342');
+('20170417222342'),
+('20170417223711');
 
 
