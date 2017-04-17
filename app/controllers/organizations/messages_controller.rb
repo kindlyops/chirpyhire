@@ -15,10 +15,11 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def person
-    @person ||= begin
-      candidacy = Candidacy.find_or_create_by(phone_number: phone_number)
-      candidacy.person || candidacy.create_person
-    end
+    @person ||= candidacy.person || candidacy.create_person
+  end
+
+  def candidacy
+    @candidacy ||= Candidacy.find_or_create_by(phone_number: phone_number)
   end
 
   def organization
