@@ -29,7 +29,7 @@ class Constraint::Answer < Constraint::Base
   end
 
   def person
-    Person.find_by(phone: from)
+    Person.find_by(phone_number: from)
   end
 
   def to

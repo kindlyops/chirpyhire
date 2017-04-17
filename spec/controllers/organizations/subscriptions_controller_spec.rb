@@ -21,7 +21,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, phone: phone_number) }
+      let!(:person) { create(:person, phone_number: phone_number) }
 
       context 'without a contact' do
         it 'creates a subscribed contact' do
@@ -73,7 +73,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, phone: phone_number) }
+      let!(:person) { create(:person, phone_number: phone_number) }
 
       context 'without a contact' do
         it 'creates an NotSubscribedJob' do

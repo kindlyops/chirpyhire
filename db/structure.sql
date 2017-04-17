@@ -432,7 +432,7 @@ CREATE TABLE people (
     id integer NOT NULL,
     name character varying,
     nickname character varying NOT NULL,
-    phone character varying NOT NULL,
+    phone_number character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     zipcode_id integer,
@@ -491,37 +491,6 @@ CREATE SEQUENCE pg_search_documents_id_seq
 --
 
 ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
-
-
---
--- Name: phone_numbers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE phone_numbers (
-    id integer NOT NULL,
-    phone_number character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: phone_numbers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE phone_numbers_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: phone_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE phone_numbers_id_seq OWNED BY phone_numbers.id;
 
 
 --
@@ -681,13 +650,6 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 
 
 --
--- Name: phone_numbers id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY phone_numbers ALTER COLUMN id SET DEFAULT nextval('phone_numbers_id_seq'::regclass);
-
-
---
 -- Name: recruiting_ads id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -795,14 +757,6 @@ ALTER TABLE ONLY people
 
 ALTER TABLE ONLY pg_search_documents
     ADD CONSTRAINT pg_search_documents_pkey PRIMARY KEY (id);
-
-
---
--- Name: phone_numbers phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY phone_numbers
-    ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
 
 
 --
@@ -1012,13 +966,6 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
--- Name: index_phone_numbers_on_phone_number; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_phone_numbers_on_phone_number ON phone_numbers USING btree (phone_number);
-
-
---
 -- Name: index_recruiting_ads_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1076,14 +1023,6 @@ ALTER TABLE ONLY accounts
 
 ALTER TABLE ONLY messages
     ADD CONSTRAINT fk_rails_41c70a97c6 FOREIGN KEY (organization_id) REFERENCES organizations(id);
-
-
---
--- Name: people fk_rails_6a497b2fd7; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY people
-    ADD CONSTRAINT fk_rails_6a497b2fd7 FOREIGN KEY (phone_number_id) REFERENCES phone_numbers(id);
 
 
 --
@@ -1207,6 +1146,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170404173405'),
 ('20170411000232'),
 ('20170417193027'),
-('20170417200205');
+('20170417200205'),
+('20170417220056');
 
 
