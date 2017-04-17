@@ -1,10 +1,9 @@
 class Person < ApplicationRecord
-  phony_normalize :phone, default_country_code: 'US'
+  phony_normalize :phone_number, default_country_code: 'US'
   has_one :candidacy
   has_many :contacts
   has_many :messages
   belongs_to :zipcode, optional: true
-  belongs_to :phone_number, optional: true
 
   before_create :add_nickname
   after_create :create_candidacy
@@ -13,10 +12,6 @@ class Person < ApplicationRecord
   delegate :inquiry, :availability, :experience,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
   delegate :zipcode, to: :candidacy, prefix: true
-
-  def phone_number
-    (super && super.to_s) || self[:phone]
-  end
 
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?
