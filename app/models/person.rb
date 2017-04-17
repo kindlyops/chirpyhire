@@ -6,7 +6,6 @@ class Person < ApplicationRecord
   belongs_to :zipcode, optional: true
 
   before_create :add_nickname
-  after_create :create_candidacy
   after_save :set_search_content
 
   delegate :inquiry, :availability, :experience,
@@ -37,7 +36,7 @@ class Person < ApplicationRecord
   private
 
   def add_nickname
-    return if nickname.present?
+    return if name.present? || nickname.present?
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
     Rollbar.debug(e)
