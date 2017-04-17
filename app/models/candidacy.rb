@@ -5,8 +5,8 @@ class Candidacy < ApplicationRecord
   belongs_to :contact, optional: true
   after_save :set_search_content
 
-  delegate :actively_subscribed_to?, :subscribed_to, :handle, :contacts,
-           to: :person
+  delegate :actively_subscribed_to?, :subscribed_to, :handle,
+           :contacts, to: :person
 
   validates :progress, numericality: {
     greater_than_or_equal_to: 0,
@@ -37,10 +37,6 @@ class Candidacy < ApplicationRecord
   enum certification: {
     pca: 0, cna: 1, other_certification: 2, no_certification: 3
   }
-
-  def phone_number
-    (super && super.to_s) || (person && person.phone_number)
-  end
 
   def self.finished_survey
     where(inquiry: nil).where.not(

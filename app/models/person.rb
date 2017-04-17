@@ -13,7 +13,7 @@ class Person < ApplicationRecord
   delegate :zipcode, to: :candidacy, prefix: true
 
   def phone_number
-    self[:phone_number] || candidacy.phone_number.to_s
+    (candidacy && candidacy.phone_number.to_s) || self[:phone_number]
   end
 
   def subscribed_to?(organization)
