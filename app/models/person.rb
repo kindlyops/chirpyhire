@@ -20,6 +20,7 @@ class Person < ApplicationRecord
 
   validates :name, presence: true, unless: :nickname_present?
   validates :nickname, presence: true, unless: :name_present?
+  validates :phone_number, presence: true, unless: :name_present?
 
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?
