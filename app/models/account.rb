@@ -3,7 +3,7 @@ class Account < ApplicationRecord
          :registerable, :recoverable, :trackable, :validatable
 
   belongs_to :organization
-  belongs_to :person, optional: true
+  belongs_to :person, optional: true, inverse_of: :account
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
