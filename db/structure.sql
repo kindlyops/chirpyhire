@@ -432,7 +432,7 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 CREATE TABLE people (
     id integer NOT NULL,
     name character varying,
-    nickname character varying NOT NULL,
+    nickname character varying,
     phone_number character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -1169,6 +1169,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417220056'),
 ('20170417222301'),
 ('20170417222342'),
-('20170417223711');
+('20170417223711'),
+('20170417230308');
 
 
