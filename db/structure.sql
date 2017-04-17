@@ -149,8 +149,7 @@ CREATE TABLE candidacies (
     updated_at timestamp without time zone NOT NULL,
     contact_id integer,
     progress double precision DEFAULT 0.0 NOT NULL,
-    state integer DEFAULT 0 NOT NULL,
-    phone_number_id integer
+    state integer DEFAULT 0 NOT NULL
 );
 
 
@@ -433,10 +432,11 @@ CREATE TABLE people (
     id integer NOT NULL,
     name character varying,
     nickname character varying NOT NULL,
-    phone_number character varying NOT NULL,
+    phone character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer
+    zipcode_id integer,
+    phone_number_id integer
 );
 
 
@@ -879,13 +879,6 @@ CREATE INDEX index_candidacies_on_person_id ON candidacies USING btree (person_i
 
 
 --
--- Name: index_candidacies_on_phone_number_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_candidacies_on_phone_number_id ON candidacies USING btree (phone_number_id);
-
-
---
 -- Name: index_contacts_on_content_tsearch; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -991,6 +984,13 @@ CREATE INDEX index_organizations_on_recruiter_id ON organizations USING btree (r
 
 
 --
+-- Name: index_people_on_phone_number_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_people_on_phone_number_id ON people USING btree (phone_number_id);
+
+
+--
 -- Name: index_people_on_zipcode_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1079,6 +1079,14 @@ ALTER TABLE ONLY messages
 
 
 --
+-- Name: people fk_rails_6a497b2fd7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY people
+    ADD CONSTRAINT fk_rails_6a497b2fd7 FOREIGN KEY (phone_number_id) REFERENCES phone_numbers(id);
+
+
+--
 -- Name: people fk_rails_6b501a6402; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1092,14 +1100,6 @@ ALTER TABLE ONLY people
 
 ALTER TABLE ONLY recruiting_ads
     ADD CONSTRAINT fk_rails_6b5e156a02 FOREIGN KEY (organization_id) REFERENCES organizations(id);
-
-
---
--- Name: candidacies fk_rails_7388338743; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY candidacies
-    ADD CONSTRAINT fk_rails_7388338743 FOREIGN KEY (phone_number_id) REFERENCES phone_numbers(id);
 
 
 --

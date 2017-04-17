@@ -6,8 +6,9 @@ class CreatePhoneNumbers < ActiveRecord::Migration[5.0]
     end
 
     add_index :phone_numbers, :phone_number, unique: true
+    rename_column :people, :phone_number, :phone
 
-    change_table :candidacies do |t|
+    change_table :people do |t|
       t.belongs_to :phone_number, null: true, foreign_key: true, index: true
     end
   end
