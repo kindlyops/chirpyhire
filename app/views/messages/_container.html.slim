@@ -6,6 +6,4 @@
         = render partial: "messages/end_display_meta"
         #end_display_status hidden=true Retrieving history...
     #msgs_div.msgs_holder
-      = render partial: "messages/day"
-      = render partial: "messages/day"
-      = render partial: "messages/day"
+      = render partial: "messages/day", collection: @conversation.days

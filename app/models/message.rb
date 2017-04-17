@@ -1,6 +1,8 @@
 class Message < ApplicationRecord
   belongs_to :person
   belongs_to :organization
+  belongs_to :sender
+  belongs_to :recipient
 
   def self.by_recency
     order(:external_created_at, :id)
@@ -14,6 +16,10 @@ class Message < ApplicationRecord
     return :organization if outbound? && manual?
     return :bot if outbound?
     :person
+  end
+
+  def day
+    external_created_at.to_date
   end
 
   def outbound?

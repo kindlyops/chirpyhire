@@ -3,7 +3,20 @@ class MessagesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: :index
   layout 'messages', only: 'index'
 
-  def index; end
+  before_action :ensure_contacts, only: :index
+
+  def index
+    if current_conversation_id.present?
+      redirect_to message_path(current_conversation_id)
+    else
+      redirect_to message_path(most_recent_conversation)
+    end
+  end
+
+  def show
+    set_current_conversation
+    @conversation = conversation
+  end
 
   def create
     @message = scoped_messages.build
@@ -13,6 +26,30 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def set_current_conversation
+    cookies.signed['current_conversation_id'] = {
+      value: conversation.id,
+      expires: 100.years.from_now
+    }
+  end
+
+  def most_recent_conversation
+    current_organization.contacts.recently_replied.first
+  end
+
+  def current_conversation_id
+    cookies.signed['current_conversation_id']
+  end
+
+  def ensure_contacts
+    no_contacts_message if current_organization.contacts.empty?
+  end
+
+  def no_contacts_message
+    flash[:notice] = 'No caregivers to message yet.'
+    redirect_to root_path
+  end
 
   def create_message
     current_organization.message(

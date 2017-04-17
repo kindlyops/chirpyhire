@@ -1,5 +1,6 @@
 module HeroPatternable
   extend ActiveSupport::Concern
+  PATTERNS = YAML.load_file(Rails.root.join('config', 'hero_patterns.yml'))
 
   included do
     def hero_pattern_classes
@@ -14,7 +15,6 @@ module HeroPatternable
       %w(first second third fourth fifth sixth seventh eighth nineth)
     end
 
-    PATTERNS = YAML.load_file(Rails.root.join('config', 'hero_patterns.yml'))
     def pattern_class
       Hash[(0..80).zip(PATTERNS)]
     end

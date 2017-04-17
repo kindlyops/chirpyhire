@@ -1,0 +1,23 @@
+.message.first
+  .message_gutter
+    .message_icon
+      - if current_account.avatar.url.present?
+        = image_tag current_account.avatar.url(:medium), class: 'member_image thumb_36'
+      - else
+        div class=="member_image thumb_36 #{current_account.decorate.hero_pattern_classes}"
+    a.timestamp
+      '
+      ' 8:21 PM
+  .message_content
+    .message_content_header
+      .message_content_header_left
+        strong.message-sender = thought.sender.handle
+        a.timestamp
+          '
+          ' 8:21 PM
+    span.message_body
+      | Basic survey immediately plus name
+      span.para_break
+        i.copy_only
+          br
+      | Gamify caregiver side

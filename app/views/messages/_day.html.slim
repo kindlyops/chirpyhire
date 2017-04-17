@@ -3,7 +3,9 @@
     i.copy_only
       br
       | \-----
-    .day_divider_label aria-label=("(March eighteenth), twenty seventeen")  March 20th
+    .day_divider_label = day.label
     i.copy_only -----
   .day_msgs
-    = render partial: "messages/message"
+    = render partial: "messages/thought", collection: day.thoughts
+
+

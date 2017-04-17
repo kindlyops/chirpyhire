@@ -5,6 +5,10 @@ class Conversation
     @contact = contact
   end
 
+  def days
+    messages.by_recency.chunk(&:day).map(&method(:thoughts))
+  end
+
   def message_groups
     messages.by_recency.chunk(&:author).map(&method(:group))
   end
@@ -26,6 +30,10 @@ class Conversation
   end
 
   private
+
+  def thoughts(day)
+    Conversation::Day.new(day)
+  end
 
   def new_message_group?(message)
     message_groups.last.messages == [message]
