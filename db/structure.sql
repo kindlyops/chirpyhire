@@ -95,7 +95,8 @@ CREATE TABLE accounts (
     avatar_file_name character varying,
     avatar_content_type character varying,
     avatar_file_size integer,
-    avatar_updated_at timestamp without time zone
+    avatar_updated_at timestamp without time zone,
+    person_id integer
 );
 
 
@@ -143,13 +144,14 @@ CREATE TABLE candidacies (
     zipcode character varying,
     cpr_first_aid boolean,
     certification integer,
-    person_id integer NOT NULL,
+    person_id integer,
     inquiry integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     contact_id integer,
     progress double precision DEFAULT 0.0 NOT NULL,
-    state integer DEFAULT 0 NOT NULL
+    state integer DEFAULT 0 NOT NULL,
+    phone_number_id integer
 );
 
 
@@ -432,10 +434,14 @@ CREATE TABLE people (
     id integer NOT NULL,
     name character varying,
     nickname character varying NOT NULL,
-    phone_number character varying NOT NULL,
+    phone_number character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer
+    zipcode_id integer,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -490,6 +496,37 @@ CREATE SEQUENCE pg_search_documents_id_seq
 --
 
 ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
+
+
+--
+-- Name: phone_numbers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE phone_numbers (
+    id integer NOT NULL,
+    phone_number character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: phone_numbers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE phone_numbers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: phone_numbers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE phone_numbers_id_seq OWNED BY phone_numbers.id;
 
 
 --
@@ -649,6 +686,13 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 
 
 --
+-- Name: phone_numbers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY phone_numbers ALTER COLUMN id SET DEFAULT nextval('phone_numbers_id_seq'::regclass);
+
+
+--
 -- Name: recruiting_ads id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -759,6 +803,14 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
+-- Name: phone_numbers phone_numbers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY phone_numbers
+    ADD CONSTRAINT phone_numbers_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: recruiting_ads recruiting_ads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -818,6 +870,13 @@ CREATE INDEX index_accounts_on_organization_id ON accounts USING btree (organiza
 
 
 --
+-- Name: index_accounts_on_person_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_accounts_on_person_id ON accounts USING btree (person_id);
+
+
+--
 -- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -829,6 +888,13 @@ CREATE UNIQUE INDEX index_accounts_on_reset_password_token ON accounts USING btr
 --
 
 CREATE INDEX index_candidacies_on_person_id ON candidacies USING btree (person_id);
+
+
+--
+-- Name: index_candidacies_on_phone_number_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_candidacies_on_phone_number_id ON candidacies USING btree (phone_number_id);
 
 
 --
@@ -1034,11 +1100,27 @@ ALTER TABLE ONLY recruiting_ads
 
 
 --
+-- Name: candidacies fk_rails_7388338743; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY candidacies
+    ADD CONSTRAINT fk_rails_7388338743 FOREIGN KEY (phone_number_id) REFERENCES phone_numbers(id);
+
+
+--
 -- Name: ideal_candidate_suggestions fk_rails_76d371f451; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ideal_candidate_suggestions
     ADD CONSTRAINT fk_rails_76d371f451 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: accounts fk_rails_777d10a224; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT fk_rails_777d10a224 FOREIGN KEY (person_id) REFERENCES people(id);
 
 
 --
@@ -1137,6 +1219,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170316150805'),
 ('20170404173405'),
 ('20170411000232'),
-('20170417193027');
+('20170417193027'),
+('20170417193951'),
+('20170417194131'),
+('20170417200205'),
+('20170417201427');
 
 

@@ -15,11 +15,20 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def person
-    @person ||= Person.find_or_create_by(phone_number: params['From'])
+    @person ||= begin
+      candidacy = Candidacy.find_or_create_by(phone_number: phone_number)
+      candidacy.person || candidacy.create_person
+    end
   end
 
   def organization
     @organization ||= Organization.find_by(phone_number: params['To'])
+  end
+
+  def phone_number
+    @phone_number ||= begin
+      PhoneNumber.find_or_create_by(phone_number: params['From'])
+    end
   end
 
   def set_header

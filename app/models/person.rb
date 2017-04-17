@@ -6,12 +6,15 @@ class Person < ApplicationRecord
   belongs_to :zipcode, optional: true
 
   before_create :add_nickname
-  after_create :create_candidacy
   after_save :set_search_content
 
   delegate :inquiry, :availability, :experience,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
   delegate :zipcode, to: :candidacy, prefix: true
+
+  def phone_number
+    self[:phone_number] || candidacy.phone_number.to_s
+  end
 
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?
