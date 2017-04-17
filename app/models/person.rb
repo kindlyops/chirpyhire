@@ -26,7 +26,7 @@ class Person < ApplicationRecord
   end
 
   def handle
-    full_name || nickname
+    name || nickname
   end
 
   private
