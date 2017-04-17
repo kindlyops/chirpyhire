@@ -27,9 +27,11 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def phone_number
-    @phone_number ||= begin
-      PhoneNumber.find_or_create_by(phone_number: params['From'])
-    end
+    @phone_number ||= PhoneNumber.find_or_create_by(phone_number: from)
+  end
+
+  def from
+    params['From']
   end
 
   def set_header
