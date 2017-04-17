@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     after(:create) do |contact, evaluator|
       if evaluator.phone_number.present?
-        contact.person.update(phone_number: evaluator.phone_number)
+        contact.person.update(phone: evaluator.phone_number)
       end
     end
 
