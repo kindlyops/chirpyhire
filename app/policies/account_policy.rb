@@ -8,7 +8,7 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(email).push(person_attributes: %i(name avatar))
+    %i(email).push(person_attributes: %i(id name avatar))
   end
 
   class Scope < ApplicationPolicy::Scope
