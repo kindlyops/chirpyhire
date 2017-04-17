@@ -3,7 +3,10 @@ class Account < ApplicationRecord
          :registerable, :recoverable, :trackable, :validatable
 
   belongs_to :organization
+  belongs_to :person, optional: true
+
   accepts_nested_attributes_for :organization, reject_if: :all_blank
+  accepts_nested_attributes_for :person, reject_if: :all_blank
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },

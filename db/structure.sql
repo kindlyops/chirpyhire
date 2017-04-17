@@ -95,7 +95,8 @@ CREATE TABLE accounts (
     avatar_file_name character varying,
     avatar_content_type character varying,
     avatar_file_size integer,
-    avatar_updated_at timestamp without time zone
+    avatar_updated_at timestamp without time zone,
+    person_id integer
 );
 
 
@@ -435,7 +436,11 @@ CREATE TABLE people (
     phone_number character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer
+    zipcode_id integer,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -818,6 +823,13 @@ CREATE INDEX index_accounts_on_organization_id ON accounts USING btree (organiza
 
 
 --
+-- Name: index_accounts_on_person_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_accounts_on_person_id ON accounts USING btree (person_id);
+
+
+--
 -- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1049,6 +1061,14 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
+-- Name: accounts fk_rails_777d10a224; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT fk_rails_777d10a224 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
 -- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1146,6 +1166,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170411000232'),
 ('20170417193027'),
 ('20170417200205'),
-('20170417220056');
+('20170417220056'),
+('20170417222301'),
+('20170417222342');
 
 
