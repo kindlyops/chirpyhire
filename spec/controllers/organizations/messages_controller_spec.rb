@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Organizations::MessagesController, type: :controller do
   let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
-  let(:person) { create(:person) }
+  let(:person) { create(:person, :with_candidacy) }
 
   let(:params) do
     {

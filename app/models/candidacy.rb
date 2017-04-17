@@ -1,11 +1,12 @@
 class Candidacy < ApplicationRecord
   paginates_per 10
-  belongs_to :person
+  belongs_to :person, optional: true
+  belongs_to :phone_number, optional: true
   belongs_to :contact, optional: true
   after_save :set_search_content
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
-           :phone_number, :contacts, to: :person
+           :contacts, to: :person
 
   validates :progress, numericality: {
     greater_than_or_equal_to: 0,
@@ -103,6 +104,6 @@ class Candidacy < ApplicationRecord
   end
 
   def set_search_content
-    contacts.find_each(&:save)
+    contacts.find_each(&:save) unless person.blank?
   end
 end
