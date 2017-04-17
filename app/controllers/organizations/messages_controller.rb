@@ -16,7 +16,7 @@ class Organizations::MessagesController < ActionController::Base
 
   def person
     @person ||= begin
-      person = Person.find_or_create_by(phone_number: params['From'])
+      person = Person.find_or_create_by(phone_number: from)
       person.candidacy.update!(phone_number: phone_number)
       person
     end
