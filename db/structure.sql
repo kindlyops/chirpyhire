@@ -1012,6 +1012,13 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
+-- Name: index_phone_numbers_on_phone_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_phone_numbers_on_phone_number ON phone_numbers USING btree (phone_number);
+
+
+--
 -- Name: index_recruiting_ads_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 

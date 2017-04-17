@@ -5,6 +5,8 @@ class CreatePhoneNumbers < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    add_index :phone_numbers, :phone_number, unique: true
+
     change_table :candidacies do |t|
       t.belongs_to :phone_number, null: true, foreign_key: true, index: true
     end
