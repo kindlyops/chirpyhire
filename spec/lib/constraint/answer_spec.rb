@@ -11,7 +11,7 @@ RSpec.describe Constraint::Answer do
 
   describe '#matches?' do
     context 'with person present' do
-      let(:person) { create(:person) }
+      let(:person) { create(:person, :with_candidacy) }
       let(:parameters) { { 'From' => person.phone_number, 'To' => organization.phone_number } }
 
       context 'with contact present' do

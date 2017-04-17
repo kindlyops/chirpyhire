@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :contact do
     organization
-    person
+    association :person, :with_candidacy
 
     transient do
       phone_number nil

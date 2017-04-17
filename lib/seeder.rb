@@ -28,7 +28,8 @@ class Seeder
   end
 
   def seed_demo_contact
-    person = FactoryGirl.create(:person, nickname: ENV.fetch('DEMO_NICKNAME'))
+    person = seed_demo_person
+
     contact = FactoryGirl.create(
       :contact,
       :not_ready,
@@ -37,6 +38,12 @@ class Seeder
       phone_number: ENV.fetch('DEMO_PHONE')
     )
     seed_messages(contact)
+  end
+
+  def seed_demo_person
+    FactoryGirl.create(:person,
+                       :with_candidacy,
+                       nickname: ENV.fetch('DEMO_NICKNAME'))
   end
 
   def candidate_contacts
