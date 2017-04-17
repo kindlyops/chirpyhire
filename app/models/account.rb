@@ -8,14 +8,10 @@ class Account < ApplicationRecord
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
 
-  has_attached_file :avatar,
-                    styles: { medium: '300x300#', thumb: '100x100#' },
-                    default_url: '/images/:style/missing.png'
-  validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
-
   validates :email, uniqueness: true
 
   delegate :name, to: :organization, prefix: true
+  delegate :name, :avatar, to: :person, allow_nil: true
 
   def self.active
     where(invitation_token: nil)

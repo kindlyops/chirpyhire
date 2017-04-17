@@ -2,6 +2,12 @@ class InvitationsController < Devise::InvitationsController
   before_action :add_accept_params, only: :update
   before_action :add_invite_params, only: :create
 
+  def new
+    self.resource = resource_class.new
+    resource.build_person
+    render :new
+  end
+
   def edit
     set_minimum_password_length
     resource.invitation_token = params[:invitation_token]
