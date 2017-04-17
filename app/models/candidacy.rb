@@ -1,6 +1,7 @@
 class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
+  belongs_to :phone_number, optional: true
   belongs_to :contact, optional: true
   after_save :set_search_content
 
