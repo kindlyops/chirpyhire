@@ -209,6 +209,39 @@ ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
 
 
 --
+-- Name: conversations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE conversations (
+    id integer NOT NULL,
+    contact_id integer NOT NULL,
+    account_id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    unread_count integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: conversations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE conversations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: conversations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE conversations_id_seq OWNED BY conversations.id;
+
+
+--
 -- Name: ideal_candidate_suggestions; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -493,6 +526,39 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
+-- Name: read_receipts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE read_receipts (
+    id integer NOT NULL,
+    conversation_id integer NOT NULL,
+    message_id integer NOT NULL,
+    read_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: read_receipts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE read_receipts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: read_receipts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE read_receipts_id_seq OWNED BY read_receipts.id;
+
+
+--
 -- Name: recruiting_ads; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -593,6 +659,13 @@ ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq':
 
 
 --
+-- Name: conversations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY conversations ALTER COLUMN id SET DEFAULT nextval('conversations_id_seq'::regclass);
+
+
+--
 -- Name: ideal_candidate_suggestions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -649,6 +722,13 @@ ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_sea
 
 
 --
+-- Name: read_receipts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY read_receipts ALTER COLUMN id SET DEFAULT nextval('read_receipts_id_seq'::regclass);
+
+
+--
 -- Name: recruiting_ads id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -692,6 +772,14 @@ ALTER TABLE ONLY candidacies
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: conversations conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY conversations
+    ADD CONSTRAINT conversations_pkey PRIMARY KEY (id);
 
 
 --
@@ -756,6 +844,14 @@ ALTER TABLE ONLY people
 
 ALTER TABLE ONLY pg_search_documents
     ADD CONSTRAINT pg_search_documents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: read_receipts read_receipts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY read_receipts
+    ADD CONSTRAINT read_receipts_pkey PRIMARY KEY (id);
 
 
 --
@@ -874,6 +970,27 @@ CREATE UNIQUE INDEX index_contacts_on_person_id_and_organization_id ON contacts 
 
 
 --
+-- Name: index_conversations_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_on_account_id ON conversations USING btree (account_id);
+
+
+--
+-- Name: index_conversations_on_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_conversations_on_contact_id ON conversations USING btree (contact_id);
+
+
+--
+-- Name: index_conversations_on_contact_id_and_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_conversations_on_contact_id_and_account_id ON conversations USING btree (contact_id, account_id);
+
+
+--
 -- Name: index_ideal_candidate_suggestions_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -979,6 +1096,27 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
+-- Name: index_read_receipts_on_conversation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_read_receipts_on_conversation_id ON read_receipts USING btree (conversation_id);
+
+
+--
+-- Name: index_read_receipts_on_conversation_id_and_message_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_read_receipts_on_conversation_id_and_message_id ON read_receipts USING btree (conversation_id, message_id);
+
+
+--
+-- Name: index_read_receipts_on_message_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_read_receipts_on_message_id ON read_receipts USING btree (message_id);
+
+
+--
 -- Name: index_recruiting_ads_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1007,11 +1145,27 @@ CREATE TRIGGER not_ready_contacts_before_insert_update_row_tr BEFORE INSERT OR U
 
 
 --
+-- Name: conversations fk_rails_00afd02cba; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY conversations
+    ADD CONSTRAINT fk_rails_00afd02cba FOREIGN KEY (account_id) REFERENCES accounts(id);
+
+
+--
 -- Name: candidacies fk_rails_01a916123b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY candidacies
     ADD CONSTRAINT fk_rails_01a916123b FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
+-- Name: conversations fk_rails_0330c79025; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY conversations
+    ADD CONSTRAINT fk_rails_0330c79025 FOREIGN KEY (contact_id) REFERENCES contacts(id);
 
 
 --
@@ -1087,6 +1241,14 @@ ALTER TABLE ONLY locations
 
 
 --
+-- Name: read_receipts fk_rails_88438ce78f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY read_receipts
+    ADD CONSTRAINT fk_rails_88438ce78f FOREIGN KEY (message_id) REFERENCES messages(id);
+
+
+--
 -- Name: contacts fk_rails_885008c105; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1108,6 +1270,14 @@ ALTER TABLE ONLY messages
 
 ALTER TABLE ONLY ideal_candidates
     ADD CONSTRAINT fk_rails_c7a0339d90 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: read_receipts fk_rails_ca6d72156e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY read_receipts
+    ADD CONSTRAINT fk_rails_ca6d72156e FOREIGN KEY (conversation_id) REFERENCES conversations(id);
 
 
 --
@@ -1184,6 +1354,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417234420'),
 ('20170418001047'),
 ('20170418014652'),
-('20170418131623');
+('20170418131623'),
+('20170418150843'),
+('20170418151820'),
+('20170418151954');
 
 

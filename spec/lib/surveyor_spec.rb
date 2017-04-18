@@ -18,6 +18,12 @@ RSpec.describe Surveyor do
 
         subject.start
       end
+
+      it 'does not call ReadReceiptsCreator' do
+        expect(ReadReceiptsCreator).not_to receive(:call)
+
+        subject.start
+      end
     end
 
     context 'candidacy not in progress' do
@@ -39,6 +45,12 @@ RSpec.describe Surveyor do
 
       it 'asks the next question in the survey' do
         expect(subject.survey).to receive(:ask)
+
+        subject.start
+      end
+
+      it 'does not call ReadReceiptsCreator' do
+        expect(ReadReceiptsCreator).not_to receive(:call)
 
         subject.start
       end
@@ -66,6 +78,12 @@ RSpec.describe Surveyor do
 
           subject.consider_answer(inquiry, message)
         end
+
+        it 'does not call ReadReceiptsCreator' do
+          expect(ReadReceiptsCreator).not_to receive(:call)
+
+          subject.consider_answer(inquiry, message)
+        end
       end
 
       describe 'incomplete survey' do
@@ -79,6 +97,12 @@ RSpec.describe Surveyor do
 
           it 'asks the next question' do
             expect(subject.survey).to receive(:ask)
+
+            subject.consider_answer(inquiry, message)
+          end
+
+          it 'does not call ReadReceiptsCreator' do
+            expect(ReadReceiptsCreator).not_to receive(:call)
 
             subject.consider_answer(inquiry, message)
           end
@@ -247,6 +271,12 @@ RSpec.describe Surveyor do
 
           it 'restates the question' do
             expect(subject.survey).to receive(:restate)
+
+            subject.consider_answer(inquiry, message)
+          end
+
+          it 'calls ReadReceiptsCreator' do
+            expect(ReadReceiptsCreator).to receive(:call)
 
             subject.consider_answer(inquiry, message)
           end

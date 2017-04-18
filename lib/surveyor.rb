@@ -14,7 +14,7 @@ class Surveyor
     return unless survey.on?(inquiry)
 
     return complete_survey(message) if survey.just_finished?(message)
-    return survey.restate unless survey.answer.valid?(message)
+    return restate_and_log(message) unless survey.answer.valid?(message)
 
     update_candidacy(message)
     survey.ask
@@ -25,6 +25,12 @@ class Surveyor
   end
 
   private
+
+  def restate_and_log(message)
+    ReadReceiptsCreator.call(message, organization)
+
+    survey.restate
+  end
 
   def complete_survey(message)
     update_candidacy(message)

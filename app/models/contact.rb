@@ -55,6 +55,8 @@ class Contact < ApplicationRecord
     !ideal?
   end
 
+  private
+
   def set_last_reply_at
     self.last_reply_at = DateTime.current
   end
