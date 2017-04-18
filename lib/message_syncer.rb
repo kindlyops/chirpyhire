@@ -43,7 +43,7 @@ class MessageSyncer
   end
 
   def create_read_receipts(message)
-    ReadReceiptsCreator.new(message, organization).call if receipt_requested?
+    ReadReceiptsCreator.call(message, organization) if receipt_requested?
   end
 
   def receipt_requested?

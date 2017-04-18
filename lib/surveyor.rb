@@ -27,15 +27,9 @@ class Surveyor
   private
 
   def restate_and_log(message)
-    create_read_receipts(message)
+    ReadReceiptsCreator.call(message, organization)
 
     survey.restate
-  end
-
-  def create_read_receipts(message)
-    organization.conversations.contact(contact).find_each do |conversation|
-      conversation.read_receipts.find_or_create_by!(message: message)
-    end
   end
 
   def complete_survey(message)

@@ -4,6 +4,10 @@ class ReadReceiptsCreator
     @organization = organization
   end
 
+  def self.call(message, organization)
+    new(message, organization).call
+  end
+
   def call
     organization.conversations.contact(contact).find_each do |conversation|
       conversation.read_receipts.find_or_create_by!(message: message)
