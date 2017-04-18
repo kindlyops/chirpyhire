@@ -57,7 +57,11 @@ class Survey
   end
 
   def send_message(message)
-    organization.message(recipient: person, body: message)
+    organization.message(
+      sender: organization.recruiter_person,
+      recipient: person,
+      body: message
+    )
   end
 
   def current_question
