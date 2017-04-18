@@ -23,12 +23,12 @@ class Organization < ApplicationRecord
     people.joins(:candidacy)
   end
 
-  def message(recipient:, body:, manual: false)
+  def message(recipient:, body:, manual: false, sender: nil)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    message = create_message(recipient, sent_message, manual)
+    message = create_message(recipient, sent_message, manual, sender)
     Broadcaster::Message.new(message).broadcast
   end
 
@@ -38,15 +38,16 @@ class Organization < ApplicationRecord
 
   private
 
-  def create_message(recipient, message, manual)
+  def create_message(recipient, message, manual, sender)
     messages.create(
-      person: recipient,
-      sid: message.sid,
+      person: recipient, sid: message.sid,
       body: message.body,
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       direction: message.direction,
-      manual: manual
+      manual: manual,
+      sender: sender,
+      recipient: recipient
     )
   end
 

@@ -12,6 +12,7 @@ class MessagesController < ApplicationController
 
   def create_message
     current_organization.message(
+      sender: current_account.person,
       recipient: conversation.person,
       body: body,
       manual: true
