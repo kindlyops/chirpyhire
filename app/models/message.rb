@@ -2,8 +2,6 @@ class Message < ApplicationRecord
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
-  belongs_to :sender
-  belongs_to :recipient
 
   validates :sender, presence: true, if: :inbound?
   validates :recipient, presence: true, if: :outbound?
