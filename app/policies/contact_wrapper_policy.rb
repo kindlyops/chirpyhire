@@ -1,4 +1,4 @@
-class ConversationPolicy < ApplicationPolicy
+class ContactWrapperPolicy < ApplicationPolicy
   def scope
     Contact
   end

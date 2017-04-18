@@ -12,8 +12,12 @@ class FakeMessaging
     self
   end
 
+  def get(sid)
+    FakeInboundMessage.new(sid: sid)
+  end
+
   def create(from:, to:, body:)
-    message = FakeMessage.new(from: from, to: to, body: body)
+    message = FakeOutboundMessage.new(from: from, to: to, body: body)
     self.class.messages << message
     message
   end

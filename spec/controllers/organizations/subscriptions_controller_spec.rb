@@ -38,6 +38,18 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
             post :create, params: params
           }.to have_enqueued_job(AlreadySubscribedJob)
         end
+
+        it 'does not create a contact' do
+          expect {
+            post :create, params: params
+          }.not_to change { Contact.count }
+        end
+
+        it 'does not create an IceBreakerJob' do
+          expect {
+            post :create, params: params
+          }.not_to have_enqueued_job(IceBreakerJob)
+        end
       end
     end
 
@@ -52,6 +64,18 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         expect {
           post :create, params: params
         }.to change { Candidacy.count }.by(1)
+      end
+
+      it 'creates a contact' do
+        expect {
+          post :create, params: params
+        }.to change { Contact.count }.by(1)
+      end
+
+      it 'creates an IceBreakerJob' do
+        expect {
+          post :create, params: params
+        }.to have_enqueued_job(IceBreakerJob)
       end
     end
   end

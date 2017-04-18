@@ -1,4 +1,4 @@
-class Conversation
+class ContactWrapper
   include Draper::Decoratable
 
   def initialize(contact)
@@ -40,7 +40,7 @@ class Conversation
   end
 
   def group(group)
-    Conversation::MessageGroup.new(group)
+    ContactWrapper::MessageGroup.new(group)
   end
 
   def render_message_group

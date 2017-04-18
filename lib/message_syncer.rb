@@ -1,8 +1,9 @@
 class MessageSyncer
-  def initialize(person, organization, message_sid)
+  def initialize(person, organization, message_sid, receipt: false)
     @person       = person
     @organization = organization
     @message_sid  = message_sid
+    @receipt      = receipt
   end
 
   def call
@@ -10,6 +11,7 @@ class MessageSyncer
     return existing_message if existing_message.present?
     message = sync_message
     update_contact(message)
+    create_read_receipts(message) if receipt_requested?
     Broadcaster::Message.new(message).broadcast
     message
   end
@@ -20,7 +22,7 @@ class MessageSyncer
     organization.get_message(message_sid)
   end
 
-  attr_reader :person, :message_sid, :organization
+  attr_reader :person, :message_sid, :organization, :receipt
 
   def sync_message
     person.sent_messages.create!(
@@ -38,5 +40,13 @@ class MessageSyncer
     contact.update(last_reply_at: message.created_at)
     Broadcaster::LastReply.new(contact).broadcast
     Broadcaster::Temperature.new(contact).broadcast
+  end
+
+  def create_read_receipts(message)
+    ReadReceiptsCreator.call(message, organization) if receipt_requested?
+  end
+
+  def receipt_requested?
+    receipt.present?
   end
 end

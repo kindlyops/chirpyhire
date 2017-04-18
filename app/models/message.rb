@@ -3,6 +3,8 @@ class Message < ApplicationRecord
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
 
+  has_many :read_receipts
+
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
 
@@ -15,8 +17,8 @@ class Message < ApplicationRecord
   end
 
   def author
-    return :organization if outbound? && sender.present?
-    return :bot if outbound? && sender.blank?
+    return :bot if outbound? && sender == Chirpy.person
+    return :organization if outbound?
     :person
   end
 

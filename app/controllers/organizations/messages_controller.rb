@@ -3,16 +3,17 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
+    MessageSyncerJob.perform_later(
+      person,
+      organization,
+      params['MessageSid'],
+      receipt: true
+    )
 
     head :ok
   end
 
   private
-
-  def contact
-    person.contacts.find_or_create_by(organization: organization)
-  end
 
   def person
     @person ||= begin
