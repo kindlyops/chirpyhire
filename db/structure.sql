@@ -984,6 +984,13 @@ CREATE INDEX index_conversations_on_contact_id ON conversations USING btree (con
 
 
 --
+-- Name: index_conversations_on_contact_id_and_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_conversations_on_contact_id_and_account_id ON conversations USING btree (contact_id, account_id);
+
+
+--
 -- Name: index_ideal_candidate_suggestions_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 

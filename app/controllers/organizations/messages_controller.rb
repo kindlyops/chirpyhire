@@ -11,7 +11,11 @@ class Organizations::MessagesController < ActionController::Base
   private
 
   def contact
-    person.contacts.find_or_create_by(organization: organization)
+    @contact ||= begin
+      contact = person.contacts.find_by(organization: organization)
+      return contact if contact.present?
+      create_contact
+    end
   end
 
   def person
@@ -28,5 +32,11 @@ class Organizations::MessagesController < ActionController::Base
 
   def set_header
     response.headers['Content-Type'] = 'text/xml'
+  end
+
+  def create_contact
+    person.contacts.create(organization: organization).tap do |contact|
+      IceBreakerJob.perform_later(contact)
+    end
   end
 end
