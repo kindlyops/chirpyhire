@@ -39,10 +39,10 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         }
       end
 
-      it 'creates a ManualMessageSyncerJob' do
+      it 'creates a MessageSyncerJob' do
         expect {
           post :create, params: params
-        }.to have_enqueued_job(ManualMessageSyncerJob)
+        }.to have_enqueued_job(MessageSyncerJob)
       end
 
       it 'does not create a person' do

@@ -3,24 +3,17 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    ManualMessageSyncerJob.perform_later(
+    MessageSyncerJob.perform_later(
       person,
       organization,
-      params['MessageSid']
+      params['MessageSid'],
+      receipt: true
     )
 
     head :ok
   end
 
   private
-
-  def contact
-    @contact ||= begin
-      contact = person.contacts.find_by(organization: organization)
-      return contact if contact.present?
-      create_contact
-    end
-  end
 
   def person
     @person ||= begin
@@ -36,11 +29,5 @@ class Organizations::MessagesController < ActionController::Base
 
   def set_header
     response.headers['Content-Type'] = 'text/xml'
-  end
-
-  def create_contact
-    person.contacts.create(organization: organization).tap do |contact|
-      IceBreakerJob.perform_later(contact)
-    end
   end
 end
