@@ -24,7 +24,7 @@ class Organization < ApplicationRecord
     people.joins(:candidacy)
   end
 
-  def message(recipient:, body:, sender:, manual: false)
+  def message(recipient:, body:, sender: nil, manual: false)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )

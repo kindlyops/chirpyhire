@@ -25,7 +25,6 @@ class MessageSyncer
   def sync_message
     person.messages.create!(external_message_details.merge(
                               organization: organization,
-                              recipient: organization.recruiter_person,
                               sender: person
     ))
   end

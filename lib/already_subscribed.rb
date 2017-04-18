@@ -10,7 +10,6 @@ class AlreadySubscribed
 
   def call
     organization.message(
-      sender: organization.recruiter_person,
       recipient: person,
       body: already_subscribed
     )

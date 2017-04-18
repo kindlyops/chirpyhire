@@ -1,7 +1,6 @@
 class NotSubscribedJob < ApplicationJob
   def perform(person, organization)
     organization.message(
-      sender: organization.recruiter_person,
       recipient: person,
       body: not_subscribed
     )
