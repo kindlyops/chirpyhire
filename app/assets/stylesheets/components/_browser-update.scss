@@ -1,0 +1,13 @@
+.buorg div a {
+  @extend .btn;
+
+  &#buorgul {
+    @extend .btn-primary;
+    padding: 0.5rem 1rem;
+  }
+
+  &#buorgig {
+    @extend .btn-warning;
+    padding: 0.5rem 1rem;
+  }
+}
