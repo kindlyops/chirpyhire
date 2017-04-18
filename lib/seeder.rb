@@ -8,7 +8,7 @@ class Seeder
 
   private
 
-  attr_reader :organization, :account
+  attr_reader :organization
 
   def seed_not_ready_contacts
     not_ready_contacts unless organization.contacts.not_ready.exists?
@@ -75,12 +75,12 @@ class Seeder
   def seed_start(contact)
     person = contact.person
     person.messages.create(
-      body: 'Start',
-      sid: SecureRandom.uuid,
+      body: 'Start', sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
-      organization: organization
+      organization: organization,
+      sender: person
     )
   end
 
@@ -92,7 +92,8 @@ class Seeder
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      organization: organization
+      organization: organization,
+      recipient: person
     )
   end
 
@@ -100,12 +101,12 @@ class Seeder
     return unless contact.candidate?
     body = Notification::ThankYou.new(contact).body
     contact.person.messages.create(
-      body: body,
-      sid: SecureRandom.uuid,
+      body: body, sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      organization: organization
+      organization: organization,
+      recipient: contact.person
     )
   end
 
@@ -136,7 +137,8 @@ class Seeder
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
-      organization: organization
+      organization: organization,
+      sender: person
     )
   end
 
@@ -176,7 +178,7 @@ class Seeder
     unless organization.accounts.present?
       account = organization.accounts.create!(
         password: ENV.fetch('DEMO_PASSWORD'),
-        name: ENV.fetch('DEMO_NAME'),
+        person_attributes: { name: ENV.fetch('DEMO_NAME') },
         email: ENV.fetch('DEMO_EMAIL'),
         super_admin: true
       )

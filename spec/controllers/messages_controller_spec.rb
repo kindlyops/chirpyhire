@@ -31,6 +31,16 @@ RSpec.describe MessagesController do
         expect(organization.messages.last.manual?).to eq(true)
       end
 
+      it 'is sent from the account' do
+        post :create, params: params, xhr: true
+        expect(organization.messages.last.sender).to eq(account.person)
+      end
+
+      it 'is received by the person' do
+        post :create, params: params, xhr: true
+        expect(organization.messages.last.recipient).to eq(contact.person)
+      end
+
       it 'sends a message' do
         expect {
           post :create, params: params, xhr: true
