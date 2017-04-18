@@ -15,8 +15,8 @@ class Message < ApplicationRecord
   end
 
   def author
-    return :organization if outbound? && sender.present?
-    return :bot if outbound? && sender.blank?
+    return :bot if outbound? && sender == Chirpy.person
+    return :organization if outbound?
     :person
   end
 

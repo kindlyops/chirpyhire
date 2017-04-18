@@ -1,4 +1,4 @@
-class Conversation::MessageGroup
+class ContactWrapper::MessageGroup
   attr_reader :group
 
   def initialize(group)

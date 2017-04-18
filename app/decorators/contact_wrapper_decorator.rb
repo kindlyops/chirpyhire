@@ -1,4 +1,4 @@
-class ConversationDecorator < Draper::Decorator
+class ContactWrapperDecorator < Draper::Decorator
   delegate_all
 
   def contact

@@ -32,7 +32,7 @@ class MessagesController < ApplicationController
 
   def conversation
     @conversation ||= begin
-      conversation = Conversation.new(Contact.find(params[:contact_id]))
+      conversation = ContactWrapper.new(Contact.find(params[:contact_id]))
       authorize conversation, :show?
     end
   end
