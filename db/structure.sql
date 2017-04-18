@@ -91,7 +91,7 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    person_id integer
+    person_id integer NOT NULL
 );
 
 
@@ -358,7 +358,9 @@ CREATE TABLE messages (
     person_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    manual boolean DEFAULT false NOT NULL
+    manual boolean DEFAULT false NOT NULL,
+    sender_id integer,
+    recipient_id integer
 );
 
 
@@ -1166,6 +1168,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417222342'),
 ('20170417223711'),
 ('20170417230308'),
-('20170417234420');
+('20170417234420'),
+('20170418001047');
 
 

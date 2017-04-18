@@ -176,7 +176,7 @@ class Seeder
     unless organization.accounts.present?
       account = organization.accounts.create!(
         password: ENV.fetch('DEMO_PASSWORD'),
-        name: ENV.fetch('DEMO_NAME'),
+        person_attributes: { name: ENV.fetch('DEMO_NAME') },
         email: ENV.fetch('DEMO_EMAIL'),
         super_admin: true
       )
