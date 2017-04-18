@@ -11,7 +11,7 @@ class MessageSyncer
     return existing_message if existing_message.present?
     message = sync_message
     update_contact(message)
-    create_read_receipts if receipt_requested?
+    create_read_receipts(message) if receipt_requested?
     Broadcaster::Message.new(message).broadcast
     message
   end
@@ -22,7 +22,7 @@ class MessageSyncer
     organization.get_message(message_sid)
   end
 
-  attr_reader :person, :message_sid, :organization
+  attr_reader :person, :message_sid, :organization, :receipt
 
   def sync_message
     person.sent_messages.create!(
