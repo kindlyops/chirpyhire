@@ -34,7 +34,7 @@ RSpec.describe IceBreaker do
       let!(:accounts) { create_list(:account, 3) }
       let(:count) { organization.accounts.count }
 
-      it 'does not create conversations' do
+      it 'only creates conversations for accounts on the organization' do
         expect {
           subject.call
         }.to change { Conversation.count }.by(count)
