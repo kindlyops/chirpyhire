@@ -10,7 +10,7 @@ class AlreadySubscribed
 
   def call
     organization.message(
-      sender: CHIRPY,
+      sender: Chirpy.person,
       recipient: person,
       body: already_subscribed
     )
