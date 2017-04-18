@@ -30,6 +30,7 @@ class MessageSyncer
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
       organization: organization,
+      recipient: organization.recruiter.person,
       sender: person
     )
   end

@@ -81,7 +81,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       organization: organization,
-      sender: person
+      sender: person,
+      recipient: organization.recruiter.person
     )
   end
 
@@ -139,7 +140,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       organization: organization,
-      sender: person
+      sender: person,
+      recipient: organization.recruiter.person
     )
   end
 
