@@ -29,6 +29,15 @@ $(document).on('turbolinks:load', function() {
 
     $(window).resize(resizeScroller);
     resizeScroller();
+
+    var scrollToBottom = function() {
+      $('#msgs_scroller_div').scrollTop($('#msgs_div').offset().top);
+    }
+
+    if ($('.messages').length) {
+      scrollToBottom();
+    }
+
     messages.attr('loaded', true);
   }
 });
