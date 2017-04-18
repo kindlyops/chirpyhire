@@ -74,39 +74,36 @@ class Seeder
 
   def seed_start(contact)
     person = contact.person
-    person.messages.create(
+    person.sent_messages.create(
       body: 'Start', sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
-      organization: organization,
-      sender: person
+      organization: organization
     )
   end
 
   def seed_question(person, question)
     body = question.body
-    person.messages.create(
+    person.received_messages.create(
       body: body,
       sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      organization: organization,
-      recipient: person
+      organization: organization
     )
   end
 
   def seed_thank_you(contact)
     return unless contact.candidate?
     body = Notification::ThankYou.new(contact).body
-    contact.person.messages.create(
+    contact.person.received_messages.create(
       body: body, sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      organization: organization,
-      recipient: contact.person
+      organization: organization
     )
   end
 
@@ -131,14 +128,13 @@ class Seeder
   end
 
   def create_answer(person, body)
-    person.messages.create(
+    person.sent_messages.create(
       body: body,
       sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
-      organization: organization,
-      sender: person
+      organization: organization
     )
   end
 

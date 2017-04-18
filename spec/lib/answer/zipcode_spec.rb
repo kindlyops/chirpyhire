@@ -46,7 +46,7 @@ RSpec.describe Answer::Zipcode do
 
   describe '#format' do
     let(:person) { contact.person }
-    let!(:message) { create(:message, person: person, body: '30342') }
+    let!(:message) { create(:message, sender: person, body: '30342') }
 
     context 'zipcode present' do
       let!(:zipcode) { create(:zipcode) }

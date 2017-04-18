@@ -15,7 +15,7 @@ class Broadcaster::Message
     @contact ||= contacts.find_by(person: person)
   end
 
-  delegate :person, :organization, to: :message
+  delegate :organization, :person, to: :message
   delegate :contacts, to: :organization
 
   def render_message

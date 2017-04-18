@@ -26,9 +26,9 @@ RSpec.describe MessagesController do
         }.to change { organization.messages.count }.by(1)
       end
 
-      it 'is a manual message' do
+      it 'is a author organization message' do
         post :create, params: params, xhr: true
-        expect(organization.messages.last.manual?).to eq(true)
+        expect(organization.messages.last.author).to eq(:organization)
       end
 
       it 'is sent from the account' do
