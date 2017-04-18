@@ -53,9 +53,9 @@ class MessagesController < ApplicationController
 
   def create_message
     current_organization.message(
+      sender: current_account.person,
       recipient: conversation.person,
-      body: body,
-      manual: true
+      body: body
     )
   end
 
@@ -65,7 +65,8 @@ class MessagesController < ApplicationController
 
   def scoped_messages
     policy_scope(Message).where(
-      person: conversation.person,
+      recipient: conversation.person,
+      sender: current_account.person,
       organization: current_organization
     )
   end

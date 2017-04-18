@@ -3,7 +3,9 @@ class Person < ApplicationRecord
   has_one :candidacy
   has_one :account, inverse_of: :person
   has_many :contacts
-  has_many :messages
+  has_many :sent_messages, class_name: 'Message', foreign_key: :sender_id
+  has_many :received_messages, class_name: 'Message', foreign_key: :recipient_id
+
   belongs_to :zipcode, optional: true
 
   before_validation :add_nickname

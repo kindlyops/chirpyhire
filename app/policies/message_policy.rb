@@ -1,9 +1,9 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    person.actively_subscribed_to?(organization)
+    recipient.actively_subscribed_to?(organization)
   end
 
-  delegate :person, to: :record
+  delegate :recipient, to: :record
 
   class Scope < ApplicationPolicy::Scope
     def resolve

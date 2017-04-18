@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :message do
     organization
-    person
+    association :sender, factory: :person
     direction { 'inbound' }
     sid { Faker::Number.number(10) }
     sent_at { DateTime.current }

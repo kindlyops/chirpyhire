@@ -1,8 +1,12 @@
 class Message < ApplicationRecord
-  belongs_to :person
+  belongs_to :sender, class_name: 'Person', optional: true
+  belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
   belongs_to :sender
   belongs_to :recipient
+
+  validates :sender, presence: true, if: :inbound?
+  validates :recipient, presence: true, if: :outbound?
 
   def self.by_recency
     order(:external_created_at, :id)
@@ -13,8 +17,8 @@ class Message < ApplicationRecord
   end
 
   def author
-    return :organization if outbound? && manual?
-    return :bot if outbound?
+    return :organization if outbound? && sender.present?
+    return :bot if outbound? && sender.blank?
     :person
   end
 
@@ -28,6 +32,11 @@ class Message < ApplicationRecord
 
   def inbound?
     direction == 'inbound'
+  end
+
+  def person
+    return recipient if outbound?
+    sender
   end
 
   def self.last_reply_at
