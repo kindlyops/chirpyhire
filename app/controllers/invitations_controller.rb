@@ -2,6 +2,12 @@ class InvitationsController < Devise::InvitationsController
   before_action :add_accept_params, only: :update
   before_action :add_invite_params, only: :create
 
+  def new
+    self.resource = resource_class.new
+    resource.build_person
+    render :new
+  end
+
   def edit
     set_minimum_password_length
     resource.invitation_token = params[:invitation_token]
@@ -23,14 +29,14 @@ class InvitationsController < Devise::InvitationsController
   def add_accept_params
     devise_parameter_sanitizer.permit(
       :accept_invitation,
-      keys: [:agreed_to_terms, :email, :name]
+      keys: [:agreed_to_terms, :email, person_attributes: %i(name)]
     )
   end
 
   def add_invite_params
     devise_parameter_sanitizer.permit(
       :invite,
-      keys: [:email, :name]
+      keys: [:email, person_attributes: %i(name)]
     )
   end
 
