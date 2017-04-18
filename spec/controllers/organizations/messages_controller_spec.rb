@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organizations::MessagesController, type: :controller do
-  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+  let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
 
   describe '#create' do
     context 'new person' do

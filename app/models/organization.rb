@@ -18,12 +18,13 @@ class Organization < ApplicationRecord
   has_many :messages
 
   delegate :zipcode, :city, to: :location
+  delegate :person, to: :recruiter, prefix: true
 
   def candidates
     people.joins(:candidacy)
   end
 
-  def message(recipient:, body:, manual: false, sender: nil)
+  def message(recipient:, body:, manual: false, sender: recruiter_person)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )

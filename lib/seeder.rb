@@ -75,14 +75,13 @@ class Seeder
   def seed_start(contact)
     person = contact.person
     person.messages.create(
-      body: 'Start',
-      sid: SecureRandom.uuid,
+      body: 'Start', sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
       organization: organization,
       sender: person,
-      recipient: organization.recruiter.person
+      recipient: organization.recruiter_person
     )
   end
 
@@ -141,7 +140,7 @@ class Seeder
       direction: 'inbound',
       organization: organization,
       sender: person,
-      recipient: organization.recruiter.person
+      recipient: organization.recruiter_person
     )
   end
 

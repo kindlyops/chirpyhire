@@ -23,16 +23,21 @@ class MessageSyncer
   attr_reader :person, :message_sid, :organization
 
   def sync_message
-    person.messages.create!(
+    person.messages.create!(external_message_details.merge(
+                              organization: organization,
+                              recipient: organization.recruiter_person,
+                              sender: person
+    ))
+  end
+
+  def external_message_details
+    {
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction,
       sent_at: external_message.date_sent,
-      external_created_at: external_message.date_created,
-      organization: organization,
-      recipient: organization.recruiter.person,
-      sender: person
-    )
+      external_created_at: external_message.date_created
+    }
   end
 
   def update_contact(message)
