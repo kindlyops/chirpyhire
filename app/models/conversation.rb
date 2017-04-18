@@ -8,16 +8,12 @@ class Conversation < ApplicationRecord
     where(contact: contact)
   end
 
-  def self.current
-    order(last_viewed_at: :desc)
-  end
-
   def self.unread
     where('unread_count > ?', 0)
   end
 
   def self.recently_viewed
-    order(last_viewed_at: :asc)
+    order(last_viewed_at: :asc, unread_count: :desc)
   end
 
   def self.by_handle
@@ -47,7 +43,8 @@ class Conversation < ApplicationRecord
     !unread?
   end
 
-  delegate :messages, to: :contact
+  delegate :messages, :person, to: :contact
+  delegate :handle, to: :person, prefix: true
 
   private
 

@@ -6,18 +6,12 @@ class MessagesController < ApplicationController
   before_action :ensure_contacts, only: :index
 
   def index
-    if current_conversation_id.present?
-      redirect_to message_path(current_conversation_id)
-    else
-      redirect_to message_path(most_recent_conversation)
-    end
+    redirect_to message_path(current_conversation.contact)
   end
 
   def show
-    conversation.transaction do
-      conversation.read_receipts.update_all(read_at: DateTime.current)
-      conversation.update!(last_viewed_at: DateTime.current, unread_count: 0)
-    end
+    conversation.read_receipts.unread.each(&method(:read))
+    conversation.update(last_viewed_at: DateTime.current)
   end
 
   def create
@@ -28,6 +22,14 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def current_conversation
+    current_account.conversations.recently_viewed.first
+  end
+
+  def read(receipt)
+    receipt.update(read_at: DateTime.current)
+  end
 
   def most_recent_conversation
     current_organization.contacts.recently_replied.first

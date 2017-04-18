@@ -2,6 +2,7 @@ class Contact < ApplicationRecord
   include Contact::Searchable
   belongs_to :person
   belongs_to :organization
+  has_many :conversations
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
            :experience, :certification, :skin_test, :avatar,

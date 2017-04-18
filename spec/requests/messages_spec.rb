@@ -22,7 +22,13 @@ RSpec.describe 'Messages' do
 
   context 'with caregivers' do
     let!(:current_contact) { create(:contact, organization: account.organization) }
-    let!(:most_recent_message_contact) { create(:contact, organization: account.organization) }
+    let!(:with_unread_messages) { create(:contact, organization: account.organization) }
+
+    before do
+      IceBreaker.call(current_contact)
+      IceBreaker.call(with_unread_messages)
+      with_unread_messages.conversations.each { |c| c.update(unread_count: 1) }
+    end
 
     context 'with a current conversation' do
       before do
@@ -36,9 +42,9 @@ RSpec.describe 'Messages' do
     end
 
     context 'without a current conversation' do
-      it 'redirects to the caregiver who sent the last message' do
+      it 'redirects to the caregiver with unread messages' do
         get messages_path
-        expect(response).to redirect_to(message_path(most_recent_message_contact))
+        expect(response).to redirect_to(message_path(with_unread_messages))
       end
     end
   end
