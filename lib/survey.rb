@@ -57,7 +57,11 @@ class Survey
   end
 
   def send_message(message)
-    organization.message(sender: Chirpy.person, recipient: person, body: message)
+    organization.message(
+      sender: Chirpy.person,
+      recipient: person,
+      body: message
+    )
   end
 
   def current_question
