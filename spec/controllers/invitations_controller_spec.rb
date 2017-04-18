@@ -1,11 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :controller do
-  let!(:organization) { create(:organization, :with_account) }
+  let!(:organization) { create(:organization) }
   let(:inviter) { organization.accounts.first }
 
   let(:invite_params) do
-    { account: { email: 'bob@example.com' } }
+    {
+      account: {
+        email: 'bob@example.com',
+        person_attributes: {
+          name: Faker::Name.name
+        }
+      }
+    }
   end
 
   before do
@@ -26,8 +33,15 @@ RSpec.describe InvitationsController, type: :controller do
 
   describe '#update' do
     let(:email) { 'bob@someemail.com' }
+
+    let(:account_attributes) do
+      { email: email, organization: organization, person_attributes: {
+        name: Faker::Name.name
+      } }
+    end
+
     let(:account) do
-      Account.invite!({ email: email, organization: organization }, inviter)
+      Account.invite!(account_attributes, inviter)
     end
 
     let(:invite_params) do

@@ -1,6 +1,10 @@
 class NotSubscribedJob < ApplicationJob
   def perform(person, organization)
-    organization.message(recipient: person, body: not_subscribed)
+    organization.message(
+      sender: Chirpy.person,
+      recipient: person,
+      body: not_subscribed
+    )
   end
 
   private

@@ -91,11 +91,7 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    name character varying,
-    avatar_file_name character varying,
-    avatar_content_type character varying,
-    avatar_file_size integer,
-    avatar_updated_at timestamp without time zone
+    person_id integer NOT NULL
 );
 
 
@@ -359,10 +355,10 @@ CREATE TABLE messages (
     sent_at timestamp without time zone,
     external_created_at timestamp without time zone,
     organization_id integer NOT NULL,
-    person_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    manual boolean DEFAULT false NOT NULL
+    sender_id integer NOT NULL,
+    recipient_id integer
 );
 
 
@@ -430,12 +426,16 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 CREATE TABLE people (
     id integer NOT NULL,
-    full_name character varying,
-    nickname character varying NOT NULL,
-    phone_number character varying NOT NULL,
+    name character varying,
+    nickname character varying,
+    phone_number character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer
+    zipcode_id integer,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -818,6 +818,13 @@ CREATE INDEX index_accounts_on_organization_id ON accounts USING btree (organiza
 
 
 --
+-- Name: index_accounts_on_person_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_accounts_on_person_id ON accounts USING btree (person_id);
+
+
+--
 -- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -909,10 +916,17 @@ CREATE INDEX index_messages_on_organization_id ON messages USING btree (organiza
 
 
 --
--- Name: index_messages_on_person_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_messages_on_recipient_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_messages_on_person_id ON messages USING btree (person_id);
+CREATE INDEX index_messages_on_recipient_id ON messages USING btree (recipient_id);
+
+
+--
+-- Name: index_messages_on_sender_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_sender_id ON messages USING btree (sender_id);
 
 
 --
@@ -934,6 +948,13 @@ CREATE UNIQUE INDEX index_organizations_on_phone_number ON organizations USING b
 --
 
 CREATE INDEX index_organizations_on_recruiter_id ON organizations USING btree (recruiter_id);
+
+
+--
+-- Name: index_people_on_phone_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_people_on_phone_number ON people USING btree (phone_number);
 
 
 --
@@ -994,6 +1015,14 @@ ALTER TABLE ONLY candidacies
 
 
 --
+-- Name: messages fk_rails_12e9de2e48; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT fk_rails_12e9de2e48 FOREIGN KEY (recipient_id) REFERENCES people(id);
+
+
+--
 -- Name: organizations fk_rails_180b619402; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1042,11 +1071,11 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
--- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: accounts fk_rails_777d10a224; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY messages
-    ADD CONSTRAINT fk_rails_835d3e2df6 FOREIGN KEY (person_id) REFERENCES people(id);
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT fk_rails_777d10a224 FOREIGN KEY (person_id) REFERENCES people(id);
 
 
 --
@@ -1063,6 +1092,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT fk_rails_885008c105 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
+-- Name: messages fk_rails_b8f26a382d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT fk_rails_b8f26a382d FOREIGN KEY (sender_id) REFERENCES people(id);
 
 
 --
@@ -1136,6 +1173,17 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170316123919'),
 ('20170316150805'),
 ('20170404173405'),
-('20170411000232');
+('20170411000232'),
+('20170417193027'),
+('20170417200205'),
+('20170417220056'),
+('20170417222301'),
+('20170417222342'),
+('20170417223711'),
+('20170417230308'),
+('20170417234420'),
+('20170418001047'),
+('20170418014652'),
+('20170418131623');
 
 

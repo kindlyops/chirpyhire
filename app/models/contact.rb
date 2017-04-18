@@ -36,7 +36,11 @@ class Contact < ApplicationRecord
   end
 
   def messages
-    person.messages.where(organization: organization)
+    organization.messages.where(sender: person).or(received_messages)
+  end
+
+  def received_messages
+    organization.messages.where(recipient: person)
   end
 
   def unsubscribe!

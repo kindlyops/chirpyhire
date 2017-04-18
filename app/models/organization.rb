@@ -1,6 +1,6 @@
 class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
-  has_many :accounts
+  has_many :accounts, inverse_of: :organization
   has_many :contacts
   has_many :people, through: :contacts, class_name: 'Person'
   belongs_to :recruiter, class_name: 'Account'
@@ -18,17 +18,18 @@ class Organization < ApplicationRecord
   has_many :messages
 
   delegate :zipcode, :city, to: :location
+  delegate :person, to: :recruiter, prefix: true
 
   def candidates
     people.joins(:candidacy)
   end
 
-  def message(recipient:, body:, manual: false)
+  def message(recipient:, body:, sender: nil)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    message = create_message(recipient, sent_message, manual)
+    message = create_message(recipient, sent_message, sender)
     Broadcaster::Message.new(message).broadcast
   end
 
@@ -38,15 +39,15 @@ class Organization < ApplicationRecord
 
   private
 
-  def create_message(recipient, message, manual)
+  def create_message(recipient, message, sender)
     messages.create(
-      person: recipient,
       sid: message.sid,
       body: message.body,
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       direction: message.direction,
-      manual: manual
+      sender: sender,
+      recipient: recipient
     )
   end
 
