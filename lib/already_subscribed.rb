@@ -9,10 +9,7 @@ class AlreadySubscribed
   end
 
   def call
-    organization.message(
-      recipient: person,
-      body: already_subscribed
-    )
+    organization.message(recipient: person, body: already_subscribed)
   end
 
   private
