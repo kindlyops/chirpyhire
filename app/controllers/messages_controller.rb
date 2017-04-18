@@ -14,8 +14,10 @@ class MessagesController < ApplicationController
   end
 
   def show
-    set_current_conversation
-    @conversation = conversation
+    conversation.transaction do
+      conversation.read_receipts.update_all(read_at: DateTime.current)
+      conversation.update!(last_viewed_at: DateTime.current, unread_count: 0)
+    end
   end
 
   def create
@@ -26,13 +28,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-  def set_current_conversation
-    cookies.signed['current_conversation_id'] = {
-      value: conversation.id,
-      expires: 100.years.from_now
-    }
-  end
 
   def most_recent_conversation
     current_organization.contacts.recently_replied.first
@@ -72,13 +67,16 @@ class MessagesController < ApplicationController
   end
 
   def conversation
-    @conversation ||= begin
-      conversation = ContactWrapper.new(Contact.find(params[:contact_id]))
-      authorize conversation, :show?
-    end
+    @conversation ||= authorize fetch_conversation, :show?
   end
 
-  delegate :contact, to: :conversation
+  def fetch_conversation
+    current_account.conversations.find_by(contact: contact)
+  end
+
+  def contact
+    @contact ||= Contact.find(params[:contact_id])
+  end
 
   def message_not_authorized
     redirect_to contact_conversation_path(contact), alert: error_message

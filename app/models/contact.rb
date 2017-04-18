@@ -4,7 +4,7 @@ class Contact < ApplicationRecord
   belongs_to :organization
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
-           :experience, :certification, :skin_test,
+           :experience, :certification, :skin_test, :avatar,
            :cpr_first_aid, :nickname, :candidacy, to: :person
   delegate :inquiry, to: :person, prefix: true
 

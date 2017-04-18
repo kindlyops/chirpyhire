@@ -6,7 +6,7 @@ class ContactWrapper
   end
 
   def days
-    messages.by_recency.chunk(&:day).map(&method(:thoughts))
+    messages.by_recency.chunk(&:day).map(&method(:to_day))
   end
 
   def message_groups
@@ -31,7 +31,7 @@ class ContactWrapper
 
   private
 
-  def thoughts(day)
+  def to_day(day)
     Conversation::Day.new(day)
   end
 

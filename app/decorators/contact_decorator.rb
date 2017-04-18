@@ -1,6 +1,7 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
-  include HeroPatternable
+  decorates_association :person
+  delegate :hero_pattern_classes, to: :person
 
   def joined_at
     Contact::JoinedAt.new(object)

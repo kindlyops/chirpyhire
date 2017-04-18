@@ -1,7 +1,7 @@
 div class==(message_counter.zero? ? 'message first' : 'message')
   .message_gutter
     .message_icon
-      - if message.sender && message.sender.avatar.url.present?
+      - if message.sender.avatar.url.present?
         = image_tag message.sender.avatar.url(:medium), class: 'member_image thumb_36'
       - elsif message.sender
         div class=="member_image thumb_36 #{message.sender.decorate.hero_pattern_classes}"
@@ -11,7 +11,7 @@ div class==(message_counter.zero? ? 'message first' : 'message')
   .message_content
     .message_content_header
       .message_content_header_left
-        strong.message-sender = message.sender && message.sender.handle
+        strong.message-sender = message.sender.handle
         a.timestamp
           '
           = message.created_at.strftime('%l:%M %p')

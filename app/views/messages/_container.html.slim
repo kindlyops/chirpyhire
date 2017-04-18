@@ -3,7 +3,7 @@
     #end_div
       #end_display_div
         #end_display_padder
-        = render partial: "messages/end_display_meta", locals: { person: @conversation.person }
+        = render partial: "messages/end_display_meta", locals: { contact: @conversation.contact }
         #end_display_status hidden=true Retrieving history...
     #msgs_div.msgs_holder
       = render partial: "messages/day", collection: @conversation.days
