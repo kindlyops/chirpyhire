@@ -1,5 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :person
+  belongs_to :sender, class_name: 'Person', optional: true
+  belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
 
   def self.by_recency
