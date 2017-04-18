@@ -28,6 +28,11 @@ class Message < ApplicationRecord
     direction == 'inbound'
   end
 
+  def person
+    return recipient if outbound?
+    sender
+  end
+
   def self.last_reply_at
     replies.by_recency.last.created_at
   end
