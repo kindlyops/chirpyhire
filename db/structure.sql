@@ -357,7 +357,7 @@ CREATE TABLE messages (
     organization_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    sender_id integer,
+    sender_id integer NOT NULL,
     recipient_id integer
 );
 
@@ -916,6 +916,20 @@ CREATE INDEX index_messages_on_organization_id ON messages USING btree (organiza
 
 
 --
+-- Name: index_messages_on_recipient_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_recipient_id ON messages USING btree (recipient_id);
+
+
+--
+-- Name: index_messages_on_sender_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_sender_id ON messages USING btree (sender_id);
+
+
+--
 -- Name: index_messages_on_sid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1001,6 +1015,14 @@ ALTER TABLE ONLY candidacies
 
 
 --
+-- Name: messages fk_rails_12e9de2e48; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT fk_rails_12e9de2e48 FOREIGN KEY (recipient_id) REFERENCES people(id);
+
+
+--
 -- Name: organizations fk_rails_180b619402; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1070,6 +1092,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT fk_rails_885008c105 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
+-- Name: messages fk_rails_b8f26a382d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY messages
+    ADD CONSTRAINT fk_rails_b8f26a382d FOREIGN KEY (sender_id) REFERENCES people(id);
 
 
 --
@@ -1153,6 +1183,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417230308'),
 ('20170417234420'),
 ('20170418001047'),
-('20170418014652');
+('20170418014652'),
+('20170418131623');
 
 
