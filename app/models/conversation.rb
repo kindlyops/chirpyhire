@@ -17,7 +17,7 @@ class Conversation < ApplicationRecord
   end
 
   def self.by_handle
-    order('COALESCE(people.name, people.nickname) ASC')
+    order('NULLIF(people.name, people.nickname) ASC')
   end
 
   def self.read
