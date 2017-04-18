@@ -6,7 +6,7 @@ class MessageSyncer
   end
 
   def call
-    existing_message = person.messages.find_by(sid: message_sid)
+    existing_message = person.sent_messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
     message = sync_message
     update_contact(message)
@@ -23,14 +23,13 @@ class MessageSyncer
   attr_reader :person, :message_sid, :organization
 
   def sync_message
-    person.messages.create!(
+    person.sent_messages.create!(
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction,
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
-      organization: organization,
-      sender: person
+      organization: organization
     )
   end
 

@@ -355,10 +355,8 @@ CREATE TABLE messages (
     sent_at timestamp without time zone,
     external_created_at timestamp without time zone,
     organization_id integer NOT NULL,
-    person_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    manual boolean DEFAULT false NOT NULL,
     sender_id integer,
     recipient_id integer
 );
@@ -918,13 +916,6 @@ CREATE INDEX index_messages_on_organization_id ON messages USING btree (organiza
 
 
 --
--- Name: index_messages_on_person_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_messages_on_person_id ON messages USING btree (person_id);
-
-
---
 -- Name: index_messages_on_sid; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1066,14 +1057,6 @@ ALTER TABLE ONLY accounts
 
 
 --
--- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY messages
-    ADD CONSTRAINT fk_rails_835d3e2df6 FOREIGN KEY (person_id) REFERENCES people(id);
-
-
---
 -- Name: locations fk_rails_84778edc55; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1169,6 +1152,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170417223711'),
 ('20170417230308'),
 ('20170417234420'),
-('20170418001047');
+('20170418001047'),
+('20170418014652');
 
 

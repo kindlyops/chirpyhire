@@ -21,9 +21,9 @@ class Answer::Zipcode < Answer::Base
     zipcode = ::Zipcode.find_by(zipcode: zipcode_string)
 
     if zipcode.present?
-      message.person.update!(zipcode: zipcode)
+      message.sender.update!(zipcode: zipcode)
     else
-      ZipcodeFetcherJob.perform_later(message.person, zipcode_string)
+      ZipcodeFetcherJob.perform_later(message.sender, zipcode_string)
     end
   end
 
