@@ -1103,6 +1103,13 @@ CREATE INDEX index_read_receipts_on_conversation_id ON read_receipts USING btree
 
 
 --
+-- Name: index_read_receipts_on_conversation_id_and_message_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_read_receipts_on_conversation_id_and_message_id ON read_receipts USING btree (conversation_id, message_id);
+
+
+--
 -- Name: index_read_receipts_on_message_id; Type: INDEX; Schema: public; Owner: -
 --
 

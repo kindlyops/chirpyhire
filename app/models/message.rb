@@ -3,6 +3,8 @@ class Message < ApplicationRecord
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
 
+  has_many :read_receipts
+
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
 

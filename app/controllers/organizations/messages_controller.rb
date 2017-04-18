@@ -3,7 +3,11 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    MessageSyncerJob.perform_later(person, organization, params['MessageSid'])
+    ManualMessageSyncerJob.perform_later(
+      person,
+      organization,
+      params['MessageSid']
+    )
 
     head :ok
   end

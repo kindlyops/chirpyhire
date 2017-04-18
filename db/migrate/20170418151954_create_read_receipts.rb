@@ -6,5 +6,7 @@ class CreateReadReceipts < ActiveRecord::Migration[5.0]
       t.datetime :read_at
       t.timestamps
     end
+
+    add_index :read_receipts, [:conversation_id, :message_id], unique: true
   end
 end

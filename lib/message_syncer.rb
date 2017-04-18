@@ -10,6 +10,7 @@ class MessageSyncer
     return existing_message if existing_message.present?
     message = sync_message
     update_contact(message)
+    yield message if block_given?
     Broadcaster::Message.new(message).broadcast
     message
   end
