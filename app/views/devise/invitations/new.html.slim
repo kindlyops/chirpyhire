@@ -12,9 +12,10 @@
               span Invite team member
             p.card-subtitle.mb-1 Recruiting caregivers is better with company.
             p.card-subtitle.mb-3 Invite as many team members as you'd like at no additional charge.
-            .form-group
-              strong = f.label :name, class: "col-form-label"
-              = f.text_field :name, required: true, class: "form-control"
+            = f.fields_for :person do |p|
+              .form-group
+                strong = p.label :name, class: "col-form-label"
+                = p.text_field :name, required: true, class: "form-control"
             .form-group
               strong = f.label :email, class: "col-form-label"
               = f.email_field :email, required: true, class: "form-control"

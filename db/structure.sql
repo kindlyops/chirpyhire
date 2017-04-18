@@ -91,11 +91,7 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    name character varying,
-    avatar_file_name character varying,
-    avatar_content_type character varying,
-    avatar_file_size integer,
-    avatar_updated_at timestamp without time zone
+    person_id integer
 );
 
 
@@ -430,12 +426,16 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 CREATE TABLE people (
     id integer NOT NULL,
-    full_name character varying,
-    nickname character varying NOT NULL,
-    phone_number character varying NOT NULL,
+    name character varying,
+    nickname character varying,
+    phone_number character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    zipcode_id integer
+    zipcode_id integer,
+    avatar_file_name character varying,
+    avatar_content_type character varying,
+    avatar_file_size integer,
+    avatar_updated_at timestamp without time zone
 );
 
 
@@ -818,6 +818,13 @@ CREATE INDEX index_accounts_on_organization_id ON accounts USING btree (organiza
 
 
 --
+-- Name: index_accounts_on_person_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_accounts_on_person_id ON accounts USING btree (person_id);
+
+
+--
 -- Name: index_accounts_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -937,6 +944,13 @@ CREATE INDEX index_organizations_on_recruiter_id ON organizations USING btree (r
 
 
 --
+-- Name: index_people_on_phone_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_people_on_phone_number ON people USING btree (phone_number);
+
+
+--
 -- Name: index_people_on_zipcode_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1042,6 +1056,14 @@ ALTER TABLE ONLY ideal_candidate_suggestions
 
 
 --
+-- Name: accounts fk_rails_777d10a224; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY accounts
+    ADD CONSTRAINT fk_rails_777d10a224 FOREIGN KEY (person_id) REFERENCES people(id);
+
+
+--
 -- Name: messages fk_rails_835d3e2df6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1136,6 +1158,14 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170316123919'),
 ('20170316150805'),
 ('20170404173405'),
-('20170411000232');
+('20170411000232'),
+('20170417193027'),
+('20170417200205'),
+('20170417220056'),
+('20170417222301'),
+('20170417222342'),
+('20170417223711'),
+('20170417230308'),
+('20170417234420');
 
 
