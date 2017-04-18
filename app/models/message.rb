@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  belongs_to :sender, class_name: 'Person'
+  belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
 
@@ -18,11 +18,6 @@ class Message < ApplicationRecord
     return :organization if outbound? && sender.present?
     return :bot if outbound? && sender.blank?
     :person
-  end
-
-  def person
-    return recipient if outbound?
-    sender if inbound?
   end
 
   def outbound?

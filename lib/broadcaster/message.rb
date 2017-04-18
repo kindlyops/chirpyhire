@@ -15,8 +15,13 @@ class Broadcaster::Message
     @contact ||= contacts.find_by(person: person)
   end
 
-  delegate :person, :organization, to: :message
+  delegate :organization, to: :message
   delegate :contacts, to: :organization
+
+  def person
+    return message.recipient if message.outbound?
+    message.sender
+  end
 
   def render_message
     Conversation.new(contact).render(message)
