@@ -1,5 +1,4 @@
 class Conversation::Day
-
   def initialize(day)
     @date, @messages = day
     @current_thought = 1
@@ -9,7 +8,9 @@ class Conversation::Day
   attr_accessor :current_thought
 
   def thoughts
-    @thoughts ||= messages.group_by.with_index(&method(:thought)).map(&method(:to_thought))
+    @thoughts ||= begin
+      messages.group_by.with_index(&method(:thought)).map(&method(:to_thought))
+    end
   end
 
   def label
@@ -42,11 +43,11 @@ class Conversation::Day
   end
 
   def thought(message, index)
-    return [message.author, self.current_thought] if index.zero?
+    return [message.author, current_thought] if index.zero?
     last_message = messages[index - 1]
 
     if same_thought?(message, last_message)
-      [message.author, self.current_thought]
+      [message.author, current_thought]
     else
       [message.author, self.current_thought += 1]
     end

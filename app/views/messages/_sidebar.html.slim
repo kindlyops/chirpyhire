@@ -10,8 +10,9 @@
     .conversations.section_holder
       h2.conversations_header data-toggle="tooltip" data-placement="top" title="Chat with a caregiver" Conversations
       ul
-        - current_organization.contacts.recently_replied.limit(10).each do |contact|
-          li
-            = nav_link_to message_path(contact), role: 'button' do
-              span.unread_count hidden=true 0
-              span = contact.handle
+        - current_organization.conversations.sidebar.each do |conversation|
+          li class==('unread' if conversation.unread?)
+            = nav_link_to message_path(conversation.contact), role: 'button' do
+              span.unread_count hidden==conversation.read?
+                = conversation.unread_count
+              span = conversation.contact.handle
