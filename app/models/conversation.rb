@@ -28,7 +28,7 @@ class Conversation < ApplicationRecord
 
   def self.sidebar
     if unread.count > SIDEBAR_MIN
-      unread.order(:handle)
+      unread.joins(contact: :person).recently_replied
     else
       joins(contact: :person).recently_replied.limit(SIDEBAR_MIN - unread.count)
     end
