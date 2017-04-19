@@ -34,6 +34,11 @@ class Message < ApplicationRecord
     direction == 'inbound'
   end
 
+  def account
+    return sender.account if outbound?
+    recipient.account
+  end
+
   def person
     return recipient if outbound?
     sender

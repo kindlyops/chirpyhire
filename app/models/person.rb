@@ -40,7 +40,13 @@ class Person < ApplicationRecord
   end
 
   def handle
-    name || nickname
+    first_name&.downcase || nickname
+  end
+
+  def first_name
+    return unless name.present?
+
+    name.split(' ', 2).first
   end
 
   private
