@@ -11,7 +11,7 @@ $(document).on('turbolinks:load', function() {
     var channel = { channel: 'MessagesChannel', contact_id: contactId };
     App.messages = App.cable.subscriptions.create(channel, {
       collection: function() {
-        return $("[data-channel='messages']");
+        return collection;
       },
 
       contactId: function() {
