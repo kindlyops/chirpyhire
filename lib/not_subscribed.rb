@@ -21,7 +21,7 @@ class NotSubscribed
   delegate :person, :organization, to: :contact
 
   def not_subscribed
-    'You were not subscribed to '\
+    'You are not subscribed to '\
     "#{organization.name}. To subscribe reply with 'START'."
   end
 end
