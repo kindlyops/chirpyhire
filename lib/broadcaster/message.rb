@@ -19,6 +19,6 @@ class Broadcaster::Message
   delegate :contacts, to: :organization
 
   def render_message
-    ContactWrapper.new(contact).render(message)
+    # TODO
   end
 end

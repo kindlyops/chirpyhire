@@ -103,8 +103,8 @@ $(document).on('turbolinks:load', function() {
             };
           },
           formatter: function(value, row, index) {
-            return ['<a class="btn btn-primary btn-block" href="/contacts/',
-            value.id, '/conversation"><i class="fa fa-commenting fa-2x"></i>',
+            return ['<a class="btn btn-primary btn-block" href="/messages/',
+            value.id, '"><i class="fa fa-commenting fa-2x"></i>',
             '</a>'].join('');
           }
         }]

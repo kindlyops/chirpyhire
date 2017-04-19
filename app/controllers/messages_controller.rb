@@ -36,10 +36,6 @@ class MessagesController < ApplicationController
     current_organization.contacts.recently_replied.first
   end
 
-  def current_conversation_id
-    cookies.signed['current_conversation_id']
-  end
-
   def ensure_contacts
     no_contacts_message if current_organization.contacts.empty?
   end
@@ -82,7 +78,7 @@ class MessagesController < ApplicationController
   end
 
   def message_not_authorized
-    redirect_to contact_conversation_path(contact), alert: error_message
+    redirect_to message_path(contact), alert: error_message
   end
 
   def error_message
