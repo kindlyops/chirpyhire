@@ -27,9 +27,6 @@ $(document).on('turbolinks:load', function() {
       end_div.height(allowed_h);
     }
 
-    $(window).resize(resizeScroller);
-    resizeScroller();
-
     var composer = $('form.new_message .message-input');
 
     composer.keydown(function(e) {
@@ -45,14 +42,13 @@ $(document).on('turbolinks:load', function() {
       }
     });
 
-    var scrollToBottom = function() {
-      $('#msgs_scroller_div').scrollTop($('#msgs_div').offset().top);
-    }
-
-    if ($('.messages').length) {
-      scrollToBottom();
-    }
+    $(window).resize(resizeScroller);
+    resizeScroller();
 
     messages.attr('loaded', true);
+  }
+
+  if ($('.messages').length) {
+    $('#msgs_scroller_div').scrollTop($('#msgs_div').height());
   }
 });
