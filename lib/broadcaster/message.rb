@@ -33,6 +33,7 @@ class Broadcaster::Message
 
   def render_message
     return render_day if new_day?
+    return render_thought if new_thought?
 
     MessagesController.render partial: 'messages/message', locals: {
       message: message, message_counter: message_counter
@@ -45,8 +46,18 @@ class Broadcaster::Message
     }
   end
 
+  def render_thought
+    MessagesController.render partial: 'messages/thought', locals: {
+      thought: thought
+    }
+  end
+
   def new_day?
     day.thoughts.first == thought
+  end
+
+  def new_thought?
+    thought.messages.first == message
   end
 
   def message_counter
