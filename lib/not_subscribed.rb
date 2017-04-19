@@ -1,4 +1,4 @@
-class AlreadySubscribed
+class NotSubscribed
   def self.call(contact)
     new(contact).call
   end
@@ -10,8 +10,8 @@ class AlreadySubscribed
   def call
     organization.message(
       sender: Chirpy.person,
-      recipient: person,
-      body: already_subscribed
+      recipient: contact.person,
+      body: not_subscribed
     )
   end
 
@@ -20,8 +20,8 @@ class AlreadySubscribed
   attr_reader :contact
   delegate :person, :organization, to: :contact
 
-  def already_subscribed
-    'You are already subscribed. '\
-    "Thanks for your interest in #{organization.name}."
+  def not_subscribed
+    'You are not subscribed to '\
+    "#{organization.name}. To subscribe reply with 'START'."
   end
 end

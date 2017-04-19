@@ -27,12 +27,12 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         it 'creates a subscribed contact' do
           expect {
             post :create, params: params
-          }.to change { person.contacts.count }.by(1)
+          }.to change { person.contacts.subscribed.count }.by(1)
         end
       end
 
-      context 'with a contact' do
-        let!(:contact) { create(:contact, person: person, organization: organization) }
+      context 'with a subscribed contact' do
+        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
         it 'creates an AlreadySubscribedJob' do
           expect {
             post :create, params: params
@@ -66,10 +66,10 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         }.to change { Candidacy.count }.by(1)
       end
 
-      it 'creates a contact' do
+      it 'creates a subscribed contact' do
         expect {
           post :create, params: params
-        }.to change { Contact.count }.by(1)
+        }.to change { Contact.subscribed.count }.by(1)
       end
 
       it 'creates an IceBreakerJob' do
@@ -100,15 +100,15 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
 
       context 'without a contact' do
-        it 'creates an NotSubscribedJob' do
+        it 'create an unsubscribed contact' do
           expect {
             delete :destroy, params: params
-          }.to have_enqueued_job(NotSubscribedJob)
+          }.to change { person.contacts.unsubscribed.count }.by(1)
         end
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, person: person, organization: organization) }
+        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
         it 'unsubscribes the contact' do
           expect {
             delete :destroy, params: params
@@ -128,6 +128,12 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Candidacy.count }.by(1)
+      end
+
+      it 'creates an unsubscribed contact' do
+        expect {
+          delete :destroy, params: params
+        }.to change { Contact.unsubscribed.count }.by(1)
       end
     end
   end
