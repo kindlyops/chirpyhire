@@ -2,19 +2,20 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   before_action :sync_message
 
   def create
-    if person.subscribed_to?(organization)
-      AlreadySubscribedJob.perform_later(person, organization)
+    if contact.subscribed?
+      AlreadySubscribedJob.perform_later(contact)
     else
+      contact.subscribe
       SurveyorJob.perform_later(contact)
     end
     head :ok
   end
 
   def destroy
-    if person.subscribed_to?(organization)
-      person.subscribed_to(organization).unsubscribe!
+    if contact.subscribed?
+      contact.unsubscribe
     else
-      NotSubscribedJob.perform_later(person, organization)
+      NotSubscribedJob.perform_later(contact)
     end
     head :ok
   end

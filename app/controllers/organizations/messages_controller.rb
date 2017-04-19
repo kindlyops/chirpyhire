@@ -14,7 +14,7 @@ class Organizations::MessagesController < ActionController::Base
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
       return contact if contact.present?
-      create_contact
+      create_subscribed_contact
     end
   end
 
@@ -30,8 +30,9 @@ class Organizations::MessagesController < ActionController::Base
     @organization ||= Organization.find_by(phone_number: params['To'])
   end
 
-  def create_contact
+  def create_subscribed_contact
     person.contacts.create(organization: organization).tap do |contact|
+      contact.subscribe
       IceBreakerJob.perform_later(contact)
     end
   end
