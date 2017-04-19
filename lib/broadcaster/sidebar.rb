@@ -12,8 +12,6 @@ class Broadcaster::Sidebar
   attr_reader :account
 
   def render_sidebar
-    return render_day if new_day?
-
     MessagesController.render partial
   end
 

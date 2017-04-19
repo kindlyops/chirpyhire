@@ -6,6 +6,10 @@ RSpec.describe MessageSyncer do
   let(:person) { contact.person }
   let(:message_sid) { 'sid' }
 
+  before do
+    IceBreaker.call(contact)
+  end
+
   describe 'receipt' do
     context 'receipt requested' do
       subject { MessageSyncer.new(person, organization, message_sid, receipt: true) }
