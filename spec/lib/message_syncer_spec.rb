@@ -4,6 +4,10 @@ RSpec.describe MessageSyncer do
   let(:contact) { create(:contact) }
   let(:message_sid) { 'sid' }
 
+  before do
+    IceBreaker.call(contact)
+  end
+
   describe 'receipt' do
     before do
       IceBreaker.call(contact)

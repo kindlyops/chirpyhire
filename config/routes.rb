@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resource :health, only: :show
   get '/candidates', to: 'candidates#index'
+  resources :messages, only: [:index, :show], param: :contact_id
   resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resource :recruiting_ad, only: [:show, :update, :create]
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 
   resources :contacts, only: [:index, :update] do
-    resource :conversation, only: :show
     resources :messages, only: :create
   end
 

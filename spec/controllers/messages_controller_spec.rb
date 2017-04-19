@@ -17,6 +17,7 @@ RSpec.describe MessagesController do
 
     before do
       sign_in(account)
+      IceBreaker.call(contact)
     end
 
     context 'and the contact is active' do

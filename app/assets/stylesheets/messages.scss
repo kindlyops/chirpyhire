@@ -1,0 +1,47 @@
+$blue-gray: #91A3B0;
+
+@import "messages/sidebar";
+@import "messages/client_body";
+@import "messages/header";
+@import "messages/container";
+@import "messages/footer";
+@import "messages/day";
+@import "messages/message";
+@import "messages/end_display_meta";
+
+.messages {
+  display: flex;
+  overflow: hidden;
+  margin-top: 82px;
+  min-height: calc(100vh - 82px);
+
+  .conversation {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 1px;
+  }
+
+  .thumb_72 {
+    width: 72px;
+    height: 72px;
+  }
+
+  .presence {
+    width: 9px;
+    height: 9px;
+    margin: 0 .15rem;
+    display: inline-block;
+    vertical-align: baseline;
+    background: 0 0;
+    position: relative;
+    color: #555459;
+    font-size: 0.75rem;
+    opacity: 0.98;
+
+    &.active {
+      color: #93cc93;
+    }
+  }
+}

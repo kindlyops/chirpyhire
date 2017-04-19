@@ -1,9 +1,0 @@
-.card
-  = render partial: 'conversations/header', locals: { conversation: conversation }
-  ul.list-group.list-group-flush
-    - if conversation.messages.present?
-      = render partial: 'conversations/messages', locals: { conversation: conversation }
-    - else
-      = render partial: 'conversations/empty', locals: { conversation: conversation }
-    = render partial: 'conversations/composer', locals: { conversation: conversation }
-

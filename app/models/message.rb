@@ -22,12 +22,21 @@ class Message < ApplicationRecord
     :person
   end
 
+  def day
+    external_created_at.to_date
+  end
+
   def outbound?
     !inbound?
   end
 
   def inbound?
     direction == 'inbound'
+  end
+
+  def account
+    return sender.account if outbound?
+    recipient.account
   end
 
   def person

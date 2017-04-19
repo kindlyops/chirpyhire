@@ -56,6 +56,7 @@ class Seeder
   end
 
   def seed_messages(contact)
+    IceBreaker.call(contact)
     seed_start(contact)
     seed_thank_you(contact) if seed_questions(contact)
   end
@@ -75,23 +76,25 @@ class Seeder
 
   def seed_start(contact)
     person = contact.person
-    person.sent_messages.create(
+    person.sent_messages.create!(
       body: 'Start', sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
+      sender: Chirpy.person,
       organization: organization
     )
   end
 
   def seed_question(person, question)
     body = question.body
-    person.received_messages.create(
+    person.received_messages.create!(
       body: body,
       sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
+      sender: Chirpy.person,
       organization: organization
     )
   end
@@ -99,11 +102,12 @@ class Seeder
   def seed_thank_you(contact)
     return unless contact.candidate?
     body = Notification::ThankYou.new(contact).body
-    contact.person.received_messages.create(
+    contact.person.received_messages.create!(
       body: body, sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
+      sender: Chirpy.person,
       organization: organization
     )
   end
@@ -129,12 +133,13 @@ class Seeder
   end
 
   def create_answer(person, body)
-    person.sent_messages.create(
+    person.sent_messages.create!(
       body: body,
       sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'inbound',
+      sender: person,
       organization: organization
     )
   end

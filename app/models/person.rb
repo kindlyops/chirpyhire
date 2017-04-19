@@ -20,7 +20,7 @@ class Person < ApplicationRecord
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },
-                    default_url: '/images/:style/missing.png'
+                    default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
   validates :name, presence: true, unless: :nickname_present?
@@ -40,7 +40,13 @@ class Person < ApplicationRecord
   end
 
   def handle
-    name || nickname
+    first_name&.downcase || nickname
+  end
+
+  def first_name
+    return unless name.present?
+
+    name.split(' ', 2).first
   end
 
   private

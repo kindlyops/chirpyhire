@@ -8,6 +8,10 @@ RSpec.describe Surveyor do
     let(:thank_you) { Notification::ThankYou.new(contact) }
     let(:candidacy) { contact.person.candidacy }
 
+    before do
+      IceBreaker.call(contact)
+    end
+
     context 'candidacy already in progress' do
       before do
         candidacy.update(contact: contact, state: :in_progress)
@@ -60,6 +64,10 @@ RSpec.describe Surveyor do
   describe '#consider_answer' do
     let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
     let(:contact) { candidacy.contact }
+
+    before do
+      IceBreaker.call(contact)
+    end
 
     context 'in_progress' do
       before do

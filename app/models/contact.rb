@@ -2,13 +2,18 @@ class Contact < ApplicationRecord
   include Contact::Searchable
   belongs_to :person
   belongs_to :organization
+  has_many :conversations
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
-           :experience, :certification, :skin_test,
+           :experience, :certification, :skin_test, :avatar,
            :cpr_first_aid, :nickname, :candidacy, to: :person
   delegate :inquiry, to: :person, prefix: true
 
   before_create :set_last_reply_at
+
+  def self.recently_replied
+    order(last_reply_at: :desc)
+  end
 
   def self.candidate
     where(candidate: true)
@@ -43,10 +48,6 @@ class Contact < ApplicationRecord
     organization.messages.where(sender: person).or(received_messages)
   end
 
-  def received_messages
-    organization.messages.where(recipient: person)
-  end
-
   def subscribe
     update(subscribed: true)
   end
@@ -67,5 +68,9 @@ class Contact < ApplicationRecord
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
+  end
+
+  def received_messages
+    organization.messages.where(recipient: person)
   end
 end

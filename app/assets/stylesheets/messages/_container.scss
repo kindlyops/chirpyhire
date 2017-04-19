@@ -1,0 +1,45 @@
+.messages {
+  #messages_container {
+    overflow-y: hidden;
+    position: relative;
+
+    #msgs_div {
+      margin: 0;
+      clear: both;
+      padding: 0;
+    }
+
+    #end_div {
+      font-size: .8rem;
+      line-height: 1.2rem;
+      color: #666;
+      padding-top: 1rem;
+    }
+
+    #msgs_scroller_div {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      border-right: .25rem solid transparent;
+      outline: 0;
+    }
+
+    #end_display_div {
+      padding: 1rem;
+      margin: 1rem 0;
+
+      p {
+        color: #555459;
+        margin: 0 auto 1rem;
+      }
+
+      #end_display_status {
+        text-align: center;
+        color: #cecece;
+        font-style: italic;
+        padding: 1rem;
+        font-size: .8rem;
+        line-height: 1.2rem;
+      }
+    }
+  }
+}

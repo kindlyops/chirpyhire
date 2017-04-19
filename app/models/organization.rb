@@ -12,7 +12,7 @@ class Organization < ApplicationRecord
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },
-                    default_url: '/images/:style/missing_organization.png'
+                    default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
@@ -30,8 +30,9 @@ class Organization < ApplicationRecord
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    message = create_message(recipient, sent_message, sender)
-    Broadcaster::Message.new(message).broadcast
+    create_message(recipient, sent_message, sender).tap do |message|
+      Broadcaster::Message.new(message).broadcast
+    end
   end
 
   def get_message(sid)

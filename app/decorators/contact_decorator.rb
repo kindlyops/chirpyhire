@@ -1,9 +1,7 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
-
-  def hero_pattern_classes
-    "#{number_class[id % 9]} #{pattern_class[id % 81]}"
-  end
+  decorates_association :person
+  delegate :hero_pattern_classes, to: :person
 
   def joined_at
     Contact::JoinedAt.new(object)
@@ -83,18 +81,5 @@ class ContactDecorator < Draper::Decorator
 
   def screened
     Contact::Screened.new(object)
-  end
-
-  def number_class
-    Hash[(0..8).zip(number_classes)]
-  end
-
-  def number_classes
-    %w(first second third fourth fifth sixth seventh eighth nineth)
-  end
-
-  PATTERNS = YAML.load_file(Rails.root.join('config', 'hero_patterns.yml'))
-  def pattern_class
-    Hash[(0..80).zip(PATTERNS)]
   end
 end

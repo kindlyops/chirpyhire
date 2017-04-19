@@ -1,0 +1,53 @@
+.messages {
+  .day_container {
+    position: relative;
+
+    .day_msgs {
+      margin: -18px 0 0;
+      padding: 1.75rem 0 1.25rem;
+      border-top: 1px solid #E8E8E8;
+    }
+
+    .day_divider {
+      z-index: 200;
+      position: sticky;
+      top: 0;
+      margin: 0;
+      pointer-events: none;
+      padding: 0;
+      font-size: .9rem;
+      line-height: 1rem;
+      color: #2C2D30;
+      font-weight: 700;
+      text-align: center;
+      cursor: default;
+      clear: both;
+
+      .day_divider_label {
+        top: -6px;
+        background: #fff;
+        padding: .25rem .75rem;
+        display: inline-block;
+        margin: 0 auto;
+        position: relative;
+        opacity: 1;
+        border-radius: 1rem;
+        transition: opacity 250ms ease-out 0s;
+      }
+    }
+
+    .copy_only {
+      display: inline-block;
+      vertical-align: baseline;
+      width: 1px;
+      height: 0;
+      background-size: 0;
+      background-repeat: no-repeat;
+      font-size: 0;
+      color: transparent;
+      float: left;
+      text-rendering: auto;
+      user-select: none;
+    }
+  }
+}

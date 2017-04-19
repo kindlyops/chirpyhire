@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    = render partial: "layouts/head"
+  body.chat
+    = render "components/navigation"
+    .messages
+      = render partial: 'messages/sidebar'
+      main.conversation
+        = yield
+    = render "layouts/script"

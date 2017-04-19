@@ -218,7 +218,8 @@ CREATE TABLE conversations (
     account_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    unread_count integer DEFAULT 0 NOT NULL
+    unread_count integer DEFAULT 0 NOT NULL,
+    last_viewed_at timestamp without time zone
 );
 
 
@@ -1358,6 +1359,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170418150843'),
 ('20170418151820'),
 ('20170418151954'),
+('20170418210912'),
 ('20170419185400');
 
 

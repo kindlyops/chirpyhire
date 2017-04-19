@@ -1,0 +1,41 @@
+.messages {
+  .footer {
+    order: 1;
+    flex-shrink: 0;
+    background-image: linear-gradient(to bottom,rgba(255,255,255,0),#fff 6px);
+    .spacer {
+      height: 1.375rem;
+    }
+
+    form.new_message {
+      position: relative;
+      margin: 0 1.25rem;
+
+      .message-input {
+        overflow: scroll;
+        margin: 0;
+        width: 100%;
+        min-height: 42px;
+        height: 38px;
+        max-height: none;
+        border: 2px solid #E0E0E0;
+        border-radius: .375rem;
+        outline: 0;
+        background: $white;
+        resize: none;
+        box-shadow: none;
+        color: #3D3C40;
+        font-size: .9375rem;
+        line-height: 1.2rem;
+        user-select: auto;
+        padding: 9px 30px 10px 20px;
+
+        &.focus {
+          border-color: #bbbdbf;
+          outline: 0;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

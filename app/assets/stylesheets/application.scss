@@ -10,10 +10,25 @@ body {
   &.white {
     background-color: $white;
   }
-}
 
-main.application {
-  padding-top: 80px;
+  main.application {
+    padding-top: 80px;
+  }
+
+  &.chat {
+    background-color: $white;
+
+    main.application {
+      padding-top: 59px;
+    }
+  }
+
+  .overflow_ellipsis {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 @import "components/navigation";
@@ -25,12 +40,13 @@ main.application {
 @import "components/hero-patterns";
 @import "components/autocomplete";
 @import "components/browser-update";
+@import "components/alert";
 
 @import "ideal_candidate";
-@import "conversation";
 @import "contacts";
 @import "candidates";
 @import "caregivers";
+@import "messages";
 
 @import "settings/base";
 @import "settings/profile";
