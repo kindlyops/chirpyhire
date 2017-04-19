@@ -44,10 +44,6 @@ class Contact < ApplicationRecord
     organization.messages.where(sender: person).or(received_messages)
   end
 
-  def received_messages
-    organization.messages.where(recipient: person)
-  end
-
   def unsubscribe!
     update!(subscribed: false)
   end
@@ -64,5 +60,9 @@ class Contact < ApplicationRecord
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
+  end
+
+  def received_messages
+    organization.messages.where(recipient: person)
   end
 end

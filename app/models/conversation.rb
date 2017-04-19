@@ -4,6 +4,8 @@ class Conversation < ApplicationRecord
   belongs_to :contact
   has_many :read_receipts
 
+  delegate :handle, to: :contact
+
   def self.contact(contact)
     where(contact: contact)
   end
@@ -13,7 +15,8 @@ class Conversation < ApplicationRecord
   end
 
   def self.recently_viewed
-    order(last_viewed_at: :asc, unread_count: :desc)
+    order('conversations.last_viewed_at DESC NULLS LAST')
+      .order(unread_count: :desc)
   end
 
   def self.by_handle
@@ -25,10 +28,10 @@ class Conversation < ApplicationRecord
   end
 
   def self.sidebar
-    viewed_recently = joins(contact: :person).recently_viewed.by_handle
+    viewed_recently = joins(contact: :person).recently_viewed
     limit_count = [3, SIDEBAR_MIN - unread.count].max
 
-    viewed_recently.read.limit(limit_count) + unread
+    (viewed_recently.read.limit(limit_count) + unread).sort_by(&:handle)
   end
 
   def days
