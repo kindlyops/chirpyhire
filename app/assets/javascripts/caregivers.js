@@ -15,7 +15,7 @@ $(document).on('turbolinks:load', function() {
       } else {
         var url = $form.attr('action') + '?' + $form.serialize();
       }
-      
+
       Turbolinks.visit(url);
     });
 

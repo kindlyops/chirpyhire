@@ -30,6 +30,21 @@ $(document).on('turbolinks:load', function() {
     $(window).resize(resizeScroller);
     resizeScroller();
 
+    var composer = $('form.new_message .message-input');
+
+    composer.keydown(function(e) {
+      var combo = e.metaKey || e.ctrlKey || e.shiftKey;
+
+      if(e.keyCode === 13 && !combo) {
+        var $form = composer.closest('form');
+        var messageBody = $form.find('textarea[name="message[body]"]').val();
+        e.preventDefault();
+        if(messageBody.length) {
+          $form.submit();
+        }
+      }
+    });
+
     var scrollToBottom = function() {
       $('#msgs_scroller_div').scrollTop($('#msgs_div').offset().top);
     }
