@@ -100,10 +100,10 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
 
       context 'without a contact' do
-        it 'creates an NotSubscribedJob' do
+        it 'create a contact' do
           expect {
             delete :destroy, params: params
-          }.to have_enqueued_job(NotSubscribedJob)
+          }.to change { organization.contacts.count }.by(1)
         end
       end
 
