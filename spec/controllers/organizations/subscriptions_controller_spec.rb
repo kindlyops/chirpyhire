@@ -77,6 +77,18 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           post :create, params: params
         }.to have_enqueued_job(IceBreakerJob)
       end
+
+      it 'does not create an AlreadySubscribedJob' do
+        expect {
+          post :create, params: params
+        }.not_to have_enqueued_job(AlreadySubscribedJob)
+      end
+
+      it 'does create an SurveyorJob' do
+        expect {
+          post :create, params: params
+        }.to have_enqueued_job(SurveyorJob)
+      end
     end
   end
 
