@@ -35,6 +35,14 @@ class Conversation < ApplicationRecord
     messages.by_recency.chunk(&:day).map(&method(:to_day))
   end
 
+  def day(date)
+    result = messages.by_recency.chunk(&:day).find do |day, _|
+      day == date
+    end
+
+    to_day(result)
+  end
+
   def unread?
     unread_count.positive?
   end

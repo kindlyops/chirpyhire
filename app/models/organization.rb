@@ -30,8 +30,9 @@ class Organization < ApplicationRecord
       to: recipient.phone_number, from: phone_number, body: body
     )
 
-    message = create_message(recipient, sent_message, sender)
-    Broadcaster::Message.new(message).broadcast
+    create_message(recipient, sent_message, sender).tap do |message|
+      Broadcaster::Message.new(message).broadcast
+    end
   end
 
   def get_message(sid)

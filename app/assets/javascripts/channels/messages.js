@@ -18,29 +18,29 @@ $(document).on('turbolinks:load', function() {
         return this.collection().data('contact-id');
       },
 
-      lastMessageGroup: function() {
-        return this.collection().find('.message-group').last();
+      lastDay: function() {
+        return this.collection().find('.day_container').last();
       },
 
       scrollToBottom: function() {
-        this.collection().scrollTop(this.collection().prop('scrollHeight'));
+        this.collection().scrollTop(this.days().prop('scrollHeight') + 100);
       },
 
-      clearComposer: function() {
-        $('.write-message textarea').val('');;
+      days: function() {
+        return this.collection().find('#msgs_div');
+      },
+
+      lastDayMessages: function() {
+        return this.lastDay().find('.day_msgs');
       },
 
       received: function(data) {
         var $data = $(data);
 
-        if ($data.hasClass('message-group')) {
-          this.collection().append(data);
+        if ($data.hasClass('day_container')) {
+          this.days().append(data);
         } else {
-          this.lastMessageGroup().find('ul').append(data);
-        }
-
-        if (this.lastMessageGroup().hasClass('organization')) {
-          this.clearComposer();
+          this.lastDayMessages().append(data);
         }
 
         this.scrollToBottom();

@@ -34,10 +34,11 @@ $(document).on('turbolinks:load', function() {
 
       if(e.keyCode === 13 && !combo) {
         var $form = composer.closest('form');
-        var messageBody = $form.find('textarea[name="message[body]"]').val();
+        var messageBody = $form.find('.message-input');
         e.preventDefault();
-        if(messageBody.length) {
+        if(messageBody.val().length) {
           $form.submit();
+          messageBody.val('');
         }
       }
     });
@@ -49,6 +50,6 @@ $(document).on('turbolinks:load', function() {
   }
 
   if ($('.messages').length) {
-    $('#msgs_scroller_div').scrollTop($('#msgs_div').height());
+    $('#msgs_scroller_div').scrollTop($('#msgs_div').prop('scrollHeight') + 100);
   }
 });
