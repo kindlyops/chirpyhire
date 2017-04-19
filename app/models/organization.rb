@@ -32,6 +32,7 @@ class Organization < ApplicationRecord
 
     create_message(recipient, sent_message, sender).tap do |message|
       Broadcaster::Message.new(message).broadcast
+      Broadcaster::Sidebar.new(self).broadcast
     end
   end
 

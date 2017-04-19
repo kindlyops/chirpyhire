@@ -1,4 +1,4 @@
-.sidebar
+.sidebar data-channel='sidebar'
   .team_menu
     .team_name_container
       span.team_name.overflow_ellipsis = current_organization.name
@@ -6,13 +6,4 @@
       .presence_container
         i.presence.fa.fa-circle.fa-fw.active
       span.team_menu_user_name.overflow_ellipsis.current_user_name = current_account.first_name.downcase
-  .conversations
-    .conversations.section_holder
-      h2.conversations_header data-toggle="tooltip" data-placement="top" title="Chat with a caregiver" Conversations
-      ul
-        - current_organization.conversations.sidebar.each do |conversation|
-          li class==('unread' if conversation.unread?)
-            = nav_link_to message_path(conversation.contact), role: 'button' do
-              span.unread_count hidden==conversation.read?
-                = conversation.unread_count
-              span = conversation.contact.handle
+  = render partial: "messages/sidebar/conversations"
