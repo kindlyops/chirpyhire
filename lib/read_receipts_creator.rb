@@ -12,6 +12,8 @@ class ReadReceiptsCreator
     organization.conversations.contact(contact).find_each do |conversation|
       conversation.read_receipts.find_or_create_by!(message: message)
     end
+
+    Broadcaster::Sidebar.new(organization).broadcast
   end
 
   def contact

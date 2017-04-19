@@ -12,7 +12,6 @@ class MessageSyncer
     update_contact(message)
     create_read_receipts(message) if receipt_requested?
     Broadcaster::Message.new(message).broadcast
-    Broadcaster::Sidebar.new(organization).broadcast
     message
   end
 
