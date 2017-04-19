@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MessageSyncer do
-  let(:organization) { create(:organization) }
-  let(:contact) { create(:contact, organization: organization) }
-  let(:person) { contact.person }
+  let(:contact) { create(:contact) }
   let(:message_sid) { 'sid' }
 
   before do
@@ -11,8 +9,12 @@ RSpec.describe MessageSyncer do
   end
 
   describe 'receipt' do
+    before do
+      IceBreaker.call(contact)
+    end
+
     context 'receipt requested' do
-      subject { MessageSyncer.new(person, organization, message_sid, receipt: true) }
+      subject { MessageSyncer.new(contact, message_sid, receipt: true) }
 
       it 'calls ReadReceiptsCreator' do
         expect(ReadReceiptsCreator).to receive(:call)
@@ -22,7 +24,7 @@ RSpec.describe MessageSyncer do
     end
 
     context 'receipt not requested' do
-      subject { MessageSyncer.new(person, organization, message_sid) }
+      subject { MessageSyncer.new(contact, message_sid) }
 
       it 'does not call ReadReceiptsCreator' do
         expect(ReadReceiptsCreator).not_to receive(:call)

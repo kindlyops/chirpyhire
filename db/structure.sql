@@ -176,7 +176,7 @@ CREATE TABLE contacts (
     id integer NOT NULL,
     person_id integer NOT NULL,
     organization_id integer NOT NULL,
-    subscribed boolean DEFAULT true NOT NULL,
+    subscribed boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     screened boolean DEFAULT false NOT NULL,
@@ -1359,6 +1359,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170418150843'),
 ('20170418151820'),
 ('20170418151954'),
-('20170418210912');
+('20170418210912'),
+('20170419185400');
 
 

@@ -34,6 +34,7 @@ class Seeder
       :contact,
       :not_ready,
       person: person,
+      subscribed: true,
       organization: organization,
       phone_number: ENV.fetch('DEMO_PHONE')
     )

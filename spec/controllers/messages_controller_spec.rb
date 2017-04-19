@@ -21,6 +21,10 @@ RSpec.describe MessagesController do
     end
 
     context 'and the contact is active' do
+      before do
+        contact.update(subscribed: true)
+      end
+
       it 'creates a message' do
         expect {
           post :create, params: params, xhr: true
@@ -50,10 +54,6 @@ RSpec.describe MessagesController do
     end
 
     context 'and the contact is not active' do
-      before do
-        contact.update(subscribed: false)
-      end
-
       it 'does not create a message' do
         expect {
           post :create, params: params, xhr: true

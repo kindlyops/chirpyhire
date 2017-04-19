@@ -36,16 +36,24 @@ class Contact < ApplicationRecord
     where(candidate: false)
   end
 
-  def self.active
+  def self.subscribed
     where(subscribed: true)
+  end
+
+  def self.unsubscribed
+    where(subscribed: false)
   end
 
   def messages
     organization.messages.where(sender: person).or(received_messages)
   end
 
-  def unsubscribe!
-    update!(subscribed: false)
+  def subscribe
+    update(subscribed: true)
+  end
+
+  def unsubscribe
+    update(subscribed: false)
   end
 
   def ideal?

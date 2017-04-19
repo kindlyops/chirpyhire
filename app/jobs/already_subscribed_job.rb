@@ -1,5 +1,5 @@
 class AlreadySubscribedJob < ApplicationJob
-  def perform(person, organization)
-    AlreadySubscribed.call(person, organization)
+  def perform(contact)
+    AlreadySubscribed.call(contact)
   end
 end

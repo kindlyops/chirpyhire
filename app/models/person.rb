@@ -32,7 +32,7 @@ class Person < ApplicationRecord
   end
 
   def actively_subscribed_to?(organization)
-    contacts.active.where(organization: organization).exists?
+    contacts.subscribed.where(organization: organization).exists?
   end
 
   def subscribed_to(organization)

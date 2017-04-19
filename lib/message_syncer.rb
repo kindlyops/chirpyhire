@@ -1,7 +1,6 @@
 class MessageSyncer
-  def initialize(person, organization, message_sid, receipt: false)
-    @person       = person
-    @organization = organization
+  def initialize(contact, message_sid, receipt: false)
+    @contact      = contact
     @message_sid  = message_sid
     @receipt      = receipt
   end
@@ -23,7 +22,8 @@ class MessageSyncer
     organization.get_message(message_sid)
   end
 
-  attr_reader :person, :message_sid, :organization, :receipt
+  attr_reader :contact, :message_sid, :receipt
+  delegate :person, :organization, to: :contact
 
   def sync_message
     person.sent_messages.create!(
@@ -37,7 +37,6 @@ class MessageSyncer
   end
 
   def update_contact(message)
-    contact = person.contacts.find_by(organization: organization)
     contact.update(last_reply_at: message.created_at)
     Broadcaster::LastReply.new(contact).broadcast
     Broadcaster::Temperature.new(contact).broadcast

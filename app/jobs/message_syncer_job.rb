@@ -1,19 +1,17 @@
 class MessageSyncerJob < MessageRetryJob
-  def perform(sender, organization, message_sid, receipt: false,
+  def perform(contact, message_sid, receipt: false,
               retries: MessageRetryJob::DEFAULT_RETRIES)
-    @sender = sender
-    @organization = organization
+    @contact = contact
     @message_sid = message_sid
     @receipt = receipt
     @retries_remaining = retries
 
-    sync_message
+    MessageSyncer.new(contact, message_sid, receipt: receipt).call
   end
 
   def retry_with(job, retries)
     job.perform_later(
-      sender,
-      organization,
+      contact,
       message_sid,
       receipt: receipt,
       retries: retries
@@ -22,14 +20,5 @@ class MessageSyncerJob < MessageRetryJob
 
   private
 
-  attr_accessor :sender, :message_sid, :organization, :receipt
-
-  def sync_message
-    MessageSyncer.new(
-      sender,
-      organization,
-      message_sid,
-      receipt: receipt
-    ).call
-  end
+  attr_accessor :contact, :message_sid, :receipt
 end
