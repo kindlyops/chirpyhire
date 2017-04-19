@@ -34,6 +34,10 @@ $(document).on('turbolinks:load', function() {
         return this.lastDay().find('.day_msgs');
       },
 
+      viewConversation: function() {
+        return $.get(location.href);
+      },
+
       received: function(data) {
         var $data = $(data);
 
@@ -44,6 +48,7 @@ $(document).on('turbolinks:load', function() {
         }
 
         this.scrollToBottom();
+        this.viewConversation();
       }
     });
   }

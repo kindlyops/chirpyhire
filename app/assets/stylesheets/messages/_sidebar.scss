@@ -27,9 +27,15 @@
         clear: both;
 
         &.unread {
-          a {
+          a:not(.active) {
             font-weight: 600;
             color: $white;
+          }
+
+          a.active {
+            .unread_count {
+              display: none;
+            }
           }
         }
 
