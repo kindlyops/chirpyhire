@@ -1,11 +1,12 @@
 class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
-  skip_after_action :verify_policy_scoped, only: :index
   layout 'messages', only: 'index'
 
   before_action :ensure_contacts, only: :index
 
   def index
+    @conversations = policy_scope(Conversation)
+
     redirect_to message_path(current_conversation.contact)
   end
 

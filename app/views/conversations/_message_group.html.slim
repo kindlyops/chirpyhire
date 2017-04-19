@@ -2,13 +2,13 @@
   .message-group.inbound
     .avatar data-toggle="tooltip" data-placement="top" title==message_group.avatar_title
       = inline_svg 'caregiver_bird.svg'
-    .messages.ml-lg-5
+    .message-group-messages.ml-lg-5
       ul
         - message_group.messages.each do |message|
           = render partial: 'conversations/message', locals: { message: message, inbound: true }
 - elsif message_group.bot?
   .message-group.outbound.bot
-    .messages.mr-lg-5
+    .message-group-messages.mr-lg-5
       ul
         - message_group.messages.each do |message|
           = render partial: 'conversations/message', locals: { message: message, inbound: false }
@@ -16,7 +16,7 @@
       = inline_svg 'chirpyhire_bird.svg'
 - else
   .message-group.outbound.organization
-    .messages.mr-lg-5
+    .message-group-messages.mr-lg-5
       ul
         - message_group.messages.each do |message|
           = render partial: 'conversations/message', locals: { message: message, inbound: false }

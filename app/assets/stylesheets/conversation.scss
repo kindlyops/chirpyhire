@@ -69,18 +69,18 @@
       }
 
       &.bot {
-        .messages .message div {
+        .message-group-messages .message div {
           background: $blue;
         }
       }
 
       &.organization {
-        .messages .message div {
+        .message-group-messages .message div {
           background: $green;
         }
       }
 
-      .messages {
+      .message-group-messages {
         ul {
           display: flex;
           flex-flow: column;
@@ -142,7 +142,7 @@
       }
     }
 
-    .messages {
+    .message-group-messages {
       .time-ago {
         vertical-align: middle;
         font-size: .875rem;
