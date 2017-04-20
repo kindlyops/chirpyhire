@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    conversation.read_receipts.unread.each(&method(:read))
+    conversation.read_receipts.unread.each(&method(:read)) unless impersonating?
     conversation.update(last_viewed_at: DateTime.current)
   end
 
