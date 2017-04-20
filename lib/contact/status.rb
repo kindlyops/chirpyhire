@@ -1,4 +1,4 @@
-class Caregiver::Status < Caregiver::Attribute
+class Contact::Status < Contact::Attribute
   def label
     humanize_attribute(candidacy.status_for(organization)) || 'Unknown'
   end

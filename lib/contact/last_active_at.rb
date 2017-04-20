@@ -1,4 +1,4 @@
-class Caregiver::LastActiveAt < Caregiver::Attribute
+class Contact::LastActiveAt < Contact::Attribute
   include ActionView::Helpers::DateHelper
 
   def label

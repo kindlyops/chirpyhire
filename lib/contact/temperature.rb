@@ -1,4 +1,4 @@
-class Caregiver::Temperature
+class Contact::Temperature
   def initialize(contact)
     @contact = contact
   end

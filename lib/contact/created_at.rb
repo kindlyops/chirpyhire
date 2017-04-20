@@ -1,4 +1,4 @@
-class Caregiver::LastReplyAt
+class Contact::CreatedAt
   def initialize(contact)
     @contact = contact
   end
@@ -6,7 +6,7 @@ class Caregiver::LastReplyAt
   attr_reader :contact
 
   def to_csv
-    contact.last_reply_at
+    contact.created_at
   end
 
   def to_json
@@ -15,5 +15,4 @@ class Caregiver::LastReplyAt
   end
 
   alias search_label to_json
-  alias to_s to_json
 end

@@ -1,4 +1,4 @@
-class Caregiver::Experience < Caregiver::Attribute
+class Contact::Experience < Contact::Attribute
   def self.humanize_attributes
     {
       less_than_one: '0 - 1 years',

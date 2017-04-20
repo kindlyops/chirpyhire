@@ -1,4 +1,4 @@
-class Caregiver::Availability < Caregiver::Attribute
+class Contact::Availability < Contact::Attribute
   def self.humanize_attributes
     {
       live_in: 'Live-In',

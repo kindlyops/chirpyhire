@@ -1,4 +1,4 @@
-class Caregiver::Handle < Caregiver::Attribute
+class Contact::Handle < Contact::Attribute
   def label
     candidacy.handle
   end

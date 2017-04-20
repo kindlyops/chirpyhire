@@ -1,4 +1,4 @@
-class Caregiver::JoinedAt < Caregiver::Attribute
+class Contact::JoinedAt < Contact::Attribute
   def label
     return 'Today' if today?
     return 'Yesterday' if yesterday?

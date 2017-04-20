@@ -10,7 +10,7 @@ module DropdownHelper
   private
 
   def klasses
-    [Caregiver::Certification, Caregiver::Experience,
-     Caregiver::Availability, Caregiver::Transportation]
+    [Contact::Certification, Contact::Experience,
+     Contact::Availability, Contact::Transportation]
   end
 end

@@ -1,4 +1,4 @@
-class Caregiver::CprFirstAid < Caregiver::Attribute
+class Contact::CprFirstAid < Contact::Attribute
   def label
     'CPR / 1st Aid'
   end
