@@ -23,6 +23,7 @@ RSpec.describe 'Caregivers' do
           get caregivers_path, params: params
 
           expect(response.body).not_to include(cna.handle)
+          expect(response.body).to include(pca.handle)
         end
       end
     end
