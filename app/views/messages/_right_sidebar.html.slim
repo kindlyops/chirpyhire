@@ -1,0 +1,47 @@
+#col_flex
+  #flex_contents.tab_panels.tab_container role="complementary" style=("opacity: 100;")
+    #details_tab.panel.dm_info_pane.active style=("height: 675px;")
+      .heading tabindex="-1"
+        .heading_row
+          h2#details_tab_header.heading_text.overflow_ellipsis
+            span.overflow_ellipsis About this conversation
+          button.btn_basic.close_flexpane aria-label=("Close Right Sidebar") title=("Close Right Sidebar") type="button"
+            i.fa.fa-times
+      #channel_page_scroller.flex_content_scroller style=("height: 605px;")
+        .selectable_flex_pane_padder.no_top_margin
+          .conversation_details
+            .member_info.display_flex
+              .cursor_pointer.flex_none onclick="TS.client.ui.previewMember('U487R52V9', 'im_page');"
+                span.member_image.thumb_72 aria-hidden="true" data-member-id="U487R52V9" data-thumb-size="72"
+              .display_flex.flex_direction_column.justify_content_center.no_min_width
+                div
+                  span.member_name.bold.link.cursor_pointer onclick="TS.client.ui.previewMember('U487R52V9', 'im_page');"
+                    | Wayne Henderson
+                .block.overflow_ellipsis
+                  span.member_username.mini @wayne
+                  span.presence.away.member_presence_U487R52V9 data-member-presence="U487R52V9" title="away"
+                    i.ts_icon.ts_icon_presence.presence_icon aria-hidden="true"
+                  span.timezone_label.mini.greigh data-member-id="U487R52V9"
+                    span.timezone_value 10:11 AM
+                    | local time
+                .member_title.mini
+              .clearfix
+          .channel_page_pinned_items.channel_page_section data-section-name="pinned_items"
+            button.section_header.no_bottom_margin.btn_unstyle title=("Click to expand or collapse") type="button"
+              .display_flex.align_items_center
+                i.ts_icon.ts_icon_thumb_tack.pin_orange.small_right_margin
+                span#pinned_items_title.section_title.flex_one Pinned Items
+                .disclosure_triangle.inline_block.left_margin
+                  i.ts_icon.ts_icon_caret_right
+                  i.ts_icon.ts_icon_caret_down
+            .section_content.pinned_items
+          .channel_page_shared_files.channel_page_section data-section-name="shared_files"
+            button.section_header.no_bottom_margin.btn_unstyle title=("Click to expand or collapse") type="button"
+              .display_flex.align_items_center
+                i.ts_icon.ts_icon_all_files.mustard_yellow.small_right_margin
+                span#channel_files_title.section_title.flex_one Shared Files
+                .disclosure_triangle.inline-block.left_margin
+                  i.ts_icon.ts_icon_caret_right
+                  i.ts_icon.ts_icon_caret_down
+            .section_content.bottom_margin
+
