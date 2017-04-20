@@ -43,7 +43,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
         fill_in 'Email', with: account.email
         fill_in 'Password', with: 'password'
         click_button 'sign-in'
-        expect(page).to have_text('Ready to Call')
+        expect(page).to have_text('No caregivers found')
       end
     end
   end
