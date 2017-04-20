@@ -5,7 +5,6 @@ RSpec.describe Surveyor do
 
   describe '#start' do
     let(:contact) { create(:contact) }
-    let(:thank_you) { Notification::ThankYou.new(contact) }
     let(:candidacy) { contact.person.candidacy }
 
     before do
@@ -17,8 +16,30 @@ RSpec.describe Surveyor do
         candidacy.update(contact: contact, state: :in_progress)
       end
 
-      it 'sends the thank you message' do
-        expect(subject).to receive(:send_message).with(thank_you.body)
+      it 'does not change the candidacy contact' do
+        allow(subject.survey).to receive(:ask)
+
+        expect {
+          subject.start
+        }.not_to change { candidacy.reload.contact }
+      end
+
+      it 'does not change the candidacy state' do
+        allow(subject.survey).to receive(:ask)
+
+        expect {
+          subject.start
+        }.not_to change { candidacy.reload.state }
+      end
+
+      it 'does not ask a question in the survey' do
+        expect(subject.survey).not_to receive(:ask)
+
+        subject.start
+      end
+
+      it 'does not send a message' do
+        expect(subject).not_to receive(:send_message)
 
         subject.start
       end

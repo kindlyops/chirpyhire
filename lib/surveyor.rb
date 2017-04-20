@@ -4,7 +4,7 @@ class Surveyor
   end
 
   def start
-    return thank_person unless candidacy.pending?
+    return unless candidacy.pending?
 
     lock_candidacy
     survey.ask
@@ -56,14 +56,6 @@ class Surveyor
 
   def lock_candidacy
     candidacy.update!(contact: contact, state: :in_progress)
-  end
-
-  def thank_person
-    send_message(thank_you.body)
-  end
-
-  def thank_you
-    Notification::ThankYou.new(contact)
   end
 
   attr_reader :contact
