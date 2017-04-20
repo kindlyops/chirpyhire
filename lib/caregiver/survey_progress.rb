@@ -1,4 +1,4 @@
-class Contact::SurveyProgress
+class Caregiver::SurveyProgress
   def initialize(contact)
     @contact = contact
   end

@@ -1,4 +1,4 @@
-class Contact::Screened < Contact::Attribute
+class Caregiver::Screened < Caregiver::Attribute
   def label
     'Screened'
   end

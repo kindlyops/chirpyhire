@@ -4,82 +4,82 @@ class ContactDecorator < Draper::Decorator
   delegate :hero_pattern_classes, to: :person
 
   def joined_at
-    Contact::JoinedAt.new(object)
+    Caregiver::JoinedAt.new(object)
   end
 
   def last_active_at
-    Contact::LastActiveAt.new(object)
+    Caregiver::LastActiveAt.new(object)
   end
 
   def stats
-    Contact::Stats.new(object)
+    Caregiver::Stats.new(object)
   end
 
   def created_at
-    Contact::CreatedAt.new(object)
+    Caregiver::CreatedAt.new(object)
   end
 
   def last_reply_at
-    Contact::LastReplyAt.new(object)
+    Caregiver::LastReplyAt.new(object)
   end
 
   def survey_progress
-    Contact::SurveyProgress.new(object)
+    Caregiver::SurveyProgress.new(object)
   end
 
   def temperature
-    Contact::Temperature.new(object)
+    Caregiver::Temperature.new(object)
   end
 
   def handle
-    Contact::Handle.new(object)
+    Caregiver::Handle.new(object)
   end
 
   def phone_number
-    Contact::PhoneNumber.new(object)
+    Caregiver::PhoneNumber.new(object)
   end
 
   def availability
-    Contact::Availability.new(object)
+    Caregiver::Availability.new(object)
   end
 
   def transportation
-    Contact::Transportation.new(object)
+    Caregiver::Transportation.new(object)
   end
 
   def experience
-    Contact::Experience.new(object)
+    Caregiver::Experience.new(object)
   end
 
   def qualifications
-    Contact::Qualifications.new(object)
+    Caregiver::Qualifications.new(object)
   end
 
   def candidacy_zipcode
-    Contact::Zipcode.new(object)
+    Caregiver::Zipcode.new(object)
   end
 
   def certification
-    Contact::Certification.new(object)
+    Caregiver::Certification.new(object)
   end
 
   def skin_test
-    Contact::SkinTest.new(object)
+    Caregiver::SkinTest.new(object)
   end
 
   def cpr_first_aid
-    Contact::CprFirstAid.new(object)
+    Caregiver::CprFirstAid.new(object)
   end
 
   def status
-    Contact::Status.new(object)
+    Caregiver::Status.new(object)
   end
 
   def subscribed
-    Contact::Subscribed.new(object)
+    Caregiver::Subscribed.new(object)
   end
 
   def screened
-    Contact::Screened.new(object)
+    Caregiver::Screened.new(object)
   end
 end

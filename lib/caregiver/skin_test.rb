@@ -1,4 +1,4 @@
-class Contact::SkinTest < Contact::Attribute
+class Caregiver::SkinTest < Caregiver::Attribute
   def label
     'Skin / TB Test'
   end

@@ -20,14 +20,14 @@ class Contact < ApplicationRecord
   end
 
   def self.candidacy_filter(filter_params)
-    return self unless filter_params.present?
+    return current_scope unless filter_params.present?
 
     includes(person: :candidacy)
       .where(people: { 'candidacies' => filter_params })
   end
 
   def self.zipcode_filter(filter_params)
-    return self unless filter_params.present?
+    return current_scope unless filter_params.present?
 
     includes(person: :zipcode).where(people: { 'zipcodes' => filter_params })
   end

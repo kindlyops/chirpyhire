@@ -1,4 +1,4 @@
-class Contact::Subscribed < Contact::Attribute
+class Caregiver::Subscribed < Caregiver::Attribute
   def id
     candidacy.subscribed_to(organization).id
   end

@@ -1,4 +1,4 @@
-class Contact::PhoneNumber < Contact::Attribute
+class Caregiver::PhoneNumber < Caregiver::Attribute
   def label
     person.phone_number.phony_formatted
   end

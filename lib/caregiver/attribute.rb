@@ -1,4 +1,4 @@
-class Contact::Attribute
+class Caregiver::Attribute
   def initialize(contact)
     @contact = contact
   end

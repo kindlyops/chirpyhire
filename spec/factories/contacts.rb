@@ -82,5 +82,21 @@ FactoryGirl.define do
         candidacy.save
       end
     end
+
+    trait :pca do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(certification: 'pca')
+      end
+    end
+
+    trait :cna do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(certification: 'cna')
+      end
+    end
   end
 end
