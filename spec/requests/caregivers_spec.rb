@@ -27,5 +27,13 @@ RSpec.describe 'Caregivers' do
         end
       end
     end
+
+    context 'sort order' do
+      it 'returns the newest records first' do
+        get caregivers_path
+
+        expect(cna.handle).to appear_before(pca.handle)
+      end
+    end
   end
 end
