@@ -91,7 +91,8 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    person_id integer NOT NULL
+    person_id integer NOT NULL,
+    unread_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1360,6 +1361,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170418151820'),
 ('20170418151954'),
 ('20170418210912'),
-('20170419185400');
+('20170419185400'),
+('20170420221033');
 
 

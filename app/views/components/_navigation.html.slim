@@ -9,8 +9,10 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
         = nav_link_to caregivers_path, { class: 'nav-link' }, url_segment: 1 do
           span Caregivers
       li.nav-item.mr-4
-        = nav_link_to messages_path, { class: 'nav-link' }, url_segment: 1 do
+        = nav_link_to messages_path, { class: 'nav-link nav-link--messages' }, url_segment: 1 do
             span.ml-2 Messages
+            - if current_account.unread_count.positive?
+              i.fa.fa-circle
       - if current_organization.phone_number.present?
         li.nav-item.mr-2.my-auto
           span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
