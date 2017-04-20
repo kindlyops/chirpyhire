@@ -29,6 +29,12 @@ RSpec.describe InvitationsController, type: :controller do
         post :create, params: invite_params
       }.to change { organization.accounts.count }.by(1)
     end
+
+    it 'creates a GlacierBreakerJob' do
+      expect {
+        post :create, params: invite_params
+      }.to have_enqueued_job(GlacierBreakerJob)
+    end
   end
 
   describe '#update' do

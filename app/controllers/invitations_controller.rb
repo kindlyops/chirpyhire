@@ -14,6 +14,10 @@ class InvitationsController < Devise::InvitationsController
     render :edit
   end
 
+  def create
+    super { |account| GlacierBreakerJob.perform_later(account) }
+  end
+
   private
 
   delegate :organization, to: :current_inviter
