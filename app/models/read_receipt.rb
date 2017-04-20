@@ -12,4 +12,8 @@ class ReadReceipt < ApplicationRecord
   def unread?
     read_at.blank?
   end
+
+  def read?
+    !unread?
+  end
 end

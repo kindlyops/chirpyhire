@@ -1,11 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController do
-  describe '#create' do
-    let(:contact) { create(:contact) }
-    let(:organization) { contact.organization }
-    let(:account) { create(:account, organization: organization) }
+  let(:contact) { create(:contact) }
+  let(:organization) { contact.organization }
+  let(:account) { create(:account, organization: organization) }
 
+  before do
+    sign_in(account)
+    IceBreaker.call(contact)
+  end
+
+  describe '#create' do
     let(:params) do
       {
         contact_id: contact.id,
@@ -13,11 +18,6 @@ RSpec.describe MessagesController do
           body: 'BODY'
         }
       }
-    end
-
-    before do
-      sign_in(account)
-      IceBreaker.call(contact)
     end
 
     context 'and the contact is active' do
@@ -69,6 +69,42 @@ RSpec.describe MessagesController do
       it 'lets the user know why' do
         post :create, params: params, xhr: true
         expect(flash[:alert]).to include('unsubscribed')
+      end
+    end
+  end
+
+  describe '#show' do
+    let(:params) {
+      { contact_id: contact.id }
+    }
+    let(:conversation) { account.conversations.find_by(contact: contact) }
+    let!(:unread_receipts) { create_list(:read_receipt, 3, conversation: conversation) }
+
+    context 'with outstanding read receipts for the conversation' do
+      context 'impersonating' do
+        let(:impersonator) { create(:account, super_admin: true) }
+
+        before do
+          sign_out(account)
+          sign_in(impersonator)
+          controller.impersonate_account(account)
+        end
+
+        it 'does not mark the read receipts as read' do
+          expect {
+            get :show, params: params
+          }.not_to change { conversation.reload.read_receipts.unread.count }
+
+          expect(conversation.read_receipts.unread.count).to eq(3)
+        end
+      end
+
+      context 'not impersonating' do
+        it 'marks the read receipts as read' do
+          expect {
+            get :show, params: params
+          }.to change { conversation.reload.read_receipts.unread.count }.from(3).to(0)
+        end
       end
     end
   end
