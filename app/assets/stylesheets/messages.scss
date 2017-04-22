@@ -24,6 +24,21 @@ $blue-gray: #91A3B0;
     min-width: 1px;
   }
 
+  .msgs_holder {
+    padding: 0;
+    margin: 0;
+    clear: both;
+  }
+
+  .close {
+    span {
+      font-size: 1.5rem;
+      position: absolute;
+      top: 15px;
+      right: 18px;
+    }
+  }
+
   .presence {
     width: 9px;
     height: 9px;

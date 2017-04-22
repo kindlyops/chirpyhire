@@ -2,5 +2,22 @@ header.chat-header
   .channel-header
     .messages-header
       .channel-title
-        .channel-name
-          span.away = @conversation.contact.handle
+        .channel-name-container
+          .channel-name
+            span = @conversation.contact.handle
+        .channel-header-info
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+          .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
+            i.fa.fa-heart-o
+      .channel-title-info
+        button.channel-header-icon.btn-unstyle.active#notes-toggle role="button" data-toggle="tooltip" data-placement="left" title="Hide notes" type="button"
+          i.fa.fa-sticky-note-o

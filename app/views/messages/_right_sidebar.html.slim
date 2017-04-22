@@ -1,12 +1,12 @@
 #col_flex
   #flex_contents.tabs_panel
-    #details_tab.panel
+    #details_tab.panel.active
       .heading
         .heading_row
           h2#details_tab_header.heading_text.overflow_ellipsis
             span.overflow_ellipsis Notes
-          button.btn-basic role="button"
-            i.fa.fa-times
+          button.btn-basic.close role="button"
+            span &times;
       #convo_scroller.flex_content_scroller
         #convo_container
           .conversation.message_container.has_replies

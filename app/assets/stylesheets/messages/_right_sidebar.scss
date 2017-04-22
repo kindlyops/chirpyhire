@@ -1,10 +1,15 @@
-.messages {
-  .msgs_holder {
-    padding: 0;
-    margin: 0;
-    clear: both;
-  }
+.tabs_panel {
+  .panel {
+    width: 100%;
+    display: none;
 
+    &.active {
+      display: block;
+    }
+  }
+}
+
+.flex_pane_showing {
   #col_flex {
     background: #FFF;
     display: flex;
@@ -258,6 +263,7 @@
             margin-top: 3px;
           }
         }
+
         #details_tab_header {
           display: flex;
         }
@@ -280,11 +286,6 @@
             margin-bottom: 12px;
           }
         }
-      }
-
-      .tabs_panel .panel {
-        width: 100%;
-        display: block;
       }
     }
   }
