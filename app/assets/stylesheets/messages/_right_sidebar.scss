@@ -41,6 +41,10 @@
 
       .btn_msg_action {
 
+        &:hover {
+          color: $green;
+        }
+
         &:first-child {
           border-radius: 6px 0 0 6px;
         }
