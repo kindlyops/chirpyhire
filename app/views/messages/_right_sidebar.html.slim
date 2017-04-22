@@ -54,6 +54,19 @@
                         strong.message_sender harry
                         span.timestamp data-toggle="tooltip" data-placement="top" title="Today at 2:51:32 PM" 11 minutes ago
                     span.message_body test
+                .message.first.highlight#message_edit_container
+                  .message_gutter
+                    .message_icon
+                      - if current_account.person.avatar.url.present?
+                        = image_tag current_account.person.avatar.url(:medium), class: 'member_image thumb_36'
+                      - else
+                        span class=="member_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
+                    span.timestamp 11 minutes ago
+                  form#message_edit_form
+                    #msg_text.message_input
+                      textarea.form-control row="1" type="text" placeholder="Share a note with your team..." required=true test
+                    a#cancel_edit.btn.btn-small.btn-outline role="button" Cancel
+                    a#commit_edit.btn.btn-small role="button" ↵ Save Changes
         #reply_container.has_focus
           - if current_account.person.avatar.url.present?
             = image_tag current_account.person.avatar.url(:medium), class: 'member_image thumb_36'
