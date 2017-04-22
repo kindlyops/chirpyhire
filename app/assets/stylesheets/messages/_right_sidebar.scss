@@ -5,6 +5,57 @@
       padding-top: .625rem !important;
       padding-bottom: .625rem !important;
     }
+
+    &:hover {
+      .action_hover_container {
+        display: block;
+
+        &.stretch_btn_heights {
+          display: flex;
+          align-items: stretch;
+        }
+      }
+    }
+
+    .action_hover_container {
+      right: 4px;
+      top: -8px;
+      display: none;
+      position: absolute;
+      top: -20px;
+      right: 18px;
+      border: .0625rem solid rgba(0,0,0,.15);
+      border-radius: .375rem;
+      overflow: hidden;
+      transition: border 50ms ease-in 0s;
+      z-index: 97;
+
+      &:hover {
+        box-shadow: 0 1px 1px rgba(0,0,0,.1);
+        border-color: rgba(0,0,0,.3);
+      }
+
+      .btn_msg_action {
+
+        &:first-child {
+          border-radius: 6px 0 0 6px;
+        }
+        &:last-child {
+          border-radius: 0 6px 6px 0;
+          border-right: none;
+        }
+        border-right: 1px solid rgba(0,0,0,.15);
+        width: 37px;
+        text-align: center;
+        line-height: 14px;
+        padding: 6px 0 6px;
+        color: #555459;
+        background: #fff;
+        transition: all 50ms ease-in 0s;
+        display: block;
+        float: left;
+      }
+    }
   }
 
   .msgs_holder {
@@ -173,6 +224,10 @@
 
             .message {
               padding-right: 10px;
+
+              .action_hover_container {
+                top: -8px;
+              }
 
               .message_gutter {
                 width: 56px;

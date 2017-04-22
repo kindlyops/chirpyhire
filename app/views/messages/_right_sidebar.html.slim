@@ -17,6 +17,11 @@
             .relatives.descendants.complete
               .day_container
                 .message.first
+                  .action_hover_container.stretch_btn_heights
+                    button.btn-unstyle.btn_msg_action role="button" type="button" data-toggle="tooltip" data-placement="top" title="Edit note"
+                      i.fa.fa-pencil
+                    button.btn-unstyle.btn_msg_action role="button" type="button" data-toggle="tooltip" data-placement="top" title="Delete note"
+                      i.fa.fa-trash
                   .message_gutter
                     .message_icon
                       - if current_account.person.avatar.url.present?
@@ -28,9 +33,14 @@
                     .message_content_header
                       .message_content_header_left
                         strong.message_sender harry
-                        span.timestamp 21 minutes ago
+                        span.timestamp data-toggle="tooltip" data-placement="top" title="Today at 2:51:32 PM" 21 minutes ago
                     span.message_body test
                 .message.first
+                  .action_hover_container.stretch_btn_heights
+                    button.btn-unstyle.btn_msg_action role="button" type="button" data-toggle="tooltip" data-placement="top" title="Edit note"
+                      i.fa.fa-pencil
+                    button.btn-unstyle.btn_msg_action role="button" type="button" data-toggle="tooltip" data-placement="top" title="Delete note"
+                      i.fa.fa-trash
                   .message_gutter
                     .message_icon
                       - if current_account.person.avatar.url.present?
@@ -42,7 +52,7 @@
                     .message_content_header
                       .message_content_header_left
                         strong.message_sender harry
-                        span.timestamp 11 minutes ago
+                        span.timestamp data-toggle="tooltip" data-placement="top" title="Today at 2:51:32 PM" 11 minutes ago
                     span.message_body test
         #reply_container.has_focus
           - if current_account.person.avatar.url.present?
@@ -52,7 +62,7 @@
           .inline_message_input_container
             form
               .message_input
-                textarea.form-control row="1" type="text" placeholder="Take a note..." required=true
+                textarea.form-control row="1" type="text" placeholder="Share a note with your team..." required=true
           .reply_container_info
             .reply_broadcast_buttons_container.justify-content-end
-              button.reply_send.btn.btn-small.btn-outline type="button" Save
+              button.reply_send.btn.btn-small.btn-outline type="button" Send
