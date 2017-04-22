@@ -6,9 +6,9 @@ $blue-gray: #91A3B0;
 @import "messages/container";
 @import "messages/footer";
 @import "messages/day";
-@import "messages/message";
 @import "messages/end_display_meta";
 @import "messages/right_sidebar";
+@import "messages/utilities";
 
 .messages {
   display: flex;
@@ -22,11 +22,6 @@ $blue-gray: #91A3B0;
     flex-direction: column;
     flex-grow: 1;
     min-width: 1px;
-  }
-
-  .thumb_72 {
-    width: 72px;
-    height: 72px;
   }
 
   .presence {

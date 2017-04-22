@@ -31,22 +31,12 @@ body {
   }
 }
 
-@import "components/navigation";
-@import "components/form";
-@import "components/icon";
-@import "components/bootstrap_table";
-@import "components/dropdown";
-@import "components/svg-uri";
-@import "components/hero-patterns";
-@import "components/autocomplete";
-@import "components/browser-update";
-@import "components/alert";
-
 @import "ideal_candidate";
 @import "contacts";
 @import "candidates";
 @import "caregivers";
 @import "messages";
+@import "components";
 
 @import "settings/base";
 @import "settings/profile";
