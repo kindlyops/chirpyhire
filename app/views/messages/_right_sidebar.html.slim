@@ -23,7 +23,56 @@
           .d-flex.align-items-center
             i.fa.fa-sticky-note-o.mr-2
             span.section_title Notes
+          .convo_flexpane_divider
+            span.reply_count 2 notes
         .section_content
+          .day_container
+            .day_msgs
+              .message.first
+                .message_gutter
+                  .message_icon
+                    .member_image.thumb_36.third.hp-architect
+                  a.timestamp 10:09 AM
+                .message_content
+                  .message_content_header
+                    .message_content_header_left
+                      strong.message-sender Passionate Otter
+                      a.timestamp 10:09 AM
+                  span.message-body Start
+              .message.first
+                .message_gutter
+                  .message_icon
+                    .member_image.thumb_36.fourth.hp-autumn
+                  a.timestamp 10:09 AM
+                .message_content
+                  .message_content_header
+                    .message_content_header_left
+                      strong.message-sender chirpy
+                      a.timestamp 10:09 AM
+                  span.message-body Hey there! This is Wayne with Happy Home Care.
+              .message.first
+                .message_gutter
+                  .message_icon
+                    .member_image.thumb_36.third.hp-architect
+                  a.timestamp 10:09 AM
+                .message_content
+                  .message_content_header
+                    .message_content_header_left
+                      strong.message-sender Passionate Otter
+                      a.timestamp 10:09 AM
+                  span.message-body Yes, PCA
+              .message.first
+                .message_gutter
+                  .message_icon
+                    .member_image.thumb_36.fourth.hp-autumn
+                  a.timestamp 10:09 AM
+                .message_content
+                  .message_content_header
+                    .message_content_header_left
+                      strong.message-sender chirpy
+                      a.timestamp 10:09 AM
+                  span.message-body What is your availability?
+
           #reply_container.has_focus
             - if current_account.person.avatar.url.present?
               = image_tag current_account.person.avatar.url(:medium), class: 'member_image thumb_36'
@@ -35,4 +84,4 @@
                   textarea.form-control row="1" type="text" placeholder="Add a note about #{contact.handle}" required=true
             .reply_container_info
               .reply_broadcast_buttons_container.justify-content-end
-                button.reply_send.btn.btn-small.btn-outline type="button"  Send
+                button.reply_send.btn.btn-small.btn-outline type="button" Save
