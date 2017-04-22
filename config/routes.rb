@@ -8,7 +8,11 @@ Rails.application.routes.draw do
 
   resource :health, only: :show
   get '/candidates', to: 'candidates#index'
-  resources :messages, only: [:index, :show], param: :contact_id
+
+  resources :messages, only: [:index, :show], param: :contact_id do
+    resources :notes, only: [:index, :create, :update]
+  end
+
   resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
   resource :recruiting_ad, only: [:show, :update, :create]

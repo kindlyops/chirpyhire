@@ -41,6 +41,9 @@
 
       #notes-toggle {
         margin-left: 4px;
+        padding-top: 4px;
+        padding-left: 6px;
+        margin-right: 8px;
 
         &.active {
           background: #E8E8E8;
@@ -70,7 +73,7 @@
         .channel-title-info {
           display: flex;
           color: #9e9ea6;
-          margin: 5px 8px 0 0;
+          margin: 6px 8px 0 0;
         }
       }
 

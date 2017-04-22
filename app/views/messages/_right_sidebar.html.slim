@@ -1,20 +1,19 @@
 #col_flex
   #flex_contents.tabs_panel
-    #details_tab.panel.active
+    #notes_tab class==(controller_name == 'notes' ? 'panel active' : 'panel')
       .heading
         .heading_row
-          h2#details_tab_header.heading_text.overflow_ellipsis
+          h2#notes_tab_header.heading_text.overflow_ellipsis
             span.overflow_ellipsis Notes
-          button.btn-basic.close role="button"
-            span &times;
-      #convo_scroller.flex_content_scroller
-        #convo_container
-          .conversation.message_container.has_replies
-            .root_msg_section.complete
-              .msgs_holder
-              .convo_flexpane_divider
+          = link_to message_path(@conversation.contact), class: 'btn-basic close', role: 'button' do
+              span &times;
+      #notes_scroller.flex_content_scroller
+        #notes_container
+          .conversation
+            div
+              .notes_flexpane_divider
                 span.reply_count 2 notes
-            .relatives.descendants.complete
+            .notes
               .day_container
                 .message.first
                   .action_hover_container.stretch_btn_heights

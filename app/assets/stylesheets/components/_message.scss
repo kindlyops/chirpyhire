@@ -49,6 +49,8 @@
   }
 
   &.first:hover {
+    background-color: #F9F9F9;
+
     .message_gutter .timestamp {
       display: none;
     }

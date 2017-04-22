@@ -19,5 +19,9 @@ header.chat-header
           .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: PCA"
             i.fa.fa-heart-o
       .channel-title-info
-        button.channel-header-icon.btn-unstyle.active#notes-toggle role="button" data-toggle="tooltip" data-placement="left" title="Hide notes" type="button"
-          i.fa.fa-sticky-note-o
+        - if controller_name == 'notes'
+          = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
+              i.fa.fa-sticky-note-o
+        - else
+          = link_to message_notes_path(@conversation.contact), class: 'channel-header-icon btn-unstyle', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Show notes' do
+              i.fa.fa-sticky-note-o
