@@ -3,6 +3,29 @@ $(document).on('turbolinks:load', function() {
   var messages = $('.messages:not([loaded])');
 
   if(messages.length) {
+    var composer = $('form.new_message .message-input');
+
+    composer.keydown(function(e) {
+      var combo = e.metaKey || e.ctrlKey || e.shiftKey;
+
+      if(e.keyCode === 13 && !combo) {
+        var $form = composer.closest('form');
+        var messageBody = $form.find('.message-input');
+        e.preventDefault();
+        if(messageBody.val().length) {
+          $form.submit();
+          messageBody.val('');
+        }
+      }
+    });
+
+    var setChannelsScrollerHeight = function(window_h) {
+      var top_nav_offset = $('nav.navbar.top').outerHeight();
+      var top_subNav_offset = $(".team_menu").outerHeight();
+      var height = window_h - top_subNav_offset - top_nav_offset;
+      $('#notes_scroller').css('height', height);
+    };
+
     var resizeScroller = function() {
       var cached_wh = $(window).height();
 
@@ -25,23 +48,11 @@ $(document).on('turbolinks:load', function() {
         end_display_padder.css("height", allowed_h - h);
       }
       end_div.height(allowed_h);
+
+      var flex_contents_height = cached_wh - msgs_scroller_y;
+      $("#flex_contents > .panel").css("height", flex_contents_height);
+      setChannelsScrollerHeight(cached_wh);
     }
-
-    var composer = $('form.new_message .message-input');
-
-    composer.keydown(function(e) {
-      var combo = e.metaKey || e.ctrlKey || e.shiftKey;
-
-      if(e.keyCode === 13 && !combo) {
-        var $form = composer.closest('form');
-        var messageBody = $form.find('.message-input');
-        e.preventDefault();
-        if(messageBody.val().length) {
-          $form.submit();
-          messageBody.val('');
-        }
-      }
-    });
 
     $(window).resize(resizeScroller);
     resizeScroller();
