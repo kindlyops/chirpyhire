@@ -1,16 +1,13 @@
 class NotesController < ApplicationController
   skip_after_action :verify_policy_scoped
   layout 'messages', only: 'index'
+  decorates_assigned :conversation
 
   def index
-    conversation
+    @conversation = authorize fetch_conversation, :show?
   end
 
   private
-
-  def conversation
-    @conversation ||= authorize fetch_conversation, :show?
-  end
 
   def fetch_conversation
     current_account.conversations.find_by(contact: contact)

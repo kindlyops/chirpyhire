@@ -14,7 +14,7 @@ class Person < ApplicationRecord
   before_validation :add_nickname
   after_save :set_search_content
 
-  delegate :inquiry, :availability, :experience,
+  delegate :inquiry, :availability, :experience, :transportation,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
   delegate :zipcode, to: :candidacy, prefix: true
 
