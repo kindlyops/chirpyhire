@@ -3,7 +3,6 @@ class Conversation < ApplicationRecord
   belongs_to :account
   belongs_to :contact
   has_many :read_receipts
-  has_many :notes
 
   delegate :handle, to: :contact
 
@@ -35,10 +34,6 @@ class Conversation < ApplicationRecord
     (viewed_recently.read.limit(limit_count) + unread).sort_by(&:handle)
   end
 
-  def note_days
-    notes.by_recency.chunk(&:day).map(&method(:to_note_day))
-  end
-
   def days
     messages.by_recency.chunk(&:day).map(&method(:to_day))
   end
@@ -63,10 +58,6 @@ class Conversation < ApplicationRecord
   delegate :handle, to: :person, prefix: true
 
   private
-
-  def to_note_day(day)
-    Conversation::NoteDay.new(day)
-  end
 
   def to_day(day)
     Conversation::Day.new(day)

@@ -1,10 +1,14 @@
 class Note < ApplicationRecord
-  belongs_to :conversation
-  delegate :account, to: :conversation
+  belongs_to :account
+  belongs_to :contact
   delegate :handle, to: :account, prefix: true
 
   def self.by_recency
     order(:created_at, :id)
+  end
+
+  def self.days
+    by_recency.chunk(&:day).map { |day| Note::Day.new(day) }
   end
 
   def day

@@ -423,7 +423,8 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 CREATE TABLE notes (
     id integer NOT NULL,
     body character varying NOT NULL,
-    conversation_id integer NOT NULL,
+    contact_id integer NOT NULL,
+    account_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1103,10 +1104,17 @@ CREATE UNIQUE INDEX index_messages_on_sid ON messages USING btree (sid);
 
 
 --
--- Name: index_notes_on_conversation_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_notes_on_account_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_notes_on_conversation_id ON notes USING btree (conversation_id);
+CREATE INDEX index_notes_on_account_id ON notes USING btree (account_id);
+
+
+--
+-- Name: index_notes_on_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_contact_id ON notes USING btree (contact_id);
 
 
 --
@@ -1225,6 +1233,14 @@ ALTER TABLE ONLY conversations
 
 
 --
+-- Name: notes fk_rails_0718ac16b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT fk_rails_0718ac16b7 FOREIGN KEY (contact_id) REFERENCES contacts(id);
+
+
+--
 -- Name: messages fk_rails_12e9de2e48; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1313,14 +1329,6 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: notes fk_rails_9259470eb1; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY notes
-    ADD CONSTRAINT fk_rails_9259470eb1 FOREIGN KEY (conversation_id) REFERENCES conversations(id);
-
-
---
 -- Name: messages fk_rails_b8f26a382d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1350,6 +1358,14 @@ ALTER TABLE ONLY read_receipts
 
 ALTER TABLE ONLY contacts
     ADD CONSTRAINT fk_rails_d2a970fc50 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: notes fk_rails_ed57cedfc1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT fk_rails_ed57cedfc1 FOREIGN KEY (account_id) REFERENCES accounts(id);
 
 
 --

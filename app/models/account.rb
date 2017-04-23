@@ -6,6 +6,7 @@ class Account < ApplicationRecord
   belongs_to :person, inverse_of: :account
 
   has_many :conversations
+  has_many :notes
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank

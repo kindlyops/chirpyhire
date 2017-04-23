@@ -1,10 +1,10 @@
 class NotesController < ApplicationController
-  skip_after_action :verify_policy_scoped
   layout 'messages', only: 'index'
   decorates_assigned :conversation
 
   def index
     @conversation = authorize fetch_conversation, :show?
+    @notes = policy_scope(contact.notes)
   end
 
   private
