@@ -64,7 +64,7 @@
     }
   }
 
-  .message_icon {
+  .message-icon {
     display: none;
   }
 
@@ -87,7 +87,7 @@
     background-color: $white;
 
     &.standalone {
-      .message_icon {
+      .message-icon {
         margin-top: 14px;
       }
     }
@@ -106,8 +106,8 @@
       display: inline;
     }
 
-    .message_icon {
-      margin-top: 4px;
+    .message-icon {
+      margin-top: 8px;
       display: block;
     }
   }

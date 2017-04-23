@@ -91,7 +91,8 @@ CREATE TABLE accounts (
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
     organization_id integer NOT NULL,
-    person_id integer NOT NULL
+    person_id integer NOT NULL,
+    unread_count integer DEFAULT 0 NOT NULL
 );
 
 
@@ -416,6 +417,38 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 
 --
+-- Name: notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE notes (
+    id integer NOT NULL,
+    body character varying NOT NULL,
+    conversation_id integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: notes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE notes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE notes_id_seq OWNED BY notes.id;
+
+
+--
 -- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -702,6 +735,13 @@ ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq':
 
 
 --
+-- Name: notes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes ALTER COLUMN id SET DEFAULT nextval('notes_id_seq'::regclass);
+
+
+--
 -- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -821,6 +861,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notes notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT notes_pkey PRIMARY KEY (id);
 
 
 --
@@ -1055,6 +1103,13 @@ CREATE UNIQUE INDEX index_messages_on_sid ON messages USING btree (sid);
 
 
 --
+-- Name: index_notes_on_conversation_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_conversation_id ON notes USING btree (conversation_id);
+
+
+--
 -- Name: index_organizations_on_phone_number; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1258,6 +1313,14 @@ ALTER TABLE ONLY contacts
 
 
 --
+-- Name: notes fk_rails_9259470eb1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT fk_rails_9259470eb1 FOREIGN KEY (conversation_id) REFERENCES conversations(id);
+
+
+--
 -- Name: messages fk_rails_b8f26a382d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1360,6 +1423,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170418151820'),
 ('20170418151954'),
 ('20170418210912'),
-('20170419185400');
+('20170419185400'),
+('20170420221033'),
+('20170423014704');
 
 
