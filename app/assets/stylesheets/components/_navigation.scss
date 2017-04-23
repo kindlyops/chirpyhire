@@ -6,6 +6,18 @@ nav.navbar.top {
     }
   }
 
+  .nav-link--messages {
+    position: relative;
+
+    .fa-circle {
+      position: absolute;
+      top: 7px;
+      right: -3px;
+      font-size: 0.2rem;
+      color: $blue;
+    }
+  }
+
   @media (max-width: 991px) {
     li.dropdown {
       margin-top: 0.5rem;
