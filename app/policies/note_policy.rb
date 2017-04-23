@@ -4,15 +4,15 @@ class NotePolicy < ApplicationPolicy
   end
 
   def show?
-    record.new_record? || update?
+    record.new_record? || scope.where(id: record.id).exists?
   end
 
   def create?
-    show?
+    update?
   end
 
   def destroy?
-    show?
+    update?
   end
 
   def permitted_attributes
