@@ -103,6 +103,7 @@ gem 'paperclip', '~> 5.1.0'
 gem 'aws-sdk', '~> 2.8.5'
 gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch: 'rearchitect-gem'
 gem 'counter_culture', '~> 1.5.1'
+gem 'paranoia', '~> 2.3'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

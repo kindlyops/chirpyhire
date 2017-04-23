@@ -1,4 +1,4 @@
-class Note::CreatedAt
+class Note::UpdatedAt
   def initialize(note)
     @note = note
   end
@@ -13,30 +13,30 @@ class Note::CreatedAt
   end
 
   def label
-    note.created_at.strftime('%I:%M %p')
+    note.updated_at.strftime('%I:%M %p')
   end
 
   def time_format
-    note.created_at.strftime('%I:%M:%S %p')
+    note.updated_at.strftime('%I:%M:%S %p')
   end
 
   def today?
-    note.created_at > Date.current.beginning_of_day
+    note.updated_at > Date.current.beginning_of_day
   end
 
   def yesterday?
-    note.created_at > Date.yesterday.beginning_of_day
+    note.updated_at > Date.yesterday.beginning_of_day
   end
 
   def current_year?
-    note.created_at > Date.current.beginning_of_year
+    note.updated_at > Date.current.beginning_of_year
   end
 
   def short_format
-    note.created_at.strftime("%B #{note.created_at.day.ordinalize}")
+    note.updated_at.strftime("%B #{note.updated_at.day.ordinalize}")
   end
 
   def long_format
-    note.created_at.strftime("%B #{note.created_at.day.ordinalize}, %Y")
+    note.updated_at.strftime("%B #{note.updated_at.day.ordinalize}, %Y")
   end
 end

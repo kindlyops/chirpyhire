@@ -425,6 +425,7 @@ CREATE TABLE notes (
     body character varying NOT NULL,
     contact_id integer NOT NULL,
     account_id integer NOT NULL,
+    deleted_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -1115,6 +1116,13 @@ CREATE INDEX index_notes_on_account_id ON notes USING btree (account_id);
 --
 
 CREATE INDEX index_notes_on_contact_id ON notes USING btree (contact_id);
+
+
+--
+-- Name: index_notes_on_deleted_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_deleted_at ON notes USING btree (deleted_at);
 
 
 --

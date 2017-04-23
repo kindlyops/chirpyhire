@@ -6,21 +6,6 @@
         button.close aria-label="Close" data-dismiss="modal" type="button"
           span aria-hidden="true" &times;
       .modal-body
-        p.mb-3 Are you sure you want to delete this note? This cannot be undone.
-        .message.first.standalone
-          .message_gutter
-            .message-icon
-              - if current_account.person.avatar.url.present?
-                = image_tag current_account.person.avatar.url(:medium), class: 'author_image thumb_36'
-              - else
-                span class=="author_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
-            span.timestamp 11 minutes ago
-          .message_content
-            .message_content_header
-              .message_content_header_left
-                strong.message-sender harry
-                span.timestamp data-toggle="tooltip" data-animation="false" data-placement="top" title="Today at 2:51:32 PM" 11 minutes ago
-            span.message_body test
       .modal-footer
         button.btn.btn-secondary data-dismiss="modal" type="button" role='button' Cancel
-        button.btn.btn-danger type="button" role='button' Delete
+        button.btn.btn-danger.delete type="button" role='button' Delete

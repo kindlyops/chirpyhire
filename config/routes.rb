@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/candidates', to: 'candidates#index'
 
   resources :messages, only: [:index, :show], param: :contact_id do
-    resources :notes, only: [:index, :create, :update]
+    resources :notes, only: [:index, :create, :update, :destroy]
   end
 
   resources :caregivers, only: :index, concerns: :paginatable

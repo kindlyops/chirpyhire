@@ -58,7 +58,7 @@
           .conversation {
             display: block;
 
-            #message_edit_container {
+            #note-edit-container {
               border-top: 1px solid #D4D4D9;
               border-bottom: 1px solid #D4D4D9;
 
@@ -72,7 +72,7 @@
 
               .message_input {
                 overflow: auto;
-                min-height: 40px;
+                min-height: 26px;
                 height: auto;
                 background: #fff;
                 user-select: auto;
@@ -87,8 +87,8 @@
                 color: #3D3C40;
               }
 
-              #message_edit_form {
-                margin: 3px 0;
+              .edit_note {
+                margin: 7px 0;
                 margin-left: 56px;
                 padding-right: .5rem;
               }
@@ -158,6 +158,12 @@
             &::placeholder {
               opacity: .375;
             }
+          }
+        }
+
+        #new_note {
+          textarea {
+            margin-top: 4px;
           }
         }
 
@@ -231,7 +237,7 @@
               opacity: 0;
               transition: all .15s ease-out 0s;
 
-              .reply_send {
+              .note_send {
                 float: right;
                 margin-right: .5rem;
               }

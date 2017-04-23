@@ -51,6 +51,10 @@
   &.first:hover {
     background-color: #F9F9F9;
 
+    &.highlight {
+      background: #FFFCE0;
+    }
+
     .message_gutter .timestamp {
       display: none;
     }

@@ -1,4 +1,6 @@
 class Note < ApplicationRecord
+  acts_as_paranoid
+
   belongs_to :account
   belongs_to :contact
   delegate :handle, to: :account, prefix: true
@@ -16,10 +18,10 @@ class Note < ApplicationRecord
   end
 
   def tooltip_title
-    Note::CreatedAt.new(self).title
+    Note::UpdatedAt.new(self).title
   end
 
   def timestamp_label
-    Note::CreatedAt.new(self).label
+    Note::UpdatedAt.new(self).label
   end
 end
