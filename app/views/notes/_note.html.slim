@@ -1,10 +1,10 @@
 .message.first.highlight#note-edit-container hidden=true data-note-id==note.id
   .message_gutter
     .message-icon
-      - if current_account.person.avatar.url.present?
-        = image_tag current_account.person.avatar.url(:medium), class: 'author_image thumb_36'
+      - if note.account.person.avatar.url.present?
+        = image_tag note.account.person.avatar.url(:medium), class: 'author_image thumb_36'
       - else
-        span class=="author_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
+        span class=="author_image thumb_36 #{note.account.person.decorate.hero_pattern_classes}"
   = form_for note, url: message_note_path(@conversation.contact, note), method: :put do |f|
     .message_input
       = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
@@ -12,17 +12,18 @@
     a#commit_edit.btn.btn-small role="button" ↵ Save Changes
 .message.first#note-show-container data-note-id==note.id
   = form_for note, url: message_note_path(@conversation.contact, note), method: :delete, html: { class: 'destroy-note', hidden: true } do |f|
-  .action_hover_container.stretch_btn_heights
-    button.btn-unstyle.btn_msg_action.edit role="button" type="button" data-toggle="tooltip" data-placement="top" title="Edit note"
-      i.fa.fa-pencil
-    button.btn-unstyle.btn_msg_action.delete role="button" type="button" data-toggle="tooltip" data-placement="top" title="Delete note"
-      i.fa.fa-trash
+  - if note.account == current_account
+    .action_hover_container.stretch_btn_heights
+      button.btn-unstyle.btn_msg_action.edit role="button" type="button" data-toggle="tooltip" data-placement="top" title="Edit note"
+        i.fa.fa-pencil
+      button.btn-unstyle.btn_msg_action.delete role="button" type="button" data-toggle="tooltip" data-placement="top" title="Delete note"
+        i.fa.fa-trash
   .message_gutter
     .message-icon
-      - if current_account.person.avatar.url.present?
-        = image_tag current_account.person.avatar.url(:medium), class: 'author_image thumb_36'
+      - if note.account.person.avatar.url.present?
+        = image_tag note.account.person.avatar.url(:medium), class: 'author_image thumb_36'
       - else
-        span class=="author_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
+        span class=="author_image thumb_36 #{note.account.person.decorate.hero_pattern_classes}"
   .message_content
     .message_content_header
       .message_content_header_left

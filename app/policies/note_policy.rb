@@ -8,7 +8,7 @@ class NotePolicy < ApplicationPolicy
   end
 
   def create?
-    update?
+    record.new_record?
   end
 
   def destroy?
