@@ -179,6 +179,10 @@
             position: relative;
             z-index: 1;
 
+            &.less-negative-margin-top {
+              margin-top: -40px;
+            }
+
             form {
               margin-top: 4px;
               margin-left: 0;
