@@ -3,9 +3,10 @@ class Contact < ApplicationRecord
   belongs_to :person
   belongs_to :organization
   has_many :conversations
+  has_many :notes
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
-           :experience, :certification, :skin_test, :avatar,
+           :experience, :certification, :skin_test, :avatar, :transportation,
            :cpr_first_aid, :nickname, :candidacy, to: :person
   delegate :inquiry, to: :person, prefix: true
 

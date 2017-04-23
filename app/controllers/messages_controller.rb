@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
   layout 'messages', only: 'index'
+  decorates_assigned :conversation
 
   before_action :ensure_contacts, only: :index
 
@@ -11,11 +12,13 @@ class MessagesController < ApplicationController
   end
 
   def show
+    @conversation = authorize fetch_conversation, :show?
     conversation.read_receipts.unread.each(&method(:read)) unless impersonating?
     conversation.update(last_viewed_at: DateTime.current)
   end
 
   def create
+    @conversation = authorize fetch_conversation, :show?
     @message = scoped_messages.build
     create_message if authorize @message
 
@@ -48,7 +51,7 @@ class MessagesController < ApplicationController
   def create_message
     current_organization.message(
       sender: current_account.person,
-      recipient: conversation.person,
+      recipient: @conversation.person,
       body: body
     )
   end
@@ -59,14 +62,10 @@ class MessagesController < ApplicationController
 
   def scoped_messages
     policy_scope(Message).where(
-      recipient: conversation.person,
+      recipient: @conversation.person,
       sender: current_account.person,
       organization: current_organization
     )
-  end
-
-  def conversation
-    @conversation ||= authorize fetch_conversation, :show?
   end
 
   def fetch_conversation
@@ -82,7 +81,7 @@ class MessagesController < ApplicationController
   end
 
   def error_message
-    "Unfortunately #{conversation.person_handle} has unsubscribed! You can't "\
+    "Unfortunately #{@conversation.person_handle} has unsubscribed! You can't "\
     'text them using ChirpyHire.'
   end
 end

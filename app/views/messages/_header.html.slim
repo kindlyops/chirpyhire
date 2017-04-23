@@ -2,5 +2,30 @@ header.chat-header
   .channel-header
     .messages-header
       .channel-title
-        .channel-name
-          span.away = @conversation.contact.handle
+        .channel-name-container
+          .channel-name
+            span = @conversation.contact.handle
+        .channel-header-info
+          - if @conversation.contact.candidacy_zipcode.present?
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.fa-map-marker
+              = conversation.contact.candidacy_zipcode.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-map-marker
+              | Location
+          - if @conversation.contact.certification.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.certification.icon_class}"
+              = conversation.contact.certification.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-graduation-cap
+              | Certification
+      .channel-title-info
+        - if controller_name == 'notes'
+          = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
+              i.fa.fa-sticky-note-o
+        - else
+          = link_to message_notes_path(@conversation.contact), class: 'channel-header-icon btn-unstyle', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Show notes' do
+              i.fa.fa-sticky-note-o

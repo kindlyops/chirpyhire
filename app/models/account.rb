@@ -6,6 +6,7 @@ class Account < ApplicationRecord
   belongs_to :person, inverse_of: :account
 
   has_many :conversations
+  has_many :notes
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
@@ -13,7 +14,7 @@ class Account < ApplicationRecord
   validates :email, uniqueness: true
 
   delegate :name, to: :organization, prefix: true
-  delegate :name, :avatar, to: :person, allow_nil: true
+  delegate :name, :avatar, :handle, to: :person, allow_nil: true
 
   def self.active
     where(invitation_token: nil)

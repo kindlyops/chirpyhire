@@ -20,7 +20,7 @@
   .chat-header {
     color: #717274;
     background: 0 0;
-    flex-basis: 35px;
+    flex-basis: 53px;
     z-index: 201;
 
     .channel-header {
@@ -29,16 +29,51 @@
       padding: .7rem 0 0;
       height: 100%;
 
+      .channel-header-icon {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        line-height: 1;
+        margin-left: 1px;
+        color: #717274;
+        border-radius: .25rem;
+      }
+
+      #notes-toggle {
+        margin-left: 4px;
+        padding-top: 4px;
+        padding-left: 6px;
+        margin-right: 8px;
+
+        &.active {
+          background: #E8E8E8;
+        }
+
+        &:not(.active):hover {
+          color: $green;
+        }
+
+        i.fa {
+          font-size: 24px;
+        }
+      }
+
       .messages-header {
         display: flex;
         flex: 1;
         min-width: 1px;
         color: #717274;
+        padding-bottom: 6px;
 
         .channel-title {
           flex: 1;
           min-width: 1px;
-          margin-top: -2px;
+        }
+
+        .channel-title-info {
+          display: flex;
+          color: #9e9ea6;
+          margin: 6px 8px 0 0;
         }
       }
 
@@ -56,6 +91,34 @@
       margin-right: .4rem;
     }
 
+    .channel-name-container {
+      display: flex;
+      transition: .15s;
+      user-select: none;
+    }
+
+    .channel-header-info {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+      padding-left: 1.3rem;
+      font-size: .8125rem;
+      font-weight: 400;
+      line-height: 1.16;
+    }
+
+    .channel-header-info-item:not(:empty) ~ .channel-header-info-item:not(:first-child):before {
+      padding-right: .4rem;
+      color: rgba(113,114,116,.5);
+      content: '|';
+    }
+
+    .channel-header-info-item {
+      display: flex;
+      white-space: nowrap;
+      margin-right: .4rem;
+    }
+
     .channel-name {
       display: flex;
       min-width: 1px;
@@ -63,9 +126,10 @@
       margin: 0 0 -2px;
       line-height: 1.3;
       font-size: 1.125rem;
-      font-weight: 600;
+      font-weight: 900;
       padding: 0 .1rem 0 1.3rem;
       color: #2C2D30;
+      cursor: pointer;
       align-items: baseline;
 
       .away {

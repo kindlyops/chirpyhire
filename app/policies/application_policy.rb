@@ -11,6 +11,8 @@ class ApplicationPolicy
     @record = record
   end
 
+  alias user account
+
   def index?
     false
   end

@@ -417,6 +417,40 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 
 --
+-- Name: notes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE notes (
+    id integer NOT NULL,
+    body character varying NOT NULL,
+    contact_id integer NOT NULL,
+    account_id integer NOT NULL,
+    deleted_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: notes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE notes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: notes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE notes_id_seq OWNED BY notes.id;
+
+
+--
 -- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -703,6 +737,13 @@ ALTER TABLE ONLY messages ALTER COLUMN id SET DEFAULT nextval('messages_id_seq':
 
 
 --
+-- Name: notes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes ALTER COLUMN id SET DEFAULT nextval('notes_id_seq'::regclass);
+
+
+--
 -- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -822,6 +863,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY messages
     ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notes notes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT notes_pkey PRIMARY KEY (id);
 
 
 --
@@ -1056,6 +1105,27 @@ CREATE UNIQUE INDEX index_messages_on_sid ON messages USING btree (sid);
 
 
 --
+-- Name: index_notes_on_account_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_account_id ON notes USING btree (account_id);
+
+
+--
+-- Name: index_notes_on_contact_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_contact_id ON notes USING btree (contact_id);
+
+
+--
+-- Name: index_notes_on_deleted_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_notes_on_deleted_at ON notes USING btree (deleted_at);
+
+
+--
 -- Name: index_organizations_on_phone_number; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1168,6 +1238,14 @@ ALTER TABLE ONLY candidacies
 
 ALTER TABLE ONLY conversations
     ADD CONSTRAINT fk_rails_0330c79025 FOREIGN KEY (contact_id) REFERENCES contacts(id);
+
+
+--
+-- Name: notes fk_rails_0718ac16b7; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT fk_rails_0718ac16b7 FOREIGN KEY (contact_id) REFERENCES contacts(id);
 
 
 --
@@ -1291,6 +1369,14 @@ ALTER TABLE ONLY contacts
 
 
 --
+-- Name: notes fk_rails_ed57cedfc1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY notes
+    ADD CONSTRAINT fk_rails_ed57cedfc1 FOREIGN KEY (account_id) REFERENCES accounts(id);
+
+
+--
 -- Name: pg_search_documents fk_rails_eda88ce3b8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1362,6 +1448,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20170418151954'),
 ('20170418210912'),
 ('20170419185400'),
-('20170420221033');
+('20170420221033'),
+('20170423014704');
 
 

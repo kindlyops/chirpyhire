@@ -275,6 +275,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (~> 0.3.0)
+    paranoia (2.3.0)
+      activerecord (>= 4.0, < 5.1)
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.19.0)
@@ -505,6 +507,7 @@ DEPENDENCIES
   meta_request (~> 0.4.0)
   nav_lynx (~> 1.1.1)
   paperclip (~> 5.1.0)
+  paranoia (~> 2.3)
   pg (~> 0.15)
   pg_search (~> 2.0.1)
   phony_rails (~> 0.14.0)

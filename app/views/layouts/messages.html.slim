@@ -2,10 +2,11 @@ doctype html
 html
   head
     = render partial: "layouts/head"
-  body.chat
+  body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
     = render "components/navigation"
     .messages
       = render partial: 'messages/sidebar'
       main.conversation
         = yield
+    = render partial: "components/modal"
     = render "layouts/script"
