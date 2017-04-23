@@ -2,7 +2,7 @@
   .message_gutter
     .message-icon
       - if note.account.person.avatar.url.present?
-        = image_tag note.account.person.avatar.url(:medium), class: 'author_image thumb_36'
+        = image_tag note.account.person.avatar.url(:medium), class: 'author_image no-repeat thumb_36'
       - else
         span class=="author_image thumb_36 #{note.account.person.decorate.hero_pattern_classes}"
   = form_for note, url: message_note_path(@conversation.contact, note), method: :put do |f|
@@ -21,7 +21,7 @@
   .message_gutter
     .message-icon
       - if note.account.person.avatar.url.present?
-        = image_tag note.account.person.avatar.url(:medium), class: 'author_image thumb_36'
+        = image_tag note.account.person.avatar.url(:medium), class: 'author_image no-repeat thumb_36'
       - else
         span class=="author_image thumb_36 #{note.account.person.decorate.hero_pattern_classes}"
   .message_content

@@ -11,8 +11,11 @@
             span People
           ul.list-unstyled
             - @people.each do |person|
-              li.media
-                = image_tag person.avatar.url(:thumb), class: 'd-flex mr-3 profile-picture'
+              li.media.mb-3
+                - if person.avatar.url.present?
+                  = image_tag person.avatar.url(:thumb), class: 'no-repeat author_image mr-3 thumb_64'
+                - else
+                  span class=="author_image thumb_64 mr-3 #{current_account.person.decorate.hero_pattern_classes}"
                 .media-body
                   h5.mt-0.mb-1 = person.name
                   = person.email

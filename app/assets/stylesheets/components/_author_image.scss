@@ -1,7 +1,10 @@
 .author_image {
   border-radius: .2rem;
   background-size: 100%;
-  background-repeat: no-repeat;
   display: inline-block;
   position: relative;
+
+  &.no-repeat {
+    background-repeat: no-repeat;
+  }
 }
