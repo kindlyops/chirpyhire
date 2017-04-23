@@ -7,46 +7,21 @@ header.chat-header
             span = @conversation.contact.handle
         .channel-header-info
           - if @conversation.contact.candidacy_zipcode.present?
-            .channel-header-info-item = conversation.contact.candidacy_zipcode.label
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.fa-map-marker
+              = conversation.contact.candidacy_zipcode.label
           - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Location: TBD"
-              i.fa.unknown.fa-map-marker
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-map-marker
+              | Location
           - if @conversation.contact.certification.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.certification.label}"
-              i class=="fa #{conversation.contact.certification.icon_class}"
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.certification.icon_class}"
+              = conversation.contact.certification.label
           - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Certification: TBD"
-              i.fa.unknown.fa-graduation-cap
-          - if @conversation.contact.availability.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.availability.label}"
-              i class=="fa #{conversation.contact.availability.icon_class}"
-          - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Availability: TBD"
-              i.fa.unknown.fa-calendar-check-o
-          - if @conversation.contact.experience.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.experience.label}"
-              i class=="fa #{conversation.contact.experience.icon_class}"
-          - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Experience: TBD"
-              i.fa.unknown.fa-level-up
-          - if @conversation.contact.transportation.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.transportation.label}"
-              i class=="fa #{conversation.contact.transportation.icon_class}"
-          - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Transportation: TBD"
-              i.fa.unknown.fa-road
-          - if @conversation.contact.cpr_first_aid.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.cpr_first_aid.label}"
-              i class=="fa #{conversation.contact.cpr_first_aid.icon_class}"
-          - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="CPR / 1st Aid: TBD"
-              i.fa.unknown.fa-medkit
-          - if @conversation.contact.skin_test.present?
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="#{conversation.contact.skin_test.label}"
-              i class=="fa #{conversation.contact.skin_test.icon_class}"
-          - else
-            .channel-header-info-item data-toggle="tooltip" data-placement="bottom" title="Skin Test: TBD"
-              i.fa.unknown.fa-newspaper-o
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-graduation-cap
+              | Certification
       .channel-title-info
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
