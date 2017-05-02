@@ -26,50 +26,56 @@ $(document).on('turbolinks:load', function() {
       }
     });
 
+    initMap();
     locationAutocomplete.attr('loaded', true);
   }
 });
 
 function initMap() {
-  var input = $('#location-autocomplete input');
-  var options = {
-    componentRestrictions: { country: 'us' },
-    types: ['(regions)']
-  };
+  var input = $('#location-autocomplete input:not([loaded])');
 
-  var autocomplete = new google.maps.places.Autocomplete(input[0], options);
+  if(google && input.length) {
+    var options = {
+      componentRestrictions: { country: 'us' },
+      types: ['(regions)']
+    };
 
-  autocomplete.addListener('place_changed', function() {
-    var place = autocomplete.getPlace();
-    var parser = document.createElement('a');
-    $form = $('form.location-autocomplete-form');
-    parser.href = $form.attr('action');
+    var autocomplete = new google.maps.places.Autocomplete(input[0], options);
 
-    var isZipcode = place.types[0] === "postal_code";
-    var isState = place.types[0] === "administrative_area_level_1";
-    var isCounty = place.types[0] === "administrative_area_level_2";
-    var isCity = place.types[0] === "locality";
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      var parser = document.createElement('a');
+      $form = $('form.location-autocomplete-form');
+      parser.href = $form.attr('action');
 
-    if (isZipcode) {
-      var location = 'zipcode=' + place.name;
-    } else if (isState) {
-      var location = 'state=' + place.address_components[0].short_name;
-    } else if (isCounty) {
-      var county = 'county=' + place.name.replace(/ County/, "");
-      var state = '&state=' + place.address_components[1].short_name;
-      var location = county + state;
-    } else if (isCity) {
-      var city = 'city=' + place.name;
-      var state = '&state=' + place.address_components[2].short_name;
-      var location = city + state;
-    }
+      var isZipcode = place.types[0] === "postal_code";
+      var isState = place.types[0] === "administrative_area_level_1";
+      var isCounty = place.types[0] === "administrative_area_level_2";
+      var isCity = place.types[0] === "locality";
 
-    if (parser.search) {
-      var url = $form.attr('action') + '&' + location;
-    } else {
-      var url = $form.attr('action') + '?' + location;
-    }
+      if (isZipcode) {
+        var location = 'zipcode=' + place.name;
+      } else if (isState) {
+        var location = 'state=' + place.address_components[0].short_name;
+      } else if (isCounty) {
+        var county = 'county=' + place.name.replace(/ County/, "");
+        var state = '&state=' + place.address_components[1].short_name;
+        var location = county + state;
+      } else if (isCity) {
+        var city = 'city=' + place.name;
+        var state = '&state=' + place.address_components[2].short_name;
+        var location = city + state;
+      }
 
-    Turbolinks.visit(url);
-  });
+      if (parser.search) {
+        var url = $form.attr('action') + '&' + location;
+      } else {
+        var url = $form.attr('action') + '?' + location;
+      }
+
+      Turbolinks.visit(url);
+    });
+
+    input.attr('loaded', true);
+  }
 }
