@@ -51,11 +51,11 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
                 i.fa.fa-home.fa-fw.ml-2
           .dropdown-item
             label.custom-control.custom-checkbox
-              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'both' }
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'open' }
               span.custom-control-indicator
               span.custom-control-description
-                span.description-text Both
-                i.fa.fa-hourglass-half.fa-fw.ml-2
+                span.description-text Open
+                i.fa.fa-flag-checkered.fa-fw.ml-2
           .dropdown-item.d-flex.justify-content-between
             a.cancel href="#" Cancel
             a.apply href="#" Apply

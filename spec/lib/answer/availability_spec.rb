@@ -7,7 +7,7 @@ RSpec.describe Answer::Availability do
 
   describe '#valid?' do
     ['Live in', 'Live-In', 'am', 'pm', 'open', 'A Live in',
-     'C bothe', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'B hourly part time'].each do |body|
+     'C hourly', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'B hourly part time'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
