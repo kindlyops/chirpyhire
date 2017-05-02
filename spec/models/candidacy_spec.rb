@@ -30,16 +30,6 @@ RSpec.describe Candidacy do
         end
       end
 
-      context 'no availability' do
-        before do
-          subject.update(availability: :no_availability)
-        end
-
-        it 'is false' do
-          expect(subject.ideal?(ideal_candidate)).to eq(false)
-        end
-      end
-
       context 'no experience' do
         before do
           subject.update(experience: :no_experience)
