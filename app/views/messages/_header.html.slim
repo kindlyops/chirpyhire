@@ -22,6 +22,46 @@ header.chat-header
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-graduation-cap
               | Certification
+          - if @conversation.contact.availability.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.availability.icon_class}"
+              = conversation.contact.availability.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-calendar-check-o
+              | Availability
+          - if @conversation.contact.experience.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.experience.icon_class}"
+              = conversation.contact.experience.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-level-up
+              | Experience
+          - if @conversation.contact.transportation.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.transportation.icon_class}"
+              = conversation.contact.transportation.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-road
+              | Transportation
+          - if @conversation.contact.cpr_first_aid.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
+              = conversation.contact.cpr_first_aid.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-medkit
+              | CPR / First-Aid
+          - if @conversation.contact.skin_test.present?
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
+              = conversation.contact.skin_test.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-newspaper-o
+              | Skin Test
       .channel-title-info
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
