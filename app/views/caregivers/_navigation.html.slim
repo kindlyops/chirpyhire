@@ -37,11 +37,18 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
         .dropdown-menu aria-labelledby="availability"
           .dropdown-item
             label.custom-control.custom-checkbox
-              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly' }
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_am' }
               span.custom-control-indicator
               span.custom-control-description
-                span.description-text Hourly
-                i.fa.fa-clock-o.fa-fw.ml-2
+                span.description-text Hourly - AM
+                i.fa.fa-sun-o.fa-fw.ml-2
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_pm' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text Hourly - PM
+                i.fa.fa-moon-o.fa-fw.ml-2
           .dropdown-item
             label.custom-control.custom-checkbox
               = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'live_in' }

@@ -36,11 +36,14 @@
                 | Live-In
                 i.fa.fa-home.ml-2
               span.mr-3.trait.inline-trait
-                | Hourly
-                i.fa.fa-clock-o.ml-2
+                | Hourly - AM
+                i.fa.fa-sun-o.ml-2
               span.mr-3.trait.inline-trait
-                | Both
-                i.fa.fa-hourglass-half.ml-2
+                | Hourly - PM
+                i.fa.fa-moon-o.ml-2
+              span.mr-3.trait.inline-trait
+                | Open
+                i.fa.fa-flag-checkered.ml-2
         li.list-group-item
           .card-block
             h4.card-title
@@ -102,14 +105,7 @@
               | Location
             p.card-text
               small.text-muted Location. Location. Location.
-            p.card-text Add the zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
-            #zipcodes
-              = f.fields_for :zipcodes do |zipcode|
-                = render 'zipcode_fields', f: zipcode
-            .form-group.mt-2
-              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-success"
-        li.list-group-item
-          = f.submit "Update ideal candidate", class: "btn btn-lg btn-block btn-primary mr-2", role: "button"
+            p.card-text Search by state, county, city, or zipcode to find caregivers near your greatest needs.
   hr
   .card.mb-4.mt-4.suggestions
     .card-block

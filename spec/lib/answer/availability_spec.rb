@@ -76,7 +76,6 @@ RSpec.describe Answer::Availability do
       end
     end
 
-
     context 'invalid' do
       ['Definitely, what location are you all hiring for?', 'hourly', 'no', 'nah', 'nope'].each do |body|
         context body do
