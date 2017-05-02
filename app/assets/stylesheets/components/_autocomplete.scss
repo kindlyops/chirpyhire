@@ -2,6 +2,12 @@
   z-index: 1030;
   left: 17px !important;
   width: 330px !important;
+
+  .pac-item {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 #location-autocomplete {
