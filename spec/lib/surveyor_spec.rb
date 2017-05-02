@@ -227,7 +227,7 @@ RSpec.describe Surveyor do
                 allow(subject.survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.availability }.to('hourly')
+                }.to change { candidacy.reload.availability }.to('hourly_am')
               end
             end
 

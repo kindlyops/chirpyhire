@@ -26,7 +26,7 @@ class Candidacy < ApplicationRecord
   }
 
   enum availability: {
-    live_in: 0, hourly: 1, both: 2, no_availability: 3
+    live_in: 0, hourly: 1, open: 2, hourly_am: 3, hourly_pm: 4
   }
 
   enum transportation: {
@@ -77,7 +77,7 @@ class Candidacy < ApplicationRecord
   end
 
   def available?
-    availability.present? && availability != 'no_availability'
+    availability.present?
   end
 
   def locatable?

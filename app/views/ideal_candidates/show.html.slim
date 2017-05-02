@@ -36,14 +36,14 @@
                 | Live-In
                 i.fa.fa-home.ml-2
               span.mr-3.trait.inline-trait
-                | Hourly
-                i.fa.fa-clock-o.ml-2
+                | Hourly - AM
+                i.fa.fa-sun-o.ml-2
               span.mr-3.trait.inline-trait
-                | Both
-                i.fa.fa-hourglass-half.ml-2
-              span.mr-3.trait.outline-trait
-                | No Availability
-                i.fa.fa-hourglass-o.ml-2
+                | Hourly - PM
+                i.fa.fa-moon-o.ml-2
+              span.mr-3.trait.inline-trait
+                | Open
+                i.fa.fa-flag-checkered.ml-2
         li.list-group-item
           .card-block
             h4.card-title
@@ -58,9 +58,6 @@
               span.mr-3.trait.inline-trait
                 | Personal
                 i.fa.fa-car.ml-2
-              span.mr-3.trait.outline-trait
-                | No Transportation
-                i.fa.fa-thumbs-o-up.ml-2
         li.list-group-item
           .card-block
             h4.card-title
@@ -78,9 +75,6 @@
               span.mr-3.trait.inline-trait
                 | 6+ years
                 i.fa.fa-battery-full.ml-2
-              span.mr-3.trait.outline-trait
-                | No Experience
-                i.fa.fa-battery-empty.ml-2
         li.list-group-item
           .card-block
             h4.card-title
@@ -98,9 +92,6 @@
               span.mr-3.trait.inline-trait
                 | RN, LPN, Other
                 i.fa.fa-heartbeat.ml-2
-              span.mr-3.trait.outline-trait
-                | No Certification
-                i.fa.fa-graduation-cap.ml-2
               span.mr-3.trait.inline-trait
                 | CPR / 1st Aid
                 i.fa.fa-medkit.ml-2
@@ -114,14 +105,7 @@
               | Location
             p.card-text
               small.text-muted Location. Location. Location.
-            p.card-text Add the zipcodes your organization operates in and we'll mark caregivers from those zipcodes as ideal.
-            #zipcodes
-              = f.fields_for :zipcodes do |zipcode|
-                = render 'zipcode_fields', f: zipcode
-            .form-group.mt-2
-              = link_to_add_association 'Add zipcode', f, :zipcodes, class: "btn btn-success"
-        li.list-group-item
-          = f.submit "Update ideal candidate", class: "btn btn-lg btn-block btn-primary mr-2", role: "button"
+            p.card-text Search by state, county, city, or zipcode to find caregivers near your greatest needs.
   hr
   .card.mb-4.mt-4.suggestions
     .card-block

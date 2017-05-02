@@ -2,18 +2,18 @@ class Answer::Availability < Answer::MultipleChoice
   def choice_map
     {
       'Live-In' => :live_in,
-      'Hourly' => :hourly,
-      'Both' => :both,
-      'No Availability' => :no_availability
+      'Hourly - AM' => :hourly_am,
+      'Hourly - PM' => :hourly_pm,
+      "I'm wide open for any shifts!" => :open
     }
   end
 
   def positive_variants
-    ['live in', 'live-in', 'hourly', 'both']
+    ['live in', 'live-in', 'am', 'pm', 'open', 'any shift']
   end
 
   def variants
-    "#{positive_variants.join('|')}|#{no_variants.join('|')}"
+    positive_variants.join('|')
   end
 
   def answer_regexp
@@ -30,12 +30,12 @@ class Answer::Availability < Answer::MultipleChoice
     case regular_match(message)[1]
     when 'live in', 'live-in'
       :live_in
-    when 'hourly'
-      :hourly
-    when 'both'
-      :both
-    when *no_variants.concat(no_variants.map { |v| "#{v} availability" })
-      :no_availability
+    when 'am'
+      :hourly_am
+    when 'pm'
+      :hourly_pm
+    when 'open', 'any shift'
+      :open
     end
   end
 end

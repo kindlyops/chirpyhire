@@ -31,7 +31,29 @@ class CaregiversController < ApplicationController
   end
 
   def candidacy_params
-    permitted_params.to_h.except(:state, :city, :county, :zipcode)
+    result = permitted_params.to_h.except(:state, :city, :county, :zipcode)
+    result[:availability] = (result[:availability] | hourly_params) if hourly?
+    result
+  end
+
+  def hourly?
+    availability? && (am? || pm?)
+  end
+
+  def am?
+    permitted_params[:availability].include?('hourly_am')
+  end
+
+  def pm?
+    permitted_params[:availability].include?('hourly_pm')
+  end
+
+  def availability?
+    permitted_params[:availability].present?
+  end
+
+  def hourly_params
+    %w(hourly)
   end
 
   def zipcode_params

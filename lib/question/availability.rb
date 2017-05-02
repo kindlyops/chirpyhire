@@ -6,9 +6,9 @@ class Question::Availability < Question::MultipleChoice
   def choices
     {
       a: 'Live-In',
-      b: 'Hourly',
-      c: 'Both',
-      d: 'No Availability'
+      b: 'Hourly - AM',
+      c: 'Hourly - PM',
+      d: "I'm wide open for any shifts!"
     }
   end
 
