@@ -13,7 +13,7 @@ class Answer::Availability < Answer::MultipleChoice
   end
 
   def variants
-    positive_variants.join('|').to_s
+    positive_variants.join('|')
   end
 
   def answer_regexp
