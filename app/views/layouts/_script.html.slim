@@ -18,10 +18,8 @@ javascript:
     });
   }();
   drift.SNIPPET_VERSION = '0.3.1';
+  drift.config({ enableWelcomeMessage: true });
   drift.load('8yehxrmwru5p');
-  drift.on('ready', function(api) {
-    api.showWelcomeOrAwayMessage();
-  });
 
   // Browser Update
   // https://browser-update.org
