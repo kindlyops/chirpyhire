@@ -2,4 +2,4 @@
   .input-group.mr-3#location-autocomplete
     span.input-group-addon
       i.fa.fa-search
-    input.form-control placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")
+    input.form-control autofocus="" placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")

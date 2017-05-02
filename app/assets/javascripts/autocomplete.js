@@ -35,15 +35,42 @@ function initMap() {
   var input = $('#location-autocomplete input:not([loaded])');
 
   if(google && input.length) {
-    var options = {
+    var mapsOptions = {
       componentRestrictions: { country: 'us' },
       types: ['(regions)']
     };
 
-    var autocomplete = new google.maps.places.Autocomplete(input[0], options);
+    function preventStandardForm(e) {
+      e.preventDefault();
+    }
 
-    autocomplete.addListener('place_changed', function() {
-      var place = autocomplete.getPlace();
+    function autoCallback(predictions, status) {
+      if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        input.className = 'error';
+        return;
+      }
+      // var placeService = new google.maps.places.PlacesService();
+      // placeService.getDetails({ placeId: predictions[0].place_id }, function(place, status) {
+      //   debugger;
+      //   applyZipCodeSearch(place);
+      // });
+      input.addClass('success');
+      input.val(predictions[0].description);
+    }
+
+    function queryAutocomplete(query) {
+      var service = new google.maps.places.AutocompleteService();
+      var options = R.merge(mapsOptions, { input: query });
+      service.getPlacePredictions(options, autoCallback);
+    }
+
+    function handleTabbingOnInput(e) {
+      if (e.which === 9 || e.keyCode === 9) {
+        queryAutocomplete(e.target.value);
+      }
+    }
+
+    function applyZipCodeSearch(place) {
       var parser = document.createElement('a');
       $form = $('form.location-autocomplete-form');
       parser.href = $form.attr('action');
@@ -74,7 +101,21 @@ function initMap() {
       }
 
       Turbolinks.visit(url);
+    }
+
+    var autocomplete = new google.maps.places.Autocomplete(input[0], mapsOptions);
+    debugger;
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      var place = autocomplete.getPlace();
+      if (typeof place.address_components === 'undefined') {
+        queryAutocomplete(place.name);
+      } else {
+        applyZipCodeSearch(place);
+      }
     });
+
+    $(document).on('keydown', '#location-autocomplete', handleTabbingOnInput);
+    $(document).on('submit', '.location-autocomplete-form', preventStandardForm);
 
     input.attr('loaded', true);
   }
