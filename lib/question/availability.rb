@@ -8,7 +8,7 @@ class Question::Availability < Question::MultipleChoice
       a: 'Live-In',
       b: 'Hourly - AM',
       c: 'Hourly - PM',
-      d: 'Wide open for any shifts!'
+      d: "I'm wide open for any shifts!"
     }
   end
 

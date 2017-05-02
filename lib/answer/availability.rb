@@ -4,7 +4,7 @@ class Answer::Availability < Answer::MultipleChoice
       'Live-In' => :live_in,
       'Hourly - AM' => :hourly_am,
       'Hourly - PM' => :hourly_pm,
-      'Wide open for any shifts!' => :open
+      "I'm wide open for any shifts!" => :open
     }
   end
 
