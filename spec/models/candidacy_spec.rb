@@ -85,7 +85,7 @@ RSpec.describe Candidacy do
           subject.update(
             experience: :one_to_five,
             skin_test: true,
-            availability: :both,
+            availability: :open,
             transportation: :personal_transportation,
             zipcode: '30342',
             cpr_first_aid: true,

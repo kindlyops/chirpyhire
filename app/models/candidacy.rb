@@ -26,7 +26,8 @@ class Candidacy < ApplicationRecord
   }
 
   enum availability: {
-    live_in: 0, hourly: 1, both: 2, no_availability: 3
+    live_in: 0, hourly: 1, open: 2,
+    no_availability: 3, hourly_am: 4, hourly_pm: 5
   }
 
   enum transportation: {
