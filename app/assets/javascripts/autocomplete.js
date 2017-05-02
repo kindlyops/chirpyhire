@@ -1,40 +1,7 @@
-$(document).on('turbolinks:load', function() {
-
-  var locationAutocomplete = $('#location-autocomplete:not([loaded])');
-
-  if(locationAutocomplete.length) {
-    $(document).on('focusin', '#location-autocomplete', function() {
-      $(this).addClass('expanded');
-      $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
-    });
-
-    $(document).on('focusout', '#location-autocomplete', function() {
-      $(this).removeClass('expanded');
-      $(this).find('input').attr('placeholder', 'Anywhere');
-    });
-
-    var input = $('#location-autocomplete input');
-    $(input).on('focusout', function(e) {
-      var searchRegex = /zipcode|city|state|county/;
-      var isFiltered = window.location.search.match(searchRegex);
-
-      if($(e.target).val() === "" && isFiltered) {
-        e.preventDefault();
-        $form = $('form.location-autocomplete-form');
-
-        Turbolinks.visit($form.attr('action'));
-      }
-    });
-
-    initMap();
-    locationAutocomplete.attr('loaded', true);
-  }
-});
-
 function initMap() {
   var input = $('#location-autocomplete input:not([loaded])');
 
-  if(input.length && google) {
+  if(input.length && typeof google !== "undefined") {
 
     var options = {
       componentRestrictions: { country: 'us' },
@@ -101,3 +68,36 @@ function initMap() {
     input.attr('loaded', true);
   }
 }
+
+$(document).on('turbolinks:load', function() {
+
+  var locationAutocomplete = $('#location-autocomplete:not([loaded])');
+
+  if(locationAutocomplete.length) {
+    $(document).on('focusin', '#location-autocomplete', function() {
+      $(this).addClass('expanded');
+      $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
+    });
+
+    $(document).on('focusout', '#location-autocomplete', function() {
+      $(this).removeClass('expanded');
+      $(this).find('input').attr('placeholder', 'Anywhere');
+    });
+
+    var input = $('#location-autocomplete input');
+    $(input).on('focusout', function(e) {
+      var searchRegex = /zipcode|city|state|county/;
+      var isFiltered = window.location.search.match(searchRegex);
+
+      if($(e.target).val() === "" && isFiltered) {
+        e.preventDefault();
+        $form = $('form.location-autocomplete-form');
+
+        Turbolinks.visit($form.attr('action'));
+      }
+    });
+
+    initMap();
+    locationAutocomplete.attr('loaded', true);
+  }
+});
