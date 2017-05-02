@@ -3,7 +3,7 @@ $(document).on('turbolinks:load', function() {
   var locationAutocomplete = $('#location-autocomplete:not([loaded])');
 
   if(locationAutocomplete.length) {
-    $(document).on('click', '#location-autocomplete', function() {
+    $(document).on('focusin', '#location-autocomplete', function() {
       $(this).addClass('expanded');
       $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
     });
@@ -34,88 +34,69 @@ $(document).on('turbolinks:load', function() {
 function initMap() {
   var input = $('#location-autocomplete input:not([loaded])');
 
-  if(google && input.length) {
-    var mapsOptions = {
+  if(input.length && google) {
+
+    var options = {
       componentRestrictions: { country: 'us' },
       types: ['(regions)']
     };
 
-    function preventStandardForm(e) {
-      e.preventDefault();
-    }
+    var autocomplete = new google.maps.places.Autocomplete(input[0], options);
 
-    function autoCallback(predictions, status) {
-      if (status !== google.maps.places.PlacesServiceStatus.OK) {
-        input.className = 'error';
-        return;
-      }
-      // var placeService = new google.maps.places.PlacesService();
-      // placeService.getDetails({ placeId: predictions[0].place_id }, function(place, status) {
-      //   debugger;
-      //   applyZipCodeSearch(place);
-      // });
-      input.addClass('success');
-      input.val(predictions[0].description);
-    }
-
-    function queryAutocomplete(query) {
-      var service = new google.maps.places.AutocompleteService();
-      var options = R.merge(mapsOptions, { input: query });
-      service.getPlacePredictions(options, autoCallback);
-    }
-
-    function handleTabbingOnInput(e) {
-      if (e.which === 9 || e.keyCode === 9) {
-        queryAutocomplete(e.target.value);
-      }
-    }
-
-    function applyZipCodeSearch(place) {
-      var parser = document.createElement('a');
-      $form = $('form.location-autocomplete-form');
-      parser.href = $form.attr('action');
-
-      var isZipcode = place.types[0] === "postal_code";
-      var isState = place.types[0] === "administrative_area_level_1";
-      var isCounty = place.types[0] === "administrative_area_level_2";
-      var isCity = place.types[0] === "locality";
-
-      if (isZipcode) {
-        var location = 'zipcode=' + place.name;
-      } else if (isState) {
-        var location = 'state=' + place.address_components[0].short_name;
-      } else if (isCounty) {
-        var county = 'county=' + place.name.replace(/ County/, "");
-        var state = '&state=' + place.address_components[1].short_name;
-        var location = county + state;
-      } else if (isCity) {
-        var city = 'city=' + place.name;
-        var state = '&state=' + place.address_components[2].short_name;
-        var location = city + state;
-      }
-
-      if (parser.search) {
-        var url = $form.attr('action') + '&' + location;
-      } else {
-        var url = $form.attr('action') + '?' + location;
-      }
-
-      Turbolinks.visit(url);
-    }
-
-    var autocomplete = new google.maps.places.Autocomplete(input[0], mapsOptions);
-    debugger;
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+    autocomplete.addListener('place_changed', function() {
       var place = autocomplete.getPlace();
-      if (typeof place.address_components === 'undefined') {
-        queryAutocomplete(place.name);
-      } else {
-        applyZipCodeSearch(place);
+
+      if (place.types) {
+        var parser = document.createElement('a');
+        $form = $('form.location-autocomplete-form');
+        parser.href = $form.attr('action');
+
+        var placeType = place.types[0];
+        var isZipcode = placeType === "postal_code";
+        var isState = placeType === "administrative_area_level_1";
+        var isCounty = placeType === "administrative_area_level_2";
+        var isCity = placeType === "locality";
+        var stateComponent = R.find(R.where({types: R.contains('administrative_area_level_1')}), place.address_components);
+
+        if (isZipcode) {
+          var location = 'zipcode=' + place.name;
+        } else if (isState) {
+          var location = 'state=' + stateComponent.short_name;
+        } else if (isCounty) {
+          var county = 'county=' + place.name.replace(/ County/, "");
+          var state = '&state=' + stateComponent.short_name;
+          var location = county + state;
+        } else if (isCity) {
+          var city = 'city=' + place.name;
+          var state = '&state=' + stateComponent.short_name;
+          var location = city + state;
+        }
+
+        if (parser.search) {
+          var url = $form.attr('action') + '&' + location;
+        } else {
+          var url = $form.attr('action') + '?' + location;
+        }
+
+        Turbolinks.visit(url);
       }
     });
 
-    $(document).on('keydown', '#location-autocomplete', handleTabbingOnInput);
-    $(document).on('submit', '.location-autocomplete-form', preventStandardForm);
+    google.maps.event.addDomListener(input[0], 'keydown', function(e){
+      var keyCode = e.keyCode || e.which;
+      var noneSelected = $('.pac-item-selected').length === 0;
+      var isTabOrEnter = keyCode === 13 || keyCode === 9;
+      var isSearching = isTabOrEnter && noneSelected && !e.triggered;
+
+      if(isSearching) {
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
+      }
+    });
+
+    $(document).on('submit', 'form.location-autocomplete-form', function(e) {
+      e.preventDefault();
+    });
 
     input.attr('loaded', true);
   }
