@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   end
 
   resource :health, only: :show
-  get '/candidates', to: 'candidates#index'
 
   resources :messages, only: [:index, :show], param: :contact_id do
     resources :notes, only: [:index, :create, :update, :destroy]
@@ -19,7 +18,7 @@ Rails.application.routes.draw do
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 
-  resources :contacts, only: [:index, :update] do
+  resources :contacts, only: [] do
     resources :messages, only: :create
   end
 

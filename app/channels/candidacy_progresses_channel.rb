@@ -1,2 +1,0 @@
-class CandidacyProgressesChannel < CandidaciesChannel
-end

@@ -24,7 +24,6 @@ class Contact::Attribute
   def label
     humanize_attribute(candidacy.send(attribute)) || 'Unknown'
   end
-  alias search_label label
 
   def icon_class
     icon_classes[candidacy.send(attribute)] || 'fa-question'

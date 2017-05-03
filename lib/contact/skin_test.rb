@@ -11,10 +11,6 @@ class Contact::SkinTest < Contact::Attribute
     label
   end
 
-  def search_label
-    label if candidacy.skin_test.present?
-  end
-
   def icon_class
     return 'fa-question' if candidacy.skin_test.nil?
 

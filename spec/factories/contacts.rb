@@ -49,7 +49,6 @@ FactoryGirl.define do
         statuses = [just_started, midway, almost_finished]
 
         candidacy.assign_attributes(statuses.sample)
-        candidacy.progress = candidacy.current_progress
         candidacy.save
       end
     end
@@ -58,7 +57,6 @@ FactoryGirl.define do
       after(:create) do |contact|
         contact.update(
           subscribed: [true, false].sample,
-          screened: [true, false].sample,
           candidate: true
         )
 
@@ -78,7 +76,6 @@ FactoryGirl.define do
           zipcode: zipcode,
           cpr_first_aid: [true, false].sample
         )
-        candidacy.progress = candidacy.current_progress
         candidacy.save
       end
     end

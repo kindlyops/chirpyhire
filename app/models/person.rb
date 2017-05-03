@@ -12,7 +12,6 @@ class Person < ApplicationRecord
   belongs_to :zipcode, optional: true
 
   before_validation :add_nickname
-  after_save :set_search_content
 
   delegate :inquiry, :availability, :experience, :transportation,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
@@ -57,10 +56,6 @@ class Person < ApplicationRecord
   rescue Nickname::OutOfNicknames => e
     Rollbar.debug(e)
     self.nickname = 'Anonymous'
-  end
-
-  def set_search_content
-    contacts.find_each(&:save)
   end
 
   def nickname_present?

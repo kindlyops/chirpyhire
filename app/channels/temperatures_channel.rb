@@ -1,2 +1,0 @@
-class TemperaturesChannel < CandidaciesChannel
-end

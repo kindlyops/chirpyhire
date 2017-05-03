@@ -1,5 +1,4 @@
 class Contact < ApplicationRecord
-  include Contact::Searchable
   belongs_to :person
   belongs_to :organization
   has_many :conversations
