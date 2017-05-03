@@ -1,6 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_action :fetch_address, only: :create
-
   def new
     super do |account|
       account.build_organization
@@ -32,10 +30,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def organization_attributes_keys
-    %i(name).push(location_attributes: location_attribute_keys)
+    %i(name).push(location_attributes: location_attributes)
   end
 
-  def location_attribute_keys
+  def location_attributes
     %i(full_street_address
        latitude
        longitude
@@ -47,54 +45,7 @@ class RegistrationsController < Devise::RegistrationsController
        country_code)
   end
 
-  def location_attributes
-    organization_attributes[:location_attributes]
-  end
-
   def organization_attributes
     params[:account][:organization_attributes]
-  end
-
-  def finder
-    @finder ||= AddressFinder.new(location_attributes[:full_street_address])
-  end
-
-  def with_rate_limit_protection
-    yield
-  rescue Geocoder::OverQueryLimitError => e
-    Rollbar.debug(e.message)
-    flash[:alert] = rate_limit_message
-    set_minimum_password_length
-    render :new
-  end
-
-  def rate_limit_message
-    "Sorry but we're a little overloaded right now and can't "\
-        'find addresses. Please try again in a few minutes.'
-  end
-
-  def fetch_address_message
-    "We couldn't find that address. Please provide the"\
-            " city, state, and zipcode if you haven't yet."
-  end
-
-  def populate_location_attributes
-    location_attribute_keys.each do |field|
-      location_attributes[field] = finder.send(field)
-    end
-  end
-
-  def fetch_address
-    with_rate_limit_protection do
-      build_resource(sign_up_params)
-
-      if finder.found?
-        populate_location_attributes
-      else
-        flash[:alert] = fetch_address_message
-        set_minimum_password_length
-        render :new
-      end
-    end
   end
 end
