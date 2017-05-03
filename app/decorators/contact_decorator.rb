@@ -39,10 +39,6 @@ class ContactDecorator < Draper::Decorator
     Contact::Experience.new(object)
   end
 
-  def qualifications
-    Contact::Qualifications.new(object)
-  end
-
   def candidacy_zipcode
     Contact::Zipcode.new(object)
   end
@@ -57,13 +53,5 @@ class ContactDecorator < Draper::Decorator
 
   def cpr_first_aid
     Contact::CprFirstAid.new(object)
-  end
-
-  def status
-    Contact::Status.new(object)
-  end
-
-  def subscribed
-    Contact::Subscribed.new(object)
   end
 end

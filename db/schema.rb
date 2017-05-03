@@ -58,13 +58,12 @@ ActiveRecord::Schema.define(version: 20170503134034) do
     t.string   "zipcode"
     t.boolean  "cpr_first_aid"
     t.integer  "certification"
-    t.integer  "person_id",                    null: false
+    t.integer  "person_id",                  null: false
     t.integer  "inquiry"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "contact_id"
-    t.float    "progress",       default: 0.0, null: false
-    t.integer  "state",          default: 0,   null: false
+    t.integer  "state",          default: 0, null: false
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
   end
 

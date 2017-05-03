@@ -5,5 +5,6 @@ class DropSearchVector < ActiveRecord::Migration[5.0]
     remove_column :contacts, :not_ready_content
     remove_column :contacts, :not_ready_content_tsearch
     remove_column :contacts, :screened
+    remove_column :candidacies, :progress
   end
 end

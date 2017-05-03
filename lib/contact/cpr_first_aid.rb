@@ -3,10 +3,6 @@ class Contact::CprFirstAid < Contact::Attribute
     'CPR / 1st Aid'
   end
 
-  def search_label
-    label if candidacy.cpr_first_aid.present?
-  end
-
   def to_s
     candidacy.cpr_first_aid.present?.to_s
   end

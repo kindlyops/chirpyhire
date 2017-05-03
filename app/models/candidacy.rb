@@ -6,11 +6,6 @@ class Candidacy < ApplicationRecord
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
 
-  validates :progress, numericality: {
-    greater_than_or_equal_to: 0,
-    less_than_or_equal_to: 100
-  }
-
   enum state: {
     pending: 0, in_progress: 1, complete: 2
   }
@@ -79,18 +74,7 @@ class Candidacy < ApplicationRecord
   end
   alias_attribute :location, :zipcode
 
-  def current_progress
-    progressable_attributes.count { |a| !a.nil? } /
-      progressable_attributes.count.to_f * 100.0
-  end
-
   private
-
-  def progressable_attributes
-    [experience, skin_test, availability,
-     transportation, zipcode, cpr_first_aid,
-     certification]
-  end
 
   def other_attributes_ideal?
     transportable? && experienced? && certified? && skin_test && cpr_first_aid
