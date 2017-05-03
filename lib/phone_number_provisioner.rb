@@ -51,7 +51,7 @@ class PhoneNumberProvisioner
       lat_long = "#{location.latitude},#{location.longitude}"
       local_numbers.list(
         near_lat_long: lat_long,
-        in_region: location.state.to_s
+        in_region: location.state_code.to_s
       )
     end
   end
