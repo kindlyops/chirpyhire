@@ -16,13 +16,6 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
-  remote: https://github.com/hwhelchel/bootstrap-table-rails.git
-  revision: 54e127d944b0d52fa782c2f58a64e647b71d2b40
-  branch: 1.11.1
-  specs:
-    bootstrap-table-rails (1.11.1)
-
-GIT
   remote: https://github.com/hwhelchel/sass.git
   revision: bdee5ad4da1b0109e7f4ab1ffe31b8c98434b5ca
   branch: dynamic_includes
@@ -174,8 +167,6 @@ GEM
       after_commit_action (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    csv_shaper (1.3.0)
-      activesupport (>= 3.0.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.2.1)
@@ -280,10 +271,6 @@ GEM
     parser (2.4.0.0)
       ast (~> 2.2)
     pg (0.20.0)
-    pg_search (2.0.1)
-      activerecord (>= 4.2)
-      activesupport (>= 4.2)
-      arel (>= 6)
     phony (2.15.43)
     phony_rails (0.14.5)
       activesupport (>= 3.0)
@@ -481,14 +468,12 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap (~> 4.0.0.alpha6)
-  bootstrap-table-rails!
   brakeman (~> 3.3.0)
   capybara (~> 2.7.0)
   capybara-email!
   capybara-webkit (~> 1.12.0)
   cocoon (~> 1.2.9)
   counter_culture (~> 1.5.1)
-  csv_shaper (~> 1.3.0)
   database_cleaner (~> 1.5.0)
   devise (~> 4.2.0)
   devise_invitable (~> 1.6.0)
@@ -511,7 +496,6 @@ DEPENDENCIES
   paperclip (~> 5.1.0)
   paranoia (~> 2.3)
   pg (~> 0.15)
-  pg_search (~> 2.0.1)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
   pretender (~> 0.2.1)

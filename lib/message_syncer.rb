@@ -9,7 +9,7 @@ class MessageSyncer
     existing_message = person.sent_messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
     message = sync_message
-    update_contact(message)
+    contact.update(last_reply_at: message.created_at)
     create_read_receipts(message) if receipt_requested?
     Broadcaster::Message.new(message).broadcast
     message
@@ -33,12 +33,6 @@ class MessageSyncer
       external_created_at: external_message.date_created,
       organization: organization
     )
-  end
-
-  def update_contact(message)
-    contact.update(last_reply_at: message.created_at)
-    Broadcaster::LastReply.new(contact).broadcast
-    Broadcaster::Temperature.new(contact).broadcast
   end
 
   def create_read_receipts(message)

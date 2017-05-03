@@ -58,7 +58,6 @@ FactoryGirl.define do
       after(:create) do |contact|
         contact.update(
           subscribed: [true, false].sample,
-          screened: [true, false].sample,
           candidate: true
         )
 

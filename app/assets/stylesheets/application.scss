@@ -1,7 +1,6 @@
 @import "base/custom";
 @import "bootstrap";
 @import "font-awesome";
-@import "bootstrap-table";
 @import "polyfill/bootstrap3";
 
 body {
@@ -33,8 +32,6 @@ body {
 }
 
 @import "ideal_candidate";
-@import "contacts";
-@import "candidates";
 @import "caregivers";
 @import "messages";
 @import "components";

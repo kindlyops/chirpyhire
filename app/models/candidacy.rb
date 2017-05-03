@@ -2,7 +2,6 @@ class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
   belongs_to :contact, optional: true
-  after_save :set_search_content
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person
@@ -54,11 +53,6 @@ class Candidacy < ApplicationRecord
     :promising
   end
 
-  def screened_at(organization)
-    return true if subscribed_to(organization).screened?
-    false
-  end
-
   def ideal?(ideal_candidate)
     complete? && ideal_candidate.zipcode?(zipcode) &&
       other_attributes_ideal?
@@ -100,9 +94,5 @@ class Candidacy < ApplicationRecord
 
   def other_attributes_ideal?
     transportable? && experienced? && certified? && skin_test && cpr_first_aid
-  end
-
-  def set_search_content
-    contacts.find_each(&:save)
   end
 end

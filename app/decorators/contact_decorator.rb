@@ -19,18 +19,6 @@ class ContactDecorator < Draper::Decorator
     Contact::CreatedAt.new(object)
   end
 
-  def last_reply_at
-    Contact::LastReplyAt.new(object)
-  end
-
-  def survey_progress
-    Contact::SurveyProgress.new(object)
-  end
-
-  def temperature
-    Contact::Temperature.new(object)
-  end
-
   def handle
     Contact::Handle.new(object)
   end
@@ -77,9 +65,5 @@ class ContactDecorator < Draper::Decorator
 
   def subscribed
     Contact::Subscribed.new(object)
-  end
-
-  def screened
-    Contact::Screened.new(object)
   end
 end
