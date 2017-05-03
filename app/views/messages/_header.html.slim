@@ -49,7 +49,6 @@ header.chat-header
           - if @conversation.contact.cpr_first_aid
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
-              ' Has
               = conversation.contact.cpr_first_aid.label
           - elsif @conversation.contact.cpr_first_aid == false
             .channel-header-info-item
