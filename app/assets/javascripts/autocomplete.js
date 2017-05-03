@@ -10,6 +10,21 @@ function initZipcodeSearch() {
 
     var zipcode_search = new google.maps.places.Autocomplete(input[0], options);
 
+    var target = $('body')[0];
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        var nodes = mutation.addedNodes;
+        var firstNode = nodes[0];
+        var className = firstNode && firstNode.className;
+
+        if (!!className && className.match(/pac-container/)) {
+          $(mutation.addedNodes).addClass('zipcode-search');
+          observer.disconnect();
+        }
+      });
+    });
+    observer.observe(target, { childList: true });
+
     zipcode_search.addListener('place_changed', function() {
       var place = zipcode_search.getPlace();
 
