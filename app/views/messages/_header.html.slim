@@ -46,17 +46,28 @@ header.chat-header
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Transportation
-          - if !@conversation.contact.cpr_first_aid.nil?
+          - if @conversation.contact.cpr_first_aid
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
+              ' Has
+              = conversation.contact.cpr_first_aid.label
+          - elsif @conversation.contact.cpr_first_aid == false
+            .channel-header-info-item
+              i class=="fa fa-fw unknown mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
+              ' No
               = conversation.contact.cpr_first_aid.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | CPR / First-Aid
-          - if !@conversation.contact.skin_test.nil?
+          - if @conversation.contact.skin_test
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
+              = conversation.contact.skin_test.label
+          - elsif @conversation.contact.skin_test == false
+            .channel-header-info-item
+              i class=="fa fa-fw unknown mr-1 #{conversation.contact.skin_test.icon_class}"
+              ' No
               = conversation.contact.skin_test.label
           - else
             .channel-header-info-item
