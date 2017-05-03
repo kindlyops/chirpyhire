@@ -31,15 +31,6 @@ GIT
     smartystreets_ruby_sdk (2.0.3)
 
 GIT
-  remote: https://github.com/rails/activemodel-serializers-xml.git
-  revision: dd9c0acf26aab111ebc647cd8deb99ebc6946531
-  specs:
-    activemodel-serializers-xml (1.0.1)
-      activemodel (> 5.x)
-      activesupport (> 5.x)
-      builder (~> 3.1)
-
-GIT
   remote: https://github.com/rails/rails.git
   revision: 73ee47bd1117ae3a8c244fd601ea02bd568a6b1a
   branch: 5-0-stable
@@ -104,7 +95,11 @@ GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
-    aasm (4.11.1)
+    activemodel-serializers-xml (1.0.1)
+      activemodel (> 5.x)
+      activerecord (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     addressable (2.5.1)
       public_suffix (~> 2.0, >= 2.0.2)
     after_commit_action (1.0.1)
@@ -462,8 +457,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm (~> 4.11.1)
-  activemodel-serializers-xml!
   aws-sdk (~> 2.8.5)
   better_errors
   binding_of_caller

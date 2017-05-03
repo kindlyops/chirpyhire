@@ -76,15 +76,12 @@ gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'
 
 # Impersonation
 gem 'pretender', '~> 0.2.1'
-
-gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
 gem 'phony_rails', '~> 0.14.0'
 gem 'slim-rails', '~> 3.1.0'
 gem 'twilio-ruby', '~> 4.11.0'
 gem 'sidekiq', '~> 4.0.0'
 gem 'sinatra', '~> 2.0.0.rc2'
 gem 'puma', '~> 3.4.0'
-gem 'aasm', '~> 4.11.1'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'draper', '~> 3.0.0.pre1'
 gem 'rails_admin', '~> 1.1.1'
