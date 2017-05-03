@@ -8,7 +8,7 @@ function initZipcodeSearch() {
       types: ['(regions)']
     };
 
-    var zipcode_search = new google.maps.places.Autocomplete(input[0], options);
+    var zipcodeSearch = new google.maps.places.Autocomplete(input[0], options);
 
     var target = $('body')[0];
     var observer = new MutationObserver(function(mutations) {
@@ -25,8 +25,8 @@ function initZipcodeSearch() {
     });
     observer.observe(target, { childList: true });
 
-    zipcode_search.addListener('place_changed', function() {
-      var place = zipcode_search.getPlace();
+    zipcodeSearch.addListener('place_changed', function() {
+      var place = zipcodeSearch.getPlace();
 
       if (place.types) {
         var parser = document.createElement('a');
