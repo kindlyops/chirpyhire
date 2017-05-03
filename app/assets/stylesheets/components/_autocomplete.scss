@@ -1,7 +1,7 @@
 .pac-container {
   z-index: 1030;
-  left: 17px !important;
-  width: 330px !important;
+  left: 222px !important;
+  width: 340px !important;
 
   .pac-item {
     &:hover {
@@ -22,6 +22,7 @@
   input {
     transition: all .5s ease;
     border-left: 0;
+    min-width: 125px;
   }
 
   &.expanded {
@@ -29,6 +30,6 @@
       border-color: lighten($brand-primary, 25%);
     }
 
-    width: 330px;
+    width: 450px;
   }
 }

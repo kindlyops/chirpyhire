@@ -3,3 +3,31 @@
     span.input-group-addon
       i.fa.fa-search
     input.form-control placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")
+    .input-group-btn
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
+        = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :certification, icon: 'fa-graduation-cap' }
+      .dropdown-menu aria-labelledby="certification"
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'pca' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text PCA
+              i.fa.fa-heart-o.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'cna' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text CNA
+              i.fa.fa-heart.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'other_certification' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text RN, LPN, Other
+              i.fa.fa-heartbeat.fa-fw.ml-2
+        .dropdown-item.d-flex.justify-content-between
+          a.cancel href="#" Cancel
+          a.apply href="#" Apply
