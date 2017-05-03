@@ -1,37 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Account Management', type: :feature, js: true do
-  feature 'sign up' do
-    let(:organization_name) { 'Orn, Beer and Schaden' }
-    let(:name) { Faker::Name.name }
-    let(:email) { Faker::Internet.email }
-    context 'with valid credentials' do
-      let(:password) { Faker::Internet.password }
-
-      before do
-        allow(PhoneNumberProvisioner).to receive(:provision) do |organization|
-          organization.update(phone_number: Faker::PhoneNumber.cell_phone)
-        end
-      end
-
-      scenario 'User progresses to recruiting ad' do
-        visit '/accounts/sign_up'
-
-        fill_in 'Organization name', with: organization_name
-        fill_in 'Organization location', with: '1000 E. Market St. 22902'
-        fill_in 'Email', with: email
-        fill_in 'Name', with: name
-        fill_in 'Password', with: password
-
-        click_button 'Create an account'
-        expect(page).to have_text('Recruiting Ad')
-        expect(Account.last.email).to eq(email)
-        expect(Account.last.name).to eq(name)
-        expect(Organization.last.name).to eq(organization_name)
-      end
-    end
-  end
-
   feature 'sign in' do
     context 'with an account' do
       let(:organization) { create(:organization) }
