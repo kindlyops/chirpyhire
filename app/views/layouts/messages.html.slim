@@ -2,6 +2,7 @@ doctype html
 html
   head
     = render partial: "layouts/head"
+    meta name='turbolinks-cache-control' content='no-preview'
   body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
     = render "components/navigation"
     .messages
