@@ -110,6 +110,32 @@ function initLocationSearch() {
       $address.val(R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', '));
     });
 
+    google.maps.event.addDomListener(input[0], 'keydown', function(e){
+      var keyCode = e.keyCode || e.which;
+      var noneSelected = $('.pac-item-selected').length === 0;
+      var isTabOrEnter = keyCode === 13 || keyCode === 9;
+      var isSearching = isTabOrEnter && noneSelected && !e.triggered;
+
+      if(isTabOrEnter) {
+        e.preventDefault();
+      }
+
+      if(isSearching) {
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
+      }
+    });
+
+    google.maps.event.addDomListener(input[0], 'focusout', function(e){
+      var noneSelected = $('.pac-item-selected').length === 0;
+      var isSearching = noneSelected && !e.triggered;
+
+      if(isSearching) {
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
+        google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
+      }
+    });
+
     input.attr('loaded', true);
   }
 }
