@@ -61,13 +61,15 @@ RSpec.describe Surveyor do
         let(:other_organization) { create(:organization) }
 
         before do
-          other_organization.contacts.create(person: contact.person)
+          other_contact = other_organization.contacts.create(person: contact.person)
+          IceBreaker.call(other_contact)
         end
 
         context 'multiple organizations' do
           context 'current organization having multiple accounts' do
             before do
-              create(:account, organization: organization)
+              account = create(:account, organization: organization)
+              GlacierBreaker.call(account)
             end
 
             it 'sends an email to each account on the current organization' do
@@ -76,14 +78,15 @@ RSpec.describe Surveyor do
               }.to have_enqueued_job(ActionMailer::DeliveryJob)
                 .with { |mailer, mailer_method, *_args|
                      expect(mailer).to eq('NotificationMailer')
-                     expect(mailer_method).to eq('caregiver_ready_for_review')
+                     expect(mailer_method).to eq('contact_ready_for_review')
                    }.exactly(2).times
             end
           end
 
           context 'other organization having multiple accounts' do
             before do
-              create(:account, organization: other_organization)
+              account = create(:account, organization: other_organization)
+              GlacierBreaker.call(account)
             end
 
             it 'does not send an email to the other accounts' do
@@ -92,7 +95,7 @@ RSpec.describe Surveyor do
               }.to have_enqueued_job(ActionMailer::DeliveryJob)
                 .with { |mailer, mailer_method, *_args|
                      expect(mailer).to eq('NotificationMailer')
-                     expect(mailer_method).to eq('caregiver_ready_for_review')
+                     expect(mailer_method).to eq('contact_ready_for_review')
                    }.exactly(1).times
             end
           end
@@ -202,13 +205,15 @@ RSpec.describe Surveyor do
           let(:other_organization) { create(:organization) }
 
           before do
-            other_organization.contacts.create(person: contact.person)
+            other_contact = other_organization.contacts.create(person: contact.person)
+            IceBreaker.call(other_contact)
           end
 
           context 'multiple organizations' do
             context 'current organization having multiple accounts' do
               before do
-                create(:account, organization: organization)
+                account = create(:account, organization: organization)
+                GlacierBreaker.call(account)
               end
 
               it 'sends an email to each account on both organizations' do
@@ -217,7 +222,7 @@ RSpec.describe Surveyor do
                 }.to have_enqueued_job(ActionMailer::DeliveryJob)
                   .with { |mailer, mailer_method, *_args|
                        expect(mailer).to eq('NotificationMailer')
-                       expect(mailer_method).to eq('caregiver_ready_for_review')
+                       expect(mailer_method).to eq('contact_ready_for_review')
                      }.exactly(3).times
               end
             end

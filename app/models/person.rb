@@ -3,8 +3,7 @@ class Person < ApplicationRecord
   has_one :candidacy
   has_one :account, inverse_of: :person
   has_many :contacts
-  has_many :organizations, through: :contacts
-  has_many :accounts, through: :organizations
+  has_many :conversations, through: :contacts
   has_many :sent_messages,
            class_name: 'Message', foreign_key: :sender_id, inverse_of: :sender
   has_many :received_messages, class_name: 'Message',

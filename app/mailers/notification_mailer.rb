@@ -1,7 +1,13 @@
 class NotificationMailer < ApplicationMailer
-  def caregiver_ready_for_review(account, contact)
-    @contact = contact
+  def contact_ready_for_review(conversation)
+    @conversation = conversation
 
-    mail(to: account.email)
+    mail(to: conversation.account.email)
+  end
+
+  def contact_waiting(conversation)
+    @conversation = conversation
+
+    mail(to: conversation.account.email)
   end
 end
