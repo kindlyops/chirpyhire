@@ -21,6 +21,6 @@ class ContactWaiting
   end
 
   def more_recent_unread_receipts?
-    conversation.read_receipts.unread.after?(read_receipt).exists?
+    conversation.read_receipts.unread.after(read_receipt).exists?
   end
 end

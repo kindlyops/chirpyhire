@@ -17,7 +17,7 @@ class ReadReceipt < ApplicationRecord
     where(read_at: nil)
   end
 
-  def self.after?(receipt)
+  def self.after(receipt)
     where('created_at > ?', receipt.created_at)
   end
 
