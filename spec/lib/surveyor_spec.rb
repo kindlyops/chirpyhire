@@ -5,6 +5,7 @@ RSpec.describe Surveyor do
 
   describe '#start' do
     let(:contact) { create(:contact) }
+    let(:organization) { contact.organization }
     let(:candidacy) { contact.person.candidacy }
 
     before do
@@ -14,6 +15,88 @@ RSpec.describe Surveyor do
     context 'candidacy already in progress' do
       before do
         candidacy.update(contact: contact, state: :in_progress)
+      end
+
+      it 'does not change the candidacy contact' do
+        allow(subject.survey).to receive(:ask)
+
+        expect {
+          subject.start
+        }.not_to change { candidacy.reload.contact }
+      end
+
+      it 'does not change the candidacy state' do
+        allow(subject.survey).to receive(:ask)
+
+        expect {
+          subject.start
+        }.not_to change { candidacy.reload.state }
+      end
+
+      it 'does not ask a question in the survey' do
+        expect(subject.survey).not_to receive(:ask)
+
+        subject.start
+      end
+
+      it 'does not send a message' do
+        expect(subject).not_to receive(:send_message)
+
+        subject.start
+      end
+
+      it 'does not call ReadReceiptsCreator' do
+        expect(ReadReceiptsCreator).not_to receive(:call)
+
+        subject.start
+      end
+    end
+
+    context 'candidacy completed' do
+      before do
+        candidacy.update(contact: contact, state: :complete)
+      end
+
+      context 'subscribed to multiple organizations' do
+        let(:other_organization) { create(:organization) }
+
+        before do
+          other_organization.contacts.create(person: contact.person)
+        end
+
+        context 'multiple organizations' do
+          context 'current organization having multiple accounts' do
+            before do
+              create(:account, organization: organization)
+            end
+
+            it 'sends an email to each account on the current organization' do
+              expect {
+                subject.start
+              }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                .with { |mailer, mailer_method, *_args|
+                     expect(mailer).to eq('NotificationMailer')
+                     expect(mailer_method).to eq('caregiver_ready_for_review')
+                   }.exactly(2).times
+            end
+          end
+
+          context 'other organization having multiple accounts' do
+            before do
+              create(:account, organization: other_organization)
+            end
+
+            it 'does not send an email to the other accounts' do
+              expect {
+                subject.start
+              }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                .with { |mailer, mailer_method, *_args|
+                     expect(mailer).to eq('NotificationMailer')
+                     expect(mailer_method).to eq('caregiver_ready_for_review')
+                   }.exactly(1).times
+            end
+          end
+        end
       end
 
       it 'does not change the candidacy contact' do
@@ -85,6 +168,7 @@ RSpec.describe Surveyor do
   describe '#consider_answer' do
     let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
     let(:contact) { candidacy.contact }
+    let(:organization) { contact.organization }
 
     before do
       IceBreaker.call(contact)
@@ -112,6 +196,32 @@ RSpec.describe Surveyor do
           expect(ReadReceiptsCreator).not_to receive(:call)
 
           subject.consider_answer(inquiry, message)
+        end
+
+        context 'subscribed to multiple organizations' do
+          let(:other_organization) { create(:organization) }
+
+          before do
+            other_organization.contacts.create(person: contact.person)
+          end
+
+          context 'multiple organizations' do
+            context 'current organization having multiple accounts' do
+              before do
+                create(:account, organization: organization)
+              end
+
+              it 'sends an email to each account on both organizations' do
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                  .with { |mailer, mailer_method, *_args|
+                       expect(mailer).to eq('NotificationMailer')
+                       expect(mailer_method).to eq('caregiver_ready_for_review')
+                     }.exactly(3).times
+              end
+            end
+          end
         end
       end
 
