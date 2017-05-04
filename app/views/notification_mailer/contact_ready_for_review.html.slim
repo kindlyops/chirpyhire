@@ -1,1 +1,22 @@
-h1 Foo
+table.body-wrap 
+  tbody
+    tr
+      td 
+        p
+          ' Hi
+          = @conversation.account.first_name
+          ',
+          |
+        p
+          | A new caregiver is waiting for you to chat with them.
+        p.callout
+          = link_to 'Chat with Caregiver', message_url(@conversation.contact), class: 'btn', target: '_blank'
+        p Keep on caring on,
+        p The ChirpyHire Team
+        br
+        p
+          | P.S. -- 
+        p 
+          .ps Did you know that texting in the hiring process can lead to conversion rates of 100%?
+          small
+            a href="http://pages.velocify.com/rs/leads360/images/Text-Messaging-for-Better-Sales-Conversion.pdf" target="_blank" (Velocify)

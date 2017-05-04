@@ -162,6 +162,8 @@ GEM
       after_commit_action (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    css_parser (1.5.0)
+      addressable
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.2.1)
@@ -201,6 +203,7 @@ GEM
     haml (4.0.7)
       tilt
     hashdiff (0.3.4)
+    htmlentities (4.3.4)
     i18n (0.8.1)
     inline_svg (0.11.1)
       activesupport (>= 4.0)
@@ -270,6 +273,13 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
+    premailer (1.10.3)
+      addressable
+      css_parser (>= 1.4.10)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.6)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     pretender (0.2.1)
       actionpack
     pry (0.10.4)
@@ -473,11 +483,13 @@ DEPENDENCIES
   listen (~> 3.0.5)
   meta_request (~> 0.4.0)
   nav_lynx (~> 1.1.1)
+  nokogiri (~> 1.7.1)
   paperclip (~> 5.1.0)
   paranoia (~> 2.3)
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
+  premailer-rails (~> 1.9.6)
   pretender (~> 0.2.1)
   pry-byebug
   pry-rails
