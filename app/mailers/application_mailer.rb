@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'hello@chirpyhire.com'
+  default from: '"ChirpyHire" <notifications@chirpyhire.com>'
   layout 'mailer'
 end
