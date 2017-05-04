@@ -116,11 +116,8 @@ function initLocationSearch() {
       var isTabOrEnter = keyCode === 13 || keyCode === 9;
       var isSearching = isTabOrEnter && noneSelected && !e.triggered;
 
-      if(isTabOrEnter) {
-        e.preventDefault();
-      }
-
       if(isSearching) {
+        e.preventDefault();
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
       }
