@@ -105,6 +105,11 @@ GEM
     after_commit_action (1.0.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
+    ahoy_email (0.5.0)
+      addressable
+      nokogiri
+      rails
+      safely_block (>= 0.1.1)
     arel (7.1.4)
     ast (2.3.0)
     autoprefixer-rails (6.7.7.2)
@@ -186,6 +191,7 @@ GEM
       activemodel-serializers-xml (~> 1.0)
       activesupport (~> 5.0)
       request_store (~> 1.0)
+    errbase (0.0.3)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -375,6 +381,8 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
+    safely_block (0.2.0)
+      errbase
     sass-listen (3.0.7)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -456,6 +464,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ahoy_email (~> 0.5.0)
   aws-sdk (~> 2.8.5)
   better_errors
   binding_of_caller
