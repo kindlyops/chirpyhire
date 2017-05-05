@@ -360,11 +360,5 @@ $colors: (first: 1, second: 2, third: 3, fourth: 4, fifth: 5,
     $background-color: adjust-hue($background-color, ($number - 1) * 36%);
     background-color: $background-color;
     $foreground-color: darken(desaturate(adjust-hue($background-color, -1deg), 2), 26);
-
-    @each $pattern in $patterns {
-      &.hp-#{$pattern} {
-        @include mixin("hp-#{$pattern}", $foreground-color);
-      }
-    }
   }
 }
