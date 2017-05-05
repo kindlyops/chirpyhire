@@ -105,6 +105,11 @@ GEM
     after_commit_action (1.0.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
+    ahoy_email (0.5.0)
+      addressable
+      nokogiri
+      rails
+      safely_block (>= 0.1.1)
     arel (7.1.4)
     ast (2.3.0)
     autoprefixer-rails (6.7.7.2)
@@ -162,6 +167,8 @@ GEM
       after_commit_action (~> 1.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    css_parser (1.5.0)
+      addressable
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     devise (4.2.1)
@@ -184,6 +191,7 @@ GEM
       activemodel-serializers-xml (~> 1.0)
       activesupport (~> 5.0)
       request_store (~> 1.0)
+    errbase (0.0.3)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -201,6 +209,7 @@ GEM
     haml (4.0.7)
       tilt
     hashdiff (0.3.4)
+    htmlentities (4.3.4)
     i18n (0.8.1)
     inline_svg (0.11.1)
       activesupport (>= 4.0)
@@ -270,6 +279,13 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
+    premailer (1.10.3)
+      addressable
+      css_parser (>= 1.4.10)
+      htmlentities (>= 4.0.0)
+    premailer-rails (1.9.6)
+      actionmailer (>= 3, < 6)
+      premailer (~> 1.7, >= 1.7.9)
     pretender (0.2.1)
       actionpack
     pry (0.10.4)
@@ -365,6 +381,8 @@ GEM
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
+    safely_block (0.2.0)
+      errbase
     sass-listen (3.0.7)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -446,6 +464,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ahoy_email (~> 0.5.0)
   aws-sdk (~> 2.8.5)
   better_errors
   binding_of_caller
@@ -473,11 +492,13 @@ DEPENDENCIES
   listen (~> 3.0.5)
   meta_request (~> 0.4.0)
   nav_lynx (~> 1.1.1)
+  nokogiri (~> 1.7.1)
   paperclip (~> 5.1.0)
   paranoia (~> 2.3)
   pg (~> 0.15)
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.10.0)
+  premailer-rails (~> 1.9.6)
   pretender (~> 0.2.1)
   pry-byebug
   pry-rails

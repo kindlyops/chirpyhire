@@ -8,9 +8,20 @@ class ReadReceiptsCreator
     new(message, organization).call
   end
 
+  def self.wait_until
+    2.minutes.from_now
+  end
+
+  def wait_until
+    self.class.wait_until
+  end
+
   def call
     organization.conversations.contact(contact).find_each do |conversation|
-      conversation.read_receipts.find_or_create_by!(message: message)
+      receipt = conversation.read_receipts.find_by(message: message)
+      next if receipt.present?
+
+      create_read_receipt(conversation)
     end
 
     broadcast_sidebar
@@ -18,6 +29,15 @@ class ReadReceiptsCreator
 
   def contact
     organization.contacts.find_by(person: message.sender)
+  end
+
+  def create_read_receipt(conversation)
+    receipt = conversation.read_receipts.create!(message: message)
+    contact_waiting_job.perform_later(conversation, receipt)
+  end
+
+  def contact_waiting_job
+    ContactWaitingJob.set(wait_until: wait_until)
   end
 
   def broadcast_sidebar

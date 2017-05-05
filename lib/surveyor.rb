@@ -4,10 +4,12 @@ class Surveyor
   end
 
   def start
-    return unless candidacy.pending?
-
-    lock_candidacy
-    survey.ask
+    if candidacy.complete?
+      notify_contact_ready_for_review(organization.conversations)
+    elsif candidacy.pending?
+      lock_candidacy
+      survey.ask
+    end
   end
 
   def consider_answer(inquiry, message)
@@ -35,6 +37,7 @@ class Surveyor
   def complete_survey(message)
     update_candidacy(message)
     survey.complete
+    notify_contact_ready_for_review(contact.person.conversations)
   end
 
   def send_message(message)
@@ -54,6 +57,12 @@ class Surveyor
 
   def lock_candidacy
     candidacy.update!(contact: contact, state: :in_progress)
+  end
+
+  def notify_contact_ready_for_review(conversations)
+    conversations.find_each do |conversation|
+      NotificationMailer.contact_ready_for_review(conversation).deliver_later
+    end
   end
 
   attr_reader :contact

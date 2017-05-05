@@ -13,10 +13,39 @@ RSpec.describe ReadReceiptsCreator do
       let!(:conversations) { accounts.map { |a| a.conversations.create(contact: contact) } }
       let(:count) { organization.conversations.count }
 
-      it 'creates a read receipt for each conversation in the organization' do
-        expect {
+      context 'and the read receipts do not exist' do
+        it 'creates a read receipt for each conversation in the organization' do
+          expect {
+            subject.call
+          }.to change { ReadReceipt.count }.by(count)
+        end
+
+        it 'creates a ContactWaitingJob for each conversation in the organization' do
+          wait_until = 2.minutes.from_now
+          allow(ReadReceiptsCreator).to receive(:wait_until).and_return(wait_until)
+
+          expect {
+            subject.call
+          }.to have_enqueued_job(ContactWaitingJob).at(wait_until).exactly(count).times
+        end
+      end
+
+      context 'and the read receipts exist already' do
+        before do
           subject.call
-        }.to change { ReadReceipt.count }.by(count)
+        end
+
+        it 'does not create a read receipt' do
+          expect {
+            subject.call
+          }.not_to change { ReadReceipt.count }
+        end
+
+        it 'does not creates a ContactWaitingJob' do
+          expect {
+            subject.call
+          }.not_to have_enqueued_job(ContactWaitingJob)
+        end
       end
     end
 

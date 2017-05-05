@@ -1,0 +1,81 @@
+@import "base/custom";
+@import "email/base";
+
+.email {
+  background-color: rgb(255,255,255);
+  a {
+    color: $brand-primary;
+  }
+
+  .btn {
+    background-color: $brand-primary;
+    color: #FFF !important;
+  }
+
+  .chirpyhire-icon {
+    padding: 0.2rem 1.35rem;
+    display: inline-block;
+    border: 2px solid $brand-primary;
+    color: $brand-primary;
+    border-radius: 4px;
+    box-shadow: -2px 2px 7px -4px rgba(0,0,0,0.75);
+    font-weight: 800;
+    font-size: 3rem;
+  }
+
+  .main-wrapper {
+    padding: 20px 0px;
+    margin: 0px auto;
+    max-width: 600px;
+  }
+
+  .header-wrap {
+    width: 80%;
+    margin: 0px auto;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgb(218,218,218);
+    
+    td {
+      text-align: center;
+    }
+  }
+
+  .body-wrap {
+    width: 80%;
+    margin: 30px auto 0px;
+    font-size: 16px;
+
+    td {
+      color: rgb(102,106,122);
+      line-height: 22px;
+
+      .ps {
+        line-height: 2rem;
+      }
+
+      p {
+        margin-bottom: 12px;
+
+        strong {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .footer-wrap {
+    width: 80%;
+    margin: 30px auto;
+    border-top: 1px dashed rgb(218,218,218);
+
+    td {
+      color: rgb(168,168,168);
+      padding-top: 15px;
+
+      p {
+        font-size: 12px;
+        text-align: left;
+      }
+    }
+  }
+}
