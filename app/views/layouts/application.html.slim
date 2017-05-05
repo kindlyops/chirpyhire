@@ -3,6 +3,7 @@ html
   head
     = render partial: "layouts/head"
   body class==(content_for?(:body_class) ? content_for(:body_class) : '')
+    = render "layouts/google_tag_manager/no_script"
     = render "components/navigation"
     div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
       .row
