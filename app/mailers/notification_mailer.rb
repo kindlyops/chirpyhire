@@ -1,5 +1,4 @@
 class NotificationMailer < ApplicationMailer
-
   def contact_ready_for_review(conversation)
     @conversation = conversation
 
