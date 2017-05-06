@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+
   def new
     super do |account|
       account.build_organization

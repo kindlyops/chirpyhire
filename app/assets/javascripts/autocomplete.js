@@ -111,7 +111,7 @@ function initLocationSearch() {
       $address.val(address);
       input.data('address', address);
       var $locationSearch = $('#location-search');
-      $locationSearch.removeClass('has-danger');
+      $locationSearch.removeClass('has-warning');
       $locationSearch.find('.form-control-feedback').remove();
     });
 
@@ -126,7 +126,7 @@ function initLocationSearch() {
       var input = $locationSearch.find('input');
       if (input.val() && missingLocation(input)) {
         e.preventDefault();
-        $locationSearch.addClass('has-danger');
+        $locationSearch.addClass('has-warning');
         $locationSearch.find('.form-control-feedback').remove();
         $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
       }
