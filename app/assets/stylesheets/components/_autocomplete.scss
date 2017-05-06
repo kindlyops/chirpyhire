@@ -2,10 +2,8 @@
   z-index: 1030;
 
   &.zipcode-search {
-    // left: 17px !important;
-    // width: 330px !important;
     left: 222px !important;
-    width: 340px !important;
+    width: 323px !important;
   }
 
   .pac-item {
@@ -35,6 +33,6 @@
       border-color: lighten($brand-primary, 25%);
     }
 
-    width: 450px;
+    width: 485px;
   }
 }
