@@ -9,7 +9,10 @@ class Organization < ApplicationRecord
   has_one :ideal_candidate
   has_one :recruiting_ad
   has_one :location
-  accepts_nested_attributes_for :location, reject_if: :all_blank
+  validates_associated :location
+  validates :location, presence: true
+  accepts_nested_attributes_for :location,
+                                reject_if: ->(l) { l.values.any?(&:blank?) }
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },

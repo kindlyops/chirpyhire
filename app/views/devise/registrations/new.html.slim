@@ -27,15 +27,15 @@
             strong = label_tag :address, 'Organization location', class: 'col-form-label'
             = text_field_tag :address, nil, required: true, placeholder: 'Local office address', class: 'form-control'
             small.form-text.text-muted We use your address to find a local phone number for your ChirpyHire account.
-          = l.hidden_field :latitude, required: true
-          = l.hidden_field :longitude, required: true
-          = l.hidden_field :full_street_address, required: true
-          = l.hidden_field :city, required: true
-          = l.hidden_field :state, required: true
-          = l.hidden_field :state_code, required: true
-          = l.hidden_field :postal_code, required: true
-          = l.hidden_field :country, required: true
-          = l.hidden_field :country_code, required: true
+          = l.hidden_field :latitude
+          = l.hidden_field :longitude
+          = l.hidden_field :full_street_address
+          = l.hidden_field :city
+          = l.hidden_field :state
+          = l.hidden_field :state_code
+          = l.hidden_field :postal_code
+          = l.hidden_field :country
+          = l.hidden_field :country_code
       hr
       .form-group.mt-3
         small.form-text.text-muted.mb-2
@@ -43,7 +43,7 @@
           a target="_blank" href="https://www.chirpyhire.com/terms" Terms
           '  and accept our
           a target="_blank" href="https://www.chirpyhire.com/terms" Privacy Policy.
-        = f.submit "Create an account", class: "btn-lg btn-block btn btn-primary", role: "button"
+        = button_tag "Create an account", class: "btn-lg btn-block btn btn-primary", role: "button", type: "submit"
 .text-center.mt-4.mb-3
   span Already have an account?
   '

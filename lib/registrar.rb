@@ -4,6 +4,7 @@ class Registrar
   end
 
   def register
+    return unless account.persisted?
     organization.update(recruiter: account)
     create_ideal_candidate
     provision_phone_number
