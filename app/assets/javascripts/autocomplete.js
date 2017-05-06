@@ -60,6 +60,10 @@ function initZipcodeSearch() {
       }
     });
 
+    var isClick;
+    $(document).on('click', '.pac-item', function() { isClick = true; });
+    $(document).on('keydown', '.pac-item', function() { isClick = false; });
+
     $(document).on('submit', 'form.zipcode-search-form', function(e) {
       e.preventDefault();
     });
@@ -107,8 +111,51 @@ function initLocationSearch() {
       var country = R.find(R.where({types: R.contains('country')}), place.address_components);
       $country.val(country.long_name);
       $country_code.val(country.short_name);
-      $address.val(R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', '));
+      var address = R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', ');
+      $address.val(address);
+      input.data('address', address);
     });
+
+    function missingLocation() {
+      return R.and(R.all(function(field) {
+        return $(field).val() !== "";
+      }, $("#new_account input[name*='account']:not([name*='location']")),
+      R.any(function(field) {
+        return $(field).val() === "";
+      }, $("#new_account input[name*='account'][name*='location']"))
+      );
+    }
+
+    $(document).on('submit', '#new_account', function(e) {
+      debugger;
+      if(missingLocation()) {
+        e.preventDefault();
+        $locationSearch = $('#location-search');
+        $locationSearch.addClass('has-danger');
+
+        $locationSearch.find('.form-control-feedback').remove();
+        if($locationSearch.find('input').val() === '') {
+          $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+        } else {
+          $locationSearch.append('<div class="form-control-feedback">Please select an address from the dropdown.</div>');
+        }
+      }
+    });
+
+    // $(document).on('click', '#new_account input[type="submit"]', function(e) {
+    //   if(missingLocation()) {
+    //     e.preventDefault();
+    //     $locationSearch = $('#location-search');
+    //     $locationSearch.addClass('has-danger');
+
+    //     $locationSearch.find('.form-control-feedback').remove();
+    //     if($locationSearch.find('input').val() === '') {
+    //       $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+    //     } else {
+    //       $locationSearch.append('<div class="form-control-feedback">Please select an address from the dropdown.</div>');
+    //     }
+    //   }
+    // });
 
     google.maps.event.addDomListener(input[0], 'keydown', function(e){
       var keyCode = e.keyCode || e.which;
@@ -118,16 +165,6 @@ function initLocationSearch() {
 
       if(isSearching) {
         e.preventDefault();
-        google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
-        google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
-      }
-    });
-
-    google.maps.event.addDomListener(input[0], 'focusout', function(e){
-      var noneSelected = $('.pac-item-selected').length === 0;
-      var isSearching = noneSelected && !e.triggered;
-
-      if(isSearching) {
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
       }
