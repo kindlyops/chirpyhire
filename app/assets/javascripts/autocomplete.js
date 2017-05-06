@@ -60,10 +60,6 @@ function initZipcodeSearch() {
       }
     });
 
-    var isClick;
-    $(document).on('click', '.pac-item', function() { isClick = true; });
-    $(document).on('keydown', '.pac-item', function() { isClick = false; });
-
     $(document).on('submit', 'form.zipcode-search-form', function(e) {
       e.preventDefault();
     });
@@ -73,8 +69,7 @@ function initZipcodeSearch() {
 }
 
 function initLocationSearch() {
-  var $locationSearch = $('#location-search');
-  var input = $locationSearch.find('input:not([loaded])');
+  var input = $('#location-search input:not([loaded])');
 
   if(input.length && typeof google !== "undefined") {
 
@@ -126,7 +121,7 @@ function initLocationSearch() {
       }, $("#new_account input[name*='account'][name*='location']")));
     }
 
-    $(document).on('focusout', input, function(e) {
+    function validateLocation(e) {
       var $locationSearch = $('#location-search');
       var input = $locationSearch.find('input');
       if (input.val() && missingLocation(input)) {
@@ -135,18 +130,11 @@ function initLocationSearch() {
         $locationSearch.find('.form-control-feedback').remove();
         $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
       }
-    });
+    }
+    
+    $(document).on('focusout', input, validateLocation.bind(this));
 
-    $(document).on('click', '#new_account button[type="submit"]', function(e) {
-      var $locationSearch = $('#location-search');
-      var input = $locationSearch.find('input');
-      if (input.val() && missingLocation(input)) {
-        e.preventDefault();
-        $locationSearch.addClass('has-danger');
-        $locationSearch.find('.form-control-feedback').remove();
-        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
-      }
-    });
+    $(document).on('click', '#new_account button[type="submit"]', validateLocation.bind(this));
 
     google.maps.event.addDomListener(input[0], 'keydown', function(e){
       var keyCode = e.keyCode || e.which;
