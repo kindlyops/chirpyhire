@@ -1,0 +1,7 @@
+en:
+  admin:
+    actions:
+      impersonate:
+        title: 'Impersonation'
+        menu: 'Impersonate'
+        breadcrumb: 'Impersonate'
