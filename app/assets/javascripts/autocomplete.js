@@ -73,7 +73,8 @@ function initZipcodeSearch() {
 }
 
 function initLocationSearch() {
-  var input = $('#location-search input:not([loaded])');
+  var $locationSearch = $('#location-search');
+  var input = $locationSearch.find('input:not([loaded])');
 
   if(input.length && typeof google !== "undefined") {
 
@@ -82,10 +83,10 @@ function initLocationSearch() {
       types: ['address']
     };
 
-    var locationSearch = new google.maps.places.Autocomplete(input[0], options);
+    var autocomplete = new google.maps.places.Autocomplete(input[0], options);
 
-    locationSearch.addListener('place_changed', function() {
-      var place = locationSearch.getPlace();
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
       var $form = $('form#new_account');
       var $latitude = $form.find('#account_organization_attributes_location_attributes_latitude');
       var $longitude = $form.find('#account_organization_attributes_location_attributes_longitude');
@@ -114,48 +115,38 @@ function initLocationSearch() {
       var address = R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', ');
       $address.val(address);
       input.data('address', address);
+      var $locationSearch = $('#location-search');
+      $locationSearch.removeClass('has-danger');
+      $locationSearch.find('.form-control-feedback').remove();
     });
 
-    function missingLocation() {
-      return R.and(R.all(function(field) {
-        return $(field).val() !== "";
-      }, $("#new_account input[name*='account']:not([name*='location']")),
-      R.any(function(field) {
+    function missingLocation(input) {
+      return R.or(input.data('address') !== input.val(), R.any(function(field) {
         return $(field).val() === "";
-      }, $("#new_account input[name*='account'][name*='location']"))
-      );
+      }, $("#new_account input[name*='account'][name*='location']")));
     }
 
-    $(document).on('submit', '#new_account', function(e) {
-      debugger;
-      if(missingLocation()) {
+    $(document).on('focusout', input, function(e) {
+      var $locationSearch = $('#location-search');
+      var input = $locationSearch.find('input');
+      if (input.val() && missingLocation(input)) {
         e.preventDefault();
-        $locationSearch = $('#location-search');
         $locationSearch.addClass('has-danger');
-
         $locationSearch.find('.form-control-feedback').remove();
-        if($locationSearch.find('input').val() === '') {
-          $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
-        } else {
-          $locationSearch.append('<div class="form-control-feedback">Please select an address from the dropdown.</div>');
-        }
+        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
       }
     });
 
-    // $(document).on('click', '#new_account input[type="submit"]', function(e) {
-    //   if(missingLocation()) {
-    //     e.preventDefault();
-    //     $locationSearch = $('#location-search');
-    //     $locationSearch.addClass('has-danger');
-
-    //     $locationSearch.find('.form-control-feedback').remove();
-    //     if($locationSearch.find('input').val() === '') {
-    //       $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
-    //     } else {
-    //       $locationSearch.append('<div class="form-control-feedback">Please select an address from the dropdown.</div>');
-    //     }
-    //   }
-    // });
+    $(document).on('click', '#new_account button[type="submit"]', function(e) {
+      var $locationSearch = $('#location-search');
+      var input = $locationSearch.find('input');
+      if (input.val() && missingLocation(input)) {
+        e.preventDefault();
+        $locationSearch.addClass('has-danger');
+        $locationSearch.find('.form-control-feedback').remove();
+        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+      }
+    });
 
     google.maps.event.addDomListener(input[0], 'keydown', function(e){
       var keyCode = e.keyCode || e.which;
