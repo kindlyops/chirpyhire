@@ -1,4 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: '"ChirpyHire" <notifications@chirpyhire.com>'
   layout 'mailer'
+  helper MailerHelper
 end

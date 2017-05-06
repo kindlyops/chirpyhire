@@ -1,7 +1,8 @@
 class Location < ApplicationRecord
   belongs_to :organization
 
-  validates :state, length: { is: 2 }
+  validates :latitude, presence: true
+  validates :longitude, presence: true
   validates :state_code, length: { is: 2 }
   validates :postal_code, length: { minimum: 5 }
 

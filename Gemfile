@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'jbuilder'
-gem 'turbolinks', '~> 5.0.0'
+gem 'turbolinks', '~> 5.0.1'
 
 group :development, :test, :demo do
   gem 'factory_girl_rails', '~> 4.0'
@@ -88,7 +88,6 @@ gem 'rails_admin', '~> 1.1.1'
 gem 'json', '~> 2.1.0'
 gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
-gem 'geocoder', '~> 1.4.3'
 gem 'zip-codes', '~> 0.2.1'
 gem 'kaminari', '~> 0.17.0'
 gem 'nav_lynx', '~> 1.1.1'
@@ -97,6 +96,9 @@ gem 'aws-sdk', '~> 2.8.5'
 gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch: 'rearchitect-gem'
 gem 'counter_culture', '~> 1.5.1'
 gem 'paranoia', '~> 2.3'
+gem 'premailer-rails', '~> 1.9.6'
+gem 'nokogiri', '~> 1.7.1'
+gem 'ahoy_email', '~> 0.5.0'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'

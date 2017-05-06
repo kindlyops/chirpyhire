@@ -1,7 +1,12 @@
 .pac-container {
   z-index: 1030;
-  left: 222px !important;
-  width: 340px !important;
+
+  &.zipcode-search {
+    // left: 17px !important;
+    // width: 330px !important;
+    left: 222px !important;
+    width: 340px !important;
+  }
 
   .pac-item {
     &:hover {
@@ -10,7 +15,7 @@
   }
 }
 
-#location-autocomplete {
+#zipcode-search {
   width: 150px;
   transition: all .5s ease;
 

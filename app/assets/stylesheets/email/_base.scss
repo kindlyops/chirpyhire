@@ -1,0 +1,157 @@
+  /* -------------------------------------
+  GLOBAL
+  ------------------------------------- */
+  * {
+    margin:0;
+    padding:0;
+  }
+  * { font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+
+  img {
+    max-width: 100%;
+  }
+  .collapse {
+    margin:0;
+    padding:0;
+  }
+  body {
+    -webkit-font-smoothing:antialiased;
+    -webkit-text-size-adjust:none;
+    width: 100%!important;
+    height: 100%;
+  }
+
+
+  /* -------------------------------------
+  ELEMENTS
+  ------------------------------------- */
+  .user-customizable-area p { font-size: 16px; margin-top: 12px }
+
+  a, a:visited, a:link { color: #4d9bd7; text-decoration: none;}
+
+  .btn {
+    text-decoration:none;
+    color: #FFF;
+    background-color: #666;
+    padding:10px 16px;
+    font-weight:bold;
+    margin-right:10px;
+    text-align:center;
+    cursor:pointer;
+    display: inline-block;
+  }
+
+  p.callout {
+    padding: 10px 0;
+    margin-bottom: 0px;
+  }
+  .callout a {
+    font-weight:bold;
+    color: #2BA6CB;
+  }
+
+  table.social {
+    /*  padding:15px; */
+    background-color: #ebebeb;
+
+  }
+  .social .soc-btn {
+    padding: 3px 7px;
+    font-size:12px;
+    margin-bottom:10px;
+    text-decoration:none;
+    color: #FFF;font-weight:bold;
+    display:block;
+    text-align:center;
+  }
+  a.fb { background-color: #3B5998!important; }
+  a.tw { background-color: #1daced!important; }
+  a.gp { background-color: #DB4A39!important; }
+  a.ms { background-color: #000!important; }
+
+  .sidebar .soc-btn {
+    display:block;
+    width:100%;
+  }
+
+  /* -------------------------------------
+  BODY
+  ------------------------------------- */
+  table.body-wrap { width: 80%; margin: 20px auto 0;}
+
+
+  /* -------------------------------------
+  FOOTER
+  ------------------------------------- */
+  table.footer-wrap { width: 80%; clear:both!important; margin: 0 auto;}
+  .footer-wrap .container td.content  p { border-top: 1px solid rgb(215,215,215); padding-top:15px;}
+  .footer-wrap .container td.content p {
+    font-size:10px;
+    font-weight: bold;
+
+  }
+
+
+  /* ---------------------------------------------------
+  RESPONSIVENESS
+  Nuke it from orbit. It's the only way to be sure.
+  ------------------------------------------------------ */
+
+  /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
+  .container {
+    display:block!important;
+    max-width:600px!important;
+    margin:0 auto!important; /* makes it centered */
+    clear:both!important;
+  }
+
+  /* This should also be a block element, so that it will fill 100% of the .container */
+  .content {
+    padding:15px;
+    max-width:600px;
+    margin:0 auto;
+    display:block;
+  }
+
+  /* Let's make sure tables in the content area are 100% wide */
+  .content table { width: 100%; }
+
+
+  /* Odds and ends */
+  .column {
+    width: 300px;
+    float:left;
+  }
+  .column tr td { padding: 15px; }
+  .column-wrap {
+    padding:0!important;
+    margin:0 auto;
+    max-width:600px!important;
+  }
+  .column table { width:100%;}
+  .social .column {
+    width: 280px;
+    min-width: 279px;
+    float:left;
+  }
+
+  /* Be sure to place a .clear element after each set of columns, just to be safe */
+  .clear { display: block; clear: both; }
+
+
+  /* -------------------------------------------
+  PHONE
+  For clients that support media queries.
+  Nothing fancy.
+  -------------------------------------------- */
+  @media only screen and (max-width: 600px) {
+
+    a[class="btn"] { display:block!important; margin-bottom:10px!important; background-image:none!important; margin-right:0!important;}
+
+    div[class="column"] { width: auto!important; float:none!important;}
+
+    table.social div[class="column"] {
+      width:auto!important;
+    }
+
+  }

@@ -1,0 +1,22 @@
+table.body-wrap 
+  tbody
+    tr
+      td 
+        p
+          ' Hi
+          = @conversation.account.first_name
+          ',
+          |
+        p
+          | A caregiver is waiting for your reply. Move quick!
+        p.callout
+          = link_to 'Chat with Caregiver', message_url(@conversation.contact), class: 'btn', target: '_blank'
+        p Keep on caring on,
+        p The ChirpyHire Team
+        br
+        p
+          | P.S. -- 
+        p 
+          .ps On average, it takes a person 90 minutes to respond to an email, but it only takes 90 seconds for them to respond to a text message.
+          small
+            a href="https://blog.hubspot.com/blog/tabid/6307/bid/24082/9-Amazing-Mobile-Marketing-Statistics-Every-Marketer-Should-Know.aspx" target="_blank" (CTIA)
