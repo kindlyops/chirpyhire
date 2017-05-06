@@ -131,10 +131,9 @@ function initLocationSearch() {
         $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
       }
     }
-    
-    $(document).on('focusout', input, validateLocation.bind(this));
 
-    $(document).on('click', '#new_account button[type="submit"]', validateLocation.bind(this));
+    $(document).on('focusout', input, validateLocation);
+    $(document).on('click', '#new_account button[type="submit"]', validateLocation);
 
     google.maps.event.addDomListener(input[0], 'keydown', function(e){
       var keyCode = e.keyCode || e.which;
