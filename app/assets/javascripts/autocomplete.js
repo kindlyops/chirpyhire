@@ -60,6 +60,10 @@ function initZipcodeSearch() {
       }
     });
 
+    var isClick;
+    $(document).on('click', '.pac-item', function() { isClick = true; });
+    $(document).on('keydown', '.pac-item', function() { isClick = false; });
+
     $(document).on('submit', 'form.zipcode-search-form', function(e) {
       e.preventDefault();
     });
@@ -69,7 +73,8 @@ function initZipcodeSearch() {
 }
 
 function initLocationSearch() {
-  var input = $('#location-search input:not([loaded])');
+  var $locationSearch = $('#location-search');
+  var input = $locationSearch.find('input:not([loaded])');
 
   if(input.length && typeof google !== "undefined") {
 
@@ -78,10 +83,10 @@ function initLocationSearch() {
       types: ['address']
     };
 
-    var locationSearch = new google.maps.places.Autocomplete(input[0], options);
+    var autocomplete = new google.maps.places.Autocomplete(input[0], options);
 
-    locationSearch.addListener('place_changed', function() {
-      var place = locationSearch.getPlace();
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
       var $form = $('form#new_account');
       var $latitude = $form.find('#account_organization_attributes_location_attributes_latitude');
       var $longitude = $form.find('#account_organization_attributes_location_attributes_longitude');
@@ -107,7 +112,40 @@ function initLocationSearch() {
       var country = R.find(R.where({types: R.contains('country')}), place.address_components);
       $country.val(country.long_name);
       $country_code.val(country.short_name);
-      $address.val(R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', '));
+      var address = R.reject(R.isEmpty, [place.name, city.long_name, state.short_name, postal_code.short_name]).join(', ');
+      $address.val(address);
+      input.data('address', address);
+      var $locationSearch = $('#location-search');
+      $locationSearch.removeClass('has-danger');
+      $locationSearch.find('.form-control-feedback').remove();
+    });
+
+    function missingLocation(input) {
+      return R.or(input.data('address') !== input.val(), R.any(function(field) {
+        return $(field).val() === "";
+      }, $("#new_account input[name*='account'][name*='location']")));
+    }
+
+    $(document).on('focusout', input, function(e) {
+      var $locationSearch = $('#location-search');
+      var input = $locationSearch.find('input');
+      if (input.val() && missingLocation(input)) {
+        e.preventDefault();
+        $locationSearch.addClass('has-danger');
+        $locationSearch.find('.form-control-feedback').remove();
+        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+      }
+    });
+
+    $(document).on('click', '#new_account button[type="submit"]', function(e) {
+      var $locationSearch = $('#location-search');
+      var input = $locationSearch.find('input');
+      if (input.val() && missingLocation(input)) {
+        e.preventDefault();
+        $locationSearch.addClass('has-danger');
+        $locationSearch.find('.form-control-feedback').remove();
+        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+      }
     });
 
     google.maps.event.addDomListener(input[0], 'keydown', function(e){
@@ -118,16 +156,6 @@ function initLocationSearch() {
 
       if(isSearching) {
         e.preventDefault();
-        google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
-        google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
-      }
-    });
-
-    google.maps.event.addDomListener(input[0], 'focusout', function(e){
-      var noneSelected = $('.pac-item-selected').length === 0;
-      var isSearching = noneSelected && !e.triggered;
-
-      if(isSearching) {
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 40 });
         google.maps.event.trigger(input[0], 'keydown', { keyCode: 13, triggered: true });
       }
