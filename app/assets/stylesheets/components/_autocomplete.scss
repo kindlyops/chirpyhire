@@ -14,8 +14,8 @@
 }
 
 #zipcode-search {
-  width: 150px;
   transition: all .5s ease;
+  width: 485px;
 
   .input-group-addon {
     background-color: $white;
@@ -28,11 +28,9 @@
     min-width: 125px;
   }
 
-  &.expanded {
+  &.focused {
     .input-group-addon {
       border-color: lighten($brand-primary, 25%);
     }
-
-    width: 485px;
   }
 }

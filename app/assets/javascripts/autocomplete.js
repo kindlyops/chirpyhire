@@ -177,12 +177,12 @@ $(document).on('turbolinks:load', function() {
     });
     observer.observe(target, { childList: true });
     $(document).on('focusin', '#zipcode-search', function() {
-      $(this).addClass('expanded');
+      $(this).addClass('focused');
       $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
     });
 
     $(document).on('focusout', '#zipcode-search', function() {
-      $(this).removeClass('expanded');
+      $(this).removeClass('focused');
       $(this).find('input').attr('placeholder', 'Anywhere');
     });
 
