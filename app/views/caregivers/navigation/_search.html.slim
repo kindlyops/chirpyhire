@@ -1,11 +1,11 @@
-= form_tag caregivers_path(params.permit(experience: [], availability: [], transportation: [], certification: [])), method: :get, enforce_utf8: false, class: 'zipcode-search-form' do |f|
-  .input-group.mr-3#zipcode-search
-    span.input-group-addon
-      i.fa.fa-search
+.input-group.mr-3#zipcode-search
+  span.input-group-addon
+    i.fa.fa-search
+  = form_tag caregivers_path(params.permit(experience: [], availability: [], transportation: [], certification: [])), method: :get, enforce_utf8: false, class: 'zipcode-search-form' do |f|
     input.form-control placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")
-    .input-group-btn
-      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
-        = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :certification, icon: 'fa-graduation-cap' }
+  .input-group-btn.dropdown
+    = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
+      = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :certification, icon: 'fa-graduation-cap' }
       .dropdown-menu aria-labelledby="certification"
         .dropdown-item
           label.custom-control.custom-checkbox

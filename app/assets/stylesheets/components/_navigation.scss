@@ -6,6 +6,22 @@ nav.navbar.top {
     }
   }
 
+  .dropdown {
+    span.dropdown-label {
+      margin-right: 5px;
+      display: inline-block;
+    }
+    span.description-text {
+      display: inline-block;
+    }
+
+    &.certification {
+      span.description-text {
+        width: 130px;
+      }
+    }
+  }
+
   .nav-link--messages {
     position: relative;
 
