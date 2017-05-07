@@ -176,14 +176,18 @@ $(document).on('turbolinks:load', function() {
       });
     });
     observer.observe(target, { childList: true });
-    $(document).on('focusin', '#zipcode-search', function() {
-      $(this).addClass('focused');
-      $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
+    $(document).on('focusin', '#zipcode-search input', function() {
+      $('#zipcode-search').addClass('focused');
+      $(this).attr('placeholder', 'Search zipcode, city, county, or state');
     });
 
-    $(document).on('focusout', '#zipcode-search', function() {
-      $(this).removeClass('focused');
-      $(this).find('input').attr('placeholder', 'Anywhere');
+    $(document).on('click', '#zipcode-search .dropdown-item', function(e) {
+      e.stopPropagation();
+    });
+
+    $(document).on('focusout', '#zipcode-search input', function() {
+      $('#zipcode-search').removeClass('focused');
+      $(this).attr('placeholder', 'Anywhere');
     });
 
     var input = $('#zipcode-search input');
