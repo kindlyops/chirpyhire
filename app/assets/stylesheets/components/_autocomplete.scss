@@ -15,17 +15,37 @@
 
 #zipcode-search {
   transition: all .5s ease;
-  width: 485px;
+
+  form {
+    display: flex;
+  }
 
   .input-group-addon {
     background-color: $white;
     transition: all .5s ease;
   }
 
-  input {
+  button#certification {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .input-group-btn {
+    &.show {
+      width: 230px;
+    }
+  }
+
+  .search-field {
+    border-right: 0;
+    border-radius: 0;
     transition: all .5s ease;
     border-left: 0;
-    min-width: 125px;
+    width: 180px;
+
+    &.expanded {
+      width: 285px;
+    }
   }
 
   &.focused {
