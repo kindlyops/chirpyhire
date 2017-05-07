@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::SubscriptionsController, type: :controller do
+RSpec.describe Messages::SubscriptionsController, type: :controller do
   let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:phone_number) { '+15555555555' }
 
