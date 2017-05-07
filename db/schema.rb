@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170504235307) do
+ActiveRecord::Schema.define(version: 20170507175031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,17 +212,6 @@ ActiveRecord::Schema.define(version: 20170504235307) do
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id", using: :btree
   end
 
-  create_table "pg_search_documents", force: :cascade do |t|
-    t.text     "content"
-    t.string   "searchable_type"
-    t.integer  "searchable_id"
-    t.integer  "organization_id", null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.index ["organization_id"], name: "index_pg_search_documents_on_organization_id", using: :btree
-    t.index ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
-  end
-
   create_table "read_receipts", force: :cascade do |t|
     t.integer  "conversation_id", null: false
     t.integer  "message_id",      null: false
@@ -274,7 +263,6 @@ ActiveRecord::Schema.define(version: 20170504235307) do
   add_foreign_key "notes", "contacts"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
   add_foreign_key "people", "zipcodes"
-  add_foreign_key "pg_search_documents", "organizations"
   add_foreign_key "read_receipts", "conversations"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"

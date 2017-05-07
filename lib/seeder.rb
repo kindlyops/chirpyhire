@@ -146,21 +146,10 @@ class Seeder
 
   def seed_organization
     @organization = find_or_create_organization
-    seed_location
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: '30341' }]
     )
     puts 'Created Organization'
-  end
-
-  def seed_location
-    organization.location || organization.create_location(
-      latitude: 33.912779, longitude: -84.2975454,
-      full_street_address: full_street_address,
-      city: 'Chamblee', state: 'GA', state_code: 'GA',
-      postal_code: '30341', country: 'United States of America',
-      country_code: 'us'
-    )
   end
 
   def full_street_address
@@ -168,12 +157,34 @@ class Seeder
   end
 
   def find_or_create_organization
-    Organization.find_or_create_by!(
+    found_organization = Organization.find_by(organization_attributes)
+
+    found_organization || create_organization
+  end
+
+  def create_organization
+    attributes = organization_attributes.merge(
+      location_attributes: location_attributes
+    )
+
+    Organization.create!(attributes)
+  end
+
+  def organization_attributes
+    {
       name: ENV.fetch('DEMO_ORGANIZATION_NAME'),
       twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
       phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
-    )
+    }
+  end
+
+  def location_attributes
+    { latitude: 33.912779, longitude: -84.2975454,
+      full_street_address: full_street_address,
+      city: 'Chamblee', state: 'Georgia', state_code: 'GA',
+      postal_code: '30341', country: 'United States of America',
+      country_code: 'us' }
   end
 
   def seed_account
