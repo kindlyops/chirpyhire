@@ -1,8 +1,9 @@
 .pac-container {
   z-index: 1030;
+
   &.zipcode-search {
-    left: 17px !important;
-    width: 330px !important;
+    left: 222px !important;
+    width: 323px !important;
   }
 
   .pac-item {
@@ -13,24 +14,43 @@
 }
 
 #zipcode-search {
-  width: 150px;
   transition: all .5s ease;
+
+  form {
+    display: flex;
+  }
 
   .input-group-addon {
     background-color: $white;
     transition: all .5s ease;
   }
 
-  input {
-    transition: all .5s ease;
-    border-left: 0;
+  button#certification {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
-  &.expanded {
+  .input-group-btn {
+    &.show {
+      width: 230px;
+    }
+  }
+
+  .search-field {
+    border-right: 0;
+    border-radius: 0;
+    transition: all .5s ease;
+    border-left: 0;
+    width: 180px;
+
+    &.expanded {
+      width: 285px;
+    }
+  }
+
+  &.focused {
     .input-group-addon {
       border-color: lighten($brand-primary, 25%);
     }
-
-    width: 330px;
   }
 }

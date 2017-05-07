@@ -176,14 +176,20 @@ $(document).on('turbolinks:load', function() {
       });
     });
     observer.observe(target, { childList: true });
-    $(document).on('focusin', '#zipcode-search', function() {
+    $(document).on('focusin', '#zipcode-search .search-field', function() {
+      $('#zipcode-search').addClass('focused');
       $(this).addClass('expanded');
-      $(this).find('input').attr('placeholder', 'Search zipcode, city, county, or state');
+      $(this).attr('placeholder', 'Search zipcode, city, county, or state');
     });
 
-    $(document).on('focusout', '#zipcode-search', function() {
+    $(document).on('click', '#zipcode-search .dropdown-item', function(e) {
+      e.stopPropagation();
+    });
+
+    $(document).on('focusout', '#zipcode-search .search-field', function() {
+      $('#zipcode-search').removeClass('focused');
       $(this).removeClass('expanded');
-      $(this).find('input').attr('placeholder', 'Anywhere');
+      $(this).attr('placeholder', 'Anywhere');
     });
 
     var input = $('#zipcode-search input');

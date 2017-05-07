@@ -3,6 +3,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
     span.navbar-toggler-icon
   = link_to root_path, class: 'navbar-brand' do
     = inline_svg 'inverse_logo.svg'
+  = render partial: "caregivers/navigation/search"
   #appnav.collapse.navbar-collapse
     ul.navbar-nav.ml-auto.mt-2.mt-md-0
       li.nav-item

@@ -1,8 +1,8 @@
 $(document).on('turbolinks:load', function() {
 
-  var caregiversNav = $('.caregivers-nav:not([loaded])');
+  var navbar = $('nav.navbar.top:not([loaded])');
 
-  if(caregiversNav.length) {
+  if(navbar.length) {
     $(document).on('click', '.apply', function(e) {
       e.preventDefault();
       $form = $(this).closest('form');
@@ -27,6 +27,6 @@ $(document).on('turbolinks:load', function() {
       $form.find('.dropdown-toggle').click();
     });
 
-    caregiversNav.attr('loaded', true);
+    navbar.attr('loaded', true);
   }
 });
