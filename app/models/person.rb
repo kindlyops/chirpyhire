@@ -32,12 +32,20 @@ class Person < ApplicationRecord
     contacts.where(organization: organization).exists?
   end
 
+  def broker_subscribed_to?(broker)
+    broker_contacts.where(broker: broker).exists?
+  end
+
   def actively_subscribed_to?(organization)
     contacts.subscribed.where(organization: organization).exists?
   end
 
   def subscribed_to(organization)
     contacts.find_by(organization: organization)
+  end
+
+  def broker_subscribed_to(broker)
+    broker_contacts.find_by(broker: broker)
   end
 
   def handle

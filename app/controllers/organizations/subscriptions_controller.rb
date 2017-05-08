@@ -1,4 +1,4 @@
-class Messages::SubscriptionsController < Messages::BaseController
+class Organizations::SubscriptionsController < Organizations::BaseController
   before_action :sync_message
 
   def create

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170507233548) do
+ActiveRecord::Schema.define(version: 20170508133014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,20 +71,20 @@ ActiveRecord::Schema.define(version: 20170507233548) do
   end
 
   create_table "broker_contacts", force: :cascade do |t|
-    t.integer  "person_id",                    null: false
-    t.integer  "broker_id",                    null: false
-    t.boolean  "subscribed",    default: true, null: false
+    t.integer  "person_id",                     null: false
+    t.integer  "broker_id",                     null: false
+    t.boolean  "subscribed",    default: false, null: false
     t.datetime "last_reply_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.index ["broker_id"], name: "index_broker_contacts_on_broker_id", using: :btree
     t.index ["person_id", "broker_id"], name: "index_broker_contacts_on_person_id_and_broker_id", unique: true, using: :btree
     t.index ["person_id"], name: "index_broker_contacts_on_person_id", using: :btree
   end
 
   create_table "brokers", force: :cascade do |t|
-    t.string   "twilio_account_sid"
-    t.string   "twilio_auth_token"
+    t.string   "twilio_account_sid", null: false
+    t.string   "twilio_auth_token",  null: false
     t.string   "phone_number"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
@@ -99,12 +99,13 @@ ActiveRecord::Schema.define(version: 20170507233548) do
     t.string   "zipcode"
     t.boolean  "cpr_first_aid"
     t.integer  "certification"
-    t.integer  "person_id",                  null: false
+    t.integer  "person_id",                     null: false
     t.integer  "inquiry"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "contact_id"
-    t.integer  "state",          default: 0, null: false
+    t.integer  "state",             default: 0, null: false
+    t.integer  "broker_contact_id"
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
   end
 

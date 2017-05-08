@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Constraint::Answer do
+RSpec.describe Constraint::Broker::Answer do
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { Constraint::Answer.new }
-  let(:organization) { create(:organization, :phone_number) }
+  let(:constraint) { Constraint::Broker::Answer.new }
+  let(:broker) { create(:broker, :phone_number) }
 
   before do
     allow(request).to receive(:request_parameters).and_return(parameters)
@@ -12,14 +12,14 @@ RSpec.describe Constraint::Answer do
   describe '#matches?' do
     context 'with person present' do
       let(:person) { create(:person, :with_candidacy) }
-      let(:parameters) { { 'From' => person.phone_number, 'To' => organization.phone_number } }
+      let(:parameters) { { 'From' => person.phone_number, 'To' => broker.phone_number } }
 
-      context 'with contact present' do
-        let!(:contact) { create(:contact, person: person, organization: organization) }
+      context 'with broker_contact present' do
+        let!(:broker_contact) { create(:broker_contact, person: person, broker: broker) }
 
         context 'tied to the candidacy' do
           before do
-            person.candidacy.update(contact: contact)
+            person.candidacy.update(broker_contact: broker_contact)
           end
 
           context 'without inquiry' do
@@ -39,9 +39,9 @@ RSpec.describe Constraint::Answer do
           end
         end
 
-        context 'candidacy tied to another contact' do
+        context 'candidacy tied to another broker_contact' do
           before do
-            person.candidacy.update(contact: create(:contact, person: person))
+            person.candidacy.update(broker_contact: create(:broker_contact, person: person))
           end
 
           it 'is false' do
@@ -49,14 +49,14 @@ RSpec.describe Constraint::Answer do
           end
         end
 
-        context 'candidacy not tied to a contact' do
+        context 'candidacy not tied to a broker_contact' do
           it 'is false' do
             expect(constraint.matches?(request)).to eq(false)
           end
         end
       end
 
-      context 'without contact present' do
+      context 'without broker_contact present' do
         it 'is false' do
           expect(constraint.matches?(request)).to eq(false)
         end
@@ -64,7 +64,7 @@ RSpec.describe Constraint::Answer do
     end
 
     context 'without person present' do
-      let(:parameters) { { 'From' => '+14041111111', 'To' => organization.phone_number } }
+      let(:parameters) { { 'From' => '+14041111111', 'To' => broker.phone_number } }
 
       it 'is false' do
         expect(constraint.matches?(request)).to eq(false)

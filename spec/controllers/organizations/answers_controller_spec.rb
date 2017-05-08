@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Messages::AnswersController, type: :controller do
+RSpec.describe Organizations::AnswersController, type: :controller do
   let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:person) { create(:person, :with_candidacy) }
 

@@ -1,4 +1,4 @@
-class Messages::BaseController < ActionController::Base
+class Organizations::BaseController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
@@ -27,7 +27,7 @@ class Messages::BaseController < ActionController::Base
   end
 
   def organization
-    @organization ||= Organization.find_by(phone_number: params['To'])
+    Organization.find_by(phone_number: params['To'])
   end
 
   def create_subscribed_contact

@@ -2,6 +2,7 @@ class Candidacy < ApplicationRecord
   paginates_per 10
   belongs_to :person
   belongs_to :contact, optional: true
+  belongs_to :broker_contact, optional: true
 
   delegate :actively_subscribed_to?, :subscribed_to, :handle,
            :phone_number, :contacts, to: :person

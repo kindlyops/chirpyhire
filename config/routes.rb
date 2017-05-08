@@ -35,10 +35,17 @@ Rails.application.routes.draw do
     end
   end
 
-  post 'twilio/text', to: 'messages/subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'messages/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'messages/answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'messages/base#create'
+  post 'twilio/text', to: 'brokers/subscriptions#create', constraints: Constraint::Broker::OptIn.new
+  post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
+
+  post 'twilio/text', to: 'brokers/subscriptions#destroy', constraints: Constraint::Broker::OptOut.new
+  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
+
+  post 'twilio/text', to: 'brokers/answers#create', constraints: Constraint::Broker::Answer.new
+  post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
+
+  post 'twilio/text' => 'brokers/base#create', constraints: Constraint::Broker.new
+  post 'twilio/text' => 'organizations/base#create'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
   devise_scope :accounts do

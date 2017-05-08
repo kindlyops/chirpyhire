@@ -1,4 +1,4 @@
-class Messages::AnswersController < Messages::BaseController
+class Organizations::AnswersController < Organizations::BaseController
   def create
     SurveyorAnswerJob.perform_later(contact, inquiry, params['MessageSid'])
 

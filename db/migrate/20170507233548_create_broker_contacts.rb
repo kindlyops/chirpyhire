@@ -4,7 +4,7 @@ class CreateBrokerContacts < ActiveRecord::Migration[5.0]
     create_table :broker_contacts do |t|
       t.belongs_to :person, null: false, index: true, foreign_key: true
       t.belongs_to :broker, null: false, index: true, foreign_key: true
-      t.boolean :subscribed, null: false, default: true
+      t.boolean :subscribed, null: false, default: false
       t.datetime :last_reply_at
       t.timestamps
     end

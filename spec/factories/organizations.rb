@@ -10,5 +10,9 @@ FactoryGirl.define do
       account = create(:account, organization: organization)
       organization.update(recruiter: account)
     end
+
+    trait :phone_number do
+      phone_number { Faker::PhoneNumber.cell_phone }
+    end
   end
 end
