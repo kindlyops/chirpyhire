@@ -44,8 +44,8 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'brokers/answers#create', constraints: Constraint::Broker::Answer.new
   post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
 
-  post 'twilio/text' => 'brokers/base#create', constraints: Constraint::Broker.new
-  post 'twilio/text' => 'organizations/base#create'
+  post 'twilio/text' => 'brokers/messages#create', constraints: Constraint::Broker.new
+  post 'twilio/text' => 'organizations/messages#create'
 
   devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
   devise_scope :accounts do

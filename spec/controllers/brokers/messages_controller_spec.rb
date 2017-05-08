@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::BaseController, type: :controller do
-  let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+RSpec.describe Brokers::MessagesController, type: :controller do
+  let!(:broker) { create(:broker, phone_number: Faker::PhoneNumber.cell_phone) }
 
   describe '#create' do
     context 'new person' do
       let(:params) do
         {
-          'To' => organization.phone_number,
+          'To' => broker.phone_number,
           'From' => '+14041234567',
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
@@ -26,10 +26,10 @@ RSpec.describe Organizations::BaseController, type: :controller do
         }.to change { Candidacy.count }.by(1)
       end
 
-      it 'creates a subscribed contact' do
+      it 'creates a subscribed broker_contact' do
         expect {
           post :create, params: params
-        }.to change { Contact.subscribed.count }.by(1)
+        }.to change { BrokerContact.subscribed.count }.by(1)
       end
     end
 
@@ -38,17 +38,17 @@ RSpec.describe Organizations::BaseController, type: :controller do
 
       let(:params) do
         {
-          'To' => organization.phone_number,
+          'To' => broker.phone_number,
           'From' => person.phone_number,
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
         }
       end
 
-      it 'creates a MessageSyncerJob' do
+      it 'creates a BrokerMessageSyncerJob' do
         expect {
           post :create, params: params
-        }.to have_enqueued_job(MessageSyncerJob)
+        }.to have_enqueued_job(BrokerMessageSyncerJob)
       end
 
       it 'does not create a person' do
@@ -63,10 +63,10 @@ RSpec.describe Organizations::BaseController, type: :controller do
         }.not_to change { Candidacy.count }
       end
 
-      it 'creates a subscribed contact' do
+      it 'creates a subscribed broker_contact' do
         expect {
           post :create, params: params
-        }.to change { person.contacts.subscribed.count }.by(1)
+        }.to change { person.broker_contacts.subscribed.count }.by(1)
       end
     end
   end

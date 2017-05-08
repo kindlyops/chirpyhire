@@ -1,4 +1,4 @@
-class Brokers::AnswersController < Brokers::BaseController
+class Brokers::AnswersController < Brokers::MessagesController
   def create
     BrokerSurveyorAnswerJob.perform_later(
       broker_contact,

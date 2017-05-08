@@ -1,4 +1,4 @@
-class Brokers::SubscriptionsController < Brokers::BaseController
+class Brokers::SubscriptionsController < Brokers::MessagesController
   before_action :sync_message
 
   def create

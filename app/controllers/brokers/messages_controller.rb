@@ -1,4 +1,4 @@
-class Brokers::BaseController < ActionController::Base
+class Brokers::MessagesController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
