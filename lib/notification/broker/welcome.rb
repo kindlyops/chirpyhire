@@ -1,14 +1,11 @@
 class Notification::Broker::Welcome < Notification::Broker::Base
   def body
     <<~BODY.strip
-      Hey there! #{sender_notice}
-      Want to join a team of "Chirpy" Caregivers?
-      Well, let's get started.
-      Please tell us more about yourself.
-    BODY
-  end
+      Oh, wow! Excited to help you get work.
+      This is Wayne, CEO of ChirpyHire. And yes, we're always happy!
+      We're here to connect you with local caregiving opportunities.
 
-  def sender_notice
-    'This is Wayne with ChirpyHire'
+      Are you ready? Let's get started.
+    BODY
   end
 end

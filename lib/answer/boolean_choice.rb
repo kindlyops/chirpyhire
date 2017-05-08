@@ -17,8 +17,8 @@ class Answer::BooleanChoice < Answer::MultipleChoice
 
   def choice_map
     {
-      'Yes' => true,
-      'No' => false
+      'Yes, of course!' => true,
+      'No, but I want it to be!' => false
     }
   end
 

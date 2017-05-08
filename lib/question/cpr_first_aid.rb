@@ -5,8 +5,8 @@ class Question::CprFirstAid < Question::MultipleChoice
 
   def choices
     {
-      a: 'Yes',
-      b: 'No'
+      a: 'Yes, of course!',
+      b: 'No, but I want it to be!'
     }
   end
 

@@ -61,7 +61,7 @@ RSpec.describe Answer::Experience do
     end
 
     context 'New to caregiving' do
-      ['0', 'D.', "D\nJazz", "I'm new to caregiving"].each do |body|
+      ['0', 'D.', "D\nJazz", "new to caregiving"].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no_experience' do

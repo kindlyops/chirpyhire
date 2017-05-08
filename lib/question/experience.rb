@@ -8,7 +8,7 @@ class Question::Experience < Question::MultipleChoice
       a: '0 - 1',
       b: '1 - 5',
       c: '6 or more',
-      d: "I'm new to caregiving"
+      d: "I'm new to caregiving! So excited!"
     }
   end
 

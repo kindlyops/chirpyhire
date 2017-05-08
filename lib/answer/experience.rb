@@ -4,7 +4,7 @@ class Answer::Experience < Answer::MultipleChoice
       '0 - 1' => :less_than_one,
       '1 - 5' => :one_to_five,
       '6 or more' => :six_or_more,
-      "I'm new to caregiving" => :no_experience
+      "I'm new to caregiving! So excited!" => :no_experience
     }
   end
 
@@ -46,6 +46,6 @@ class Answer::Experience < Answer::MultipleChoice
   def no_case_variants
     no_variants
       .concat(no_variants.map { |v| "#{v} experience" })
-      .push("I'm new to caregiving".downcase)
+      .push("new to caregiving")
   end
 end

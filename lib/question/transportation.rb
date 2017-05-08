@@ -1,6 +1,6 @@
 class Question::Transportation < Question::MultipleChoice
   def question
-    'Do you have reliable transportation?'
+    'How do you plan to get to work?'
   end
 
   def choices

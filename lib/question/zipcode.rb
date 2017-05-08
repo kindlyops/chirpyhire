@@ -1,7 +1,7 @@
 class Question::Zipcode < Question::Base
   def body
     <<~BODY
-      What is your five-digit zipcode?
+      What is your five-digit zipcode? Let's get you jobs close to home!
     BODY
   end
 

@@ -1,9 +1,7 @@
 class Notification::Broker::ThankYou < Notification::Broker::Base
   def body
     <<~BODY
-      Thanks for your interest in ChirpyHire!
-
-      ...
+      Ok. Great! We're all set. Now, let us get you the right opportunity!
     BODY
   end
 end
