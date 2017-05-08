@@ -18,6 +18,7 @@ class Person < ApplicationRecord
 
   delegate :inquiry, :availability, :experience, :transportation,
            :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
+  delegate :inquiry, to: :broker_candidacy, prefix: true
   delegate :zipcode, to: :candidacy, prefix: true
 
   has_attached_file :avatar,

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Brokers::AnswersController, type: :controller do
   let(:broker) { create(:broker, phone_number: Faker::PhoneNumber.cell_phone) }
-  let(:person) { create(:person, :with_candidacy) }
+  let(:person) { create(:person, :with_broker_candidacy) }
 
   let(:params) do
     {

@@ -1,7 +1,7 @@
 class BrokerContact < ApplicationRecord
   belongs_to :person
   belongs_to :broker
-  delegate :inquiry, to: :person, prefix: true
+  delegate :broker_candidacy_inquiry, to: :person
 
   before_create :set_last_reply_at
 

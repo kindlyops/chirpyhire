@@ -12,6 +12,6 @@ class Brokers::AnswersController < Brokers::MessagesController
   private
 
   def inquiry
-    broker_contact.person_inquiry
+    broker_contact.broker_candidacy_inquiry
   end
 end
