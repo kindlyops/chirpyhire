@@ -1,6 +1,6 @@
 class Question::Experience < Question::MultipleChoice
   def question
-    'How many years of private duty or home-care experience do you have?'
+    'How many years of professional caregiving experience do you have?'
   end
 
   def choices
