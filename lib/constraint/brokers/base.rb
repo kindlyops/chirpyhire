@@ -1,4 +1,4 @@
-class Constraint::Broker < Constraint::Base
+class Constraint::Brokers::Base < Constraint::Base
   def matches?(request)
     @request = request
 

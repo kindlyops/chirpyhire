@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Constraint::Broker::Answer do
+RSpec.describe Constraint::Brokers::Answer do
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { Constraint::Broker::Answer.new }
+  let(:constraint) { Constraint::Brokers::Answer.new }
   let(:broker) { create(:broker) }
 
   before do

@@ -46,6 +46,6 @@ class Answer::Experience < Answer::MultipleChoice
   def no_case_variants
     no_variants
       .concat(no_variants.map { |v| "#{v} experience" })
-      .push("new to caregiving")
+      .push('new to caregiving')
   end
 end

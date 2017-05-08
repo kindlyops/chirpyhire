@@ -1,4 +1,4 @@
-class Constraint::Broker::OptIn < Constraint::Base
+class Constraint::Brokers::OptIn < Constraint::Base
   OPT_IN_RESPONSES = %w(START).freeze
 
   def matches?(request)

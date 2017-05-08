@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Constraint::Broker::OptIn do
+RSpec.describe Constraint::Brokers::OptIn do
   let(:request) { ActionDispatch::Request.new({}) }
-  let(:constraint) { Constraint::Broker::OptIn.new }
+  let(:constraint) { Constraint::Brokers::OptIn.new }
   let!(:broker) { create(:broker) }
 
   before do

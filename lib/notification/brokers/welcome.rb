@@ -1,4 +1,4 @@
-class Notification::Broker::Welcome < Notification::Broker::Base
+class Notification::Brokers::Welcome < Notification::Brokers::Base
   def body
     <<~BODY.strip
       Oh, wow! Excited to help you get work.

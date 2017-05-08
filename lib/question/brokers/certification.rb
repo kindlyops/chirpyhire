@@ -1,4 +1,4 @@
-class Question::Broker::Certification < Question::MultipleChoice
+class Question::Brokers::Certification < Question::MultipleChoice
   def question
     <<~QUESTION.strip
       #{welcome}
@@ -25,6 +25,6 @@ class Question::Broker::Certification < Question::MultipleChoice
   end
 
   def welcome
-    Notification::Broker::Welcome.new(contact).body
+    Notification::Brokers::Welcome.new(contact).body
   end
 end

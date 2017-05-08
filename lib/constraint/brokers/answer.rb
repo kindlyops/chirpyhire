@@ -1,4 +1,4 @@
-class Constraint::Broker::Answer < Constraint::Base
+class Constraint::Brokers::Answer < Constraint::Base
   def matches?(request)
     @request = request
     surveying_broker_contact? && broker_candidacy.inquiry.present?

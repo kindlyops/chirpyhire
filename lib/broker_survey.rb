@@ -108,11 +108,11 @@ class BrokerSurvey
   end
 
   def certification
-    Question::Broker::Certification.new(broker_contact)
+    Question::Brokers::Certification.new(broker_contact)
   end
 
   def thank_you
-    Notification::Broker::ThankYou.new(broker_contact)
+    Notification::Brokers::ThankYou.new(broker_contact)
   end
 
   attr_reader :broker_candidacy
