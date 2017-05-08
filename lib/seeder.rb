@@ -189,7 +189,7 @@ class Seeder
     {
       twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
-      phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
+      phone_number: ENV.fetch('DEMO_BROKER_PHONE')
     }
   end
 
