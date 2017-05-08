@@ -1,36 +1,36 @@
 class BrokerSurvey
   LAST_QUESTION = :skin_test
 
-  def initialize(candidacy)
-    @candidacy = candidacy
+  def initialize(broker_candidacy)
+    @broker_candidacy = broker_candidacy
   end
 
   def ask
-    return unless candidacy.in_progress?
+    return unless broker_candidacy.in_progress?
 
-    candidacy.update!(inquiry: next_question.inquiry)
+    broker_candidacy.update!(inquiry: next_question.inquiry)
     send_message(next_question.body)
   end
 
   def on?(inquiry)
-    candidacy.in_progress? && candidacy.inquiry == inquiry.to_s
+    broker_candidacy.in_progress? && broker_candidacy.inquiry == inquiry.to_s
   end
 
   def restate
-    return unless candidacy.in_progress?
+    return unless broker_candidacy.in_progress?
 
     send_message(current_question.restated)
   end
 
   def complete
-    return unless candidacy.in_progress?
+    return unless broker_candidacy.in_progress?
 
-    candidacy.update!(inquiry: nil, state: :complete)
+    broker_candidacy.update!(inquiry: nil, state: :complete)
     send_message(thank_you.body)
   end
 
   def just_finished?(message)
-    return unless candidacy.in_progress?
+    return unless broker_candidacy.in_progress?
 
     last_question? && answer.valid?(message)
   end
@@ -64,11 +64,11 @@ class BrokerSurvey
   end
 
   def current_question
-    @current_question ||= questions[candidacy.inquiry]
+    @current_question ||= questions[broker_candidacy.inquiry]
   end
 
   def next_question
-    @next_question ||= question_after[candidacy.inquiry]
+    @next_question ||= question_after[broker_candidacy.inquiry]
   end
 
   def question_after
@@ -115,7 +115,7 @@ class BrokerSurvey
     Notification::Broker::ThankYou.new(broker_contact)
   end
 
-  attr_reader :candidacy
-  delegate :broker_contact, to: :candidacy
+  attr_reader :broker_candidacy
+  delegate :broker_contact, to: :broker_candidacy
   delegate :person, :broker, to: :broker_contact
 end

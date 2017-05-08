@@ -21,7 +21,7 @@ class Brokers::MessagesController < ActionController::Base
   def person
     @person ||= begin
       person = Person.find_or_create_by(phone_number: params['From'])
-      person.candidacy || person.create_candidacy
+      person.broker_candidacy || person.create_broker_candidacy
       person
     end
   end

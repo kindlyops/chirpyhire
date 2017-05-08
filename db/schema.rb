@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508185755) do
+ActiveRecord::Schema.define(version: 20170508203124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,24 @@ ActiveRecord::Schema.define(version: 20170508185755) do
     t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
   end
 
+  create_table "broker_candidacies", force: :cascade do |t|
+    t.integer  "experience"
+    t.boolean  "skin_test"
+    t.integer  "availability"
+    t.integer  "transportation"
+    t.string   "zipcode"
+    t.boolean  "cpr_first_aid"
+    t.integer  "certification"
+    t.integer  "person_id",                     null: false
+    t.integer  "inquiry"
+    t.integer  "state",             default: 0, null: false
+    t.integer  "broker_contact_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["broker_contact_id"], name: "index_broker_candidacies_on_broker_contact_id", using: :btree
+    t.index ["person_id"], name: "index_broker_candidacies_on_person_id", using: :btree
+  end
+
   create_table "broker_contacts", force: :cascade do |t|
     t.integer  "person_id",                     null: false
     t.integer  "broker_id",                     null: false
@@ -99,13 +117,12 @@ ActiveRecord::Schema.define(version: 20170508185755) do
     t.string   "zipcode"
     t.boolean  "cpr_first_aid"
     t.integer  "certification"
-    t.integer  "person_id",                     null: false
+    t.integer  "person_id",                  null: false
     t.integer  "inquiry"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "contact_id"
-    t.integer  "state",             default: 0, null: false
-    t.integer  "broker_contact_id"
+    t.integer  "state",          default: 0, null: false
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
   end
 
@@ -269,6 +286,8 @@ ActiveRecord::Schema.define(version: 20170508185755) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
+  add_foreign_key "broker_candidacies", "broker_contacts"
+  add_foreign_key "broker_candidacies", "people"
   add_foreign_key "broker_contacts", "brokers"
   add_foreign_key "broker_contacts", "people"
   add_foreign_key "candidacies", "people"

@@ -21,7 +21,7 @@ RSpec.describe Brokers::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
+      let!(:person) { create(:person, :with_broker_candidacy, phone_number: phone_number) }
 
       context 'without a broker_contact' do
         it 'creates a subscribed broker_contact' do
@@ -54,10 +54,10 @@ RSpec.describe Brokers::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a candidacy' do
+      it 'creates a broker_candidacy' do
         expect {
           post :create, params: params
-        }.to change { Candidacy.count }.by(1)
+        }.to change { BrokerCandidacy.count }.by(1)
       end
 
       it 'creates a subscribed broker_contact' do
@@ -97,7 +97,7 @@ RSpec.describe Brokers::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
+      let!(:person) { create(:person, :with_broker_candidacy, phone_number: phone_number) }
 
       context 'without a broker_contact' do
         it 'create an unsubscribed broker_contact' do
@@ -124,10 +124,10 @@ RSpec.describe Brokers::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a candidacy' do
+      it 'creates a broker_candidacy' do
         expect {
           delete :destroy, params: params
-        }.to change { Candidacy.count }.by(1)
+        }.to change { BrokerCandidacy.count }.by(1)
       end
 
       it 'creates an unsubscribed broker_contact' do

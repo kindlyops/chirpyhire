@@ -20,10 +20,10 @@ RSpec.describe Brokers::MessagesController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a candidacy' do
+      it 'creates a broker_candidacy' do
         expect {
           post :create, params: params
-        }.to change { Candidacy.count }.by(1)
+        }.to change { BrokerCandidacy.count }.by(1)
       end
 
       it 'creates a subscribed broker_contact' do
@@ -34,7 +34,7 @@ RSpec.describe Brokers::MessagesController, type: :controller do
     end
 
     context 'existing person' do
-      let!(:person) { create(:person, :with_candidacy) }
+      let!(:person) { create(:person, :with_broker_candidacy) }
 
       let(:params) do
         {
@@ -57,10 +57,10 @@ RSpec.describe Brokers::MessagesController, type: :controller do
         }.not_to change { Person.count }
       end
 
-      it 'does not create a candidacy' do
+      it 'does not create a broker_candidacy' do
         expect {
           post :create, params: params
-        }.not_to change { Candidacy.count }
+        }.not_to change { BrokerCandidacy.count }
       end
 
       it 'creates a subscribed broker_contact' do

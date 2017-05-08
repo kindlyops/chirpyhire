@@ -62,14 +62,6 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def ideal?
-    person.ideal?(organization.ideal_candidate)
-  end
-
-  def promising?
-    !ideal?
-  end
-
   private
 
   def set_last_reply_at

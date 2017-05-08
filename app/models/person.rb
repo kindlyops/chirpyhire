@@ -1,6 +1,7 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_one :candidacy
+  has_one :broker_candidacy
   has_one :account, inverse_of: :person
   has_many :broker_contacts
   has_many :contacts
@@ -16,7 +17,7 @@ class Person < ApplicationRecord
   before_validation :add_nickname
 
   delegate :inquiry, :availability, :experience, :transportation,
-           :certification, :skin_test, :cpr_first_aid, :ideal?, to: :candidacy
+           :certification, :skin_test, :cpr_first_aid, to: :candidacy
   delegate :zipcode, to: :candidacy, prefix: true
 
   has_attached_file :avatar,

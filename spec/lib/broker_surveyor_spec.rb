@@ -6,27 +6,27 @@ RSpec.describe BrokerSurveyor do
   describe '#start' do
     let(:broker_contact) { create(:broker_contact) }
     let(:broker) { broker_contact.broker }
-    let(:candidacy) { broker_contact.person.candidacy }
+    let(:broker_candidacy) { broker_contact.person.broker_candidacy }
 
-    context 'candidacy already in progress' do
+    context 'broker_candidacy already in progress' do
       before do
-        candidacy.update(broker_contact: broker_contact, state: :in_progress)
+        broker_candidacy.update(broker_contact: broker_contact, state: :in_progress)
       end
 
-      it 'does not change the candidacy broker_contact' do
+      it 'does not change the broker_candidacy broker_contact' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.not_to change { candidacy.reload.broker_contact }
+        }.not_to change { broker_candidacy.reload.broker_contact }
       end
 
-      it 'does not change the candidacy state' do
+      it 'does not change the broker_candidacy state' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.not_to change { candidacy.reload.state }
+        }.not_to change { broker_candidacy.reload.state }
       end
 
       it 'does not ask a question in the survey' do
@@ -42,25 +42,25 @@ RSpec.describe BrokerSurveyor do
       end
     end
 
-    context 'candidacy completed' do
+    context 'broker_candidacy completed' do
       before do
-        candidacy.update(broker_contact: broker_contact, state: :complete)
+        broker_candidacy.update(broker_contact: broker_contact, state: :complete)
       end
 
-      it 'does not change the candidacy broker_contact' do
+      it 'does not change the broker_candidacy broker_contact' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.not_to change { candidacy.reload.broker_contact }
+        }.not_to change { broker_candidacy.reload.broker_contact }
       end
 
-      it 'does not change the candidacy state' do
+      it 'does not change the broker_candidacy state' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.not_to change { candidacy.reload.state }
+        }.not_to change { broker_candidacy.reload.state }
       end
 
       it 'does not ask a question in the survey' do
@@ -76,21 +76,21 @@ RSpec.describe BrokerSurveyor do
       end
     end
 
-    context 'candidacy not in progress' do
-      it 'locks the candidacy to the broker_contact' do
+    context 'broker_candidacy not in progress' do
+      it 'locks the broker_candidacy to the broker_contact' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.to change { candidacy.reload.broker_contact }.from(nil).to(broker_contact)
+        }.to change { broker_candidacy.reload.broker_contact }.from(nil).to(broker_contact)
       end
 
-      it 'sets the candidacy to in progress' do
+      it 'sets the broker_candidacy to in progress' do
         allow(subject.broker_survey).to receive(:ask)
 
         expect {
           subject.start
-        }.to change { candidacy.reload.state }.from('pending').to('in_progress')
+        }.to change { broker_candidacy.reload.state }.from('pending').to('in_progress')
       end
 
       it 'asks the next question in the survey' do
@@ -102,20 +102,20 @@ RSpec.describe BrokerSurveyor do
   end
 
   describe '#consider_answer' do
-    let(:candidacy) { create(:person, :with_broker_subscribed_candidacy).candidacy }
-    let(:broker_contact) { candidacy.broker_contact }
+    let(:broker_candidacy) { create(:person, :with_broker_subscribed_candidacy).broker_candidacy }
+    let(:broker_contact) { broker_candidacy.broker_contact }
     let(:broker) { broker_contact.broker }
 
     context 'in_progress' do
       before do
-        candidacy.update(state: :in_progress)
+        broker_candidacy.update(state: :in_progress)
       end
 
       describe 'completed survey' do
         let(:message) { create(:message, body: 'a') }
         let(:inquiry) { 'skin_test' }
         before do
-          candidacy.update(inquiry: inquiry)
+          broker_candidacy.update(inquiry: inquiry)
         end
 
         it 'completes the survey' do
@@ -128,7 +128,7 @@ RSpec.describe BrokerSurveyor do
       describe 'incomplete survey' do
         let(:inquiry) { 'experience' }
         before do
-          candidacy.update(inquiry: inquiry)
+          broker_candidacy.update(inquiry: inquiry)
         end
 
         describe 'valid answer' do
@@ -142,7 +142,7 @@ RSpec.describe BrokerSurveyor do
 
           context 'last question' do
             before do
-              candidacy.update(inquiry: BrokerSurvey::LAST_QUESTION)
+              broker_candidacy.update(inquiry: BrokerSurvey::LAST_QUESTION)
             end
 
             context 'and another valid answer has already come in' do
@@ -180,14 +180,14 @@ RSpec.describe BrokerSurveyor do
               let(:inquiry) { 'experience' }
 
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the experience' do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.experience }.to('less_than_one')
+                }.to change { broker_candidacy.reload.experience }.to('less_than_one')
               end
 
               context 'and another valid answer has already come in' do
@@ -214,7 +214,7 @@ RSpec.describe BrokerSurveyor do
 
                   expect {
                     subject.consider_answer(inquiry, message)
-                  }.not_to change { candidacy.reload.experience }
+                  }.not_to change { broker_candidacy.reload.experience }
                 end
               end
             end
@@ -224,14 +224,14 @@ RSpec.describe BrokerSurveyor do
               let(:inquiry) { 'availability' }
 
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the value' do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.availability }.to('hourly_am')
+                }.to change { broker_candidacy.reload.availability }.to('hourly_am')
               end
             end
 
@@ -239,14 +239,14 @@ RSpec.describe BrokerSurveyor do
               let(:body) { 'c' }
               let(:inquiry) { 'transportation' }
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the value' do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.transportation }.to('no_transportation')
+                }.to change { broker_candidacy.reload.transportation }.to('no_transportation')
               end
             end
 
@@ -254,14 +254,14 @@ RSpec.describe BrokerSurveyor do
               let(:body) { 'a' }
               let(:inquiry) { 'skin_test' }
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the value' do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.skin_test }.to(true)
+                }.to change { broker_candidacy.reload.skin_test }.to(true)
               end
             end
 
@@ -270,14 +270,14 @@ RSpec.describe BrokerSurveyor do
               let(:inquiry) { 'zipcode' }
 
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the value' do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.zipcode }.to('30342')
+                }.to change { broker_candidacy.reload.zipcode }.to('30342')
               end
             end
 
@@ -285,14 +285,14 @@ RSpec.describe BrokerSurveyor do
               let(:body) { 'a' }
               let(:inquiry) { 'certification' }
               before do
-                candidacy.update(inquiry: inquiry)
+                broker_candidacy.update(inquiry: inquiry)
               end
 
               it 'updates the value' do
                 allow(subject.broker_survey).to receive(:complete)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.certification }.to('pca')
+                }.to change { broker_candidacy.reload.certification }.to('pca')
               end
             end
           end

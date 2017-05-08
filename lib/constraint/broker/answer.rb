@@ -1,7 +1,7 @@
 class Constraint::Broker::Answer < Constraint::Base
   def matches?(request)
     @request = request
-    surveying_broker_contact? && candidacy.inquiry.present?
+    surveying_broker_contact? && broker_candidacy.inquiry.present?
   end
 
   private
@@ -11,10 +11,10 @@ class Constraint::Broker::Answer < Constraint::Base
   end
 
   def same_broker_contact?
-    person.broker_subscribed_to(broker) == candidacy.broker_contact
+    person.broker_subscribed_to(broker) == broker_candidacy.broker_contact
   end
 
-  delegate :candidacy, to: :person
+  delegate :broker_candidacy, to: :person
 
   def broker_contact_present?
     communicators_present? && person.broker_subscribed_to?(broker)

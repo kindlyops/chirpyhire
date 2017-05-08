@@ -11,15 +11,15 @@ RSpec.describe Constraint::Broker::Answer do
 
   describe '#matches?' do
     context 'with person present' do
-      let(:person) { create(:person, :with_candidacy) }
+      let(:person) { create(:person, :with_broker_candidacy) }
       let(:parameters) { { 'From' => person.phone_number, 'To' => broker.phone_number } }
 
       context 'with broker_contact present' do
         let!(:broker_contact) { create(:broker_contact, person: person, broker: broker) }
 
-        context 'tied to the candidacy' do
+        context 'tied to the broker_candidacy' do
           before do
-            person.candidacy.update(broker_contact: broker_contact)
+            person.broker_candidacy.update(broker_contact: broker_contact)
           end
 
           context 'without inquiry' do
@@ -30,7 +30,7 @@ RSpec.describe Constraint::Broker::Answer do
 
           context 'with inquiry' do
             before do
-              person.candidacy.update(inquiry: :experience)
+              person.broker_candidacy.update(inquiry: :experience)
             end
 
             it 'is true' do
@@ -39,9 +39,9 @@ RSpec.describe Constraint::Broker::Answer do
           end
         end
 
-        context 'candidacy tied to another broker_contact' do
+        context 'broker_candidacy tied to another broker_contact' do
           before do
-            person.candidacy.update(broker_contact: create(:broker_contact, person: person))
+            person.broker_candidacy.update(broker_contact: create(:broker_contact, person: person))
           end
 
           it 'is false' do
@@ -49,7 +49,7 @@ RSpec.describe Constraint::Broker::Answer do
           end
         end
 
-        context 'candidacy not tied to a broker_contact' do
+        context 'broker_candidacy not tied to a broker_contact' do
           it 'is false' do
             expect(constraint.matches?(request)).to eq(false)
           end

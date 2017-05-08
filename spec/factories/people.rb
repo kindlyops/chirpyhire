@@ -12,6 +12,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_broker_candidacy do
+      after(:create) do |person|
+        person.broker_candidacy || person.create_broker_candidacy
+      end
+    end
+
     trait :with_subscribed_candidacy do
       after(:create) do |person|
         person.create_candidacy
@@ -22,9 +28,9 @@ FactoryGirl.define do
 
     trait :with_broker_subscribed_candidacy do
       after(:create) do |person|
-        person.create_candidacy
+        person.create_broker_candidacy
         broker_contact = create(:broker_contact, person: person)
-        person.candidacy.update(broker_contact: broker_contact)
+        person.broker_candidacy.update(broker_contact: broker_contact)
       end
     end
 
