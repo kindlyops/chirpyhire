@@ -12,11 +12,8 @@ class Brokers::SubscriptionsController < Brokers::MessagesController
   end
 
   def destroy
-    if broker_contact.subscribed?
-      broker_contact.unsubscribe
-    else
-      BrokerNotSubscribedJob.perform_later(broker_contact)
-    end
+    broker_contact.unsubscribe if broker_contact.subscribed?
+
     head :ok
   end
 

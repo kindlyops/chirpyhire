@@ -12,11 +12,8 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   end
 
   def destroy
-    if contact.subscribed?
-      contact.unsubscribe
-    else
-      NotSubscribedJob.perform_later(contact)
-    end
+    contact.unsubscribe if contact.subscribed?
+
     head :ok
   end
 
