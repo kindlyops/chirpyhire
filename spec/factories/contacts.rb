@@ -13,7 +13,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :incomplete do
+    trait :not_ready do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
 
@@ -54,10 +54,11 @@ FactoryGirl.define do
       end
     end
 
-    trait :complete do
+    trait :candidate do
       after(:create) do |contact|
         contact.update(
-          subscribed: [true, false].sample
+          subscribed: [true, false].sample,
+          candidate: true
         )
 
         candidacy = contact.person.candidacy
@@ -82,7 +83,7 @@ FactoryGirl.define do
     end
 
     trait :pca do
-      complete
+      candidate
 
       after(:create) do |contact|
         contact.candidacy.update(certification: 'pca')
@@ -90,7 +91,7 @@ FactoryGirl.define do
     end
 
     trait :cna do
-      complete
+      candidate
 
       after(:create) do |contact|
         contact.candidacy.update(certification: 'cna')

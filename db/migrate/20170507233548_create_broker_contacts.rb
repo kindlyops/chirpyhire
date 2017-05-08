@@ -1,6 +1,5 @@
 class CreateBrokerContacts < ActiveRecord::Migration[5.0]
   def change
-    remove_column :contacts, :candidate
     create_table :broker_contacts do |t|
       t.belongs_to :person, null: false, index: true, foreign_key: true
       t.belongs_to :broker, null: false, index: true, foreign_key: true

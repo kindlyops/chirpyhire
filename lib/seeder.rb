@@ -3,26 +3,26 @@ class Seeder
     seed_broker
     seed_organization
     seed_account
-    seed_incomplete_contacts
-    seed_complete_contacts
+    seed_not_ready_contacts
+    seed_candidate_contacts
   end
 
   private
 
   attr_reader :organization
 
-  def seed_incomplete_contacts
-    incomplete_contacts unless organization.contacts.incomplete.exists?
+  def seed_not_ready_contacts
+    not_ready_contacts unless organization.contacts.not_ready.exists?
   end
 
-  def seed_complete_contacts
-    complete_contacts unless organization.contacts.complete.exists?
+  def seed_candidate_contacts
+    candidate_contacts unless organization.contacts.candidate.exists?
   end
 
-  def incomplete_contacts
+  def not_ready_contacts
     seed_demo_contact
     contacts = FactoryGirl.create_list(
-      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :incomplete,
+      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :not_ready,
       organization: organization
     )
     contacts.each(&method(:seed_messages))
@@ -33,7 +33,7 @@ class Seeder
 
     contact = FactoryGirl.create(
       :contact,
-      :incomplete,
+      :not_ready,
       person: person,
       subscribed: true,
       organization: organization,
@@ -48,9 +48,9 @@ class Seeder
                        nickname: ENV.fetch('DEMO_NICKNAME'))
   end
 
-  def complete_contacts
+  def candidate_contacts
     contacts = FactoryGirl.create_list(
-      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
+      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :candidate,
       organization: organization
     )
     contacts.each(&method(:seed_messages))
@@ -101,7 +101,7 @@ class Seeder
   end
 
   def seed_thank_you(contact)
-    return unless contact.complete?
+    return unless contact.candidate?
     body = Notification::ThankYou.new(contact).body
     contact.person.received_messages.create!(
       body: body, sid: SecureRandom.uuid,

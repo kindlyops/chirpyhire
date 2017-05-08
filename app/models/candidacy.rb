@@ -43,5 +43,40 @@ class Candidacy < ApplicationRecord
     )
   end
 
+  def status_for(organization)
+    return :ideal if ideal?(organization.ideal_candidate)
+    :promising
+  end
+
+  def ideal?(ideal_candidate)
+    complete? && ideal_candidate.zipcode?(zipcode) &&
+      other_attributes_ideal?
+  end
+
+  def transportable?
+    transportation.present? && transportation != 'no_transportation'
+  end
+
+  def experienced?
+    experience.present? && experience != 'no_experience'
+  end
+
+  def certified?
+    certification.present? && certification != 'no_certification'
+  end
+
+  def available?
+    availability.present?
+  end
+
+  def locatable?
+    zipcode.present?
+  end
   alias_attribute :location, :zipcode
+
+  private
+
+  def other_attributes_ideal?
+    transportable? && experienced? && certified? && skin_test && cpr_first_aid
+  end
 end

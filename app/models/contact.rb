@@ -11,6 +11,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  def self.recently_replied
+    order(last_reply_at: :desc)
+  end
+
   def self.incomplete
     includes(person: :candidacy)
       .where.not(people: { 'candidacies' => { state: :complete } })
@@ -21,12 +25,12 @@ class Contact < ApplicationRecord
       .where(people: { 'candidacies' =>  { state: :complete } })
   end
 
-  def complete?
-    person.candidacy.complete?
+  def self.candidate
+    where(candidate: true)
   end
 
-  def self.recently_replied
-    order(last_reply_at: :desc)
+  def complete?
+    person.candidacy.complete?
   end
 
   def self.candidacy_filter(filter_params)
@@ -40,6 +44,10 @@ class Contact < ApplicationRecord
     return current_scope unless filter_params.present?
 
     includes(person: :zipcode).where(people: { 'zipcodes' => filter_params })
+  end
+
+  def self.not_ready
+    where(candidate: false)
   end
 
   def self.subscribed
@@ -60,6 +68,14 @@ class Contact < ApplicationRecord
 
   def unsubscribe
     update(subscribed: false)
+  end
+
+  def ideal?
+    person.ideal?(organization.ideal_candidate)
+  end
+
+  def promising?
+    !ideal?
   end
 
   private
