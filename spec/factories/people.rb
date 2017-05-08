@@ -20,6 +20,14 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_broker_subscribed_candidacy do
+      after(:create) do |person|
+        person.create_candidacy
+        broker_contact = create(:broker_contact, person: person)
+        person.candidacy.update(broker_contact: broker_contact)
+      end
+    end
+
     trait :with_zipcode do
       after(:create) do |person|
         zipcode = create(:zipcode)

@@ -1,12 +1,16 @@
 class Message < ApplicationRecord
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
-  belongs_to :organization
+  belongs_to :organization, optional: true
+  belongs_to :broker, optional: true
 
   has_many :read_receipts
 
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
+
+  validates :broker, presence: true, unless: :organization_present?
+  validates :organization, presence: true, unless: :broker_present?
 
   def self.by_recency
     order(:external_created_at, :id)
@@ -50,5 +54,15 @@ class Message < ApplicationRecord
 
   def time_ago
     external_created_at.strftime('%I:%M')
+  end
+
+  private
+
+  def broker_present?
+    broker.present?
+  end
+
+  def organization_present?
+    organization.present?
   end
 end

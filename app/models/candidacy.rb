@@ -77,6 +77,14 @@ class Candidacy < ApplicationRecord
 
   private
 
+  def broker_contact_present?
+    broker_contact.present?
+  end
+
+  def contact_present?
+    contact.present?
+  end
+
   def other_attributes_ideal?
     transportable? && experienced? && certified? && skin_test && cpr_first_aid
   end

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :broker_contact do
-    person
+    association :person, :with_candidacy
     broker
   end
 end
