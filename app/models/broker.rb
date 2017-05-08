@@ -1,10 +1,8 @@
 class Broker < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :messages
-
-  def get_message(sid)
-    messaging_client.messages.get(sid)
-  end
+  has_many :broker_contacts
+  has_many :people, through: :broker_contacts, class_name: 'Person'
 
   def message(recipient:, body:, sender: nil)
     sent_message = messaging_client.send_message(
@@ -12,6 +10,10 @@ class Broker < ApplicationRecord
     )
 
     create_message(recipient, sent_message, sender)
+  end
+
+  def get_message(sid)
+    messaging_client.messages.get(sid)
   end
 
   private

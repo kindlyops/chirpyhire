@@ -108,7 +108,7 @@ class BrokerSurvey
   end
 
   def certification
-    Question::Certification.new(broker_contact)
+    Question::Broker::Certification.new(broker_contact)
   end
 
   def thank_you

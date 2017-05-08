@@ -3,7 +3,7 @@ class CreateBrokers < ActiveRecord::Migration[5.0]
     create_table :brokers do |t|
       t.string :twilio_account_sid, null: false
       t.string :twilio_auth_token, null: false
-      t.string :phone_number
+      t.string :phone_number, null: false
       t.timestamps null: false
     end
 

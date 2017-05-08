@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20170508185755) do
   create_table "brokers", force: :cascade do |t|
     t.string   "twilio_account_sid", null: false
     t.string   "twilio_auth_token",  null: false
-    t.string   "phone_number"
+    t.string   "phone_number",       null: false
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.index ["phone_number"], name: "index_brokers_on_phone_number", unique: true, using: :btree

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Constraint::Broker::Answer do
   let(:request) { ActionDispatch::Request.new({}) }
   let(:constraint) { Constraint::Broker::Answer.new }
-  let(:broker) { create(:broker, :phone_number) }
+  let(:broker) { create(:broker) }
 
   before do
     allow(request).to receive(:request_parameters).and_return(parameters)

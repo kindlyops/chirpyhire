@@ -1,8 +1,4 @@
-class Notification::Broker::ThankYou
-  def initialize(broker_contact)
-    @broker_contact = broker_contact
-  end
-
+class Notification::Broker::ThankYou < Notification::Broker::Base
   def body
     <<~BODY
       Thanks for your interest in ChirpyHire!
@@ -10,6 +6,4 @@ class Notification::Broker::ThankYou
       ...
     BODY
   end
-
-  attr_reader :broker_contact
 end

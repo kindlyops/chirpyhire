@@ -3,6 +3,8 @@ class BrokerContact < ApplicationRecord
   belongs_to :broker
   delegate :inquiry, to: :person, prefix: true
 
+  before_create :set_last_reply_at
+
   def self.unsubscribed
     where(subscribed: false)
   end
@@ -17,5 +19,11 @@ class BrokerContact < ApplicationRecord
 
   def unsubscribe
     update(subscribed: false)
+  end
+
+  private
+
+  def set_last_reply_at
+    self.last_reply_at = DateTime.current
   end
 end
