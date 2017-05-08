@@ -7,8 +7,8 @@ class BrokerSurveyor
     if candidacy.pending?
       lock_candidacy
       broker_survey.ask
-      # else
-      #   # send thank you message
+    else
+      send_thank_you if thank_you_required?
     end
   end
 
@@ -50,6 +50,19 @@ class BrokerSurveyor
 
   def lock_candidacy
     candidacy.update!(broker_contact: broker_contact, state: :in_progress)
+  end
+
+  def thank_you
+    Notification::Broker::ThankYou.new(broker_contact)
+  end
+
+  def thank_you_required?
+    broker_contact.broker_thank_you_sent_at.blank?
+  end
+
+  def send_thank_you
+    send_message(thank_you.body)
+    broker_contact.update(broker_thank_you_sent_at: DateTime.current)
   end
 
   attr_reader :broker_contact
