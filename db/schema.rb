@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170507175031) do
+ActiveRecord::Schema.define(version: 20170507233548) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,27 @@ ActiveRecord::Schema.define(version: 20170507175031) do
     t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
   end
 
+  create_table "broker_contacts", force: :cascade do |t|
+    t.integer  "person_id",                    null: false
+    t.integer  "broker_id",                    null: false
+    t.boolean  "subscribed",    default: true, null: false
+    t.datetime "last_reply_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["broker_id"], name: "index_broker_contacts_on_broker_id", using: :btree
+    t.index ["person_id", "broker_id"], name: "index_broker_contacts_on_person_id_and_broker_id", unique: true, using: :btree
+    t.index ["person_id"], name: "index_broker_contacts_on_person_id", using: :btree
+  end
+
+  create_table "brokers", force: :cascade do |t|
+    t.string   "twilio_account_sid"
+    t.string   "twilio_auth_token"
+    t.string   "phone_number"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["phone_number"], name: "index_brokers_on_phone_number", unique: true, using: :btree
+  end
+
   create_table "candidacies", force: :cascade do |t|
     t.integer  "experience"
     t.boolean  "skin_test"
@@ -93,7 +114,6 @@ ActiveRecord::Schema.define(version: 20170507175031) do
     t.boolean  "subscribed",      default: false, null: false
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.boolean  "candidate",       default: false, null: false
     t.datetime "last_reply_at"
     t.index ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true, using: :btree
@@ -247,6 +267,8 @@ ActiveRecord::Schema.define(version: 20170507175031) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
+  add_foreign_key "broker_contacts", "brokers"
+  add_foreign_key "broker_contacts", "people"
   add_foreign_key "candidacies", "people"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"

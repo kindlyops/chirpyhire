@@ -26,7 +26,6 @@ class Survey
     return unless candidacy.in_progress?
 
     candidacy.update!(inquiry: nil, state: :complete)
-    candidacy.contacts.find_each { |contact| contact.update(candidate: true) }
     send_message(thank_you.body)
   end
 
