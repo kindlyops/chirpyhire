@@ -11,8 +11,8 @@ class Question::Certification < Question::MultipleChoice
     {
       a: 'Yes, CNA',
       b: 'Yes, HHA',
-      c: 'Yes, Other (MA, LPN, RN, etc.)',
-      d: 'Yes, PCA',
+      c: 'Yes, PCA',
+      d: 'Yes, Other (MA, LPN, RN, etc.)',
       e: 'Not Yet, but I want to be!'
     }
   end

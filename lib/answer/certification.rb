@@ -3,8 +3,8 @@ class Answer::Certification < Answer::MultipleChoice
     {
       'Yes, CNA' => :cna,
       'Yes, HHA' => :hha,
-      'Yes, Other (MA, LPN, RN, etc.)' => :other_certification,
       'Yes, PCA' => :pca,
+      'Yes, Other (MA, LPN, RN, etc.)' => :other_certification,
       'Not Yet, but I want to be!' => :no_certification
     }
   end
