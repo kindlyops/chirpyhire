@@ -81,6 +81,25 @@ RSpec.describe Surveyor do
                      expect(mailer_method).to eq('contact_ready_for_review')
                    }.exactly(2).times
             end
+
+            context 'with 10 contacts with conversations' do
+              before do
+                contacts = create_list(:contact, 10, organization: organization)
+                contacts.each do |contact|
+                  IceBreaker.call(contact)
+                end
+              end
+
+              it 'sends an email to each account on the current organization' do
+                expect {
+                  subject.start
+                }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                  .with { |mailer, mailer_method, *_args|
+                       expect(mailer).to eq('NotificationMailer')
+                       expect(mailer_method).to eq('contact_ready_for_review')
+                     }.exactly(2).times
+              end
+            end
           end
 
           context 'other organization having multiple accounts' do

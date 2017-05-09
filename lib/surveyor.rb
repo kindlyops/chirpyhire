@@ -5,7 +5,7 @@ class Surveyor
 
   def start
     if candidacy.complete?
-      notify_contact_ready_for_review(organization.conversations)
+      notify_contact_ready_for_review(organization_contact_conversations)
     elsif candidacy.pending?
       lock_candidacy
       survey.ask
@@ -27,6 +27,10 @@ class Surveyor
   end
 
   private
+
+  def organization_contact_conversations
+    organization.conversations.contact(contact)
+  end
 
   def restate_and_log(message)
     ReadReceiptsCreator.call(message, organization)
