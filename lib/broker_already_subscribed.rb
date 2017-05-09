@@ -21,7 +21,16 @@ class BrokerAlreadySubscribed
   delegate :person, :broker, to: :broker_contact
 
   def already_subscribed
-    'You are already subscribed. '\
-    'Thanks for your interest in ChirpyHire.'
+    <<~BODY
+      So great to hear from you!
+
+      You are already subscribed so no need to worry!
+
+      Is there anything I can help you with?
+
+      Hope you're having a great day,
+
+      Chirpy
+    BODY
   end
 end

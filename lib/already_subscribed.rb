@@ -21,7 +21,16 @@ class AlreadySubscribed
   delegate :person, :organization, to: :contact
 
   def already_subscribed
-    'You are already subscribed. '\
-    "Thanks for your interest in #{organization.name}."
+    <<~BODY
+      So great to hear from you!
+
+      You are already subscribed so no need to worry!
+
+      Is there anything we can help you with?
+
+      Hope you're having a great day,
+
+      The #{organization.name} Team
+    BODY
   end
 end
