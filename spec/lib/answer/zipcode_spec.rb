@@ -49,7 +49,7 @@ RSpec.describe Answer::Zipcode do
     let!(:message) { create(:message, sender: person, body: '30342') }
 
     context 'zipcode present' do
-      let!(:zipcode) { create(:zipcode) }
+      let!(:zipcode) { create(:zipcode, '30342'.to_sym) }
 
       it 'sets the zipcode on the person' do
         expect {
