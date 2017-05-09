@@ -292,7 +292,7 @@ RSpec.describe BrokerSurveyor do
                 allow(subject.broker_survey).to receive(:complete)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { broker_candidacy.reload.certification }.to('pca')
+                }.to change { broker_candidacy.reload.certification }.to('cna')
               end
             end
           end

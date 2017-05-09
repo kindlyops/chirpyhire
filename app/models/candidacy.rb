@@ -28,7 +28,7 @@ class Candidacy < ApplicationRecord
   }
 
   enum certification: {
-    pca: 0, cna: 1, other_certification: 2, no_certification: 3
+    pca: 0, cna: 1, other_certification: 2, no_certification: 3, hha: 4
   }
 
   def self.finished_survey

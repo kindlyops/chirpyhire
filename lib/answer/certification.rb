@@ -1,9 +1,10 @@
 class Answer::Certification < Answer::MultipleChoice
   def choice_map
     {
-      'Yes, PCA' => :pca,
       'Yes, CNA' => :cna,
+      'Yes, HHA' => :hha,
       'Yes, Other (MA, LPN, RN, etc.)' => :other_certification,
+      'Yes, PCA' => :pca,
       'Not Yet, but I want to be!' => :no_certification
     }
   end
@@ -36,6 +37,8 @@ class Answer::Certification < Answer::MultipleChoice
       :pca
     when 'cna', 'yes, cna'
       :cna
+    when 'hha', 'yes, hha'
+      :hha
     when *other_variants
       :other_certification
     when *no_variants.concat(no_variants.map { |v| "#{v} certification" })
@@ -44,6 +47,6 @@ class Answer::Certification < Answer::MultipleChoice
   end
 
   def other_variants
-    ['other', 'ma', 'lpn', 'rn', 'rca', 'hha', 'yes, other (ma, lpn, rn, etc.)']
+    ['other', 'ma', 'lpn', 'rn', 'rca', 'yes, other (ma, lpn, rn, etc.)']
   end
 end
