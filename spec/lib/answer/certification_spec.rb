@@ -31,8 +31,8 @@ RSpec.describe Answer::Certification do
 
   describe '#attribute' do
     context 'pca' do
-      ['Yes, PCA', 'A PCA', 'pca', 'A)', 'A.',
-       "A\nJazz", "A.\nJazz"].each do |body|
+      ['Yes, PCA', 'D PCA', 'pca', 'D)', 'D.',
+       "D\nJazz", "D.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
 
@@ -43,8 +43,8 @@ RSpec.describe Answer::Certification do
     end
 
     context 'cna' do
-      ['Yes, CNA', 'B CNA', 'cna', 'B)', 'B.',
-       "B\nJazz", "B.\nJazz"].each do |body|
+      ['Yes, CNA', 'A CNA', 'cna', 'A)', 'A.',
+       "A\nJazz", "A.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
 
@@ -54,8 +54,20 @@ RSpec.describe Answer::Certification do
       end
     end
 
+    context 'hha' do
+      ['Yes, HHA', 'B HHA', 'hha', 'B)', 'B.',
+       "B\nJazz", "B.\nJazz"].each do |body|
+
+        let(:message) { create(:message, body: body) }
+
+        it 'is hha' do
+          expect(subject.attribute(message)[:certification]).to eq(:hha)
+        end
+      end
+    end
+
     context 'other' do
-      %w(other ma hha lpn rn rca).push('Yes, Other (MA, LPN, RN, etc.)').each do |body|
+      %w(other ma lpn rn rca).push('Yes, Other (MA, LPN, RN, etc.)').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is other' do
@@ -65,7 +77,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'no' do
-      %w(no nope N nah).push('Not Yet', 'Not yet', 'D just certificate').each do |body|
+      %w(no nope N nah).push('Not Yet', 'Not yet', 'E just certificate').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do

@@ -3,6 +3,7 @@ class Contact::Certification < Contact::Attribute
     {
       pca: 'PCA',
       cna: 'CNA',
+      hha: 'HHA',
       other_certification: 'RN, LPN, Other',
       no_certification: 'No Certification'
     }.with_indifferent_access
@@ -10,8 +11,9 @@ class Contact::Certification < Contact::Attribute
 
   def self.icon_classes
     {
-      pca: 'fa-heart-o',
-      cna: 'fa-heart',
+      pca: 'fa-heart-o purple',
+      cna: 'fa-heart-o',
+      hha: 'fa-heart',
       other_certification: 'fa-heartbeat',
       no_certification: 'fa-graduation-cap'
     }.with_indifferent_access

@@ -422,7 +422,7 @@ RSpec.describe Surveyor do
                 allow(subject.survey).to receive(:complete)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { candidacy.reload.certification }.to('pca')
+                }.to change { candidacy.reload.certification }.to('cna')
               end
             end
           end

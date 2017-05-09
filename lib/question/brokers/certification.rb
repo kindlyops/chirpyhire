@@ -9,10 +9,11 @@ class Question::Brokers::Certification < Question::MultipleChoice
 
   def choices
     {
-      a: 'Yes, PCA',
-      b: 'Yes, CNA',
+      a: 'Yes, CNA',
+      b: 'Yes, HHA',
       c: 'Yes, Other (MA, LPN, RN, etc.)',
-      d: 'Not Yet, but I want to be!'
+      d: 'Yes, PCA',
+      e: 'Not Yet, but I want to be!'
     }
   end
 

@@ -13,13 +13,20 @@
             span.custom-control-indicator
             span.custom-control-description
               span.description-text PCA
-              i.fa.fa-heart-o.fa-fw.ml-2
+              i.fa.fa-heart-o.purple.fa-fw.ml-2
         .dropdown-item
           label.custom-control.custom-checkbox
             = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'cna' }
             span.custom-control-indicator
             span.custom-control-description
               span.description-text CNA
+              i.fa.fa-heart-o.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'hha' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text HHA
               i.fa.fa-heart.fa-fw.ml-2
         .dropdown-item
           label.custom-control.custom-checkbox
