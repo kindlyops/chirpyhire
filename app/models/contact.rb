@@ -29,7 +29,11 @@ class Contact < ApplicationRecord
   def self.zipcode_filter(filter_params)
     return current_scope unless filter_params.present?
 
-    includes(person: :zipcode).where(people: { 'zipcodes' => filter_params })
+    filters = filter_params.map do |k, v|
+      sanitize_sql_array(["lower(\"zipcodes\".\"#{k}\") = ?", v.downcase])
+    end.join(' AND ')
+
+    joins(person: :zipcode).where(filters)
   end
 
   def self.not_ready
