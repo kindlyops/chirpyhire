@@ -31,8 +31,8 @@ RSpec.describe Answer::Certification do
 
   describe '#attribute' do
     context 'pca' do
-      ['Yes, PCA', 'D PCA', 'pca', 'D)', 'D.',
-       "D\nJazz", "D.\nJazz"].each do |body|
+      ['Yes, PCA', 'C PCA', 'pca', 'C)', 'C.',
+       "C\nJazz", "C.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
 
