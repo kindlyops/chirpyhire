@@ -22,6 +22,14 @@
   color: $orange;
 }
 
+.fa-facebook-official {
+  color: $facebook;
+
+  &.disabled {
+    color: $facebook-disabled;
+  }
+}
+
 .fa-heart-o, .fa-heart, .fa-heartbeat, .fa-medkit, .fa-battery-empty,
 .fa-tachometer, .fa-magnet {
   color: $red;
