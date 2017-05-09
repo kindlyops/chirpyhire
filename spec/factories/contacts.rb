@@ -13,6 +13,13 @@ FactoryGirl.define do
       end
     end
 
+    trait :"30341" do
+      after(:create) do |contact|
+        create(:zipcode, :"30341")
+        ZipcodeFetcher.call(contact.person, '30341')
+      end
+    end
+
     trait :not_ready do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
