@@ -2,9 +2,6 @@ class BrokerCandidacy < ApplicationRecord
   belongs_to :person
   belongs_to :broker_contact, optional: true
 
-  delegate :actively_subscribed_to?, :subscribed_to, :handle,
-           :phone_number, :contacts, to: :person
-
   enum state: {
     pending: 0, in_progress: 1, complete: 2
   }
