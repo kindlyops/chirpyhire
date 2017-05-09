@@ -155,7 +155,8 @@ class Seeder
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: '30341' }]
     )
-    puts 'Created Organization'
+    organization.create_recruiting_ad(body: RecruitingAd.body(organization))
+    puts 'Created Organization, Ideal Candidate, and Recruiting Ad'
   end
 
   def full_street_address
