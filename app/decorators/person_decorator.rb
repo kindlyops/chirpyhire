@@ -8,8 +8,9 @@ class PersonDecorator < Draper::Decorator
   end
 
   def last_active_at
+    broker_contact = Broker.first.broker_contacts.find_by(person: object)
     contact = h.current_organization.contacts.find_by(person: object)
-    Contact::LastActiveAt.new(contact)
+    Contact::LastActiveAt.new(broker_contact || contact)
   end
 
   def stats

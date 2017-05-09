@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe PersonPolicy do
-
   let(:organization) { create(:organization) }
   let(:account) { create(:account, organization: organization) }
 
@@ -40,7 +39,7 @@ RSpec.describe PersonPolicy do
           create(:contact, person: person)
         end
       end
-      
+
       context 'without broker contacts' do
         it 'excludes the people' do
           expect(resolved_scope).not_to include(*other_contact_people)

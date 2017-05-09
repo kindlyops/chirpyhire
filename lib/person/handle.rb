@@ -1,14 +1,14 @@
 class Person::Handle < Person::Attribute
   def label
-    candidacy.handle
+    person.handle
   end
 
   def humanize_attribute(*)
-    candidacy.handle
+    person.handle
   end
 
   def icon_class
-    return 'fa-question' unless candidacy.handle.present?
+    return 'fa-question' unless person.handle.present?
 
     'fa-user'
   end

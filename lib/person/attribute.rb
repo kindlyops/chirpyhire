@@ -8,7 +8,6 @@ class Person::Attribute
   end
 
   attr_reader :person
-  delegate :candidacy, to: :person
 
   def humanize_attribute(attribute)
     return if attribute.nil?
@@ -40,5 +39,9 @@ class Person::Attribute
 
   def icon_classes
     self.class.icon_classes
+  end
+
+  def candidacy
+    person.broker_candidacy || person.candidacy
   end
 end

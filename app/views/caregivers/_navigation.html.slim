@@ -87,3 +87,25 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
           .dropdown-item.d-flex.justify-content-between
             a.cancel href="#" Cancel
             a.apply href="#" Apply
+    .dropdown.network.mr-3
+      .overlay
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, experience: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
+        = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :source, icon: 'fa-rss' }
+        .dropdown-menu aria-labelledby="network"
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :network, value: 'my_caregivers' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text My Caregivers
+                i.fa.fa-group.fa-fw.ml-2
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :network, value: 'network' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text Network
+                i.fa.fa-globe.fa-fw.ml-2
+          .dropdown-item.d-flex.justify-content-between
+            a.cancel href="#" Cancel
+            a.apply href="#" Apply
