@@ -5,7 +5,7 @@ RSpec.describe ZipcodeFetcher do
 
   describe '#call' do
     context 'with an existing zipcode' do
-      let(:zipcode) { create(:zipcode) }
+      let(:zipcode) { create(:zipcode, '30342'.to_sym) }
       subject { ZipcodeFetcher.new(person, zipcode.zipcode) }
 
       it 'sets the person zipcode as existing zipcode' do

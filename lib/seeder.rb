@@ -5,6 +5,7 @@ class Seeder
     seed_account
     seed_not_ready_contacts
     seed_candidate_contacts
+    seed_zipcodes_for_people
   end
 
   private
@@ -214,5 +215,19 @@ class Seeder
     end
 
     puts 'Created Account'
+  end
+
+  def seed_zipcodes_for_people
+    zipcodes = %w(30319 30324 30327 30328 30329
+                  30338 30339 30340 30341 30342)
+    zipcodes.each do |zipcode|
+      FactoryGirl.create(:zipcode, zipcode.to_sym)
+    end
+    Person.find_each do |p|
+      next if p.candidacy.blank? || p.candidacy.zipcode.blank?
+      ZipcodeFetcher.call(p, p.candidacy.zipcode)
+    end
+
+    puts 'Zipcodes Added'
   end
 end

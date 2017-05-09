@@ -13,6 +13,13 @@ FactoryGirl.define do
       end
     end
 
+    trait :"30341" do
+      after(:create) do |contact|
+        create(:zipcode, :"30341")
+        ZipcodeFetcher.call(contact.person, '30341')
+      end
+    end
+
     trait :not_ready do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
@@ -31,9 +38,8 @@ FactoryGirl.define do
           inquiry: :transportation
         }
 
-        zipcode = %w(30002 30030 30032 30033 30303 30305 30306 30307 30308
-                     30309 30310 30312 30315 30316 30317 30319 30319 30324 30327 30328
-                     30329 30338 30339 30340 30341 30342 30345 30363).sample
+        zipcode = %w(30319 30324 30327 30328 30329
+                     30338 30339 30340 30341 30342).sample
 
         almost_finished = {
           contact: contact,
@@ -62,9 +68,8 @@ FactoryGirl.define do
         )
 
         candidacy = contact.person.candidacy
-        zipcode = %w(30002 30030 30032 30033 30303 30305 30306 30307 30308
-                     30309 30310 30312 30315 30316 30317 30319 30319 30324 30327 30328
-                     30329 30338 30339 30340 30341 30342 30345 30363).sample
+        zipcode = %w(30319 30324 30327 30328 30329
+                     30338 30339 30340 30341 30342).sample
 
         candidacy.assign_attributes(
           contact: contact,
