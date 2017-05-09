@@ -19,15 +19,14 @@
               .card
                 div class=="card-img-top #{candidate.hero_pattern_classes}"
                 .card-block
-                  .btn.btn-success.disabled.float-right
-                    span Coming Soon
+                  = link_to message_path(candidate), class: 'btn btn-success float-right', role: 'button' do
+                    span Message
                     i.fa.fa-comment.ml-2
                   h4.card-title = candidate.phone_number
                   h6.card-subtitle.mb-2.text-muted = candidate.handle
                 .card-block
-                  p.card-text.d-flex.justify-content-between
+                  p.card-text
                     span = candidate.stats
-                    i.ml-1.fa.fa-facebook-official.disabled.fa-2x
                 .card-footer
                   p.card-text.d-flex.justify-content-between
                     small.text-muted

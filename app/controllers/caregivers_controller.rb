@@ -17,7 +17,7 @@ class CaregiversController < ApplicationController
   end
 
   def scope
-    policy_scope(Contact)
+    policy_scope(Person)
   end
 
   def permitted_params

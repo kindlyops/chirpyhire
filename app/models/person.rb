@@ -30,6 +30,23 @@ class Person < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
   validates :phone_number, presence: true, unless: :name_present?
 
+  def self.candidacy_filter(filter_params)
+    return current_scope unless filter_params.present?
+
+    includes(:candidacy)
+      .where('candidacies' => filter_params)
+  end
+
+  def self.zipcode_filter(filter_params)
+    return current_scope unless filter_params.present?
+
+    filters = filter_params.map do |k, v|
+      sanitize_sql_array(["lower(\"zipcodes\".\"#{k}\") = ?", v.downcase])
+    end.join(' AND ')
+
+    joins(:zipcode).where(filters)
+  end
+
   def subscribed_to?(organization)
     contacts.where(organization: organization).exists?
   end
