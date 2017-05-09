@@ -1,14 +1,17 @@
 class Notification::Brokers::ThankYou < Notification::Brokers::Base
   def body
     <<~BODY
-      Ok. Great! We're all set.
+      Hey there!
 
-      Now, let us get you the right opportunity!
+      It's Chirpy! Just wanted to thank you for taking the time to tell us a little more about yourself.
 
-      We will be in touch.
+      As care providers express interest in you we'll reach back out and introduce you to great employers in your area!
 
-      - Wayne
-      CEO, ChirpyHire
+      We'll be in touch!
+
+      Keep on caring,
+
+      Chirpy
     BODY
   end
 end
