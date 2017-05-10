@@ -4,7 +4,10 @@ header.chat-header
       .channel-title
         .channel-name-container
           .channel-name
-            span = @conversation.contact.handle
+            span
+              = @conversation.contact.handle
+              '
+              small = @conversation.contact.phone_number.phony_formatted
         .channel-header-info
           .channel-header-info-item
             = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'View nearly identical caregivers.' do
