@@ -3,6 +3,23 @@ class ContactDecorator < Draper::Decorator
   decorates_association :person
   delegate :hero_pattern_classes, to: :person
 
+  def broad_query_params
+    {
+      zipcode: candidacy_zipcode.query,
+      certification: [certification.query].compact
+    }.delete_if { |k, v| v.blank? }
+  end
+
+  def near_query_params
+    {
+      zipcode: candidacy_zipcode.query,
+      certification: [certification.query].compact,
+      transportation: [transportation.query].compact,
+      availability: [availability.query].compact,
+      experience: [experience.query].compact
+    }.delete_if { |k, v| v.blank? }
+  end
+
   def joined_at
     Contact::JoinedAt.new(object)
   end
