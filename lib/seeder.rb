@@ -73,7 +73,7 @@ class Seeder
   def seed_question_and_answer(contact, category, question)
     person = contact.person
     seed_question(person, question)
-    seed_answer(person, category)
+    seed_answer(person, category, question)
   end
 
   def seed_start(contact)
@@ -114,11 +114,11 @@ class Seeder
     )
   end
 
-  def seed_answer(person, category)
+  def seed_answer(person, category, question)
     choice = person.candidacy.send(category.to_sym)
     return if choice.nil?
     choice = choice.to_sym if choice.respond_to?(:to_sym)
-    answer = "Answer::#{category.camelcase}".constantize.new({})
+    answer = "Answer::#{category.camelcase}".constantize.new(question)
 
     body = answer_body(answer, choice, category)
     create_answer(person, body)
@@ -126,11 +126,10 @@ class Seeder
 
   def answer_body(answer, choice, category)
     if category != 'zipcode'
-      answer.choice_map.invert[choice]
+      answer.question.choices.invert[answer.choice_map.invert[choice]]
     else
-      %w(30002 30030 30032 30033 30303 30305 30306 30307 30308 30309 30310
-         30312 30315 30316 30317 30319 30319 30324 30327 30328 30329 30338
-         30339 30340 30341 30342 30345 30363).sample
+      %w(30319 30324 30327 30328 30329
+         30338 30339 30340 30341 30342).sample
     end
   end
 
