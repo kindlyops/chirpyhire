@@ -68,11 +68,13 @@ header.chat-header
                 i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
                 = conversation.contact.live_in.label
           - if @conversation.contact.cpr_first_aid
-            .channel-header-info-item data-toggle="tooltip" data-placement="right" title== conversation.contact.cpr_first_aid.label
+            .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
+              = conversation.contact.cpr_first_aid.label
           - if @conversation.contact.skin_test
-            .channel-header-info-item data-toggle="tooltip" data-placement="right" title== conversation.contact.skin_test.label
+            .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
+              = conversation.contact.skin_test.label
       .channel-title-info
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
