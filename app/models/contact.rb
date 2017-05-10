@@ -22,8 +22,27 @@ class Contact < ApplicationRecord
   def self.candidacy_filter(filter_params)
     return current_scope unless filter_params.present?
 
-    joins(person: :candidacy)
-      .where(people: { 'candidacies' => filter_params })
+    if filter_params[:availability].present?
+      if filter_params[:availability].include?('live_in')
+        filter_params[:live_in] = true
+        filter_params[:availability] = filter_params[:availability] - ['live_in']
+        filter_params.delete(:availability) if filter_params[:availability].blank?
+      elsif filter_params[:availability].include?('hourly_pm') || filter_params[:availability].include?('hourly_am')
+        filter_params[:availability] << 'hourly'
+      end
+    end
+
+    if filter_params[:availability].present? && filter_params[:live_in].present?
+      availabilities = filter_params[:availability].map { |a| Candidacy.availabilities[a] }
+      filters = "(\"candidacies\".\"availability\" IN (#{availabilities.join(',')}) OR \"candidacies\".\"live_in\" = ?)"
+      filters = sanitize_sql_array([filters, filter_params[:live_in]])
+
+      joins(person: :candidacy)
+        .where(filters)
+    else
+      joins(person: :candidacy)
+        .where(people: { 'candidacies' => filter_params })
+    end
   end
 
   def self.zipcode_filter(filter_params)

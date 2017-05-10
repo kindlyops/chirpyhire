@@ -1,13 +1,13 @@
 class Question::Availability < Question::MultipleChoice
   def question
-    'What hourly shifts are you interested in?'
+    'What shifts are you interested in?'
   end
 
   def choices
     {
       a: 'Morning (AM) shifts are great!',
       b: 'Evening (PM) shifts are great!',
-      c: "I'm wide open for any hourly shifts!"
+      c: "I'm wide open for AM or PM shifts!"
     }
   end
 

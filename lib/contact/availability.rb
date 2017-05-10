@@ -2,9 +2,9 @@ class Contact::Availability < Contact::Attribute
   def self.humanize_attributes
     {
       live_in: 'Live-In',
-      hourly: 'Hourly',
-      hourly_am: 'Hourly - AM',
-      hourly_pm: 'Hourly - PM',
+      hourly: 'AM/PM',
+      hourly_am: 'AM',
+      hourly_pm: 'PM',
       open: 'Open'
     }.with_indifferent_access
   end

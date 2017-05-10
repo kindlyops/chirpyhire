@@ -53,6 +53,7 @@ header.chat-header
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Experience
+        .channel-header-info
           - if @conversation.contact.transportation.present?
             .channel-header-info-item
               = link_to caregivers_path(transportation: [conversation.contact.transportation.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.transportation.tooltip_label} transportation." do

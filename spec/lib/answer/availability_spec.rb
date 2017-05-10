@@ -70,7 +70,7 @@ RSpec.describe Answer::Availability do
        "C\nJazz", "C.\nJazz"].each do |body|
         let(:message) { create(:message, body: body) }
 
-        it 'is open' do
+        it 'is hourly' do
           expect(subject.attribute(message)[:availability]).to eq(:hourly)
         end
       end

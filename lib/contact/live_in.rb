@@ -7,6 +7,10 @@ class Contact::LiveIn < Contact::Attribute
     candidacy.live_in.present?.to_s
   end
 
+  def stat
+    ' · Live-In' if candidacy.live_in
+  end
+
   def humanize_attribute(*)
     label
   end

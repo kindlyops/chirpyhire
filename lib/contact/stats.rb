@@ -5,6 +5,7 @@ class Contact::Stats < Contact::Attribute
     "#{Contact::Certification.new(contact)} · "\
     "#{Contact::Experience.new(contact)} · "\
     "#{Contact::Zipcode.new(contact)}"\
-    " · #{Contact::Availability.new(contact)}"
+    " · #{Contact::Availability.new(contact)}"\
+    "#{Contact::LiveIn.new(contact).stat}"
   end
 end

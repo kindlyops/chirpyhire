@@ -3,7 +3,7 @@ class Answer::Availability < Answer::MultipleChoice
     {
       'Morning (AM) shifts are great!' => :hourly_am,
       'Evening (PM) shifts are great!' => :hourly_pm,
-      "I'm wide open for any hourly shifts!" => :hourly
+      "I'm wide open for AM or PM shifts!" => :hourly
     }
   end
 
