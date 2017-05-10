@@ -18,4 +18,14 @@ class Person::Availability < Person::Attribute
       open: 'fa-flag-checkered'
     }.with_indifferent_access
   end
+
+  def self.tooltip_labels
+    {
+      live_in: 'looking for live-in shifts',
+      hourly: 'looking for hourly shifts',
+      hourly_am: 'looking for AM shifts',
+      hourly_pm: 'looking for PM shifts',
+      open: 'looking for any shift'
+    }.with_indifferent_access
+  end
 end

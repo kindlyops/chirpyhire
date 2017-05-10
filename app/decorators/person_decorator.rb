@@ -3,6 +3,23 @@ class PersonDecorator < Draper::Decorator
 
   include HeroPatternable
 
+  def broad_query_params
+    {
+      zipcode: candidacy_zipcode.query,
+      certification: [certification.query].compact
+    }.delete_if { |_k, v| v.blank? }
+  end
+
+  def near_query_params
+    near_params.delete_if { |_k, v| v.blank? }
+  end
+
+  def near_params
+    broad_query_params.merge(transportation: [transportation.query].compact,
+                             availability: [availability.query].compact,
+                             experience: [experience.query].compact)
+  end
+
   def my_caregiver?
     object.contacts.where(organization: h.current_organization).exists?
   end
