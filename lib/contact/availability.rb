@@ -21,7 +21,7 @@ class Contact::Availability < Contact::Attribute
 
   def query_array
     if query == 'hourly'
-      ['hourly_am', 'hourly_pm']
+      %w(hourly_am hourly_pm)
     else
       [query]
     end

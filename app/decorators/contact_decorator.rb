@@ -11,7 +11,7 @@ class ContactDecorator < Draper::Decorator
   end
 
   def near_query_params
-    near_params.delete_if { |_k, v| v.blank? }
+    near_params.delete_if { |_, v| v.blank? }
   end
 
   def live_in
@@ -74,7 +74,11 @@ class ContactDecorator < Draper::Decorator
 
   def near_params
     broad_query_params.merge(transportation: [transportation.query].compact,
-                             availability: [availability.query].compact,
+                             availability: availabilities.compact,
                              experience: [experience.query].compact)
+  end
+
+  def availabilities
+    availability.query_array.push(live_in.query)
   end
 end

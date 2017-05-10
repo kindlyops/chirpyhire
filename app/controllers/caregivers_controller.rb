@@ -33,7 +33,43 @@ class CaregiversController < ApplicationController
   def candidacy_params
     result = permitted_params.to_h.except(:state, :city, :county, :zipcode)
     result[:availability] = (result[:availability] | hourly_params) if hourly?
+    result = handle_live_in_params(result)
+    handle_live_in_or_hourly(result)
+  end
+
+  def handle_live_in_params(result)
+    return result unless result[:availability].present?
+    if result[:availability].include?('live_in')
+      result[:live_in] = true
+      result[:availability] = result[:availability] - ['live_in']
+      result.delete(:availability) if result[:availability].blank?
+    end
+
     result
+  end
+
+  def handle_live_in_or_hourly(result)
+    return hours(result) unless complex_availability?(result)
+
+    availabilities = result[:availability].map(&method(:enum_availabilities))
+    sanitize_sql_array([availability_clause(availabilities), result[:live_in]])
+  end
+
+  def availability_clause(availabilities)
+    "(\"candidacies\".\"availability\" IN (#{availabilities.join(',')}) OR"\
+    ' "candidacies"."live_in" = ?)'
+  end
+
+  def enum_availabilities(availability)
+    Candidacy.availabilities[availability]
+  end
+
+  def complex_availability?(result)
+    result[:availability].present? && result[:live_in].present?
+  end
+
+  def hours(result)
+    { people: { 'candidacies' => result } }
   end
 
   def hourly?
