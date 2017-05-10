@@ -7,11 +7,11 @@ header.chat-header
             span = @conversation.contact.handle
         .channel-header-info
           .channel-header-info-item
-            = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Near Match: View caregivers with the same zipcode, certification, availability, experience, and transportation.' do
+            = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'View nearly identical caregivers.' do
               i.fa.fa-fw.fa-bullseye.mr-1
               | Near
           .channel-header-info-item
-            = link_to caregivers_path(conversation.contact.broad_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Broad Match: View caregivers with the same zipcode and certification.' do
+            = link_to caregivers_path(conversation.contact.broad_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'View broadly similar caregivers.' do
               i.fa.fa-fw.fa-dot-circle-o.mr-1
               | Broad
           - if @conversation.contact.candidacy_zipcode.present?

@@ -6,18 +6,18 @@ class ContactDecorator < Draper::Decorator
   def broad_query_params
     {
       zipcode: candidacy_zipcode.query,
-      certification: [certification.query]
-    }
+      certification: [certification.query].compact
+    }.delete_if { |k, v| v.blank? }
   end
 
   def near_query_params
     {
       zipcode: candidacy_zipcode.query,
-      certification: [certification.query],
-      transportation: [transportation.query],
-      availability: [availability.query],
-      experience: [experience.query]
-    }
+      certification: [certification.query].compact,
+      transportation: [transportation.query].compact,
+      availability: [availability.query].compact,
+      experience: [experience.query].compact
+    }.delete_if { |k, v| v.blank? }
   end
 
   def joined_at
