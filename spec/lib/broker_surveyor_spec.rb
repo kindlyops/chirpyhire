@@ -231,7 +231,7 @@ RSpec.describe BrokerSurveyor do
                 allow(subject.broker_survey).to receive(:ask)
                 expect {
                   subject.consider_answer(inquiry, message)
-                }.to change { broker_candidacy.reload.availability }.to('hourly_am')
+                }.to change { broker_candidacy.reload.availability }.to('hourly_pm')
               end
             end
 

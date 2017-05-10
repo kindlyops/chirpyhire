@@ -41,6 +41,7 @@ class BrokerSurvey
     {
       certification: certification,
       availability: availability,
+      live_in: live_in,
       experience: experience,
       transportation: transportation,
       zipcode: zipcode,
@@ -75,7 +76,8 @@ class BrokerSurvey
     {
       nil => certification,
       certification: availability,
-      availability: experience,
+      availability: live_in,
+      live_in: experience,
       experience: transportation,
       transportation: zipcode,
       zipcode: cpr_first_aid,
@@ -93,6 +95,10 @@ class BrokerSurvey
 
   def availability
     Question::Availability.new(broker_contact)
+  end
+
+  def live_in
+    Question::LiveIn.new(broker_contact)
   end
 
   def transportation

@@ -6,8 +6,8 @@ RSpec.describe Answer::Availability do
   subject { Answer::Availability.new(question) }
 
   describe '#valid?' do
-    ['Live in', 'Live-In', 'am', 'pm', 'open', 'A Live in',
-     'C hourly', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'B hourly part time'].each do |body|
+    ['hourly', 'am', 'pm', 'open', 'A hourly',
+     'B hourly', 'A)', 'A.', "A\nJazz", "A.\nJazz", 'B hourly part time'].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -36,14 +36,14 @@ RSpec.describe Answer::Availability do
         let(:message) { create(:message, body: body) }
 
         it 'is live_in' do
-          expect(subject.attribute(message)[:availability]).to eq(:live_in)
+          expect(subject.attribute(message)[:availability]).not_to eq(:live_in)
         end
       end
     end
 
     context 'hourly am' do
-      ['B hourly', 'am', 'B)', 'B.', 'B hourly part time',
-       "B\nJazz", "B.\nJazz"].each do |body|
+      ['A hourly', 'am', 'A)', 'A.', 'A hourly part time',
+       "A\nJazz", "A.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
 
@@ -54,8 +54,8 @@ RSpec.describe Answer::Availability do
     end
 
     context 'hourly pm' do
-      ['C hourly', 'pm', 'C)', 'C.', 'C hourly part time',
-       "C\nJazz", "C.\nJazz"].each do |body|
+      ['B hourly', 'pm', 'B)', 'B.', 'B hourly part time',
+       "B\nJazz", "B.\nJazz"].each do |body|
 
         let(:message) { create(:message, body: body) }
 
@@ -66,18 +66,18 @@ RSpec.describe Answer::Availability do
     end
 
     context 'open' do
-      ['D open', 'Open', 'D)', 'D.',
-       "D\nJazz", "D.\nJazz"].each do |body|
+      ['C open', 'Open', 'C)', 'C.',
+       "C\nJazz", "C.\nJazz"].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is open' do
-          expect(subject.attribute(message)[:availability]).to eq(:open)
+          expect(subject.attribute(message)[:availability]).to eq(:hourly)
         end
       end
     end
 
     context 'invalid' do
-      ['Definitely, what location are you all hiring for?', 'hourly', 'no', 'nah', 'nope'].each do |body|
+      ['Definitely, what location are you all hiring for?', 'Live in', 'Live-In', 'no', 'nah', 'nope'].each do |body|
         context body do
           let(:message) { create(:message, body: body) }
 

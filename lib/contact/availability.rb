@@ -22,7 +22,7 @@ class Contact::Availability < Contact::Attribute
   def self.tooltip_labels
     {
       live_in: 'looking for live-in shifts',
-      hourly: 'looking for hourly shifts',
+      hourly: 'looking for any shift',
       hourly_am: 'looking for AM shifts',
       hourly_pm: 'looking for PM shifts',
       open: 'looking for any shift'

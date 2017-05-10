@@ -14,6 +14,10 @@ class ContactDecorator < Draper::Decorator
     near_params.delete_if { |_k, v| v.blank? }
   end
 
+  def live_in
+    Contact::LiveIn.new(object)
+  end
+
   def joined_at
     Contact::JoinedAt.new(object)
   end

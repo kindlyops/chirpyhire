@@ -62,6 +62,19 @@ header.chat-header
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Transportation
+          - if @conversation.contact.live_in
+            .channel-header-info-item
+              i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
+              = conversation.contact.live_in.label
+          - elsif @conversation.contact.live_in == false
+            .channel-header-info-item
+              i class=="fa fa-fw unknown mr-1 #{conversation.contact.live_in.icon_class}"
+              ' No
+              = conversation.contact.live_in.label
+          - else
+            .channel-header-info-item
+              i.fa.fa-fw.mr-1.unknown.fa-question
+              | Live-In
           - if @conversation.contact.cpr_first_aid
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
