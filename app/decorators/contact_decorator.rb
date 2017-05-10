@@ -3,14 +3,14 @@ class ContactDecorator < Draper::Decorator
   decorates_association :person
   delegate :hero_pattern_classes, to: :person
 
-  def close_query_params
+  def broad_query_params
     {
       zipcode: candidacy_zipcode.query,
       certification: [certification.query]
     }
   end
 
-  def exact_query_params
+  def near_query_params
     {
       zipcode: candidacy_zipcode.query,
       certification: [certification.query],
