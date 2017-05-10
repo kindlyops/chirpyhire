@@ -18,10 +18,10 @@ function initZipcodeSearch() {
         parser.href = $form.attr('action');
 
         var placeType = place.types[0];
-        var isZipcode = placeType === "postal_code";
-        var isState = placeType === "administrative_area_level_1";
-        var isCounty = placeType === "administrative_area_level_2";
-        var isCity = placeType === "locality";
+        var isZipcode = R.contains("postal_code", place.types);
+        var isState = R.contains("administrative_area_level_1", place.types);
+        var isCounty = R.contains("administrative_area_level_2", place.types);
+        var isCity = R.contains("locality", place.types) || R.contains("sublocality", place.types);
         var stateComponent = R.find(R.where({types: R.contains('administrative_area_level_1')}), place.address_components);
 
         if (isZipcode) {
@@ -98,6 +98,7 @@ function initLocationSearch() {
       $longitude.val(place.geometry.location.lng());
       $full_street_address.val(place.formatted_address);
       var city = R.find(R.where({types: R.contains('locality')}), place.address_components);
+      city = city || R.find(R.where({types: R.contains('sublocality')}), place.address_components);
       $city.val(city.long_name);
       var state = R.find(R.where({types: R.contains('administrative_area_level_1')}), place.address_components);
       $state.val(state.long_name);
