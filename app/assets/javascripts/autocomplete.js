@@ -128,7 +128,7 @@ function initLocationSearch() {
         e.preventDefault();
         $locationSearch.addClass('has-warning');
         $locationSearch.find('.form-control-feedback').remove();
-        $locationSearch.append('<div class="form-control-feedback">Please enter your address and select from the dropdown.</div>');
+        $locationSearch.append('<div class="form-control-feedback">Oops! We need a full street address.</div><div class="form-control-feedback">Please enter a full street address and select from the dropdown.</div>');
       }
     }
 
