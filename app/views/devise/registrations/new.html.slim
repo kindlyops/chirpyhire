@@ -24,8 +24,8 @@
           = o.text_field :name, required: true, class: "form-control"
         = o.fields_for :location, o.object.build_location do |l|
           .form-group#location-search
-            strong = label_tag :address, 'Organization location', class: 'col-form-label'
-            = text_field_tag :address, nil, required: true, placeholder: 'Local office address', class: 'form-control'
+            strong = label_tag :address, 'Office street address', class: 'col-form-label'
+            = text_field_tag :address, nil, required: true, placeholder: '123 Main St, Caretown, USA, 12345', class: 'form-control'
             small.form-text.text-muted We use your address to find a local phone number for your ChirpyHire account.
           = l.hidden_field :latitude
           = l.hidden_field :longitude

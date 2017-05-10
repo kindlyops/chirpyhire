@@ -7,17 +7,11 @@ class ContactDecorator < Draper::Decorator
     {
       zipcode: candidacy_zipcode.query,
       certification: [certification.query].compact
-    }.delete_if { |k, v| v.blank? }
+    }.delete_if { |_k, v| v.blank? }
   end
 
   def near_query_params
-    {
-      zipcode: candidacy_zipcode.query,
-      certification: [certification.query].compact,
-      transportation: [transportation.query].compact,
-      availability: [availability.query].compact,
-      experience: [experience.query].compact
-    }.delete_if { |k, v| v.blank? }
+    near_params.delete_if { |_k, v| v.blank? }
   end
 
   def joined_at
@@ -70,5 +64,13 @@ class ContactDecorator < Draper::Decorator
 
   def cpr_first_aid
     Contact::CprFirstAid.new(object)
+  end
+
+  private
+
+  def near_params
+    broad_query_params.merge(transportation: [transportation.query].compact,
+                             availability: [availability.query].compact,
+                             experience: [experience.query].compact)
   end
 end
