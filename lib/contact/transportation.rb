@@ -17,8 +17,8 @@ class Contact::Transportation < Contact::Attribute
 
   def self.tooltip_labels
     {
-      personal_transportation: 'using personal',
-      public_transportation: 'using public',
+      personal_transportation: 'with personal',
+      public_transportation: 'with public',
       no_transportation: 'without'
     }.with_indifferent_access
   end
