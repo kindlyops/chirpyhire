@@ -16,4 +16,13 @@ class Contact::Experience < Contact::Attribute
       no_experience: 'fa-battery-empty'
     }.with_indifferent_access
   end
+
+  def self.tooltip_labels
+    {
+      less_than_one: 'with 0 - 1 years of',
+      one_to_five: 'with 1 - 5 years of',
+      six_or_more: 'with 6+ years of',
+      no_experience: 'without'
+    }.with_indifferent_access
+  end
 end
