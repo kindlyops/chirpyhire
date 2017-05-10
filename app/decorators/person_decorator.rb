@@ -3,6 +3,14 @@ class PersonDecorator < Draper::Decorator
 
   include HeroPatternable
 
+  def my_caregiver?
+    object.contacts.where(organization: h.current_organization).exists?
+  end
+
+  def network?
+    !my_caregiver?
+  end
+
   def joined_at
     Person::JoinedAt.new(object)
   end
