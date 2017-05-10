@@ -7,7 +7,7 @@ class ContactDecorator < Draper::Decorator
     {
       zipcode: candidacy_zipcode.query,
       certification: [certification.query].compact
-    }.delete_if { |_k, v| v.blank? }
+    }.delete_if { |_, v| v.blank? }
   end
 
   def near_query_params
