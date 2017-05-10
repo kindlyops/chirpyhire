@@ -17,20 +17,24 @@ class Contact::Attribute
     humanize_attributes[attribute]
   end
 
+  def query
+    candidacy.send(attribute)
+  end
+
   def attribute
     self.class.to_s.demodulize.underscore.to_sym
   end
 
   def label
-    humanize_attribute(candidacy.send(attribute)) || 'Unknown'
+    humanize_attribute(query) || 'Unknown'
   end
 
   def icon_class
-    icon_classes[candidacy.send(attribute)] || 'fa-question'
+    icon_classes[query] || 'fa-question'
   end
 
   def button_class
-    return 'btn-secondary' if candidacy.send(attribute).present?
+    return 'btn-secondary' if query.present?
 
     'btn-outline-secondary'
   end
