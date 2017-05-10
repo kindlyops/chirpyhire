@@ -14,4 +14,12 @@ class Contact::Transportation < Contact::Attribute
       no_transportation: 'fa-thumbs-o-up'
     }.with_indifferent_access
   end
+
+  def self.tooltip_labels
+    {
+      personal_transportation: 'using personal',
+      public_transportation: 'using public',
+      no_transportation: 'without'
+    }.with_indifferent_access
+  end
 end

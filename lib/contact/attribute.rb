@@ -17,6 +17,18 @@ class Contact::Attribute
     humanize_attributes[attribute]
   end
 
+  def tooltip_label
+    tooltip_labels[query] || label
+  end
+
+  def tooltip_labels
+    self.class.tooltip_labels
+  end
+
+  def self.tooltip_labels
+    {}
+  end
+
   def query
     candidacy.send(attribute)
   end

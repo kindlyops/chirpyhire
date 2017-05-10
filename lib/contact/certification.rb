@@ -18,4 +18,14 @@ class Contact::Certification < Contact::Attribute
       no_certification: 'fa-graduation-cap'
     }.with_indifferent_access
   end
+
+  def self.tooltip_labels
+    {
+      pca: 'PCAs',
+      cna: 'CNAs',
+      hha: 'HHAs',
+      other_certification: 'RNs, LPNs, other certifications',
+      no_certification: 'caregivers without certification'
+    }.with_indifferent_access
+  end
 end
