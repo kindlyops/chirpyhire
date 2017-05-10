@@ -1,6 +1,10 @@
-class Contact::Zipcode < Contact::Attribute
+class Person::ZipCode < Person::Attribute
   def humanize_attribute(*)
     candidacy.zipcode
+  end
+
+  def attribute
+    :zipcode
   end
 
   def icon_class

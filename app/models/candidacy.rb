@@ -3,7 +3,7 @@ class Candidacy < ApplicationRecord
   belongs_to :person
   belongs_to :contact, optional: true
 
-  delegate :actively_subscribed_to?, :subscribed_to, :handle,
+  delegate :actively_subscribed_to?, :subscribed_to,
            :phone_number, :contacts, to: :person
 
   enum state: {

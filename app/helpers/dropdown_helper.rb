@@ -10,7 +10,7 @@ module DropdownHelper
   private
 
   def klasses
-    [Contact::Certification, Contact::Experience,
-     Contact::Availability, Contact::Transportation]
+    [Person::Certification, Person::Experience,
+     Person::Availability, Person::Transportation, Person::Source]
   end
 end

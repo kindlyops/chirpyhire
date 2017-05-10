@@ -4,6 +4,7 @@ RSpec.describe 'Caregivers' do
   let(:account) { create(:account) }
 
   before do
+    create(:broker)
     sign_in(account)
   end
 

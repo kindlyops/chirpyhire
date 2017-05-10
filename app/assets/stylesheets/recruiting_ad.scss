@@ -5,13 +5,6 @@
     }
   }
 
-  $craigslist: #551A8B;
-  $facebook: #3B5998;
-  $indeed: #2164F3;
-  $jobcom: #005F9E;
-  $mycnajobs: #E91E63;
-  $monster: #5D2F8C;
-
   .craigslist {
     @include button-variant($white, $craigslist, darken($craigslist, 10%));
   }

@@ -1,0 +1,22 @@
+.card
+  div class=="card-img-top #{candidate.hero_pattern_classes}"
+  .card-block
+    .btn.btn-success.disabled.float-right
+      span Coming Soon
+      i.fa.fa-comment.ml-2
+    h4.card-title
+      i.fa.fa-lock.mr-2
+      | (···) ··· - ····
+    h6.card-subtitle.mb-2.text-muted = candidate.handle
+  .card-block
+    p.card-text.d-flex.justify-content-between
+      span = candidate.stats
+      i.ml-1.fa.fa-facebook-official.fa-2x
+  .card-footer
+    p.card-text.d-flex.justify-content-between
+      small.text-muted
+        ' Last active
+        = candidate.last_active_at
+      small.text-muted
+        ' Joined
+        = candidate.joined_at

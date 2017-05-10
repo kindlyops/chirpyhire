@@ -2,11 +2,11 @@
   color: $gray-light;
 }
 
-.fa-bus, .fa-trophy, .fa-star-half-o, .fa-key, .fa-sun-o {
+.fa-bus, .fa-trophy, .fa-lock, .fa-star-half-o, .fa-key, .fa-sun-o {
   color: $yellow;
 }
 
-.fa-id-card, .fa-car, .fa-clock-o {
+.fa-id-card, .fa-car, .fa-clock-o, .fa-group {
   color: $purple;
 }
 
@@ -20,6 +20,14 @@
 
 .fa-battery-half, .fa-battery-quarter {
   color: $orange;
+}
+
+.fa-facebook-official {
+  color: $facebook;
+
+  &.disabled {
+    color: $facebook-disabled;
+  }
 }
 
 .fa-heart-o, .fa-heart, .fa-heartbeat, .fa-medkit, .fa-battery-empty,
