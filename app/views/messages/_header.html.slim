@@ -67,15 +67,12 @@ header.chat-header
               = link_to caregivers_path(availability: [conversation.contact.live_in.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.live_in.tooltip_label}." do
                 i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
                 = conversation.contact.live_in.label
-        .channel-header-info
           - if @conversation.contact.cpr_first_aid
-            .channel-header-info-item
+            .channel-header-info-item data-toggle="tooltip" data-placement="right" title== conversation.contact.cpr_first_aid.label
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
-              = conversation.contact.cpr_first_aid.label
           - if @conversation.contact.skin_test
-            .channel-header-info-item
+            .channel-header-info-item data-toggle="tooltip" data-placement="right" title== conversation.contact.skin_test.label
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
-              = conversation.contact.skin_test.label
       .channel-title-info
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
