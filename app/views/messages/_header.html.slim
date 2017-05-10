@@ -6,55 +6,42 @@ header.chat-header
           .channel-name
             span = @conversation.contact.handle
         .channel-header-info
-          .channel-header-info-item
-            = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Near Match: View caregivers with the same zipcode, certification, availability, experience, and transportation.' do
-              i.fa.fa-fw.fa-bullseye.mr-1
-              | Near
-          .channel-header-info-item
-            = link_to caregivers_path(conversation.contact.broad_query_params), data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Broad Match: View caregivers with the same zipcode and certification.' do
-              i.fa.fa-fw.fa-dot-circle-o.mr-1
-              | Broad
           - if @conversation.contact.candidacy_zipcode.present?
             .channel-header-info-item
-              = link_to caregivers_path(zipcode: conversation.contact.candidacy_zipcode.query), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers in #{conversation.contact.candidacy_zipcode.tooltip_label}." do
-                i.fa.fa-fw.mr-1.fa-map-marker
-                = conversation.contact.candidacy_zipcode.label
+              i.fa.fa-fw.mr-1.fa-map-marker
+              = conversation.contact.candidacy_zipcode.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Location
           - if @conversation.contact.certification.present?
             .channel-header-info-item
-              = link_to caregivers_path(certification: [conversation.contact.certification.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View #{conversation.contact.certification.tooltip_label}." do
-                i class=="fa fa-fw mr-1 #{conversation.contact.certification.icon_class}"
-                = conversation.contact.certification.label
+              i class=="fa fa-fw mr-1 #{conversation.contact.certification.icon_class}"
+              = conversation.contact.certification.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Certification
           - if @conversation.contact.availability.present?
             .channel-header-info-item
-              = link_to caregivers_path(availability: [conversation.contact.availability.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.availability.tooltip_label}." do
-                i class=="fa fa-fw mr-1 #{conversation.contact.availability.icon_class}"
-                = conversation.contact.availability.label
+              i class=="fa fa-fw mr-1 #{conversation.contact.availability.icon_class}"
+              = conversation.contact.availability.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Availability
           - if @conversation.contact.experience.present?
             .channel-header-info-item
-              = link_to caregivers_path(experience: [conversation.contact.experience.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.experience.tooltip_label} experience." do
-                i class=="fa fa-fw mr-1 #{conversation.contact.experience.icon_class}"
-                = conversation.contact.experience.label
+              i class=="fa fa-fw mr-1 #{conversation.contact.experience.icon_class}"
+              = conversation.contact.experience.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Experience
           - if @conversation.contact.transportation.present?
             .channel-header-info-item
-              = link_to caregivers_path(transportation: [conversation.contact.transportation.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.transportation.tooltip_label} transportation." do
-                i class=="fa fa-fw mr-1 #{conversation.contact.transportation.icon_class}"
-                = conversation.contact.transportation.label
+              i class=="fa fa-fw mr-1 #{conversation.contact.transportation.icon_class}"
+              = conversation.contact.transportation.label
           - else
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
