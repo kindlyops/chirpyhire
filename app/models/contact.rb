@@ -22,7 +22,7 @@ class Contact < ApplicationRecord
   def self.candidacy_filter(filter_params)
     return current_scope unless filter_params.present?
 
-    joins(person: :candidacy)
+    includes(person: :candidacy)
       .where(people: { 'candidacies' => filter_params })
   end
 
