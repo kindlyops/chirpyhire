@@ -11,6 +11,6 @@ module DropdownHelper
 
   def klasses
     [Person::Certification, Person::Experience,
-     Person::Availability, Person::Transportation]
+     Person::Availability, Person::Transportation, Person::Source]
   end
 end

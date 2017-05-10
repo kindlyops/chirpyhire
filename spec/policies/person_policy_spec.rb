@@ -19,6 +19,30 @@ RSpec.describe PersonPolicy do
       it 'includes the people' do
         expect(resolved_scope).to include(*contact_people)
       end
+
+      context 'that are also contacts on other organizations' do
+        let!(:other_contact_people) do
+          people.each do |person|
+            create(:contact, person: person)
+          end
+        end
+
+        it 'does not have duplicates' do
+          expect(resolved_scope.count).to eq(contact_people.count)
+        end
+      end
+
+      context 'that are also broker_contacts' do
+        before do
+          people.each do |person|
+            create(:broker_contact, person: person)
+          end
+        end
+
+        it 'does not have duplicates' do
+          expect(resolved_scope.count).to eq(contact_people.count)
+        end
+      end
     end
 
     context 'people that have broker_contacts' do
