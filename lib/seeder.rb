@@ -89,7 +89,8 @@ class Seeder
   end
 
   def seed_broker_questions(contact)
-    BrokerSurvey.new(contact.person.broker_candidacy).questions.each do |category, question|
+    broker_survey = BrokerSurvey.new(contact.person.broker_candidacy)
+    broker_survey.questions.each do |category, question|
       result = seed_broker_question_and_answer(contact, category, question)
       break unless result.present?
     end
@@ -308,9 +309,12 @@ class Seeder
     puts 'Created Account'
   end
 
+  def zipcodes
+    %w(30319 30324 30327 30328 30329
+       30338 30339 30340 30341 30342)
+  end
+
   def seed_zipcodes_for_people
-    zipcodes = %w(30319 30324 30327 30328 30329
-                  30338 30339 30340 30341 30342)
     zipcodes.each do |zipcode|
       FactoryGirl.create(:zipcode, zipcode.to_sym)
     end

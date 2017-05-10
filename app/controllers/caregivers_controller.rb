@@ -21,10 +21,10 @@ class CaregiversController < ApplicationController
   end
 
   def filter_source(scope)
-    return scope unless source_params.count == 1
-    if source_params.first == "my_caregivers"
+    return scope unless source_params && source_params.count == 1
+    if source_params.first == 'my_caregivers'
       scope.where('contacts.organization_id = ?', current_organization.id)
-    elsif source_params.first == "network"
+    elsif source_params.first == 'network'
       scope.where('broker_contacts.id IS NOT NULL')
     else
       scope
@@ -47,7 +47,10 @@ class CaregiversController < ApplicationController
   end
 
   def candidacy_params
-    result = permitted_params.to_h.except(:source, :state, :city, :county, :zipcode)
+    result = permitted_params.to_h.except(
+      :source, :state, :city, :county, :zipcode
+    )
+
     result[:availability] = (result[:availability] | hourly_params) if hourly?
     result
   end
