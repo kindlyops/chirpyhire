@@ -36,6 +36,13 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
         .dropdown-menu aria-labelledby="experience"
           .dropdown-item
             label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'no_experience' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text No Experience
+                i.fa.fa-battery-empty.fa-fw.ml-2
+          .dropdown-item
+            label.custom-control.custom-checkbox
               = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'less_than_one' }
               span.custom-control-indicator
               span.custom-control-description

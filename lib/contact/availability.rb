@@ -19,6 +19,14 @@ class Contact::Availability < Contact::Attribute
     }.with_indifferent_access
   end
 
+  def query_array
+    if query == 'hourly'
+      ['hourly_am', 'hourly_pm']
+    else
+      [query]
+    end
+  end
+
   def self.tooltip_labels
     {
       live_in: 'looking for live-in shifts',

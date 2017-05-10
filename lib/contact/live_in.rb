@@ -11,6 +11,14 @@ class Contact::LiveIn < Contact::Attribute
     ' · Live-In' if candidacy.live_in
   end
 
+  def query
+    'live_in'
+  end
+
+  def tooltip_label
+    'looking for live-in shifts'
+  end
+
   def humanize_attribute(*)
     label
   end

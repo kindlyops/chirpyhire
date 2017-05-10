@@ -37,7 +37,7 @@ header.chat-header
               | Certification
           - if @conversation.contact.availability.present?
             .channel-header-info-item
-              = link_to caregivers_path(availability: [conversation.contact.availability.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.availability.tooltip_label}." do
+              = link_to caregivers_path(availability: conversation.contact.availability.query_array), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.availability.tooltip_label}." do
                 i class=="fa fa-fw mr-1 #{conversation.contact.availability.icon_class}"
                 = conversation.contact.availability.label
           - else
@@ -53,7 +53,6 @@ header.chat-header
             .channel-header-info-item
               i.fa.fa-fw.mr-1.unknown.fa-question
               | Experience
-        .channel-header-info
           - if @conversation.contact.transportation.present?
             .channel-header-info-item
               = link_to caregivers_path(transportation: [conversation.contact.transportation.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.transportation.tooltip_label} transportation." do
@@ -65,43 +64,18 @@ header.chat-header
               | Transportation
           - if @conversation.contact.live_in
             .channel-header-info-item
-              i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
-              = conversation.contact.live_in.label
-          - elsif @conversation.contact.live_in == false
-            .channel-header-info-item
-              i class=="fa fa-fw unknown mr-1 #{conversation.contact.live_in.icon_class}"
-              ' No
-              = conversation.contact.live_in.label
-          - else
-            .channel-header-info-item
-              i.fa.fa-fw.mr-1.unknown.fa-question
-              | Live-In
+              = link_to caregivers_path(availability: [conversation.contact.live_in.query]), data: { toggle: 'tooltip', placement: 'bottom' }, title: "View caregivers #{conversation.contact.live_in.tooltip_label}." do
+                i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
+                = conversation.contact.live_in.label
+        .channel-header-info
           - if @conversation.contact.cpr_first_aid
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
               = conversation.contact.cpr_first_aid.label
-          - elsif @conversation.contact.cpr_first_aid == false
-            .channel-header-info-item
-              i class=="fa fa-fw unknown mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
-              ' No
-              = conversation.contact.cpr_first_aid.label
-          - else
-            .channel-header-info-item
-              i.fa.fa-fw.mr-1.unknown.fa-question
-              | CPR / First-Aid
           - if @conversation.contact.skin_test
             .channel-header-info-item
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
               = conversation.contact.skin_test.label
-          - elsif @conversation.contact.skin_test == false
-            .channel-header-info-item
-              i class=="fa fa-fw unknown mr-1 #{conversation.contact.skin_test.icon_class}"
-              ' No
-              = conversation.contact.skin_test.label
-          - else
-            .channel-header-info-item
-              i.fa.fa-fw.mr-1.unknown.fa-question
-              | Skin Test
       .channel-title-info
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
