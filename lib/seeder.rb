@@ -5,6 +5,7 @@ class Seeder
     seed_account
     seed_not_ready_contacts
     seed_candidate_contacts
+    seed_broker_contacts
     seed_zipcodes_for_people
   end
 
@@ -20,13 +21,17 @@ class Seeder
     candidate_contacts unless organization.contacts.candidate.exists?
   end
 
+  def seed_broker_contacts
+    broker_contacts unless Broker.first.broker_contacts.exists?
+  end
+
   def not_ready_contacts
     seed_demo_contact
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :not_ready,
       organization: organization
     )
-    contacts.each(&method(:seed_messages))
+    contacts.each(&method(:seed_contact_messages))
   end
 
   def seed_demo_contact
@@ -40,7 +45,7 @@ class Seeder
       organization: organization,
       phone_number: ENV.fetch('DEMO_PHONE')
     )
-    seed_messages(contact)
+    seed_contact_messages(contact)
   end
 
   def seed_demo_person
@@ -54,10 +59,23 @@ class Seeder
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :candidate,
       organization: organization
     )
-    contacts.each(&method(:seed_messages))
+    contacts.each(&method(:seed_contact_messages))
   end
 
-  def seed_messages(contact)
+  def broker_contacts
+    contacts = FactoryGirl.create_list(
+      :broker_contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :broker_candidate,
+      broker: Broker.first
+    )
+    contacts.each(&method(:seed_broker_contact_messages))
+  end
+
+  def seed_broker_contact_messages(contact)
+    seed_broker_start(contact)
+    seed_broker_thank_you(contact) if seed_broker_questions(contact)
+  end
+
+  def seed_contact_messages(contact)
     IceBreaker.call(contact)
     seed_start(contact)
     seed_thank_you(contact) if seed_questions(contact)
@@ -70,10 +88,35 @@ class Seeder
     end
   end
 
+  def seed_broker_questions(contact)
+    BrokerSurvey.new(contact.person.broker_candidacy).questions.each do |category, question|
+      result = seed_broker_question_and_answer(contact, category, question)
+      break unless result.present?
+    end
+  end
+
+  def seed_broker_question_and_answer(contact, category, question)
+    person = contact.person
+    seed_broker_question(person, question)
+    seed_broker_answer(person, category)
+  end
+
   def seed_question_and_answer(contact, category, question)
     person = contact.person
     seed_question(person, question)
     seed_answer(person, category)
+  end
+
+  def seed_broker_start(contact)
+    person = contact.person
+    person.sent_messages.create!(
+      body: 'Start', sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'inbound',
+      sender: Chirpy.person,
+      broker: Broker.first
+    )
   end
 
   def seed_start(contact)
@@ -101,6 +144,19 @@ class Seeder
     )
   end
 
+  def seed_broker_question(person, question)
+    body = question.body
+    person.received_messages.create!(
+      body: body,
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'outbound-api',
+      sender: Chirpy.person,
+      broker: Broker.first
+    )
+  end
+
   def seed_thank_you(contact)
     return unless contact.candidate?
     body = Notification::ThankYou.new(contact).body
@@ -114,8 +170,31 @@ class Seeder
     )
   end
 
+  def seed_broker_thank_you(contact)
+    return unless contact.person.broker_candidacy.complete?
+    body = Notification::Brokers::ThankYou.new(contact).body
+    contact.person.received_messages.create!(
+      body: body, sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'outbound-api',
+      sender: Chirpy.person,
+      broker: Broker.first
+    )
+  end
+
   def seed_answer(person, category)
     choice = person.candidacy.send(category.to_sym)
+    return if choice.nil?
+    choice = choice.to_sym if choice.respond_to?(:to_sym)
+    answer = "Answer::#{category.camelcase}".constantize.new({})
+
+    body = answer_body(answer, choice, category)
+    create_broker_answer(person, body)
+  end
+
+  def seed_broker_answer(person, category)
+    choice = person.broker_candidacy.send(category.to_sym)
     return if choice.nil?
     choice = choice.to_sym if choice.respond_to?(:to_sym)
     answer = "Answer::#{category.camelcase}".constantize.new({})
@@ -143,6 +222,18 @@ class Seeder
       direction: 'inbound',
       sender: person,
       organization: organization
+    )
+  end
+
+  def create_broker_answer(person, body)
+    person.sent_messages.create!(
+      body: body,
+      sid: SecureRandom.uuid,
+      sent_at: DateTime.current,
+      external_created_at: DateTime.current,
+      direction: 'inbound',
+      sender: person,
+      broker: Broker.first
     )
   end
 
@@ -224,8 +315,10 @@ class Seeder
       FactoryGirl.create(:zipcode, zipcode.to_sym)
     end
     Person.find_each do |p|
-      next if p.candidacy.blank? || p.candidacy.zipcode.blank?
-      ZipcodeFetcher.call(p, p.candidacy.zipcode)
+      c = p.broker_candidacy || p.candidacy
+
+      next if c.blank? || c.zipcode.blank?
+      ZipcodeFetcher.call(p, c.zipcode)
     end
 
     puts 'Zipcodes Added'
