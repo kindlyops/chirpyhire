@@ -49,15 +49,17 @@ class CaregiversController < ApplicationController
   end
 
   def handle_live_in_or_hourly(result)
-    return hours(result) unless complex_availability?(result)
+    return standard_candidacy(result) unless complex_availability?(result)
 
-    availabilities = result[:availability].map(&method(:enum_availabilities))
-    sanitize_sql_array([availability_clause(availabilities), result[:live_in]])
+    availabilities = result[:availability]
+                     .map(&method(:enum_availabilities)).compact
+
+    availability_clause(availabilities)
   end
 
   def availability_clause(availabilities)
     "(\"candidacies\".\"availability\" IN (#{availabilities.join(',')}) OR"\
-    ' "candidacies"."live_in" = ?)'
+    ' "candidacies"."live_in" = \'t\')'
   end
 
   def enum_availabilities(availability)
@@ -68,7 +70,7 @@ class CaregiversController < ApplicationController
     result[:availability].present? && result[:live_in].present?
   end
 
-  def hours(result)
+  def standard_candidacy(result)
     { people: { 'candidacies' => result } }
   end
 

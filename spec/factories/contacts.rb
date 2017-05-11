@@ -105,5 +105,37 @@ FactoryGirl.define do
         contact.candidacy.update(certification: 'cna')
       end
     end
+
+    trait :am do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly_am')
+      end
+    end
+
+    trait :pm do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly_pm')
+      end
+    end
+
+    trait :hourly do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly')
+      end
+    end
+
+    trait :live_in do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: true, availability: nil)
+      end
+    end
   end
 end
