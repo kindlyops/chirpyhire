@@ -2,7 +2,7 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   before_action :sync_message
 
   def create
-    if contact.subscribed?
+    if contact.subscribed? && contact.candidacy.started?
       AlreadySubscribedJob.perform_later(contact)
     else
       contact.subscribe
