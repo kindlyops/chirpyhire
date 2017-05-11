@@ -22,13 +22,9 @@ class BrokerAlreadySubscribed
 
   def already_subscribed
     <<~BODY
-      So great to hear from you!
+      Hey there!
 
-      You are already subscribed so no need to worry!
-
-      Is there anything I can help you with?
-
-      Hope you're having a great day,
+      How can I help?
 
       Chirpy
     BODY
