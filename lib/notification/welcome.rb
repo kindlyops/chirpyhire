@@ -2,7 +2,7 @@ class Notification::Welcome < Notification::Base
   def body
     <<~BODY.strip
       Hey there! #{sender_notice}
-      Want to join a team of "Chirpy" Caregivers?
+      Want to join the #{organization.name} team?
       Well, let's get started.
       Please tell us more about yourself.
     BODY
