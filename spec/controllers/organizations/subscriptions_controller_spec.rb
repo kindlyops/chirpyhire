@@ -33,22 +33,77 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
 
       context 'with a subscribed contact' do
         let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
-        it 'creates an AlreadySubscribedJob' do
-          expect {
-            post :create, params: params
-          }.to have_enqueued_job(AlreadySubscribedJob)
+
+        context 'and an in progress candidacy' do
+          before do
+            person.candidacy.update(state: :in_progress)
+          end
+
+          it 'creates an AlreadySubscribedJob' do
+            expect {
+              post :create, params: params
+            }.to have_enqueued_job(AlreadySubscribedJob)
+          end
+
+          it 'does not create a contact' do
+            expect {
+              post :create, params: params
+            }.not_to change { Contact.count }
+          end
+
+          it 'does not create an IceBreakerJob' do
+            expect {
+              post :create, params: params
+            }.not_to have_enqueued_job(IceBreakerJob)
+          end
         end
 
-        it 'does not create a contact' do
-          expect {
-            post :create, params: params
-          }.not_to change { Contact.count }
+        context 'and a completed candidacy' do
+          before do
+            person.candidacy.update(state: :complete)
+          end
+
+          it 'creates an AlreadySubscribedJob' do
+            expect {
+              post :create, params: params
+            }.to have_enqueued_job(AlreadySubscribedJob)
+          end
+
+          it 'does not create a contact' do
+            expect {
+              post :create, params: params
+            }.not_to change { Contact.count }
+          end
+
+          it 'does not create an IceBreakerJob' do
+            expect {
+              post :create, params: params
+            }.not_to have_enqueued_job(IceBreakerJob)
+          end
         end
 
-        it 'does not create an IceBreakerJob' do
-          expect {
-            post :create, params: params
-          }.not_to have_enqueued_job(IceBreakerJob)
+        context 'and a pending candidacy' do
+          before do
+            person.candidacy.update(state: :pending)
+          end
+
+          it 'does not create an AlreadySubscribedJob' do
+            expect {
+              post :create, params: params
+            }.not_to have_enqueued_job(AlreadySubscribedJob)
+          end
+
+          it 'does not create an IceBreakerJob' do
+            expect {
+              post :create, params: params
+            }.not_to have_enqueued_job(IceBreakerJob)
+          end
+
+          it 'does create a SurveyorJob' do
+            expect {
+              post :create, params: params
+            }.to have_enqueued_job(SurveyorJob)
+          end
         end
       end
     end
