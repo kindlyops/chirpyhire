@@ -22,15 +22,11 @@ class AlreadySubscribed
 
   def already_subscribed
     <<~BODY
-      So great to hear from you!
+      Hey there!
 
-      You are already subscribed so no need to worry!
+      How can I help?
 
-      Is there anything we can help you with?
-
-      Hope you're having a great day,
-
-      The #{organization.name} Team
+      Team #{organization.name}
     BODY
   end
 end
