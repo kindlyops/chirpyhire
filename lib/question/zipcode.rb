@@ -3,7 +3,7 @@ class Question::Zipcode < Question::Base
     <<~BODY
       What is your five-digit zipcode?
 
-      Let's get you jobs close to home!
+      This helps us find the best cases for you!
     BODY
   end
 
