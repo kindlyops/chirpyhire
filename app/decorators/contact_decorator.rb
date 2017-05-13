@@ -55,7 +55,7 @@ class ContactDecorator < Draper::Decorator
   end
 
   def candidacy_zipcode
-    Contact::Zipcode.new(object)
+    Contact::ZipCode.new(object)
   end
 
   def certification
