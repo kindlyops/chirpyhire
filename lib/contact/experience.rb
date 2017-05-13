@@ -13,7 +13,7 @@ class Contact::Experience < Contact::Attribute
       less_than_one: 'fa-battery-quarter',
       one_to_five: 'fa-battery-half',
       six_or_more: 'fa-battery-full',
-      no_experience: 'fa-battery-empty'
+      no_experience: 'fa-leaf'
     }.with_indifferent_access
   end
 
