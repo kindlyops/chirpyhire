@@ -13,7 +13,7 @@ class Question::Certification < Question::MultipleChoice
       b: 'Yes, HHA',
       c: 'Yes, PCA',
       d: 'Yes, Other (MA, LPN, RN, etc.)',
-      e: 'Not Yet, but I want to be!'
+      e: 'Not yet, but I want to be!'
     }
   end
 

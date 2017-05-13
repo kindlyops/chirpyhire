@@ -7,7 +7,7 @@ class Question::Transportation < Question::MultipleChoice
     {
       a: 'I have personal transportation',
       b: 'I use public transportation',
-      c: 'I do not have reliable transportation'
+      c: "I don't have a great way to get to work"
     }
   end
 

@@ -12,7 +12,7 @@ class Candidacy < ApplicationRecord
 
   enum inquiry: {
     experience: 0, skin_test: 1, availability: 2, transportation: 3,
-    zipcode: 4, cpr_first_aid: 5, certification: 6
+    zipcode: 4, cpr_first_aid: 5, certification: 6, live_in: 7
   }
 
   enum experience: {
@@ -20,7 +20,7 @@ class Candidacy < ApplicationRecord
   }
 
   enum availability: {
-    live_in: 0, hourly: 1, any_shift: 2, hourly_am: 3, hourly_pm: 4
+    old_live_in: 0, hourly: 1, any_shift: 2, hourly_am: 3, hourly_pm: 4
   }
 
   enum transportation: {

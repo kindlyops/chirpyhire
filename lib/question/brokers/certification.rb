@@ -13,7 +13,7 @@ class Question::Brokers::Certification < Question::MultipleChoice
       b: 'Yes, HHA',
       c: 'Yes, Other (MA, LPN, RN, etc.)',
       d: 'Yes, PCA',
-      e: 'Not Yet, but I want to be!'
+      e: 'Not yet, but I want to be!'
     }
   end
 
