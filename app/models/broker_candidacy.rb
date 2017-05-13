@@ -16,7 +16,7 @@ class BrokerCandidacy < ApplicationRecord
   }
 
   enum availability: {
-    old_live_in: 0, hourly: 1, any_shift: 2, hourly_am: 3, hourly_pm: 4
+    hourly: 1, hourly_am: 3, hourly_pm: 4
   }
 
   enum transportation: {
