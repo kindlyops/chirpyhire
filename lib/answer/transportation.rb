@@ -35,6 +35,6 @@ class Answer::Transportation < Answer::MultipleChoice
   def no_case_variants
     no_variants
       .concat(no_variants.map { |v| "#{v} transportation" })
-      .push('I don\'t have a great way to get to work'.downcase)
+      .push("I don't have a great way to get to work".downcase)
   end
 end
