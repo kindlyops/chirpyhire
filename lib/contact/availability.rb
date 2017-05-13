@@ -5,7 +5,7 @@ class Contact::Availability < Contact::Attribute
       hourly: 'AM/PM',
       hourly_am: 'AM',
       hourly_pm: 'PM',
-      open: 'Open'
+      any_shift: 'Open'
     }.with_indifferent_access
   end
 
@@ -15,7 +15,7 @@ class Contact::Availability < Contact::Attribute
       hourly: 'fa-clock-o',
       hourly_am: 'fa-sun-o',
       hourly_pm: 'fa-moon-o',
-      open: 'fa-flag-checkered'
+      any_shift: 'fa-flag-checkered'
     }.with_indifferent_access
   end
 
@@ -33,7 +33,7 @@ class Contact::Availability < Contact::Attribute
       hourly: 'looking for any shift',
       hourly_am: 'looking for AM shifts',
       hourly_pm: 'looking for PM shifts',
-      open: 'looking for any shift'
+      any_shift: 'looking for any shift'
     }.with_indifferent_access
   end
 end

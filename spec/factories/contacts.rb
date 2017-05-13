@@ -33,7 +33,7 @@ FactoryGirl.define do
         midway = {
           contact: contact,
           certification: Candidacy.certifications.keys.sample,
-          availability: Candidacy.availabilities.except('live_in', 'open').keys.sample,
+          availability: Candidacy.availabilities.keys.sample,
           live_in: [true, false].sample,
           experience: Candidacy.experiences.keys.sample,
           inquiry: :transportation
@@ -45,7 +45,7 @@ FactoryGirl.define do
         almost_finished = {
           contact: contact,
           certification: Candidacy.certifications.keys.sample,
-          availability: Candidacy.availabilities.except('live_in', 'open').keys.sample,
+          availability: Candidacy.availabilities.keys.sample,
           experience: Candidacy.experiences.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
           live_in: [true, false].sample,
@@ -77,7 +77,7 @@ FactoryGirl.define do
           contact: contact,
           inquiry: nil,
           experience: Candidacy.experiences.keys.sample,
-          availability: Candidacy.availabilities.except('live_in', 'open').keys.sample,
+          availability: Candidacy.availabilities.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
           certification: Candidacy.certifications.keys.sample,
           skin_test: [true, false].sample,

@@ -84,6 +84,13 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
               span.custom-control-description
                 span.description-text Public
                 i.fa.fa-bus.fa-fw.ml-2
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :transportation, value: 'no_transportation' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text No Transportation
+                i.fa.fa-thumbs-o-up.fa-fw.ml-2
           .dropdown-item.d-flex.justify-content-between
             a.cancel href="#" Cancel
             a.apply href="#" Apply
