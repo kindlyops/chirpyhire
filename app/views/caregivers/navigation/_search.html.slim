@@ -35,6 +35,13 @@
             span.custom-control-description
               span.description-text PCA
               i.fa.fa-heart-o.purple.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'no_certification' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text No Certification
+              i.fa.fa-graduation-cap.fa-fw.ml-2
         .dropdown-item.d-flex.justify-content-between
           a.cancel href="#" Cancel
           a.apply href="#" Apply

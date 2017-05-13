@@ -10,14 +10,14 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
               = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_am' }
               span.custom-control-indicator
               span.custom-control-description
-                span.description-text Hourly - AM
+                span.description-text AM
                 i.fa.fa-sun-o.fa-fw.ml-2
           .dropdown-item
             label.custom-control.custom-checkbox
               = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_pm' }
               span.custom-control-indicator
               span.custom-control-description
-                span.description-text Hourly - PM
+                span.description-text PM
                 i.fa.fa-moon-o.fa-fw.ml-2
           .dropdown-item
             label.custom-control.custom-checkbox
@@ -26,13 +26,6 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
               span.custom-control-description
                 span.description-text Live-In
                 i.fa.fa-home.fa-fw.ml-2
-          .dropdown-item
-            label.custom-control.custom-checkbox
-              = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'open' }
-              span.custom-control-indicator
-              span.custom-control-description
-                span.description-text Open
-                i.fa.fa-flag-checkered.fa-fw.ml-2
           .dropdown-item.d-flex.justify-content-between
             a.cancel href="#" Cancel
             a.apply href="#" Apply
@@ -41,6 +34,13 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
       = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, transportation: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
         = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :experience, icon: 'fa-level-up' }
         .dropdown-menu aria-labelledby="experience"
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'no_experience' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text No Experience
+                i.fa.fa-leaf.fa-fw.ml-2
           .dropdown-item
             label.custom-control.custom-checkbox
               = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'less_than_one' }
@@ -84,6 +84,13 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
               span.custom-control-description
                 span.description-text Public
                 i.fa.fa-bus.fa-fw.ml-2
+          .dropdown-item
+            label.custom-control.custom-checkbox
+              = render partial: "caregivers/navigation/checkbox", locals: { category: :transportation, value: 'no_transportation' }
+              span.custom-control-indicator
+              span.custom-control-description
+                span.description-text No Transportation
+                i.fa.fa-thumbs-o-up.fa-fw.ml-2
           .dropdown-item.d-flex.justify-content-between
             a.cancel href="#" Cancel
             a.apply href="#" Apply

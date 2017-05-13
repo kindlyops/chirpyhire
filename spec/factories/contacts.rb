@@ -34,6 +34,7 @@ FactoryGirl.define do
           contact: contact,
           certification: Candidacy.certifications.keys.sample,
           availability: Candidacy.availabilities.keys.sample,
+          live_in: [true, false].sample,
           experience: Candidacy.experiences.keys.sample,
           inquiry: :transportation
         }
@@ -47,6 +48,7 @@ FactoryGirl.define do
           availability: Candidacy.availabilities.keys.sample,
           experience: Candidacy.experiences.keys.sample,
           transportation: Candidacy.transportations.keys.sample,
+          live_in: [true, false].sample,
           zipcode: zipcode,
           cpr_first_aid: [true, false].sample,
           inquiry: :skin_test
@@ -79,6 +81,7 @@ FactoryGirl.define do
           transportation: Candidacy.transportations.keys.sample,
           certification: Candidacy.certifications.keys.sample,
           skin_test: [true, false].sample,
+          live_in: [true, false].sample,
           zipcode: zipcode,
           cpr_first_aid: [true, false].sample,
           state: :complete
@@ -100,6 +103,38 @@ FactoryGirl.define do
 
       after(:create) do |contact|
         contact.candidacy.update(certification: 'cna')
+      end
+    end
+
+    trait :am do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly_am')
+      end
+    end
+
+    trait :pm do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly_pm')
+      end
+    end
+
+    trait :hourly do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: false, availability: 'hourly')
+      end
+    end
+
+    trait :live_in do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(live_in: true, availability: nil)
       end
     end
   end

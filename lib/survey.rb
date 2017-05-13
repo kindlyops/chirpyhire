@@ -42,6 +42,7 @@ class Survey
     {
       certification: certification,
       availability: availability,
+      live_in: live_in,
       experience: experience,
       transportation: transportation,
       zipcode: zipcode,
@@ -76,7 +77,8 @@ class Survey
     {
       nil => certification,
       certification: availability,
-      availability: experience,
+      availability: live_in,
+      live_in: experience,
       experience: transportation,
       transportation: zipcode,
       zipcode: cpr_first_aid,
@@ -94,6 +96,10 @@ class Survey
 
   def availability
     Question::Availability.new(contact)
+  end
+
+  def live_in
+    Question::LiveIn.new(contact)
   end
 
   def transportation

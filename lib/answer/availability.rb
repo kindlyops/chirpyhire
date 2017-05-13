@@ -1,15 +1,14 @@
 class Answer::Availability < Answer::MultipleChoice
   def choice_map
     {
-      'Live-In' => :live_in,
-      'Hourly - AM' => :hourly_am,
-      'Hourly - PM' => :hourly_pm,
-      "I'm wide open for any shifts!" => :open
+      'Morning (AM) shifts are great!' => :hourly_am,
+      'Evening (PM) shifts are great!' => :hourly_pm,
+      "I'm wide open for AM or PM shifts!" => :hourly
     }
   end
 
   def positive_variants
-    ['live in', 'live-in', 'am', 'pm', 'open', 'any shift']
+    ['am', 'pm', 'open', 'any shift', 'hourly']
   end
 
   def variants
@@ -28,14 +27,12 @@ class Answer::Availability < Answer::MultipleChoice
 
   def regular_case(message)
     case regular_match(message)[1]
-    when 'live in', 'live-in'
-      :live_in
     when 'am'
       :hourly_am
     when 'pm'
       :hourly_pm
-    when 'open', 'any shift'
-      :open
+    when 'open', 'any shift', 'hourly'
+      :hourly
     end
   end
 end

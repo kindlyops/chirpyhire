@@ -46,7 +46,7 @@ RSpec.describe Answer::Transportation do
 
     context 'no_transportation' do
       ['C no transportation', 'No', 'C)', 'C.',
-       "C\nJazz", "C.\nJazz", 'I do not have reliable transportation'].each do |body|
+       "C\nJazz", "C.\nJazz", "I don't have a great way to get to work"].each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no_transportation' do

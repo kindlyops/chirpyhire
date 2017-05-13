@@ -3,7 +3,7 @@ class Answer::Transportation < Answer::MultipleChoice
     {
       'I have personal transportation' => :personal_transportation,
       'I use public transportation' => :public_transportation,
-      'I do not have reliable transportation' => :no_transportation
+      "I don't have a great way to get to work" => :no_transportation
     }
   end
 
@@ -35,6 +35,6 @@ class Answer::Transportation < Answer::MultipleChoice
   def no_case_variants
     no_variants
       .concat(no_variants.map { |v| "#{v} transportation" })
-      .push('I do not have reliable transportation'.downcase)
+      .push("I don't have a great way to get to work".downcase)
   end
 end

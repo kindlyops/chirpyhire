@@ -20,10 +20,11 @@ RSpec.describe CandidacyPolicy do
       candidacy.update(
         experience: :less_than_one,
         skin_test: true,
-        availability: :live_in,
+        availability: :hourly,
         transportation: :personal_transportation,
         zipcode: '30342',
         cpr_first_aid: true,
+        live_in: true,
         certification: :pca
       )
     end

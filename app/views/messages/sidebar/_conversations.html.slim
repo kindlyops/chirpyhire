@@ -4,7 +4,7 @@
     ul
       - current_account.conversations.sidebar.each do |conversation|
         li class==('unread' if conversation.unread?)
-          = nav_link_to message_path(conversation.contact), 'data-contact-id' => conversation.contact_id, role: 'button' do
+          = nav_link_to message_path(conversation.contact), { 'data-contact-id' => conversation.contact_id, role: 'button' }, url_segment: 2 do
             span.unread_count hidden==conversation.read?
               = conversation.unread_count
             span = conversation.contact.handle

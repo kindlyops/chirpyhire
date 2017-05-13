@@ -6,7 +6,7 @@ class Contact < ApplicationRecord
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
            :experience, :certification, :skin_test, :avatar, :transportation,
-           :cpr_first_aid, :nickname, :candidacy, to: :person
+           :cpr_first_aid, :nickname, :candidacy, :live_in, to: :person
   delegate :inquiry, to: :person, prefix: true
 
   before_create :set_last_reply_at
@@ -19,11 +19,10 @@ class Contact < ApplicationRecord
     where(candidate: true)
   end
 
-  def self.candidacy_filter(filter_params)
-    return current_scope unless filter_params.present?
+  def self.candidacy_filter(filter_clause)
+    return current_scope unless filter_clause.present?
 
-    joins(person: :candidacy)
-      .where(people: { 'candidacies' => filter_params })
+    joins(person: :candidacy).where(filter_clause)
   end
 
   def self.zipcode_filter(filter_params)
