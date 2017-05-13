@@ -11,8 +11,8 @@
         = f.password_field :password, autocomplete: "off", class: "form-control"
       - if devise_mapping.rememberable?
         .form-group
-          strong = f.label :remember_me, class: "remember-me col-form-label"
-          = f.check_box :remember_me, class: "ml-2"
+          strong = f.label :remember_me, class: "remember-me col-form-label mr-1"
+          = f.check_box :remember_me, { checked: true }
       .form-group
         = button_tag id: 'sign-in', class: "btn btn-primary btn-lg btn-block", role: 'button', type: 'submit' do
           span Continue
