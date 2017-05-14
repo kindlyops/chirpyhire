@@ -3,7 +3,7 @@ class NewTeamNotificationJob < ApplicationJob
     @account = account
     @organization = account.organization
 
-    notifier.ping new_team_message # if Rails.env.production?
+    notifier.ping new_team_message if Rails.env.production?
   end
 
   def notifier
