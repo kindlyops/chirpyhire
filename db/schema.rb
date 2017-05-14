@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514001633) do
+ActiveRecord::Schema.define(version: 20170514153747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,46 +68,6 @@ ActiveRecord::Schema.define(version: 20170514001633) do
     t.datetime "clicked_at"
     t.index ["token"], name: "index_ahoy_messages_on_token", using: :btree
     t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type", using: :btree
-  end
-
-  create_table "broker_candidacies", force: :cascade do |t|
-    t.integer  "experience"
-    t.boolean  "skin_test"
-    t.integer  "availability"
-    t.integer  "transportation"
-    t.string   "zipcode"
-    t.boolean  "cpr_first_aid"
-    t.integer  "certification"
-    t.integer  "person_id",                     null: false
-    t.integer  "inquiry"
-    t.integer  "state",             default: 0, null: false
-    t.integer  "broker_contact_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.boolean  "live_in"
-    t.index ["broker_contact_id"], name: "index_broker_candidacies_on_broker_contact_id", using: :btree
-    t.index ["person_id"], name: "index_broker_candidacies_on_person_id", using: :btree
-  end
-
-  create_table "broker_contacts", force: :cascade do |t|
-    t.integer  "person_id",                     null: false
-    t.integer  "broker_id",                     null: false
-    t.boolean  "subscribed",    default: false, null: false
-    t.datetime "last_reply_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.index ["broker_id"], name: "index_broker_contacts_on_broker_id", using: :btree
-    t.index ["person_id", "broker_id"], name: "index_broker_contacts_on_person_id_and_broker_id", unique: true, using: :btree
-    t.index ["person_id"], name: "index_broker_contacts_on_person_id", using: :btree
-  end
-
-  create_table "brokers", force: :cascade do |t|
-    t.string   "twilio_account_sid", null: false
-    t.string   "twilio_auth_token",  null: false
-    t.string   "phone_number",       null: false
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.index ["phone_number"], name: "index_brokers_on_phone_number", unique: true, using: :btree
   end
 
   create_table "candidacies", force: :cascade do |t|
@@ -200,12 +160,11 @@ ActiveRecord::Schema.define(version: 20170514001633) do
     t.string   "direction",           null: false
     t.datetime "sent_at"
     t.datetime "external_created_at"
-    t.integer  "organization_id"
+    t.integer  "organization_id",     null: false
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "sender_id",           null: false
     t.integer  "recipient_id"
-    t.integer  "broker_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id", using: :btree
     t.index ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
     t.index ["sender_id"], name: "index_messages_on_sender_id", using: :btree
@@ -290,10 +249,6 @@ ActiveRecord::Schema.define(version: 20170514001633) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
-  add_foreign_key "broker_candidacies", "broker_contacts"
-  add_foreign_key "broker_candidacies", "people"
-  add_foreign_key "broker_contacts", "brokers"
-  add_foreign_key "broker_contacts", "people"
   add_foreign_key "candidacies", "people"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"

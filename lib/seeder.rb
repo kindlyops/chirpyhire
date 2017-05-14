@@ -1,6 +1,5 @@
 class Seeder
   def seed
-    seed_broker
     seed_organization
     seed_account
     seed_not_ready_contacts
@@ -145,11 +144,6 @@ class Seeder
     )
   end
 
-  def seed_broker
-    Broker.find_or_create_by!(broker_attributes)
-    puts 'Created Broker'
-  end
-
   def seed_organization
     @organization = find_or_create_organization
     organization.create_ideal_candidate!(
@@ -183,14 +177,6 @@ class Seeder
       twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
       phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
-    }
-  end
-
-  def broker_attributes
-    {
-      twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
-      twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
-      phone_number: ENV.fetch('DEMO_BROKER_PHONE')
     }
   end
 

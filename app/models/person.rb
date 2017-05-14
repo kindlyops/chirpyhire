@@ -1,9 +1,7 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_one :candidacy
-  has_one :broker_candidacy
   has_one :account, inverse_of: :person
-  has_many :broker_contacts
   has_many :contacts
   has_many :conversations, through: :contacts
   has_many :sent_messages,
@@ -19,7 +17,6 @@ class Person < ApplicationRecord
   delegate :inquiry, :availability, :experience, :transportation,
            :certification, :skin_test, :cpr_first_aid, :ideal?,
            :live_in, to: :candidacy
-  delegate :inquiry, to: :broker_candidacy, prefix: true
   delegate :zipcode, to: :candidacy, prefix: true
 
   has_attached_file :avatar,
@@ -35,20 +32,12 @@ class Person < ApplicationRecord
     contacts.where(organization: organization).exists?
   end
 
-  def broker_subscribed_to?(broker)
-    broker_contacts.where(broker: broker).exists?
-  end
-
   def actively_subscribed_to?(organization)
     contacts.subscribed.where(organization: organization).exists?
   end
 
   def subscribed_to(organization)
     contacts.find_by(organization: organization)
-  end
-
-  def broker_subscribed_to(broker)
-    broker_contacts.find_by(broker: broker)
   end
 
   def handle
