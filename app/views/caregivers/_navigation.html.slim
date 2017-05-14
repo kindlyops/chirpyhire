@@ -96,7 +96,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.top.fixed-top.caregivers-nav
             a.apply href="#" Apply
     .dropdown.starred.mr-3
       .overlay
-      = form_tag caregivers_path(params.permit(:city, :transportation, :state, :county, :zipcode, experience: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
+      = form_tag caregivers_path(params.permit(:city, :state, :county, :zipcode, transportation: [], experience: [], availability: [], certification: [])), method: :get, enforce_utf8: false do |f|
         button.btn.btn-secondary.dropdown-toggle id="starred" role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
           - if params[:starred].present?
             i class=="fa fa-star dropdown-icon fa-fw mr-2"
