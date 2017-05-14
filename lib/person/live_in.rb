@@ -1,4 +1,4 @@
-class Contact::LiveIn < Contact::Attribute
+class Person::LiveIn < Person::Attribute
   def label
     'Live-In'
   end
