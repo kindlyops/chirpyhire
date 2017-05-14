@@ -9,6 +9,7 @@ class Registrar
     create_ideal_candidate
     provision_phone_number
     create_recruiting_ad
+    new_team_notification_job
   end
 
   private
@@ -27,6 +28,10 @@ class Registrar
 
   def provision_phone_number
     PhoneNumberProvisioner.provision(organization)
+  end
+
+  def new_team_notification_job
+    NewTeamNotificationJob.perform_later(account)
   end
 
   def organization
