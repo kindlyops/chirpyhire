@@ -39,7 +39,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :not_ready do
+    trait :incomplete do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
 
@@ -81,11 +81,10 @@ FactoryGirl.define do
       end
     end
 
-    trait :candidate do
+    trait :complete do
       after(:create) do |contact|
         contact.update(
-          subscribed: [true, false].sample,
-          candidate: true
+          subscribed: [true, false].sample
         )
 
         candidacy = contact.person.candidacy
@@ -110,7 +109,7 @@ FactoryGirl.define do
     end
 
     trait :pca do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(certification: 'pca')
@@ -118,7 +117,7 @@ FactoryGirl.define do
     end
 
     trait :cna do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(certification: 'cna')
@@ -126,7 +125,7 @@ FactoryGirl.define do
     end
 
     trait :am do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(live_in: false, availability: 'hourly_am')
@@ -134,7 +133,7 @@ FactoryGirl.define do
     end
 
     trait :six_or_more do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(experience: :six_or_more)
@@ -142,7 +141,7 @@ FactoryGirl.define do
     end
 
     trait :less_than_one do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(experience: :less_than_one)
@@ -150,7 +149,7 @@ FactoryGirl.define do
     end
 
     trait :pm do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(live_in: false, availability: 'hourly_pm')
@@ -158,7 +157,7 @@ FactoryGirl.define do
     end
 
     trait :hourly do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(live_in: false, availability: 'hourly')
@@ -166,7 +165,7 @@ FactoryGirl.define do
     end
 
     trait :live_in do
-      candidate
+      complete
 
       after(:create) do |contact|
         contact.candidacy.update(live_in: true, availability: nil)

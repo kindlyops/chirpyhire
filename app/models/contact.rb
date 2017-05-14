@@ -15,10 +15,6 @@ class Contact < ApplicationRecord
     order(last_reply_at: :desc)
   end
 
-  def self.candidate
-    where(candidate: true)
-  end
-
   def self.candidacy_filter(filter_clause)
     return current_scope unless filter_clause.present?
 
@@ -41,8 +37,18 @@ class Contact < ApplicationRecord
     joins(person: :zipcode).where(filters)
   end
 
-  def self.not_ready
-    where(candidate: false)
+  def self.incomplete
+    includes(person: :candidacy)
+      .where.not(people: { 'candidacies' => { state: :complete } })
+  end
+
+  def self.complete
+    includes(person: :candidacy)
+      .where(people: { 'candidacies' => { state: :complete } })
+  end
+
+  def complete?
+    person.candidacy.complete?
   end
 
   def self.subscribed
@@ -63,14 +69,6 @@ class Contact < ApplicationRecord
 
   def unsubscribe
     update(subscribed: false)
-  end
-
-  def ideal?
-    person.ideal?(organization.ideal_candidate)
-  end
-
-  def promising?
-    !ideal?
   end
 
   private

@@ -1,4 +1,4 @@
-class Contact::SkinTest < Contact::Attribute
+class Person::SkinTest < Person::Attribute
   def label
     'Skin / TB Test'
   end

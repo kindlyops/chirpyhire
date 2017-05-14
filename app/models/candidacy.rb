@@ -3,9 +3,6 @@ class Candidacy < ApplicationRecord
   belongs_to :person
   belongs_to :contact, optional: true
 
-  delegate :actively_subscribed_to?, :subscribed_to, :handle,
-           :phone_number, :contacts, to: :person
-
   enum state: {
     pending: 0, in_progress: 1, complete: 2
   }
@@ -32,55 +29,6 @@ class Candidacy < ApplicationRecord
   }
 
   def started?
-    in_progress? || complete?
-  end
-
-  def self.finished_survey
-    where(inquiry: nil).where.not(
-      experience: nil,
-      skin_test: nil,
-      availability: nil,
-      transportation: nil,
-      zipcode: nil,
-      cpr_first_aid: nil,
-      certification: nil
-    )
-  end
-
-  def status_for(organization)
-    return :ideal if ideal?(organization.ideal_candidate)
-    :promising
-  end
-
-  def ideal?(ideal_candidate)
-    complete? && ideal_candidate.zipcode?(zipcode) &&
-      other_attributes_ideal?
-  end
-
-  def transportable?
-    transportation.present? && transportation != 'no_transportation'
-  end
-
-  def experienced?
-    experience.present? && experience != 'no_experience'
-  end
-
-  def certified?
-    certification.present? && certification != 'no_certification'
-  end
-
-  def available?
-    availability.present?
-  end
-
-  def locatable?
-    zipcode.present?
-  end
-  alias_attribute :location, :zipcode
-
-  private
-
-  def other_attributes_ideal?
-    transportable? && experienced? && certified? && skin_test && cpr_first_aid
+    !pending?
   end
 end
