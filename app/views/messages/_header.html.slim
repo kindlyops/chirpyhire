@@ -76,6 +76,19 @@ header.chat-header
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
               = conversation.contact.skin_test.label
       .channel-title-info
+        - if contact.starred?
+          = button_to contact_stars_path(contact), remote: true, form: { "data-type" => "json" }, { role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Unstar caregiver' } do
+            i.fa.fa-star
+        - else
+          = button_to contact_stars_path(contact), remote: true, form: { "data-type" => "json" }, { role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Unstar caregiver' } do
+            i.fa.fa-star
+        = form_for conversation.contact do |f|
+          = f.
+
+        a.star href="#" data-toggle='tooltip' data-placement='left' title='Star caregiver'
+          i.fa.fa-star-o
+        a.star href="#" data-toggle='tooltip' data-placement='left' title='Unstar caregiver'
+          i.fa.fa-star
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
               i.fa.fa-sticky-note-o

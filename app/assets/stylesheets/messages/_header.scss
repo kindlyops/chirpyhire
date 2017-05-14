@@ -39,6 +39,29 @@
         border-radius: .25rem;
       }
 
+      .star {
+        margin-left: 4px;
+        padding-top: 4px;
+        padding-left: 6px;
+        margin-right: 8px;
+
+        i {
+          font-size: 1.5rem;
+          transition: all .2s ease-in-out;
+          &.fa-star-o {          
+            &:hover {
+              color: darken(#717274, 30%);
+            }
+          }
+
+          &.fa-star {          
+            &:hover {
+              color: darken($yellow, 5%);
+            }
+          }
+        }
+      }
+
       #notes-toggle {
         margin-left: 4px;
         padding-top: 4px;
@@ -53,8 +76,17 @@
           color: $green;
         }
 
+        &:hover {
+          color: darken(#717274, 30%);
+        }
+
         i.fa {
+          transition: all .2s ease-in-out;
           font-size: 24px;
+
+          &:hover {
+            color: darken(#717274, 30%);
+          }
         }
       }
 

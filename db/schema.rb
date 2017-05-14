@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170510171050) do
+ActiveRecord::Schema.define(version: 20170514001633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20170510171050) do
     t.datetime "updated_at",                      null: false
     t.boolean  "candidate",       default: false, null: false
     t.datetime "last_reply_at"
+    t.boolean  "starred",         default: false, null: false
     t.index ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true, using: :btree
     t.index ["person_id"], name: "index_contacts_on_person_id", using: :btree
