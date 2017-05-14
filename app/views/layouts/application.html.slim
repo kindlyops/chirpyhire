@@ -10,4 +10,4 @@ html
         main.col.application
           = render partial: "layouts/alerts"
           = yield
-    = render "layouts/script"
+    = render "layouts/script" unless Rails.env.test?
