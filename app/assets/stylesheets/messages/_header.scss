@@ -1,21 +1,4 @@
 .messages {
-  button.star {
-    outline: 0;
-    background: 0 0;
-    border: none;
-    padding: 0;
-    appearance: none;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    color: inherit;
-    padding-top: 1px;
-    padding-bottom: 2px;
-
-    &:hover {
-      color: $yellow;
-    }
-  }
 
   .chat-header {
     color: #717274;
@@ -43,27 +26,25 @@
         margin-left: 4px;
         padding-top: 4px;
         padding-left: 6px;
-        margin-right: 8px;
+        padding-right: 6px;
+
+        &:hover {
+          .fa-star {
+            color: darken($yellow, 5%);
+          }
+
+          .fa-star-o {
+            color: darken(#717274, 30%);
+          }
+        }
 
         i {
           font-size: 1.5rem;
           transition: all .2s ease-in-out;
-          &.fa-star-o {          
-            &:hover {
-              color: darken(#717274, 30%);
-            }
-          }
-
-          &.fa-star {          
-            &:hover {
-              color: darken($yellow, 5%);
-            }
-          }
         }
       }
 
       #notes-toggle {
-        margin-left: 4px;
         padding-top: 4px;
         padding-left: 6px;
         margin-right: 8px;

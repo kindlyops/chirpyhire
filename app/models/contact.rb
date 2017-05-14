@@ -25,6 +25,12 @@ class Contact < ApplicationRecord
     joins(person: :candidacy).where(filter_clause)
   end
 
+  def self.starred_filter(filter_params)
+    return current_scope unless filter_params.present?
+
+    where(filter_params)
+  end
+
   def self.zipcode_filter(filter_params)
     return current_scope unless filter_params.present?
 

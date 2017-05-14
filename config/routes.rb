@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 
   resources :contacts, only: [] do
+    resource :star, only: :create
     resources :messages, only: :create
   end
 

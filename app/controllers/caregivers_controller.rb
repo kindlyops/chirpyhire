@@ -14,6 +14,7 @@ class CaregiversController < ApplicationController
     scope
       .candidacy_filter(candidacy_params)
       .zipcode_filter(zipcode_params)
+      .starred_filter(star_params)
   end
 
   def scope
@@ -22,7 +23,7 @@ class CaregiversController < ApplicationController
 
   def permitted_params
     params.permit(
-      :city, :state, :county, :zipcode,
+      :city, :state, :county, :zipcode, :starred,
       experience: [],
       availability: [],
       transportation: [],
@@ -30,8 +31,17 @@ class CaregiversController < ApplicationController
     )
   end
 
+  def star_params
+    return {} unless params[:starred].present?
+
+    { starred: true }
+  end
+
   def candidacy_params
-    result = permitted_params.to_h.except(:state, :city, :county, :zipcode)
+    result = permitted_params.to_h.except(
+      :state, :city, :county, :zipcode, :starred
+    )
+
     result[:availability] = (result[:availability] | hourly_params) if hourly?
     result = handle_live_in_params(result)
     handle_live_in_or_hourly(result)
@@ -71,6 +81,8 @@ class CaregiversController < ApplicationController
   end
 
   def standard_candidacy(result)
+    return {} unless result.present?
+
     { people: { 'candidacies' => result } }
   end
 
