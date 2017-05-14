@@ -76,6 +76,12 @@ header.chat-header
               i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
               = conversation.contact.skin_test.label
       .channel-title-info
+        - if conversation.contact.starred?
+          = button_to contact_star_path(conversation.contact), class: 'star btn btn-link', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Unstar caregiver' do
+            i.fa.fa-star
+        - else
+          = button_to contact_star_path(conversation.contact), class: 'star btn btn-link', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Star caregiver' do
+            i.fa.fa-star-o
         - if controller_name == 'notes'
           = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
               i.fa.fa-sticky-note-o

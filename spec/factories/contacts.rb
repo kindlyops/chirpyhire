@@ -20,6 +20,25 @@ FactoryGirl.define do
       end
     end
 
+    trait :"30342" do
+      after(:create) do |contact|
+        create(:zipcode, :"30342")
+        ZipcodeFetcher.call(contact.person, '30342')
+      end
+    end
+
+    trait :public_transportation do
+      after(:create) do |contact|
+        contact.person.candidacy.update(transportation: :public_transportation)
+      end
+    end
+
+    trait :personal_transportation do
+      after(:create) do |contact|
+        contact.person.candidacy.update(transportation: :personal_transportation)
+      end
+    end
+
     trait :not_ready do
       after(:create) do |contact|
         candidacy = contact.person.candidacy
@@ -111,6 +130,22 @@ FactoryGirl.define do
 
       after(:create) do |contact|
         contact.candidacy.update(live_in: false, availability: 'hourly_am')
+      end
+    end
+
+    trait :six_or_more do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(experience: :six_or_more)
+      end
+    end
+
+    trait :less_than_one do
+      candidate
+
+      after(:create) do |contact|
+        contact.candidacy.update(experience: :less_than_one)
       end
     end
 

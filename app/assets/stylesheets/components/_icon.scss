@@ -2,7 +2,7 @@
   color: $gray-light;
 }
 
-.fa-bus, .fa-trophy, .fa-star-half-o, .fa-key, .fa-sun-o {
+.fa-bus, .fa-trophy, .fa-star-half-o, .fa-key, .fa-sun-o, .fa-star {
   color: $yellow;
 }
 
@@ -12,6 +12,10 @@
 
 .fa-mobile, .fa-phone, .fa-home, .fa-comments, .fa-usd, .fa-battery-full, .fa-battery-half, .fa-battery-quarter, .fa-leaf, .fa-check-circle {
   color: $green;
+}
+
+.fa-star-o {
+  color: #717274;
 }
 
 .fa-sign-out, .fa-map-marker, .fa-globe, .fa-moon-o {

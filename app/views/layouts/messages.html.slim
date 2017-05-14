@@ -10,4 +10,4 @@ html
       main.conversation
         = yield
     = render partial: "components/modal"
-    = render "layouts/script"
+    = render "layouts/script" unless Rails.env.test?
