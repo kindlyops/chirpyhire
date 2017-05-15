@@ -1,11 +1,8 @@
-button.btn.btn-secondary.dropdown-toggle id==category role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
-  - if params[category].present? && params[category].one?
-    i class=="fa #{dropdown_icons[params[category].first]} dropdown-icon fa-fw mr-2"
-    span.dropdown-label = dropdown_labels[params[category].first]
-  - elsif params[category].present? && params[category].length.positive?
-    i class=="fa #{icon} dropdown-icon fa-fw mr-2"
-    span.dropdown-label = category.to_s.titleize
-    span.badge.badge-primary = params[category].length
+button#filters.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
+  - if [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification], params[:city], params[:zipcode], params[:county], params[:state]].flatten.compact.count.positive?
+    i class=="fa fa-filter dropdown-icon fa-fw mr-2"
+    span.dropdown-label Filters
+    span.badge.badge-primary = [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification], params[:city], params[:zipcode], params[:county], params[:state]].flatten.compact.count
   - else
-    i class=="fa #{icon} dropdown-icon fa-fw mr-2"
-    span.dropdown-label = category.to_s.titleize
+    i class=="fa fa-filter dropdown-icon fa-fw mr-2"
+    span.dropdown-label Filters
