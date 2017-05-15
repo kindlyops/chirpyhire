@@ -11,9 +11,9 @@ class MessageRetryJob < ApplicationJob
     set(wait: 15.seconds)
   end
 
-  private
-
   attr_accessor :retries_remaining
+
+  private
 
   def retry_job
     retry_with(self.class.backoff, retries_remaining)
