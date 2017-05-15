@@ -3,10 +3,11 @@
     span.input-group-addon
       i.fa.fa-search
     input.form-control.search-field placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")
-  = form_tag caregivers_path(params.permit(:starred, :city, :state, :county, :zipcode, experience: [], availability: [], transportation: [])), method: :get, enforce_utf8: false do |f|
+  = form_tag caregivers_path, method: :get, enforce_utf8: false do |f|
     .input-group-btn.dropdown
-      = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :certification, icon: 'fa-graduation-cap' }
-      .dropdown-menu aria-labelledby="certification"
+      = render partial: "caregivers/navigation/dropdown_toggle"
+      .dropdown-menu.scrollable-dropdown aria-labelledby="search"
+        h6.dropdown-header Certification
         .dropdown-item
           label.custom-control.custom-checkbox
             = render partial: "caregivers/navigation/checkbox", locals: { category: :certification, value: 'cna' }
@@ -42,6 +43,91 @@
             span.custom-control-description
               span.description-text No Certification
               i.fa.fa-graduation-cap.fa-fw.ml-2
+        .dropdown-divider
+        h6.dropdown-header Availability
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_am' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text AM
+              i.fa.fa-sun-o.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'hourly_pm' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text PM
+              i.fa.fa-moon-o.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :availability, value: 'live_in' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text Live-In
+              i.fa.fa-home.fa-fw.ml-2
+        .dropdown-divider
+        h6.dropdown-header Experience
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'no_experience' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text No Experience
+              i.fa.fa-leaf.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'less_than_one' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text 0 - 1 years
+              i.fa.fa-battery-quarter.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'one_to_five' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text 1 - 5 years
+              i.fa.fa-battery-half.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :experience, value: 'six_or_more' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text 6+ years
+              i.fa.fa-battery-full.fa-fw.ml-2
+        .dropdown-divider
+        h6.dropdown-header Transportation
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :transportation, value: 'personal_transportation' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text Personal
+              i.fa.fa-car.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :transportation, value: 'public_transportation' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text Public
+              i.fa.fa-bus.fa-fw.ml-2
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            = render partial: "caregivers/navigation/checkbox", locals: { category: :transportation, value: 'no_transportation' }
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text No Transportation
+              i.fa.fa-thumbs-o-up.fa-fw.ml-2
+        .dropdown-divider
+        h6.dropdown-header Starred
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            input class==(params[:starred].present? ? 'custom-control-input active' : 'custom-control-input') type="checkbox" name="starred" value="true" checked==(params[:starred].present?)
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text Starred
+              i.fa.fa-star.fa-fw.ml-2
         .dropdown-item.d-flex.justify-content-between
           a.cancel href="#" Cancel
           a.apply href="#" Apply

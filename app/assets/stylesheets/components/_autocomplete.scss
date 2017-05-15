@@ -16,6 +16,16 @@
 #zipcode-search {
   transition: all .5s ease;
 
+  .scrollable-dropdown {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+  }
+
+  .dropdown-divider {
+    background-color: #eceeef;
+  }
+
   form {
     display: flex;
   }
@@ -25,7 +35,7 @@
     transition: all .5s ease;
   }
 
-  button#certification {
+  button#filters {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
