@@ -5,7 +5,7 @@
     input.form-control.search-field placeholder=("Anywhere") type="text" value==[params[:city], params[:county], params[:state], params[:zipcode]].compact.join(", ")
   = form_tag caregivers_path, method: :get, enforce_utf8: false do |f|
     .input-group-btn.dropdown
-      = render partial: "caregivers/navigation/dropdown_toggle", locals: { category: :filters, icon: 'fa-filter' }
+      = render partial: "caregivers/navigation/dropdown_toggle"
       .dropdown-menu.scrollable-dropdown aria-labelledby="search"
         h6.dropdown-header Certification
         .dropdown-item
