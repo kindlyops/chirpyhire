@@ -6,7 +6,18 @@ Rollbar.configure do |config|
 
   # Here we'll disable in 'test':
   config.enabled = false unless Rails.env.production?
-  config.js_enabled = false
+
+  if Rails.env.production?
+    config.js_enabled = true
+    config.js_options = {
+      accessToken: ENV['ROLLBAR_CLIENT_ACCESS_TOKEN'],
+      captureUncaught: true,
+      captureUnhandledRejections: true,
+      payload: {
+        environment: 'production'
+      }
+    }
+  end
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
