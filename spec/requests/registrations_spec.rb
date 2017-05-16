@@ -46,6 +46,7 @@ RSpec.describe 'Registration' do
         expect(response).to redirect_to recruiting_ad_path
         expect(Account.last.email).to eq(email)
         expect(Account.last.name).to eq(name)
+        expect(Account.last.inbox.present?).to eq(true)
         expect(Organization.last.name).to eq(organization_name)
       end
     end

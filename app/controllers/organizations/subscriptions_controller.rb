@@ -34,6 +34,7 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   end
 
   def sync_message
+    # TODO use conversation object
     MessageSyncerJob.perform_later(contact, params['MessageSid'])
   end
 end

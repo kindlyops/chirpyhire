@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514160748) do
+ActiveRecord::Schema.define(version: 20170516004833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,18 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.index ["person_id"], name: "index_candidacies_on_person_id", using: :btree
   end
 
+  create_table "contact_conversations", force: :cascade do |t|
+    t.integer  "contact_id",                 null: false
+    t.integer  "account_id",                 null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "unread_count",   default: 0, null: false
+    t.datetime "last_viewed_at"
+    t.index ["account_id"], name: "index_contact_conversations_on_account_id", using: :btree
+    t.index ["contact_id", "account_id"], name: "index_contact_conversations_on_contact_id_and_account_id", unique: true, using: :btree
+    t.index ["contact_id"], name: "index_contact_conversations_on_contact_id", using: :btree
+  end
+
   create_table "contacts", force: :cascade do |t|
     t.integer  "person_id",                       null: false
     t.integer  "organization_id",                 null: false
@@ -102,15 +114,13 @@ ActiveRecord::Schema.define(version: 20170514160748) do
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.integer  "contact_id",                 null: false
-    t.integer  "account_id",                 null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "unread_count",   default: 0, null: false
-    t.datetime "last_viewed_at"
-    t.index ["account_id"], name: "index_conversations_on_account_id", using: :btree
-    t.index ["contact_id", "account_id"], name: "index_conversations_on_contact_id_and_account_id", unique: true, using: :btree
+    t.integer  "assignee_id"
+    t.datetime "closed_at"
+    t.integer  "contact_id",      null: false
+    t.integer  "organization_id", null: false
+    t.integer  "status"
     t.index ["contact_id"], name: "index_conversations_on_contact_id", using: :btree
+    t.index ["organization_id"], name: "index_conversations_on_organization_id", using: :btree
   end
 
   create_table "ideal_candidate_suggestions", force: :cascade do |t|
@@ -135,6 +145,20 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["organization_id"], name: "index_ideal_candidates_on_organization_id", using: :btree
+  end
+
+  create_table "inbox_conversations", force: :cascade do |t|
+    t.integer "inbox_id",        null: false
+    t.integer "conversation_id", null: false
+    t.index ["conversation_id"], name: "index_inbox_conversations_on_conversation_id", using: :btree
+    t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id", using: :btree
+  end
+
+  create_table "inboxes", force: :cascade do |t|
+    t.integer  "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_inboxes_on_account_id", using: :btree
   end
 
   create_table "locations", force: :cascade do |t|
@@ -164,6 +188,8 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.datetime "updated_at",          null: false
     t.integer  "sender_id",           null: false
     t.integer  "recipient_id"
+    t.integer  "conversation_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
     t.index ["organization_id"], name: "index_messages_on_organization_id", using: :btree
     t.index ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
     t.index ["sender_id"], name: "index_messages_on_sender_id", using: :btree
@@ -196,6 +222,15 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.datetime "avatar_updated_at"
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true, using: :btree
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id", using: :btree
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.integer  "conversation_id", null: false
+    t.integer  "account_id",      null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["account_id"], name: "index_participants_on_account_id", using: :btree
+    t.index ["conversation_id"], name: "index_participants_on_conversation_id", using: :btree
   end
 
   create_table "people", force: :cascade do |t|
@@ -249,22 +284,30 @@ ActiveRecord::Schema.define(version: 20170514160748) do
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
   add_foreign_key "candidacies", "people"
+  add_foreign_key "contact_conversations", "accounts"
+  add_foreign_key "contact_conversations", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
-  add_foreign_key "conversations", "accounts"
   add_foreign_key "conversations", "contacts"
+  add_foreign_key "conversations", "organizations"
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
   add_foreign_key "ideal_candidates", "organizations"
+  add_foreign_key "inbox_conversations", "conversations"
+  add_foreign_key "inbox_conversations", "inboxes"
+  add_foreign_key "inboxes", "accounts"
   add_foreign_key "locations", "organizations"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
   add_foreign_key "messages", "people", column: "sender_id"
   add_foreign_key "notes", "accounts"
   add_foreign_key "notes", "contacts"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
+  add_foreign_key "participants", "accounts"
+  add_foreign_key "participants", "conversations"
   add_foreign_key "people", "zipcodes"
-  add_foreign_key "read_receipts", "conversations"
+  add_foreign_key "read_receipts", "contact_conversations", column: "conversation_id"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
 end

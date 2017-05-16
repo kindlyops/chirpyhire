@@ -6,6 +6,7 @@ class Registrar
   def register
     return unless account.persisted?
     organization.update(recruiter: account)
+    account.create_inbox
     create_ideal_candidate
     provision_phone_number
     create_recruiting_ad

@@ -30,6 +30,12 @@ RSpec.describe InvitationsController, type: :controller do
       }.to change { organization.accounts.count }.by(1)
     end
 
+    it 'creates the inbox' do
+      expect {
+        post :create, params: invite_params
+      }.to change { organization.inboxes.count }.by(1)
+    end
+
     it 'creates a GlacierBreakerJob' do
       expect {
         post :create, params: invite_params

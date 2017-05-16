@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
+  resources :inboxes, only: [] do
+    resources :conversations, controller: 'inboxes/conversations'
+  end
+
   namespace :settings do
     resource :profile, only: [:show, :update]
     resource :password, only: [:show, :update]

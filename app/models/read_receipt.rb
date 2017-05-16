@@ -1,6 +1,6 @@
 class ReadReceipt < ApplicationRecord
   belongs_to :message
-  belongs_to :conversation
+  belongs_to :conversation, class_name: 'ContactConversation'
 
   counter_culture [:conversation, :account],
                   column_name: proc { |model| 'unread_count' if model.unread? },
