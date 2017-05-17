@@ -212,6 +212,8 @@ GEM
       activesupport (>= 4.0)
       loofah (>= 2.0)
       nokogiri (~> 1.6)
+    intercom-rails (0.3.5)
+      activesupport (> 3.0)
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
       multi_json (~> 1.2)
@@ -488,6 +490,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.7.0)
   haml (~> 5.0.1)
   inline_svg (~> 0.11.1)
+  intercom-rails (~> 0.3.4)
   jbuilder
   jquery-rails
   json (~> 2.1.0)
