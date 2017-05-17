@@ -7,7 +7,7 @@ end
 
 ruby '2.4.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', github: 'rails/rails', branch: '5-0-stable'
+gem 'rails', '~> 5.1.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
@@ -30,14 +30,14 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.5.1'
-  gem 'dotenv-rails', '~> 2.1.0'
+  gem 'dotenv-rails', '~> 2.2.1'
 end
 
 group :test do
   gem 'vcr', '~> 3.0.0'
   gem 'webmock', '~> 2.3.2'
   gem 'capybara', '~> 2.7.0'
-  gem 'database_cleaner', '~> 1.5.0'
+  gem 'database_cleaner', '~> 1.6.1'
   gem 'launchy', '~> 2.4.3'
   gem 'capybara-email', git: 'git@github.com:DockYard/capybara-email.git', ref: 'c30c5f0'
   gem 'pundit-matchers', '~> 1.0.2'
@@ -57,7 +57,7 @@ group :development do
   gem 'brakeman', '~> 3.3.0'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'meta_request', '~> 0.4.0'
+  gem 'meta_request', '~> 0.4.2'
 end
 
 group :production do
@@ -68,7 +68,7 @@ end
 gem 'rollbar', '~> 2.14.0'
 
 # Authentication
-gem 'devise', '~> 4.2.0'
+gem 'devise', '~> 4.3.0'
 gem 'devise_invitable', '~> 1.6.0'
 
 # Authorization
@@ -84,7 +84,7 @@ gem 'sinatra', '~> 2.0.0'
 gem 'puma', '~> 3.4.0'
 gem 'font-awesome-rails', '~> 4.7.0'
 gem 'draper', '~> 3.0.0.pre1'
-gem 'rails_admin', '~> 1.1.1'
+gem 'rails_admin', github: 'sferik/rails_admin', branch: 'master'
 gem 'json', '~> 2.1.0'
 gem 'inline_svg', '~> 0.11.1'
 gem 'cocoon', '~> 1.2.9'
