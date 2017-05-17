@@ -22,20 +22,22 @@
         .form-group
           strong = o.label :name, "Organization name", class: "col-form-label"
           = o.text_field :name, required: true, class: "form-control"
-        = o.fields_for :location, o.object.build_location do |l|
-          .form-group#location-search
-            strong = label_tag :address, 'Office street address', class: 'col-form-label'
-            = text_field_tag :address, nil, required: true, placeholder: '123 Main St, Caretown, USA, 12345', class: 'form-control'
-            small.form-text.text-muted We use your address to find a local phone number for your ChirpyHire account.
-          = l.hidden_field :latitude
-          = l.hidden_field :longitude
-          = l.hidden_field :full_street_address
-          = l.hidden_field :city
-          = l.hidden_field :state
-          = l.hidden_field :state_code
-          = l.hidden_field :postal_code
-          = l.hidden_field :country
-          = l.hidden_field :country_code
+        = o.fields_for :teams, o.object.teams.build do |t|
+          = t.hidden_field :name
+          = t.fields_for :location, t.object.build_location do |l|
+            .form-group#location-search
+              strong = label_tag :address, 'Office street address', class: 'col-form-label'
+              = text_field_tag :address, nil, required: true, placeholder: '123 Main St, Caretown, USA, 12345', class: 'form-control'
+              small.form-text.text-muted We use your address to find a local phone number for your ChirpyHire account.
+            = l.hidden_field :latitude
+            = l.hidden_field :longitude
+            = l.hidden_field :full_street_address
+            = l.hidden_field :city
+            = l.hidden_field :state
+            = l.hidden_field :state_code
+            = l.hidden_field :postal_code
+            = l.hidden_field :country
+            = l.hidden_field :country_code
       hr
       .form-group.mt-3
         small.form-text.text-muted.mb-2

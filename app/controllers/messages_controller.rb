@@ -52,12 +52,18 @@ class MessagesController < ApplicationController
     current_organization.message(
       sender: current_account.person,
       recipient: @conversation.person,
+      from: from,
       body: body
     )
   end
 
   def body
     params[:message][:body]
+  end
+
+  def from
+    contact.team.phone_number if contact.team.present?
+    current_organization.phone_number
   end
 
   def scoped_messages

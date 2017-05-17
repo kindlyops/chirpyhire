@@ -58,10 +58,13 @@ class Survey
 
   def send_message(message)
     organization.message(
-      sender: Chirpy.person,
-      recipient: person,
-      body: message
+      sender: Chirpy.person, recipient: person, from: from, body: message
     )
+  end
+
+  def from
+    contact.team.phone_number if contact.team.present?
+    organization.phone_number
   end
 
   def current_question

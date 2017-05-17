@@ -9,8 +9,8 @@ RSpec.describe 'Registration' do
       let(:password) { Faker::Internet.password }
 
       before do
-        allow(PhoneNumberProvisioner).to receive(:provision) do |organization|
-          organization.update(phone_number: Faker::PhoneNumber.cell_phone)
+        allow(PhoneNumberProvisioner).to receive(:provision) do |team|
+          team.update(phone_number: Faker::PhoneNumber.cell_phone)
         end
       end
 

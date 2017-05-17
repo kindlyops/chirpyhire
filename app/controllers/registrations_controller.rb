@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(*)
+    # TODO: Update Path and Controller
     recruiting_ad_path
   end
 
@@ -30,6 +31,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def organization_attributes_keys
+    %i(name).push(teams_attributes: teams_attributes)
+  end
+
+  def teams_attributes
     %i(name).push(location_attributes: location_attributes)
   end
 

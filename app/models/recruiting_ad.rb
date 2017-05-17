@@ -1,15 +1,16 @@
 class RecruitingAd < ApplicationRecord
+  belongs_to :team, optional: true
   belongs_to :organization
 
-  def self.body(organization)
+  def self.body(team)
     <<-BODY
-#{organization.name} is hiring Caregivers! Our CNAs are as important to us as \
+#{team.organization.name} is hiring Caregivers! Our CNAs are as important to us as \
 our clients. Openings PT/FT for M-F day shifts and weekends.
 
 *********************************
 
 For immediate opportunities, text START to \
-#{organization.phone_number.phony_formatted}
+#{team.phone_number.phony_formatted}
 
 *********************************
 

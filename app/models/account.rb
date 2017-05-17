@@ -8,6 +8,8 @@ class Account < ApplicationRecord
   has_many :conversations
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
+  has_many :memberships
+  has_many :teams, through: :memberships
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank

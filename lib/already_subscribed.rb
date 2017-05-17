@@ -11,11 +11,17 @@ class AlreadySubscribed
     organization.message(
       sender: Chirpy.person,
       recipient: person,
+      from: from,
       body: already_subscribed
     )
   end
 
   private
+
+  def from
+    contact.team.phone_number if contact.team.present?
+    organization.phone_number
+  end
 
   attr_reader :contact
   delegate :person, :organization, to: :contact
