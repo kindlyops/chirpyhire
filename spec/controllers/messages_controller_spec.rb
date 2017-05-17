@@ -25,31 +25,53 @@ RSpec.describe MessagesController do
         contact.update(subscribed: true)
       end
 
-      it 'creates a message' do
-        expect {
+      context 'and the contact and account are on the same team' do
+        before do
+          team = create(:team, organization: organization)
+          team.accounts << account
+          contact.update(team: account.teams.first)
+        end
+
+        it 'creates a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.to change { organization.messages.count }.by(1)
+        end
+
+        it 'is a author organization message' do
           post :create, params: params, xhr: true
-        }.to change { organization.messages.count }.by(1)
-      end
+          expect(organization.messages.last.author).to eq(:organization)
+        end
 
-      it 'is a author organization message' do
-        post :create, params: params, xhr: true
-        expect(organization.messages.last.author).to eq(:organization)
-      end
-
-      it 'is sent from the account' do
-        post :create, params: params, xhr: true
-        expect(organization.messages.last.sender).to eq(account.person)
-      end
-
-      it 'is received by the person' do
-        post :create, params: params, xhr: true
-        expect(organization.messages.last.recipient).to eq(contact.person)
-      end
-
-      it 'sends a message' do
-        expect {
+        it 'is sent from the account' do
           post :create, params: params, xhr: true
-        }.to change { FakeMessaging.messages.count }.by(1)
+          expect(organization.messages.last.sender).to eq(account.person)
+        end
+
+        it 'is received by the person' do
+          post :create, params: params, xhr: true
+          expect(organization.messages.last.recipient).to eq(contact.person)
+        end
+
+        it 'sends a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.to change { FakeMessaging.messages.count }.by(1)
+        end
+      end
+
+      context 'and the account and contact are not on the same team' do
+        it 'does not create a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.not_to change { organization.messages.count }
+        end
+
+        it 'does not send a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.not_to change { FakeMessaging.messages.count }
+        end
       end
     end
 

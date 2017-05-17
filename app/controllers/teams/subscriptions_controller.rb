@@ -1,4 +1,4 @@
-class Organizations::SubscriptionsController < Organizations::MessagesController
+class Teams::SubscriptionsController < Teams::MessagesController
   before_action :sync_message
 
   def create
@@ -21,14 +21,14 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
 
   def contact
     @contact ||= begin
-      contact = person.contacts.find_by(organization: organization)
+      contact = person.contacts.find_by(team: team)
       return contact if contact.present?
       create_unsubscribed_contact
     end
   end
 
   def create_unsubscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
+    person.contacts.create(team: team).tap do |contact|
       IceBreakerJob.perform_later(contact)
     end
   end

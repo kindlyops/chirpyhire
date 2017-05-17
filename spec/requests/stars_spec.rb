@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Stars' do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :team) }
 
   before do
     sign_in(account)

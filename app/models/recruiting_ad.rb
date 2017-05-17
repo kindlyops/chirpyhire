@@ -2,6 +2,8 @@ class RecruitingAd < ApplicationRecord
   belongs_to :team, optional: true
   belongs_to :organization
 
+  delegate :name, to: :team, prefix: true
+
   def self.body(team)
     <<-BODY
 #{team.organization.name} is hiring Caregivers! Our CNAs are as important to us as \

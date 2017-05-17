@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: [:show], controller: 'ideal_candidates'
-  resource :recruiting_ad, only: [:show, :update, :create]
+  resources :recruiting_ads, only: [:index, :update, :create]
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 
@@ -36,10 +36,10 @@ Rails.application.routes.draw do
     end
   end
 
-  post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'organizations/messages#create'
+  post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new
+  post 'twilio/text', to: 'teams/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text', to: 'teams/answers#create', constraints: Constraint::Answer.new
+  post 'twilio/text' => 'teams/messages#create'
 
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
   devise_scope :accounts do

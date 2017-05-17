@@ -4,8 +4,8 @@ RSpec.describe Surveyor do
   subject { Surveyor.new(contact) }
 
   describe '#start' do
-    let(:contact) { create(:contact) }
-    let(:organization) { contact.organization }
+    let(:organization) { create(:organization, :account) }
+    let(:contact) { create(:contact, organization: organization) }
     let(:candidacy) { contact.person.candidacy }
 
     before do
@@ -58,7 +58,7 @@ RSpec.describe Surveyor do
       end
 
       context 'subscribed to multiple organizations' do
-        let(:other_organization) { create(:organization) }
+        let(:other_organization) { create(:organization, :account) }
 
         before do
           other_contact = other_organization.contacts.create(person: contact.person)
@@ -193,6 +193,7 @@ RSpec.describe Surveyor do
     let(:organization) { contact.organization }
 
     before do
+      create(:account, organization: organization)
       IceBreaker.call(contact)
     end
 
@@ -221,7 +222,7 @@ RSpec.describe Surveyor do
         end
 
         context 'subscribed to multiple organizations' do
-          let(:other_organization) { create(:organization) }
+          let(:other_organization) { create(:organization, :account) }
 
           before do
             other_contact = other_organization.contacts.create(person: contact.person)

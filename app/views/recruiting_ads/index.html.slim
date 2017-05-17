@@ -1,4 +1,4 @@
-= title "Recruiting Ad | ChirpyHire"
+= title "Recruiting Ads | ChirpyHire"
 .recruiting-ad
   .row
     .col
@@ -6,16 +6,9 @@
         .card-block
           h2.card-title
             i.fa.fa-magnet.mr-2
-            span Recruiting Ad
-          p.card-subtitle Keep a copy of your recruiting ad here for easy posting in the future.
-          = form_for @recruiting_ad, url: recruiting_ad_path do |f|
-            .form-group.mt-3
-              = f.label :body, class: "sr-only col-form-label"
-              = f.text_area :body, rows: 10, required: true, class: "form-control"
-            = f.submit "Save recruiting ad", class: "btn-lg btn btn-primary mr-2", role: "button"
-            button.btn.btn-secondary.btn-lg.clipboard role="button" type="button" data-clipboard-target="#recruiting_ad_body"
-              i.fa.fa-clipboard.mr-2
-              span Copy to clipboard
+            span Recruiting Ads
+          p.card-subtitle Keep copies of your recruiting ads here for easy posting in the future.
+          = render partial: "recruiting_ads/recruiting_ad", collection: @recruiting_ads
       .card.mt-3.channels
         .card-block
           h2.card-title

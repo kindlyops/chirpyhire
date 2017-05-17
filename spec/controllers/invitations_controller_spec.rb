@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :controller do
-  let!(:organization) { create(:organization) }
+  let!(:organization) { create(:organization, :account) }
   let(:inviter) { organization.accounts.first }
 
   let(:invite_params) do

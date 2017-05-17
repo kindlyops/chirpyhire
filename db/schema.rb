@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(version: 20170517174312) do
     t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"
     t.index ["phone_number"], name: "index_teams_on_phone_number", unique: true
     t.index ["recruiter_id"], name: "index_teams_on_recruiter_id"
