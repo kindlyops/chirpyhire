@@ -1,8 +1,8 @@
 button#filters.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button"
-  - if [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification], params[:city], params[:zipcode], params[:county], params[:state]].flatten.compact.count.positive?
+  - if [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification]].flatten.compact.count.positive?
     i class=="fa fa-filter dropdown-icon fa-fw mr-2"
     span.dropdown-label Filters
-    span.badge.badge-primary = [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification], params[:city], params[:zipcode], params[:county], params[:state]].flatten.compact.count
+    span.badge.badge-primary = [params[:starred], params[:experience], params[:availability], params[:transportation], params[:certification]].flatten.compact.count
   - else
     i class=="fa fa-filter dropdown-icon fa-fw mr-2"
     span.dropdown-label Filters

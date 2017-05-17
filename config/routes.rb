@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'organizations/messages#create'
 
-  devise_for :accounts, controllers: { sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
+  devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
   devise_scope :accounts do
     get 'organizations/settings/people/invitation/new', to: 'invitations#new'
   end

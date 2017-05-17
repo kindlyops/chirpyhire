@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var unloadedClipboard = $('.clipboard:not([loaded])');
 
   if (unloadedClipboard.length) {
