@@ -202,7 +202,7 @@ $(document).on('ready', function() {
         e.preventDefault();
         $form = $('form.zipcode-search-form');
 
-        Turbolinks.visit($form.attr('action'));
+        window.location.href = $form.attr('action');
       }
     });
 
