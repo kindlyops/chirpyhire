@@ -4,6 +4,9 @@ class Notification::Base
   end
 
   attr_reader :contact
-  delegate :organization, to: :contact
-  delegate :recruiter, to: :organization
+  delegate :team, :organization, to: :contact
+
+  def recruiter
+    team && team.recruiter || organization.recruiter
+  end
 end

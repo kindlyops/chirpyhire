@@ -1,14 +1,10 @@
 class RecruitingAdPolicy < ApplicationPolicy
   def update?
-    scope.where(id: record.id).exists?
+    show?
   end
 
   def show?
-    record.new_record? || update?
-  end
-
-  def create?
-    show?
+    scope.where(id: record.id).exists?
   end
 
   def permitted_attributes
@@ -17,7 +13,7 @@ class RecruitingAdPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(organization: organization)
+      scope.where(team: account.teams)
     end
   end
 end

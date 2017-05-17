@@ -1,4 +1,4 @@
-class Organizations::MessagesController < ActionController::Base
+class Teams::MessagesController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
@@ -12,7 +12,7 @@ class Organizations::MessagesController < ActionController::Base
 
   def contact
     @contact ||= begin
-      contact = person.contacts.find_by(organization: organization)
+      contact = person.contacts.find_by(team: team)
       return contact if contact.present?
       create_subscribed_contact
     end
@@ -26,12 +26,12 @@ class Organizations::MessagesController < ActionController::Base
     end
   end
 
-  def organization
-    @organization ||= Organization.find_by(phone_number: params['To'])
+  def team
+    @team ||= Team.find_by(phone_number: params['To'])
   end
 
   def create_subscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
+    person.contacts.create(team: team).tap do |contact|
       contact.subscribe
       IceBreakerJob.perform_later(contact)
     end

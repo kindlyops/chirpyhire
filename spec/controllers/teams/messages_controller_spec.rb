@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::MessagesController, type: :controller do
-  let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+RSpec.describe Teams::MessagesController, type: :controller do
+  let!(:team) { create(:team, phone_number: Faker::PhoneNumber.cell_phone) }
 
   describe '#create' do
     context 'new person' do
       let(:params) do
         {
-          'To' => organization.phone_number,
+          'To' => team.phone_number,
           'From' => '+14041234567',
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
@@ -29,7 +29,12 @@ RSpec.describe Organizations::MessagesController, type: :controller do
       it 'creates a subscribed contact' do
         expect {
           post :create, params: params
-        }.to change { Contact.subscribed.count }.by(1)
+        }.to change { team.reload.contacts.subscribed.count }.by(1)
+      end
+
+      it 'the contact is tied to the team' do
+        post :create, params: params
+        expect(team.contacts).to include(Contact.last)
       end
     end
 
@@ -38,7 +43,7 @@ RSpec.describe Organizations::MessagesController, type: :controller do
 
       let(:params) do
         {
-          'To' => organization.phone_number,
+          'To' => team.phone_number,
           'From' => person.phone_number,
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
@@ -67,6 +72,11 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         expect {
           post :create, params: params
         }.to change { person.contacts.subscribed.count }.by(1)
+      end
+
+      it 'the contact is tied to the team' do
+        post :create, params: params
+        expect(team.contacts).to include(Contact.last)
       end
     end
   end

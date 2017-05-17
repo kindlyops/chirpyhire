@@ -48,8 +48,14 @@ class Surveyor
     organization.message(
       sender: Chirpy.person,
       recipient: person,
+      from: from,
       body: message
     )
+  end
+
+  def from
+    contact.team.phone_number if contact.team.present?
+    organization.phone_number
   end
 
   def update_candidacy(message)

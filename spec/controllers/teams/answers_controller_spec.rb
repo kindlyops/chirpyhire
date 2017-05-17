@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::AnswersController, type: :controller do
-  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+RSpec.describe Teams::AnswersController, type: :controller do
+  let(:team) { create(:team, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:person) { create(:person, :with_candidacy) }
 
   let(:params) do
     {
-      'To' => organization.phone_number,
+      'To' => team.phone_number,
       'From' => person.phone_number,
       'Body' => 'Answer',
       'MessageSid' => 'MESSAGE_SID'

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe Organizations::SubscriptionsController, type: :controller do
-  let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+RSpec.describe Teams::SubscriptionsController, type: :controller do
+  let!(:team) { create(:team, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:phone_number) { '+15555555555' }
 
   describe '#create' do
     let(:params) do
       {
-        'To' => organization.phone_number,
+        'To' => team.phone_number,
         'From' => phone_number,
         'Body' => 'START',
         'MessageSid' => 'MESSAGE_SID'
@@ -29,10 +29,15 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
             post :create, params: params
           }.to change { person.contacts.subscribed.count }.by(1)
         end
+
+        it 'the contact is tied to the team' do
+          post :create, params: params
+          expect(team.contacts).to include(Contact.last)
+        end
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
+        let!(:contact) { create(:contact, subscribed: true, person: person, team: team) }
 
         context 'and an in progress candidacy' do
           before do
@@ -48,7 +53,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           it 'does not create a contact' do
             expect {
               post :create, params: params
-            }.not_to change { Contact.count }
+            }.not_to change { team.reload.contacts.count }
           end
 
           it 'does not create an IceBreakerJob' do
@@ -72,7 +77,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           it 'does not create a contact' do
             expect {
               post :create, params: params
-            }.not_to change { Contact.count }
+            }.not_to change { team.reload.contacts.count }
           end
 
           it 'does not create an IceBreakerJob' do
@@ -124,7 +129,12 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       it 'creates a subscribed contact' do
         expect {
           post :create, params: params
-        }.to change { Contact.subscribed.count }.by(1)
+        }.to change { team.reload.contacts.subscribed.count }.by(1)
+      end
+
+      it 'the contact is tied to the team' do
+        post :create, params: params
+        expect(team.contacts).to include(Contact.last)
       end
 
       it 'creates an IceBreakerJob' do
@@ -150,7 +160,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
   describe '#destroy' do
     let(:params) do
       {
-        'To' => organization.phone_number,
+        'To' => team.phone_number,
         'From' => phone_number,
         'Body' => 'STOP',
         'MessageSid' => 'MESSAGE_SID'
@@ -175,7 +185,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
+        let!(:contact) { create(:contact, subscribed: true, person: person, team: team) }
         it 'unsubscribes the contact' do
           expect {
             delete :destroy, params: params
@@ -200,7 +210,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       it 'creates an unsubscribed contact' do
         expect {
           delete :destroy, params: params
-        }.to change { Contact.unsubscribed.count }.by(1)
+        }.to change { team.reload.contacts.unsubscribed.count }.by(1)
       end
     end
   end
