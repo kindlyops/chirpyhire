@@ -22,7 +22,8 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   def contact
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
-      add_to_team(contact || create_unsubscribed_contact)
+      contact ||= create_unsubscribed_contact
+      add_to_team(contact)
     end
   end
 
