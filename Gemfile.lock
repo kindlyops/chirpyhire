@@ -486,6 +486,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.7.0)
+  haml (~> 5.0.1)
   inline_svg (~> 0.11.1)
   jbuilder
   jquery-rails
