@@ -101,6 +101,7 @@ gem 'premailer-rails', '~> 1.9.6'
 gem 'nokogiri', '~> 1.7.1'
 gem 'ahoy_email', '~> 0.5.0'
 gem 'slack-notifier', '~> 2.1.0'
+gem 'intercom-rails', '~> 0.3.4'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.3.3'
