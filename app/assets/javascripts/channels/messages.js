@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var collection = $("[data-channel='messages']");
 
   if(collection.length) {

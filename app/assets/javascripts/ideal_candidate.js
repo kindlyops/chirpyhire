@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var idealCandidate = $('.ideal-candidate:not([loaded])');
   if(idealCandidate.length) {
     var cover = $('.cover');

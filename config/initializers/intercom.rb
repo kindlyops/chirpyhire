@@ -1,7 +1,7 @@
 IntercomRails.config do |config|
   # == Intercom app_id
   #
-  config.app_id = ENV.fetch("INTERCOM_APP_ID")
+  config.app_id = ENV.fetch('INTERCOM_APP_ID')
 
   # == Intercom session_duration
   #
@@ -15,13 +15,13 @@ IntercomRails.config do |config|
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
   #
-  config.enabled_environments = ["development", "production"]
+  config.enabled_environments = %w(development production)
 
   # == Current user method/variable
   # The method/variable that contains the logged in user in your controllers.
   # If it is `current_user` or `@user`, then you can ignore this
   #
-  config.user.current = Proc.new { current_account }
+  config.user.current = proc { current_account }
 
   # == Include for logged out Users
   # If set to true, include the Intercom messenger on all pages, regardless of whether
