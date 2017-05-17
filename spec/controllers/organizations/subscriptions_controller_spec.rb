@@ -14,6 +14,28 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       }
     end
 
+    # Create message tied to conversation
+
+    it 'creates a conversation with the Screen Status' do
+      expect {
+        post :create, params: params
+      }.to change { organization.conversations.screen.count }.by(1)
+    end
+
+    context 'with two accounts' do
+      let!(:accounts) { create_list(:account, 2, organization: organization) }
+      before do
+        
+      end
+      it 'ties the conversation to each inbox in the organization' do
+        post :create, params: params
+
+        organization.inboxes.each do |inbox|
+          expect(inbox.conversations).to include(Conversation.last)
+        end
+      end
+    end
+
     it 'creates a MessageSyncerJob to log the START message' do
       expect {
         post :create, params: params

@@ -1,0 +1,178 @@
+= content_for :container_class, 'inbox'
+.conversation-list-wrapper
+  .conversation-filter-dropdown
+    .filter-selector
+      span.filter-selector-button role="button"
+        .filter-item
+          .filter-count 3
+          span.filter-name Open
+          .filler
+          i.fa.fa-angle-down.fa-2x
+      .filter-selector-menu role="menu"
+        .filter-item role="menuitem"
+          .filter-count 0
+          span.filter-name Your Conversations
+        .filter-item role="menuitem"
+          .filter-count 1
+          span.filter-name Pending
+        .filter-item.active role="menuitem"
+          .filter-count 17
+          span.filter-name Closed
+  .conversation-list
+    / = render partial: "inboxes/conversations/empty_list"
+    div
+      .conversation-list-item.selected
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .conversation-count
+          .count 2
+          | Conversations
+        .tag-list
+          .tag SMS
+      .conversation-list-item
+        .caregiver-and-timestamp
+          .handle Joyful Pheasant
+          .timestamp-container
+            .timestamp 9:15 AM
+        .summary.selected Excellent.
+        .tag-list
+          .tag SMS
+/ = render partial: "inboxes/conversations/empty_conversation"
+= render partial: "messages/header"
+= render partial: "messages/client_body"
