@@ -8,8 +8,8 @@ class Registrar
     organization.update(recruiter: account)
     create_ideal_candidate
     provision_phone_number
-    create_recruiting_ad
-    new_team_notification_job
+    setup_team
+    new_organization_notification_job
   end
 
   private
@@ -22,16 +22,36 @@ class Registrar
     )
   end
 
-  def create_recruiting_ad
-    organization.create_recruiting_ad(body: RecruitingAd.body(organization))
+  def team
+    @team ||= begin
+      organization.teams.create(
+        phone_number: organization.phone_number,
+        name: location.city,
+        recruiter: account
+      )
+    end
+  end
+
+  def setup_team
+    location.update(team: team)
+    recruiting_ad.update(team: team)
+    team.accounts << account
+  end
+
+  delegate :location, to: :organization
+
+  def recruiting_ad
+    @recruiting_ad ||= begin
+      organization.create_recruiting_ad(body: RecruitingAd.body(organization))
+    end
   end
 
   def provision_phone_number
     PhoneNumberProvisioner.provision(organization)
   end
 
-  def new_team_notification_job
-    NewTeamNotificationJob.perform_later(account)
+  def new_organization_notification_job
+    NewOrganizationNotificationJob.perform_later(account)
   end
 
   def organization
