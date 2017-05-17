@@ -19,7 +19,6 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'jbuilder'
-gem 'turbolinks', '~> 5.0.1'
 
 group :development, :test, :demo do
   gem 'factory_girl_rails', '~> 4.0'

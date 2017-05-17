@@ -4,12 +4,10 @@ meta content="IE=edge" http-equiv="X-UA-Compatible"
 meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"
 meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
 title= content_for?(:title) ? content_for(:title) : "Your Caregiver Recruiting Assistant | ChirpyHire"
-- if content_for?(:disable_turbolinks_caching)
-    = content_for(:disable_turbolinks_caching)
 = csrf_meta_tags
 = action_cable_meta_tag
-= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+= stylesheet_link_tag 'application', media: 'all'
 link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"
-= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+= javascript_include_tag 'application'
 script async==!Rails.env.test? defer=true type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_PLACES_KEY')}&libraries=places&callback=initAutocompletes"
 = favicon_link_tag 'favicon.ico'

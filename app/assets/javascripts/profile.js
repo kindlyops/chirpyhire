@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var profile = $('.settings .profile:not([loaded])');
   if(profile.length) {
     $(document).on('click', '.profile #upload', function(e) {

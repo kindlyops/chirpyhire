@@ -44,7 +44,7 @@ function initZipcodeSearch() {
           var url = $form.attr('action') + '?' + location;
         }
 
-        Turbolinks.visit(url);
+        window.location.href = url;
       }
     });
 
@@ -158,7 +158,7 @@ function initAutocompletes() {
   initLocationSearch();
 }
 
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   initLocationSearch();
 
   var zipcodeSearch = $('#zipcode-search:not([loaded])');

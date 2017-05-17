@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
 
   var navbar = $('nav.navbar.top:not([loaded])');
 
@@ -16,7 +16,7 @@ $(document).on('turbolinks:load', function() {
         var url = $form.attr('action') + '?' + $form.serialize();
       }
 
-      Turbolinks.visit(url);
+      window.location.href = url;
     });
 
     $(document).on('click', '.cancel', function(e) {

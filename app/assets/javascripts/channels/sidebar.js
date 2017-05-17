@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var model = $("[data-channel='sidebar']:not([loaded])");
 
   if(model.length) {
