@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :controller do
-  let!(:organization) { create(:organization, :account) }
+  let!(:organization) { create(:organization, :account, :recruiting_ad) }
   let(:inviter) { organization.accounts.first }
 
   let(:invite_params) do
@@ -34,6 +34,15 @@ RSpec.describe InvitationsController, type: :controller do
       expect {
         post :create, params: invite_params
       }.to have_enqueued_job(GlacierBreakerJob)
+    end
+
+    context 'with a team' do
+      let!(:team) { create(:team, organization: organization) }
+      it 'adds the account to the team' do
+        expect {
+          post :create, params: invite_params
+        }.to change { team.accounts.count }.by(1)
+      end
     end
   end
 
