@@ -35,15 +35,15 @@ end
 group :test do
   gem 'vcr', '~> 3.0.0'
   gem 'webmock', '~> 2.3.2'
-  gem 'capybara', '~> 2.7.0'
+  gem 'capybara', '~> 2.14.0'
   gem 'database_cleaner', '~> 1.6.1'
   gem 'launchy', '~> 2.4.3'
   gem 'capybara-email', git: 'git@github.com:DockYard/capybara-email.git', ref: 'c30c5f0'
   gem 'pundit-matchers', '~> 1.0.2'
-  gem 'poltergeist', '~> 1.10.0'
+  gem 'poltergeist', '~> 1.15.0'
   gem 'rails-controller-testing'
   gem 'timecop', '~> 0.8.1'
-  gem 'capybara-webkit', '~> 1.12.0'
+  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'rubocop', '~> 0.47.1'
 end
