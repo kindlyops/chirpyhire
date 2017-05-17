@@ -22,9 +22,15 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   def contact
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
-      return contact if contact.present?
-      create_unsubscribed_contact
+      add_to_team(contact || create_unsubscribed_contact)
     end
+  end
+
+  def add_to_team(contact)
+    return contact if contact.team.present?
+    team = TeamCreator.call(organization)
+    team.contacts << contact
+    contact
   end
 
   def create_unsubscribed_contact

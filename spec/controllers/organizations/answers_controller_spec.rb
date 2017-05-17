@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organizations::AnswersController, type: :controller do
-  let(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+  let(:organization) { create(:organization, :account, :recruiting_ad, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:person) { create(:person, :with_candidacy) }
 
   let(:params) do

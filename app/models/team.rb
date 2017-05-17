@@ -6,9 +6,7 @@ class Team < ApplicationRecord
   has_one :recruiting_ad
   has_one :location
 
-  validates_associated :location
-  validates :location, presence: true
-
   has_many :memberships
   has_many :accounts, through: :memberships
+  has_many :contacts
 end

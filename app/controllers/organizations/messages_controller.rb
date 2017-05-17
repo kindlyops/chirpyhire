@@ -13,9 +13,16 @@ class Organizations::MessagesController < ActionController::Base
   def contact
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
-      return contact if contact.present?
-      create_subscribed_contact
+      contact ||= create_subscribed_contact
+      add_to_team(contact)
     end
+  end
+
+  def add_to_team(contact)
+    return contact if contact.team.present?
+    team = TeamCreator.call(organization)
+    team.contacts << contact
+    contact
   end
 
   def person
