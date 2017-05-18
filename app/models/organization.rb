@@ -26,9 +26,6 @@ class Organization < ApplicationRecord
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
-  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
-  has_many :messages
-
   delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
