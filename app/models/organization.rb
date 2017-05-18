@@ -9,6 +9,9 @@ class Organization < ApplicationRecord
   has_many :recruiting_ads, through: :teams
   has_many :people, through: :contacts, class_name: 'Person'
 
+  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
+  has_many :messages
+
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate
   has_one :recruiting_ad

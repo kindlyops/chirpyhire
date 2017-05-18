@@ -35,12 +35,8 @@ class MessagesController < ApplicationController
     receipt.update(read_at: DateTime.current)
   end
 
-  def most_recent_conversation
-    current_organization.contacts.recently_replied.first
-  end
-
   def ensure_contacts
-    no_contacts_message if current_organization.contacts.empty?
+    no_contacts_message if current_account.contacts.empty?
   end
 
   def no_contacts_message
