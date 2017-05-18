@@ -19,7 +19,7 @@ class Contact < ApplicationRecord
   before_create :set_last_reply_at
 
   def self.recently_replied
-    order(last_reply_at: :desc)
+    order('last_reply_at DESC NULLS LAST')
   end
 
   def self.candidacy_filter(filter_clause)
