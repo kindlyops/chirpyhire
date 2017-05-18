@@ -83,15 +83,15 @@ function initLocationSearch() {
     autocomplete.addListener('place_changed', function() {
       var place = autocomplete.getPlace();
       var $form = $('form#new_account');
-      var $latitude = $form.find('#account_organization_attributes_location_attributes_latitude');
-      var $longitude = $form.find('#account_organization_attributes_location_attributes_longitude');
-      var $full_street_address = $form.find('#account_organization_attributes_location_attributes_full_street_address');
-      var $city = $form.find('#account_organization_attributes_location_attributes_city');
-      var $state = $form.find('#account_organization_attributes_location_attributes_state');
-      var $state_code = $form.find('#account_organization_attributes_location_attributes_state_code');
-      var $postal_code = $form.find('#account_organization_attributes_location_attributes_postal_code');
-      var $country = $form.find('#account_organization_attributes_location_attributes_country');
-      var $country_code = $form.find('#account_organization_attributes_location_attributes_country_code');
+      var $latitude = $form.find("input[name*='[location_attributes][latitude]']");
+      var $longitude = $form.find("input[name*='[location_attributes][longitude]']");
+      var $full_street_address = $form.find("input[name*='[location_attributes][full_street_address]']");
+      var $city = $form.find("input[name*='[location_attributes][city]']");
+      var $state = $form.find("input[name*='[location_attributes][state]']");
+      var $state_code = $form.find("input[name*='[location_attributes][state_code]']");
+      var $postal_code = $form.find("input[name*='[location_attributes][postal_code]']");
+      var $country = $form.find("input[name*='[location_attributes][country]']");
+      var $country_code = $form.find("input[name*='[location_attributes][country_code]']");
       var $address = $form.find('#address');
 
       $latitude.val(place.geometry.location.lat());
@@ -114,6 +114,8 @@ function initLocationSearch() {
       var $locationSearch = $('#location-search');
       $locationSearch.removeClass('has-warning');
       $locationSearch.find('.form-control-feedback').remove();
+      var $teamName = $form.find("#account_organization_attributes_teams_attributes_0_name");
+      $teamName.val(city.long_name);
     });
 
     function missingLocation(input) {

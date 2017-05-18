@@ -11,10 +11,10 @@ class Organization < ApplicationRecord
   has_one :ideal_candidate
   has_one :recruiting_ad
   has_one :location
-  validates_associated :location
-  validates :location, presence: true
   accepts_nested_attributes_for :location,
                                 reject_if: ->(l) { l.values.any?(&:blank?) }
+
+  accepts_nested_attributes_for :teams, reject_if: :all_blank
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },
@@ -24,7 +24,7 @@ class Organization < ApplicationRecord
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
   has_many :messages
 
-  delegate :zipcode, :city, to: :location
+  delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
   def candidates
@@ -43,6 +43,10 @@ class Organization < ApplicationRecord
 
   def get_message(sid)
     messaging_client.messages.get(sid)
+  end
+
+  def subaccount?
+    twilio_account_sid.present?
   end
 
   private

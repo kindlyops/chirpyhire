@@ -35,8 +35,27 @@ class TeamCreator
       organization.teams.create(
         phone_number: organization.phone_number,
         name: location.city,
-        recruiter: account
+        recruiter: account,
+        location_attributes: location_attributes
       )
     end
+  end
+
+  def location_attributes
+    location_keys.each_with_object({}) do |key, hash|
+      hash[key] = location.send(key)
+    end
+  end
+
+  def location_keys
+    %i(full_street_address
+       latitude
+       longitude
+       city
+       state
+       state_code
+       postal_code
+       country
+       country_code)
   end
 end

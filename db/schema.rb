@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20170517222921) do
     t.string "postal_code", null: false
     t.string "country", null: false
     t.string "country_code"
-    t.integer "organization_id", null: false
+    t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "team_id"

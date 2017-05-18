@@ -3,14 +3,13 @@ require 'rails_helper'
 RSpec.describe Registrar do
   describe 'register' do
     subject { Registrar.new(account) }
-    let(:organization) { create(:organization) }
+    let(:organization) { create(:organization, :team) }
 
     before do
-      allow(PhoneNumberProvisioner).to receive(:provision) do |organization|
-        organization.update(phone_number: Faker::PhoneNumber.cell_phone)
-        organization.teams.each do |team|
-          team.update(phone_number: Faker::PhoneNumber.cell_phone)
-        end
+      allow(PhoneNumberProvisioner).to receive(:provision) do |team, organization|
+        phone = Faker::PhoneNumber.cell_phone
+        organization.update(phone_number: phone)
+        team.update(phone_number: phone)
       end
     end
 
@@ -57,11 +56,6 @@ RSpec.describe Registrar do
       it 'creates a recruiting ad for the team' do
         subject.register
         expect(Team.last.recruiting_ad).to eq(organization.recruiting_ad)
-      end
-
-      it 'sets the location on the team' do
-        subject.register
-        expect(Team.last.location).to eq(organization.location)
       end
 
       it 'provisions a phone number for the organization' do

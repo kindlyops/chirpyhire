@@ -5,6 +5,12 @@ FactoryGirl.define do
       organization.location_attributes = attributes_for(:location, postal_code: '30342')
     end
 
+    trait :team do
+      after(:create) do |organization|
+        create(:team, organization: organization)
+      end
+    end
+
     trait :account do
       after(:create) do |organization|
         account = create(:account, organization: organization)
