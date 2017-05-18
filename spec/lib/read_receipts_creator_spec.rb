@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ReadReceiptsCreator do
-  let(:organization) { create(:organization) }
-  let(:contact) { create(:contact, organization: organization) }
+  let(:team) { create(:team) }
+  let(:organization) { team.organization }
+  let(:contact) { create(:contact, team: team) }
   let!(:message) { create(:message, sender: contact.person, organization: organization) }
 
   subject { ReadReceiptsCreator.new(message, organization) }

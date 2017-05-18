@@ -14,9 +14,9 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
             span.ml-2 Messages
             - if current_account.unread_count.positive?
               i.fa.fa-circle
-      - if current_organization.phone_number.present?
+      - if current_organization.phone_numbers.present?
         li.nav-item.mr-2.my-auto
-          span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_number.phony_formatted
+          span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_numbers.first.phony_formatted
       - else
         li.nav-item.mr-2.my-auto
           span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
@@ -27,9 +27,9 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
         button#settingsDropdown.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" role="button"
           i.fa.fa-user-circle-o
         .dropdown-menu.dropdown-menu-right aria-labelledby="settingsDropdown"
-          = link_to recruiting_ad_path, class: 'dropdown-item' do
+          = link_to recruiting_ads_path, class: 'dropdown-item' do
               i.fa.fa-fw.fa-magnet.mr-1
-              span.ml-2 Recruiting Ad
+              span.ml-2 Recruiting Ads
           = link_to candidate_path, class: 'dropdown-item' do
               i.fa.fa-fw.fa-id-card
               span.ml-2 Ideal Candidate

@@ -10,11 +10,10 @@ class GlacierBreaker
   attr_reader :account
 
   def call
-    contacts.find_each do |contact|
-      account.conversations.find_or_create_by!(contact: contact)
+    account.teams.find_each do |team|
+      team.contacts.find_each do |contact|
+        account.conversations.find_or_create_by!(contact: contact)
+      end
     end
   end
-
-  delegate :organization, to: :account
-  delegate :contacts, to: :organization
 end

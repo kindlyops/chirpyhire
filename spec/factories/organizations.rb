@@ -1,9 +1,6 @@
 FactoryGirl.define do
   factory :organization do
     name { Faker::Company.name }
-    before(:create) do |organization|
-      organization.location_attributes = attributes_for(:location, postal_code: '30342')
-    end
 
     trait :team do
       after(:create) do |organization|

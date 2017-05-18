@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170517222921) do
+ActiveRecord::Schema.define(version: 20170518015038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,13 +90,13 @@ ActiveRecord::Schema.define(version: 20170517222921) do
 
   create_table "contacts", id: :serial, force: :cascade do |t|
     t.integer "person_id", null: false
-    t.integer "organization_id", null: false
+    t.integer "organization_id"
     t.boolean "subscribed", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_reply_at"
     t.boolean "starred", default: false, null: false
-    t.bigint "team_id"
+    t.bigint "team_id", null: false
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 20170517222921) do
     t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "team_id"
+    t.bigint "team_id", null: false
     t.index ["organization_id"], name: "index_locations_on_organization_id"
     t.index ["team_id"], name: "index_locations_on_team_id"
   end
@@ -238,11 +238,11 @@ ActiveRecord::Schema.define(version: 20170517222921) do
   end
 
   create_table "recruiting_ads", id: :serial, force: :cascade do |t|
-    t.integer "organization_id", null: false
+    t.integer "organization_id"
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "team_id"
+    t.bigint "team_id", null: false
     t.index ["organization_id"], name: "index_recruiting_ads_on_organization_id"
     t.index ["team_id"], name: "index_recruiting_ads_on_team_id"
   end

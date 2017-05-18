@@ -10,7 +10,7 @@ class AlreadySubscribed
   def call
     organization.message(
       sender: Chirpy.person,
-      recipient: person,
+      contact: contact,
       body: already_subscribed
     )
   end
@@ -18,7 +18,7 @@ class AlreadySubscribed
   private
 
   attr_reader :contact
-  delegate :person, :organization, to: :contact
+  delegate :organization, to: :contact
 
   def already_subscribed
     <<~BODY

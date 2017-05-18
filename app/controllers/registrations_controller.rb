@@ -22,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(*)
-    recruiting_ad_path
+    recruiting_ads_path
   end
 
   def account_attributes

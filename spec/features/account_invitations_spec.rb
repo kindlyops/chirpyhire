@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Account Invitations', type: :feature, js: true do
   include Features::InvitationHelpers
-  let(:organization) { create(:organization, :account, :recruiting_ad) }
+  let(:team) { create(:team, :account) }
+  let(:organization) { team.organization }
   let(:account) { organization.accounts.first }
   let(:email) { Faker::Internet.email }
   let(:name) { Faker::Name.name }

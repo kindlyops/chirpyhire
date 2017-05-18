@@ -1,6 +1,6 @@
 class Seeder
   def seed
-    seed_organization
+    seed_account
     seed_incomplete_contacts
     seed_complete_contacts
     seed_zipcodes_for_people
@@ -130,41 +130,6 @@ class Seeder
     )
   end
 
-  def seed_organization
-    @organization = find_or_create_organization
-    organization.create_ideal_candidate!(
-      zipcodes_attributes: [{ value: '30341' }]
-    )
-    seed_account
-    seed_team
-    organization.create_recruiting_ad(
-      team: team, body: RecruitingAd.body(team)
-    )
-    puts 'Created Organization'
-  end
-
-  def seed_team
-    find_or_create_team
-
-    puts 'Created Team and Recruiting Ad'
-  end
-
-  def find_or_create_team
-    found_team = organization.teams.find_by(team_attributes)
-
-    found_team || create_team
-  end
-
-  def create_team
-    @team = organization.teams.create!(team_params)
-    tie_account_to_team
-  end
-
-  def tie_account_to_team
-    team.accounts << account
-    team.update(recruiter: account)
-  end
-
   def team_attributes
     { name: 'Atlanta', phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE') }
   end
@@ -177,26 +142,14 @@ class Seeder
     '2225 Spring Walk Court, Chamblee, GA 30341, United States of America'
   end
 
-  def find_or_create_organization
-    found_organization = Organization.find_by(organization_attributes)
-
-    found_organization || create_organization
-  end
-
-  def create_organization
-    attributes = organization_attributes.merge(
-      location_attributes: location_attributes
-    )
-
-    Organization.create!(attributes)
-  end
-
   def organization_attributes
     {
       name: ENV.fetch('DEMO_ORGANIZATION_NAME'),
       twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
-      phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
+      teams_attributes: {
+        '0' => team_params
+      }
     }
   end
 
@@ -209,17 +162,38 @@ class Seeder
   end
 
   def seed_account
-    unless organization.accounts.present?
-      @account = organization.accounts.create!(
-        password: ENV.fetch('DEMO_PASSWORD'),
-        person_attributes: { name: ENV.fetch('DEMO_NAME') },
-        email: ENV.fetch('DEMO_EMAIL'),
-        super_admin: true
-      )
-      organization.update(recruiter: account)
-    end
+    @account = Account.create(account_attributes)
+    @organization = account.organization
+    @team = organization.teams.first
+    setup_account
 
     puts 'Created Account'
+  end
+
+  def account_attributes
+    {
+      password: ENV.fetch('DEMO_PASSWORD'),
+      person_attributes: { name: ENV.fetch('DEMO_NAME') },
+      email: ENV.fetch('DEMO_EMAIL'),
+      super_admin: true,
+      organization_attributes: organization_attributes
+    }
+  end
+
+  def setup_account
+    setup_organization
+    team.accounts << account
+    team.update(recruiter: account)
+  end
+
+  def setup_organization
+    organization.create_ideal_candidate!(
+      zipcodes_attributes: [{ value: '30341' }]
+    )
+    organization.create_recruiting_ad(
+      team: team, body: RecruitingAd.body(team)
+    )
+    organization.update(recruiter: account)
   end
 
   def seed_zipcodes_for_people

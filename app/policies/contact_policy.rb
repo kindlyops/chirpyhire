@@ -5,7 +5,7 @@ class ContactPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(organization: organization)
+      scope.where(team: account.teams)
     end
   end
 end

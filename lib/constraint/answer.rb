@@ -11,21 +11,21 @@ class Constraint::Answer < Constraint::Base
   end
 
   def same_contact?
-    person.subscribed_to(organization) == candidacy.contact
+    person.subscribed_to(team) == candidacy.contact
   end
 
   delegate :candidacy, to: :person
 
   def contact_present?
-    communicators_present? && person.subscribed_to?(organization)
+    communicators_present? && person.subscribed_to?(team)
   end
 
   def communicators_present?
-    organization.present? && person.present?
+    team.present? && person.present?
   end
 
-  def organization
-    Organization.find_by(phone_number: to)
+  def team
+    Team.find_by(phone_number: to)
   end
 
   def person

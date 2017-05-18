@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :location do
-    organization
+    team
     state_code = Faker::Address.state_abbr
 
     latitude 33.929966

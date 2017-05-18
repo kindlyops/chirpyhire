@@ -1,17 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe GlacierBreaker do
-  let(:account) { create(:account) }
-  let(:organization) { account.organization }
+  let(:team) { create(:team, :account) }
+  let(:account) { team.accounts.first }
+  let(:organization) { team.organization }
 
   subject { GlacierBreaker.new(account) }
 
   describe '#call' do
-    context 'with multiple contacts on the organization' do
-      let!(:contacts) { create_list(:contact, 3, organization: account.organization) }
-      let(:count) { organization.contacts.count }
+    context 'with multiple contacts on the team' do
+      let!(:contacts) { create_list(:contact, 3, team: team) }
+      let(:count) { team.contacts.count }
 
-      it 'creates a conversation for each contact on the organization' do
+      it 'creates a conversation for each contact on the team' do
         expect {
           subject.call
         }.to change { organization.conversations.count }.by(count)
@@ -30,11 +31,11 @@ RSpec.describe GlacierBreaker do
       end
     end
 
-    context 'with contacts on other organizations' do
+    context 'with contacts on other teams' do
       let!(:contacts) { create_list(:contact, 3) }
-      let(:count) { organization.contacts.count }
+      let(:count) { team.contacts.count }
 
-      it 'only creates conversations for contacts on the organization' do
+      it 'only creates conversations for contacts on the team' do
         expect {
           subject.call
         }.to change { organization.conversations.count }.by(count)
