@@ -17,7 +17,7 @@ class ReadReceiptsCreator
   end
 
   def call
-    organization.conversations.contact(contact).find_each do |conversation|
+    contact_team_conversations.find_each do |conversation|
       receipt = conversation.read_receipts.find_by(message: message)
       next if receipt.present?
 
@@ -25,6 +25,10 @@ class ReadReceiptsCreator
     end
 
     broadcast_sidebar
+  end
+
+  def contact_team_conversations
+    contact.team.conversations.contact(contact)
   end
 
   def contact

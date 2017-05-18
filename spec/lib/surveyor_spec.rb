@@ -57,6 +57,18 @@ RSpec.describe Surveyor do
         candidacy.update(contact: contact, state: :complete)
       end
 
+      context 'but account is no longer on the same team as the contact' do
+        before do
+          team.accounts.destroy(team.accounts.first)
+        end
+
+        it 'does not send an email to the account' do
+          expect {
+            subject.start
+          }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
+        end
+      end
+
       context 'subscribed to multiple teams' do
         let(:other_team) { create(:team, :account) }
 

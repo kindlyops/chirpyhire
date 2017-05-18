@@ -5,7 +5,7 @@ class Surveyor
 
   def start
     if candidacy.complete?
-      notify_contact_ready_for_review(organization_contact_conversations)
+      notify_contact_ready_for_review(contact_team_conversations)
     elsif candidacy.pending?
       lock_candidacy
       survey.ask
@@ -28,8 +28,8 @@ class Surveyor
 
   private
 
-  def organization_contact_conversations
-    organization.conversations.contact(contact)
+  def contact_team_conversations
+    contact.team.conversations.contact(contact)
   end
 
   def restate_and_log(message)
@@ -41,6 +41,7 @@ class Surveyor
   def complete_survey(message)
     update_candidacy(message)
     survey.complete
+    # contact.person.conversations (has many conversations through teams; has many teams through contacts)
     notify_contact_ready_for_review(contact.person.conversations)
   end
 
