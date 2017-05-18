@@ -2,6 +2,8 @@ class RecruitingAd < ApplicationRecord
   belongs_to :team
   belongs_to :organization, optional: true
 
+  delegate :name, to: :team, prefix: true
+
   def organization
     super || team.organization
   end

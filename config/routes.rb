@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
-  resource :recruiting_ad, only: [:show, :update, :create]
+  resources :recruiting_ads, only: [:index, :update]
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
 

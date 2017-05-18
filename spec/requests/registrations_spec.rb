@@ -49,7 +49,7 @@ RSpec.describe 'Registration' do
 
       it 'progress to recruiting ad' do
         post account_registration_path, params: params
-        expect(response).to redirect_to recruiting_ad_path
+        expect(response).to redirect_to recruiting_ads_path
         expect(Account.last.email).to eq(email)
         expect(Account.last.name).to eq(name)
         expect(Organization.last.name).to eq(organization_name)

@@ -27,6 +27,10 @@ class Organization < ApplicationRecord
   delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
+  def phone_numbers
+    teams.pluck(:phone_number).compact
+  end
+
   def candidates
     people.joins(:candidacy)
   end
