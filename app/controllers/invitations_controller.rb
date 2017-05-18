@@ -15,7 +15,10 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def create
-    super { |account| GlacierBreakerJob.perform_later(account) }
+    super do |account|
+      account.teams << TeamFindOrCreator.call(organization)
+      GlacierBreakerJob.perform_later(account)
+    end
   end
 
   private

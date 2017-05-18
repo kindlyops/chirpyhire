@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Organizations::SubscriptionsController, type: :controller do
-  let!(:organization) { create(:organization, phone_number: Faker::PhoneNumber.cell_phone) }
+  let!(:organization) { create(:organization, :account, :recruiting_ad, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:phone_number) { '+15555555555' }
 
   describe '#create' do
@@ -28,6 +28,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           expect {
             post :create, params: params
           }.to change { person.contacts.subscribed.count }.by(1)
+        end
+
+        context 'without a team' do
+          it 'creates a team' do
+            expect {
+              post :create, params: params
+            }.to change { organization.reload.teams.count }.by(1)
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
+        end
+
+        context 'with a team' do
+          before do
+            create(:team, organization: organization)
+          end
+
+          it 'does not create a team' do
+            expect {
+              post :create, params: params
+            }.not_to change { organization.reload.teams.count }
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
         end
       end
 
@@ -56,6 +86,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
               post :create, params: params
             }.not_to have_enqueued_job(IceBreakerJob)
           end
+
+          context 'without a team' do
+            it 'creates a team' do
+              expect {
+                post :create, params: params
+              }.to change { organization.reload.teams.count }.by(1)
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
+          end
+
+          context 'with a team' do
+            before do
+              create(:team, organization: organization)
+            end
+
+            it 'does not create a team' do
+              expect {
+                post :create, params: params
+              }.not_to change { organization.reload.teams.count }
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
+          end
         end
 
         context 'and a completed candidacy' do
@@ -80,6 +140,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
               post :create, params: params
             }.not_to have_enqueued_job(IceBreakerJob)
           end
+
+          context 'without a team' do
+            it 'creates a team' do
+              expect {
+                post :create, params: params
+              }.to change { organization.reload.teams.count }.by(1)
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
+          end
+
+          context 'with a team' do
+            before do
+              create(:team, organization: organization)
+            end
+
+            it 'does not create a team' do
+              expect {
+                post :create, params: params
+              }.not_to change { organization.reload.teams.count }
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
+          end
         end
 
         context 'and a pending candidacy' do
@@ -103,6 +193,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
             expect {
               post :create, params: params
             }.to have_enqueued_job(SurveyorJob)
+          end
+
+          context 'without a team' do
+            it 'creates a team' do
+              expect {
+                post :create, params: params
+              }.to change { organization.reload.teams.count }.by(1)
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
+          end
+
+          context 'with a team' do
+            before do
+              create(:team, organization: organization)
+            end
+
+            it 'does not create a team' do
+              expect {
+                post :create, params: params
+              }.not_to change { organization.reload.teams.count }
+            end
+
+            it 'adds the contact to the existing team' do
+              post :create, params: params
+              expect(organization.teams.first.contacts).to include(Contact.last)
+            end
           end
         end
       end
@@ -144,6 +264,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           post :create, params: params
         }.to have_enqueued_job(SurveyorJob)
       end
+
+      context 'without a team' do
+        it 'creates a team' do
+          expect {
+            post :create, params: params
+          }.to change { organization.reload.teams.count }.by(1)
+        end
+
+        it 'adds the contact to the existing team' do
+          post :create, params: params
+          expect(organization.teams.first.contacts).to include(Contact.last)
+        end
+      end
+
+      context 'with a team' do
+        before do
+          create(:team, organization: organization)
+        end
+
+        it 'does not create a team' do
+          expect {
+            post :create, params: params
+          }.not_to change { organization.reload.teams.count }
+        end
+
+        it 'adds the contact to the existing team' do
+          post :create, params: params
+          expect(organization.teams.first.contacts).to include(Contact.last)
+        end
+      end
     end
   end
 
@@ -172,6 +322,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
             delete :destroy, params: params
           }.to change { person.contacts.unsubscribed.count }.by(1)
         end
+
+        context 'without a team' do
+          it 'creates a team' do
+            expect {
+              post :create, params: params
+            }.to change { organization.reload.teams.count }.by(1)
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
+        end
+
+        context 'with a team' do
+          before do
+            create(:team, organization: organization)
+          end
+
+          it 'does not create a team' do
+            expect {
+              post :create, params: params
+            }.not_to change { organization.reload.teams.count }
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
+        end
       end
 
       context 'with a subscribed contact' do
@@ -180,6 +360,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           expect {
             delete :destroy, params: params
           }.to change { contact.reload.subscribed? }.from(true).to(false)
+        end
+
+        context 'without a team' do
+          it 'creates a team' do
+            expect {
+              post :create, params: params
+            }.to change { organization.reload.teams.count }.by(1)
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
+        end
+
+        context 'with a team' do
+          before do
+            create(:team, organization: organization)
+          end
+
+          it 'does not create a team' do
+            expect {
+              post :create, params: params
+            }.not_to change { organization.reload.teams.count }
+          end
+
+          it 'adds the contact to the existing team' do
+            post :create, params: params
+            expect(organization.teams.first.contacts).to include(Contact.last)
+          end
         end
       end
     end
@@ -201,6 +411,36 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Contact.unsubscribed.count }.by(1)
+      end
+
+      context 'without a team' do
+        it 'creates a team' do
+          expect {
+            post :create, params: params
+          }.to change { organization.reload.teams.count }.by(1)
+        end
+
+        it 'adds the contact to the existing team' do
+          post :create, params: params
+          expect(organization.teams.first.contacts).to include(Contact.last)
+        end
+      end
+
+      context 'with a team' do
+        before do
+          create(:team, organization: organization)
+        end
+
+        it 'does not create a team' do
+          expect {
+            post :create, params: params
+          }.not_to change { organization.reload.teams.count }
+        end
+
+        it 'adds the contact to the existing team' do
+          post :create, params: params
+          expect(organization.teams.first.contacts).to include(Contact.last)
+        end
       end
     end
   end

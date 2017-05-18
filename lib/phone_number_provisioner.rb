@@ -1,10 +1,11 @@
 class PhoneNumberProvisioner
-  def initialize(organization)
+  def initialize(team, organization)
     @organization = organization
+    @team = team
   end
 
-  def self.provision(organization)
-    new(organization).provision
+  def self.provision(team, organization)
+    new(team, organization).provision
   end
 
   def provision
@@ -12,6 +13,7 @@ class PhoneNumberProvisioner
 
     sub_account.incoming_phone_numbers.create(phone_number_attributes)
     organization.update(update_params)
+    team.update(phone_params)
   end
 
   def deprovision
@@ -60,11 +62,14 @@ class PhoneNumberProvisioner
     available_local_phone_numbers[0].phone_number
   end
 
-  def update_params
-    params = { phone_number: available_local_phone_number }
-    return params if organization.twilio_account_sid.present?
+  def phone_params
+    { phone_number: available_local_phone_number }
+  end
 
-    params.merge(
+  def update_params
+    return phone_params if organization.subaccount?
+
+    phone_params.merge(
       twilio_account_sid: sub_account.sid,
       twilio_auth_token: sub_account.auth_token
     )
@@ -74,7 +79,6 @@ class PhoneNumberProvisioner
     Messaging::Client.master
   end
 
-  attr_reader :organization
-
-  delegate :location, to: :organization
+  attr_reader :organization, :team
+  delegate :location, to: :team
 end

@@ -1,4 +1,4 @@
-class NewTeamNotificationJob < ApplicationJob
+class NewOrganizationNotificationJob < ApplicationJob
   def perform(account)
     @account = account
     @organization = account.organization

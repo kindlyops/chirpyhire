@@ -1,6 +1,8 @@
 class Contact < ApplicationRecord
   belongs_to :person
   belongs_to :organization
+  belongs_to :team, optional: true
+
   has_many :conversations
   has_many :notes
 

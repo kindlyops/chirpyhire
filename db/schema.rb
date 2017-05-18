@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170514160748) do
+ActiveRecord::Schema.define(version: 20170517222921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,9 +96,11 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.datetime "updated_at", null: false
     t.datetime "last_reply_at"
     t.boolean "starred", default: false, null: false
+    t.bigint "team_id"
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
+    t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
   create_table "conversations", id: :serial, force: :cascade do |t|
@@ -147,10 +149,21 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.string "postal_code", null: false
     t.string "country", null: false
     t.string "country_code"
-    t.integer "organization_id", null: false
+    t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "team_id"
     t.index ["organization_id"], name: "index_locations_on_organization_id"
+    t.index ["team_id"], name: "index_locations_on_team_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_memberships_on_account_id"
+    t.index ["team_id"], name: "index_memberships_on_team_id"
   end
 
   create_table "messages", id: :serial, force: :cascade do |t|
@@ -229,7 +242,22 @@ ActiveRecord::Schema.define(version: 20170514160748) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "team_id"
     t.index ["organization_id"], name: "index_recruiting_ads_on_organization_id"
+    t.index ["team_id"], name: "index_recruiting_ads_on_team_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "name", null: false
+    t.string "phone_number"
+    t.integer "recruiter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
+    t.index ["organization_id"], name: "index_teams_on_organization_id"
+    t.index ["phone_number"], name: "index_teams_on_phone_number", unique: true
+    t.index ["recruiter_id"], name: "index_teams_on_recruiter_id"
   end
 
   create_table "zipcodes", id: :serial, force: :cascade do |t|
@@ -251,12 +279,16 @@ ActiveRecord::Schema.define(version: 20170514160748) do
   add_foreign_key "candidacies", "people"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
+  add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "accounts"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "locations", "organizations"
+  add_foreign_key "locations", "teams"
+  add_foreign_key "memberships", "accounts"
+  add_foreign_key "memberships", "teams"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
   add_foreign_key "messages", "people", column: "sender_id"
@@ -267,4 +299,6 @@ ActiveRecord::Schema.define(version: 20170514160748) do
   add_foreign_key "read_receipts", "conversations"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
+  add_foreign_key "recruiting_ads", "teams"
+  add_foreign_key "teams", "organizations"
 end

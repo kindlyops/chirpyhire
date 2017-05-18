@@ -13,8 +13,7 @@ class Organizations::MessagesController < ActionController::Base
   def contact
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
-      return contact if contact.present?
-      create_subscribed_contact
+      add_to_team(contact) || create_subscribed_contact
     end
   end
 
@@ -31,10 +30,25 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
+    person.contacts.create(contact_attributes).tap do |contact|
       contact.subscribe
       IceBreakerJob.perform_later(contact)
     end
+  end
+
+  def add_to_team(contact)
+    return unless contact.present?
+    return contact if contact.team.present?
+    contact.update(team: team)
+    contact
+  end
+
+  def contact_attributes
+    { team: team, organization: organization }
+  end
+
+  def team
+    @team ||= TeamFindOrCreator.call(organization)
   end
 
   def set_header
