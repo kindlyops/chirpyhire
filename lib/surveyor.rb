@@ -29,7 +29,7 @@ class Surveyor
   private
 
   def contact_team_conversations
-    contact.team.conversations.contact(contact)
+    team.conversations.contact(contact)
   end
 
   def restate_and_log(message)
@@ -79,6 +79,6 @@ class Surveyor
 
   attr_reader :contact
 
-  delegate :person, :organization, to: :contact
+  delegate :person, :organization, :team, to: :contact
   delegate :candidacy, to: :person
 end
