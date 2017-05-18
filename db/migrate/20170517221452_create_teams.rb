@@ -21,9 +21,6 @@ class CreateTeams < ActiveRecord::Migration[5.1]
     end
 
     change_column_null :locations, :organization_id, true
-    # change_column_null :contacts, :organization_id, true
-    # change_column_null :recruiting_ads, :organization_id, true
-
     add_index :teams, [:name, :organization_id], unique: true
     add_index :teams, :phone_number, unique: true
   end

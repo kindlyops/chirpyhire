@@ -22,20 +22,12 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   def contact
     @contact ||= begin
       contact = person.contacts.find_by(organization: organization)
-      contact ||= create_unsubscribed_contact
-      add_to_team(contact)
+      add_to_team(contact) || create_unsubscribed_contact
     end
   end
 
-  def add_to_team(contact)
-    return contact if contact.team.present?
-    team = TeamCreator.call(organization)
-    team.contacts << contact
-    contact
-  end
-
   def create_unsubscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
+    person.contacts.create(contact_attributes).tap do |contact|
       IceBreakerJob.perform_later(contact)
     end
   end

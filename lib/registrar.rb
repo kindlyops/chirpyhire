@@ -31,7 +31,9 @@ class Registrar
   end
 
   def create_recruiting_ad
-    organization.create_recruiting_ad(body: RecruitingAd.body(team), team: team)
+    team.create_recruiting_ad(
+      body: RecruitingAd.body(team), organization: organization
+    )
   end
 
   def provision_phone_number
