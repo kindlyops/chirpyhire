@@ -1,6 +1,6 @@
 class Location < ApplicationRecord
   belongs_to :organization, optional: true
-  belongs_to :team, optional: true
+  belongs_to :team
 
   validates :latitude, presence: true
   validates :longitude, presence: true

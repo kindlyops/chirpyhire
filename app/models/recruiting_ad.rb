@@ -1,6 +1,6 @@
 class RecruitingAd < ApplicationRecord
-  belongs_to :organization
-  belongs_to :team, optional: true
+  belongs_to :organization, optional: true
+  belongs_to :team
 
   def self.body(team)
     <<-BODY
