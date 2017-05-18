@@ -47,7 +47,7 @@ class Surveyor
   def send_message(message)
     organization.message(
       sender: Chirpy.person,
-      recipient: person,
+      contact: contact,
       body: message
     )
   end

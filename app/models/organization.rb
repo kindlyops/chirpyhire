@@ -16,8 +16,6 @@ class Organization < ApplicationRecord
   has_one :ideal_candidate
   has_one :recruiting_ad
   has_one :location
-  accepts_nested_attributes_for :location,
-                                reject_if: ->(l) { l.values.any?(&:blank?) }
 
   accepts_nested_attributes_for :teams, reject_if: :all_blank
 
@@ -33,12 +31,12 @@ class Organization < ApplicationRecord
     people.joins(:candidacy)
   end
 
-  def message(recipient:, body:, sender: nil)
+  def message(contact:, body:, sender: nil)
     sent_message = messaging_client.send_message(
-      to: recipient.phone_number, from: phone_number, body: body
+      to: contact.phone_number, from: contact.team_phone_number, body: body
     )
 
-    create_message(recipient, sent_message, sender).tap do |message|
+    create_message(contact.person, sent_message, sender).tap do |message|
       Broadcaster::Message.new(message).broadcast
     end
   end

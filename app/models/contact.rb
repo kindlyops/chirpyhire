@@ -10,6 +10,7 @@ class Contact < ApplicationRecord
            :cpr_first_aid, :nickname, :candidacy, :live_in, to: :person
   delegate :inquiry, to: :person, prefix: true
   delegate :organization, to: :team
+  delegate :phone_number, to: :team, prefix: true
 
   before_create :set_last_reply_at
 
