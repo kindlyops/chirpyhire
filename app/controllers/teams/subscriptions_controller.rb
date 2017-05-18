@@ -1,4 +1,4 @@
-class Organizations::SubscriptionsController < Organizations::MessagesController
+class Teams::SubscriptionsController < Teams::MessagesController
   before_action :sync_message
 
   def create

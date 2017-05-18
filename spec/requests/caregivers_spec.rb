@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Caregivers' do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :team) }
+  let(:team) { account.teams.first }
 
   before do
     sign_in(account)
@@ -9,8 +10,8 @@ RSpec.describe 'Caregivers' do
 
   context 'with caregivers' do
     context 'filter PCA only' do
-      let!(:pca) { create(:contact, :pca, organization: account.organization) }
-      let!(:cna) { create(:contact, :cna, organization: account.organization) }
+      let!(:pca) { create(:contact, :pca, team: team) }
+      let!(:cna) { create(:contact, :cna, team: team) }
 
       let(:params) do
         {
@@ -29,10 +30,10 @@ RSpec.describe 'Caregivers' do
     end
 
     context 'filtering availability' do
-      let!(:live_in) { create(:contact, :live_in, organization: account.organization) }
-      let!(:am) { create(:contact, :am, organization: account.organization) }
-      let!(:pm) { create(:contact, :pm, organization: account.organization) }
-      let!(:hourly) { create(:contact, :hourly, organization: account.organization) }
+      let!(:live_in) { create(:contact, :live_in, team: team) }
+      let!(:am) { create(:contact, :am, team: team) }
+      let!(:pm) { create(:contact, :pm, team: team) }
+      let!(:hourly) { create(:contact, :hourly, team: team) }
 
       before do
         live_in.person.update(nickname: 'Bob Live-In')
@@ -162,10 +163,10 @@ RSpec.describe 'Caregivers' do
     end
 
     context 'filtering starred' do
-      let!(:unstarred) { create(:contact, organization: account.organization) }
+      let!(:unstarred) { create(:contact, team: team) }
 
       context 'with a starred contact' do
-        let!(:starred) { create(:contact, starred: true, organization: account.organization) }
+        let!(:starred) { create(:contact, starred: true, team: team) }
         let(:params) do
           {
             starred: true
@@ -180,8 +181,8 @@ RSpec.describe 'Caregivers' do
         end
 
         context 'and filtering public transportation' do
-          let!(:starred_public) { create(:contact, :public_transportation, starred: true, organization: account.organization) }
-          let!(:starred_personal) { create(:contact, :personal_transportation, starred: true, organization: account.organization) }
+          let!(:starred_public) { create(:contact, :public_transportation, starred: true, team: team) }
+          let!(:starred_personal) { create(:contact, :personal_transportation, starred: true, team: team) }
 
           let(:params) do
             {
@@ -200,8 +201,8 @@ RSpec.describe 'Caregivers' do
         end
 
         context 'and filtering 30341 zipcode' do
-          let!(:starred_30341) { create(:contact, :"30341", starred: true, organization: account.organization) }
-          let!(:starred_30342) { create(:contact, :"30342", starred: true, organization: account.organization) }
+          let!(:starred_30341) { create(:contact, :"30341", starred: true, team: team) }
+          let!(:starred_30342) { create(:contact, :"30342", starred: true, team: team) }
 
           let(:params) do
             {
@@ -220,8 +221,8 @@ RSpec.describe 'Caregivers' do
         end
 
         context 'and filtering CNA certification' do
-          let!(:starred_cna) { create(:contact, :cna, starred: true, organization: account.organization) }
-          let!(:starred_pca) { create(:contact, :pca, starred: true, organization: account.organization) }
+          let!(:starred_cna) { create(:contact, :cna, starred: true, team: team) }
+          let!(:starred_pca) { create(:contact, :pca, starred: true, team: team) }
 
           let(:params) do
             {
@@ -240,8 +241,8 @@ RSpec.describe 'Caregivers' do
         end
 
         context 'and filtering AM availability' do
-          let!(:starred_am) { create(:contact, :am, starred: true, organization: account.organization) }
-          let!(:starred_pm) { create(:contact, :pm, starred: true, organization: account.organization) }
+          let!(:starred_am) { create(:contact, :am, starred: true, team: team) }
+          let!(:starred_pm) { create(:contact, :pm, starred: true, team: team) }
 
           let(:params) do
             {
@@ -260,8 +261,8 @@ RSpec.describe 'Caregivers' do
         end
 
         context 'and filtering 6+ years experience' do
-          let!(:starred_six_or_more) { create(:contact, :six_or_more, starred: true, organization: account.organization) }
-          let!(:starred_less_than_one) { create(:contact, :less_than_one, starred: true, organization: account.organization) }
+          let!(:starred_six_or_more) { create(:contact, :six_or_more, starred: true, team: team) }
+          let!(:starred_less_than_one) { create(:contact, :less_than_one, starred: true, team: team) }
 
           let(:params) do
             {
@@ -282,8 +283,8 @@ RSpec.describe 'Caregivers' do
     end
 
     context 'sort order' do
-      let!(:pca) { create(:contact, :pca, organization: account.organization) }
-      let!(:cna) { create(:contact, :cna, organization: account.organization) }
+      let!(:pca) { create(:contact, :pca, team: team) }
+      let!(:cna) { create(:contact, :cna, team: team) }
 
       it 'returns the newest records first' do
         get caregivers_path

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe NotePolicy do
-  let(:account) { create(:account) }
-  let(:organization) { account.organization }
+  let(:account) { create(:account, :team) }
+  let(:team) { account.teams.first }
 
   describe '.scope' do
     let(:resolved_scope) { NotePolicy::Scope.new(account, Note.all).resolve }
 
-    context 'note is by another account on the organization' do
-      let(:contact) { create(:contact, organization: organization) }
-      let(:team_member) { create(:account, organization: organization) }
+    context 'note is by another account on the team' do
+      let(:contact) { create(:contact, team: team) }
+      let(:team_member) { create(:account, organization: team.organization) }
 
       let!(:note) { create(:note, account: team_member, contact: contact) }
 
@@ -19,7 +19,7 @@ RSpec.describe NotePolicy do
     end
 
     context 'note is by the account' do
-      let(:contact) { create(:contact, organization: organization) }
+      let(:contact) { create(:contact, team: team) }
       let!(:note) { create(:note, account: account, contact: contact) }
 
       it 'includes note in resolved scope' do
@@ -27,7 +27,7 @@ RSpec.describe NotePolicy do
       end
     end
 
-    context 'note is by an account on another organization' do
+    context 'note is by an account on another team' do
       let(:contact) { create(:contact) }
       let!(:note) { create(:note, contact: contact) }
 
@@ -39,7 +39,7 @@ RSpec.describe NotePolicy do
 
   describe 'policies' do
     context 'as the note author' do
-      let(:contact) { create(:contact, organization: organization) }
+      let(:contact) { create(:contact, team: team) }
       let!(:note) { create(:note, account: account, contact: contact) }
       subject { described_class.new(account, note) }
 
@@ -50,8 +50,8 @@ RSpec.describe NotePolicy do
 
     context 'not the note author' do
       context 'on the same team' do
-        let(:contact) { create(:contact, organization: organization) }
-        let(:team_member) { create(:account, organization: organization) }
+        let(:contact) { create(:contact, team: team) }
+        let(:team_member) { create(:account, organization: team.organization) }
 
         let!(:note) { create(:note, account: team_member, contact: contact) }
         subject { described_class.new(account, note) }

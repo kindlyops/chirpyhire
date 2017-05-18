@@ -3,9 +3,11 @@ class Organization < ApplicationRecord
   has_many :accounts, inverse_of: :organization
   has_many :conversations, through: :accounts
 
-  has_many :contacts
-  has_many :people, through: :contacts, class_name: 'Person'
   has_many :teams
+  has_many :contacts, through: :teams
+  has_many :locations, through: :teams
+  has_many :recruiting_ads, through: :teams
+  has_many :people, through: :contacts, class_name: 'Person'
 
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate

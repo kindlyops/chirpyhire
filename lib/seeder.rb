@@ -163,26 +163,38 @@ class Seeder
   end
 
   def seed_account
-    @account = Account.create(
+    @account = Account.create(account_attributes)
+    @organization = account.organization
+    @team = organization.teams.first
+    setup_account
+
+    puts 'Created Account'
+  end
+
+  def account_attributes
+    {
       password: ENV.fetch('DEMO_PASSWORD'),
       person_attributes: { name: ENV.fetch('DEMO_NAME') },
       email: ENV.fetch('DEMO_EMAIL'),
       super_admin: true,
       organization_attributes: organization_attributes
-    )
-    @organization = account.organization
-    @team = organization.teams.first
+    }
+  end
+
+  def setup_account
+    setup_organization
+    team.accounts << account
+    team.update(recruiter: account)
+  end
+
+  def setup_organization
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: '30341' }]
     )
     organization.create_recruiting_ad(
       team: team, body: RecruitingAd.body(team)
     )
-    team.accounts << account
-    team.update(recruiter: account)
     organization.update(recruiter: account)
-
-    puts 'Created Account'
   end
 
   def seed_zipcodes_for_people

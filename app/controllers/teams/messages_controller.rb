@@ -1,4 +1,4 @@
-class Organizations::MessagesController < ActionController::Base
+class Teams::MessagesController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 

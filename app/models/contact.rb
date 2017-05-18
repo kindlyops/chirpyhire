@@ -1,6 +1,5 @@
 class Contact < ApplicationRecord
   belongs_to :person
-  belongs_to :organization, optional: true
   belongs_to :team
 
   has_many :conversations
@@ -10,6 +9,7 @@ class Contact < ApplicationRecord
            :experience, :certification, :skin_test, :avatar, :transportation,
            :cpr_first_aid, :nickname, :candidacy, :live_in, to: :person
   delegate :inquiry, to: :person, prefix: true
+  delegate :organization, to: :team
 
   before_create :set_last_reply_at
 

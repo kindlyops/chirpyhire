@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController do
-  let(:contact) { create(:contact) }
-  let(:organization) { contact.organization }
-  let(:account) { create(:account, organization: organization) }
+  let(:team) { create(:team, :account) }
+  let(:contact) { create(:contact, team: team) }
+  let(:organization) { team.organization }
+  let(:account) { team.accounts.first }
 
   before do
     sign_in(account)

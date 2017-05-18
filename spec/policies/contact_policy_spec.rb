@@ -7,11 +7,12 @@ RSpec.describe ContactPolicy do
     context 'when account id is different from organization id' do
       let(:first_account) { create(:account) }
       let!(:other_account) { create(:account, organization: first_account.organization) }
-      let!(:account) { create(:account) }
+      let!(:account) { create(:account, :team) }
+      let(:team) { account.teams.first }
 
       context 'and the organization has contacts' do
         before do
-          create_list(:contact, 3, organization: account.organization)
+          create_list(:contact, 3, team: team)
         end
 
         it 'is the 3 contacts' do
