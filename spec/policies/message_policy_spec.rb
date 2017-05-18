@@ -29,32 +29,32 @@ RSpec.describe MessagePolicy do
     end
   end
 
-  # describe 'scope' do
-  #   subject { MessagePolicy::Scope.new(account, Message.all) }
+  describe 'scope' do
+    subject { MessagePolicy::Scope.new(account, Message.all) }
 
-  #   context 'teams' do
-  #     let(:team) { create(:team, :account) }
-  #     let(:account) { team.accounts.first }
-  #     let(:other_team) { create(:team, organization: team.organization) }
-  #     let(:contact) { create(:contact, team: other_team) }
-  #     let!(:message) { create(:message, organization: team.organization, sender: contact.person) }
+    context 'teams' do
+      let(:team) { create(:team, :account) }
+      let(:account) { team.accounts.first }
+      let(:other_team) { create(:team, organization: team.organization) }
+      let(:contact) { create(:contact, team: other_team) }
+      let!(:message) { create(:message, organization: team.organization, sender: contact.person) }
 
-  #     context 'account is on a different team than the message contact' do
-  #       it 'does not include the message' do
-  #         expect(subject.resolve).not_to include(message)
-  #       end
-  #     end
+      context 'account is on a different team than the message contact' do
+        it 'does include the message' do
+          expect(subject.resolve).to include(message)
+        end
+      end
 
-  #     context 'account is on same team as the message contact' do
-  #       let(:team) { create(:team, :account) }
-  #       let(:account) { team.accounts.first }
-  #       let(:contact) { create(:contact, team: team) }
-  #       let!(:message) { create(:message, organization: team.organization, sender: contact.person) }
+      context 'account is on same team as the message contact' do
+        let(:team) { create(:team, :account) }
+        let(:account) { team.accounts.first }
+        let(:contact) { create(:contact, team: team) }
+        let!(:message) { create(:message, organization: team.organization, sender: contact.person) }
 
-  #       it 'does include the message' do
-  #         expect(subject.resolve).to include(message)
-  #       end
-  #     end
-  #   end
-  # end
+        it 'does include the message' do
+          expect(subject.resolve).to include(message)
+        end
+      end
+    end
+  end
 end
