@@ -4,5 +4,9 @@
     &.active {
       border-top: 3px solid $brand-primary;
     }
+
+    &:hover:not(.active) {
+      border-color: transparent transparent transparent;
+    }
   }
 }
