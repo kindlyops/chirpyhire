@@ -48,7 +48,7 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def team
-    @team ||= TeamCreator.call(organization)
+    @team ||= TeamFindOrCreator.call(organization)
   end
 
   def set_header

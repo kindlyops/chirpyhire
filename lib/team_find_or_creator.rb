@@ -1,4 +1,4 @@
-class TeamCreator
+class TeamFindOrCreator
   def self.call(organization)
     new(organization).call
   end
