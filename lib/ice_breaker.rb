@@ -15,6 +15,6 @@ class IceBreaker
     end
   end
 
-  delegate :team, to: :contact
-  delegate :accounts, to: :team
+  delegate :organization, to: :contact
+  delegate :accounts, to: :organization
 end
