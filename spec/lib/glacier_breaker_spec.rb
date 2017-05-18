@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe GlacierBreaker do
   let(:team) { create(:team, :account) }
   let(:account) { team.accounts.first }
-  let(:organization) { team.organization }
 
   subject { GlacierBreaker.new(account) }
 
@@ -15,7 +14,7 @@ RSpec.describe GlacierBreaker do
       it 'creates a conversation for each contact on the team' do
         expect {
           subject.call
-        }.to change { organization.conversations.count }.by(count)
+        }.to change { team.conversations.count }.by(count)
       end
 
       context 'with existing conversations' do
@@ -26,7 +25,7 @@ RSpec.describe GlacierBreaker do
         it 'creates a conversation for just contacts without a conversation' do
           expect {
             subject.call
-          }.to change { organization.conversations.count }.by(count - 1)
+          }.to change { team.conversations.count }.by(count - 1)
         end
       end
     end
@@ -38,7 +37,7 @@ RSpec.describe GlacierBreaker do
       it 'only creates conversations for contacts on the team' do
         expect {
           subject.call
-        }.to change { organization.conversations.count }.by(count)
+        }.to change { team.conversations.count }.by(count)
       end
     end
   end

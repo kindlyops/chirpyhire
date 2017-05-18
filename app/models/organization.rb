@@ -1,15 +1,11 @@
 class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
-  
-  # TODO: DELETE
-  has_many :conversations, through: :accounts
 
   has_many :teams
   has_many :contacts, through: :teams
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
-  has_many :people, through: :contacts, class_name: 'Person'
 
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
   has_many :messages
@@ -31,10 +27,6 @@ class Organization < ApplicationRecord
 
   def phone_numbers
     teams.pluck(:phone_number).compact
-  end
-
-  def candidates
-    people.joins(:candidacy)
   end
 
   def message(contact:, body:, sender: nil)

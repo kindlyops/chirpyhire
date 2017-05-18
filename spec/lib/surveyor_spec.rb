@@ -5,7 +5,7 @@ RSpec.describe Surveyor do
 
   describe '#start' do
     let(:team) { create(:team, :account) }
-    let(:contact) { create(:contact, team: team) }
+    let(:contact) { create(:contact, team: team, subscribed: true) }
     let(:candidacy) { contact.person.candidacy }
 
     before do
@@ -207,6 +207,7 @@ RSpec.describe Surveyor do
     let(:team) { contact.team }
 
     before do
+      contact.update(subscribed: true)
       account = create(:account, organization: team.organization)
       team.accounts << account
       IceBreaker.call(contact)
@@ -240,7 +241,7 @@ RSpec.describe Surveyor do
           let(:other_team) { create(:team, :account) }
 
           before do
-            other_contact = other_team.contacts.create(person: contact.person)
+            other_contact = other_team.contacts.create(subscribed: true, person: contact.person)
             IceBreaker.call(other_contact)
           end
 

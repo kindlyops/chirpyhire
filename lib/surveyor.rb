@@ -33,7 +33,7 @@ class Surveyor
   end
 
   def restate_and_log(message)
-    ReadReceiptsCreator.call(message, organization)
+    ReadReceiptsCreator.call(message, contact)
 
     survey.restate
   end
@@ -41,8 +41,15 @@ class Surveyor
   def complete_survey(message)
     update_candidacy(message)
     survey.complete
-    # contact.person.conversations (has many conversations through teams; has many teams through contacts)
-    notify_contact_ready_for_review(contact.person.conversations)
+
+    notify_contact_ready_for_review(person_conversations)
+  end
+
+  def person_conversations
+    person = contact.person
+    contacts = person.contacts.subscribed
+
+    Conversation.where(contact: contacts)
   end
 
   def send_message(message)
