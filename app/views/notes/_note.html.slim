@@ -9,7 +9,7 @@
     .message_input
       = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
     a#cancel_edit.btn.btn-small.btn-outline role="button" Cancel
-    a#commit_edit.btn.btn-small role="button" ↵ Save Changes
+    a#commit_edit.btn.btn-small.btn-primary role="button" ↵ Save Changes
 .message.first#note-show-container data-note-id==note.id
   = form_for note, url: message_note_path(@conversation.contact, note), method: :delete, html: { class: 'destroy-note', hidden: true } do |f|
   - if note.account == current_account
