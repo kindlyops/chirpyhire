@@ -39,8 +39,7 @@ class Organizations::MessagesController < ActionController::Base
   def add_to_team(contact)
     return unless contact.present?
     return contact if contact.team.present?
-    team = TeamCreator.call(organization)
-    team.contacts << contact
+    contact.update(team: team)
     contact
   end
 
