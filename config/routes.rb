@@ -28,7 +28,6 @@ Rails.application.routes.draw do
     resource :password, only: [:show, :update]
   end
 
-
   namespace :organizations do
     namespace :settings do
       resources :teams, only: :index
