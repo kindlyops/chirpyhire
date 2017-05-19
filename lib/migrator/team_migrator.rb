@@ -7,11 +7,13 @@ class Migrator::TeamMigrator
   end
 
   def migrate
-    update_old_team_phone_number
-    created_recruiting_ad
-    create_memberships
-    contacts.find_each do |contact|
-      Migrator::ContactMigrator.new(self, contact).migrate
+    Team.transaction do
+      update_old_team_phone_number
+      created_recruiting_ad
+      create_memberships
+      contacts.find_each do |contact|
+        Migrator::ContactMigrator.new(self, contact).migrate
+      end
     end
   end
 
