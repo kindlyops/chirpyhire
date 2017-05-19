@@ -1,8 +1,8 @@
 class Migrator::TeamMigrator
-  def initialize(options)
-    @organizations = options[:organizations]
-    @accounts = options[:accounts]
-    @team = options[:team]
+  def initialize(organizations:, accounts:, team:)
+    @organizations = organizations
+    @accounts = accounts
+    @team = team
     @phone_number = @team.phone_number
   end
 
