@@ -237,6 +237,28 @@ RSpec.describe Surveyor do
           subject.consider_answer(inquiry, message)
         end
 
+        context 'two teams same organization' do
+          let!(:other_team) { create(:team, :account, organization: team.organization) }
+
+          before do
+            IceBreaker.call(contact)
+          end
+
+          context 'account on each team' do
+            context 'contact on one team' do
+              it 'sends an email to the account on the same team only' do
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                  .with { |mailer, mailer_method, *_args|
+                       expect(mailer).to eq('NotificationMailer')
+                       expect(mailer_method).to eq('contact_ready_for_review')
+                     }.exactly(1).times
+              end
+            end
+          end
+        end
+
         context 'subscribed to multiple teams' do
           let(:other_team) { create(:team, :account) }
 
