@@ -30,7 +30,7 @@ class PhoneNumberProvisioner
       voice_url: nil,
       sms_url: "#{ENV.fetch('TWILIO_WEBHOOK_BASE')}/twilio/text",
       capabilities: {
-        voice: false,
+        voice: true,
         sms: true,
         mms: true
       }
