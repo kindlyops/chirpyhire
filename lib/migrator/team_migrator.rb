@@ -17,6 +17,8 @@ class Migrator::TeamMigrator
     end
   end
 
+  private
+
   def update_old_team_phone_number
     updated_phone_number = "MIGRATED:#{phone_number}"
     Rails.logger.info "Updating Team #{team.id} Phone Number to #{updated_phone_number}"
@@ -66,7 +68,8 @@ class Migrator::TeamMigrator
   end
 
   def location_attributes
-    location.attributes.merge(organization_id: organizations[:to].id)
+    location.attributes.except('id', 'team_id')
+            .merge('organization_id' => organizations[:to].id)
   end
 
   attr_reader :team, :accounts, :organizations, :phone_number
