@@ -111,13 +111,156 @@ RSpec.describe Migrator::TeamMigrator do
           expect(Contact.last.team).to eq(Team.last)
         end
 
-        context 'with read receipts' do
+        it 'creates a new conversation for each account' do
+          expect {
+            subject.migrate
+          }.to change { Conversation.count }.by(accounts.count)
+        end
 
+        context 'with message' do
+          context 'inbound message' do
+            let!(:message) { create(:message, sender: contact.person, organization: from_organization) }
+            let!(:sid) { message.sid }
+
+            it 'creates a new message' do
+              expect {
+                subject.migrate
+              }.to change { Message.count }.by(1)
+            end
+
+            it 'is tied to the new organization' do
+              subject.migrate
+              expect(Message.last.organization).to eq(to_organization)
+            end
+
+            it 'is tied to the same sender' do
+              subject.migrate
+              expect(Message.last.sender).to eq(contact.person)
+            end
+
+            it 'has the same sid as the old message' do
+              subject.migrate
+              expect(Message.last.sid).to eq(sid)
+            end
+
+            context 'with read receipt' do
+              let!(:conversation) { contact.conversations.find_by(account: from_account_a) }
+              let!(:read_receipt) { create(:read_receipt, message: message, conversation: conversation, read_at: rand(10.days).seconds.ago) }
+
+              it 'creates a new read receipt' do
+                expect {
+                  subject.migrate
+                }.to change { ReadReceipt.count }.by(1)
+              end
+
+              it 'is tied to the new message' do
+                subject.migrate
+                expect(Message.last).to eq(ReadReceipt.last.message)
+              end
+
+              it 'has the same read_at as the old receipt' do
+                subject.migrate
+                expect(ReadReceipt.last.read_at).to eq(read_receipt.read_at)
+              end
+
+              it 'is tied to the new conversation' do
+                subject.migrate
+                new_contact = to_organization.contacts.find_by(person: contact.person)
+                new_conversation = to_account_a.conversations.find_by(contact: new_contact)
+
+                expect(ReadReceipt.last.conversation).to eq(new_conversation)
+              end
+            end
+          end
+
+          context 'outbound chirpy automated message' do
+            let!(:message) { create(:message, sender: Chirpy.person, recipient: contact.person, organization: from_organization) }
+            let!(:sid) { message.sid }
+
+            it 'creates a new message' do
+              expect {
+                subject.migrate
+              }.to change { Message.count }.by(1)
+            end
+
+            it 'is tied to the new organization' do
+              subject.migrate
+              expect(Message.last.organization).to eq(to_organization)
+            end
+
+            it 'is tied to the same sender' do
+              subject.migrate
+              expect(Message.last.sender).to eq(Chirpy.person)
+            end
+
+            it 'is tied to the same recipient' do
+              subject.migrate
+              expect(Message.last.recipient).to eq(contact.person)
+            end
+
+            it 'has the same sid as the old message' do
+              subject.migrate
+              expect(Message.last.sid).to eq(sid)
+            end
+          end
+
+          context 'outbound account message' do
+            let!(:message) { create(:message, sender: from_account_a.person, recipient: contact.person, organization: from_organization) }
+            let!(:sid) { message.sid }
+
+            it 'creates a new message' do
+              expect {
+                subject.migrate
+              }.to change { Message.count }.by(1)
+            end
+
+            it 'is tied to the new organization' do
+              subject.migrate
+              expect(Message.last.organization).to eq(to_organization)
+            end
+
+            it 'is tied to the same sender' do
+              subject.migrate
+              expect(Message.last.sender).to eq(to_account_a.person)
+            end
+
+            it 'is tied to the same recipient' do
+              subject.migrate
+              expect(Message.last.recipient).to eq(contact.person)
+            end
+
+            it 'has the same sid as the old message' do
+              subject.migrate
+              expect(Message.last.sid).to eq(sid)
+            end
+          end
         end
       end
 
-      context 'with notes' do
+      context 'with note' do
+        let!(:note) { create(:note, contact: contact, account: from_account_a) }
 
+        it 'creates a new note' do
+          expect {
+            subject.migrate
+          }.to change { Note.count }.by(1)
+        end
+
+        it 'is tied to the new contact' do
+          subject.migrate
+          new_contact = to_organization.contacts.find_by(person: contact.person)
+          expect(Note.last.contact).to eq(new_contact)
+        end
+
+        it 'is tied to the new account' do
+          subject.migrate
+          expect(Note.last.account).to eq(to_account_a)
+        end
+
+        it 'has the same body as the old note' do
+          subject.migrate
+          expect(Note.last.body).to eq(note.body)
+        end
       end
     end
   end
