@@ -6,6 +6,9 @@ class Migrator::TeamMigrator
     @phone_number = @team.phone_number
   end
 
+  attr_reader :team, :accounts, :organizations, :phone_number
+  delegate :location, :recruiting_ad, :contacts, to: :team
+
   def migrate
     Team.transaction do
       update_old_team_phone_number
@@ -14,6 +17,17 @@ class Migrator::TeamMigrator
       contacts.find_each do |contact|
         Migrator::ContactMigrator.new(self, contact).migrate
       end
+    end
+  end
+
+  def created_team
+    @created_team ||= begin
+      organizations[:to].teams.create!(
+        name: team.name,
+        recruiter: accounts.first[:to],
+        phone_number: phone_number,
+        location_attributes: location_attributes
+      )
     end
   end
 
@@ -38,17 +52,6 @@ class Migrator::TeamMigrator
     Rails.logger.info "Account: #{to_account.id} joined Team: #{created_team.id}"
   end
 
-  def created_team
-    @created_team ||= begin
-      organizations[:to].teams.create!(
-        name: team.name,
-        recruiter: accounts.first[:to],
-        phone_number: phone_number,
-        location_attributes: location_attributes
-      )
-    end
-  end
-
   def created_recruiting_ad
     @created_recruiting_ad ||= begin
       Rails.logger.info "Creating Recruiting Ad for Team: #{created_team.id}"
@@ -71,7 +74,4 @@ class Migrator::TeamMigrator
     location.attributes.except('id', 'team_id')
             .merge('organization_id' => organizations[:to].id)
   end
-
-  attr_reader :team, :accounts, :organizations, :phone_number
-  delegate :location, :recruiting_ad, :contacts, to: :team
 end

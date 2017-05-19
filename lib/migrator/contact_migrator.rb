@@ -4,7 +4,7 @@ class Migrator::ContactMigrator
     @contact = contact
   end
 
-  attr_reader :team_migrator
+  attr_reader :team_migrator, :contact
   delegate :created_team, :organizations,
            :accounts, to: :team_migrator
 
