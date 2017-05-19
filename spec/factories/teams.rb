@@ -15,6 +15,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :recruiting_ad do
+      after(:create) do |team|
+        create(:recruiting_ad, team: team)
+      end
+    end
+
     trait :phone_number do
       phone_number { Faker::PhoneNumber.cell_phone }
     end
