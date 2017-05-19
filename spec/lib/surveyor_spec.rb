@@ -157,8 +157,8 @@ RSpec.describe Surveyor do
         subject.start
       end
 
-      it 'does not send a message' do
-        expect(subject).not_to receive(:send_message)
+      it 'does send a welcome message' do
+        expect(subject).to receive(:send_message)
 
         subject.start
       end

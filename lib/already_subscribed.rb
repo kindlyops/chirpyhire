@@ -19,14 +19,27 @@ class AlreadySubscribed
 
   attr_reader :contact
   delegate :organization, to: :contact
+  delegate :recruiter, to: :organization
+
+  def recruiter_signature
+    "-#{recruiter.first_name}\n#{organization_signature}" if recruiter.present?
+  end
+
+  def organization_signature
+    "Team #{organization.name}"
+  end
+
+  def signature
+    recruiter_signature || organization_signature
+  end
 
   def already_subscribed
     <<~BODY
       Hey there!
 
-      How can I help?
+      How can we help?
 
-      Team #{organization.name}
+      #{signature}
     BODY
   end
 end

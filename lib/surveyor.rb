@@ -6,6 +6,7 @@ class Surveyor
   def start
     if candidacy.complete?
       notify_contact_ready_for_review(contact_team_conversations)
+      send_message(complete_welcome.body)
     elsif candidacy.pending?
       lock_candidacy
       survey.ask
@@ -75,6 +76,10 @@ class Surveyor
     conversations.find_each do |conversation|
       NotificationMailer.contact_ready_for_review(conversation).deliver_later
     end
+  end
+
+  def complete_welcome
+    Notification::CompleteWelcome.new(contact)
   end
 
   attr_reader :contact
