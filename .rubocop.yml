@@ -29,6 +29,7 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
     - 'config/**/*'
+    - 'lib/migrator/**/*'
 
 Metrics/BlockLength:
   Exclude:
