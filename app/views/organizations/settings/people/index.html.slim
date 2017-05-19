@@ -10,15 +10,15 @@
             i.fa.fa-users.mr-3.ml-2
             span People
           ul.list-unstyled
-            - @people.each do |person|
+            - @accounts.each do |account|
               li.media.mb-3
-                - if person.avatar.url.present?
-                  = image_tag person.avatar.url(:thumb), class: 'no-repeat author_image mr-3 thumb_64'
+                - if account.avatar.url.present?
+                  = image_tag account.avatar.url(:thumb), class: 'no-repeat author_image mr-3 thumb_64'
                 - else
-                  span class=="author_image thumb_64 mr-3 #{person.decorate.hero_pattern_classes}"
+                  span class=="author_image thumb_64 mr-3 #{account.decorate.hero_pattern_classes}"
                 .media-body
-                  h5.mt-0.mb-1 = person.name
-                  = person.email
+                  h5.mt-0.mb-1 = account.name
+                  = account.email
         .card-block
           = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary btn-lg btn-block' do
             i.fa.fa-user-plus.mr-1.white
