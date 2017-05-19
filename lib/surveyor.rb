@@ -47,7 +47,7 @@ class Surveyor
 
   def person_conversations
     account_ids = Membership.where(team: person.teams).pluck(:account_id)
-    contact_ids = person.contacts.pluck(:id)
+    contact_ids = person.contacts.subscribed.pluck(:id)
 
     Conversation.where(account_id: account_ids, contact_id: contact_ids)
   end
