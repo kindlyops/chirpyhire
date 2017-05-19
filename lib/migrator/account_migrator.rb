@@ -9,8 +9,10 @@ class Migrator::AccountMigrator
   delegate :contact, :update_sid, :create_new_message, to: :contact_migrator
 
   def migrate
-    create_new_conversations(contact, new_contact, account)
-    create_notes(contact, new_contact, account)
+    Account.transaction do
+      create_new_conversations(contact, new_contact, account)
+      create_notes(contact, new_contact, account)
+    end
   end
 
   private

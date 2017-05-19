@@ -9,12 +9,14 @@ class Migrator::ContactMigrator
            :accounts, to: :team_migrator
 
   def migrate
-    new_contact = create_new_contact(contact)
-    create_chirpy_messages(contact, new_contact)
-    create_inbound_messages(contact, new_contact)
+    Contact.transaction do
+      new_contact = create_new_contact(contact)
+      create_chirpy_messages(contact, new_contact)
+      create_inbound_messages(contact, new_contact)
 
-    accounts.each do |account|
-      Migrator::AccountMigrator.new(self, new_contact, account).migrate
+      accounts.each do |account|
+        Migrator::AccountMigrator.new(self, new_contact, account).migrate
+      end
     end
   end
 
