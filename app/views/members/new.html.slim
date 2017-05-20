@@ -5,4 +5,4 @@
   .card.mt-4
     .card-header
     ul.list-group.list-group-flush
-      = render partial: "members/non_member", collection: @accounts, locals: { team: @team, organization: @organization }
+      = render partial: "members/account", collection: @accounts, locals: { team: @team, organization: @organization }

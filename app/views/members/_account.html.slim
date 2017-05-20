@@ -20,10 +20,9 @@ li.list-group-item
         span = account.role.humanize
     .teams = pluralize(account.teams.count, "team")
     .settings
-      = link_to organization_person_path(organization, account), class: "btn btn-secondary" do
-        - if current_account.owner?
-          | Manage
-          i.fa.fa-gear.fa-fw.ml-1
-        - else
-          | View
-          i.fa.fa-id-card-o.fa-fw.ml-1
+      = form_for @member, url: organization_team_members_path(organization, team) do |f|
+        = f.hidden_field :account_id, value: account.id
+        = f.hidden_field :team_id, value: team.id
+        = button_tag type: 'submit', class: 'btn btn-primary', role: 'button' do
+          | Add to team
+          i.fa.fa-user-plus.ml-2.white
