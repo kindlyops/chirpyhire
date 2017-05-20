@@ -8,6 +8,28 @@ RSpec.describe 'People' do
     sign_in(account)
   end
 
+  describe 'viewing a person' do
+    let!(:team_member) { create(:account, organization: organization) }
+
+    context 'as an owner' do
+      before do
+        account.update(role: :owner)
+      end
+
+      it 'has a button to change the account role' do
+        get organization_person_path(organization, team_member)
+        expect(response.body).to include('full administrative access')
+      end
+    end
+
+    context 'as a member' do
+      it 'does not have a button to change the account role' do
+        get organization_person_path(organization, team_member)
+        expect(response.body).not_to include('full administrative access')
+      end
+    end
+  end
+
   describe 'viewing people' do
     context 'as a member' do
       before do

@@ -16,7 +16,22 @@ class Organizations::TeamsController < OrganizationsController
     end
   end
 
+  def create
+    @team = authorize new_team
+
+    if @team.save
+      NewTeamNotificationJob.perform_later(@team)
+      redirect_to team_index_path, notice: create_notice
+    else
+      render :index
+    end
+  end
+
   private
+
+  def new_team
+    organization.teams.build(permitted_attributes(Team))
+  end
 
   def fetch_organization
     @organization ||= authorize(Organization.find(params[:organization_id]))
@@ -28,11 +43,19 @@ class Organizations::TeamsController < OrganizationsController
     end
   end
 
+  def team_index_path
+    organization_teams_path(current_organization)
+  end
+
   def team_path
     organization_team_path(current_organization, @team)
   end
 
   def update_notice
     'Team updated!'
+  end
+
+  def create_notice
+    'Team created!'
   end
 end

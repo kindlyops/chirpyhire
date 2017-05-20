@@ -1,7 +1,7 @@
-class NewOrganizationNotificationJob < ApplicationJob
-  def perform(account)
-    @account = account
-    @organization = account.organization
+class NewTeamNotificationJob < ApplicationJob
+  def perform(team)
+    @team = team
+    @organization = team.organization
 
     notifier.ping new_team_message if Rails.env.production?
   end
@@ -14,13 +14,12 @@ class NewOrganizationNotificationJob < ApplicationJob
 
   def new_team_message
     <<~MESSAGE
-      New Organization Signed Up!
+      New Team Created!
 
       Organization: #{organization.name}
-      Owner Name: #{account.name}
-      Owner Email: #{account.email}
+      Team Name: #{team.name}
     MESSAGE
   end
 
-  attr_reader :account, :organization
+  attr_reader :team, :organization
 end
