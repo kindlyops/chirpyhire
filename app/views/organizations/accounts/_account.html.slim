@@ -20,5 +20,9 @@ li.list-group-item
     .teams = pluralize(account.teams.count, "team")
     .settings
       = link_to organization_person_path(organization, account), class: "btn btn-secondary" do
-        | Manage
-        i.fa.fa-gear.fa-fw.ml-1
+        - if current_account.owner?
+          | Manage
+          i.fa.fa-gear.fa-fw.ml-1
+        - else
+          | View
+          i.fa.fa-id-card-o.fa-fw.ml-1

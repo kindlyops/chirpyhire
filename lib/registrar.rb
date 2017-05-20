@@ -10,6 +10,7 @@ class Registrar
     provision_phone_number
     create_recruiting_ad
     team.accounts << account
+    account.update(role: :owner)
     new_organization_notification_job
   end
 

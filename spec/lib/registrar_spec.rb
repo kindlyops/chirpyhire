@@ -46,7 +46,7 @@ RSpec.describe Registrar do
       it 'sets the account as an owner on the organization' do
         expect {
           subject.register
-        }.to change { account.owner? }.from(false).to(true)
+        }.to change { account.reload.owner? }.from(false).to(true)
       end
 
       it 'provisions a phone number for the team' do

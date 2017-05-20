@@ -66,7 +66,12 @@
         ul.list-group.list-group-flush
           - @account.teams.each do |team|
             li.list-group-item.justify-content-between
-              .team-name
+              .team-details.d-flex.justify-content-center.align-items-center
+                .profile-picture.mr-2
+                  - if team.avatar.url.present?
+                    = image_tag team.avatar.url(:medium), class: 'd-flex thumb_36 profile-image'
+                  - else
+                    div class=="d-flex profile-image thumb_36 default #{team.decorate.hero_pattern_classes}"
                 = link_to team.name, organization_team_path(@organization, team)
               .team-role
                 - if @account.memberships.find_by(team: team).manager?
