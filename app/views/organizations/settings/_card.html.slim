@@ -9,6 +9,13 @@
       .organization-details
         h1.organization-name = current_organization.name
         .organization-subdetails
+          .organization-description
+            i.fa.fa-building.mr-2
+            - if current_organization.description
+              = current_organization.description
+            - else
+              = link_to "Add Description", organizations_settings_profile_path
+        .organization-subdetails
           .organization-url
             i.fa.fa-link.mr-2
             - if current_organization.url
