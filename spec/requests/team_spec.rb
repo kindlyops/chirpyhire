@@ -36,31 +36,19 @@ RSpec.describe 'Team' do
       it 'lets the user edit the name' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.name }.to(name)
-      end
-
-      it 'lets the user edit the email' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.email }.to(email)
+        }.to change { team.reload.name }.to(name)
       end
 
       it 'lets the user edit the description' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.description }.to(description)
+        }.to change { team.reload.description }.to(description)
       end
 
-      it 'lets the user edit the url' do
+      it 'lets the user edit the recruiter' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.url }.to(url)
-      end
-
-      it 'does not let the user edit the billing_email' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.not_to change { organization.reload.billing_email }
+        }.to change { team.reload.recruiter }.to(team_member)
       end
     end
 
@@ -72,31 +60,43 @@ RSpec.describe 'Team' do
       it 'lets the user edit the name' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.name }.to(name)
-      end
-
-      it 'lets the user edit the email' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.email }.to(email)
+        }.to change { team.reload.name }.to(name)
       end
 
       it 'lets the user edit the description' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.description }.to(description)
+        }.to change { team.reload.description }.to(description)
       end
 
-      it 'lets the user edit the url' do
+      it 'lets the user edit the recruiter' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.url }.to(url)
+        }.to change { team.reload.recruiter }.to(team_member)
+      end
+    end
+
+    context 'not on the team' do
+      before do
+        team.memberships.destroy_all
       end
 
-      it 'lets the user edit the billing_email' do
+      it 'does not let the user edit the name' do
         expect {
           put organization_team_path(organization, team), params: params
-        }.to change { organization.reload.billing_email }.to(billing_email)
+        }.not_to change { team.reload.name }
+      end
+
+      it 'does not let the user edit the description' do
+        expect {
+          put organization_team_path(organization, team), params: params
+        }.not_to change { team.reload.description }
+      end
+
+      it 'does not let the user edit the recruiter' do
+        expect {
+          put organization_team_path(organization, team), params: params
+        }.not_to change { team.reload.recruiter }
       end
     end
   end

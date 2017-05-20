@@ -1,6 +1,6 @@
 class TeamPolicy < ApplicationPolicy
   def update?
-    show?
+    show? && account.on?(record)
   end
 
   def permitted_attributes
