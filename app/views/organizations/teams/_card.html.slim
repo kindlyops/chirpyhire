@@ -3,9 +3,9 @@
     .team-card
       .team-logo
         - if team.avatar.url.present?
-          = image_tag team.avatar.url(:medium), class: 'logo'
+          = image_tag team.avatar.url(:medium), class: 'logo thumb_100'
         - else
-          div class=="logo #{team.decorate.hero_pattern_classes}"
+          div class=="logo thumb_100 #{team.decorate.hero_pattern_classes}"
       .team-details
         h1.team-name = team.name
         .team-subdetails

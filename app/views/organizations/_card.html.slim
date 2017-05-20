@@ -3,9 +3,9 @@
     .organization-card
       .organization-logo
         - if organization.avatar.url.present?
-          = image_tag organization.avatar.url(:medium), class: 'logo'
+          = image_tag organization.avatar.url(:medium), class: 'logo thumb_100'
         - else
-          div class=="logo #{organization.decorate.hero_pattern_classes}"
+          div class=="logo thumb_100 #{organization.decorate.hero_pattern_classes}"
       .organization-details
         h1.organization-name = organization.name
         .organization-subdetails

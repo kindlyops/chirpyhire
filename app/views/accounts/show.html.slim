@@ -18,7 +18,7 @@
             = link_to organization_path(current_organization) do
               .organization-profile-link
                 - if current_organization.avatar.url.present?
-                  = image_tag current_organization.avatar.url(:medium), class: 'logo'
+                  = image_tag current_organization.avatar.url(:medium), class: 'thumb_36 logo'
                 - else
                   div class=="logo thumb_36 #{current_organization.decorate.hero_pattern_classes}"
                 = current_organization.name
