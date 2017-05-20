@@ -17,7 +17,7 @@ class Organizations::TeamsController < OrganizationsController
   end
 
   private
-  
+
   def fetch_organization
     @organization ||= authorize(Organization.find(params[:organization_id]))
   end

@@ -1,8 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :fetch_organization, only: [:show, :update]
-  
-  def show
-  end
+
+  def show; end
 
   def update
     if @organization.update(permitted_attributes(Organization))

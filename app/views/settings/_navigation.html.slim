@@ -1,3 +1,3 @@
 ul.nav.nav-tabs.card-header-tabs
-  li.nav-item = nav_link_to "Profile", account_path, class: "nav-link"
+  li.nav-item = nav_link_to "Profile", account_path(current_account), class: "nav-link"
   li.nav-item = nav_link_to "Organization", organization_people_path(organization), class: "nav-link"

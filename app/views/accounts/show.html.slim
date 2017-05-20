@@ -7,9 +7,9 @@
           strong Personal settings
         .list-group.list-group-flush
           li.list-group-item
-            = link_to "Profile", account_path
+            = link_to "Profile", account_path(@account)
           li.list-group-item
-            = link_to "Password", account_password_path 
+            = link_to "Password", account_settings_password_path(@account) 
       .card.settings-sidebar.mt-4
         .card-header 
           strong Organization settings
@@ -27,7 +27,7 @@
       hr
       .row
         .col-8
-          = form_for @account, url: account_path do |f|
+          = form_for @account, url: account_path(@account) do |f|
             = content_for :validation_errors do
               = render partial: "common/validation_errors", locals: { model: @account }
             .form-group
@@ -39,7 +39,7 @@
             .form-group
               = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4
-          = form_for @account, url: account_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
+          = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
             .form-group
               h6 = f.label :avatar, "Profile picture"
               .profile-picture.text-center.d-flex.justify-content-center

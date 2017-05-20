@@ -39,7 +39,7 @@
         .col-4
           = form_for @organization, url: organization_path(@organization), html: { multipart: true, class: 'edit_profile_picture' } do |f|
             .form-group
-              h6 = f.label :avatar, "Brand logo"
+              h6 = f.label :avatar, "Organization logo"
               .profile-picture.text-center.d-flex.justify-content-center
                 - if @organization.avatar.url.present?
                   = image_tag @organization.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'

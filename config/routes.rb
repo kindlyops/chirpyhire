@@ -23,10 +23,6 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
-  resource :account, only: [:show, :update], controller: 'account' do
-    resource :password, only: [:show, :update], controller: 'account/password'
-  end
-
   resources :organizations, only: [:show, :update] do
     resources :teams, except: :destroy, controller: 'organizations/teams'
     resources :people, only: [:index, :show, :update], controller: 'organizations/accounts'
@@ -38,8 +34,13 @@ Rails.application.routes.draw do
   post 'twilio/text' => 'teams/messages#create'
 
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
-  resources :accounts, only: [] do
+
+  resources :accounts, only: [:show, :update] do
     post :stop_impersonating, on: :collection
+
+    namespace :settings do
+      resource :password, only: [:show, :update]
+    end
   end
 
   authenticate :account, ->(a) { a.super_admin? } do

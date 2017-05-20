@@ -1,4 +1,4 @@
-class Organizations::AccountsController < OrganizationsController  
+class Organizations::AccountsController < OrganizationsController
   def index
     @accounts = policy_scope(organization.accounts)
   end

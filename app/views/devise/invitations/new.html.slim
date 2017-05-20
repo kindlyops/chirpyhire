@@ -1,7 +1,7 @@
 = title "Invite member · ChirpyHire"
 .settings.people
-  = render partial: "organizations/card"
-  = render partial: "organizations/navigation"
+  = render partial: "organizations/card", locals: { organization: current_organization }
+  = render partial: "organizations/navigation", locals: { organization: current_organization }
   .col-6.offset-3.mt-5
     = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
       h3.card-title
