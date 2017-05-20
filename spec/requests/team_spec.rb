@@ -101,31 +101,27 @@ RSpec.describe 'Team' do
     end
   end
 
-  # describe 'viewing teams' do
-  #   before do
-  #     create(:team, organization: organization)
-  #   end
-    
-  #   context 'as a member' do
-  #     before do
-  #       account.update(role: :member)
-  #     end
+  describe 'viewing teams' do    
+    context 'as a member' do
+      before do
+        account.memberships.update_all(role: :member)
+      end
 
-  #     it 'does not say "Manage"' do
-  #       get organization_teams_path(organization)
-  #       expect(response.body).not_to include('Manage')
-  #     end
-  #   end
+      it 'does not say "Manage"' do
+        get organization_teams_path(organization)
+        expect(response.body).not_to include('Manage')
+      end
+    end
 
-  #   context 'as a owner' do
-  #     before do
-  #       account.update(role: :owner)
-  #     end
+    context 'as a team manager' do
+      before do
+        account.memberships.update_all(role: :manager)
+      end
 
-  #     it 'says "Manage"' do
-  #       get organization_teams_path(organization)
-  #       expect(response.body).to include('Manage')
-  #     end
-  #   end
-  # end
+      it 'says "Manage"' do
+        get organization_teams_path(organization)
+        expect(response.body).to include('Manage')
+      end
+    end
+  end
 end
