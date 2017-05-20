@@ -20,6 +20,10 @@ class Account < ApplicationRecord
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
 
+  def phone_numbers
+    teams.pluck(:phone_number).compact
+  end
+
   def self.active
     where(invitation_token: nil)
   end
