@@ -1,16 +1,9 @@
 = title "#{@team.name} · ChirpyHire"
 .settings.teams
-  = render partial: "organizations/card", locals: { organization: @organization }
-  = render partial: "organizations/navigation", locals: { organization: @organization }
+  = render partial: "organizations/teams/card", locals: { team: @team, organization: @organization }
+  = render partial: "organizations/teams/navigation", locals: { team: @team, organization: @organization }
   .row.mt-4
-    .col-3
-      .card.settings-sidebar
-        .card-header 
-          strong Team settings
-        .list-group.list-group-flush
-          li.list-group-item
-            = link_to "Profile", organization_team_path(@organization, @team)
-    .col-9
+    .col-8.offset-2
       h2.mb-4 Team profile
       hr
       .row
@@ -29,7 +22,7 @@
               = f.collection_select(:recruiter_id, @team.accounts, :id, :name, { required: true }, { class: "form-control" })
               small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your team's screening process.
             .form-group
-              = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
+              = f.submit "Update team", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4
           = form_for @team, url: organization_team_path(@organization, @team), html: { multipart: true, class: 'edit_profile_picture' } do |f|
             .form-group

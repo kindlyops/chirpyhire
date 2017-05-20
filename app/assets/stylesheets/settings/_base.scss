@@ -1,4 +1,15 @@
 .settings {
+  .change-role {
+    .dropdown-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-divider {
+      background-color: #eceeef;
+    }
+  }
+  
   .settings-sidebar {
     .list-group-item {
 

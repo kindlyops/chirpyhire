@@ -1,4 +1,38 @@
 .teams {
+  .team-card {
+    display: flex;
+
+    .team-logo {
+      .logo {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .team-details {
+      display: flex;
+      flex-direction: column;
+      margin-left: 2rem;
+
+      .team-name {
+        font-size: 2rem;
+      }
+
+      .team-subdetails {
+        display: flex;
+        margin-top: .25rem;
+
+        .team-url {
+          margin-right: 20px;
+        }
+
+        .team-email {
+
+        }
+      }
+    }
+  }
+
   .team {
     display: flex;
     justify-content: space-between;
