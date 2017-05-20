@@ -26,10 +26,6 @@ class Organization < ApplicationRecord
   delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
-  def phone_numbers
-    teams.pluck(:phone_number).compact
-  end
-
   def message(contact:, body:, sender: nil)
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: contact.team_phone_number, body: body

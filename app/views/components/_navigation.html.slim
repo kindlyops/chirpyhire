@@ -9,14 +9,20 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
       li.nav-item
         = nav_link_to caregivers_path, { class: 'nav-link' }, url_segment: 1 do
           span Caregivers
-      li.nav-item.mr-4
+      li.nav-item.mr-2
         = nav_link_to messages_path, { class: 'nav-link nav-link--messages' }, url_segment: 1 do
             span.ml-2 Messages
             - if current_account.unread_count.positive?
               i.fa.fa-circle
-      - if current_organization.phone_numbers.present?
+      - if current_account.phone_numbers.one?
         li.nav-item.mr-2.my-auto
-          span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_organization.phone_numbers.first.phony_formatted
+          span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_account.phone_numbers.first.phony_formatted
+      - elsif current_account.phone_numbers.count.positive?
+        li.nav-item.mr-2.my-auto
+          = link_to organizations_settings_teams_path do
+            span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' data-html="true" title="#{team_numbers(current_account)}"
+              | Team numbers
+              i.fa.fa-mobile.ml-2.white
       - else
         li.nav-item.mr-2.my-auto
           span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
