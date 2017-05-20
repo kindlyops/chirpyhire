@@ -1,0 +1,26 @@
+tr
+  td
+    .account-details
+      .account-photo
+        - if account.avatar.url.present?
+          = image_tag account.avatar.url(:medium), class: 'author_image mr-3 thumb_48 no-repeat'
+        - else
+          span class=="author_image thumb_48 mr-3 #{account.person.decorate.hero_pattern_classes}"
+      .account-subdetails
+        .account-name
+          = link_to "Harry Whelchel", "#"
+        .account-handle
+          span.text-muted harry
+  td.td--role
+    .role
+      i.fa.fa-wrench.fa-fw.mr-2
+      span Owner
+  td.td--teams
+    .teams = pluralize(account.teams.count, "team")
+  td.td--settings
+    .settings
+      = link_to "#", class: "btn btn-secondary" do
+        | Manage
+        i.fa.fa-gear.fa-fw.ml-1
+
+

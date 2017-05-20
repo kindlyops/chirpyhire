@@ -1,0 +1,17 @@
+.row
+  .col-6
+    .organization-card
+      .organization-logo
+        - if current_organization.avatar.url.present?
+          = image_tag current_organization.avatar.url(:medium), class: 'logo'
+        - else
+          div class=="logo #{current_organization.decorate.hero_pattern_classes}"
+      .organization-details
+        h1.organization-name ChirpyHire
+        .organization-subdetails
+          .organization-url
+            i.fa.fa-link.mr-1
+            = link_to "https://chirpyhire.com", "https://chirpyhire.com", target: "_blank"
+          .organization-email
+            i.fa.fa-envelope-o.mr-1
+            = link_to "hello@chirpyhire.com", "mailto:hello@chirpyhire.com", target: "_blank"
