@@ -2,9 +2,10 @@
 .settings.teams.members
   = render partial: "organizations/teams/card", locals: { team: @team, organization: @organization }
   = render partial: "organizations/teams/navigation", locals: { team: @team, organization: @organization }
-  .d-flex.justify-content-end.mt-4
-    = link_to "#", class: 'btn btn-primary' do
-      span Add a member
+  - if current_account.manages?(@team)
+    .d-flex.justify-content-end.mt-4
+      = link_to "#", class: 'btn btn-primary' do
+        span Add a member
   .card.mt-4
     .card-header
     ul.list-group.list-group-flush

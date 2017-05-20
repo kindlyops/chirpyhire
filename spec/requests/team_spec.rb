@@ -30,7 +30,7 @@ RSpec.describe 'Team' do
 
     context 'as a team member' do
       before do
-        account.memberships.update_all(role: :member)
+        account.memberships.each { |m| m.update(role: :member) }
       end
 
       it 'lets the user edit the name' do
@@ -54,7 +54,7 @@ RSpec.describe 'Team' do
 
     context 'as a team manager' do
       before do
-        account.memberships.update_all(role: :manager)
+        account.memberships.each { |m| m.update(role: :manager) }
       end
 
       it 'lets the user edit the name' do
@@ -101,10 +101,10 @@ RSpec.describe 'Team' do
     end
   end
 
-  describe 'viewing teams' do    
+  describe 'viewing teams' do
     context 'as a member' do
       before do
-        account.memberships.update_all(role: :member)
+        account.memberships.each { |m| m.update(role: :member) }
       end
 
       it 'does not say "Manage"' do
@@ -115,7 +115,7 @@ RSpec.describe 'Team' do
 
     context 'as a team manager' do
       before do
-        account.memberships.update_all(role: :manager)
+        account.memberships.each { |m| m.update(role: :manager) }
       end
 
       it 'says "Manage"' do
