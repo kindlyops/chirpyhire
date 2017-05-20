@@ -9,7 +9,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
       li.nav-item
         = nav_link_to caregivers_path, { class: 'nav-link' }, url_segment: 1 do
           span Caregivers
-      li.nav-item.mr-2
+      li.nav-item.mr-4
         = nav_link_to messages_path, { class: 'nav-link nav-link--messages' }, url_segment: 1 do
             span.ml-2 Messages
             - if current_account.unread_count.positive?
