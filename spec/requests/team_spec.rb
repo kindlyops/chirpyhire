@@ -102,6 +102,28 @@ RSpec.describe 'Team' do
   end
 
   describe 'viewing teams' do
+    context 'as an organization owner' do
+      before do
+        account.update(role: :owner)
+      end
+
+      it 'does not show the "Create team" button' do
+        get organization_teams_path(organization)
+        expect(response.body).to include('Create team')
+      end
+    end
+
+    context 'as an organization member' do
+      before do
+        account.update(role: :member)
+      end
+
+      it 'does not show the "Create team" button' do
+        get organization_teams_path(organization)
+        expect(response.body).not_to include('Create team')
+      end
+    end
+
     context 'as a member' do
       before do
         account.memberships.each { |m| m.update(role: :member) }

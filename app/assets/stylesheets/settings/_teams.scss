@@ -11,6 +11,7 @@
 
     .team-details {
       display: flex;
+      flex-direction: column;
       margin-left: 2rem;
 
       .team-name {
@@ -41,14 +42,16 @@
     min-height: 50px;
   }
 
-  .team-details {
-    display: flex;
-    align-items: center;
-    
-    .team-subdetails {
-      margin-left: 10px;
+  .team {
+    .team-details {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      
+      .team-subdetails {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 }
