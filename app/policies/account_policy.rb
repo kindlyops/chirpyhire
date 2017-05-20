@@ -1,14 +1,18 @@
 class AccountPolicy < ApplicationPolicy
-  def show?
-    record == account
-  end
-
   def update?
-    show?
+    show? && (same_account? || account.owner?)
   end
 
   def permitted_attributes
-    %i(email).push(person_attributes: %i(id name avatar))
+    attributes = %i(email).push(person_attributes: %i(id name avatar))
+    attributes.push(:role) if account.owner?
+    attributes
+  end
+
+  private
+
+  def same_account?
+    record == account
   end
 
   class Scope < ApplicationPolicy::Scope

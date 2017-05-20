@@ -1,0 +1,24 @@
+.people {
+  .person {
+    .change-role {
+      .dropdown-item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dropdown-divider {
+        background-color: #eceeef;
+      }
+    }
+
+    .stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .stat {
+        margin: 10px 0;
+      }
+    }
+  }
+}

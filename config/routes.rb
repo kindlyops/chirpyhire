@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   namespace :organizations do
     namespace :settings do
-      resources :teams, only: :index
+      resources :teams, only: [:index, :show]
       resources :people, only: [:index, :show]
       resource :profile, only: [:show, :update]
       resource :billing, only: [:show]
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   devise_scope :accounts do
     get 'organizations/settings/people/invitation/new', to: 'invitations#new'
   end
-  resources :accounts, only: [] do
+  resources :accounts, only: [:update] do
     post :stop_impersonating, on: :collection
   end
 
