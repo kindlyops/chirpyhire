@@ -74,7 +74,7 @@
                     div class=="d-flex profile-image thumb_36 default #{team.decorate.hero_pattern_classes}"
                 = link_to team.name, organization_team_path(@organization, team)
               .team-role
-                - if @account.memberships.find_by(team: team).manager?
+                - if @account.manages?(team)
                   | Manager
                 - else
                   | Member

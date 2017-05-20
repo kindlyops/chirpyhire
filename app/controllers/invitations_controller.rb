@@ -14,8 +14,15 @@ class InvitationsController < Devise::InvitationsController
     render :edit
   end
 
+  def update
+    super do |account|
+      account.update(role: :member)
+    end
+  end
+
   def create
     super do |account|
+      account.update(role: :invited)
       account.teams << TeamFindOrCreator.call(organization)
       GlacierBreakerJob.perform_later(account)
     end

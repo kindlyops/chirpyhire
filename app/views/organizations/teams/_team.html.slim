@@ -20,7 +20,7 @@ li.list-group-item
     .members-count = pluralize(team.memberships.count, "member")
     .settings
       = link_to organization_team_path(organization, team), class: "btn btn-secondary" do
-        - if current_account.memberships.find_by(team: team).manager?
+        - if current_account.manages?(team)
           | Manage
           i.fa.fa-gear.fa-fw.ml-1
         - else

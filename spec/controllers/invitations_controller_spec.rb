@@ -31,6 +31,11 @@ RSpec.describe InvitationsController, type: :controller do
       }.to change { organization.accounts.count }.by(1)
     end
 
+    it 'makes the account invited' do
+      post :create, params: invite_params
+      expect(Account.last.invited?).to eq(true)
+    end
+
     it 'creates a GlacierBreakerJob' do
       expect {
         post :create, params: invite_params
@@ -65,6 +70,11 @@ RSpec.describe InvitationsController, type: :controller do
         password_confirmation: 'password',
         agreed_to_terms: true
       } }
+    end
+
+    it 'makes the account a member' do
+      post :create, params: invite_params
+      expect(Account.last.member?).to eq(true)
     end
 
     it 'agrees to the terms' do

@@ -16,7 +16,7 @@ li.list-group-item
         i.fa.fa-wrench.fa-fw.mr-2
         span Owner
       - else
-        span Member
+        span = account.role.humanize
     .teams = pluralize(account.teams.count, "team")
     .settings
       = link_to organization_person_path(organization, account), class: "btn btn-secondary" do
