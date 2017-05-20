@@ -1,21 +1,13 @@
 .people {
-  .td--role, .td--teams, .td--settings {
-    vertical-align: middle;
-    text-align: right;
-    padding-right: 0;
+  .account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
   }
 
-  th.invite-member {
-    padding-right: 0;
-    text-align: right;
-  }
-
-  .td--teams {
-    width: 90px;
-  }
-
-  .td--settings {
-    width: 160px;
+  .card-header {
+    min-height: 50px;
   }
 
   .account-details {

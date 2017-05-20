@@ -1,26 +1,11 @@
 = title "Teams · ChirpyHire"
-.settings
-  .row.teams
-    .col
-      .card
-        .card-header
-          = render "organizations/settings/navigation"
-        .card-block
-          table.table.table-hover
-            thead
-              tr
-                th Name
-                th Phone Number
-                th Members
-            tbody
-              - @teams.each do |team|
-                tr
-                  td = team.name
-                  td
-                    span.badge.badge-primary.team-phone-number = team.phone_number.phony_formatted
-                  td
-                    - team.accounts.each do |account|
-                      - if account.avatar.url.present?
-                        = image_tag account.avatar.url(:thumb), class: 'no-repeat author_image mr-3 thumb_36', data: { toggle: 'tooltip', placement: 'bottom' }, title: account.handle
-                      - else
-                        span class=="author_image thumb_36 mr-3 #{account.person.decorate.hero_pattern_classes}" data-toggle='tooltip' data-placement= 'bottom' title==account.handle
+.settings.teams
+  = render partial: "organizations/settings/card"
+  = render partial: "organizations/settings/navigation"
+  .d-flex.justify-content-end.mt-4
+    = link_to new_organizations_settings_team_path, class: 'btn btn-primary' do
+      span Create team
+  .card.mt-4
+    .card-header
+    ul.list-group.list-group-flush
+      = render partial: "organizations/settings/teams/team", collection: @teams

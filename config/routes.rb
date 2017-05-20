@@ -30,7 +30,7 @@ Rails.application.routes.draw do
 
   namespace :organizations do
     namespace :settings do
-      resources :teams, only: [:index, :show]
+      resources :teams, only: [:index, :show, :new, :show]
       resources :people, only: [:index, :show, :update]
       resource :profile, only: [:show, :update]
       resource :billing, only: [:show]

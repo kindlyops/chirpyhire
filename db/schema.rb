@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520152206) do
+ActiveRecord::Schema.define(version: 20170520173902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 20170520152206) do
     t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "description"
     t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"
     t.index ["phone_number"], name: "index_teams_on_phone_number", unique: true
