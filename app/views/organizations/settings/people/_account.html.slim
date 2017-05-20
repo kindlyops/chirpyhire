@@ -8,18 +8,21 @@ tr
           span class=="author_image thumb_48 mr-3 #{account.person.decorate.hero_pattern_classes}"
       .account-subdetails
         .account-name
-          = link_to "Harry Whelchel", "#"
+          = link_to account.name, organizations_settings_person_path(account)
         .account-handle
-          span.text-muted harry
+          span.text-muted = account.handle
   td.td--role
     .role
-      i.fa.fa-wrench.fa-fw.mr-2
-      span Owner
+      - if account.owner?
+        i.fa.fa-wrench.fa-fw.mr-2
+        span Owner
+      - else
+        span Member
   td.td--teams
     .teams = pluralize(account.teams.count, "team")
   td.td--settings
     .settings
-      = link_to "#", class: "btn btn-secondary" do
+      = link_to organizations_settings_person_path(account), class: "btn btn-secondary" do
         | Manage
         i.fa.fa-gear.fa-fw.ml-1
 

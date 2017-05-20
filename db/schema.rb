@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520132910) do
+ActiveRecord::Schema.define(version: 20170520152206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,8 @@ ActiveRecord::Schema.define(version: 20170520132910) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string "url"
+    t.string "email"
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end

@@ -4,11 +4,11 @@
       li.nav-item = nav_link_to organizations_settings_people_path, { class: "nav-link" }, url_segment: 3 do
           i.fa.fa-users.fa-fw.mr-2
           | People
-          span.counter = current_organization.accounts.count
+          span.counter.ml-1 = current_organization.accounts.count
       li.nav-item = nav_link_to organizations_settings_teams_path, { class: "nav-link" }, url_segment: 3 do
           i.fa.fa-building-o.fa-fw.mr-2
           | Teams
-          span.counter = current_organization.teams.count
+          span.counter.ml-1 = current_organization.teams.count
       li.nav-item = nav_link_to organizations_settings_profile_path, { class: "nav-link" }, url_segment: 3 do
           i.fa.fa-gear.fa-fw.mr-2
           | Settings

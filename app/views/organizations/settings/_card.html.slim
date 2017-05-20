@@ -7,11 +7,17 @@
         - else
           div class=="logo #{current_organization.decorate.hero_pattern_classes}"
       .organization-details
-        h1.organization-name ChirpyHire
+        h1.organization-name = current_organization.name
         .organization-subdetails
           .organization-url
-            i.fa.fa-link.mr-1
-            = link_to "https://chirpyhire.com", "https://chirpyhire.com", target: "_blank"
+            i.fa.fa-link.mr-2
+            - if current_organization.url
+              = link_to current_organization.url, current_organization.url, target: "_blank"
+            - else
+              = link_to "Add URL", organizations_settings_profile_path
           .organization-email
-            i.fa.fa-envelope-o.mr-1
-            = link_to "hello@chirpyhire.com", "mailto:hello@chirpyhire.com", target: "_blank"
+            i.fa.fa-envelope-o.mr-2
+            - if current_organization.email
+              = link_to current_organization.email, "mailto:#{current_organization.email}", target: "_blank"
+            - else
+              = link_to "Add Email", organizations_settings_profile_path
