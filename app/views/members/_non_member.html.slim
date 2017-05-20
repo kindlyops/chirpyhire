@@ -1,0 +1,14 @@
+li.list-group-item
+  .member
+    .member-details
+      .member-photo
+        - if non_member.avatar.url.present?
+          = image_tag non_member.avatar.url(:medium), class: 'author_image mr-3 thumb_48 no-repeat'
+        - else
+          span class=="author_image thumb_48 mr-3 #{non_member.person.decorate.hero_pattern_classes}"
+      .member-name
+        = link_to non_member.name, organization_person_path(organization, non_member)
+      .member-handle.ml-2
+        span.text-muted = non_member.handle
+      .role.ml-2
+    .edit-member

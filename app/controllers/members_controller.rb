@@ -13,11 +13,16 @@ class MembersController < OrganizationsController
     end
   end
 
+  def new
+    @accounts = current_organization.accounts.where.not(id: team.accounts.pluck(:id))
+    @member = authorize team.memberships.build
+  end
+
   def create
     @member = authorize new_member
 
     if @member.save
-      redirect_to member_index_path, notice: create_notice
+      redirect_to member_new_path, notice: create_notice
     else
       render :index
     end
@@ -31,6 +36,10 @@ class MembersController < OrganizationsController
   end
 
   private
+
+  def member_new_path
+    new_organization_team_member_path(organization, team)
+  end
 
   def authorized_member
     authorize Membership.find(params[:id])

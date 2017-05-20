@@ -2,11 +2,7 @@
 .settings.teams.members
   = render partial: "organizations/teams/card", locals: { team: @team, organization: @organization }
   = render partial: "organizations/teams/navigation", locals: { team: @team, organization: @organization }
-  - if current_account.manages?(@team)
-    .d-flex.justify-content-end.mt-4
-      = link_to new_organization_team_member_path(@organization, @team), class: 'btn btn-primary' do
-        span Add a member
   .card.mt-4
     .card-header
     ul.list-group.list-group-flush
-      = render partial: "members/member", collection: @members, locals: { team: @team, organization: @organization }
+      = render partial: "members/non_member", collection: @accounts, locals: { team: @team, organization: @organization }

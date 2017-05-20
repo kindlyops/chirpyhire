@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :organizations, only: [:show, :update] do
     resources :teams, except: :destroy, controller: 'organizations/teams' do
-      resources :members, only: [:create, :destroy, :index, :update]
+      resources :members, only: [:create, :destroy, :index, :update, :new]
     end
     resources :people, only: [:index, :show, :update], controller: 'organizations/accounts'
   end
