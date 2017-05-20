@@ -1,0 +1,11 @@
+= title "Teams · ChirpyHire"
+.settings.teams
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
+  .d-flex.justify-content-end.mt-4
+    = link_to new_organization_team_path, class: 'btn btn-primary' do
+      span Create team
+  .card.mt-4
+    .card-header
+    ul.list-group.list-group-flush
+      = render partial: "organizations/teams/team", collection: @teams, locals: { organization: @organization }

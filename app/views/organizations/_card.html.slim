@@ -1,0 +1,30 @@
+.row
+  .col-6
+    .organization-card
+      .organization-logo
+        - if organization.avatar.url.present?
+          = image_tag organization.avatar.url(:medium), class: 'logo'
+        - else
+          div class=="logo #{organization.decorate.hero_pattern_classes}"
+      .organization-details
+        h1.organization-name = organization.name
+        .organization-subdetails
+          .organization-description
+            i.fa.fa-building.mr-2
+            - if organization.description
+              = organization.description
+            - else
+              = link_to "Add Description", organization_path(organization)
+        .organization-subdetails
+          .organization-url
+            i.fa.fa-link.mr-2
+            - if organization.url
+              = link_to organization.url, organization.url, target: "_blank"
+            - else
+              = link_to "Add URL", organization_path(organization)
+          .organization-email
+            i.fa.fa-envelope-o.mr-2
+            - if organization.email
+              = link_to organization.email, "mailto:#{organization.email}", target: "_blank"
+            - else
+              = link_to "Add Email", organization_path(organization)

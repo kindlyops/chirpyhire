@@ -1,7 +1,7 @@
 = title "#{@account.handle} · ChirpyHire"
 .settings.people
-  = render partial: "organizations/settings/card"
-  = render partial: "organizations/settings/navigation"
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
   .row.mt-4.person
     .col-4
       .card
@@ -14,7 +14,7 @@
                 span class=="author_image thumb_48 mr-3 #{@account.person.decorate.hero_pattern_classes}"
             .account-subdetails
               .account-name
-                = link_to @account.name, organizations_settings_person_path(@account)
+                = link_to @account.name, organization_person_path(@organization, @account)
               .account-handle
                 span.text-muted = @account.handle
         ul.list-group.list-group-flush
@@ -30,13 +30,13 @@
                     strong Organization role
                   .dropdown-divider
                   a.dropdown-item.owner href="#"
-                    = form_for @account, url: organizations_settings_person_path(@account) do |f|
+                    = form_for @account, url: organization_person_path(@organization, @account) do |f|
                       = f.hidden_field :role, value: :owner
                     strong Owner
                     span Has full administrative access to the entire organization.
                   .dropdown-divider
                   a.dropdown-item.member href="#"
-                    = form_for @account, url: organizations_settings_person_path(@account) do |f|
+                    = form_for @account, url: organization_person_path(@organization, @account) do |f|
                       = f.hidden_field :role, value: :member
                     strong Member
                     span Can see every team and member in the organization.
@@ -67,7 +67,7 @@
           - @account.teams.each do |team|
             li.list-group-item.justify-content-between
               .team-name
-                = link_to team.name, organizations_settings_team_path(team)
+                = link_to team.name, organization_team_path(@organization, team)
               .team-role
                 - if @account.memberships.find_by(team: team).manager?
                   | Manager

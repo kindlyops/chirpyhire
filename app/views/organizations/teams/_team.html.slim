@@ -2,7 +2,7 @@ li.list-group-item
   .team
     .team-details
       .team-name
-        = link_to team.name, organizations_settings_team_path(team)
+        = link_to team.name, organization_team_path(organization, team)
       .team-description
         span.text-muted = team.description
     .members
@@ -13,6 +13,6 @@ li.list-group-item
           span class=="author_image thumb_36 mr-3 #{account.person.decorate.hero_pattern_classes}" data-toggle='tooltip' data-placement= 'bottom' title==account.handle
     .members-count = pluralize(team.memberships.count, "member")
     .settings
-      = link_to organizations_settings_team_path(team), class: "btn btn-secondary" do
+      = link_to organization_team_path(organization, team), class: "btn btn-secondary" do
         | Manage
         i.fa.fa-gear.fa-fw.ml-1

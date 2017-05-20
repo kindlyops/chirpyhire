@@ -1,25 +1,23 @@
-= title "#{@profile.name} · ChirpyHire"
+= title "#{@organization.name} · ChirpyHire"
 .settings.organization.profile
-  = render partial: "organizations/settings/card"
-  = render partial: "organizations/settings/navigation"
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
   .row.mt-4
     .col-3
-      .card.organization-settings-sidebar
+      .card.settings-sidebar
         .card-header 
           strong Organization settings
         .list-group.list-group-flush
           li.list-group-item
-            = link_to "Profile", organizations_settings_profile_path
+            = link_to "Profile", organization_path(@organization)
     .col-9
-      h2.mb-4
-        i.fa.fa-home.mr-2
-        span Organization profile
+      h2.mb-4 Organization profile
       hr
       .row
         .col-8
-          = form_for @profile, url: organizations_settings_profile_path do |f|
+          = form_for @organization, url: organization_path(@organization) do |f|
             = content_for :validation_errors do
-              = render partial: "common/validation_errors", locals: { model: @profile }
+              = render partial: "common/validation_errors", locals: { model: @organization }
             .form-group
               strong = f.label :name, class: "col-form-label"
               = f.text_field :name, required: true, class: "form-control"
@@ -39,14 +37,14 @@
             .form-group
               = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4
-          = form_for @profile, url: organizations_settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
+          = form_for @organization, url: organization_path(@organization), html: { multipart: true, class: 'edit_profile_picture' } do |f|
             .form-group
               h6 = f.label :avatar, "Brand logo"
               .profile-picture.text-center.d-flex.justify-content-center
-                - if @profile.avatar.url.present?
-                  = image_tag @profile.avatar.url(:medium), class: 'd-flexthumb_200 profile-image'
+                - if @organization.avatar.url.present?
+                  = image_tag @organization.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
                 - else
-                  div class=="d-flexprofile-image thumb_200 default #{@profile.decorate.hero_pattern_classes}"
+                  div class=="d-flex profile-image thumb_200 default #{@organization.decorate.hero_pattern_classes}"
               a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
               = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 

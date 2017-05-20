@@ -261,6 +261,10 @@ ActiveRecord::Schema.define(version: 20170520173902) do
     t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.string "description"
     t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"

@@ -4,7 +4,7 @@
     .col
       .card
         .card-header
-          = render "settings/navigation"
+          = render partial: "settings/navigation", locals: { organization: @profile.organization }
         .card-block
           h2.card-title.mb-4
             i.fa.fa-user.mr-3

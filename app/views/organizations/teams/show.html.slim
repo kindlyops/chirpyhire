@@ -1,0 +1,43 @@
+= title "#{@team.name} · ChirpyHire"
+.settings.teams
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
+  .row.mt-4
+    .col-3
+      .card.settings-sidebar
+        .card-header 
+          strong Team settings
+        .list-group.list-group-flush
+          li.list-group-item
+            = link_to "Profile", organization_team_path(@organization, @team)
+    .col-9
+      h2.mb-4 Team profile
+      hr
+      .row
+        .col-8
+          = form_for @team, url: organization_team_path(@organization, @team) do |f|
+            = content_for :validation_errors do
+              = render partial: "common/validation_errors", locals: { model: @team }
+            .form-group
+              strong = f.label :name, class: "col-form-label"
+              = f.text_field :name, required: true, class: "form-control"
+            .form-group
+              strong = f.label :description, class: "col-form-label"
+              = f.text_field :description, class: "form-control"
+            .form-group
+              strong = f.label :recruiter_id, class: "col-form-label"
+              = f.collection_select(:recruiter_id, @team.accounts, :id, :name, { required: true }, { class: "form-control" })
+              small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your team's screening process.
+            .form-group
+              = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
+        .col-4
+          = form_for @team, url: organization_team_path(@organization, @team), html: { multipart: true, class: 'edit_profile_picture' } do |f|
+            .form-group
+              h6 = f.label :avatar, "Team logo"
+              .profile-picture.text-center.d-flex.justify-content-center
+                - if @team.avatar.url.present?
+                  = image_tag @team.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
+                - else
+                  div class=="d-flex profile-image thumb_200 default #{@team.decorate.hero_pattern_classes}"
+              a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+              = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true

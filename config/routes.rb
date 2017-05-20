@@ -23,18 +23,13 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
-  namespace :settings do
-    resource :profile, only: [:show, :update]
-    resource :password, only: [:show, :update]
+  resource :account, only: [:show, :update], controller: 'account' do
+    resource :password, only: [:show, :update], controller: 'account/password'
   end
 
-  namespace :organizations do
-    namespace :settings do
-      resources :teams, only: [:index, :show, :new, :show]
-      resources :people, only: [:index, :show, :update]
-      resource :profile, only: [:show, :update]
-      resource :billing, only: [:show]
-    end
+  resources :organizations, only: [:show, :update] do
+    resources :teams, except: :destroy, controller: 'organizations/teams'
+    resources :people, only: [:index, :show, :update], controller: 'organizations/accounts'
   end
 
   post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new
@@ -43,9 +38,6 @@ Rails.application.routes.draw do
   post 'twilio/text' => 'teams/messages#create'
 
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
-  devise_scope :accounts do
-    get 'organizations/settings/people/invitation/new', to: 'invitations#new'
-  end
   resources :accounts, only: [] do
     post :stop_impersonating, on: :collection
   end
