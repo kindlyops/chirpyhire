@@ -7,6 +7,15 @@
     .input-group-btn.dropdown
       = render partial: "caregivers/navigation/dropdown_toggle"
       .dropdown-menu.scrollable-dropdown aria-labelledby="search"
+        h6.dropdown-header Starred
+        .dropdown-item
+          label.custom-control.custom-checkbox
+            input class==(params[:starred].present? ? 'custom-control-input active' : 'custom-control-input') type="checkbox" name="starred" value="true" checked==(params[:starred].present?)
+            span.custom-control-indicator
+            span.custom-control-description
+              span.description-text Starred
+              i.fa.fa-star.fa-fw.ml-2
+        .dropdown-divider  
         h6.dropdown-header Certification
         .dropdown-item
           label.custom-control.custom-checkbox
@@ -119,15 +128,7 @@
             span.custom-control-description
               span.description-text No Transportation
               i.fa.fa-thumbs-o-up.fa-fw.ml-2
-        .dropdown-divider
-        h6.dropdown-header Starred
-        .dropdown-item
-          label.custom-control.custom-checkbox
-            input class==(params[:starred].present? ? 'custom-control-input active' : 'custom-control-input') type="checkbox" name="starred" value="true" checked==(params[:starred].present?)
-            span.custom-control-indicator
-            span.custom-control-description
-              span.description-text Starred
-              i.fa.fa-star.fa-fw.ml-2
+        .dropdown-divider 
         .dropdown-item.d-flex.justify-content-between
           a.cancel href="#" Cancel
           a.apply href="#" Apply
