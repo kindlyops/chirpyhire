@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Account Management' do
+RSpec.describe 'Account' do
   let(:organization) { create(:organization, :account) }
   let(:account) { organization.accounts.first }
 

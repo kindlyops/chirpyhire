@@ -31,9 +31,10 @@
             .form-group
               strong = f.label :url, "URL", class: "col-form-label"
               = f.url_field :url, class: "form-control"
-            .form-group
-              strong = f.label :billing_email, "Billing email (Private)", class: "col-form-label"
-              = f.email_field :billing_email, disabled: current_account.member?, class: "form-control"
+            - if current_account.owner?
+              .form-group
+                strong = f.label :billing_email, "Billing email (Private)", class: "col-form-label"
+                = f.email_field :billing_email, class: "form-control"
             .form-group
               = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4
