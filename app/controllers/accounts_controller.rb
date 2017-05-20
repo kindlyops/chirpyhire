@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
   private
 
   def update_notice
-    "#{@account.name} updated!"
+    "Profile updated!"
   end
 
   def require_super_admin!

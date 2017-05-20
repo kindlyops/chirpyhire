@@ -4,7 +4,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def update?
-    show? && account.owner?
+    show?
   end
 
   def permitted_attributes

@@ -43,6 +43,12 @@ RSpec.describe Registrar do
     context 'account persisted' do
       let!(:account) { create(:account, organization: organization) }
 
+      it 'sets the account as an owner on the organization' do
+        expect {
+          subject.register
+        }.to change { account.owner? }.from(false).to(true)
+      end
+
       it 'provisions a phone number for the team' do
         subject.register
         expect(Team.last.phone_number).to eq(organization.phone_number)

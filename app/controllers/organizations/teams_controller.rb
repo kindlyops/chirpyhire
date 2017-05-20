@@ -29,7 +29,7 @@ class Organizations::TeamsController < OrganizationsController
   end
 
   def team_path
-    organizations_team_path(current_organization, @team)
+    organization_team_path(current_organization, @team)
   end
 
   def update_notice
