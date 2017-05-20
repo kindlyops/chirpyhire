@@ -2,15 +2,14 @@
 .settings.people
   = render partial: "organizations/settings/card"
   = render partial: "organizations/settings/navigation"
-  .d-flex.justify-content-end.mt-4
-    = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary' do
-      span Invite member
   table.table
     thead
       tr
         th
         th
         th
-        th
+        th.invite-member
+          = link_to organizations_settings_people_invitation_new_path, class: 'btn btn-primary' do
+            span Invite member
     tbody
       = render partial: "organizations/settings/people/account", collection: @accounts

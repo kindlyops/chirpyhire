@@ -1,38 +1,52 @@
-= title "Organization Profile | ChirpyHire"
-.settings
-  .row.profile
-    .col
-      .card
-        .card-header
-          = render "organizations/settings/navigation"
-        .card-block
-          h2.card-title.mb-4
-            i.fa.fa-home.mr-2
-            span Profile
-          .row
-            .col-md-8
-              = form_for @profile, url: organizations_settings_profile_path do |f|
-                = content_for :validation_errors do
-                  = render partial: "common/validation_errors", locals: { model: @profile }
-                .form-group
-                  strong = f.label :name, class: "col-form-label"
-                  = f.text_field :name, required: true, class: "form-control"
-                  small.form-text.text-muted We'll use your organization's name when screening caregivers to give the screening process a personal touch.
-                .form-group
-                  strong = f.label :recruiter_id, class: "col-form-label"
-                  = f.collection_select(:recruiter_id, @profile.accounts, :id, :name, { required: true }, { class: "form-control" })
-                  small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your organization's screening process.
-                .form-group
-                  = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
-            .col-md-4
-              = form_for @profile, url: organizations_settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
-                .form-group
-                  h6 = f.label :avatar, "Brand logo"
-                  .profile-picture.text-center
-                    - if @profile.avatar.url.present?
-                      = image_tag @profile.avatar.url(:medium), class: 'profile-image'
-                    - else
-                      div class=="profile-image default #{@profile.decorate.hero_pattern_classes}"
-                  a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
-                  = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
+= title "#{@profile.name} · ChirpyHire"
+.settings.organization.profile
+  = render partial: "organizations/settings/card"
+  = render partial: "organizations/settings/navigation"
+  .row.mt-4
+    .col-3
+      .card.organization-settings-sidebar
+        .card-header 
+          strong Organization settings
+        .list-group.list-group-flush
+          li.list-group-item
+            = link_to "Profile", organizations_settings_profile_path
+    .col-9
+      h2.mb-4
+        i.fa.fa-home.mr-2
+        span Organization profile
+      hr
+      .row
+        .col-8
+          = form_for @profile, url: organizations_settings_profile_path do |f|
+            = content_for :validation_errors do
+              = render partial: "common/validation_errors", locals: { model: @profile }
+            .form-group
+              strong = f.label :name, class: "col-form-label"
+              = f.text_field :name, required: true, class: "form-control"
+              small.form-text.text-muted We'll use your organization's name when screening caregivers to give the screening process a personal touch.
+            .form-group
+              strong = f.label :email, class: "col-form-label"
+              = f.email_field :email, class: "form-control"
+            .form-group
+              strong = f.label :description, class: "col-form-label"
+              = f.text_field :description, class: "form-control"
+            .form-group
+              strong = f.label :url, "URL", class: "col-form-label"
+              = f.url_field :url, class: "form-control"
+            .form-group
+              strong = f.label :billing_email, "Billing email (Private)", class: "col-form-label"
+              = f.email_field :billing_email, class: "form-control"
+            .form-group
+              = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
+        .col-4
+          = form_for @profile, url: organizations_settings_profile_path, html: { multipart: true, class: 'edit_profile_picture' } do |f|
+            .form-group
+              h6 = f.label :avatar, "Brand logo"
+              .profile-picture.text-center.d-flex.justify-content-center
+                - if @profile.avatar.url.present?
+                  = image_tag @profile.avatar.url(:medium), class: 'd-flexthumb_200 profile-image'
+                - else
+                  div class=="d-flexprofile-image thumb_200 default #{@profile.decorate.hero_pattern_classes}"
+              a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+              = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 
