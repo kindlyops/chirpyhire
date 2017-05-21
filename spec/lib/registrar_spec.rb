@@ -50,7 +50,7 @@ RSpec.describe Registrar do
 
       it 'provisions a phone number for the team' do
         subject.register
-        expect(Team.last.phone_number).to eq(organization.phone_number)
+        expect(Team.last.phone_number.present?).to eq(true)
       end
 
       it 'sets the recruiter on the team' do
@@ -61,12 +61,6 @@ RSpec.describe Registrar do
       it 'creates a recruiting ad for the team' do
         subject.register
         expect(Team.last.recruiting_ad).to eq(organization.recruiting_ad)
-      end
-
-      it 'provisions a phone number for the organization' do
-        expect {
-          subject.register
-        }.to change { organization.reload.phone_number.present? }.from(false).to(true)
       end
 
       it 'sets the recruiter on the organization' do
