@@ -1,7 +1,8 @@
 doctype html
 html
   head
-    link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet"
+    - unless Rails.env.test?
+      link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet"
     meta[http-equiv="Content-Type" content="text/html; charset=utf-8"]
     = stylesheet_link_tag 'email', media: 'all'
   body

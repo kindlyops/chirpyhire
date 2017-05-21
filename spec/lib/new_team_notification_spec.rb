@@ -5,7 +5,7 @@ RSpec.describe NewTeamNotification do
   let(:account) { team.accounts.first }
   let!(:owners) { create_list(:account, 3, :owner, organization: team.organization) }
 
-  subject { NewTeamNotification.new(team, account) }
+  subject { NewTeamNotification.new(team) }
 
   describe '#call' do
     context 'with owners' do

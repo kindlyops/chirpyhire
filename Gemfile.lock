@@ -1,13 +1,4 @@
 GIT
-  remote: git@github.com:DockYard/capybara-email.git
-  revision: c30c5f0a211d32ad489bc3070cbb4a9cc809d20c
-  ref: c30c5f0
-  specs:
-    capybara-email (2.5.0)
-      capybara (~> 2.4)
-      mail
-
-GIT
   remote: https://github.com/elabs/pundit.git
   revision: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
   ref: 58eda659d44a2
@@ -479,7 +470,6 @@ DEPENDENCIES
   bootstrap (~> 4.0.0.alpha6)
   brakeman (~> 3.3.0)
   capybara (~> 2.14.0)
-  capybara-email!
   capybara-webkit!
   cocoon (~> 1.2.9)
   counter_culture (~> 1.5.1)

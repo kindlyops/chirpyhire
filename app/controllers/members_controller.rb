@@ -22,7 +22,7 @@ class MembersController < ApplicationController
     @member = authorize new_member
 
     if @member.save
-      NotificationMailer.added_to_team(@member).deliver_later(wait: 5.minutes)
+      notify_team_member
       redirect_to member_new_path, notice: create_notice
     else
       render :index
@@ -37,6 +37,10 @@ class MembersController < ApplicationController
   end
 
   private
+
+  def notify_team_member
+    TeamMemberNotifier.call(@member)
+  end
 
   def non_member_accounts
     current_organization.accounts.where.not(id: team.accounts.pluck(:id))

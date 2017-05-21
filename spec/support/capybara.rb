@@ -1,6 +1,5 @@
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara/email/rspec'
 require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist_debug do |app|

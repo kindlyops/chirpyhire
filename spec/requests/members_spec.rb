@@ -56,7 +56,14 @@ RSpec.describe 'Team Members' do
         account.memberships.each { |m| m.update(role: :manager) }
       end
 
+      it 'notifies the new team member' do
+        expect(TeamMemberNotifier).to receive(:call)
+        post organization_team_members_path(organization, team), params: params
+      end
+
       it 'adds the team member from the team' do
+        allow(TeamMemberNotifier).to receive(:call)
+
         expect {
           post organization_team_members_path(organization, team), params: params
         }.to change { team.accounts.count }.by(1)
