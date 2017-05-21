@@ -1,5 +1,5 @@
 class NewTeamNotificationJob < ApplicationJob
-  def perform(team, account)
-    NewTeamNotification.call(team, account)
+  def perform(team)
+    NewTeamNotification.call(team)
   end
 end

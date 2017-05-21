@@ -18,7 +18,7 @@ class TeamRegistrar
     provision_phone_number
     create_recruiting_ad
 
-    NewTeamNotificationJob.perform_later(team, account)
+    NewTeamNotificationJob.perform_later(team)
   end
 
   private

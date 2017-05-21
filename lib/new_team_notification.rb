@@ -1,14 +1,13 @@
 class NewTeamNotification
-  def self.call(team, account)
-    new(team, account).call
+  def self.call(team)
+    new(team).call
   end
 
-  def initialize(team, account)
+  def initialize(team)
     @team = team
-    @account = account
   end
 
-  attr_reader :team, :account
+  attr_reader :team
 
   def call
     send_email_notifications
@@ -25,7 +24,7 @@ class NewTeamNotification
   end
 
   def send_email_notifications
-    organization.owners.where.not(id: account.id).find_each do |owner|
+    organization.owners.find_each do |owner|
       NotificationMailer.team_created(team, owner).deliver_later
     end
   end

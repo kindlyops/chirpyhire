@@ -16,7 +16,7 @@ RSpec.describe NewTeamNotification do
           .with { |mailer, mailer_method, *_args|
                expect(mailer).to eq('NotificationMailer')
                expect(mailer_method).to eq('team_created')
-             }.exactly(owners.count).times
+             }.exactly(owners.count + 1).times
       end
     end
   end
