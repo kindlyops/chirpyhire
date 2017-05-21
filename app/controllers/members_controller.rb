@@ -68,10 +68,10 @@ class MembersController < OrganizationsController
   end
 
   def create_notice
-    "#{@member.account.name} joined #{@member.team.name}!"
+    "#{@member.account.name} added to #{@member.team.name}!"
   end
 
   def destroy_notice
-    "#{@member.account.name} left #{@member.team.name}!"
+    "#{@member.account.name} removed from #{@member.team.name}!"
   end
 end

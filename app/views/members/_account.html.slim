@@ -11,18 +11,12 @@ li.list-group-item
           = link_to account.name, organization_person_path(organization, account)
         .account-handle
           span.text-muted = account.handle
-    .role
-      - if account.owner?
-        i.fa.fa-wrench.fa-fw.mr-2
-        span Owner
-      - else
-        i.fa.fa-user.black.fa-fw.mr-2
-        span = account.role.humanize
-    .teams = pluralize(account.teams.count, "team")
-    .settings
-      = form_for @member, url: organization_team_members_path(organization, team) do |f|
-        = f.hidden_field :account_id, value: account.id
-        = f.hidden_field :team_id, value: team.id
-        = button_tag type: 'submit', class: 'btn btn-primary', role: 'button' do
-          | Add to team
-          i.fa.fa-user-plus.ml-2.white
+    .account-right-details.d-flex.justify-content-between.align-items-center
+      .teams.mr-4 = pluralize(account.teams.count, "team")
+      .settings
+        = form_for @member, url: organization_team_members_path(organization, team) do |f|
+          = f.hidden_field :account_id, value: account.id
+          = f.hidden_field :team_id, value: team.id
+          = button_tag type: 'submit', class: 'btn btn-primary', role: 'button' do
+            | Add to team
+            i.fa.fa-user-plus.ml-2.white

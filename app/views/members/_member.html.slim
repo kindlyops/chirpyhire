@@ -13,11 +13,9 @@ li.list-group-item
       .role.ml-2
         - if member.manager?
           span.badge.badge-primary
-            i.fa.fa-wrench.fa-fw.mr-2
             | Manager
         - else
           span.badge.badge-default
-            i.fa.fa-user.black.fa-fw.mr-2
             | Member
     .edit-member
       - if current_account.manages?(member.team)
