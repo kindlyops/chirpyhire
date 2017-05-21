@@ -2,7 +2,7 @@ class CustomDeviseMailer < Devise::Mailer
   default from: '"ChirpyHire" <notifications@chirpyhire.com>'
   layout 'mailer'
   helper MailerHelper
-  
+
   def subject_for(key)
     return super unless key.to_s == 'invitation_instructions'
 
