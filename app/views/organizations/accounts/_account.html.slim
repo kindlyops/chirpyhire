@@ -1,0 +1,29 @@
+li.list-group-item
+  .account
+    .account-details
+      .account-photo
+        - if account.avatar.url.present?
+          = image_tag account.avatar.url(:medium), class: 'author_image mr-3 thumb_48 no-repeat'
+        - else
+          span class=="author_image thumb_48 mr-3 #{account.person.decorate.hero_pattern_classes}"
+      .account-subdetails
+        .account-name
+          = link_to account.name, organization_person_path(organization, account)
+        .account-handle
+          span.text-muted = account.handle
+    .role
+      - if account.owner?
+        i.fa.fa-wrench.fa-fw.mr-2
+        span Owner
+      - else
+        i.fa.fa-user.black.fa-fw.mr-2
+        span = account.role.humanize
+    .teams = pluralize(account.teams.count, "team")
+    .settings
+      = link_to organization_person_path(organization, account), class: "btn btn-secondary" do
+        - if current_account.owner?
+          | Manage
+          i.fa.fa-gear.fa-fw.ml-1
+        - else
+          | View
+          i.fa.fa-id-card-o.fa-fw.ml-1

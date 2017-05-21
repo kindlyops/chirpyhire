@@ -1,0 +1,27 @@
+.members {
+  .member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .member-details {
+      display: flex;
+      align-items: center;
+    }
+
+    .remove-from-team {
+      a {
+        &:hover {
+          background-color: $brand-danger;
+          color: $white;
+        }
+      }
+    }
+
+    .edit-member {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

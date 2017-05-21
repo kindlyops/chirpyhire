@@ -15,6 +15,14 @@ FactoryGirl.define do
       end
     end
 
+    trait :owner do
+      after(:create) do |team|
+        account = create(:account, :owner, organization: team.organization)
+        team.accounts << account
+        team.update(recruiter: account)
+      end
+    end
+
     trait :recruiting_ad do
       after(:create) do |team|
         create(:recruiting_ad, team: team)

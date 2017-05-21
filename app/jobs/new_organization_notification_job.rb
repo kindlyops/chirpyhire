@@ -14,9 +14,9 @@ class NewOrganizationNotificationJob < ApplicationJob
 
   def new_team_message
     <<~MESSAGE
-      New Team Signed Up!
+      New Organization Signed Up!
 
-      Team: #{organization.name}
+      Organization: #{organization.name}
       Owner Name: #{account.name}
       Owner Email: #{account.email}
     MESSAGE

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518210012) do
+ActiveRecord::Schema.define(version: 20170520173902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170518210012) do
     t.integer "organization_id", null: false
     t.integer "person_id", null: false
     t.integer "unread_count", default: 0, null: false
+    t.integer "role", default: 0, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
@@ -162,6 +163,7 @@ ActiveRecord::Schema.define(version: 20170518210012) do
     t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", default: 0, null: false
     t.index ["account_id", "team_id"], name: "index_memberships_on_account_id_and_team_id", unique: true
     t.index ["account_id"], name: "index_memberships_on_account_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"
@@ -208,6 +210,10 @@ ActiveRecord::Schema.define(version: 20170518210012) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.string "url"
+    t.string "email"
+    t.string "billing_email"
+    t.string "description"
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
@@ -255,6 +261,11 @@ ActiveRecord::Schema.define(version: 20170518210012) do
     t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string "description"
     t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"
     t.index ["phone_number"], name: "index_teams_on_phone_number", unique: true

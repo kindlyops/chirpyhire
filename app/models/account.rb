@@ -20,6 +20,18 @@ class Account < ApplicationRecord
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
 
+  enum role: {
+    member: 0, owner: 1, invited: 2
+  }
+
+  def on?(team)
+    memberships.where(team: team).exists?
+  end
+
+  def manages?(team)
+    on?(team) && memberships.find_by(team: team).manager?
+  end
+
   def phone_numbers
     teams.pluck(:phone_number).compact
   end

@@ -1,0 +1,13 @@
+.people {
+  .person {
+    .stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .stat {
+        margin: 10px 0;
+      }
+    }
+  }
+}

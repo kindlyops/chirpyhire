@@ -1,0 +1,36 @@
+li.list-group-item
+  .team
+    .team-details
+      .team-logo
+        - if team.avatar.url.present?
+          = image_tag team.avatar.url(:medium), class: 'd-flex thumb_36 profile-image'
+        - else
+          div class=="d-flex profile-image thumb_36 default #{team.decorate.hero_pattern_classes}"
+      .team-subdetails
+        .team-name
+          = link_to team.name, organization_team_path(organization, team)
+        .team-description
+          span.text-muted = team.description
+      .team-subdetails
+        .team-phone-number
+          - if team.phone_number.present?
+              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{team.name}'s phone number." = team.phone_number.phony_formatted
+          - else
+              span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+                | Your phone number
+                i.fa.fa-mobile.ml-2.white
+    .members
+      - team.accounts.each do |account|
+        - if account.avatar.url.present?
+          = image_tag account.avatar.url(:thumb), class: 'no-repeat author_image mr-3 thumb_36', data: { toggle: 'tooltip', placement: 'bottom' }, title: account.handle
+        - else
+          span class=="author_image thumb_36 mr-3 #{account.person.decorate.hero_pattern_classes}" data-toggle='tooltip' data-placement= 'bottom' title==account.handle
+    .members-count = pluralize(team.memberships.count, "member")
+    .settings.d-flex.justify-content-end
+      = link_to organization_team_path(organization, team), class: "btn btn-secondary" do
+        - if current_account.manages?(team)
+          | Manage
+          i.fa.fa-gear.fa-fw.ml-1
+        - else
+          | View
+          i.fa.fa-building-o.fa-fw.ml-1

@@ -1,0 +1,11 @@
+.row
+  .col
+    ul.nav.nav-tabs.mt-4
+      li.nav-item = nav_link_to organization_team_path(organization, team), { class: "nav-link" } do
+          i.fa.fa-gear.fa-fw.mr-2
+          | Settings
+      li.nav-item = nav_link_to organization_team_members_path(organization, team), { class: "nav-link" }, url_segment: 5 do
+          i.fa.fa-users.fa-fw.mr-2
+          | Members
+          span.counter.ml-1 = team.accounts.count
+

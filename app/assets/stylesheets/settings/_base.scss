@@ -1,12 +1,84 @@
 .settings {
+  .change-role {
+    .dropdown-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dropdown-divider {
+      background-color: #eceeef;
+    }
+  }
+  
+  .settings-sidebar {
+    .list-group-item {
+
+      &:before {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 2px;
+        content: "";
+        background-color: $brand-primary;
+      }
+    }
+  }
+
   .nav-link {
     border-top: 3px solid transparent;
+    color: #77747e;
     &.active {
       border-top: 3px solid $brand-primary;
     }
 
     &:hover:not(.active) {
+      color: darken(#77747e, 25%);
+      .fa {
+        color: darken(#77747e, 25%);
+      }
       border-color: transparent transparent transparent;
+    }
+  }
+
+  .counter {
+    display: inline-block;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: #444d56;
+    background-color: rgba(27,31,35,0.08);
+    border-radius: 20px;
+  }
+
+  .organization-card {
+    display: flex;
+
+    .organization-logo {
+      .logo {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .organization-details {
+      display: flex;
+      flex-direction: column;
+      margin-left: 2rem;
+
+      .organization-name {
+        font-size: 2rem;
+      }
+
+      .organization-subdetails {
+        display: flex;
+        margin-top: .25rem;
+
+        .organization-url {
+          margin-right: 20px;
+        }
+      }
     }
   }
 }

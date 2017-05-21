@@ -1,0 +1,31 @@
+table.body-wrap 
+  tbody
+    tr
+      td 
+        p
+          ' Hi
+          = @account.first_name
+          ',
+          |
+        p
+          | All aboard! You've been added to the
+          '
+          strong = @team.name
+          '
+          | team.
+        p 
+          | We're excited to see you build meaningful relationships with compassionate and kind caregivers in the
+          '
+          = @team.location.city
+          '
+          | area.
+
+        p.callout
+          = link_to "View the #{@team.name} Team", organization_team_url(@team.organization, @team), class: 'btn', target: '_blank'
+        p Chugga chugga choo choo,
+        p The ChirpyHire Team
+        br
+        p
+          | P.S. -- 
+        p 
+          .ps As you hire caregivers, don't hesitate to reach out to us with ChirpyHire caregiver stories. We love hearing from you!

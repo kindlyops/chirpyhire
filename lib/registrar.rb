@@ -10,6 +10,7 @@ class Registrar
     provision_phone_number
     create_recruiting_ad
     team.accounts << account
+    account.update(role: :owner)
     new_organization_notification_job
   end
 
@@ -37,7 +38,7 @@ class Registrar
   end
 
   def provision_phone_number
-    PhoneNumberProvisioner.provision(team, organization)
+    PhoneNumberProvisioner.provision(team)
   end
 
   def new_organization_notification_job

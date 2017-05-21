@@ -1,0 +1,34 @@
+= title "New Team · ChirpyHire"
+.settings.teams
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
+  .row.mt-4
+    .col-8.offset-2
+      h2.mb-4 
+        | Create a new team
+        small.text-muted.ml-2 to increase caregiver engagement.
+      p.text-muted Enter a name and address for your team and we'll provide a local phone number for you!
+      hr
+      = form_for @team, url: organization_teams_path(@organization) do |f|
+        = content_for :validation_errors do
+          = render partial: "common/validation_errors", locals: { model: @team }
+        .form-group
+          strong = f.label :name, class: "col-form-label"
+          = f.text_field :name, required: true, class: "form-control"
+          small.form-text.text-muted Each team gets a local phone number. Name your team so you can easily remember which office it is for.
+        = f.fields_for :location, f.object.build_location do |l|
+          .form-group#team-search
+            strong = label_tag :address, 'Office street address', class: 'col-form-label'
+            = text_field_tag :address, nil, required: true, placeholder: '123 Main St, Caretown, USA, 12345', class: 'form-control'
+            small.form-text.text-muted Provide your office address so we can find a local phone number. Local numbers make your recruiting more effective.
+          = l.hidden_field :latitude
+          = l.hidden_field :longitude
+          = l.hidden_field :full_street_address
+          = l.hidden_field :city
+          = l.hidden_field :state
+          = l.hidden_field :state_code
+          = l.hidden_field :postal_code
+          = l.hidden_field :country
+          = l.hidden_field :country_code
+        .form-group
+          = f.submit "Create team", class: 'btn btn-block btn-lg btn-primary', role: 'button'

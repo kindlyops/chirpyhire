@@ -1,0 +1,41 @@
+li.list-group-item
+  .member
+    .member-details
+      .member-photo
+        - if member.avatar.url.present?
+          = image_tag member.avatar.url(:medium), class: 'author_image mr-3 thumb_48 no-repeat'
+        - else
+          span class=="author_image thumb_48 mr-3 #{member.person.decorate.hero_pattern_classes}"
+      .member-name
+        = link_to member.name, organization_person_path(organization, member.account)
+      .member-handle.ml-2
+        span.text-muted = member.handle
+      .role.ml-2
+        - if member.manager?
+          span.badge.badge-primary
+            | Manager
+    .edit-member
+      - if current_account.manages?(member.team)
+        .mr-3
+          .dropdown.change-role
+            button.btn.btn-secondary.dropdown-toggle id="change-role-#{member.id}" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" role="button"
+              | Role:
+              '
+              strong = member.role.humanize
+            .dropdown-menu aria-labelledby="change-role-#{member.id}"
+              h6.dropdown-header 
+                strong Team role
+              .dropdown-divider
+              a.dropdown-item.manager href="#"
+                = form_for member, url: organization_team_member_path(organization, team, member) do |f|
+                  = f.hidden_field :role, value: :manager
+                strong Manager
+                span Can add and remove users from the team.
+              .dropdown-divider
+              a.dropdown-item.member--role href="#"
+                = form_for member, url: organization_team_member_path(organization, team, member) do |f|
+                  = f.hidden_field :role, value: :member
+                strong Member
+                span Can view all caregivers in the team.
+        .remove-from-team
+          = link_to "Remove from team", organization_team_member_path(organization, team, member), method: :delete, class: "btn btn-secondary"

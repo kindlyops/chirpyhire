@@ -14,8 +14,15 @@ class InvitationsController < Devise::InvitationsController
     render :edit
   end
 
+  def update
+    super do |account|
+      account.update(role: :member) if account.invited?
+    end
+  end
+
   def create
     super do |account|
+      account.update(role: :invited)
       account.teams << TeamFindOrCreator.call(organization)
       GlacierBreakerJob.perform_later(account)
     end
@@ -30,7 +37,7 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def after_invite_path_for(*)
-    organizations_settings_people_invitation_new_path
+    new_account_invitation_path
   end
 
   def add_accept_params
