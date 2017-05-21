@@ -36,6 +36,7 @@
   .members {
     display: flex;
     align-items: center;
+    min-width: 110px;
   }
 
   .card-header {
@@ -46,6 +47,7 @@
     .team-details {
       display: flex;
       align-items: center;
+      min-width: 350px;
       
       .team-subdetails {
         margin-left: 10px;

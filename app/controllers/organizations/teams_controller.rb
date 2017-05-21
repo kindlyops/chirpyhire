@@ -20,11 +20,15 @@ class Organizations::TeamsController < OrganizationsController
     @team = authorize new_team
 
     if @team.save
-      NewTeamNotificationJob.perform_later(@team)
+      TeamRegistrar.call(@team, current_account)
       redirect_to team_index_path, notice: create_notice
     else
-      render :index
+      render :new
     end
+  end
+
+  def new
+    @team = authorize organization.teams.build
   end
 
   private

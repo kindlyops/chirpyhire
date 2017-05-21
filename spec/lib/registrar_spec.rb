@@ -6,9 +6,8 @@ RSpec.describe Registrar do
     let(:organization) { create(:organization, :team) }
 
     before do
-      allow(PhoneNumberProvisioner).to receive(:provision) do |team, organization|
+      allow(PhoneNumberProvisioner).to receive(:provision) do |team|
         phone = Faker::PhoneNumber.cell_phone
-        organization.update(phone_number: phone)
         team.update(phone_number: phone)
       end
     end
