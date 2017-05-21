@@ -14,9 +14,6 @@ li.list-group-item
         - if member.manager?
           span.badge.badge-primary
             | Manager
-        - else
-          span.badge.badge-default
-            | Member
     .edit-member
       - if current_account.manages?(member.team)
         .mr-3
