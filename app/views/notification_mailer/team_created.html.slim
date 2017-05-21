@@ -1,0 +1,27 @@
+table.body-wrap 
+  tbody
+    tr
+      td 
+        p
+          ' Hi
+          = @owner.first_name
+          ',
+          |
+        p
+          | Congratulations are in order for the new
+          '
+          strong = @team.name
+          '
+          | team!
+        p Hit reply and let us know how we can help make your new team a success.
+        p.callout
+          = link_to "View the #{@team.name} Team", organization_team_url(@team.organization, @team), class: 'btn', target: '_blank'
+        p To infinity and beyond,
+        p The ChirpyHire Team
+        br
+        p
+          | P.S. -- 
+        p 
+          .ps A recent survey finds 86% of consumers consider local businesses a better alternative to national brands. 79% believe local businesses are more reliable.
+          small
+            a href="https://www.aol.com/article/2013/02/05/singleplatform-survey-nearly-half-of-local-busines/20449078/" target="_blank" (SinglePlatform)

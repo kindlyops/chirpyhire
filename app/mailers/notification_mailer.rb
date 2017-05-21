@@ -14,4 +14,13 @@ class NotificationMailer < ApplicationMailer
     subject = 'Hurry! Your caregiver is slipping away... ⏰'
     mail(to: conversation.account.email, subject: subject)
   end
+
+  def team_created(team, owner)
+    @team = team
+    @owner = owner
+
+    track user: owner
+    subject = 'New team ready for lift-off! 🚀'
+    mail(to: owner.email, subject: subject)
+  end
 end

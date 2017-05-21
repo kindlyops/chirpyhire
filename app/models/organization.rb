@@ -1,6 +1,7 @@
 class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
+  has_many :owners, -> { owner }, class_name: 'Account'
   has_many :conversations, through: :accounts
 
   has_many :teams
