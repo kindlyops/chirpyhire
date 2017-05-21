@@ -1,5 +1,7 @@
 = title "New Team · ChirpyHire"
 .settings.teams
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
   .row.mt-4
     .col-8.offset-2
       h2.mb-4 

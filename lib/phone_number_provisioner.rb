@@ -74,6 +74,6 @@ class PhoneNumberProvisioner
   def master_client
     Messaging::Client.master
   end
-
+  attr_reader :team
   delegate :location, :organization, to: :team
 end

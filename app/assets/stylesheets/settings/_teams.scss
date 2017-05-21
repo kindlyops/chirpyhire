@@ -1,4 +1,16 @@
 .teams {
+  .team-phone-number {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .team {
+    .team-phone-number {
+      font-size: 1.25rem;
+      margin-bottom: 0;
+    }
+  }
+
   .team-card {
     display: flex;
 
@@ -44,6 +56,10 @@
   }
 
   .team {
+    .settings {
+      min-width: 120px;
+    }
+    
     .team-details {
       display: flex;
       align-items: center;
@@ -53,6 +69,7 @@
         margin-left: 10px;
         display: flex;
         flex-direction: column;
+        min-width: 100px;
       }
     }
   }

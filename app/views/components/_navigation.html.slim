@@ -19,7 +19,7 @@ nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.top.fixed-top
           span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to your phone number unique to #{current_organization.name}." = current_account.phone_numbers.first.phony_formatted
       - elsif current_account.phone_numbers.count.positive?
         li.nav-item.mr-2.my-auto
-          = link_to organizations_settings_teams_path do
+          = link_to organization_teams_path(current_organization) do
             span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' data-html="true" title="#{team_numbers(current_account)}"
               | Team numbers
               i.fa.fa-mobile.ml-2.white

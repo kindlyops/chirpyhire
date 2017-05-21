@@ -11,6 +11,14 @@ li.list-group-item
           = link_to team.name, organization_team_path(organization, team)
         .team-description
           span.text-muted = team.description
+      .team-subdetails
+        .team-phone-number
+          - if team.phone_number.present?
+              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{team.name}'s phone number." = team.phone_number.phony_formatted
+          - else
+              span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+                | Your phone number
+                i.fa.fa-mobile.ml-2.white
     .members
       - team.accounts.each do |account|
         - if account.avatar.url.present?
@@ -18,7 +26,7 @@ li.list-group-item
         - else
           span class=="author_image thumb_36 mr-3 #{account.person.decorate.hero_pattern_classes}" data-toggle='tooltip' data-placement= 'bottom' title==account.handle
     .members-count = pluralize(team.memberships.count, "member")
-    .settings
+    .settings.d-flex.justify-content-end
       = link_to organization_team_path(organization, team), class: "btn btn-secondary" do
         - if current_account.manages?(team)
           | Manage

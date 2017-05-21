@@ -6,4 +6,8 @@
   .card.mt-4
     .card-header
     ul.list-group.list-group-flush
-      = render partial: "members/account", collection: @accounts, locals: { team: @team, organization: @organization }
+      - if @accounts.count.positive?
+        = render partial: "members/account", collection: @accounts, locals: { team: @team, organization: @organization }
+      - else
+        li.list-group-item.mx-auto No one to add to team!
+
