@@ -22,7 +22,7 @@ class MembersController < ApplicationController
     @member = authorize new_member
 
     if @member.save
-      NotificationMailer.added_to_team(@member).deliver_later
+      NotificationMailer.added_to_team(@member).deliver_later(wait: 5.minutes)
       redirect_to member_new_path, notice: create_notice
     else
       render :index
