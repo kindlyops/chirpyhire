@@ -18,6 +18,6 @@ class OrganizationsController < ApplicationController
   end
 
   def update_notice
-    'Organization updated!'
+    "#{@organization.name} updated!"
   end
 end

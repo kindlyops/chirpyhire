@@ -56,10 +56,10 @@ class Organizations::TeamsController < OrganizationsController
   end
 
   def update_notice
-    'Team updated!'
+    "#{@team.name} updated!"
   end
 
   def create_notice
-    'Team created!'
+    "#{@team.name} created!"
   end
 end
