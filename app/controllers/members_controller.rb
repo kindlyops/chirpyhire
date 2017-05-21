@@ -1,4 +1,4 @@
-class MembersController < OrganizationsController
+class MembersController < ApplicationController
   def index
     @members = policy_scope(team.memberships)
   end
@@ -14,7 +14,7 @@ class MembersController < OrganizationsController
   end
 
   def new
-    @accounts = current_organization.accounts.where.not(id: team.accounts.pluck(:id))
+    @accounts = non_member_accounts
     @member = authorize team.memberships.build
   end
 
@@ -36,6 +36,10 @@ class MembersController < OrganizationsController
   end
 
   private
+
+  def non_member_accounts
+    current_organization.accounts.where.not(id: team.accounts.pluck(:id))
+  end
 
   def member_new_path
     new_organization_team_member_path(organization, team)
@@ -64,7 +68,7 @@ class MembersController < OrganizationsController
   end
 
   def update_notice
-    "#{@member.account.name} role updated!"
+    "#{@member.account.name} team role updated!"
   end
 
   def create_notice

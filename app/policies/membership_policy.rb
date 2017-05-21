@@ -1,6 +1,6 @@
 class MembershipPolicy < ApplicationPolicy
   def update?
-    show?
+    show? && manager_on_team?
   end
 
   def destroy?
@@ -12,7 +12,7 @@ class MembershipPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(account_id)
+    %i(account_id role)
   end
 
   private

@@ -76,6 +76,57 @@ RSpec.describe 'Team Members' do
     end
   end
 
+  context 'changing role of a team member' do
+    before do
+      team.accounts << team_member
+    end
+
+    let(:member) { team_member.memberships.find_by(team: team) }
+    let(:params) do
+      {
+        membership: {
+          role: :manager
+        }
+      }
+    end
+
+    describe 'as a manager' do
+      before do
+        account.memberships.each { |m| m.update(role: :manager) }
+      end
+
+      it 'changes the role on the member' do
+        expect {
+          put organization_team_member_path(organization, team, member), params: params
+        }.to change { member.reload.role }.from('member').to('manager')
+      end
+    end
+
+    describe 'as a member' do
+      before do
+        account.memberships.each { |m| m.update(role: :member) }
+      end
+
+      it 'does not change the role on the member' do
+        expect {
+          put organization_team_member_path(organization, team, member), params: params
+        }.not_to change { member.reload.role }
+      end
+    end
+
+    describe 'as a non member' do
+      before do
+        account.memberships.each(&:destroy)
+      end
+
+      it 'does not change the role on the member' do
+        expect {
+          put organization_team_member_path(organization, team, member), params: params
+        }.not_to change { member.reload.role }
+      end
+    end
+  end
+
   describe 'viewing team members' do
     before do
       team.accounts << team_member
