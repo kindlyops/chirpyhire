@@ -31,7 +31,7 @@ IntercomRails.config do |config|
   # == User model class
   # The class which defines your user model
   #
-  # config.user.model = Proc.new { User }
+  config.user.model = proc { Account }
 
   # == Lead/custom attributes for non-signed up users
   # Pass additional attributes to for potential leads or
@@ -61,7 +61,7 @@ IntercomRails.config do |config|
   # in your controllers. 'Companies' are generic groupings of users, so this
   # could be a company, app or group.
   #
-  # config.company.current = Proc.new { current_company }
+  config.company.current = proc { current_organization }
   #
   # Or if you are using devise you can just use the following config
   #
