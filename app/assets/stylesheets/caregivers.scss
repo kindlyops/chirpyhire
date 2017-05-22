@@ -77,6 +77,34 @@
 }
 .caregivers {
 
+  .reporting {
+    p.card-text {
+      font-size: 3rem;
+    }
+
+    h4 {
+      .fa {
+        color: $white !important;
+      }
+    }
+
+    .starred {
+      background-color: #d491ac;
+    }
+
+    .chatted {
+      background-color: #91d4b9;
+    }
+
+    .screened {
+      background-color: #ac91d4;
+    }
+
+    .contacts {
+      background-color: #91c7d4;
+    }
+  }
+
   @include media-breakpoint-down(sm) {
     margin-top: 10rem !important;
   }
