@@ -104,6 +104,14 @@ RSpec.describe Survey do
         }.to change { candidacy.reload.inquiry }.from('skin_test').to(nil)
       end
 
+      it 'marks the contact as screened' do
+        allow(subject).to receive(:send_message).with(thank_you.body)
+
+        expect {
+          subject.complete
+        }.to change { contact.reload.screened? }.from(false).to(true)
+      end
+
       it 'sends the thank you message' do
         expect(subject).to receive(:send_message).with(thank_you.body)
 

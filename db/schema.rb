@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520173902) do
+ActiveRecord::Schema.define(version: 20170523004817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,8 @@ ActiveRecord::Schema.define(version: 20170520173902) do
     t.datetime "last_reply_at"
     t.boolean "starred", default: false, null: false
     t.bigint "team_id", null: false
+    t.boolean "screened", default: false, null: false
+    t.boolean "reached", default: false, null: false
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
@@ -214,6 +216,10 @@ ActiveRecord::Schema.define(version: 20170520173902) do
     t.string "email"
     t.string "billing_email"
     t.string "description"
+    t.integer "contacts_count", default: 0, null: false
+    t.integer "screened_contacts_count", default: 0, null: false
+    t.integer "reached_contacts_count", default: 0, null: false
+    t.integer "starred_contacts_count", default: 0, null: false
     t.index ["phone_number"], name: "index_organizations_on_phone_number", unique: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end

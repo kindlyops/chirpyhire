@@ -11,7 +11,7 @@
         h4.card-title.d-flex.justify-content-between
           | Contacts
           i.fa.fa-user
-        p.card-text 200
+        p.card-text = current_organization.contacts_count
     .d-flex.align-items-center
       i.fa.fa-angle-right.fa-fw.fa-2x
     .card.screened
@@ -19,15 +19,15 @@
         h4.card-title.d-flex.justify-content-between 
           | Screened
           i.fa.fa-tasks
-        p.card-text 175
+        p.card-text = current_organization.screened_contacts_count
     .d-flex.align-items-center
       i.fa.fa-angle-right.fa-fw.fa-2x
     .card.chatted
       .card-block
         h4.card-title.d-flex.justify-content-between 
-          | Chatted
+          | Reached
           i.fa.fa-commenting-o
-        p.card-text 100
+        p.card-text = current_organization.reached_contacts_count
     .d-flex.align-items-center
       i.fa.fa-angle-right.fa-fw.fa-2x
     .card.starred
@@ -35,7 +35,7 @@
         h4.card-title.d-flex.justify-content-between 
           | Starred
           i.fa.fa-star-o
-        p.card-text 20
+        p.card-text = current_organization.starred_contacts_count
 
 
   - if @candidates.total_count.positive?

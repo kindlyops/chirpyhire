@@ -6,6 +6,7 @@ class Surveyor
   def start
     if candidacy.complete?
       notify_contact_ready_for_review(contact_team_conversations)
+      contact.update(screened: true)
       send_message(complete_welcome.body)
     elsif candidacy.pending?
       lock_candidacy

@@ -2,6 +2,7 @@ class Contact < ApplicationRecord
   belongs_to :person
   belongs_to :team
   belongs_to :organization, optional: true
+  include RecruitingCounts
 
   def organization
     super || team.organization

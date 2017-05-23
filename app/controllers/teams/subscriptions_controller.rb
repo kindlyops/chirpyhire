@@ -21,9 +21,15 @@ class Teams::SubscriptionsController < Teams::MessagesController
 
   def contact
     @contact ||= begin
-      contact = person.contacts.find_by(team: team)
+      contact = find_contact
       contact || create_unsubscribed_contact
     end
+  end
+
+  def find_contact
+    contact = person.contacts.find_by(team: team)
+    contact.update(screened: true) if contact && contact.candidacy.complete?
+    contact
   end
 
   def create_unsubscribed_contact
