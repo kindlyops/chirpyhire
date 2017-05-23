@@ -2,10 +2,46 @@
 = content_for :container_class, 'container-fluid caregivers'
 = content_for :body_class, 'white'
 .caregivers.mb-3
+  .row
+    .col
+      p.lead Recruiting Performance
+  .card-deck.reporting
+    .card.contacts
+      .card-block
+        h4.card-title.d-flex.justify-content-between
+          | Contacts
+          i.fa.fa-user
+        p.card-text = current_organization.contacts_count
+    .d-flex.align-items-center
+      i.fa.fa-angle-right.fa-fw.fa-2x
+    .card.screened
+      .card-block
+        h4.card-title.d-flex.justify-content-between 
+          | Screened
+          i.fa.fa-tasks
+        p.card-text = current_organization.screened_contacts_count
+    .d-flex.align-items-center
+      i.fa.fa-angle-right.fa-fw.fa-2x
+    .card.chatted
+      .card-block
+        h4.card-title.d-flex.justify-content-between 
+          | Reached
+          i.fa.fa-commenting-o
+        p.card-text = current_organization.reached_contacts_count
+    .d-flex.align-items-center
+      i.fa.fa-angle-right.fa-fw.fa-2x
+    .card.starred
+      .card-block
+        h4.card-title.d-flex.justify-content-between 
+          | Starred
+          i.fa.fa-star-o
+        p.card-text = current_organization.starred_contacts_count
+
+
   - if @candidates.total_count.positive?
     .row
       .col
-        p.lead
+        p.lead.mt-3
           = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
           '+
           '

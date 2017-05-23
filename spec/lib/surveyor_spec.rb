@@ -57,6 +57,12 @@ RSpec.describe Surveyor do
         candidacy.update(contact: contact, state: :complete)
       end
 
+      it 'marks the contact as screened' do
+        expect {
+          subject.start
+        }.to change { contact.reload.screened? }.from(false).to(true)
+      end
+
       context 'but account is no longer on the same team as the contact' do
         before do
           team.accounts.destroy(team.accounts.first)

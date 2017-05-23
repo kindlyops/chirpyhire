@@ -80,6 +80,11 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.to have_enqueued_job(AlreadySubscribedJob)
           end
 
+          it 'marks the contact as screened' do
+            post :create, params: params
+            expect(Contact.last.screened?).to eq(true)
+          end
+
           it 'does not create a contact' do
             expect {
               post :create, params: params
