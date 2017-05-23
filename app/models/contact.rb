@@ -79,13 +79,13 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
+  def received_messages
+    organization.messages.where(recipient: person)
+  end
+
   private
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
-  end
-
-  def received_messages
-    organization.messages.where(recipient: person)
   end
 end

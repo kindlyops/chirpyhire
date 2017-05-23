@@ -13,6 +13,10 @@ class Message < ApplicationRecord
     order(:external_created_at, :id)
   end
 
+  def self.manual
+    where.not(sender: Chirpy.person)
+  end
+
   def self.replies
     where(direction: 'inbound')
   end
