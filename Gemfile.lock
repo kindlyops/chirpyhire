@@ -454,6 +454,10 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    webpacker (1.2)
+      activesupport (>= 4.2)
+      multi_json (~> 1.2)
+      railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -535,6 +539,7 @@ DEPENDENCIES
   vcr (~> 3.0.0)
   web-console (~> 3.1.0)
   webmock (~> 2.3.2)
+  webpacker (~> 1.2.0)
   zip-codes (~> 0.2.1)
 
 RUBY VERSION
