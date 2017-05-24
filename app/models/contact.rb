@@ -23,6 +23,10 @@ class Contact < ApplicationRecord
     order('last_reply_at DESC NULLS LAST')
   end
 
+  def self.max_notes_count
+    joins(:notes).group(:contact_id, :last_reply_at).count.values.max
+  end
+
   def self.candidacy_filter(filter_clause)
     return current_scope unless filter_clause.present?
 

@@ -39,13 +39,17 @@
 
 
   - if @candidates.total_count.positive?
-    .row
-      .col
+    .row.align-items-center.mt-4
+      .col-md-6
         p.lead.mt-3
           = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
           '+
           '
           | Caregivers
+      .col-md-6.align-items-center.text-right
+        button.btn.btn-primary.export-caregivers role="button"
+          | Export
+          i.fa.fa-cloud-download.ml-2
     - candidates.each_slice(3).with_index do |slice, i|
       .row
         .col
