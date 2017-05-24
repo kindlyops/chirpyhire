@@ -1,7 +1,7 @@
 .sidebar {
 
   .fa {
-    color: $white !important;
+    color: $white;
   }
 
   &.compact {
@@ -95,9 +95,19 @@
     min-height: 36px;
     padding: 0 5px;
 
+    &.active {
+      .fa {
+        color: $brand-primary;
+      }
+      background-color: #f2f6f8;
+    }
+
     &:hover, &:focus, &:active {
-      background-color: rgba(0, 0, 0, 0.2);
       text-decoration: none;
+      
+      &:not(.active) {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
     }
 
     .fa {

@@ -8,15 +8,15 @@
       i.fa.fa-map-signs.fa-fw
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Dashboard (coming soon)"
       i.fa.fa-dashboard.fa-fw
-    = link_to recruiting_ads_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' do
+    = nav_link_to recruiting_ads_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' }, url_segment: 1 do
       i.fa.fa-magnet.fa-fw
-    = link_to caregivers_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' do
+    = nav_link_to caregivers_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, url_segment: 1 do
       i.fa.fa-users.fa-fw
-    = link_to messages_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Messages' do
+    = nav_link_to messages_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Messages' }, url_segment: 1 do
       i.fa.fa-comment-o.fa-fw
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
       i.fa.fa-bullhorn.fa-fw
-    = link_to account_path(current_account), class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' do
+    = nav_link_to account_path(current_account), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' }, url_segment: 1 do
       i.fa.fa-gear.fa-fw
   .sidebar--bottom.flex-column.d-flex.justify-content-end
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Search (coming soon)"
