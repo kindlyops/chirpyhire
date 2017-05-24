@@ -5,7 +5,11 @@ $(function() {
   let popper = $('.agent-status-dropdown');
   
   new Popper(reference, popper, {
-    placement: 'right'
+    placement: 'right',
+    modifiers: {
+      offset: {
+        offset: '-140px, 50%'
+      }
+    }
   });
-  console.log(Popper);
 });

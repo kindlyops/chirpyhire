@@ -10,8 +10,8 @@
   }
 
   .agent-status-menu-divider {
-    border-bottom: 1px solid #e1eef4;
     margin-bottom: .5rem;
+    border-bottom: 1px solid #e1eef4;
     padding-bottom: .5rem;
   }
 
@@ -20,9 +20,15 @@
   }
 
   .agent-status-description {
-    background-color: #13cb6e;
-    color: #fff;
     padding: .5rem 0;
+    color: $white;
+    background-color: $brand-primary;
     margin-bottom: .5rem;
+
+    .ch-dropup-item {
+      background-color: inherit;
+      display: block;
+      cursor: default;
+    }
   }
 }
