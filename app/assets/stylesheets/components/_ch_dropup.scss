@@ -1,0 +1,59 @@
+.ch-dropup {
+  margin-top: .5rem;
+  overflow: hidden;
+  z-index: 99999;
+  border: 1px solid #effaff;
+  box-shadow: 0 2px 8px 1px rgba(57,79,90,.3);
+  padding: .3rem 0;
+  font-size: .875rem;
+  border-radius: .3125rem;
+  background-color: #fff;
+
+  .title {
+    font-size: 1rem;
+    position: relative;
+    left: -10px;
+  }
+
+  .body {
+    font-style: italic;
+    font-size: .875rem;
+    font-weight: 400;
+  }
+
+  > :last-child {
+    border-bottom-left-radius: .3125rem;
+    border-bottom-right-radius: .3125rem;
+  }
+
+  > :first-child {
+    border-top-left-radius: .3125rem;
+    border-top-right-radius: .3125rem;
+  }
+
+  .medium-weight {
+    font-weight: 500 !important;
+  }
+
+  .ch-dropup-item {
+    align-items: center;
+    width: 100%;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+      background: #effaff;
+    }
+
+    &:not(:first-of-type) {
+      &:hover {
+        background: #effaff;
+        color: #000;
+      }
+    }
+
+    > * {
+      padding: .4rem 1.25rem .4rem .8rem;
+    }
+  }
+}
