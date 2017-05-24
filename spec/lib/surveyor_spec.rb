@@ -4,8 +4,8 @@ RSpec.describe Surveyor do
   subject { Surveyor.new(contact) }
 
   describe '#start' do
-    let(:contact) { create(:contact) }
-    let(:organization) { contact.organization }
+    let(:team) { create(:team, :account) }
+    let(:contact) { create(:contact, team: team, subscribed: true) }
     let(:candidacy) { contact.person.candidacy }
 
     before do
@@ -57,22 +57,41 @@ RSpec.describe Surveyor do
         candidacy.update(contact: contact, state: :complete)
       end
 
-      context 'subscribed to multiple organizations' do
-        let(:other_organization) { create(:organization) }
+      it 'marks the contact as screened' do
+        expect {
+          subject.start
+        }.to change { contact.reload.screened? }.from(false).to(true)
+      end
+
+      context 'but account is no longer on the same team as the contact' do
+        before do
+          team.accounts.destroy(team.accounts.first)
+        end
+
+        it 'does not send an email to the account' do
+          expect {
+            subject.start
+          }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
+        end
+      end
+
+      context 'subscribed to multiple teams' do
+        let(:other_team) { create(:team, :account) }
 
         before do
-          other_contact = other_organization.contacts.create(person: contact.person)
+          other_contact = other_team.contacts.create(person: contact.person)
           IceBreaker.call(other_contact)
         end
 
-        context 'multiple organizations' do
-          context 'current organization having multiple accounts' do
+        context 'multiple teams' do
+          context 'current team having multiple accounts' do
             before do
-              account = create(:account, organization: organization)
+              account = create(:account, organization: team.organization)
+              team.accounts << account
               GlacierBreaker.call(account)
             end
 
-            it 'sends an email to each account on the current organization' do
+            it 'sends an email to each account on the current team' do
               expect {
                 subject.start
               }.to have_enqueued_job(ActionMailer::DeliveryJob)
@@ -84,13 +103,13 @@ RSpec.describe Surveyor do
 
             context 'with 10 contacts with conversations' do
               before do
-                contacts = create_list(:contact, 10, organization: organization)
+                contacts = create_list(:contact, 10, team: team)
                 contacts.each do |contact|
                   IceBreaker.call(contact)
                 end
               end
 
-              it 'sends an email to each account on the current organization' do
+              it 'sends an email to each account on the current team' do
                 expect {
                   subject.start
                 }.to have_enqueued_job(ActionMailer::DeliveryJob)
@@ -102,9 +121,10 @@ RSpec.describe Surveyor do
             end
           end
 
-          context 'other organization having multiple accounts' do
+          context 'other team having multiple accounts' do
             before do
-              account = create(:account, organization: other_organization)
+              account = create(:account, organization: other_team.organization)
+              other_team.accounts << account
               GlacierBreaker.call(account)
             end
 
@@ -143,8 +163,8 @@ RSpec.describe Surveyor do
         subject.start
       end
 
-      it 'does not send a message' do
-        expect(subject).not_to receive(:send_message)
+      it 'does send a welcome message' do
+        expect(subject).to receive(:send_message)
 
         subject.start
       end
@@ -190,9 +210,12 @@ RSpec.describe Surveyor do
   describe '#consider_answer' do
     let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
     let(:contact) { candidacy.contact }
-    let(:organization) { contact.organization }
+    let(:team) { contact.team }
 
     before do
+      contact.update(subscribed: true)
+      account = create(:account, organization: team.organization)
+      team.accounts << account
       IceBreaker.call(contact)
     end
 
@@ -220,22 +243,45 @@ RSpec.describe Surveyor do
           subject.consider_answer(inquiry, message)
         end
 
-        context 'subscribed to multiple organizations' do
-          let(:other_organization) { create(:organization) }
+        context 'two teams same organization' do
+          let!(:other_team) { create(:team, :account, organization: team.organization) }
 
           before do
-            other_contact = other_organization.contacts.create(person: contact.person)
+            IceBreaker.call(contact)
+          end
+
+          context 'account on each team' do
+            context 'contact on one team' do
+              it 'sends an email to the account on the same team only' do
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to have_enqueued_job(ActionMailer::DeliveryJob)
+                  .with { |mailer, mailer_method, *_args|
+                       expect(mailer).to eq('NotificationMailer')
+                       expect(mailer_method).to eq('contact_ready_for_review')
+                     }.exactly(1).times
+              end
+            end
+          end
+        end
+
+        context 'subscribed to multiple teams' do
+          let(:other_team) { create(:team, :account) }
+
+          before do
+            other_contact = other_team.contacts.create(subscribed: true, person: contact.person)
             IceBreaker.call(other_contact)
           end
 
-          context 'multiple organizations' do
-            context 'current organization having multiple accounts' do
+          context 'multiple teams' do
+            context 'current team having multiple accounts' do
               before do
-                account = create(:account, organization: organization)
+                account = create(:account, organization: team.organization)
+                team.accounts << account
                 GlacierBreaker.call(account)
               end
 
-              it 'sends an email to each account on both organizations' do
+              it 'sends an email to each account on both teams' do
                 expect {
                   subject.consider_answer(inquiry, message)
                 }.to have_enqueued_job(ActionMailer::DeliveryJob)

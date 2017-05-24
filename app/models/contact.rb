@@ -1,6 +1,13 @@
 class Contact < ApplicationRecord
   belongs_to :person
-  belongs_to :organization
+  belongs_to :team
+  belongs_to :organization, optional: true
+  include RecruitingCounts
+
+  def organization
+    super || team.organization
+  end
+
   has_many :conversations
   has_many :notes
 
@@ -8,11 +15,16 @@ class Contact < ApplicationRecord
            :experience, :certification, :skin_test, :avatar, :transportation,
            :cpr_first_aid, :nickname, :candidacy, :live_in, to: :person
   delegate :inquiry, to: :person, prefix: true
+  delegate :phone_number, to: :team, prefix: true
 
   before_create :set_last_reply_at
 
   def self.recently_replied
-    order(last_reply_at: :desc)
+    order('last_reply_at DESC NULLS LAST')
+  end
+
+  def self.max_notes_count
+    joins(:notes).group(:contact_id, :last_reply_at).count.values.max
   end
 
   def self.candidacy_filter(filter_clause)
@@ -71,13 +83,13 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
+  def received_messages
+    organization.messages.where(recipient: person)
+  end
+
   private
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
-  end
-
-  def received_messages
-    organization.messages.where(recipient: person)
   end
 end

@@ -1,0 +1,44 @@
+= title "#{@team.name} · ChirpyHire"
+.settings.teams
+  = render partial: "organizations/teams/card", locals: { team: @team, organization: @organization }
+  = render partial: "organizations/teams/navigation", locals: { team: @team, organization: @organization }
+  .row.mt-4
+    .col-8.offset-2
+      .team-header.d-flex.justify-content-between.align-items-center
+        h2.mb-4 Team profile
+        .team-phone-number
+          - if @team.phone_number.present?
+              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{@team.name}'s phone number." = @team.phone_number.phony_formatted
+          - else
+              span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+                | Your phone number
+                i.fa.fa-mobile.ml-2.white
+      hr
+      .row
+        .col-8
+          = form_for @team, url: organization_team_path(@organization, @team) do |f|
+            = content_for :validation_errors do
+              = render partial: "common/validation_errors", locals: { model: @team }
+            .form-group
+              strong = f.label :name, class: "col-form-label"
+              = f.text_field :name, required: true, class: "form-control"
+            .form-group
+              strong = f.label :description, class: "col-form-label"
+              = f.text_field :description, class: "form-control"
+            .form-group
+              strong = f.label :recruiter_id, class: "col-form-label"
+              = f.collection_select(:recruiter_id, @team.accounts, :id, :name, { required: true }, { class: "form-control" })
+              small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your team's screening process.
+            .form-group
+              = f.submit "Update team", class: 'btn btn-block btn-lg btn-primary', role: 'button'
+        .col-4
+          = form_for @team, url: organization_team_path(@organization, @team), html: { multipart: true, class: 'edit_profile_picture' } do |f|
+            .form-group
+              h6 = f.label :avatar, "Team logo"
+              .profile-picture.text-center.d-flex.justify-content-center
+                - if @team.avatar.url.present?
+                  = image_tag @team.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
+                - else
+                  div class=="d-flex profile-image thumb_200 default #{@team.decorate.hero_pattern_classes}"
+              a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+              = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true

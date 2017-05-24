@@ -1,5 +1,7 @@
 class Conversation < ApplicationRecord
   SIDEBAR_MIN = 10
+  SIDEBAR_MAX = 25
+
   belongs_to :account
   belongs_to :contact
   has_many :read_receipts
@@ -31,7 +33,8 @@ class Conversation < ApplicationRecord
     viewed_recently = joins(contact: :person).recently_viewed
     limit_count = [3, SIDEBAR_MIN - unread.count].max
 
-    (viewed_recently.read.limit(limit_count) + unread).sort_by(&:handle)
+    sidebar = (viewed_recently.read.limit(limit_count) + unread)
+    sidebar.sort_by(&:handle).take(SIDEBAR_MAX)
   end
 
   def days

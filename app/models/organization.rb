@@ -1,46 +1,48 @@
 class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
+  has_many :owners, -> { owner }, class_name: 'Account'
   has_many :conversations, through: :accounts
 
-  has_many :contacts
-  has_many :people, through: :contacts, class_name: 'Person'
+  has_many :teams
+  has_many :contacts, through: :teams
+  has_many :locations, through: :teams
+  has_many :recruiting_ads, through: :teams
+
+  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
+  has_many :messages
+
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate
   has_one :recruiting_ad
   has_one :location
-  validates_associated :location
-  validates :location, presence: true
-  accepts_nested_attributes_for :location,
-                                reject_if: ->(l) { l.values.any?(&:blank?) }
+
+  accepts_nested_attributes_for :teams, reject_if: :all_blank
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
-  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
-  has_many :messages
-
-  delegate :zipcode, :city, to: :location
+  delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
-  def candidates
-    people.joins(:candidacy)
-  end
-
-  def message(recipient:, body:, sender: nil)
+  def message(contact:, body:, sender: nil)
     sent_message = messaging_client.send_message(
-      to: recipient.phone_number, from: phone_number, body: body
+      to: contact.phone_number, from: contact.team_phone_number, body: body
     )
-
-    create_message(recipient, sent_message, sender).tap do |message|
-      Broadcaster::Message.new(message).broadcast
+    contact.update(reached: true) if sender != Chirpy.person
+    create_message(contact.person, sent_message, sender).tap do |message|
+      Broadcaster::Message.broadcast(message)
     end
   end
 
   def get_message(sid)
     messaging_client.messages.get(sid)
+  end
+
+  def subaccount?
+    twilio_account_sid.present?
   end
 
   private

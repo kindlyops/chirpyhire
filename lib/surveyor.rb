@@ -5,7 +5,9 @@ class Surveyor
 
   def start
     if candidacy.complete?
-      notify_contact_ready_for_review(organization_contact_conversations)
+      notify_contact_ready_for_review(contact_team_conversations)
+      contact.update(screened: true)
+      send_message(complete_welcome.body)
     elsif candidacy.pending?
       lock_candidacy
       survey.ask
@@ -28,12 +30,12 @@ class Surveyor
 
   private
 
-  def organization_contact_conversations
-    organization.conversations.contact(contact)
+  def contact_team_conversations
+    team.conversations.contact(contact)
   end
 
   def restate_and_log(message)
-    ReadReceiptsCreator.call(message, organization)
+    ReadReceiptsCreator.call(message, contact)
 
     survey.restate
   end
@@ -41,13 +43,21 @@ class Surveyor
   def complete_survey(message)
     update_candidacy(message)
     survey.complete
-    notify_contact_ready_for_review(contact.person.conversations)
+
+    notify_contact_ready_for_review(person_conversations)
+  end
+
+  def person_conversations
+    account_ids = Membership.where(team: person.teams).pluck(:account_id)
+    contact_ids = person.contacts.subscribed.pluck(:id)
+
+    Conversation.where(account_id: account_ids, contact_id: contact_ids)
   end
 
   def send_message(message)
     organization.message(
       sender: Chirpy.person,
-      recipient: person,
+      contact: contact,
       body: message
     )
   end
@@ -69,8 +79,12 @@ class Surveyor
     end
   end
 
+  def complete_welcome
+    Notification::CompleteWelcome.new(contact)
+  end
+
   attr_reader :contact
 
-  delegate :person, :organization, to: :contact
+  delegate :person, :organization, :team, to: :contact
   delegate :candidacy, to: :person
 end

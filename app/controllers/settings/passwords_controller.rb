@@ -12,7 +12,7 @@ class Settings::PasswordsController < RegistrationsController
 
     if resource_updated
       bypass_sign_in resource, scope: resource_name
-      redirect_to settings_password_path, notice: 'Password updated!'
+      redirect_to account_password_path, notice: 'Password updated!'
     else
       clean_up_passwords resource
       set_minimum_password_length
@@ -21,6 +21,10 @@ class Settings::PasswordsController < RegistrationsController
   end
 
   private
+
+  def account_password_path
+    account_settings_password_path(resource)
+  end
 
   def devise_mapping
     Devise.mappings[:account]

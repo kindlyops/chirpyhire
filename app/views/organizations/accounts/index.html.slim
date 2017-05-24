@@ -1,0 +1,11 @@
+= title "People · ChirpyHire"
+.settings.people
+  = render partial: "organizations/card", locals: { organization: @organization }
+  = render partial: "organizations/navigation", locals: { organization: @organization }
+  .d-flex.justify-content-end.mt-4
+    = link_to new_account_invitation_path, class: 'btn btn-primary' do
+      span Invite member
+  .card.mt-4
+    .card-header
+    ul.list-group.list-group-flush
+      = render partial: "organizations/accounts/account", collection: @accounts, locals: { organization: @organization }

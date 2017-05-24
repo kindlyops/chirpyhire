@@ -1,14 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Stars' do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :team) }
+  let(:team) { account.teams.first }
 
   before do
     sign_in(account)
   end
 
   describe '#create' do
-    let!(:contact) { create(:contact, organization: account.organization) }
+    let!(:contact) { create(:contact, team: team) }
 
     it 'redirects to messages path' do
       post contact_star_path(contact)

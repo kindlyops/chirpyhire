@@ -4,5 +4,17 @@ FactoryGirl.define do
     email { Faker::Internet.email }
     password 'password'
     organization
+
+    trait :owner do
+      role :owner
+    end
+
+    trait :team do
+      after(:create) do |account|
+        team = create(:team, organization: account.organization)
+        team.accounts << account
+        team.update(recruiter: account)
+      end
+    end
   end
 end

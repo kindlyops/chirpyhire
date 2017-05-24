@@ -1,4 +1,8 @@
 class CustomDeviseMailer < Devise::Mailer
+  default from: '"ChirpyHire" <notifications@chirpyhire.com>'
+  layout 'mailer'
+  helper MailerHelper
+
   def subject_for(key)
     return super unless key.to_s == 'invitation_instructions'
 
@@ -12,8 +16,12 @@ class CustomDeviseMailer < Devise::Mailer
   end
 
   def invitor
-    return 'Someone' unless resource.invited_by
+    return default_invitor unless resource.invited_by
 
     resource.invited_by.first_name
+  end
+
+  def default_invitor
+    "A #{resource.organization.name} team member"
   end
 end

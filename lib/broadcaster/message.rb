@@ -1,4 +1,8 @@
 class Broadcaster::Message
+  def self.broadcast(message)
+    new(message).broadcast
+  end
+
   def initialize(message)
     @message = message
   end

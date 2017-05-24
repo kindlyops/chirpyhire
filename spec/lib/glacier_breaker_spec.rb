@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe GlacierBreaker do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :team) }
   let(:organization) { account.organization }
 
   subject { GlacierBreaker.new(account) }
 
   describe '#call' do
     context 'with multiple contacts on the organization' do
-      let!(:contacts) { create_list(:contact, 3, organization: account.organization) }
+      let!(:contacts) { create_list(:contact, 3, team: account.teams.first) }
       let(:count) { organization.contacts.count }
 
       it 'creates a conversation for each contact on the organization' do

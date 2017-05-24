@@ -1,6 +1,6 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    recipient.actively_subscribed_to?(organization)
+    recipient.actively_subscribed_to?(account.teams)
   end
 
   delegate :recipient, to: :record

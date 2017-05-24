@@ -24,7 +24,7 @@ class Survey
 
   def complete
     return unless candidacy.in_progress?
-
+    contact.update!(screened: true)
     candidacy.update!(inquiry: nil, state: :complete)
     send_message(thank_you.body)
   end
@@ -59,7 +59,7 @@ class Survey
   def send_message(message)
     organization.message(
       sender: Chirpy.person,
-      recipient: person,
+      contact: contact,
       body: message
     )
   end

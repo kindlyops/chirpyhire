@@ -34,10 +34,16 @@ body {
 @import "ideal_candidate";
 @import "caregivers";
 @import "messages";
+@import "account";
+@import "members";
+
 @import "components";
 
 @import "settings/base";
-@import "settings/profile";
+@import "settings/teams";
+@import "settings/people";
+@import "settings/person";
+
 
 @import "registrations";
 @import "recruiting_ad";

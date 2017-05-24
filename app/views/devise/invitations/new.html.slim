@@ -1,25 +1,21 @@
-= title "Invitations | ChirpyHire"
-.settings
-  .row.people.invite
-    .col
-      .card
-        .card-header
-          = render "organizations/settings/navigation"
-        .card-block
-          = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
-            h3.card-title
-              i.fa.fa-user-plus.mr-2
-              span Invite team member
-            p.card-subtitle.mb-1 Recruiting caregivers is better with company.
-            p.card-subtitle.mb-3 Invite as many team members as you'd like.
-            = f.fields_for :person do |p|
-              .form-group
-                strong = p.label :name, class: "col-form-label"
-                = p.text_field :name, required: true, class: "form-control"
-            .form-group
-              strong = f.label :email, class: "col-form-label"
-              = f.email_field :email, required: true, class: "form-control"
-            .form-group
-              = button_tag type: "submit", role: "button", class: "btn btn-lg btn-block btn-primary" do
-                i.fa.fa-paper-plane.white.mr-2
-                span Invite
+= title "Invite member · ChirpyHire"
+.settings.people
+  = render partial: "organizations/card", locals: { organization: current_organization }
+  = render partial: "organizations/navigation", locals: { organization: current_organization }
+  .col-6.offset-3.mt-5
+    = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post, role: "form"} do |f|
+      h3.card-title
+        i.fa.fa-user-plus.mr-2
+        span Invite team member
+      p.card-subtitle.mb-1 Recruiting caregivers is better with company. Invite as many team members as you'd like.
+      = f.fields_for :person do |p|
+        .form-group
+          strong = p.label :name, class: "col-form-label"
+          = p.text_field :name, required: true, placeholder: "Name", class: "form-control"
+      .form-group
+        strong = f.label :email, class: "col-form-label"
+        = f.email_field :email, required: true, placeholder: "Email", class: "form-control"
+      .form-group
+        = button_tag type: "submit", role: "button", class: "btn btn-lg btn-block btn-primary mt-4" do
+          i.fa.fa-paper-plane.white.mr-2
+          span Send Email Invitation

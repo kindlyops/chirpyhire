@@ -77,6 +77,12 @@
 }
 .caregivers {
 
+  .reporting {
+    p.card-text {
+      font-size: 3rem;
+    }
+  }
+
   @include media-breakpoint-down(sm) {
     margin-top: 10rem !important;
   }

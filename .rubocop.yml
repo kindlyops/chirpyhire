@@ -20,6 +20,7 @@ Style/FrozenStringLiteralComment:
 Metrics/ClassLength:
   Exclude:
     - 'lib/seeder.rb'
+    - 'app/controllers/caregivers_controller.rb'
 
 Metrics/MethodLength:
   Exclude:
@@ -29,6 +30,7 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*'
     - 'config/**/*'
+    - 'lib/migrator/**/*'
 
 Metrics/BlockLength:
   Exclude:

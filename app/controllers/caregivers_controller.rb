@@ -3,10 +3,22 @@ class CaregiversController < ApplicationController
   PAGE_LIMIT = 9
 
   def index
-    @candidates = paginated(filtered_candidates).order(id: :desc)
+    respond_to do |format|
+      format.html { @candidates = paginated_candidates }
+      format.csv { index_csv }
+    end
   end
 
   private
+
+  def paginated_candidates
+    paginated(filtered_candidates.recently_replied)
+  end
+
+  def index_csv
+    @candidates = filtered_candidates.recently_replied
+    @filename = "caregivers-#{DateTime.current.to_i}.csv"
+  end
 
   def filtered_candidates
     return scope unless permitted_params.present?

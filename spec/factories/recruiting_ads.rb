@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :recruiting_ad do
-    organization
+    team
     body { Faker::Lorem.paragraph }
   end
 end

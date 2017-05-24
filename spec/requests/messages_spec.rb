@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Messages' do
-  let(:account) { create(:account) }
+  let(:account) { create(:account, :team) }
+  let(:team) { account.teams.first }
 
   before do
     sign_in(account)
@@ -21,8 +22,8 @@ RSpec.describe 'Messages' do
   end
 
   context 'with caregivers' do
-    let!(:current_contact) { create(:contact, organization: account.organization) }
-    let!(:with_unread_messages) { create(:contact, organization: account.organization) }
+    let!(:current_contact) { create(:contact, team: team) }
+    let!(:with_unread_messages) { create(:contact, team: team) }
 
     before do
       IceBreaker.call(current_contact)

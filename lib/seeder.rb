@@ -1,6 +1,5 @@
 class Seeder
   def seed
-    seed_organization
     seed_account
     seed_incomplete_contacts
     seed_complete_contacts
@@ -9,7 +8,7 @@ class Seeder
 
   private
 
-  attr_reader :organization
+  attr_reader :organization, :account, :team
 
   def seed_incomplete_contacts
     incomplete_contacts unless organization.contacts.incomplete.exists?
@@ -20,26 +19,12 @@ class Seeder
   end
 
   def incomplete_contacts
-    seed_demo_contact
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :incomplete,
-      organization: organization
+      organization: organization,
+      team: team
     )
     contacts.each(&method(:seed_messages))
-  end
-
-  def seed_demo_contact
-    person = seed_demo_person
-
-    contact = FactoryGirl.create(
-      :contact,
-      :incomplete,
-      person: person,
-      subscribed: true,
-      organization: organization,
-      phone_number: ENV.fetch('DEMO_PHONE')
-    )
-    seed_messages(contact)
   end
 
   def seed_demo_person
@@ -51,7 +36,8 @@ class Seeder
   def complete_contacts
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
-      organization: organization
+      organization: organization,
+      team: team
     )
     contacts.each(&method(:seed_messages))
   end
@@ -144,31 +130,16 @@ class Seeder
     )
   end
 
-  def seed_organization
-    @organization = find_or_create_organization
-    organization.create_ideal_candidate!(
-      zipcodes_attributes: [{ value: '30341' }]
-    )
-    organization.create_recruiting_ad(body: RecruitingAd.body(organization))
-    puts 'Created Organization, Ideal Candidate, and Recruiting Ad'
+  def team_attributes
+    { name: 'Atlanta', phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE') }
+  end
+
+  def team_params
+    team_attributes.merge(location_attributes: location_attributes)
   end
 
   def full_street_address
     '2225 Spring Walk Court, Chamblee, GA 30341, United States of America'
-  end
-
-  def find_or_create_organization
-    found_organization = Organization.find_by(organization_attributes)
-
-    found_organization || create_organization
-  end
-
-  def create_organization
-    attributes = organization_attributes.merge(
-      location_attributes: location_attributes
-    )
-
-    Organization.create!(attributes)
   end
 
   def organization_attributes
@@ -176,7 +147,9 @@ class Seeder
       name: ENV.fetch('DEMO_ORGANIZATION_NAME'),
       twilio_account_sid: ENV.fetch('DEMO_TWILIO_ACCOUNT_SID'),
       twilio_auth_token: ENV.fetch('DEMO_TWILIO_AUTH_TOKEN'),
-      phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
+      teams_attributes: {
+        '0' => team_params
+      }
     }
   end
 
@@ -189,17 +162,38 @@ class Seeder
   end
 
   def seed_account
-    unless organization.accounts.present?
-      account = organization.accounts.create!(
-        password: ENV.fetch('DEMO_PASSWORD'),
-        person_attributes: { name: ENV.fetch('DEMO_NAME') },
-        email: ENV.fetch('DEMO_EMAIL'),
-        super_admin: true
-      )
-      organization.update(recruiter: account)
-    end
+    @account = Account.create(account_attributes)
+    @organization = account.organization
+    @team = organization.teams.first
+    setup_account
 
     puts 'Created Account'
+  end
+
+  def account_attributes
+    {
+      password: ENV.fetch('DEMO_PASSWORD'),
+      person_attributes: { name: ENV.fetch('DEMO_NAME') },
+      email: ENV.fetch('DEMO_EMAIL'),
+      super_admin: true,
+      organization_attributes: organization_attributes
+    }
+  end
+
+  def setup_account
+    setup_organization
+    team.accounts << account
+    team.update(recruiter: account)
+  end
+
+  def setup_organization
+    organization.create_ideal_candidate!(
+      zipcodes_attributes: [{ value: '30341' }]
+    )
+    organization.create_recruiting_ad(
+      team: team, body: RecruitingAd.body(team)
+    )
+    organization.update(recruiter: account)
   end
 
   def seed_zipcodes_for_people

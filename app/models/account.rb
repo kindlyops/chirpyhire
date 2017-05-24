@@ -8,6 +8,9 @@ class Account < ApplicationRecord
   has_many :conversations
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
+  has_many :memberships
+  has_many :teams, through: :memberships
+  has_many :contacts, through: :teams
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
@@ -16,6 +19,22 @@ class Account < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
+
+  enum role: {
+    member: 0, owner: 1, invited: 2
+  }
+
+  def on?(team)
+    memberships.where(team: team).exists?
+  end
+
+  def manages?(team)
+    on?(team) && memberships.find_by(team: team).manager?
+  end
+
+  def phone_numbers
+    teams.pluck(:phone_number).compact
+  end
 
   def self.active
     where(invitation_token: nil)

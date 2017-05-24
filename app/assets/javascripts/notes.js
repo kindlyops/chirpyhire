@@ -1,4 +1,4 @@
-$(document).on('turbolinks:load', function() {
+$(document).on('ready', function() {
   var notes = $('#notes_tab:not([loaded])');
 
   if (notes.length) {

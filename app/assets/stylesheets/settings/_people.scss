@@ -1,0 +1,22 @@
+.people, .members {
+  .account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .card-header {
+    min-height: 50px;
+  }
+
+  .account-details {
+    display: flex;
+    width: 350px;
+
+    .account-subdetails {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

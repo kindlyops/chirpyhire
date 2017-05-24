@@ -1,15 +1,22 @@
 class RecruitingAd < ApplicationRecord
-  belongs_to :organization
+  belongs_to :team
+  belongs_to :organization, optional: true
 
-  def self.body(organization)
+  delegate :name, to: :team, prefix: true
+
+  def organization
+    super || team.organization
+  end
+
+  def self.body(team)
     <<-BODY
-#{organization.name} is hiring Caregivers! Our CNAs are as important to us as \
+#{team.organization_name} is hiring Caregivers! Our CNAs are as important to us as \
 our clients. Openings PT/FT for M-F day shifts and weekends.
 
 *********************************
 
 For immediate opportunities, text START to \
-#{organization.phone_number.phony_formatted}
+#{team.phone_number.phony_formatted}
 
 *********************************
 

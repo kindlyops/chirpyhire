@@ -3,7 +3,8 @@ class Person < ApplicationRecord
   has_one :candidacy
   has_one :account, inverse_of: :person
   has_many :contacts
-  has_many :conversations, through: :contacts
+  has_many :teams, through: :contacts
+
   has_many :sent_messages,
            class_name: 'Message', foreign_key: :sender_id, inverse_of: :sender
   has_many :received_messages, class_name: 'Message',
@@ -28,16 +29,16 @@ class Person < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
   validates :phone_number, presence: true, unless: :name_present?
 
-  def subscribed_to?(organization)
-    contacts.where(organization: organization).exists?
+  def subscribed_to?(teams)
+    contacts.where(team: teams).exists?
   end
 
-  def actively_subscribed_to?(organization)
-    contacts.subscribed.where(organization: organization).exists?
+  def actively_subscribed_to?(teams)
+    contacts.subscribed.where(team: teams).exists?
   end
 
-  def subscribed_to(organization)
-    contacts.find_by(organization: organization)
+  def subscribed_to(teams)
+    contacts.find_by(team: teams)
   end
 
   def handle

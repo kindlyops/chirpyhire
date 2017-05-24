@@ -1,11 +1,11 @@
 class ReadReceiptsCreator
-  def initialize(message, organization)
+  def initialize(message, contact)
     @message = message
-    @organization = organization
+    @contact = contact
   end
 
-  def self.call(message, organization)
-    new(message, organization).call
+  def self.call(message, contact)
+    new(message, contact).call
   end
 
   def self.wait_until
@@ -17,7 +17,7 @@ class ReadReceiptsCreator
   end
 
   def call
-    organization.conversations.contact(contact).find_each do |conversation|
+    contact_team_conversations.find_each do |conversation|
       receipt = conversation.read_receipts.find_by(message: message)
       next if receipt.present?
 
@@ -27,8 +27,8 @@ class ReadReceiptsCreator
     broadcast_sidebar
   end
 
-  def contact
-    organization.contacts.find_by(person: message.sender)
+  def contact_team_conversations
+    team.conversations.contact(contact)
   end
 
   def create_read_receipt(conversation)
@@ -41,10 +41,11 @@ class ReadReceiptsCreator
   end
 
   def broadcast_sidebar
-    organization.accounts.find_each do |account|
+    team.accounts.find_each do |account|
       Broadcaster::Sidebar.new(account).broadcast
     end
   end
 
-  attr_reader :message, :organization
+  attr_reader :message, :contact
+  delegate :team, to: :contact
 end
