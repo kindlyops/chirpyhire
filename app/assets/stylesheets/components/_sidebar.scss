@@ -1,0 +1,108 @@
+.sidebar {
+
+  .fa {
+    color: $white !important;
+  }
+
+  &.compact {
+    width: 53px;
+    min-width: 53px;
+  }
+
+  background: linear-gradient(45deg, #2ba373, #75d0ab);
+  
+  display: flex;
+  overflow-y: auto;
+  color: $white;
+  transition: width .3s;
+  padding: 1rem .5rem 0;
+  flex-shrink: 0;
+  flex-direction: column;
+
+  .sidebar--bottom {
+    flex-shrink: 1;
+    flex: 1;
+
+    .section {
+      margin: .25rem 0;
+
+      .fa {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  .sidebar--top {
+    min-height: 50px;
+  }
+
+  .agent-status-container {
+    border-radius: .3125rem;
+    margin-bottom: .5rem;
+    background: rgba(0,0,0,.2);
+
+    &.dropup {
+      .dropdown-toggle:after {
+        content: none;
+      }
+    }
+
+    .agent-status-indicator {
+      width: 15px;
+      right: -3px;
+      bottom: 0;
+      position: absolute;
+      height: 15px;
+    }
+
+    .agent-status-button {
+      cursor: pointer;
+      position: relative;
+      padding: 0 .25rem;
+
+      .avatar {
+        margin-right: .5rem;
+
+        .avatar-image {
+          &.fa {
+            font-size: 2.15rem;
+            color: white;
+            position: relative;
+            left: 3px;
+            bottom: 1px;
+          }
+        }
+      }
+
+      .agent-status-button-inner {
+        padding: 0.25rem 0px;
+      }
+
+      .align-items-center {
+        padding: 0.25rem 0px;
+      }
+    }
+  }
+
+  .section {
+    height: 36px;
+    transition: width .3s;
+    margin: 1.25rem 0;
+    display: flex;
+    border-radius: .3125rem;
+    transition: background-color .3s;
+    align-items: center;
+    transition-delay: .1s;
+    min-height: 28px;
+    padding: 0 5px;
+
+    &:hover, &:focus, &:active {
+      background-color: rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+    }
+
+    .fa {
+      font-size: 1.5rem;
+    }
+  }
+}

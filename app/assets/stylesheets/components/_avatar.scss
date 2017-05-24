@@ -1,0 +1,13 @@
+.avatar {
+  flex-shrink: 0;
+  height: 1.875rem;
+  width: 1.875rem;
+
+  .avatar-image {
+    border-radius: 5px;
+    background-size: cover;
+    background-position: 50%;
+    width: 100%;
+    height: 100%;
+  }
+}

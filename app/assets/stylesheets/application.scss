@@ -10,17 +10,9 @@ body {
     background-color: $white;
   }
 
-  main.application {
-    padding-top: 80px;
-  }
-
   &.chat {
     overflow: hidden;
     background-color: $white;
-
-    main.application {
-      padding-top: 59px;
-    }
   }
 
   .overflow_ellipsis {
@@ -28,6 +20,30 @@ body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+}
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .notification-bar-wrapper {
+    width: 100%;
+    color: #fff;
+  }
+
+  .app {
+    flex: 1;
+    max-height: 100%;
+    height: 100%;
+    display: flex;
+
+    .app-content-container {
+      overflow-y: auto;
+      width: 100%;
+      display: inline-block;
+    }
   }
 }
 

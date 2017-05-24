@@ -1,0 +1,36 @@
+.sidebar.compact
+  .sidebar--top.align-items-start.justify-content-between
+    a.logo.d-flex.align-items-center.ml-2 href="#"
+      i
+        = inline_svg "mini_logo.svg"
+  div
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
+      i.fa.fa-map-signs.fa-fw
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Dashboard (coming soon)"
+      i.fa.fa-dashboard.fa-fw
+    = link_to recruiting_ads_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' do
+      i.fa.fa-magnet.fa-fw
+    = link_to caregivers_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' do
+      i.fa.fa-users.fa-fw
+    = link_to messages_path, class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Messages' do
+      i.fa.fa-comment-o.fa-fw
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
+      i.fa.fa-bullhorn.fa-fw
+    = link_to account_path(current_account), class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' do
+      i.fa.fa-gear.fa-fw
+  .sidebar--bottom.flex-column.d-flex.justify-content-end
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Search (coming soon)"
+      i.fa.fa-search.fa-fw
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Reports (coming soon)"
+      i.fa.fa-line-chart.fa-fw
+    .agent-status-container
+      div
+        .agent-status-button.d-flex.justify-content-between.align-items-center
+          .align-items-center.agent-status-button-inner
+            .avatar
+              - if current_account.avatar.url.present?
+                .avatar-image style="background-image: url(#{account.avatar.url(:medium)}"
+              - else
+                i.fa.fa-user.avatar-image
+          i.agent-status-indicator
+            = inline_svg "active_status_indicator.svg"
