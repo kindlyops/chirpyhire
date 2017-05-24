@@ -1,6 +1,4 @@
-notes_count = @candidates.joins(:notes).group(:contact_id, :last_reply_at).count.values.max
-
-notes = notes_count.times.each_with_object([]) do |i, result|
+notes = @candidates.max_notes_count.times.each_with_object([]) do |i, result|
   result << "note_#{i}".to_sym
 end
 
@@ -25,6 +23,6 @@ csv.rows candidates do |csv, candidate|
   csv.cell :last_reply_at, candidate.last_reply_at
   csv.cell :starred, candidate.starred
   candidate.notes.each_with_index do |note, i|
-    csv.cell "note_#{i}".to_symm note.body
+    csv.cell "note_#{i}".to_sym, note.body
   end
 end
