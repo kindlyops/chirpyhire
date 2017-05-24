@@ -1,0 +1,30 @@
+notes_count = @candidates.joins(:notes).group(:contact_id, :last_reply_at).count.values.max
+
+notes = notes_count.times.each_with_object([]) do |i, result|
+  result << "note_#{i}".to_sym
+end
+
+headers = %i(nickname phone_number location availability live_in
+  transportation experience certification skin_test cpr_first_aid
+  last_reply_at starred
+)
+
+csv.headers *headers.concat(notes)
+
+csv.rows candidates do |csv, candidate|
+  csv.cell :nickname, candidate.handle.label
+  csv.cell :phone_number, candidate.phone_number.label
+  csv.cell :location, candidate.candidacy_zipcode.label
+  csv.cell :availability, candidate.availability.label
+  csv.cell :live_in, candidate.live_in
+  csv.cell :transportation, candidate.transportation.label
+  csv.cell :experience, candidate.experience.label
+  csv.cell :certification, candidate.certification.label
+  csv.cell :skin_test, candidate.skin_test
+  csv.cell :cpr_first_aid, candidate.cpr_first_aid
+  csv.cell :last_reply_at, candidate.last_reply_at
+  csv.cell :starred, candidate.starred
+  candidate.notes.each_with_index do |note, i|
+    csv.cell "note_#{i}".to_symm note.body
+  end
+end
