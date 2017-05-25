@@ -15,6 +15,10 @@
     .account-status-menu-divider
     .ch-dropup-item
       = link_to "My Profile", account_path(current_account)
-    .ch-dropup-item
-      = link_to "Sign Out", destroy_account_session_path, method: :delete, id: 'sign-out'
+    - if impersonating?
+      .ch-dropup-item
+        = link_to "Stop Impersonating", stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}"
+    - else
+      .ch-dropup-item
+        = link_to "Sign Out", destroy_account_session_path, method: :delete, id: 'sign-out'
 

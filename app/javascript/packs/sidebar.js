@@ -24,7 +24,7 @@ $(function() {
         placement: 'right',
         modifiers: {
           offset: {
-            offset: '-130px, 50%'
+            offset: '-100px, 50%'
           }
         }
       });
