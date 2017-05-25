@@ -6,7 +6,7 @@
   div
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
       i.fa.fa-map-signs.fa-fw
-    a.section href="#" data-toggle="tooltip" data-placement="right" title="Dashboard (coming soon)"
+    = nav_link_to dashboard_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Dashboard' }, url_segment: 1 do
       i.fa.fa-dashboard.fa-fw
     = nav_link_to recruiting_ads_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' }, url_segment: 1 do
       i.fa.fa-magnet.fa-fw

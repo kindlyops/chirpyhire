@@ -1,0 +1,28 @@
+.dashboard {
+  padding: 1rem 2rem;
+
+  .coming-soon {
+    font-size: 2.5rem;
+  }
+
+  .card-header {
+    background-color: $white;
+    border-bottom: 2px solid #e1eef4;
+    padding: 1.5rem 2rem;
+    height: 75px;
+    width: 100%;
+
+    h4 {
+      margin-bottom: 0;
+    }
+  }
+
+  .funnel-angle {
+    width: 40%;
+  }
+
+  .metric {
+    padding: 2rem 1rem 2rem .85rem;
+    width: 100%;
+  }
+}

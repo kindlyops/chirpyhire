@@ -9,6 +9,10 @@ body {
       margin-top: 82px;
     }
   }
+
+  &.body--dashboard {
+    background-color: #F2F6F8;
+  }
   
   background-color: $gray-lighter;
 
@@ -61,7 +65,8 @@ body {
 @import "settings/people";
 @import "settings/person";
 
-
 @import "registrations";
 @import "recruiting_ad";
+@import "dashboard";
+
 
