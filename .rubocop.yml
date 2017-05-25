@@ -10,6 +10,7 @@ AllCops:
     - 'script/**/*'
     - 'bin/**/*'
     - 'lib/middleware/sabayon.rb'
+    - 'node_modules/**/*'
 
 Style/Documentation:
   Enabled: false
