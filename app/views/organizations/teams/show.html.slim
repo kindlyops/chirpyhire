@@ -63,11 +63,11 @@
         .col-4
           = form_for @team, url: organization_team_path(@organization, @team), html: { multipart: true, class: 'edit_profile_picture' } do |f|
             .form-group
-              h6 = f.label :avatar, "Team logo"
+              h6 = f.label :avatar, "Team picture"
               .profile-picture.text-center.d-flex.justify-content-center
                 - if @team.avatar.url.present?
                   = image_tag @team.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
                 - else
                   div class=="d-flex profile-image thumb_200 default #{@team.decorate.hero_pattern_classes}"
-              a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+              a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new picture
               = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
