@@ -13,8 +13,7 @@ $blue-gray: #91A3B0;
 .messages {
   display: flex;
   overflow: hidden;
-  margin-top: 82px;
-  min-height: calc(100vh - 82px);
+  min-height: 100vh;
 
   .conversation {
     position: relative;

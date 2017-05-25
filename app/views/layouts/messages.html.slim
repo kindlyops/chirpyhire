@@ -3,10 +3,17 @@ html
   head
     = render partial: "layouts/head"
   body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
-    = render "components/navigation"
-    .messages
-      = render partial: 'messages/sidebar'
-      main.conversation
-        = yield
+    = render "layouts/google_tag_manager/no_script"
+    #app
+      .app-container
+        = render partial: "layouts/alerts"
+        .app
+          = render "components/sidebar"
+          .app-content-container
+            .messages
+              = render partial: 'messages/sidebar'
+              main.conversation
+                = yield
+    = render "components/account_dropdown"
     = render partial: "components/modal"
     = render "layouts/script" unless Rails.env.test?
