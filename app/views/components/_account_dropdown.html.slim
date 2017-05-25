@@ -1,6 +1,6 @@
-.agent-status-dropdown.ch-dropup
+.account-status-dropdown.ch-dropup
   div
-    .agent-status-description
+    .account-status-description
       .ch-dropup-item
         h4.title.medium-weight.d-flex.align-items-center
           i.fa.fa-mobile.fa-fw.fa-2x.white
@@ -12,9 +12,9 @@
         = link_to organization_team_path(team.organization, team), class: 'phone-number d-flex justify-content-between' do
           .location = "#{team.name}:"
           .number = team.phone_number.phony_formatted
-    .agent-status-menu-divider
+    .account-status-menu-divider
     .ch-dropup-item
       = link_to "My Profile", account_path(current_account)
     .ch-dropup-item
-      = link_to "Sign Out", destroy_account_session_path, method: :delete
+      = link_to "Sign Out", destroy_account_session_path, method: :delete, id: 'sign-out'
 

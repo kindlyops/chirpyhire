@@ -36,7 +36,7 @@
     min-height: 50px;
   }
 
-  .agent-status-container {
+  .account-status-container {
     border-radius: .3125rem;
     margin-bottom: .5rem;
     background: rgba(0,0,0,.2);
@@ -47,7 +47,7 @@
       }
     }
 
-    .agent-status-indicator {
+    .account-status-indicator {
       width: 15px;
       right: -3px;
       bottom: 0;
@@ -55,7 +55,7 @@
       height: 15px;
     }
 
-    .agent-status-button {
+    .account-status-button {
       cursor: pointer;
       position: relative;
       padding: 0 .25rem;
@@ -74,7 +74,7 @@
         }
       }
 
-      .agent-status-button-inner {
+      .account-status-button-inner {
         padding: 0.25rem 0px;
       }
 

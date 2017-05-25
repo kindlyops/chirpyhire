@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Caregivers' do
-  let(:account) { create(:account, :team) }
+  let(:account) { create(:account, :team_with_phone_number) }
   let(:team) { account.teams.first }
 
   before do

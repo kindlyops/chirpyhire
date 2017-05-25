@@ -1,10 +1,10 @@
-.show-agent-status-dropdown {
-  .agent-status-dropdown {
+.show-account-status-dropdown {
+  .account-status-dropdown {
     display: block;
   }
 }
 
-.agent-status-dropdown {
+.account-status-dropdown {
   display: none;
 
   &.ch-dropup {
@@ -24,7 +24,7 @@
     width: 100%;
   }
 
-  .agent-status-menu-divider {
+  .account-status-menu-divider {
     margin-bottom: .5rem;
     border-bottom: 1px solid #e1eef4;
     padding-bottom: .5rem;
@@ -34,7 +34,7 @@
     margin-bottom: .5rem;
   }
 
-  .agent-status-description {
+  .account-status-description {
     padding: .5rem 0;
     color: $white;
     background-color: $brand-primary;

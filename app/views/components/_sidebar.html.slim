@@ -25,16 +25,16 @@
       i.fa.fa-search.fa-fw
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Reports (coming soon)"
       i.fa.fa-line-chart.fa-fw
-    .agent-status-container
+    .account-status-container#account-status-container
       div
-        .agent-status-button.d-flex.justify-content-between.align-items-center
-          .align-items-center.agent-status-button-inner
+        .account-status-button.d-flex.justify-content-between.align-items-center
+          .align-items-center.account-status-button-inner
             .avatar
               - if current_account.avatar.url.present?
                 .avatar-image style="background-image: url(#{account.avatar.url(:medium)}"
               - else
                 i.fa.fa-user.avatar-image
-          i.agent-status-indicator
+          i.account-status-indicator
             = inline_svg "active_status_indicator.svg"
 
 = javascript_pack_tag 'sidebar'

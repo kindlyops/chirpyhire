@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Team Members' do
-  let(:account) { create(:account, :team) }
+  let(:account) { create(:account, :team_with_phone_number) }
   let(:organization) { account.organization }
   let(:team_member) { create(:account, organization: organization) }
   let(:team) { account.teams.first }
