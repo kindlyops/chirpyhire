@@ -2,27 +2,32 @@ import Popper from 'popper.js';
 
 $(function() {
   $(document).on('click', function(e) {
-    var withinDropdown = $(e.target).closest('.agent-status-dropdown').length;
-    var openingDropdown = $(e.target).closest('.agent-status-container').length;
-    if (!openingDropdown && !withinDropdown) {
+    let withinDropdown = $(e.target).closest('.agent-status-dropdown').length;
+    let withinToggle = $(e.target).closest('.agent-status-container').length;
+    if (!withinDropdown && !withinToggle) {
       $('body').removeClass('show-agent-status-dropdown');
-      Popper.destroy();
     }
   });
 
   $(document).on('click', '.agent-status-container', function(e) {
     e.preventDefault();
-    $('body').addClass('show-agent-status-dropdown');
-    let reference = $('.agent-status-container');
-    let popper = $('.agent-status-dropdown');
-    
-    new Popper(reference, popper, {
-      placement: 'right',
-      modifiers: {
-        offset: {
-          offset: '-100px, 50%'
+    let isOpen = $('body').hasClass('show-agent-status-dropdown');
+
+    if (isOpen) {
+      $('body').removeClass('show-agent-status-dropdown');
+    } else {
+      $('body').addClass('show-agent-status-dropdown');
+      let reference = $('.agent-status-container');
+      let popper = $('.agent-status-dropdown');
+      
+      new Popper(reference, popper, {
+        placement: 'right',
+        modifiers: {
+          offset: {
+            offset: '-100px, 50%'
+          }
         }
-      }
-    });
+      });
+    }
   });
 });
