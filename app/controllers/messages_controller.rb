@@ -3,12 +3,14 @@ class MessagesController < ApplicationController
   layout 'messages', only: 'index'
   decorates_assigned :conversation
 
-  before_action :ensure_contacts, only: :index
-
   def index
     @conversations = policy_scope(Conversation)
 
-    redirect_to message_path(current_conversation.contact)
+    if current_account.conversations.exists?
+      redirect_to_recent_conversation
+    else
+      render :index
+    end
   end
 
   def show
@@ -27,16 +29,16 @@ class MessagesController < ApplicationController
 
   private
 
+  def redirect_to_recent_conversation
+    redirect_to message_path(current_conversation.contact)
+  end
+
   def current_conversation
     current_account.conversations.recently_viewed.first
   end
 
   def read(receipt)
     receipt.update(read_at: DateTime.current)
-  end
-
-  def ensure_contacts
-    redirect_to root_path if current_account.contacts.empty?
   end
 
   def create_message
