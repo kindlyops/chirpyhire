@@ -1,4 +1,12 @@
+.show-agent-status-dropdown {
+  .agent-status-dropdown {
+    display: block;
+  }
+}
+
 .agent-status-dropdown {
+  display: none;
+
   &.ch-dropup {
     width: 20rem;
     padding: 0;
