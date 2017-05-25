@@ -9,9 +9,9 @@ RSpec.describe 'Messages' do
   end
 
   context 'without any caregivers' do
-    it 'redirects to the home page' do
+    it 'provides a useful empty state message' do
       get messages_path
-      expect(response).to redirect_to(root_path)
+      expect(response.body).to include('No one to message yet...')
     end
   end
 
