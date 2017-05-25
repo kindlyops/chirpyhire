@@ -9,8 +9,8 @@ html
       .app-container
         = render partial: "layouts/alerts"
         .app
-          .app-content-container.container
-            .row.mt-5
-              .col-md-6.offset-md-3.mt-5
+          .app-content-container
+            .mt-5
+              .d-flex.flex-column.justify-content-center.align-items-center
                 = yield
     = render "layouts/script" unless Rails.env.test?
