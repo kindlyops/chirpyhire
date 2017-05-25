@@ -1,5 +1,9 @@
 = title "Your Profile · ChirpyHire"
 .settings.account
+  h1 
+    i.fa.fa-gear.fa-fw.mr-2
+    | Settings
+  hr.mb-5
   = render partial: "organizations/accounts/card", locals: { account: @account, organization: @account.organization }
   .row.mt-4
     .col-3

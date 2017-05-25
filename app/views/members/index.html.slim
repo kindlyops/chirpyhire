@@ -1,5 +1,9 @@
 = title "People · ChirpyHire"
 .settings.teams.members
+  h1 
+    i.fa.fa-gear.fa-fw.mr-2
+    | Settings
+  hr.mb-5
   = render partial: "organizations/teams/card", locals: { team: @team, organization: @organization }
   = render partial: "organizations/teams/navigation", locals: { team: @team, organization: @organization }
   - if current_account.manages?(@team)

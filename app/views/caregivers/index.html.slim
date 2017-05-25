@@ -1,19 +1,24 @@
 = title "Caregivers · ChirpyHire"
 = content_for :body_class, 'white'
 .caregivers.mb-3
+  .header.d-flex.align-items-center.justify-content-between
+    h1 
+      i.fa.fa-users.fa-fw.mr-2
+      | Caregivers
+    .controls.d-flex.align-items-center.justify-content-between
+      = render partial: "caregivers/navigation/search"
+      button.btn.btn-primary.export-caregivers role="button"
+        | Export
+        i.fa.fa-cloud-download.ml-2
+  hr.mb-2
   - if @candidates.total_count.positive?
-    .row.align-items-center.mt-4
+    .row.align-items-center
       .col-md-6.d-flex.justify-content-start.align-items-center.controls
         p.lead.mt-3
           = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
           '+
           '
           | Caregivers
-        = render partial: "caregivers/navigation/search"
-      .col-md-6.align-items-center.text-right
-        button.btn.btn-primary.export-caregivers role="button"
-          | Export
-          i.fa.fa-cloud-download.ml-2
     - candidates.each_slice(3).with_index do |slice, i|
       .row
         .col

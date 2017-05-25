@@ -1,12 +1,13 @@
 = title "Recruiting Ads · ChirpyHire"
 .recruiting-ad
+  h1 
+    i.fa.fa-magnet.fa-fw.mr-2
+    | Recruiting Ads
+  hr.mb-5
   .row
     .col
       .card
         .card-block
-          h2.card-title
-            i.fa.fa-magnet.mr-2
-            span Recruiting Ads
           p.card-subtitle Keep copies of your recruiting ads here for easy posting in the future.
           = render partial: "recruiting_ads/recruiting_ad", collection: @recruiting_ads
       .card.mt-3.channels
