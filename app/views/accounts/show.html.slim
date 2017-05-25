@@ -1,5 +1,6 @@
 = title "Your Profile · ChirpyHire"
 .settings.account
+  = render partial: "organizations/accounts/card", locals: { account: @account, organization: @account.organization }
   .row.mt-4
     .col-3
       .card.settings-sidebar
@@ -50,6 +51,9 @@
             .form-group
               strong = f.label :email, class: "col-form-label"
               = f.email_field :email, class: "form-control"
+            .form-group
+              strong = f.label :bio, "Short Bio / Quote", class: "col-form-label"
+              = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
             .form-group
               = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4

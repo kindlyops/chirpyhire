@@ -4,6 +4,12 @@
 @import "polyfill/bootstrap3";
 
 body {
+  &.devise {
+    #app {
+      margin-top: 82px;
+    }
+  }
+  
   background-color: $gray-lighter;
 
   &.white {
@@ -27,11 +33,6 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-
-  .notification-bar-wrapper {
-    width: 100%;
-    color: #fff;
-  }
 
   .app {
     flex: 1;

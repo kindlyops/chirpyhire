@@ -31,7 +31,7 @@
           .align-items-center.account-status-button-inner
             .avatar
               - if current_account.avatar.url.present?
-                .avatar-image style="background-image: url(#{account.avatar.url(:medium)}"
+                .avatar-image style="background-image: url(#{current_account.avatar.url(:medium)}"
               - else
                 i.fa.fa-user.avatar-image
           i.account-status-indicator

@@ -9,7 +9,8 @@ html
         = render partial: "layouts/alerts"
         .app
           = render "components/sidebar"
-          .app-content-container
-            = yield
+          .app-content-container.container
+            .mt-4
+              = yield
     = render "components/account_dropdown"
     = render "layouts/script" unless Rails.env.test?
