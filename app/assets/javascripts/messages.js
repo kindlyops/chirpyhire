@@ -19,43 +19,45 @@ $(document).on('ready', function() {
       }
     });
 
-    var setChannelsScrollerHeight = function(window_h) {
-      var top_nav_offset = $('nav.navbar.top').outerHeight();
-      var top_subNav_offset = $(".team_menu").outerHeight();
-      var height = window_h - top_subNav_offset - top_nav_offset;
-      $('#notes_scroller').css('height', height);
-    };
+    if (messages.find('.client_body').length) {
+      var setChannelsScrollerHeight = function(window_h) {
+        var top_nav_offset = $('nav.navbar.top').outerHeight();
+        var top_subNav_offset = $(".team_menu").outerHeight();
+        var height = window_h - top_subNav_offset - top_nav_offset;
+        $('#notes_scroller').css('height', height);
+      };
 
-    var resizeScroller = function() {
-      var cached_wh = $(window).height();
+      var resizeScroller = function() {
+        var cached_wh = $(window).height();
 
-      var msgs_scroller_y = $(".client_body").offset().top;
-      var footer_outer_h = $(".footer").outerHeight();
+        var msgs_scroller_y = $(".client_body").offset().top;
+        var footer_outer_h = $(".footer").outerHeight();
 
-      var msgs_scroller_height = cached_wh - msgs_scroller_y - footer_outer_h;
-      $('#msgs_scroller_div').css('height', msgs_scroller_height);
+        var msgs_scroller_height = cached_wh - msgs_scroller_y - footer_outer_h;
+        $('#msgs_scroller_div').css('height', msgs_scroller_height);
 
-      var end_div = $("#end_div");
-      var end_display_padder = $("#end_display_padder");
-      end_div.css("height", "");
-      end_display_padder.css("height", "");
-      var end_display_div = $("#end_display_div");
-      var h = end_display_div.outerHeight();
-      var allowed_h;
-      allowed_h = $('#msgs_scroller_div')[0].scrollHeight - $('#msgs_div').outerHeight();
-      allowed_h -= 32;
-      if (allowed_h > h) {
-        end_display_padder.css("height", allowed_h - h);
+        var end_div = $("#end_div");
+        var end_display_padder = $("#end_display_padder");
+        end_div.css("height", "");
+        end_display_padder.css("height", "");
+        var end_display_div = $("#end_display_div");
+        var h = end_display_div.outerHeight();
+        var allowed_h;
+        allowed_h = $('#msgs_scroller_div')[0].scrollHeight - $('#msgs_div').outerHeight();
+        allowed_h -= 32;
+        if (allowed_h > h) {
+          end_display_padder.css("height", allowed_h - h);
+        }
+        end_div.height(allowed_h);
+
+        var flex_contents_height = cached_wh - msgs_scroller_y;
+        $("#flex_contents > .panel").css("height", flex_contents_height);
+        setChannelsScrollerHeight(cached_wh);
       }
-      end_div.height(allowed_h);
 
-      var flex_contents_height = cached_wh - msgs_scroller_y;
-      $("#flex_contents > .panel").css("height", flex_contents_height);
-      setChannelsScrollerHeight(cached_wh);
+      $(window).resize(resizeScroller);
+      resizeScroller();
     }
-
-    $(window).resize(resizeScroller);
-    resizeScroller();
 
     messages.attr('loaded', true);
   }
