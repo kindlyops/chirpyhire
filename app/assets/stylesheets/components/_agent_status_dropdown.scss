@@ -5,6 +5,13 @@
     border: none;
   }
 
+  a {
+    color: inherit;
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+    }
+  }
+
   .phone-number {
     width: 100%;
   }

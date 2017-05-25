@@ -8,7 +8,7 @@ $(function() {
     placement: 'right',
     modifiers: {
       offset: {
-        offset: '-140px, 50%'
+        offset: '-100px, 50%'
       }
     }
   });

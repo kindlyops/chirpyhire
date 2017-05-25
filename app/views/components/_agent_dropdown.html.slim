@@ -4,22 +4,17 @@
       .ch-dropup-item
         h4.title.medium-weight.d-flex.align-items-center
           i.fa.fa-mobile.fa-fw.fa-2x.white
-          | Phone Numbers
-    .ch-dropup-item
-      span.phone-number.d-flex.justify-content-between 
-        .location Atlanta:
-        .number 
-          | (404) 123-4567
-    .ch-dropup-item
-      span.phone-number.d-flex.justify-content-between
-        .location Chamblee:
-        .number 
-          | (404) 123-4567
+          | Phone
+          '
+          = 'Number'.pluralize(current_account.teams.count)
+    - current_account.teams.each do |team|
+      .ch-dropup-item
+        span.phone-number.d-flex.justify-content-between 
+          .location = "#{team.name}:"
+          .number = team.phone_number.phony_formatted
     .agent-status-menu-divider
     .ch-dropup-item
-      span My Profile
+      = link_to "My Profile", account_path(current_account)
     .ch-dropup-item
-      span Talk to Us
-    .ch-dropup-item
-      span Sign Out
+      = link_to "Sign Out", destroy_account_session_path, method: :delete
 

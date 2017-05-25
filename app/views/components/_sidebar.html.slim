@@ -1,6 +1,6 @@
 .sidebar.compact
   .sidebar--top.align-items-start.justify-content-between
-    a.logo.d-flex.align-items-center.ml-2 href="#"
+    = link_to root_path, class: 'logo d-flex align-items-center ml-2' do
       i
         = inline_svg "mini_logo.svg"
   div
@@ -14,6 +14,8 @@
       i.fa.fa-users.fa-fw
     = nav_link_to messages_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Messages' }, url_segment: 1 do
       i.fa.fa-comment-o.fa-fw
+      - if current_account.unread_count.positive?
+        i.fa.fa-circle.fa-fw.unread-count
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
       i.fa.fa-bullhorn.fa-fw
     = nav_link_to account_path(current_account), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' }, url_segment: 1 do
