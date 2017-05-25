@@ -1,0 +1,126 @@
+.sidebar {
+
+  .fa {
+    color: $white;
+  }
+
+  &.compact {
+    width: 53px;
+    min-width: 53px;
+  }
+
+  background: linear-gradient(45deg, #2ba373, #75d0ab);
+  
+  display: flex;
+  overflow-y: auto;
+  color: $white;
+  transition: width .3s;
+  padding: 1rem .5rem 0;
+  flex-shrink: 0;
+  flex-direction: column;
+
+  .sidebar--bottom {
+    flex-shrink: 1;
+    flex: 1;
+
+    .section {
+      margin: .25rem 0;
+
+      .fa {
+        font-size: 1.15rem;
+      }
+    }
+  }
+
+  .sidebar--top {
+    min-height: 50px;
+  }
+
+  .account-status-container {
+    border-radius: .3125rem;
+    margin-bottom: .5rem;
+    background: rgba(0,0,0,.2);
+
+    &.dropup {
+      .dropdown-toggle:after {
+        content: none;
+      }
+    }
+
+    .account-status-indicator {
+      width: 15px;
+      right: -3px;
+      bottom: 0;
+      position: absolute;
+      height: 15px;
+    }
+
+    .account-status-button {
+      cursor: pointer;
+      position: relative;
+      padding: 0 .25rem;
+
+      .avatar {
+        margin-right: .5rem;
+
+        .avatar-image {
+          &.fa {
+            font-size: 2rem;
+            left: 4px;
+            color: white;
+            position: relative;
+            bottom: 1px;
+          }
+        }
+      }
+
+      .account-status-button-inner {
+        padding: 0.25rem 0px;
+      }
+
+      .align-items-center {
+        padding: 0.25rem 0px;
+      }
+    }
+  }
+
+  .section {
+    height: 30px;
+    transition: width .3s;
+    margin: 1.25rem 0;
+    display: flex;
+    border-radius: .3125rem;
+    transition: background-color .3s;
+    align-items: center;
+    min-height: 30px;
+    padding: 0 7px;
+    position: relative;
+
+    &.active {
+      .fa {
+        color: $brand-primary;
+      }
+      background-color: #f2f6f8;
+    }
+
+    &:hover, &:focus, &:active {
+      text-decoration: none;
+
+      &:not(.active) {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .fa {
+      font-size: 1.15rem;
+
+      &.unread-count {
+        font-size: 7px;
+        position: absolute;
+        top: 3px;
+        right: 2px;
+      }
+    }
+  }
+}
+

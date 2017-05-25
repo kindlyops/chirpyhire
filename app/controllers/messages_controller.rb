@@ -36,12 +36,7 @@ class MessagesController < ApplicationController
   end
 
   def ensure_contacts
-    no_contacts_message if current_account.contacts.empty?
-  end
-
-  def no_contacts_message
-    flash[:notice] = 'No caregivers to message yet.'
-    redirect_to root_path
+    redirect_to root_path if current_account.contacts.empty?
   end
 
   def create_message

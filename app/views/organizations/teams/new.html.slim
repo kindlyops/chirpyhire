@@ -1,5 +1,9 @@
 = title "New Team · ChirpyHire"
 .settings.teams
+  h1 
+    i.fa.fa-gear.fa-fw.mr-2
+    | Settings
+  hr.mb-5
   = render partial: "organizations/card", locals: { organization: @organization }
   = render partial: "organizations/navigation", locals: { organization: @organization }
   .row.mt-4

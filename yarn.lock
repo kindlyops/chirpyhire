@@ -1480,6 +1480,10 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
+detect-node@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.3.tgz#a2033c09cc8e158d37748fbde7507832bd6ce127"
+
 diffie-hellman@^5.0.0:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/diffie-hellman/-/diffie-hellman-5.0.2.tgz#b5835739270cfe26acf632099fded2a07f209e5e"
@@ -3189,6 +3193,10 @@ pkg-dir@^1.0.0:
   dependencies:
     find-up "^1.0.0"
 
+popper.js@^1.9.9:
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.9.9.tgz#bcc8d2e4e40fa0ce26ce33ee0f9f8e7ad8c75809"
+
 portfinder@^1.0.9:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.13.tgz#bb32ecd87c27104ae6ee44b5a3ccbf0ebb1aede9"
@@ -4225,10 +4233,11 @@ spdx-license-ids@^1.0.2:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
 
 spdy-transport@^2.0.18:
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/spdy-transport/-/spdy-transport-2.0.19.tgz#f4bb95424296cd52927485ddd88a821682f196eb"
+  version "2.0.20"
+  resolved "https://registry.yarnpkg.com/spdy-transport/-/spdy-transport-2.0.20.tgz#735e72054c486b2354fe89e702256004a39ace4d"
   dependencies:
     debug "^2.6.8"
+    detect-node "^2.0.3"
     hpack.js "^2.1.6"
     obuf "^1.1.1"
     readable-stream "^2.2.9"

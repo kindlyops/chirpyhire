@@ -2,11 +2,15 @@ doctype html
 html
   head
     = render partial: "layouts/head"
-  body
+  body.devise
+    = render "layouts/google_tag_manager/no_script"
     = render "components/guest_navigation"
-    div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
-      .row
-        main.col-md-6.offset-md-3.application
-          .mt-3 = render partial: "layouts/alerts"
-          = yield
+    #app
+      .app-container
+        = render partial: "layouts/alerts"
+        .app
+          .app-content-container
+            .mt-5
+              .d-flex.flex-column.justify-content-center.align-items-center
+                = yield
     = render "layouts/script" unless Rails.env.test?

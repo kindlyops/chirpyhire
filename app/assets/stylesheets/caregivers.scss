@@ -76,6 +76,27 @@
   }
 }
 .caregivers {
+  .dropdown {
+    span.dropdown-label {
+      margin-right: 5px;
+      display: inline-block;
+    }
+    span.description-text {
+      display: inline-block;
+    }
+
+    &.certification {
+      span.description-text {
+        width: 130px;
+      }
+    }
+  }
+  
+  .controls {
+    .lead {
+      min-width: 160px;
+    }
+  }
 
   .reporting {
     p.card-text {

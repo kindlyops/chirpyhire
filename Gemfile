@@ -104,7 +104,7 @@ gem 'intercom-rails', '~> 0.3.4'
 gem 'csv_shaper', '~> 1.3.0'
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-tether', '>= 1.3.3'
+  gem 'rails-assets-tether', '~> 1.4.0'
   gem 'rails-assets-ramda', '~> 0.23.0'
   gem 'rails-assets-clipboard', '~> 1.6.1'
 end

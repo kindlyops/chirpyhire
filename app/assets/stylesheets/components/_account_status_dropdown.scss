@@ -1,0 +1,49 @@
+.show-account-status-dropdown {
+  .account-status-dropdown {
+    display: block;
+  }
+}
+
+.account-status-dropdown {
+  display: none;
+
+  &.ch-dropup {
+    width: 20rem;
+    padding: 0;
+    border: none;
+  }
+
+  a {
+    color: inherit;
+    &:hover, &:active, &:focus {
+      text-decoration: none;
+    }
+  }
+
+  .phone-number {
+    width: 100%;
+  }
+
+  .account-status-menu-divider {
+    margin-bottom: .5rem;
+    border-bottom: 1px solid #e1eef4;
+    padding-bottom: .5rem;
+  }
+
+  .ch-dropup-item:last-of-type {
+    margin-bottom: .5rem;
+  }
+
+  .account-status-description {
+    padding: .5rem 0;
+    color: $white;
+    background-color: $brand-primary;
+    margin-bottom: .5rem;
+
+    .ch-dropup-item {
+      background-color: inherit;
+      display: block;
+      cursor: default;
+    }
+  }
+}

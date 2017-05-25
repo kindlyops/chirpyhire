@@ -8,9 +8,6 @@
   $craigslist: #551A8B;
   $facebook: #3B5998;
   $indeed: #2164F3;
-  $jobcom: #005F9E;
-  $mycnajobs: #E91E63;
-  $monster: #5D2F8C;
 
   .craigslist {
     @include button-variant($white, $craigslist, darken($craigslist, 10%));
@@ -22,18 +19,6 @@
 
   .indeed {
     @include button-variant($white, $indeed, darken($indeed, 10%));
-  }
-
-  .jobcom {
-    @include button-variant($white, $jobcom, darken($jobcom, 10%));
-  }
-
-  .mycnajobs {
-    @include button-variant($white, $mycnajobs, darken($mycnajobs, 10%));
-  }
-
-  .monster {
-    @include button-variant($white, $monster, darken($monster, 10%));
   }
 
   .channels {

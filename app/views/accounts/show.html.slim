@@ -1,5 +1,10 @@
 = title "Your Profile · ChirpyHire"
 .settings.account
+  h1 
+    i.fa.fa-gear.fa-fw.mr-2
+    | Settings
+  hr.mb-5
+  = render partial: "organizations/accounts/card", locals: { account: @account, organization: @account.organization }
   .row.mt-4
     .col-3
       .card.settings-sidebar
@@ -51,6 +56,9 @@
               strong = f.label :email, class: "col-form-label"
               = f.email_field :email, class: "form-control"
             .form-group
+              strong = f.label :bio, "Short Bio / Quote", class: "col-form-label"
+              = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
+            .form-group
               = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4
           = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
@@ -62,6 +70,6 @@
                     = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
                   - else
                     div class=="d-flex profile-image thumb_200 default #{@account.decorate.hero_pattern_classes}"
-                a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+                a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new picture
                 = p.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 

@@ -1,0 +1,40 @@
+.sidebar.compact
+  .sidebar--top.align-items-start.justify-content-between
+    = link_to root_path, class: 'logo d-flex align-items-center ml-2' do
+      i
+        = inline_svg "mini_logo.svg"
+  div
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
+      i.fa.fa-map-signs.fa-fw
+    = nav_link_to dashboard_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Dashboard' }, url_segment: 1 do
+      i.fa.fa-dashboard.fa-fw
+    = nav_link_to recruiting_ads_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' }, url_segment: 1 do
+      i.fa.fa-magnet.fa-fw
+    = nav_link_to caregivers_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, url_segment: 1 do
+      i.fa.fa-users.fa-fw
+    = nav_link_to messages_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Messages' }, url_segment: 1 do
+      i.fa.fa-comment-o.fa-fw
+      - if current_account.unread_count.positive?
+        i.fa.fa-circle.fa-fw.unread-count
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
+      i.fa.fa-bullhorn.fa-fw
+    = nav_link_to account_path(current_account), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' }, url_segment: 1 do
+      i.fa.fa-gear.fa-fw
+  .sidebar--bottom.flex-column.d-flex.justify-content-end
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Search (coming soon)"
+      i.fa.fa-search.fa-fw
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Reports (coming soon)"
+      i.fa.fa-line-chart.fa-fw
+    .account-status-container#account-status-container
+      div
+        .account-status-button.d-flex.justify-content-between.align-items-center
+          .align-items-center.account-status-button-inner
+            .avatar
+              - if current_account.avatar.url.present?
+                .avatar-image style="background-image: url(#{current_account.avatar.url(:medium)}"
+              - else
+                i.fa.fa-user.avatar-image
+          i.account-status-indicator
+            = inline_svg "active_status_indicator.svg"
+
+= javascript_pack_tag 'sidebar'

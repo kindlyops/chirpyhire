@@ -1,0 +1,59 @@
+.ch-dropup {
+  padding: .3rem 0;
+  margin-top: .5rem;
+  border-radius: .3125rem;
+  z-index: 99999;
+  border: 1px solid #effaff;
+  font-size: .875rem;
+  box-shadow: 0 2px 8px 1px rgba(57,79,90,.3);
+  overflow: hidden;
+  background-color: #fff;
+
+  .title {
+    font-size: 1rem;
+    left: -10px;
+    position: relative;
+  }
+
+  .body {
+    font-size: .875rem;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  > :last-child {
+    border-bottom-right-radius: .3125rem;
+    border-bottom-left-radius: .3125rem;
+  }
+
+  > :first-child {
+    border-top-right-radius: .3125rem;
+    border-top-left-radius: .3125rem;
+  }
+
+  .medium-weight {
+    font-weight: 500 !important;
+  }
+
+  .ch-dropup-item {
+    align-items: center;
+    display: flex;
+    width: 100%;
+
+    &:hover {
+      background: #effaff;
+      cursor: pointer;
+    }
+
+    &:not(:first-of-type) {
+      &:hover {
+        color: #000;
+        background: #effaff;
+      }
+    }
+
+    > * {
+      padding: .4rem 1.25rem .4rem .8rem;
+    }
+  }
+}

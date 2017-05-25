@@ -4,10 +4,13 @@ html
     = render partial: "layouts/head"
   body class==(content_for?(:body_class) ? content_for(:body_class) : '')
     = render "layouts/google_tag_manager/no_script"
-    = render "components/navigation"
-    div class==(content_for?(:container_class) ? content_for(:container_class) : 'container')
-      .row
-        main.col.application
-          = render partial: "layouts/alerts"
-          = yield
+    #app
+      .app-container
+        = render partial: "layouts/alerts"
+        .app
+          = render "components/sidebar"
+          .app-content-container.container
+            .mt-4.mr-4.ml-4
+              = yield
+    = render "components/account_dropdown"
     = render "layouts/script" unless Rails.env.test?

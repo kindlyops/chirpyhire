@@ -1,5 +1,9 @@
 = title "Invite member · ChirpyHire"
 .settings.people
+  h1
+    i.fa.fa-gear.fa-fw.mr-2
+    | Settings
+  hr.mb-5
   = render partial: "organizations/card", locals: { organization: current_organization }
   = render partial: "organizations/navigation", locals: { organization: current_organization }
   .col-6.offset-3.mt-5

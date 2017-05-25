@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :recruiting_ads, only: [:index, :update]
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
+  resource :dashboard
 
   resources :contacts, only: [] do
     resource :star, only: :create
@@ -50,5 +51,5 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
-  root 'caregivers#index'
+  root to: redirect('/caregivers')
 end

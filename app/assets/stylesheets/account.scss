@@ -1,10 +1,29 @@
 .account {
-  .organization-profile-link {
-    display: flex;
-    align-items: center;
 
-    .logo {
-      margin-right: 10px;
+  .account-card {
+    display: flex;
+
+    .account-logo {
+      .logo {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .account-details {
+      display: flex;
+      flex-direction: column;
+      margin-left: 2rem;
+
+      .account-name {
+        font-size: 2rem;
+      }
+
+      .account-subdetails {
+        display: flex;
+        flex-direction: column;
+        margin-top: .25rem;
+      }
     }
   }
 }
