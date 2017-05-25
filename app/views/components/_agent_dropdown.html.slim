@@ -9,7 +9,7 @@
           = 'Number'.pluralize(current_account.teams.count)
     - current_account.teams.each do |team|
       .ch-dropup-item
-        span.phone-number.d-flex.justify-content-between 
+        = link_to organization_team_path(team.organization, team), class: 'phone-number d-flex justify-content-between' do
           .location = "#{team.name}:"
           .number = team.phone_number.phony_formatted
     .agent-status-menu-divider
