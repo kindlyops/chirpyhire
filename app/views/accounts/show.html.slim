@@ -70,6 +70,6 @@
                     = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
                   - else
                     div class=="d-flex profile-image thumb_200 default #{@account.decorate.hero_pattern_classes}"
-                a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new logo
+                a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new picture
                 = p.file_field :avatar, class: "form-control", id: "avatar", hidden: true
 
