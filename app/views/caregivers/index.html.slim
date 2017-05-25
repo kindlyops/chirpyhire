@@ -39,12 +39,13 @@
 
   - if @candidates.total_count.positive?
     .row.align-items-center.mt-4
-      .col-md-6
+      .col-md-6.d-flex.justify-content-start.align-items-center.controls
         p.lead.mt-3
           = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
           '+
           '
           | Caregivers
+        = render partial: "caregivers/navigation/search"
       .col-md-6.align-items-center.text-right
         button.btn.btn-primary.export-caregivers role="button"
           | Export

@@ -24,7 +24,9 @@ class Contact < ApplicationRecord
   end
 
   def self.max_notes_count
-    joins(:notes).group(:contact_id, :last_reply_at).count.values.max
+    joins(:notes)
+      .group('notes.contact_id, contacts.last_reply_at')
+      .count.values.max
   end
 
   def self.candidacy_filter(filter_clause)
