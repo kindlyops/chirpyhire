@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="25px" viewBox="0 0 128 164" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="28px" height="32px" viewBox="0 0 240 164" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>c</title>
+    <title>C</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="288" font-family="OpenSans-Bold, Open Sans" font-weight="bold">
-        <text id="c" fill="#FFFFFF">
-            <tspan x="-11.0390625" y="161">c</tspan>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" font-size="288" font-family="OpenSans-Bold, Open Sans" font-weight="800">
+        <text id="C" fill="#FFFFFF">
+            <tspan x="-11.0390625" y="161">C</tspan>
         </text>
     </g>
 </svg>

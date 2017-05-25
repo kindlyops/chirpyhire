@@ -27,7 +27,7 @@
       margin: .25rem 0;
 
       .fa {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
       }
     }
   }
@@ -85,15 +85,15 @@
   }
 
   .section {
-    height: 36px;
+    height: 30px;
     transition: width .3s;
     margin: 1.25rem 0;
     display: flex;
     border-radius: .3125rem;
     transition: background-color .3s;
     align-items: center;
-    min-height: 36px;
-    padding: 0 5px;
+    min-height: 30px;
+    padding: 0 7px;
 
     &.active {
       .fa {
@@ -104,14 +104,14 @@
 
     &:hover, &:focus, &:active {
       text-decoration: none;
-      
+
       &:not(.active) {
         background-color: rgba(0, 0, 0, 0.2);
       }
     }
 
     .fa {
-      font-size: 1.5rem;
+      font-size: 1.15rem;
     }
   }
 }
