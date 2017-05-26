@@ -11,7 +11,7 @@ html
           = render "components/sidebar"
           .app-content-container
             .messages
-              = render partial: 'messages/sidebar'
+              = javascript_pack_tag 'Inbox'
               main.conversation
                 = yield
     = render "components/account_dropdown"
