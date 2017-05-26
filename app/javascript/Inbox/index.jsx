@@ -12,8 +12,8 @@ const InboxWrapper = props => (
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <InboxWrapper />,
-    $('<div></div>').prependTo($('.messages'))[0],
-  )
+  const node = document.getElementById('inbox')
+  const data = JSON.parse(node.getAttribute('data'))
+
+  ReactDOM.render(<InboxWrapper {...data} />, node)
 })
