@@ -6,7 +6,7 @@ const InboxDropdown = props => (
   <div className="InboxDropdown">
     <div className="view-title">
       <div className="view-count">
-      16
+        <span className='badge badge-default'>16</span>
       </div>
       <div className="view-name">
       All
