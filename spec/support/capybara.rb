@@ -9,8 +9,8 @@ end
 Capybara::Webkit.configure(&:allow_unknown_urls)
 
 Capybara.javascript_driver = :poltergeist
-Capybara.server_port = 3001
-Capybara.app_host = 'http://localhost:3001'
+Capybara.server_port = 8080
+Capybara.app_host = 'http://localhost:8080'
 Capybara.save_path = Dir.pwd
 
 RSpec.configure do |config|
