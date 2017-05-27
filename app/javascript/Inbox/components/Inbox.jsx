@@ -2,6 +2,9 @@ import React from 'react'
 import InboxItem from './inboxItem'
 import { AutoSizer, List, InfiniteLoader } from 'react-virtualized'
 
+const STATUS_LOADING = 1
+const STATUS_LOADED = 2
+
 class Inbox extends React.Component {
   constructor(props) {
     super(props);
@@ -10,62 +13,15 @@ class Inbox extends React.Component {
       loadedRowCount: 0,
       loadedRowsMap: {},
       loadingRowCount: 0,
-      randomScrollToIndex: null
+      conversations: props.conversations
     }
+
+    this._isRowLoaded = this._isRowLoaded.bind(this)
+    this._loadMoreRows = this._loadMoreRows.bind(this)
+    this._rowRenderer = this._rowRenderer.bind(this)
   }
 
-  remoteRowCount() {
-    return this.props.conversations_count;
-  }
-
-  isRowLoaded({ index }) {
-    return !!this.state.conversations[index];
-  }
-
-  loadMoreRows({ startIndex, stopIndex }) {
-    const page = Math.round(((startIndex) / this.pageSize()) + 1);
-
-    return $.get(`/inboxes/1/conversations/page/${page}.json`)
-      .then(response => {
-        // var conversations = this.state.conversations.conversations.slice();
-        // var conversations = R.unionWith(
-        //   R.eqBy(R.prop('id')), response, conversations
-        // );
-
-        // this.setState({ conversations: conversations });
-
-        R.forEach(conversation => {
-          let index = R.findIndex(existingConversation => {
-            return existingConversation.id === conversation.id;
-          }, this.state.conversations);
-
-          if (index) {
-            var state = this.state.conversations.slice();
-            state[index] = conversation;
-            this.setState({ conversations: state });
-          } else {
-            var state = this.state.conversations.slice().push(conversation);
-            this.setState({ conversations: state });
-          }
-
-        }, response);
-      });
-  }
-
-  pageSize() {
-    return 25;
-  }
-
-  infiniteLoaderParams() {
-    return {
-      rowCount: this.remoteRowCount(),
-      isRowLoaded: this.isRowLoaded.bind(this),
-      loadMoreRows: this.loadMoreRows.bind(this),
-      minimumBatchSize: this.pageSize()
-    }
-  }
-
-  render() {
+  render() {    
     return (
       <InfiniteLoader {...this.infiniteLoaderParams()}>
         {({ onRowsRendered, registerChild }) => (
@@ -90,11 +46,75 @@ class Inbox extends React.Component {
   }
 
   _rowRenderer({ key, index, style }) {
+    const { conversations, loadedRowsMap } = this.state;
+    const row = conversations[index];
+    let content;
+
+    if (loadedRowsMap[index] === STATUS_LOADED) {
+      content = <InboxItem {...conversations[index]} />;
+    } else {
+      content = <div className='conversation-placeholder' />;
+    }
+
     return (
-      <div key={key} style={style}>
-        <InboxItem {...this.state.conversations[index]} />
+      <div key={index} style={style}>
+        {content}
       </div>
     )
+  }
+
+  _loadMoreRows({ startIndex, stopIndex }) {
+    const { loadedRowsMap, loadingRowCount } = this.state;
+    const increment = stopIndex - startIndex + 1;
+
+    for (var i = startIndex; i <= stopIndex; i++) {
+      loadedRowsMap[i] = STATUS_LOADING;
+    }
+
+    this.setState({
+      loadingRowCount: loadingRowCount + increment
+    });
+
+    const page = Math.round(((startIndex) / this.pageSize()) + 1);
+    return $.get(`/inboxes/1/conversations/page/${page}.json`)
+            .then(response => { 
+              const { loadedRowCount, loadingRowCount } = this.state
+
+              for (var i = startIndex; i <= stopIndex; i++) {
+                loadedRowsMap[i] = STATUS_LOADED
+              }
+
+              var conversations = this.state.conversations.concat(response);
+
+              this.setState({
+                loadingRowCount: loadingRowCount - increment,
+                loadedRowCount: loadedRowCount + increment,
+                conversations: conversations
+              });
+            });
+  }
+
+  infiniteLoaderParams() {
+    return {
+      rowCount: this.remoteRowCount(),
+      isRowLoaded: this._isRowLoaded,
+      loadMoreRows: this._loadMoreRows,
+      minimumBatchSize: this.pageSize(),
+      threshold: this.pageSize()
+    }
+  }
+
+  remoteRowCount() {
+    return this.props.conversations_count;
+  }
+
+  _isRowLoaded({ index }) {
+    const { loadedRowsMap } = this.state
+    return !!loadedRowsMap[index];
+  }
+
+  pageSize() {
+    return 25;
   }
 }
 
