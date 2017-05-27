@@ -7,6 +7,10 @@
   border-right: 1px solid #E1F4E6;
   height: 100vh;
 
+  .autosizer-wrapper {
+    flex: 1 1 auto;
+  }
+
   .Inbox {
     flex: 1;
     background-color: #f2f6f8;

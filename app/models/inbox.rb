@@ -8,6 +8,7 @@ class Inbox < ApplicationRecord
     end
     
     Jbuilder.new do |json|
+      json.conversations_count conversations.count
       json.conversations conversations
     end
   end

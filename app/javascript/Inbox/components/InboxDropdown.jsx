@@ -4,7 +4,7 @@ const InboxDropdown = props => (
   <div className="InboxDropdown">
     <div className="view-title">
       <div className="view-count">
-        <span className='badge badge-default'>{props.conversations.length}</span>
+        <span className='badge badge-default'>{props.conversations_count}</span>
       </div>
       <div className="view-name">
       All
