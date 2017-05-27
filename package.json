@@ -25,6 +25,7 @@
     "rails-erb-loader": "^5.0.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-virtualized": "^9.7.6",
     "sass-loader": "^6.0.5",
     "slate": "^0.19.30",
     "style-loader": "^0.17.0",

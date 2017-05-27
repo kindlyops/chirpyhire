@@ -23,8 +23,6 @@ class ReadReceiptsCreator
 
       create_read_receipt(conversation)
     end
-
-    broadcast_sidebar
   end
 
   def contact_team_conversations
@@ -38,12 +36,6 @@ class ReadReceiptsCreator
 
   def contact_waiting_job
     ContactWaitingJob.set(wait_until: wait_until)
-  end
-
-  def broadcast_sidebar
-    team.accounts.find_each do |account|
-      Broadcaster::Sidebar.new(account).broadcast
-    end
   end
 
   attr_reader :message, :contact

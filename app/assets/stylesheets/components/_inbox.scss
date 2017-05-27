@@ -1,0 +1,141 @@
+#inbox {
+  min-width: 17.6rem;
+  width: 17.6rem;
+
+  .InboxWrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 17.6rem;
+    width: 17.6rem;
+    border-left: 1px solid #E1F4E6;
+    border-right: 1px solid #E1F4E6;
+    height: 100vh;
+
+    .autosizer-wrapper {
+      flex: 1 1 auto;
+    }
+
+    .Inbox {
+      flex: 1;
+      background-color: #f2f6f8;
+      overflow-y: auto;
+
+      .InboxItem {
+        border-bottom: 1px solid #E1F4E6;
+        padding: 10px 10px 10px 15px;
+        background-color: #fff;
+        cursor: pointer;
+        position: relative;
+        display: block;
+        transition: all .5s ease;
+
+        &.active {
+          background-color: #f9fcfa;
+
+          .handle {
+            color: darken($brand-primary, 10%);
+            font-weight: 600;
+          }
+
+          .summary {
+            color: darken($brand-primary, 10%);
+            font-weight: 600;
+          }
+        }
+
+        &:hover, &:focus {
+          text-decoration: none;
+          background-color: lighten(#E1F4E6, 5%);
+
+          .handle {
+            color: darken($brand-primary, 10%);
+          }
+        }
+
+        .summary {
+          padding-top: .3rem;
+          padding-bottom: .3rem;
+          font-size: 14px;
+          line-height: 1rem;
+          color: #7695a5;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .summary-and-unread-count {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .unread-count {
+            margin-right: .5rem;
+          }
+        }
+
+        .handle-and-timestamp {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .handle {
+            flex: 1;
+            margin-right: .25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          .timestamp-container {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: #7695a5;
+
+            .timestamp {
+              margin-right: .5rem;
+            }
+          }
+        }
+      }
+    }
+
+    .InboxDropdown {
+      border-bottom: 1px solid #E1F4E6;
+      height: auto;
+      padding: 0;
+      min-height: 1.7rem;
+      justify-content: space-between;
+      position: relative;
+      text-align: left;
+      width: auto;
+      align-items: center;
+      display: flex;
+
+      .view-title {
+        align-items: center;
+        height: 68px;
+        padding: 0 20px;
+        cursor: pointer;
+        width: 100%;
+        font-size: .875rem;
+        display: flex;
+
+        .view-count {
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          min-width: 28px;
+          font-size: 1.25rem;
+        }
+
+        .view-name {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

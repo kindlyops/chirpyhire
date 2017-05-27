@@ -463,6 +463,7 @@ GEM
     websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
+    yajl-ruby (1.3.0)
     zip-codes (0.2.1)
 
 PLATFORMS
@@ -540,6 +541,7 @@ DEPENDENCIES
   web-console (~> 3.1.0)
   webmock (~> 2.3.2)
   webpacker (~> 1.2.0)
+  yajl-ruby
   zip-codes (~> 0.2.1)
 
 RUBY VERSION

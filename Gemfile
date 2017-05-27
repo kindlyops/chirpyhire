@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jquery-rails'
 gem 'jbuilder'
+gem 'yajl-ruby'
 
 group :development, :test, :demo do
   gem 'factory_girl_rails', '~> 4.0'

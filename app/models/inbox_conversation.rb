@@ -1,7 +1,4 @@
 class InboxConversation < ApplicationRecord
-  SIDEBAR_MIN = 10
-  SIDEBAR_MAX = 25
-
   belongs_to :contact
   belongs_to :inbox
   has_many :read_receipts
@@ -30,14 +27,6 @@ class InboxConversation < ApplicationRecord
     where(unread_count: 0)
   end
 
-  def self.sidebar
-    viewed_recently = joins(contact: :person).recently_viewed
-    limit_count = [3, SIDEBAR_MIN - unread.count].max
-
-    sidebar = (viewed_recently.read.limit(limit_count) + unread)
-    sidebar.sort_by(&:handle).take(SIDEBAR_MAX)
-  end
-
   def days
     messages.by_recency.chunk(&:day).map(&method(:to_day))
   end
@@ -60,6 +49,10 @@ class InboxConversation < ApplicationRecord
 
   delegate :messages, :person, to: :contact
   delegate :handle, to: :person, prefix: true
+
+  def to_builder
+    Inbox::ConversationSerializer.new(self)
+  end
 
   private
 
