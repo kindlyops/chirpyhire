@@ -6,56 +6,9 @@ import InboxItem from './inboxItem'
 const Inbox = props => (
   <div className="Inbox">
     <div>
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
-      <InboxItem />
+      {props.conversations.map((conversation) =>
+       <InboxItem key={conversation.id} conversation={conversation} />
+      )}
     </div>
   </div>
 )
