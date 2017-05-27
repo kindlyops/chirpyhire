@@ -62,6 +62,6 @@ class Message < ApplicationRecord
   end
 
   def summary
-    body[0..30]
+    body && body[0..30] || ''
   end
 end
