@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import Inbox from './components/inbox'
 import InboxDropdown from './components/inboxDropdown'
-
 
 class InboxWrapper extends React.Component {
   constructor(props) {
@@ -14,6 +12,27 @@ class InboxWrapper extends React.Component {
       conversations: props.conversations 
     };
     this.handleConversationsChange = this.handleConversationsChange.bind(this);
+  }
+
+  componentDidMount() {
+    var channel = { channel: 'InboxChannel' };
+    var that = this;
+    App.inbox = App.cable.subscriptions.create(channel, {
+      received: function({ conversation, conversations_count }) {
+        let conversations = this.state.conversations;
+        let index = R.findIndex(R.propEq('id', conversation.id), conversations);
+        if(index) {
+          conversations[index] = conversation
+        } else {
+          conversations.push(conversation)
+        }
+
+        that.setState({
+          conversations_count: conversations_count,
+          conversations: conversations
+        })
+      }
+    });
   }
 
   render() {
