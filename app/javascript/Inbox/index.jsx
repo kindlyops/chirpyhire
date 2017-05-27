@@ -6,8 +6,8 @@ import InboxDropdown from './components/inboxDropdown'
 
 const InboxWrapper = props => (
   <div className="InboxWrapper">
-    <InboxDropdown conversations={props.conversations} />
-    <Inbox conversations={props.conversations} />
+    <InboxDropdown {...props} />
+    <Inbox {...props} />
   </div>
 )
 

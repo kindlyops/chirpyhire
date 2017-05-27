@@ -18,6 +18,7 @@
       background-color: #fff;
       cursor: pointer;
       position: relative;
+      display: block;
 
       &.active {
         background-color: #effaff;
@@ -34,6 +35,8 @@
       }
 
       &:hover {
+        text-decoration: none;
+
         .handle {
           color: #0176ff;
         }
@@ -112,9 +115,5 @@
         margin-left: 10px;
       }
     }
-  }
-
-  .Inbox {
-
   }
 }
