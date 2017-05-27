@@ -2,7 +2,7 @@ doctype html
 html
   head
     = render partial: "layouts/head"
-    = javascript_pack_tag 'Inbox'
+    = javascript_pack_tag 'inbox'
   body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
     = render "layouts/google_tag_manager/no_script"
     #app

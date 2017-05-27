@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import InboxItem from './InboxItem'
+import InboxItem from './inboxItem'
 
 const Inbox = props => (
   <div className="Inbox">

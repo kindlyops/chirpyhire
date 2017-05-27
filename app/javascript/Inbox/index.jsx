@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import Inbox from './components/Inbox'
-import InboxDropdown from './components/InboxDropdown'
+import Inbox from './components/inbox'
+import InboxDropdown from './components/inboxDropdown'
 
 const InboxWrapper = props => (
   <div className="InboxWrapper">
