@@ -28,6 +28,7 @@
         position: relative;
         display: block;
         transition: all .5s ease;
+        height: 70.59px;
 
         &.active {
           background-color: #f9fcfa;
@@ -68,7 +69,6 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          min-height: 25.59px;
 
           .unread-count {
             margin-right: .5rem;
