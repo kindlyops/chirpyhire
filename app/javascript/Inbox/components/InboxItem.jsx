@@ -15,6 +15,23 @@ class InboxItem extends React.Component {
   }
 
   render() {
+    let summary = <div className='summary-and-unread-count'>
+                    <div className='summary'>
+                      {this.props.summary}
+                    </div>
+                  </div>;
+
+    if(this.props.unread_count > 0) {
+      summary = <div className='summary-and-unread-count'>
+                  <div className='summary'>
+                    {this.props.summary}
+                  </div>
+                  <div className='badge badge-success unread-count'>
+                    {this.props.unread_count}
+                  </div>
+                </div>
+    }
+
     return <a href={this.href()} className={this.classNames()}>
       <div className='handle-and-timestamp'>
         <div className='handle'>
@@ -26,9 +43,7 @@ class InboxItem extends React.Component {
           </div>
         </div>
       </div>
-      <div className='summary'>
-        {this.props.summary}
-      </div>
+      {summary}
     </a>;
   }
 }

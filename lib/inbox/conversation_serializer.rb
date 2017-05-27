@@ -8,7 +8,7 @@ class Inbox::ConversationSerializer
   end
 
   delegate :attributes!, to: :call
-  delegate :id, :contact, to: :inbox_conversation
+  delegate :id, :contact, :unread_count, to: :inbox_conversation
 
   private
 
@@ -16,6 +16,7 @@ class Inbox::ConversationSerializer
     json.id id
     json.contact_id contact.id
     json.handle contact.handle
+    json.unread_count unread_count
 
     add_message(json) if message.present?
   end
