@@ -14,27 +14,6 @@ class InboxWrapper extends React.Component {
     this.handleConversationsChange = this.handleConversationsChange.bind(this);
   }
 
-  componentDidMount() {
-    var channel = { channel: 'InboxChannel' };
-    var that = this;
-    App.inbox = App.cable.subscriptions.create(channel, {
-      received: function({ conversation, conversations_count }) {
-        let conversations = this.state.conversations;
-        let index = R.findIndex(R.propEq('id', conversation.id), conversations);
-        if(index) {
-          conversations[index] = conversation
-        } else {
-          conversations.push(conversation)
-        }
-
-        that.setState({
-          conversations_count: conversations_count,
-          conversations: conversations
-        })
-      }
-    });
-  }
-
   render() {
     return <div className="InboxWrapper">
               <InboxDropdown conversations_count={this.state.conversations_count} />
