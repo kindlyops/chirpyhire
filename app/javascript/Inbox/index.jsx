@@ -18,6 +18,7 @@ class InboxWrapper extends React.Component {
     return <div className="InboxWrapper">
               <InboxDropdown conversations_count={this.state.conversations_count} />
               <Inbox
+                inboxId={this.props.id}
                 conversations_count={this.state.conversations_count}
                 conversations={this.state.conversations}
                 onConversationsChange={this.handleConversationsChange}

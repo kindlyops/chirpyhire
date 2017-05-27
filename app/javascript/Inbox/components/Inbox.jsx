@@ -64,6 +64,7 @@ class Inbox extends React.Component {
 
   _loadMoreRows({ startIndex, stopIndex }) {
     const { loadedRowsMap, loadingRowCount } = this.state;
+    const { inboxId } = this.props;
     const increment = stopIndex - startIndex + 1;
 
     for (var i = startIndex; i <= stopIndex; i++) {
@@ -75,7 +76,7 @@ class Inbox extends React.Component {
     });
 
     const page = Math.round(((startIndex) / this.pageSize()) + 1);
-    return $.get(`/inboxes/1/conversations/page/${page}.json`)
+    return $.get(`/inboxes/${inboxId}/conversations/page/${page}.json`)
             .then(response => { 
               const { loadedRowCount, loadingRowCount } = this.state
 
