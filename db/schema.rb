@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525012929) do
+ActiveRecord::Schema.define(version: 20170527124245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,18 +107,6 @@ ActiveRecord::Schema.define(version: 20170525012929) do
     t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
-  create_table "conversations", id: :serial, force: :cascade do |t|
-    t.integer "contact_id", null: false
-    t.integer "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "unread_count", default: 0, null: false
-    t.datetime "last_viewed_at"
-    t.index ["account_id"], name: "index_conversations_on_account_id"
-    t.index ["contact_id", "account_id"], name: "index_conversations_on_contact_id_and_account_id", unique: true
-    t.index ["contact_id"], name: "index_conversations_on_contact_id"
-  end
-
   create_table "ideal_candidate_suggestions", id: :serial, force: :cascade do |t|
     t.integer "organization_id", null: false
     t.text "value", null: false
@@ -141,6 +129,27 @@ ActiveRecord::Schema.define(version: 20170525012929) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_ideal_candidates_on_organization_id"
+  end
+
+  create_table "inbox_conversations", id: :serial, force: :cascade do |t|
+    t.integer "contact_id", null: false
+    t.integer "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "unread_count", default: 0, null: false
+    t.datetime "last_viewed_at"
+    t.integer "inbox_id"
+    t.index ["account_id"], name: "index_inbox_conversations_on_account_id"
+    t.index ["contact_id", "account_id"], name: "index_inbox_conversations_on_contact_id_and_account_id", unique: true
+    t.index ["contact_id"], name: "index_inbox_conversations_on_contact_id"
+    t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id"
+  end
+
+  create_table "inboxes", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_inboxes_on_account_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -241,13 +250,13 @@ ActiveRecord::Schema.define(version: 20170525012929) do
   end
 
   create_table "read_receipts", id: :serial, force: :cascade do |t|
-    t.integer "conversation_id", null: false
+    t.integer "inbox_conversation_id", null: false
     t.integer "message_id", null: false
     t.datetime "read_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["conversation_id", "message_id"], name: "index_read_receipts_on_conversation_id_and_message_id", unique: true
-    t.index ["conversation_id"], name: "index_read_receipts_on_conversation_id"
+    t.index ["inbox_conversation_id", "message_id"], name: "index_read_receipts_on_inbox_conversation_id_and_message_id", unique: true
+    t.index ["inbox_conversation_id"], name: "index_read_receipts_on_inbox_conversation_id"
     t.index ["message_id"], name: "index_read_receipts_on_message_id"
   end
 
@@ -299,11 +308,13 @@ ActiveRecord::Schema.define(version: 20170525012929) do
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
-  add_foreign_key "conversations", "accounts"
-  add_foreign_key "conversations", "contacts"
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
   add_foreign_key "ideal_candidates", "organizations"
+  add_foreign_key "inbox_conversations", "accounts"
+  add_foreign_key "inbox_conversations", "contacts"
+  add_foreign_key "inbox_conversations", "inboxes"
+  add_foreign_key "inboxes", "accounts"
   add_foreign_key "locations", "organizations"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
@@ -315,7 +326,7 @@ ActiveRecord::Schema.define(version: 20170525012929) do
   add_foreign_key "notes", "contacts"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
   add_foreign_key "people", "zipcodes"
-  add_foreign_key "read_receipts", "conversations"
+  add_foreign_key "read_receipts", "inbox_conversations"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"

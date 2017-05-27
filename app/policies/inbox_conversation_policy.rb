@@ -1,4 +1,4 @@
-class ConversationPolicy < ApplicationPolicy
+class InboxConversationPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope

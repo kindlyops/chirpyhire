@@ -4,9 +4,9 @@ class MessagesController < ApplicationController
   decorates_assigned :conversation
 
   def index
-    @conversations = policy_scope(Conversation)
+    @conversations = policy_scope(InboxConversation)
 
-    if current_account.conversations.exists?
+    if current_account.inbox_conversations.exists?
       redirect_to_recent_conversation
     else
       render :index
@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
   end
 
   def current_conversation
-    current_account.conversations.recently_viewed.first
+    current_account.inbox_conversations.recently_viewed.first
   end
 
   def read(receipt)
@@ -62,7 +62,7 @@ class MessagesController < ApplicationController
   end
 
   def fetch_conversation
-    current_account.conversations.find_by(contact: contact)
+    current_account.inbox_conversations.find_by(contact: contact)
   end
 
   def contact

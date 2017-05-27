@@ -28,7 +28,7 @@ class ReadReceiptsCreator
   end
 
   def contact_team_conversations
-    team.conversations.contact(contact)
+    team.inbox_conversations.contact(contact)
   end
 
   def create_read_receipt(conversation)

@@ -5,12 +5,13 @@ class Account < ApplicationRecord
   belongs_to :organization, inverse_of: :accounts
   belongs_to :person, inverse_of: :account
 
-  has_many :conversations
+  has_many :inbox_conversations
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
   has_many :memberships
   has_many :teams, through: :memberships
   has_many :contacts, through: :teams
+  has_one :inbox
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank

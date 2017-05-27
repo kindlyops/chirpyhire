@@ -11,7 +11,9 @@ class IceBreaker
 
   def call
     accounts.find_each do |account|
-      account.conversations.find_or_create_by!(contact: contact)
+      account.inbox_conversations.find_or_create_by!(
+        inbox: account.inbox, contact: contact
+      )
     end
   end
 
