@@ -12,8 +12,7 @@ class Inbox extends React.Component {
     this.state = {
       loadedRowCount: 0,
       loadedRowsMap: {},
-      loadingRowCount: 0,
-      conversations: props.conversations
+      loadingRowCount: 0
     }
 
     this._isRowLoaded = this._isRowLoaded.bind(this)
@@ -46,8 +45,8 @@ class Inbox extends React.Component {
   }
 
   _rowRenderer({ key, index, style }) {
-    const { conversations, loadedRowsMap } = this.state;
-    const row = conversations[index];
+    const { loadedRowsMap } = this.state;
+    const { conversations } = this.props;
     let content;
 
     if (loadedRowsMap[index] === STATUS_LOADED) {
@@ -57,7 +56,7 @@ class Inbox extends React.Component {
     }
 
     return (
-      <div key={index} style={style}>
+      <div key={key} style={style}>
         {content}
       </div>
     )
@@ -84,13 +83,14 @@ class Inbox extends React.Component {
                 loadedRowsMap[i] = STATUS_LOADED
               }
 
-              var conversations = this.state.conversations.concat(response);
+              var conversations = this.props.conversations.concat(response);
 
               this.setState({
                 loadingRowCount: loadingRowCount - increment,
-                loadedRowCount: loadedRowCount + increment,
-                conversations: conversations
+                loadedRowCount: loadedRowCount + increment
               });
+
+              this.props.onConversationsChange(conversations);
             });
   }
 

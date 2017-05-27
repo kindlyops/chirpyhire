@@ -4,12 +4,33 @@ import PropTypes from 'prop-types'
 import Inbox from './components/inbox'
 import InboxDropdown from './components/inboxDropdown'
 
-const InboxWrapper = props => (
-  <div className="InboxWrapper">
-    <InboxDropdown {...props} />
-    <Inbox {...props} />
-  </div>
-)
+
+class InboxWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { 
+      conversations_count: props.conversations_count,
+      conversations: props.conversations 
+    };
+    this.handleConversationsChange = this.handleConversationsChange.bind(this);
+  }
+
+  render() {
+    return <div className="InboxWrapper">
+              <InboxDropdown conversations_count={this.state.conversations_count} />
+              <Inbox
+                conversations_count={this.state.conversations_count}
+                conversations={this.state.conversations}
+                onConversationsChange={this.handleConversationsChange}
+               />
+            </div>;
+  }
+
+  handleConversationsChange(conversations) {
+    this.setState({ conversations: conversations });
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('inbox')
