@@ -24,6 +24,10 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
+  resources :inboxes, only: [] do
+    resources :conversations, only: :index, concerns: :paginatable
+  end
+
   resources :organizations, only: [:show, :update] do
     resources :teams, except: :destroy, controller: 'organizations/teams' do
       resources :members, only: [:create, :destroy, :index, :update, :new]
