@@ -19,7 +19,7 @@ class Migrator::AccountMigrator
 
   def create_new_conversations(contact, new_contact, account)
     Rails.logger.info 'Begin Creating New Conversations'
-    contact.conversations.where(account: account[:from]).each do |conversation|
+    contact.inbox_conversations.where(inbox: account[:from].inbox).each do |conversation|
       new_conversation = create_new_conversation(
         conversation, new_contact, account
       )
@@ -32,15 +32,21 @@ class Migrator::AccountMigrator
 
   def create_new_conversation(conversation, new_contact, account)
     Rails.logger.info "Create new conversation for Conversation: #{conversation.id}"
-    new_conversation = account[:to].conversations.create!(
+    new_conversation = account[:to].inbox.inbox_conversations.create!(
+      new_conversation_params(conversation, new_contact)
+    )
+    Rails.logger.info "Created new conversation: #{new_conversation.id} for Conversation: #{conversation.id}"
+    new_conversation
+  end
+
+  def new_conversation_params(conversation, new_contact)
+    {
       contact: new_contact,
       unread_count: conversation.unread_count,
       last_viewed_at: conversation.last_viewed_at,
       created_at: conversation.created_at,
       updated_at: conversation.updated_at
-    )
-    Rails.logger.info "Created new conversation: #{new_conversation.id} for Conversation: #{conversation.id}"
-    new_conversation
+    }
   end
 
   def create_outbound_account_messages(conversation, new_contact, account)
@@ -69,7 +75,7 @@ class Migrator::AccountMigrator
 
   def create_message_read_receipts(conversation, message, new_message, new_conversation)
     Rails.logger.info "Begin Creating Read Receipts for Conversation: #{new_conversation.id} and Message: #{new_message.id}"
-    message.read_receipts.where(conversation: conversation).find_each do |receipt|
+    message.read_receipts.where(inbox_conversation: conversation).find_each do |receipt|
       create_read_receipt(new_conversation, new_message, receipt)
     end
     Rails.logger.info "Complete Creating Read Receipts for Conversation: #{new_conversation.id} and Message: #{new_message.id}"

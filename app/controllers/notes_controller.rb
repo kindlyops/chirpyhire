@@ -54,7 +54,7 @@ class NotesController < ApplicationController
   end
 
   def fetch_conversation
-    current_account.conversations.find_by(contact: contact)
+    current_account.inbox_conversations.find_by(contact: contact)
   end
 
   def contact

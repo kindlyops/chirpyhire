@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ContactWaiting do
-  let(:conversation) { create(:conversation) }
-  let(:read_receipt) { create(:read_receipt, conversation: conversation) }
+  let(:conversation) { create(:inbox_conversation) }
+  let(:read_receipt) { create(:read_receipt, inbox_conversation: conversation) }
 
   subject { ContactWaiting.new(conversation, read_receipt) }
 
@@ -22,7 +22,7 @@ RSpec.describe ContactWaiting do
     context 'read_receipt is not read' do
       context 'and a more recent read_receipt is not read' do
         before do
-          create(:read_receipt, conversation: conversation, created_at: 5.minutes.from_now)
+          create(:read_receipt, inbox_conversation: conversation, created_at: 5.minutes.from_now)
         end
 
         it 'does not send an email to the conversation account' do
@@ -34,7 +34,7 @@ RSpec.describe ContactWaiting do
 
       context 'and a past read_receipt is not read' do
         before do
-          create(:read_receipt, conversation: conversation, created_at: 10.days.ago)
+          create(:read_receipt, inbox_conversation: conversation, created_at: 10.days.ago)
         end
 
         it 'sends an email to the conversation account' do

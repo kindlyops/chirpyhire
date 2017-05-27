@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Messages' do
-  let(:account) { create(:account, :team_with_phone_number) }
+  let(:account) { create(:account, :inbox, :team_with_phone_number) }
   let(:team) { account.teams.first }
 
   before do
@@ -22,7 +22,7 @@ RSpec.describe 'Messages' do
     before do
       IceBreaker.call(current_contact)
       IceBreaker.call(with_unread_messages)
-      with_unread_messages.conversations.each { |c| c.update(unread_count: 1) }
+      with_unread_messages.inbox_conversations.each { |c| c.update(unread_count: 1) }
     end
 
     context 'with a current conversation' do

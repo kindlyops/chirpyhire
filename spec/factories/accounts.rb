@@ -9,6 +9,12 @@ FactoryGirl.define do
       role :owner
     end
 
+    trait :inbox do
+      after(:create) do |account|
+        create(:inbox, account: account)
+      end
+    end
+
     trait :team do
       after(:create) do |account|
         team = create(:team, organization: account.organization)

@@ -48,6 +48,12 @@ RSpec.describe Registrar do
         }.to change { account.reload.owner? }.from(false).to(true)
       end
 
+      it 'creates the inbox' do
+        expect {
+          subject.register
+        }.to change { Inbox.count }.by(1)
+      end
+
       it 'provisions a phone number for the team' do
         subject.register
         expect(Team.last.phone_number.present?).to eq(true)

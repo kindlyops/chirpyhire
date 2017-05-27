@@ -1,24 +1,25 @@
-class Conversation < ApplicationRecord
+class InboxConversation < ApplicationRecord
   SIDEBAR_MIN = 10
   SIDEBAR_MAX = 25
 
-  belongs_to :account
   belongs_to :contact
+  belongs_to :inbox
   has_many :read_receipts
 
   delegate :handle, to: :contact
+  delegate :account, to: :inbox
 
   def self.contact(contact)
     where(contact: contact)
   end
 
   def self.unread
-    where('unread_count > ?', 0)
+    where('inbox_conversations.unread_count > ?', 0)
   end
 
   def self.recently_viewed
-    order('conversations.last_viewed_at DESC NULLS LAST')
-      .order(unread_count: :desc)
+    order('inbox_conversations.last_viewed_at DESC NULLS LAST')
+      .order('inbox_conversations.unread_count DESC')
   end
 
   def self.by_handle

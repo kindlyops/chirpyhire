@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :conversation do
+  factory :inbox_conversation do
     contact
-    account
+    inbox
   end
 end

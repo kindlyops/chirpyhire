@@ -1,10 +1,10 @@
 class NotificationMailerPreview < ActionMailer::Preview
   def contact_ready_for_review
-    NotificationMailer.contact_ready_for_review(Conversation.last)
+    NotificationMailer.contact_ready_for_review(InboxConversation.last)
   end
 
   def contact_waiting
-    NotificationMailer.contact_waiting(Conversation.last)
+    NotificationMailer.contact_waiting(InboxConversation.last)
   end
 
   def team_created
