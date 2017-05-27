@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Messages' do
-  let(:account) { create(:account, :team_with_phone_number) }
+  let(:account) { create(:account, :inbox, :team_with_phone_number) }
   let(:team) { account.teams.first }
 
   before do

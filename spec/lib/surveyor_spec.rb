@@ -86,7 +86,7 @@ RSpec.describe Surveyor do
         context 'multiple teams' do
           context 'current team having multiple accounts' do
             before do
-              account = create(:account, organization: team.organization)
+              account = create(:account, :inbox, organization: team.organization)
               team.accounts << account
               GlacierBreaker.call(account)
             end
@@ -123,7 +123,7 @@ RSpec.describe Surveyor do
 
           context 'other team having multiple accounts' do
             before do
-              account = create(:account, organization: other_team.organization)
+              account = create(:account, :inbox, organization: other_team.organization)
               other_team.accounts << account
               GlacierBreaker.call(account)
             end
@@ -214,7 +214,7 @@ RSpec.describe Surveyor do
 
     before do
       contact.update(subscribed: true)
-      account = create(:account, organization: team.organization)
+      account = create(:account, :inbox, organization: team.organization)
       team.accounts << account
       IceBreaker.call(contact)
     end
@@ -276,7 +276,7 @@ RSpec.describe Surveyor do
           context 'multiple teams' do
             context 'current team having multiple accounts' do
               before do
-                account = create(:account, organization: team.organization)
+                account = create(:account, :inbox, organization: team.organization)
                 team.accounts << account
                 GlacierBreaker.call(account)
               end

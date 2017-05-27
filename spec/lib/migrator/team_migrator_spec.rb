@@ -6,13 +6,13 @@ RSpec.describe Migrator::TeamMigrator do
   let(:team) { from_organization.teams.first }
   let!(:phone_number) { team.phone_number }
 
-  let(:from_account_a) { create(:account, organization: from_organization) }
-  let(:from_account_b) { create(:account, organization: from_organization) }
-  let(:from_account_c) { create(:account, organization: from_organization) }
+  let(:from_account_a) { create(:account, :inbox, organization: from_organization) }
+  let(:from_account_b) { create(:account, :inbox, organization: from_organization) }
+  let(:from_account_c) { create(:account, :inbox, organization: from_organization) }
 
-  let(:to_account_a) { create(:account, organization: to_organization) }
-  let(:to_account_b) { create(:account, organization: to_organization) }
-  let(:to_account_c) { create(:account, organization: to_organization) }
+  let(:to_account_a) { create(:account, :inbox, organization: to_organization) }
+  let(:to_account_b) { create(:account, :inbox, organization: to_organization) }
+  let(:to_account_c) { create(:account, :inbox, organization: to_organization) }
 
   let(:organizations) do
     { from: from_organization, to: to_organization }
@@ -144,7 +144,7 @@ RSpec.describe Migrator::TeamMigrator do
             end
 
             context 'with read receipt' do
-              let!(:conversation) { contact.inbox_conversations.find_by(account: from_account_a) }
+              let!(:conversation) { contact.inbox_conversations.find_by(inbox: from_account_a.inbox) }
               let!(:read_receipt) { create(:read_receipt, message: message, inbox_conversation: conversation, read_at: rand(10.days).seconds.ago) }
 
               it 'creates a new read receipt' do

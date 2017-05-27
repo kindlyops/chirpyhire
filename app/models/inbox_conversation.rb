@@ -2,9 +2,8 @@ class InboxConversation < ApplicationRecord
   SIDEBAR_MIN = 10
   SIDEBAR_MAX = 25
 
-  belongs_to :account
   belongs_to :contact
-  belongs_to :inbox, optional: true
+  belongs_to :inbox
   has_many :read_receipts
 
   delegate :handle, to: :contact
