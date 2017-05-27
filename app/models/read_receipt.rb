@@ -7,6 +7,11 @@ class ReadReceipt < ApplicationRecord
                   column_names: {
                     ['read_receipts.read_at IS NULL'] => 'unread_count'
                   }
+  counter_culture [:inbox_conversation, :inbox],
+                  column_name: proc { |model| 'unread_count' if model.unread? },
+                  column_names: {
+                    ['read_receipts.read_at IS NULL'] => 'unread_count'
+                  }
   counter_culture :inbox_conversation,
                   column_name: proc { |model| 'unread_count' if model.unread? },
                   column_names: {
