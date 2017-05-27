@@ -1,4 +1,4 @@
-class Conversation < ApplicationRecord
+class InboxConversation < ApplicationRecord
   SIDEBAR_MIN = 10
   SIDEBAR_MAX = 25
 
@@ -17,7 +17,7 @@ class Conversation < ApplicationRecord
   end
 
   def self.recently_viewed
-    order('conversations.last_viewed_at DESC NULLS LAST')
+    order('inbox_conversations.last_viewed_at DESC NULLS LAST')
       .order(unread_count: :desc)
   end
 

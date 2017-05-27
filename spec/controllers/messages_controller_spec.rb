@@ -78,8 +78,8 @@ RSpec.describe MessagesController do
     let(:params) {
       { contact_id: contact.id }
     }
-    let(:conversation) { account.conversations.find_by(contact: contact) }
-    let!(:unread_receipts) { create_list(:read_receipt, 3, conversation: conversation) }
+    let(:conversation) { account.inbox_conversations.find_by(contact: contact) }
+    let!(:unread_receipts) { create_list(:read_receipt, 3, inbox_conversation: conversation) }
 
     context 'with outstanding read receipts for the conversation' do
       context 'impersonating' do

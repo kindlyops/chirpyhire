@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :conversation do
+  factory :inbox_conversation do
     contact
     account
   end

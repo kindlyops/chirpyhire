@@ -31,7 +31,7 @@ class Surveyor
   private
 
   def contact_team_conversations
-    team.conversations.contact(contact)
+    team.inbox_conversations.contact(contact)
   end
 
   def restate_and_log(message)
@@ -51,7 +51,7 @@ class Surveyor
     account_ids = Membership.where(team: person.teams).pluck(:account_id)
     contact_ids = person.contacts.subscribed.pluck(:id)
 
-    Conversation.where(account_id: account_ids, contact_id: contact_ids)
+    InboxConversation.where(account_id: account_ids, contact_id: contact_ids)
   end
 
   def send_message(message)

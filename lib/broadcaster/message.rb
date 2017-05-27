@@ -20,7 +20,7 @@ class Broadcaster::Message
   end
 
   def conversation
-    contact.conversations.first
+    contact.inbox_conversations.first
   end
 
   def day

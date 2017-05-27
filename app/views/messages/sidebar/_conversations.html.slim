@@ -2,7 +2,7 @@
   .conversations.section_holder
     h2.conversations_header data-toggle="tooltip" data-placement="top" title="Chat with a caregiver" Conversations
     ul
-      - current_account.conversations.sidebar.each do |conversation|
+      - current_account.inbox_conversations.sidebar.each do |conversation|
         li class==('unread' if conversation.unread?)
           = nav_link_to message_path(conversation.contact), { 'data-contact-id' => conversation.contact_id, role: 'button' }, url_segment: 2 do
             span.unread_count hidden==conversation.read?

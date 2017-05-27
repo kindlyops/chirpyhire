@@ -5,7 +5,7 @@ class Account < ApplicationRecord
   belongs_to :organization, inverse_of: :accounts
   belongs_to :person, inverse_of: :account
 
-  has_many :conversations
+  has_many :inbox_conversations
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
   has_many :memberships

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe ConversationPolicy do
+RSpec.describe InboxConversationPolicy do
   describe 'scope' do
-    subject { ConversationPolicy::Scope.new(account, Conversation.all) }
+    subject { InboxConversationPolicy::Scope.new(account, InboxConversation.all) }
 
     context 'teams' do
       let(:team) { create(:team, :account) }
       let(:account) { team.accounts.first }
       let(:other_team) { create(:team, organization: team.organization) }
       let(:contact) { create(:contact, team: other_team) }
-      let!(:conversation) { create(:conversation, account: account, contact: contact) }
+      let!(:conversation) { create(:inbox_conversation, account: account, contact: contact) }
 
       context 'account is on a different team than the conversation contact' do
         it 'does not include the conversation' do
@@ -21,7 +21,7 @@ RSpec.describe ConversationPolicy do
         let(:team) { create(:team, :account) }
         let(:account) { team.accounts.first }
         let(:contact) { create(:contact, team: team) }
-        let!(:conversation) { create(:conversation, account: account, contact: contact) }
+        let!(:conversation) { create(:inbox_conversation, account: account, contact: contact) }
 
         it 'does include the conversation' do
           expect(subject.resolve).to include(conversation)

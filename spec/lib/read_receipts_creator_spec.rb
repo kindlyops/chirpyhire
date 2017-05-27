@@ -11,7 +11,7 @@ RSpec.describe ReadReceiptsCreator do
   describe '#call' do
     context 'with multiple conversations on the organization' do
       let!(:accounts) { create_list(:account, 3, organization: organization) }
-      let!(:conversations) { accounts.map { |a| a.conversations.create(contact: contact) } }
+      let!(:conversations) { accounts.map { |a| a.inbox_conversations.create(contact: contact) } }
 
       context 'and the read receipts do not exist' do
         context 'and the contact and accounts are on the same team' do
@@ -20,7 +20,7 @@ RSpec.describe ReadReceiptsCreator do
             conversations.map(&:contact).each { |c| c.update(team: team) }
           end
 
-          let(:count) { team.conversations.count }
+          let(:count) { team.inbox_conversations.count }
 
           it 'creates a read receipt for each conversation in the organization' do
             expect {
@@ -76,8 +76,8 @@ RSpec.describe ReadReceiptsCreator do
     end
 
     context 'with conversations on other organizations' do
-      let!(:conversations) { create_list(:conversation, 3) }
-      let(:count) { team.conversations.count }
+      let!(:conversations) { create_list(:inbox_conversation, 3) }
+      let(:count) { team.inbox_conversations.count }
 
       it 'only creates read receipts for the team conversations' do
         expect {

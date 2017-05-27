@@ -114,7 +114,7 @@ RSpec.describe Migrator::TeamMigrator do
         it 'creates a new conversation for each account' do
           expect {
             subject.migrate
-          }.to change { Conversation.count }.by(accounts.count)
+          }.to change { InboxConversation.count }.by(accounts.count)
         end
 
         context 'with message' do
@@ -144,8 +144,8 @@ RSpec.describe Migrator::TeamMigrator do
             end
 
             context 'with read receipt' do
-              let!(:conversation) { contact.conversations.find_by(account: from_account_a) }
-              let!(:read_receipt) { create(:read_receipt, message: message, conversation: conversation, read_at: rand(10.days).seconds.ago) }
+              let!(:conversation) { contact.inbox_conversations.find_by(account: from_account_a) }
+              let!(:read_receipt) { create(:read_receipt, message: message, inbox_conversation: conversation, read_at: rand(10.days).seconds.ago) }
 
               it 'creates a new read receipt' do
                 expect {
@@ -166,9 +166,9 @@ RSpec.describe Migrator::TeamMigrator do
               it 'is tied to the new conversation' do
                 subject.migrate
                 new_contact = to_organization.contacts.find_by(person: contact.person)
-                new_conversation = to_account_a.conversations.find_by(contact: new_contact)
+                new_conversation = to_account_a.inbox_conversations.find_by(contact: new_contact)
 
-                expect(ReadReceipt.last.conversation).to eq(new_conversation)
+                expect(ReadReceipt.last.inbox_conversation).to eq(new_conversation)
               end
             end
           end

@@ -14,18 +14,18 @@ RSpec.describe GlacierBreaker do
       it 'creates a conversation for each contact on the organization' do
         expect {
           subject.call
-        }.to change { organization.conversations.count }.by(count)
+        }.to change { organization.inbox_conversations.count }.by(count)
       end
 
       context 'with existing conversations' do
         before do
-          create(:conversation, contact: contacts.first, account: account)
+          create(:inbox_conversation, contact: contacts.first, account: account)
         end
 
         it 'creates a conversation for just contacts without a conversation' do
           expect {
             subject.call
-          }.to change { organization.conversations.count }.by(count - 1)
+          }.to change { organization.inbox_conversations.count }.by(count - 1)
         end
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe GlacierBreaker do
       it 'only creates conversations for contacts on the organization' do
         expect {
           subject.call
-        }.to change { organization.conversations.count }.by(count)
+        }.to change { organization.inbox_conversations.count }.by(count)
       end
     end
   end
