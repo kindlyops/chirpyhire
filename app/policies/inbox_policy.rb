@@ -3,8 +3,6 @@ class InboxPolicy < ApplicationPolicy
     record.account == account
   end
 
-  private
-
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where(account: account)

@@ -62,14 +62,7 @@ class InboxConversation < ApplicationRecord
   delegate :handle, to: :person, prefix: true
 
   def to_builder
-    message = messages.by_recency.first
-    Jbuilder.new do |json|
-      json.id id
-      json.contact_id contact.id
-      json.handle contact.handle
-      json.timestamp message.conversation_day.label
-      json.summary message.summary
-    end
+    Inbox::ConversationSerializer.new(self)
   end
 
   private
