@@ -3,8 +3,8 @@
   flex-direction: column;
   min-width: 17.6rem;
   width: 17.6rem;
-  border-left: 1px solid #e1eef4;
-  border-right: 1px solid #e1eef4;
+  border-left: 1px solid #E1F4E6;
+  border-right: 1px solid #E1F4E6;
   height: 100vh;
 
   .Inbox {
@@ -13,7 +13,7 @@
     overflow-y: auto;
 
     .InboxItem {
-      border-bottom: 1px solid #e1eef4;
+      border-bottom: 1px solid #E1F4E6;
       padding: 10px 10px 10px 15px;
       background-color: #fff;
       cursor: pointer;
@@ -21,24 +21,24 @@
       display: block;
 
       &.active {
-        background-color: #effaff;
+        background-color: #f9fcfa;
 
         .handle {
-          color: #0176ff;
+          color: darken($brand-primary, 10%);
           font-weight: 600;
         }
 
         .summary {
-          color: #0176ff;
+          color: darken($brand-primary, 10%);
           font-weight: 600;
         }
       }
 
-      &:hover {
+      &:hover, &:focus {
         text-decoration: none;
 
         .handle {
-          color: #0176ff;
+          color: darken($brand-primary, 10%);
         }
       }
 
@@ -83,7 +83,7 @@
   }
 
   .InboxDropdown {
-    border-bottom: 1px solid #e1eef4;
+    border-bottom: 1px solid #E1F4E6;
     height: auto;
     padding: 0;
     min-height: 1.7rem;
