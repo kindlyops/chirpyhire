@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Account Management', type: :feature, js: true do
   feature 'sign in' do
     context 'with an account' do
-      let(:account) { create(:account, :team_with_phone_number) }
+      let(:account) { create(:account, :inbox, :team_with_phone_number) }
       let(:organization) { account.organization }
 
       scenario 'it progresses to the candidates' do
@@ -28,7 +28,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
   end
 
   feature 'sign out' do
-    let(:account) { create(:account, :team_with_phone_number) }
+    let(:account) { create(:account, :inbox, :team_with_phone_number) }
     let(:organization) { account.organization }
 
     background(:each) do

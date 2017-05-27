@@ -21,6 +21,7 @@ class Account < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
+  delegate :unread_count, to: :inbox
 
   enum role: {
     member: 0, owner: 1, invited: 2
