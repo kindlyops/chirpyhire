@@ -17,7 +17,7 @@ RSpec.describe GlacierBreaker do
         }.to change { organization.inbox_conversations.count }.by(count)
       end
 
-      context 'account with inboxes' do
+      context 'account with inbox' do
         before do
           account.create_inbox
         end
