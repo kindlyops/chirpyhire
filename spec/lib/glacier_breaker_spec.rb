@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe GlacierBreaker do
-  let(:account) { create(:account, :team) }
+  let(:account) { create(:account, :inbox, :team) }
   let(:organization) { account.organization }
 
   subject { GlacierBreaker.new(account) }
@@ -17,20 +17,14 @@ RSpec.describe GlacierBreaker do
         }.to change { organization.inbox_conversations.count }.by(count)
       end
 
-      context 'account with inbox' do
-        before do
-          account.create_inbox
-        end
-
-        it 'ties the conversations to inboxes' do
-          subject.call
-          expect(organization.inbox_conversations.map(&:inbox).all?(&:present?)).to eq(true)
-        end
+      it 'ties the conversations to inboxes' do
+        subject.call
+        expect(organization.inbox_conversations.map(&:inbox).all?(&:present?)).to eq(true)
       end
 
       context 'with existing conversations' do
         before do
-          create(:inbox_conversation, contact: contacts.first, account: account)
+          create(:inbox_conversation, contact: contacts.first, inbox: account.inbox)
         end
 
         it 'creates a conversation for just contacts without a conversation' do

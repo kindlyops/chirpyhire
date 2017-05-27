@@ -49,9 +49,10 @@ class Surveyor
 
   def person_conversations
     account_ids = Membership.where(team: person.teams).pluck(:account_id)
+    inbox_ids = Inbox.where(account_id: account_ids).pluck(:id)
     contact_ids = person.contacts.subscribed.pluck(:id)
 
-    InboxConversation.where(account_id: account_ids, contact_id: contact_ids)
+    InboxConversation.where(inbox_id: inbox_ids, contact_id: contact_ids)
   end
 
   def send_message(message)

@@ -10,8 +10,9 @@ RSpec.describe ReadReceiptsCreator do
 
   describe '#call' do
     context 'with multiple conversations on the organization' do
-      let!(:accounts) { create_list(:account, 3, organization: organization) }
-      let!(:conversations) { accounts.map { |a| a.inbox_conversations.create(contact: contact) } }
+      let!(:accounts) { create_list(:account, 3, :inbox, organization: organization) }
+      let!(:inboxes) { accounts.map(&:inbox) }
+      let!(:conversations) { inboxes.map { |i| i.inbox_conversations.create(contact: contact) } }
 
       context 'and the read receipts do not exist' do
         context 'and the contact and accounts are on the same team' do
