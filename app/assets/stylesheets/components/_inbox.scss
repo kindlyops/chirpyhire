@@ -27,6 +27,7 @@
         cursor: pointer;
         position: relative;
         display: block;
+        transition: all .5s ease;
 
         &.active {
           background-color: #f9fcfa;
@@ -44,6 +45,7 @@
 
         &:hover, &:focus {
           text-decoration: none;
+          background-color: lighten(#E1F4E6, 5%);
 
           .handle {
             color: darken($brand-primary, 10%);

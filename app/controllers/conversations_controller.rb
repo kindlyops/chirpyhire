@@ -12,7 +12,7 @@ class ConversationsController < ApplicationController
   private
 
   def inbox_conversations
-    inbox.inbox_conversations
+    inbox.inbox_conversations.joins(contact: :person).recently_viewed.by_handle
   end
 
   def inbox
