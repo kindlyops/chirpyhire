@@ -17,6 +17,17 @@ RSpec.describe GlacierBreaker do
         }.to change { organization.inbox_conversations.count }.by(count)
       end
 
+      context 'account with inboxes' do
+        before do
+          account.create_inbox
+        end
+
+        it 'ties the conversations to inboxes' do
+          subject.call
+          expect(organization.inbox_conversations.map(&:inbox).all?(&:present?)).to eq(true)
+        end
+      end
+
       context 'with existing conversations' do
         before do
           create(:inbox_conversation, contact: contacts.first, account: account)

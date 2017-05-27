@@ -11,6 +11,7 @@ class Account < ApplicationRecord
   has_many :memberships
   has_many :teams, through: :memberships
   has_many :contacts, through: :teams
+  has_one :inbox
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank

@@ -17,6 +17,17 @@ RSpec.describe IceBreaker do
         }.to change { organization.inbox_conversations.count }.by(count)
       end
 
+      context 'accounts with inboxes' do
+        before do
+          accounts.each(&:create_inbox)
+        end
+
+        it 'ties the conversations to inboxes' do
+          subject.call
+          expect(organization.inbox_conversations.map(&:inbox).all?(&:present?)).to eq(true)
+        end
+      end
+
       context 'with existing conversations' do
         before do
           create(:inbox_conversation, account: accounts.first, contact: contact)

@@ -5,12 +5,9 @@ class Registrar
 
   def register
     return unless account.persisted?
-    create_recruiter
+    setup_team
+    setup_account
     create_ideal_candidate
-    provision_phone_number
-    create_recruiting_ad
-    team.accounts << account
-    account.update(role: :owner)
     new_organization_notification_job
   end
 
@@ -19,6 +16,18 @@ class Registrar
   attr_reader :account
 
   delegate :location, to: :organization
+
+  def setup_team
+    create_recruiter
+    provision_phone_number
+    create_recruiting_ad
+  end
+
+  def setup_account
+    account.create_inbox
+    team.accounts << account
+    account.update(role: :owner)
+  end
 
   def create_ideal_candidate
     organization.create_ideal_candidate!(

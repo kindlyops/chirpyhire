@@ -4,6 +4,7 @@ class InboxConversation < ApplicationRecord
 
   belongs_to :account
   belongs_to :contact
+  belongs_to :inbox, optional: true
   has_many :read_receipts
 
   delegate :handle, to: :contact
