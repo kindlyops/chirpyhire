@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe NotificationMailer do
-
   describe 'contact_ready_for_review' do
     let(:conversation) { create(:inbox_conversation) }
     let(:mail) { described_class.contact_ready_for_review(conversation).deliver_now }
