@@ -12,10 +12,22 @@ class Seeder
 
   def seed_organization_metrics
     organization.update(
-      screened_contacts_count: (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 7 / 8).floor,
-      reached_contacts_count: (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 6 / 8).floor,
-      starred_contacts_count: (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 5 / 8).floor
+      screened_contacts_count: screened_count,
+      reached_contacts_count: reached_count,
+      starred_contacts_count: starred_count
     )
+  end
+
+  def starred_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 5 / 8).floor
+  end
+
+  def screened_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 7 / 8).floor
+  end
+
+  def reached_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 6 / 8).floor
   end
 
   def seed_complete_contacts
@@ -23,7 +35,7 @@ class Seeder
   end
 
   def seed_demo_contact
-    contact = FactoryGirl.create(
+    FactoryGirl.create(
       :contact, :complete,
       organization: organization,
       team: team

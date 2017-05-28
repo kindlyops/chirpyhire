@@ -42,7 +42,6 @@ group :test do
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'poltergeist', '~> 1.15.0'
   gem 'rails-controller-testing'
-  gem 'timecop', '~> 0.8.1'
   gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'rubocop', '~> 0.47.1'
