@@ -1,39 +1,54 @@
 class Seeder
   def seed
     seed_account
-    seed_incomplete_contacts
     seed_complete_contacts
     seed_zipcodes_for_people
+    seed_organization_metrics
   end
 
   private
 
   attr_reader :organization, :account, :team
 
-  def seed_incomplete_contacts
-    incomplete_contacts unless organization.contacts.incomplete.exists?
+  def seed_organization_metrics
+    organization.update(
+      screened_contacts_count: screened_count,
+      reached_contacts_count: reached_count,
+      starred_contacts_count: starred_count
+    )
+  end
+
+  def starred_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 5 / 8).floor
+  end
+
+  def screened_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 7 / 8).floor
+  end
+
+  def reached_count
+    (ENV.fetch('DEMO_SEED_AMOUNT').to_i * 6 / 8).floor
   end
 
   def seed_complete_contacts
     complete_contacts unless organization.contacts.complete.exists?
   end
 
-  def incomplete_contacts
-    contacts = FactoryGirl.create_list(
-      :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :incomplete,
+  def seed_demo_contact
+    FactoryGirl.create(
+      :contact, :complete,
       organization: organization,
       team: team
-    )
-    contacts.each(&method(:seed_messages))
-  end
-
-  def seed_demo_person
-    FactoryGirl.create(:person,
-                       :with_candidacy,
-                       nickname: ENV.fetch('DEMO_NICKNAME'))
+    ).tap do |contact|
+      contact.person.update(
+        nickname: ENV.fetch('DEMO_NICKNAME'),
+        phone_number: ENV.fetch('DEMO_PHONE')
+      )
+    end
   end
 
   def complete_contacts
+    seed_messages(seed_demo_contact)
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
       organization: organization,

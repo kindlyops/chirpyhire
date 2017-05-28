@@ -15,7 +15,7 @@
     .row.align-items-center
       .col-md-6.d-flex.justify-content-start.align-items-center.controls
         p.lead.mt-3
-          = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
+          = @candidates.total_count.round(-1)
           '+
           '
           | Caregivers
@@ -54,7 +54,7 @@
         '
         | of
         '
-        = @candidates.total_count.round(@candidates.total_count.to_s.size * -1 + 1)
+        = @candidates.total_count.round(-1)
         '+
         '
         | Caregivers

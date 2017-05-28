@@ -433,7 +433,6 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.7)
-    timecop (0.8.1)
     twilio-ruby (4.11.1)
       builder (>= 2.1.2)
       jwt (~> 1.0)
@@ -534,7 +533,6 @@ DEPENDENCIES
   smartystreets_ruby_sdk!
   spring
   spring-watcher-listen (~> 2.0.0)
-  timecop (~> 0.8.1)
   twilio-ruby (~> 4.11.0)
   uglifier (>= 1.3.0)
   vcr (~> 3.0.0)

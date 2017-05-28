@@ -29,6 +29,6 @@ class Inbox::ConversationSerializer
   end
 
   def message
-    @message ||= inbox_conversation.messages.by_recency.first
+    @message ||= inbox_conversation.messages.by_recency.last
   end
 end

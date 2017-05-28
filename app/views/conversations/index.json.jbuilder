@@ -1,5 +1,5 @@
 json.array! @conversations do |conversation|
-  message = conversation.messages.by_recency.first
+  message = conversation.messages.by_recency.last
 
   json.id conversation.id
   json.contact_id conversation.contact.id
