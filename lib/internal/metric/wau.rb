@@ -23,7 +23,18 @@ class Internal::Metric::Wau
   end
 
   def count
-    @count ||= Account.where('current_sign_in_at >= ?', 1.week.ago).count
+    @count ||= begin
+      Account
+        .where('current_sign_in_at >= ?', 1.week.ago)
+        .where.not(id: excluded_ids)
+        .count
+    end
+  end
+
+  def excluded_ids
+    @excluded_ids ||= begin
+      Account.where(organization_id: [1, 2, 3, 5, 6, 7]).pluck(:id)
+    end
   end
 
   def new_weekly_active_users_count
@@ -31,6 +42,7 @@ class Internal::Metric::Wau
       Account
         .where('current_sign_in_at >= ?', 1.week.ago)
         .where('created_at >= ?', 1.week.ago)
+        .where.not(id: excluded_ids)
         .count
     end
   end
@@ -40,6 +52,7 @@ class Internal::Metric::Wau
       Account
         .where('current_sign_in_at >= ?', 1.week.ago)
         .where('created_at <= ?', 1.week.ago)
+        .where.not(id: excluded_ids)
         .count
     end
   end
