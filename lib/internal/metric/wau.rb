@@ -33,7 +33,7 @@ class Internal::Metric::Wau
 
   def excluded_ids
     @excluded_ids ||= begin
-      Account.where(organization_id: [1, 2, 3, 5, 6, 7]).pluck(:id)
+      Account.where(organization_id: [1, 2, 3, 5, 6, 7, 18]).pluck(:id)
     end
   end
 
