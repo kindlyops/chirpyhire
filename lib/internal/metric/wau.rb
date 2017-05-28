@@ -11,12 +11,9 @@ class Internal::Metric::Wau
     <<~MESSAGE
       Today, #{Date.current.strftime('%A, %b %d')}:
 
-      #{count} weekly active #{users}!
+      WAU Growth (WoW): #{growth}%
+      WAU Total: #{count}
     MESSAGE
-  end
-
-  def users
-    'user'.pluralize(count)
   end
 
   def notifier
@@ -27,5 +24,29 @@ class Internal::Metric::Wau
 
   def count
     @count ||= Account.where('current_sign_in_at >= ?', 1.week.ago).count
+  end
+
+  def new_weekly_active_users_count
+    @new_weekly_active_users_count ||= begin
+      Account
+        .where('current_sign_in_at >= ?', 1.week.ago)
+        .where('created_at >= ?', 1.week.ago)
+        .count
+    end
+  end
+
+  def existing_weekly_active_users_count
+    @existing_weekly_active_users_count ||= begin
+      Account
+        .where('current_sign_in_at >= ?', 1.week.ago)
+        .where('created_at <= ?', 1.week.ago)
+        .count
+    end
+  end
+
+  def growth
+    return '0' unless existing_weekly_active_users_count.positive?
+
+    new_weekly_active_users_count.fdiv(existing_weekly_active_users_count) * 100
   end
 end
