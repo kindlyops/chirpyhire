@@ -8,4 +8,3 @@ json.array! @conversations do |conversation|
   json.unread_count conversation.unread_count
   json.summary message.summary
 end
-

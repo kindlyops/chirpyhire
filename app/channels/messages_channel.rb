@@ -1,6 +1,6 @@
 class MessagesChannel < ApplicationCable::Channel
   def subscribed
-    reject unless contact.present?
+    reject if contact.blank?
     stream_for contact
   end
 

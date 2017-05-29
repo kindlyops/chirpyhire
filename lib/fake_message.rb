@@ -2,7 +2,7 @@ class FakeMessage
   attr_reader :sid
 
   def self.sid_sequence
-    return 1 unless Message.last.present?
+    return 1 if Message.last.blank?
     Message.last.id + 1
   end
 

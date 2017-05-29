@@ -12,7 +12,7 @@ class MembershipPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(account_id role)
+    %i[account_id role]
   end
 
   private

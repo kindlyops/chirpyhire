@@ -8,7 +8,7 @@ class Person::Handle < Person::Attribute
   end
 
   def icon_class
-    return 'fa-question' unless person.handle.present?
+    return 'fa-question' if person.handle.blank?
 
     'fa-user'
   end

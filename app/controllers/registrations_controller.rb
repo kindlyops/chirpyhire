@@ -26,19 +26,19 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def account_attributes
-    %i(email password agreed_to_terms).push(person_attributes: %i(name))
+    %i[email password agreed_to_terms].push(person_attributes: %i[name])
   end
 
   def organization_attributes_keys
-    %i(name).push(teams_attributes: teams_attributes)
+    %i[name].push(teams_attributes: teams_attributes)
   end
 
   def teams_attributes
-    %i(name).push(location_attributes: location_attributes)
+    %i[name].push(location_attributes: location_attributes)
   end
 
   def location_attributes
-    %i(full_street_address
+    %i[full_street_address
        latitude
        longitude
        city
@@ -46,7 +46,7 @@ class RegistrationsController < Devise::RegistrationsController
        state_code
        postal_code
        country
-       country_code)
+       country_code]
   end
 
   def organization_attributes

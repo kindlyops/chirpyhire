@@ -46,7 +46,7 @@ class Person < ApplicationRecord
   end
 
   def first_name
-    return unless name.present?
+    return if name.blank?
 
     name.split(' ', 2).first
   end

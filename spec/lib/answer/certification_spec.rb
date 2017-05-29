@@ -18,7 +18,7 @@ RSpec.describe Answer::Certification do
       end
     end
 
-    %w(rcabdef another bother notoreity yarn).each do |body|
+    %w[rcabdef another bother notoreity yarn].each do |body|
       context body do
         let(:message) { create(:message, body: body) }
 
@@ -67,7 +67,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'other' do
-      %w(other ma lpn rn rca).push('Yes, Other (MA, LPN, RN, etc.)').each do |body|
+      %w[other ma lpn rn rca].push('Yes, Other (MA, LPN, RN, etc.)').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is other' do
@@ -77,7 +77,7 @@ RSpec.describe Answer::Certification do
     end
 
     context 'no' do
-      %w(no nope N nah).push('Not Yet', 'Not yet', 'E just certificate').each do |body|
+      %w[no nope N nah].push('Not Yet', 'Not yet', 'E just certificate').each do |body|
         let(:message) { create(:message, body: body) }
 
         it 'is no' do

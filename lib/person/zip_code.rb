@@ -8,7 +8,7 @@ class Person::ZipCode < Person::Attribute
   end
 
   def icon_class
-    return 'fa-question' unless candidacy.zipcode.present?
+    return 'fa-question' if candidacy.zipcode.blank?
 
     'fa-map-marker'
   end

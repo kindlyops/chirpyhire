@@ -66,7 +66,7 @@ class Seeder
   def seed_questions(contact)
     Survey.new(contact.person.candidacy).questions.each do |category, question|
       result = seed_question_and_answer(contact, category, question)
-      break unless result.present?
+      break if result.blank?
     end
   end
 
@@ -128,8 +128,8 @@ class Seeder
     if category != 'zipcode'
       answer.question.choices.invert[answer.choice_map.invert[choice]]
     else
-      %w(30319 30324 30327 30328 30329
-         30338 30339 30340 30341 30342).sample
+      %w[30319 30324 30327 30328 30329
+         30338 30339 30340 30341 30342].sample
     end
   end
 
@@ -213,8 +213,8 @@ class Seeder
   end
 
   def seed_zipcodes_for_people
-    zipcodes = %w(30319 30324 30327 30328 30329
-                  30338 30339 30340 30341 30342)
+    zipcodes = %w[30319 30324 30327 30328 30329
+                  30338 30339 30340 30341 30342]
     zipcodes.each do |zipcode|
       FactoryGirl.create(:zipcode, zipcode.to_sym)
     end

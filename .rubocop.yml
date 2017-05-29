@@ -12,6 +12,15 @@ AllCops:
     - 'lib/middleware/sabayon.rb'
     - 'node_modules/**/*'
 
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/initializers/devise.rb'
+
+Style/FileName:
+  Exclude:
+    - 'Gemfile'
+
 Style/Documentation:
   Enabled: false
 
@@ -32,6 +41,7 @@ Metrics/LineLength:
     - 'spec/**/*'
     - 'config/**/*'
     - 'lib/migrator/**/*'
+    - 'Gemfile'
 
 Metrics/BlockLength:
   Exclude:

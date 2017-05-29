@@ -1,5 +1,5 @@
 class Constraint::OptOut < Constraint::Base
-  OPT_OUT_RESPONSES = %w(STOP STOPALL UNSUBSCRIBE CANCEL END QUIT).freeze
+  OPT_OUT_RESPONSES = %w[STOP STOPALL UNSUBSCRIBE CANCEL END QUIT].freeze
 
   def matches?(request)
     @request = request

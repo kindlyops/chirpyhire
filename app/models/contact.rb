@@ -30,19 +30,19 @@ class Contact < ApplicationRecord
   end
 
   def self.candidacy_filter(filter_clause)
-    return current_scope unless filter_clause.present?
+    return current_scope if filter_clause.blank?
 
     joins(person: :candidacy).where(filter_clause)
   end
 
   def self.starred_filter(filter_params)
-    return current_scope unless filter_params.present?
+    return current_scope if filter_params.blank?
 
     where(filter_params)
   end
 
   def self.zipcode_filter(filter_params)
-    return current_scope unless filter_params.present?
+    return current_scope if filter_params.blank?
 
     filters = filter_params.map do |k, v|
       sanitize_sql_array(["lower(\"zipcodes\".\"#{k}\") = ?", v.downcase])

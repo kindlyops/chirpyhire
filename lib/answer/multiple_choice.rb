@@ -36,7 +36,7 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def choice(message)
-    return unless match(message).present?
+    return if match(message).blank?
     match(message)[1].to_sym
   end
 
@@ -57,6 +57,6 @@ class Answer::MultipleChoice < Answer::Base
   end
 
   def no_variants
-    %w(nah nope no n)
+    %w[nah nope no n]
   end
 end

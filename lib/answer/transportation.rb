@@ -8,7 +8,7 @@ class Answer::Transportation < Answer::MultipleChoice
   end
 
   def positive_variants
-    %w(personal public).concat(regular_variants)
+    %w[personal public].concat(regular_variants)
   end
 
   def variants
@@ -20,7 +20,7 @@ class Answer::Transportation < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    return unless regular_match(message).present?
+    return if regular_match(message).blank?
 
     case regular_match(message)[1]
     when 'personal', 'I have personal transportation'.downcase

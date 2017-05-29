@@ -23,7 +23,7 @@ class Answer::BooleanChoice < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    return unless regular_match(message).present?
+    return if regular_match(message).blank?
 
     case regular_match(message)[1]
     when Regexp.new("\\A(#{yes_variants.join('|')})#{space_or_end_of_string}")
