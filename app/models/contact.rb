@@ -10,7 +10,7 @@ class Contact < ApplicationRecord
 
   has_many :inbox_conversations
   has_many :conversations
-  
+
   has_many :notes
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,

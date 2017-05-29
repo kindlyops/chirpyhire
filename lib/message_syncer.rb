@@ -31,8 +31,13 @@ class MessageSyncer
       direction: external_message.direction,
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
-      organization: organization
+      organization: organization,
+      conversation: conversation
     )
+  end
+
+  def conversation
+    contact.conversations.first || contact.conversations.create!
   end
 
   def create_read_receipts(message)
