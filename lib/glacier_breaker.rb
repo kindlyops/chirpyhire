@@ -11,12 +11,8 @@ class GlacierBreaker
 
   def call
     contacts.find_each do |contact|
-      inbox_conversation(contact).update!(conversation: conversation(contact))
+      inbox_conversation(contact).update!(conversation: contact.conversation)
     end
-  end
-
-  def conversation(contact)
-    contact.conversations.first || contact.conversations.create!
   end
 
   def inbox_conversation(contact)

@@ -11,13 +11,7 @@ class IceBreaker
 
   def call
     accounts.find_each do |account|
-      inbox_conversation(account).update!(conversation: conversation(contact))
-    end
-  end
-
-  def conversation
-    @conversation ||= begin
-      contact.conversations.first || contact.conversations.create!
+      inbox_conversation(account).update!(conversation: contact.conversation)
     end
   end
 

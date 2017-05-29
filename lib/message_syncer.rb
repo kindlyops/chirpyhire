@@ -22,7 +22,7 @@ class MessageSyncer
   end
 
   attr_reader :contact, :message_sid, :receipt
-  delegate :person, :organization, to: :contact
+  delegate :person, :organization, :conversation, to: :contact
 
   def sync_message
     person.sent_messages.create!(
@@ -34,10 +34,6 @@ class MessageSyncer
       organization: organization,
       conversation: conversation
     )
-  end
-
-  def conversation
-    contact.conversations.first || contact.conversations.create!
   end
 
   def create_read_receipts(message)

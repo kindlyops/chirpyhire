@@ -21,6 +21,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  def conversation
+    conversations.first || conversations.create!
+  end
+
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')
   end
