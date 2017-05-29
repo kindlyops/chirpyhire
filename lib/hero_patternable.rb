@@ -12,7 +12,7 @@ module HeroPatternable
     end
 
     def number_classes
-      %w(first second third fourth fifth sixth seventh eighth nineth)
+      %w[first second third fourth fifth sixth seventh eighth nineth]
     end
 
     def pattern_class

@@ -61,7 +61,7 @@ RSpec.describe 'Caregivers' do
         context 'and am' do
           let(:params) do
             {
-              availability: %w(live_in hourly_am)
+              availability: %w[live_in hourly_am]
             }
           end
 
@@ -77,7 +77,7 @@ RSpec.describe 'Caregivers' do
           context 'and pm' do
             let(:params) do
               {
-                availability: %w(live_in hourly_am hourly_pm)
+                availability: %w[live_in hourly_am hourly_pm]
               }
             end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Caregivers' do
         context 'and pm' do
           let(:params) do
             {
-              availability: %w(live_in hourly_pm)
+              availability: %w[live_in hourly_pm]
             }
           end
 
@@ -129,7 +129,7 @@ RSpec.describe 'Caregivers' do
         context 'and pm' do
           let(:params) do
             {
-              availability: %w(hourly_am hourly_pm)
+              availability: %w[hourly_am hourly_pm]
             }
           end
 

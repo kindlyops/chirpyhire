@@ -32,8 +32,8 @@ class ZipcodeFetcher
   end
 
   def zipcode_attributes
-    %i(zipcode zipcode_type default_city county_fips county_name
-       state_abbreviation state latitude longitude precision)
+    %i[zipcode zipcode_type default_city county_fips county_name
+       state_abbreviation state latitude longitude precision]
   end
 
   def response_zipcode

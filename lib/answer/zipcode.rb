@@ -33,7 +33,7 @@ class Answer::Zipcode < Answer::Base
 
   def fetch_zipcode(message)
     result = zipcode_regexp.match(clean_body(message))
-    return unless result.present?
+    return if result.blank?
 
     result[1]
   end

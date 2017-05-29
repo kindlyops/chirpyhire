@@ -48,7 +48,7 @@ class TeamFindOrCreator
   end
 
   def location_keys
-    %i(full_street_address
+    %i[full_street_address
        latitude
        longitude
        city
@@ -56,6 +56,6 @@ class TeamFindOrCreator
        state_code
        postal_code
        country
-       country_code)
+       country_code]
   end
 end

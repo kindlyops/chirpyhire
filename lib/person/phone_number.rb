@@ -4,7 +4,7 @@ class Person::PhoneNumber < Person::Attribute
   end
 
   def icon_class
-    return 'fa-question' unless person.phone_number.present?
+    return 'fa-question' if person.phone_number.blank?
 
     'fa-phone'
   end

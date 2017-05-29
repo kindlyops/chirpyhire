@@ -8,13 +8,13 @@ Rails.application.routes.draw do
 
   resource :health, only: :show
 
-  resources :messages, only: [:index, :show], param: :contact_id do
-    resources :notes, only: [:index, :create, :update, :destroy]
+  resources :messages, only: %i[index show], param: :contact_id do
+    resources :notes, only: %i[index create update destroy]
   end
 
   resources :caregivers, only: :index, concerns: :paginatable
-  resource :candidate, only: [:show, :update], controller: 'ideal_candidates'
-  resources :recruiting_ads, only: [:index, :update]
+  resource :candidate, only: %i[show update], controller: 'ideal_candidates'
+  resources :recruiting_ads, only: %i[index update]
   resources :ideal_candidate_suggestions, only: :create
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
   resource :dashboard
@@ -28,11 +28,11 @@ Rails.application.routes.draw do
     resources :conversations, only: :index, concerns: :paginatable
   end
 
-  resources :organizations, only: [:show, :update] do
+  resources :organizations, only: %i[show update] do
     resources :teams, except: :destroy, controller: 'organizations/teams' do
-      resources :members, only: [:create, :destroy, :index, :update, :new]
+      resources :members, only: %i[create destroy index update new]
     end
-    resources :people, only: [:index, :show, :update], controller: 'organizations/accounts'
+    resources :people, only: %i[index show update], controller: 'organizations/accounts'
   end
 
   post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new
@@ -42,11 +42,11 @@ Rails.application.routes.draw do
 
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
 
-  resources :accounts, only: [:show, :update] do
+  resources :accounts, only: %i[show update] do
     post :stop_impersonating, on: :collection
 
     namespace :settings do
-      resource :password, only: [:show, :update]
+      resource :password, only: %i[show update]
     end
   end
 

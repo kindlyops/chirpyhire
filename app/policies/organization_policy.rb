@@ -8,7 +8,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attributes = %i(name avatar email description url)
+    attributes = %i[name avatar email description url]
     attributes.push(:billing_email) if account.owner?
     attributes
   end

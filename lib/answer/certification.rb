@@ -10,7 +10,7 @@ class Answer::Certification < Answer::MultipleChoice
   end
 
   def positive_variants
-    %w(pca cna other ma lpn rn cna rca hha).concat(regular_variants)
+    %w[pca cna other ma lpn rn cna rca hha].concat(regular_variants)
   end
 
   def variants
@@ -26,7 +26,7 @@ class Answer::Certification < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    return unless regular_match(message).present?
+    return if regular_match(message).blank?
 
     regular_case(message)
   end

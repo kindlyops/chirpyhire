@@ -4,6 +4,6 @@ class IdealCandidateSuggestionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(value)
+    %i[value]
   end
 end

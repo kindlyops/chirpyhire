@@ -20,7 +20,7 @@ class Answer::Availability < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    return unless regular_match(message).present?
+    return if regular_match(message).blank?
 
     regular_case(message)
   end

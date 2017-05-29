@@ -9,7 +9,7 @@ class Answer::Experience < Answer::MultipleChoice
   end
 
   def no_variants
-    %w(no)
+    %w[no]
   end
 
   def positive_variants
@@ -26,7 +26,7 @@ class Answer::Experience < Answer::MultipleChoice
   end
 
   def regular_attribute(message)
-    return unless regular_match(message).present?
+    return if regular_match(message).blank?
     regular_case(message)
   end
 

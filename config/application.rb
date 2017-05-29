@@ -29,7 +29,7 @@ module Congaree
     config.action_controller.forgery_protection_origin_check = false
     config.active_job.queue_adapter = :sidekiq
     config.nav_lynx.selected_class = 'active'
-    config.assets.precompile += %w(email.css)
+    config.assets.precompile += %w[email.css]
 
     config.cache_store = :memory_store
 

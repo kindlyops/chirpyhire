@@ -8,12 +8,12 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(name avatar recruiter_id description)
+    %i[name avatar recruiter_id description]
       .push(location_attributes: location_attributes)
   end
 
   def location_attributes
-    %i(full_street_address
+    %i[full_street_address
        latitude
        longitude
        city
@@ -21,7 +21,7 @@ class TeamPolicy < ApplicationPolicy
        state_code
        postal_code
        country
-       country_code)
+       country_code]
   end
 
   class Scope < ApplicationPolicy::Scope

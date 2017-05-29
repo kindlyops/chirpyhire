@@ -58,8 +58,8 @@ FactoryGirl.define do
           inquiry: :transportation
         }
 
-        zipcode = %w(30319 30324 30327 30328 30329
-                     30338 30339 30340 30341 30342).sample
+        zipcode = %w[30319 30324 30327 30328 30329
+                     30338 30339 30340 30341 30342].sample
 
         almost_finished = {
           contact: contact,
@@ -88,8 +88,8 @@ FactoryGirl.define do
         )
 
         candidacy = contact.person.candidacy
-        zipcode = %w(30319 30324 30327 30328 30329
-                     30338 30339 30340 30341 30342).sample
+        zipcode = %w[30319 30324 30327 30328 30329
+                     30338 30339 30340 30341 30342].sample
 
         candidacy.assign_attributes(
           contact: contact,

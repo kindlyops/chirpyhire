@@ -21,7 +21,7 @@ class CaregiversController < ApplicationController
   end
 
   def filtered_candidates
-    return scope unless permitted_params.present?
+    return scope if permitted_params.blank?
 
     scope
       .candidacy_filter(candidacy_params)
@@ -44,7 +44,7 @@ class CaregiversController < ApplicationController
   end
 
   def star_params
-    return {} unless params[:starred].present?
+    return {} if params[:starred].blank?
 
     { starred: true }
   end
@@ -60,7 +60,7 @@ class CaregiversController < ApplicationController
   end
 
   def handle_live_in_params(result)
-    return result unless result[:availability].present?
+    return result if result[:availability].blank?
     if result[:availability].include?('live_in')
       result[:live_in] = true
       result[:availability] = result[:availability] - ['live_in']
@@ -93,7 +93,7 @@ class CaregiversController < ApplicationController
   end
 
   def standard_candidacy(result)
-    return {} unless result.present?
+    return {} if result.blank?
 
     { people: { 'candidacies' => result } }
   end
@@ -115,7 +115,7 @@ class CaregiversController < ApplicationController
   end
 
   def hourly_params
-    %w(hourly)
+    %w[hourly]
   end
 
   def zipcode_params

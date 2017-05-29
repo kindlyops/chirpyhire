@@ -21,7 +21,7 @@ class Person::Availability < Person::Attribute
 
   def query_array
     if query == 'hourly'
-      %w(hourly_am hourly_pm)
+      %w[hourly_am hourly_pm]
     else
       [query]
     end
