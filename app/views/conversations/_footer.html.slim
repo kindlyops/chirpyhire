@@ -1,0 +1,4 @@
+.footer
+  = form_for @conversation.messages.build, url: contact_messages_path(@conversation.contact), remote: true do |f|
+    = f.text_area :body, autofocus: true, autocomplete: 'off', autocorrect: 'off', spellcheck: true, placeholder: "Message #{@conversation.contact.handle}", 'data-autoresize' => true, rows: 1, class: 'message-input focus'
+  .spacer

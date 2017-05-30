@@ -1,15 +1,15 @@
 class InboxConversation < ApplicationRecord
-  belongs_to :contact
   belongs_to :inbox
-  belongs_to :conversation, optional: true
+  belongs_to :conversation
 
   has_many :read_receipts
 
-  delegate :handle, to: :contact
+  delegate :contact, :messages, to: :conversation
+  delegate :handle, :person, to: :contact
   delegate :account, to: :inbox
 
   def self.contact(contact)
-    where(contact: contact)
+    joins(:conversation).where(conversations: { contact: contact })
   end
 
   def self.unread
@@ -48,9 +48,6 @@ class InboxConversation < ApplicationRecord
   def read?
     !unread?
   end
-
-  delegate :messages, :person, to: :contact
-  delegate :handle, to: :person, prefix: true
 
   def to_builder
     Inbox::ConversationSerializer.new(self)

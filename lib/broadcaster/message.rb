@@ -15,24 +15,20 @@ class Broadcaster::Message
 
   attr_reader :message
 
-  def contact
-    @contact ||= contacts.find_by(person: person)
-  end
-
-  def conversation
+  def inbox_conversation
     contact.inbox_conversations.first
   end
 
   def day
-    conversation.day(message.external_created_at.to_date)
+    inbox_conversation.day(message.external_created_at.to_date)
   end
 
   def thought
     thoughts.find { |thought| thought.messages.include?(message) }
   end
 
-  delegate :organization, :person, to: :message
-  delegate :contacts, to: :organization
+  delegate :conversation, :person, to: :message
+  delegate :contact, to: :conversation
   delegate :thoughts, to: :day
 
   def render_message

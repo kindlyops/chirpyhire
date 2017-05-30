@@ -11,12 +11,8 @@ class GlacierBreaker
 
   def call
     contacts.find_each do |contact|
-      inbox_conversation(contact).update!(conversation: contact.conversation)
+      account.inbox.conversations << contact.conversation
     end
-  end
-
-  def inbox_conversation(contact)
-    inbox.inbox_conversations.find_or_create_by!(contact: contact)
   end
 
   delegate :organization, :inbox, to: :account

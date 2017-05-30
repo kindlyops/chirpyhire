@@ -5,6 +5,6 @@ json.array! @conversations do |conversation|
   json.contact_id conversation.contact.id
   json.handle conversation.contact.handle
   json.timestamp message.conversation_day.label
-  json.unread_count conversation.unread_count
+  json.unread_count conversation.unread_count(current_account.inbox)
   json.summary message.summary
 end

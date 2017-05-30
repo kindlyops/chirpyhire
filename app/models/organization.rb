@@ -10,7 +10,6 @@ class Organization < ApplicationRecord
   has_many :recruiting_ads, through: :teams
 
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
-  has_many :messages
 
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate
@@ -48,15 +47,14 @@ class Organization < ApplicationRecord
   private
 
   def create_message(contact, message, sender)
-    messages.create(
+    contact.conversation.messages.create(
       sid: message.sid,
       body: message.body,
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       direction: message.direction,
       sender: sender,
-      recipient: contact.person,
-      conversation: contact.conversation
+      recipient: contact.person
     )
   end
 

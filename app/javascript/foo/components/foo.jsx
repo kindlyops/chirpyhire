@@ -50,7 +50,7 @@ class Inbox extends React.Component {
     let content;
 
     if (loadedRowsMap[index] === STATUS_LOADED) {
-      content = <InboxItem {...conversations[index]} />;
+      content = <InboxItem inboxId={this.props.inboxId} {...conversations[index]} />;
     } else {
       content = <div className='conversation-placeholder' />;
     }

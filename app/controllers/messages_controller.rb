@@ -74,7 +74,7 @@ class MessagesController < ApplicationController
   end
 
   def error_message
-    "Unfortunately #{@conversation.person_handle} has unsubscribed! You can't "\
+    "Unfortunately #{@conversation.handle} has unsubscribed! You can't "\
     'text them using ChirpyHire.'
   end
 end
