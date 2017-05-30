@@ -2,10 +2,12 @@ class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
   has_many :owners, -> { owner }, class_name: 'Account'
-  has_many :inbox_conversations, through: :accounts
 
   has_many :teams
   has_many :contacts, through: :teams
+  has_many :conversations, through: :contacts
+  has_many :inbox_conversations, through: :contacts
+
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
 

@@ -4,6 +4,8 @@ class Conversation < ApplicationRecord
   has_many :inboxes, through: :inbox_conversations
   has_many :messages
 
+  delegate :person, :handle, to: :contact
+
   def unread_count(inbox)
     inbox_conversations.find_by(inbox: inbox).unread_count
   end

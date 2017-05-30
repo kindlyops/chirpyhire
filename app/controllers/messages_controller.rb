@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   decorates_assigned :conversation
 
   def index
-    @conversations = policy_scope(InboxConversation)
+    @conversations = policy_scope(Conversation)
 
     if current_account.inbox_conversations.exists?
       redirect_to_recent_conversation
@@ -15,8 +15,8 @@ class MessagesController < ApplicationController
 
   def show
     @conversation = authorize fetch_conversation, :show?
-    conversation.read_receipts.unread.each(&method(:read)) unless impersonating?
-    conversation.update(last_viewed_at: DateTime.current)
+    read_messages unless impersonating?
+    inbox_conversation.update(last_viewed_at: DateTime.current)
   end
 
   def create
@@ -28,6 +28,16 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def read_messages
+    inbox_conversation.read_receipts.unread.each(&method(:read))
+  end
+
+  def inbox_conversation
+    @inbox_conversation ||= begin
+      current_account.inbox_conversations.find_by(conversation: @conversation)
+    end
+  end
 
   def redirect_to_recent_conversation
     redirect_to message_path(current_conversation.contact)
@@ -57,12 +67,12 @@ class MessagesController < ApplicationController
     policy_scope(Message).where(
       recipient: @conversation.person,
       sender: current_account.person,
-      organization: current_organization
+      conversation: @conversation
     )
   end
 
   def fetch_conversation
-    current_account.inbox_conversations.find_by(contact: contact)
+    current_account.conversations.find_by(contact: contact)
   end
 
   def contact

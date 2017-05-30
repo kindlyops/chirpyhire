@@ -8,8 +8,8 @@ class Team < ApplicationRecord
 
   has_many :memberships
   has_many :accounts, through: :memberships
-  has_many :contacts
   has_many :inbox_conversations, through: :accounts
+  has_many :contacts
 
   has_one :location
   validates_associated :location

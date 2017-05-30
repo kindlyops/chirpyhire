@@ -8,6 +8,8 @@ RSpec.describe MessagesController do
 
   before do
     sign_in(account)
+    account.inbox.conversations << contact.conversation
+
     IceBreaker.call(contact)
   end
 
@@ -29,22 +31,22 @@ RSpec.describe MessagesController do
       it 'creates a message' do
         expect {
           post :create, params: params, xhr: true
-        }.to change { organization.messages.count }.by(1)
+        }.to change { contact.messages.count }.by(1)
       end
 
       it 'is a author organization message' do
         post :create, params: params, xhr: true
-        expect(organization.messages.last.author).to eq(:organization)
+        expect(contact.messages.last.author).to eq(:organization)
       end
 
       it 'is sent from the account' do
         post :create, params: params, xhr: true
-        expect(organization.messages.last.sender).to eq(account.person)
+        expect(contact.messages.last.sender).to eq(account.person)
       end
 
       it 'is received by the person' do
         post :create, params: params, xhr: true
-        expect(organization.messages.last.recipient).to eq(contact.person)
+        expect(contact.messages.last.recipient).to eq(contact.person)
       end
 
       it 'sends a message' do
@@ -58,7 +60,7 @@ RSpec.describe MessagesController do
       it 'does not create a message' do
         expect {
           post :create, params: params, xhr: true
-        }.not_to change { organization.messages.count }
+        }.not_to change { contact.messages.count }
       end
 
       it 'does not send a message' do
@@ -78,7 +80,7 @@ RSpec.describe MessagesController do
     let(:params) {
       { contact_id: contact.id }
     }
-    let(:conversation) { account.inbox_conversations.find_by(contact: contact) }
+    let(:conversation) { account.inbox_conversations.find_by(conversation: contact.conversation) }
     let!(:unread_receipts) { create_list(:read_receipt, 3, inbox_conversation: conversation) }
 
     context 'with outstanding read receipts for the conversation' do

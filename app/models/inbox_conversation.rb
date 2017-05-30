@@ -5,7 +5,6 @@ class InboxConversation < ApplicationRecord
   has_many :read_receipts
 
   delegate :contact, :messages, to: :conversation
-  delegate :handle, :person, to: :contact
   delegate :account, to: :inbox
 
   def self.contact(contact)

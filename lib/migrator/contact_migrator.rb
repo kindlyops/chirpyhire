@@ -28,7 +28,7 @@ class Migrator::ContactMigrator
       recipient: recipient
     )
 
-    new_message = new_contact.messages.create!(params)
+    new_message = new_contact.conversation.messages.create!(params)
     Rails.logger.info "Created New Message: #{new_message.id} for Message: #{message.id}"
   end
 
@@ -49,7 +49,6 @@ class Migrator::ContactMigrator
       direction: message.direction,
       sent_at: message.sent_at,
       external_created_at: message.external_created_at,
-      organization: organizations[:to],
       created_at: message.created_at,
       updated_at: message.updated_at
     }
