@@ -25,7 +25,9 @@ Rails.application.routes.draw do
   end
 
   resources :inboxes, only: [] do
-    resources :conversations, only: %i[index show], concerns: :paginatable
+    resources :conversations, only: %i[index show], concerns: :paginatable do
+      resources :notes, only: %i[index create update destroy]
+    end
   end
 
   resources :organizations, only: %i[show update] do
