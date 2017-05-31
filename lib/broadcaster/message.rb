@@ -35,19 +35,19 @@ class Broadcaster::Message
     return render_day if new_day?
     return render_thought if new_thought?
 
-    MessagesController.render partial: 'messages/message', locals: {
+    MessagesController.render partial: 'conversations/message', locals: {
       message: message, message_counter: message_counter
     }
   end
 
   def render_day
-    MessagesController.render partial: 'messages/day', locals: {
+    MessagesController.render partial: 'conversations/day', locals: {
       day: day
     }
   end
 
   def render_thought
-    MessagesController.render partial: 'messages/thought', locals: {
+    MessagesController.render partial: 'conversations/thought', locals: {
       thought: thought
     }
   end

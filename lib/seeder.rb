@@ -1,9 +1,9 @@
 class Seeder
   def seed
     seed_account
-    seed_complete_contacts
-    seed_zipcodes_for_people
-    seed_organization_metrics
+    # seed_complete_contacts
+    # seed_zipcodes_for_people
+    # seed_organization_metrics
   end
 
   private

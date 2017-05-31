@@ -39,9 +39,11 @@ RSpec.describe 'Conversations' do
     end
 
     context 'without a current conversation' do
+      let(:unread_conversation) { inbox.conversation(with_unread_messages) }
+
       it 'redirects to the caregiver with unread messages' do
         get inbox_conversations_path(inbox)
-        expect(response).to redirect_to(inbox_conversation_path(inbox, current_conversation))
+        expect(response).to redirect_to(inbox_conversation_path(inbox, unread_conversation))
       end
     end
   end

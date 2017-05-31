@@ -21,6 +21,10 @@ class ReadReceipt < ApplicationRecord
     where('created_at > ?', receipt.created_at)
   end
 
+  def read
+    update(read_at: DateTime.current)
+  end
+
   def unread?
     read_at.blank?
   end

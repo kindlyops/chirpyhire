@@ -6,19 +6,33 @@ class ConversationsController < ApplicationController
   def index
     @conversations = paginated(policy_scope(conversations))
 
-    respond_to do |format|
-      format.json
-      format.html { redirect_to current_conversation_path }
+    if inbox.conversations.exists?
+      respond_to do |format|
+        format.json
+        format.html { redirect_to current_conversation_path }
+      end
+    else
+      render :index
     end
   end
 
   def show
     @conversation = authorize(conversations.find(params[:id]))
+    read_messages unless impersonating?
+    inbox_conversation.update(last_viewed_at: DateTime.current)
   end
 
   private
 
   delegate :conversations, :inbox_conversations, to: :inbox
+
+  def read_messages
+    inbox_conversation.read_receipts.unread.each(&:read)
+  end
+
+  def inbox_conversation
+    inbox.inbox_conversations.find_by(conversation: @conversation)
+  end
 
   def current_conversation_path
     inbox_conversation_path(inbox, current_conversation)

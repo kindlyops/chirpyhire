@@ -4,13 +4,13 @@ table.body-wrap
       td 
         p
           ' Hi
-          = @conversation.account.first_name
+          = @account.first_name
           ',
           |
         p
           | A caregiver is waiting for your reply. Move quick!
         p.callout
-          = link_to 'Chat with Caregiver', message_url(@conversation.contact), class: 'btn', target: '_blank'
+          = link_to 'Chat with Caregiver', inbox_conversation_url(@inbox_conversation.inbox, @inbox_conversation.conversation), class: 'btn', target: '_blank'
         p Keep on caring on,
         p The ChirpyHire Team
         br
