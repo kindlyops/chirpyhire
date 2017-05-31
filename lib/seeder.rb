@@ -37,6 +37,7 @@ class Seeder
   def seed_demo_contact
     FactoryGirl.create(
       :contact, :complete,
+      subscribed: true,
       organization: organization,
       team: team
     ).tap do |contact|
@@ -51,6 +52,7 @@ class Seeder
     seed_messages(seed_demo_contact)
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
+      subscribed: true,
       organization: organization,
       team: team
     )
