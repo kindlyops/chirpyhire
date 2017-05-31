@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
+  skip_after_action :verify_policy_scoped, only: :index
   decorates_assigned :conversation
 
   def create
@@ -10,7 +11,25 @@ class MessagesController < ApplicationController
     head :ok
   end
 
+  def index
+    redirect_to conversations_path
+  end
+
+  def show
+    @conversation = authorize fetch_conversation, :show?
+
+    redirect_to conversation_path
+  end
+
   private
+
+  def conversations_path
+    inbox_conversations_path(current_inbox)
+  end
+
+  def conversation_path
+    inbox_conversation_path(current_inbox, @conversation)
+  end
 
   def create_message
     current_organization.message(

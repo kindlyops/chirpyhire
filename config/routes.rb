@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
   resource :dashboard
 
+  resources :messages, only: %i[index show], param: :contact_id
   resources :contacts, only: [] do
     resources :notes, only: %i[index create update destroy]
     resource :star, only: :create
