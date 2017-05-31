@@ -18,6 +18,7 @@ class Inbox::ConversationSerializer
     json.contact_id contact.id
     json.handle contact.handle
     json.unread_count unread_count
+    json.timestamp conversation.decorate.last_message_created_at.label
 
     add_message(json) if message.present?
   end
@@ -25,7 +26,6 @@ class Inbox::ConversationSerializer
   attr_reader :inbox_conversation
 
   def add_message(json)
-    json.timestamp message.conversation_day.label
     json.summary message.summary
   end
 

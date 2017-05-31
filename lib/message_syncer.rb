@@ -25,14 +25,15 @@ class MessageSyncer
   delegate :person, :organization, :conversation, to: :contact
 
   def sync_message
-    person.sent_messages.create!(
+    conversation.messages.create!(
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction,
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
-      conversation: conversation
+      sender: person
     )
+    conversation.touch(:last_message_created_at)
   end
 
   def create_read_receipts(message)

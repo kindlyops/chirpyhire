@@ -2,9 +2,10 @@ class ConversationsController < ApplicationController
   PAGE_LIMIT = 25
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
+  decorates_assigned :conversations
 
   def index
-    @conversations = paginated(policy_scope(conversations))
+    @conversations = paginated(policy_scope(recent_conversations))
 
     if inbox.conversations.exists?
       respond_to do |format|
@@ -17,14 +18,18 @@ class ConversationsController < ApplicationController
   end
 
   def show
-    @conversation = authorize(conversations.find(params[:id]))
+    @conversation = authorize(inbox.conversations.find(params[:id]))
     read_messages unless impersonating?
     inbox_conversation.update(last_viewed_at: DateTime.current)
   end
 
   private
 
-  delegate :conversations, :inbox_conversations, to: :inbox
+  delegate :inbox_conversations, to: :inbox
+
+  def recent_conversations
+    inbox.conversations.by_recent_message
+  end
 
   def read_messages
     inbox_conversation.read_receipts.unread.each(&:read)

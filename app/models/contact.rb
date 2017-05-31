@@ -98,6 +98,7 @@ class Contact < ApplicationRecord
       sender: sender,
       recipient: person
     )
+    conversation.touch(:last_message_created_at)
   end
 
   private
