@@ -8,7 +8,7 @@ class Inbox < ApplicationRecord
   end
 
   def to_builder
-    conversations = inbox_conversations.limit(25).map do |c|
+    conversations = inbox_conversations.by_recent_message.limit(25).map do |c|
       c.to_builder.attributes!
     end
 

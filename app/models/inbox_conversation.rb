@@ -7,6 +7,10 @@ class InboxConversation < ApplicationRecord
   delegate :contact, :messages, to: :conversation
   delegate :account, to: :inbox
 
+  def self.by_recent_message
+    joins(:conversation).order('conversations.last_message_created_at DESC')
+  end
+
   def self.contact(contact)
     joins(:conversation).where(conversations: { contact: contact })
   end
