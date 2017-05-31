@@ -150,6 +150,13 @@
   }
 
   &:hover {
+
+    &.standalone {
+      .action_hover_container.stretch_btn_heights {
+        display: none;
+      }
+    }
+
     .action_hover_container {
       display: block;
 
