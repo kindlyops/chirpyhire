@@ -11,7 +11,7 @@ class Internal::Metric::Wau
     <<~MESSAGE
       Today, #{Date.current.strftime('%A, %b %d')}:
 
-      WAU Growth (WoW): #{growth}%
+      WAU Growth (WoW): #{growth.round(2)}%
       WAU Total: #{count}
     MESSAGE
   end
