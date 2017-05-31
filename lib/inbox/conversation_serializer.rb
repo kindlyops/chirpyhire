@@ -8,7 +8,8 @@ class Inbox::ConversationSerializer
   end
 
   delegate :attributes!, to: :call
-  delegate :id, :contact, :unread_count, to: :inbox_conversation
+  delegate :unread_count, :conversation, to: :inbox_conversation
+  delegate :id, :contact, to: :conversation
 
   private
 
@@ -29,6 +30,6 @@ class Inbox::ConversationSerializer
   end
 
   def message
-    @message ||= inbox_conversation.messages.by_recency.last
+    @message ||= conversation.messages.by_recency.last
   end
 end

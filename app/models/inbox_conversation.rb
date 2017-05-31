@@ -20,24 +20,8 @@ class InboxConversation < ApplicationRecord
       .order('inbox_conversations.unread_count DESC')
   end
 
-  def self.by_handle
-    order('NULLIF(people.name, people.nickname) ASC')
-  end
-
   def self.read
     where(unread_count: 0)
-  end
-
-  def days
-    messages.by_recency.chunk(&:day).map(&method(:to_day))
-  end
-
-  def day(date)
-    result = messages.by_recency.chunk(&:day).find do |day, _|
-      day == date
-    end
-
-    to_day(result)
   end
 
   def unread?
@@ -50,11 +34,5 @@ class InboxConversation < ApplicationRecord
 
   def to_builder
     Inbox::ConversationSerializer.new(self)
-  end
-
-  private
-
-  def to_day(day)
-    Conversation::Day.new(day)
   end
 end

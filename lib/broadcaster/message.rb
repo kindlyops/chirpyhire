@@ -15,12 +15,10 @@ class Broadcaster::Message
 
   attr_reader :message
 
-  def inbox_conversation
-    contact.inbox_conversations.first
-  end
+  delegate :conversation, to: :contact
 
   def day
-    inbox_conversation.day(message.external_created_at.to_date)
+    conversation.day(message.external_created_at.to_date)
   end
 
   def thought
