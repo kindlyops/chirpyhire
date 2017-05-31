@@ -63,10 +63,6 @@ class MessagesController < ApplicationController
     redirect_to conversation_path, alert: error_message
   end
 
-  def conversation_path
-    inbox_conversation_path(current_inbox, @conversation)
-  end
-
   def error_message
     "Unfortunately #{@conversation.handle} has unsubscribed! You can't "\
     'text them using ChirpyHire.'
