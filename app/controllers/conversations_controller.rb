@@ -1,6 +1,6 @@
 class ConversationsController < ApplicationController
   PAGE_LIMIT = 25
-  layout 'conversations', only: 'show'
+  layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
 
   def index
