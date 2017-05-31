@@ -9,6 +9,8 @@ class Contact < ApplicationRecord
   end
 
   has_many :inbox_conversations
+  has_many :conversations
+
   has_many :notes
 
   delegate :handle, :phone_number, :candidacy_zipcode, :availability,
@@ -18,6 +20,10 @@ class Contact < ApplicationRecord
   delegate :phone_number, to: :team, prefix: true
 
   before_create :set_last_reply_at
+
+  def conversation
+    conversations.first || conversations.create!
+  end
 
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')

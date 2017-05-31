@@ -1,6 +1,7 @@
 class Inbox < ApplicationRecord
   belongs_to :account
   has_many :inbox_conversations
+  has_many :conversations, through: :inbox_conversations
 
   def to_builder
     conversations = inbox_conversations.limit(25).map do |c|

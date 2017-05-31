@@ -2,6 +2,7 @@ class Message < ApplicationRecord
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :organization
+  belongs_to :conversation, optional: true
 
   has_many :read_receipts
 

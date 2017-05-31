@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170527140206) do
+ActiveRecord::Schema.define(version: 20170529220036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,11 @@ ActiveRecord::Schema.define(version: 20170527140206) do
     t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.index ["contact_id"], name: "index_conversations_on_contact_id"
+  end
+
   create_table "ideal_candidate_suggestions", id: :serial, force: :cascade do |t|
     t.integer "organization_id", null: false
     t.text "value", null: false
@@ -137,7 +142,9 @@ ActiveRecord::Schema.define(version: 20170527140206) do
     t.integer "unread_count", default: 0, null: false
     t.datetime "last_viewed_at"
     t.integer "inbox_id"
+    t.bigint "conversation_id"
     t.index ["contact_id"], name: "index_inbox_conversations_on_contact_id"
+    t.index ["conversation_id"], name: "index_inbox_conversations_on_conversation_id"
     t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id"
   end
 
@@ -189,6 +196,8 @@ ActiveRecord::Schema.define(version: 20170527140206) do
     t.datetime "updated_at", null: false
     t.integer "sender_id", null: false
     t.integer "recipient_id"
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
@@ -305,16 +314,19 @@ ActiveRecord::Schema.define(version: 20170527140206) do
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
+  add_foreign_key "conversations", "contacts"
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
   add_foreign_key "ideal_candidates", "organizations"
   add_foreign_key "inbox_conversations", "contacts"
+  add_foreign_key "inbox_conversations", "conversations"
   add_foreign_key "inbox_conversations", "inboxes"
   add_foreign_key "inboxes", "accounts"
   add_foreign_key "locations", "organizations"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
   add_foreign_key "messages", "people", column: "sender_id"

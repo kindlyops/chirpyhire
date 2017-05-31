@@ -1,6 +1,8 @@
 class InboxConversation < ApplicationRecord
   belongs_to :contact
   belongs_to :inbox
+  belongs_to :conversation, optional: true
+
   has_many :read_receipts
 
   delegate :handle, to: :contact

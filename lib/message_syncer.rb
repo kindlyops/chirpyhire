@@ -22,7 +22,7 @@ class MessageSyncer
   end
 
   attr_reader :contact, :message_sid, :receipt
-  delegate :person, :organization, to: :contact
+  delegate :person, :organization, :conversation, to: :contact
 
   def sync_message
     person.sent_messages.create!(
@@ -31,7 +31,8 @@ class MessageSyncer
       direction: external_message.direction,
       sent_at: external_message.date_sent,
       external_created_at: external_message.date_created,
-      organization: organization
+      organization: organization,
+      conversation: conversation
     )
   end
 
