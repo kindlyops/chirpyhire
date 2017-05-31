@@ -91,7 +91,7 @@ class Seeder
       sender: Chirpy.person,
       conversation: contact.conversation
     )
-    contact.conversation.touch(:last_message_created_at)
+    contact.conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_question(contact, question)
@@ -105,7 +105,7 @@ class Seeder
       sender: Chirpy.person,
       conversation: contact.conversation
     )
-    contact.conversation.touch(:last_message_created_at)
+    contact.conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_thank_you(contact)
@@ -119,7 +119,7 @@ class Seeder
       sender: Chirpy.person,
       conversation: contact.conversation
     )
-    contact.conversation.touch(:last_message_created_at)
+    contact.conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_answer(contact, category, question)
@@ -153,7 +153,7 @@ class Seeder
       sender: person,
       conversation: contact.conversation
     )
-    contact.conversation.touch(:last_message_created_at)
+    contact.conversation.update(last_message_created_at: DateTime.current)
   end
 
   def team_attributes

@@ -97,8 +97,9 @@ class Contact < ApplicationRecord
       direction: message.direction,
       sender: sender,
       recipient: person
-    )
-    conversation.touch(:last_message_created_at)
+    ).tap do |message|
+      conversation.update(last_message_created_at: message.created_at)
+    end
   end
 
   private

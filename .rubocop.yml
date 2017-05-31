@@ -35,6 +35,7 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Exclude:
     - 'lib/answer/certification.rb'
+    - 'lib/seeder.rb'
 
 Metrics/LineLength:
   Exclude:

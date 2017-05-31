@@ -18,22 +18,26 @@ class MessageSyncer
   private
 
   def external_message
-    organization.get_message(message_sid)
+    @external_message ||= organization.get_message(message_sid)
   end
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, :conversation, to: :contact
 
   def sync_message
-    conversation.messages.create!(
+    conversation.messages.create!(message_params).tap do |message|
+      conversation.update(last_message_created_at: message.created_at)
+    end
+  end
+
+  def message_params
+    {
       sid: external_message.sid,
       body: external_message.body,
       direction: external_message.direction,
       sent_at: external_message.date_sent,
-      external_created_at: external_message.date_created,
-      sender: person
-    )
-    conversation.touch(:last_message_created_at)
+      external_created_at: external_message.date_created
+    }.merge(sender: person)
   end
 
   def create_read_receipts(message)

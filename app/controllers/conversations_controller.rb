@@ -2,7 +2,6 @@ class ConversationsController < ApplicationController
   PAGE_LIMIT = 25
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
-  decorates_assigned :conversations
 
   def index
     @conversations = paginated(policy_scope(recent_conversations))

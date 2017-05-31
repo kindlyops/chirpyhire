@@ -5,10 +5,6 @@ class Conversation::LastMessageCreatedAt
     @conversation = conversation
   end
 
-  def to_s
-    label
-  end
-
   attr_reader :conversation
 
   def label
@@ -37,7 +33,7 @@ class Conversation::LastMessageCreatedAt
   end
 
   def time_ago_format
-    time_ago_in_words(time, include_seconds: true) << " ago"
+    time_ago_in_words(time, include_seconds: true) << ' ago'
   end
 
   def short_format
