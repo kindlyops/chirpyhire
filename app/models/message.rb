@@ -64,4 +64,8 @@ class Message < ApplicationRecord
   def summary
     body && body[0..30] || ''
   end
+
+  def touch_conversation
+    conversation.update(last_message_created_at: created_at)
+  end
 end

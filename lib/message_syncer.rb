@@ -25,9 +25,7 @@ class MessageSyncer
   delegate :person, :organization, :conversation, to: :contact
 
   def sync_message
-    conversation.messages.create!(message_params).tap do |message|
-      conversation.update(last_message_created_at: message.created_at)
-    end
+    conversation.messages.create!(message_params).tap(&:touch_conversation)
   end
 
   def message_params

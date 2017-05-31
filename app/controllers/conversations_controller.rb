@@ -4,7 +4,7 @@ class ConversationsController < ApplicationController
   decorates_assigned :conversation
 
   def index
-    @conversations = paginated(policy_scope(recent_conversations))
+    @conversations = paginated(policy_scope(inbox.recent_conversations))
 
     if inbox.conversations.exists?
       respond_to do |format|
@@ -25,10 +25,6 @@ class ConversationsController < ApplicationController
   private
 
   delegate :inbox_conversations, to: :inbox
-
-  def recent_conversations
-    inbox.conversations.by_recent_message
-  end
 
   def read_messages
     inbox_conversation.read_receipts.unread.each(&:read)
