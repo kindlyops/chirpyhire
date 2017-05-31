@@ -15,8 +15,6 @@ class Broadcaster::Message
 
   attr_reader :message
 
-  delegate :conversation, to: :contact
-
   def day
     conversation.day(message.external_created_at.to_date)
   end
