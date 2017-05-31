@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529220036) do
+ActiveRecord::Schema.define(version: 20170529223746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,13 +136,13 @@ ActiveRecord::Schema.define(version: 20170529220036) do
   end
 
   create_table "inbox_conversations", id: :serial, force: :cascade do |t|
-    t.integer "contact_id", null: false
+    t.integer "contact_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
     t.datetime "last_viewed_at"
     t.integer "inbox_id"
-    t.bigint "conversation_id"
+    t.bigint "conversation_id", null: false
     t.index ["contact_id"], name: "index_inbox_conversations_on_contact_id"
     t.index ["conversation_id"], name: "index_inbox_conversations_on_conversation_id"
     t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id"
@@ -191,12 +191,12 @@ ActiveRecord::Schema.define(version: 20170529220036) do
     t.string "direction", null: false
     t.datetime "sent_at"
     t.datetime "external_created_at"
-    t.integer "organization_id", null: false
+    t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sender_id", null: false
     t.integer "recipient_id"
-    t.bigint "conversation_id"
+    t.bigint "conversation_id", null: false
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"

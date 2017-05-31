@@ -4,7 +4,7 @@ RSpec.describe ReadReceiptsCreator do
   let(:team) { create(:team) }
   let(:organization) { team.organization }
   let(:contact) { create(:contact, team: team) }
-  let!(:message) { create(:message, sender: contact.person, organization: organization) }
+  let!(:message) { create(:message, sender: contact.person, conversation: contact.conversation) }
 
   subject { ReadReceiptsCreator.new(message, contact) }
 
@@ -12,7 +12,13 @@ RSpec.describe ReadReceiptsCreator do
     context 'with multiple conversations on the organization' do
       let!(:accounts) { create_list(:account, 3, :inbox, organization: organization) }
       let!(:inboxes) { accounts.map(&:inbox) }
-      let!(:conversations) { inboxes.map { |i| i.inbox_conversations.create(contact: contact) } }
+      let!(:conversations) {
+        inboxes.map do |i|
+          conversation = create(:conversation, contact: contact)
+          i.conversations << conversation
+          conversation
+        end
+      }
 
       context 'and the read receipts do not exist' do
         context 'and the contact and accounts are on the same team' do

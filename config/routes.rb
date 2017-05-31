@@ -7,11 +7,6 @@ Rails.application.routes.draw do
   end
 
   resource :health, only: :show
-
-  resources :messages, only: %i[index show], param: :contact_id do
-    resources :notes, only: %i[index create update destroy]
-  end
-
   resources :caregivers, only: :index, concerns: :paginatable
   resource :candidate, only: %i[show update], controller: 'ideal_candidates'
   resources :recruiting_ads, only: %i[index update]
@@ -19,13 +14,15 @@ Rails.application.routes.draw do
   post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
   resource :dashboard
 
+  resources :messages, only: %i[index show], param: :contact_id
   resources :contacts, only: [] do
+    resources :notes, only: %i[index create update destroy]
     resource :star, only: :create
     resources :messages, only: :create
   end
 
   resources :inboxes, only: [] do
-    resources :conversations, only: :index, concerns: :paginatable
+    resources :conversations, only: %i[index show], concerns: :paginatable
   end
 
   resources :organizations, only: %i[show update] do

@@ -1,23 +1,7 @@
 class MessagesController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
-  layout 'messages', only: 'index'
+  skip_after_action :verify_policy_scoped, only: :index
   decorates_assigned :conversation
-
-  def index
-    @conversations = policy_scope(InboxConversation)
-
-    if current_account.inbox_conversations.exists?
-      redirect_to_recent_conversation
-    else
-      render :index
-    end
-  end
-
-  def show
-    @conversation = authorize fetch_conversation, :show?
-    conversation.read_receipts.unread.each(&method(:read)) unless impersonating?
-    conversation.update(last_viewed_at: DateTime.current)
-  end
 
   def create
     @conversation = authorize fetch_conversation, :show?
@@ -27,18 +11,24 @@ class MessagesController < ApplicationController
     head :ok
   end
 
+  def index
+    redirect_to conversations_path
+  end
+
+  def show
+    @conversation = authorize fetch_conversation, :show?
+
+    redirect_to conversation_path
+  end
+
   private
 
-  def redirect_to_recent_conversation
-    redirect_to message_path(current_conversation.contact)
+  def conversations_path
+    inbox_conversations_path(current_inbox)
   end
 
-  def current_conversation
-    current_account.inbox_conversations.recently_viewed.first
-  end
-
-  def read(receipt)
-    receipt.update(read_at: DateTime.current)
+  def conversation_path
+    inbox_conversation_path(current_inbox, @conversation)
   end
 
   def create_message
@@ -57,12 +47,12 @@ class MessagesController < ApplicationController
     policy_scope(Message).where(
       recipient: @conversation.person,
       sender: current_account.person,
-      organization: current_organization
+      conversation: @conversation
     )
   end
 
   def fetch_conversation
-    current_account.inbox_conversations.find_by(contact: contact)
+    current_account.conversations.find_by(contact: contact)
   end
 
   def contact
@@ -70,11 +60,11 @@ class MessagesController < ApplicationController
   end
 
   def message_not_authorized
-    redirect_to message_path(contact), alert: error_message
+    redirect_to conversation_path, alert: error_message
   end
 
   def error_message
-    "Unfortunately #{@conversation.person_handle} has unsubscribed! You can't "\
+    "Unfortunately #{@conversation.handle} has unsubscribed! You can't "\
     'text them using ChirpyHire.'
   end
 end

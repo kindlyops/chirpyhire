@@ -1,8 +1,7 @@
 $(document).on('ready', function() {
-  var notes = $('#notes_tab:not([loaded])');
+  var notes = $('#notes_tab');
 
   if (notes.length) {
-
     $(document).on('focus', '#reply_container textarea', function() {
       $('#reply_container').addClass('has_focus');
     });
@@ -69,7 +68,6 @@ $(document).on('ready', function() {
         $(this).closest('form').submit();
       }
     });
-
-    notes.attr('loaded', true);
   }
+
 });

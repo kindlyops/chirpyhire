@@ -8,8 +8,9 @@ class Contact < ApplicationRecord
     super || team.organization
   end
 
-  has_many :inbox_conversations
   has_many :conversations
+  has_many :inbox_conversations, through: :conversations
+  has_many :messages, through: :conversations
 
   has_many :notes
 
@@ -79,10 +80,6 @@ class Contact < ApplicationRecord
     where(subscribed: false)
   end
 
-  def messages
-    organization.messages.where(sender: person).or(received_messages)
-  end
-
   def subscribe
     update(subscribed: true)
   end
@@ -91,8 +88,16 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def received_messages
-    organization.messages.where(recipient: person)
+  def create_message(message, sender)
+    conversation.messages.create(
+      sid: message.sid,
+      body: message.body,
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      direction: message.direction,
+      sender: sender,
+      recipient: person
+    )
   end
 
   private

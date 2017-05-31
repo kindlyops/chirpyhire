@@ -11,14 +11,14 @@ class IceBreaker
 
   def call
     accounts.find_each do |account|
-      inbox_conversation(account).update!(conversation: contact.conversation)
+      inbox_conversations(account).find_or_create_by(conversation: conversation)
     end
   end
 
-  def inbox_conversation(account)
-    account.inbox.inbox_conversations.find_or_create_by!(contact: contact)
+  def inbox_conversations(account)
+    account.inbox.inbox_conversations
   end
 
-  delegate :organization, to: :contact
+  delegate :organization, :conversation, to: :contact
   delegate :accounts, to: :organization
 end

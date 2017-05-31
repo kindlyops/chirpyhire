@@ -1,15 +1,14 @@
 class InboxConversation < ApplicationRecord
-  belongs_to :contact
   belongs_to :inbox
-  belongs_to :conversation, optional: true
+  belongs_to :conversation
 
   has_many :read_receipts
 
-  delegate :handle, to: :contact
+  delegate :contact, :messages, to: :conversation
   delegate :account, to: :inbox
 
   def self.contact(contact)
-    where(contact: contact)
+    joins(:conversation).where(conversations: { contact: contact })
   end
 
   def self.unread
@@ -21,24 +20,8 @@ class InboxConversation < ApplicationRecord
       .order('inbox_conversations.unread_count DESC')
   end
 
-  def self.by_handle
-    order('NULLIF(people.name, people.nickname) ASC')
-  end
-
   def self.read
     where(unread_count: 0)
-  end
-
-  def days
-    messages.by_recency.chunk(&:day).map(&method(:to_day))
-  end
-
-  def day(date)
-    result = messages.by_recency.chunk(&:day).find do |day, _|
-      day == date
-    end
-
-    to_day(result)
   end
 
   def unread?
@@ -49,16 +32,7 @@ class InboxConversation < ApplicationRecord
     !unread?
   end
 
-  delegate :messages, :person, to: :contact
-  delegate :handle, to: :person, prefix: true
-
   def to_builder
     Inbox::ConversationSerializer.new(self)
-  end
-
-  private
-
-  def to_day(day)
-    Conversation::Day.new(day)
   end
 end

@@ -2,15 +2,16 @@ class Organization < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
   has_many :owners, -> { owner }, class_name: 'Account'
-  has_many :inbox_conversations, through: :accounts
 
   has_many :teams
   has_many :contacts, through: :teams
+  has_many :conversations, through: :contacts
+  has_many :inbox_conversations, through: :contacts
+
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
 
   has_many :suggestions, class_name: 'IdealCandidateSuggestion'
-  has_many :messages
 
   belongs_to :recruiter, class_name: 'Account'
   has_one :ideal_candidate
@@ -32,7 +33,8 @@ class Organization < ApplicationRecord
       to: contact.phone_number, from: contact.team_phone_number, body: body
     )
     contact.update(reached: true) if sender != Chirpy.person
-    create_message(contact, sent_message, sender).tap do |message|
+
+    contact.create_message(sent_message, sender).tap do |message|
       Broadcaster::Message.broadcast(message)
     end
   end
@@ -46,19 +48,6 @@ class Organization < ApplicationRecord
   end
 
   private
-
-  def create_message(contact, message, sender)
-    messages.create(
-      sid: message.sid,
-      body: message.body,
-      sent_at: message.date_sent,
-      external_created_at: message.date_created,
-      direction: message.direction,
-      sender: sender,
-      recipient: contact.person,
-      conversation: contact.conversation
-    )
-  end
 
   def messaging_client
     @messaging_client ||= Messaging::Client.new(self)

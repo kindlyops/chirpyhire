@@ -5,13 +5,13 @@
         = image_tag note.account.person.avatar.url(:medium), class: 'author_image no-repeat thumb_36'
       - else
         span class=="author_image thumb_36 #{note.account.person.decorate.hero_pattern_classes}"
-  = form_for note, url: message_note_path(@conversation.contact, note), method: :put do |f|
+  = form_for note, url: contact_note_path(@conversation.contact, note), method: :put do |f|
     .message_input
       = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
     a#cancel_edit.btn.btn-small.btn-outline role="button" Cancel
     a#commit_edit.btn.btn-small.btn-primary role="button" ↵ Save Changes
 .message.first#note-show-container data-note-id==note.id
-  = form_for note, url: message_note_path(@conversation.contact, note), method: :delete, html: { class: 'destroy-note', hidden: true } do |f|
+  = form_for note, url: contact_note_path(@conversation.contact, note), method: :delete, html: { class: 'destroy-note', hidden: true } do |f|
   - if note.account == current_account
     .action_hover_container.stretch_btn_heights
       button.btn-unstyle.btn_msg_action.edit role="button" type="button" data-toggle="tooltip" data-placement="top" title="Edit note"

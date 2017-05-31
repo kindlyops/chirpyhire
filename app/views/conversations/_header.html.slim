@@ -83,8 +83,8 @@ header.chat-header
           = button_to contact_star_path(conversation.contact), class: 'star btn btn-link', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Star caregiver' do
             i.fa.fa-star-o
         - if controller_name == 'notes'
-          = link_to message_path(@conversation.contact), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
+          = link_to inbox_conversation_path(current_inbox, @conversation), class: 'channel-header-icon btn-unstyle active', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Hide notes' do
               i.fa.fa-sticky-note-o
         - else
-          = link_to message_notes_path(@conversation.contact), class: 'channel-header-icon btn-unstyle', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Show notes' do
+          = link_to contact_notes_path(@conversation.contact), class: 'channel-header-icon btn-unstyle', id: 'notes-toggle', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Show notes' do
               i.fa.fa-sticky-note-o

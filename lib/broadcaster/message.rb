@@ -15,14 +15,6 @@ class Broadcaster::Message
 
   attr_reader :message
 
-  def contact
-    @contact ||= contacts.find_by(person: person)
-  end
-
-  def conversation
-    contact.inbox_conversations.first
-  end
-
   def day
     conversation.day(message.external_created_at.to_date)
   end
@@ -31,27 +23,27 @@ class Broadcaster::Message
     thoughts.find { |thought| thought.messages.include?(message) }
   end
 
-  delegate :organization, :person, to: :message
-  delegate :contacts, to: :organization
+  delegate :conversation, :person, to: :message
+  delegate :contact, to: :conversation
   delegate :thoughts, to: :day
 
   def render_message
     return render_day if new_day?
     return render_thought if new_thought?
 
-    MessagesController.render partial: 'messages/message', locals: {
+    MessagesController.render partial: 'conversations/message', locals: {
       message: message, message_counter: message_counter
     }
   end
 
   def render_day
-    MessagesController.render partial: 'messages/day', locals: {
+    MessagesController.render partial: 'conversations/day', locals: {
       day: day
     }
   end
 
   def render_thought
-    MessagesController.render partial: 'messages/thought', locals: {
+    MessagesController.render partial: 'conversations/thought', locals: {
       thought: thought
     }
   end

@@ -1,14 +1,13 @@
 class Message < ApplicationRecord
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
-  belongs_to :organization
-  belongs_to :conversation, optional: true
+  belongs_to :conversation
 
   has_many :read_receipts
 
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
-  validates :organization, presence: true
+  validates :conversation, presence: true
 
   def self.by_recency
     order(:external_created_at, :id)

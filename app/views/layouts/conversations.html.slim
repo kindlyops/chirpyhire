@@ -12,7 +12,7 @@ html
           = render "components/sidebar"
           .app-content-container
             .messages
-              = content_tag :div, id: 'inbox', data: current_account.inbox.to_builder.target! do
+              = content_tag :div, id: 'inbox', data: current_inbox.to_builder.target! do
               main.conversation
                 = yield
     = render "components/account_dropdown"

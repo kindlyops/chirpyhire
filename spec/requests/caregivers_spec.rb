@@ -19,6 +19,11 @@ RSpec.describe 'Caregivers' do
         }
       end
 
+      before do
+        IceBreaker.call(pca)
+        IceBreaker.call(cna)
+      end
+
       context 'without zipcode filter' do
         it 'returns only PCA caregivers' do
           get caregivers_path, params: params
@@ -40,6 +45,10 @@ RSpec.describe 'Caregivers' do
         am.person.update(nickname: 'Bill AM')
         pm.person.update(nickname: 'Brett PM')
         hourly.person.update(nickname: 'Richard Hourly')
+        IceBreaker.call(live_in)
+        IceBreaker.call(am)
+        IceBreaker.call(pm)
+        IceBreaker.call(hourly)
       end
 
       context 'requesting live_in' do
@@ -165,12 +174,20 @@ RSpec.describe 'Caregivers' do
     context 'filtering starred' do
       let!(:unstarred) { create(:contact, team: team) }
 
+      before do
+        IceBreaker.call(unstarred)
+      end
+
       context 'with a starred contact' do
         let!(:starred) { create(:contact, starred: true, team: team) }
         let(:params) do
           {
             starred: true
           }
+        end
+
+        before do
+          IceBreaker.call(starred)
         end
 
         it 'only returns the starred' do
@@ -183,6 +200,11 @@ RSpec.describe 'Caregivers' do
         context 'and filtering public transportation' do
           let!(:starred_public) { create(:contact, :public_transportation, starred: true, team: team) }
           let!(:starred_personal) { create(:contact, :personal_transportation, starred: true, team: team) }
+
+          before do
+            IceBreaker.call(starred_public)
+            IceBreaker.call(starred_personal)
+          end
 
           let(:params) do
             {
@@ -204,6 +226,11 @@ RSpec.describe 'Caregivers' do
           let!(:starred_30341) { create(:contact, :"30341", starred: true, team: team) }
           let!(:starred_30342) { create(:contact, :"30342", starred: true, team: team) }
 
+          before do
+            IceBreaker.call(starred_30341)
+            IceBreaker.call(starred_30342)
+          end
+
           let(:params) do
             {
               starred: true,
@@ -223,6 +250,11 @@ RSpec.describe 'Caregivers' do
         context 'and filtering CNA certification' do
           let!(:starred_cna) { create(:contact, :cna, starred: true, team: team) }
           let!(:starred_pca) { create(:contact, :pca, starred: true, team: team) }
+
+          before do
+            IceBreaker.call(starred_cna)
+            IceBreaker.call(starred_pca)
+          end
 
           let(:params) do
             {
@@ -244,6 +276,11 @@ RSpec.describe 'Caregivers' do
           let!(:starred_am) { create(:contact, :am, starred: true, team: team) }
           let!(:starred_pm) { create(:contact, :pm, starred: true, team: team) }
 
+          before do
+            IceBreaker.call(starred_am)
+            IceBreaker.call(starred_pm)
+          end
+
           let(:params) do
             {
               starred: true,
@@ -263,6 +300,11 @@ RSpec.describe 'Caregivers' do
         context 'and filtering 6+ years experience' do
           let!(:starred_six_or_more) { create(:contact, :six_or_more, starred: true, team: team) }
           let!(:starred_less_than_one) { create(:contact, :less_than_one, starred: true, team: team) }
+
+          before do
+            IceBreaker.call(starred_six_or_more)
+            IceBreaker.call(starred_less_than_one)
+          end
 
           let(:params) do
             {
@@ -285,6 +327,11 @@ RSpec.describe 'Caregivers' do
     context 'sort order' do
       let!(:pca) { create(:contact, :pca, team: team) }
       let!(:cna) { create(:contact, :cna, team: team) }
+
+      before do
+        IceBreaker.call(pca)
+        IceBreaker.call(cna)
+      end
 
       it 'returns the newest records first' do
         get caregivers_path

@@ -2,7 +2,7 @@ import React from 'react'
 
 class InboxItem extends React.Component {
   href() {
-    return '/messages/' + this.props.contact_id;
+    return '/inboxes/' + this.props.inboxId + '/conversations/' + this.props.id;
   }
 
   classNames() {

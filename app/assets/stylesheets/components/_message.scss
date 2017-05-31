@@ -15,7 +15,7 @@
   padding: 1px 40px 2px 0;
 
   &.standalone {
-    border: 1px solid #E1F4E6;
+    border: 1px solid #eeeeef;
     border-radius: .25rem;
     padding-top: .5rem !important;
     padding-bottom: .5rem !important;
@@ -150,6 +150,13 @@
   }
 
   &:hover {
+
+    &.standalone {
+      .action_hover_container.stretch_btn_heights {
+        display: none;
+      }
+    }
+
     .action_hover_container {
       display: block;
 

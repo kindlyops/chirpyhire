@@ -1,8 +1,6 @@
 $(document).on('ready', function() {
-
-  var messages = $('.messages:not([loaded])');
-
-  if(messages.length) {
+  var messages = $('.messages');
+  if (messages.length) {
     var composer = $('form.new_message .message-input');
 
     composer.keydown(function(e) {
@@ -58,11 +56,7 @@ $(document).on('ready', function() {
       $(window).resize(resizeScroller);
       resizeScroller();
     }
-
-    messages.attr('loaded', true);
-  }
-
-  if ($('.messages').length) {
+    
     $('#msgs_scroller_div').scrollTop($('#msgs_div').prop('scrollHeight') + 100);
   }
 });

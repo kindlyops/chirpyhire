@@ -37,8 +37,7 @@ class Seeder
   def seed_demo_contact
     FactoryGirl.create(
       :contact, :complete,
-      organization: organization,
-      team: team
+      contact_params
     ).tap do |contact|
       contact.person.update(
         nickname: ENV.fetch('DEMO_NICKNAME'),
@@ -47,12 +46,19 @@ class Seeder
     end
   end
 
+  def contact_params
+    {
+      subscribed: true,
+      organization: organization,
+      team: team
+    }
+  end
+
   def complete_contacts
     seed_messages(seed_demo_contact)
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
-      organization: organization,
-      team: team
+      contact_params
     )
     contacts.each(&method(:seed_messages))
   end
@@ -71,9 +77,8 @@ class Seeder
   end
 
   def seed_question_and_answer(contact, category, question)
-    person = contact.person
-    seed_question(person, question)
-    seed_answer(person, category, question)
+    seed_question(contact, question)
+    seed_answer(contact, category, question)
   end
 
   def seed_start(contact)
@@ -84,20 +89,20 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: Chirpy.person,
-      organization: organization
+      conversation: contact.conversation
     )
   end
 
-  def seed_question(person, question)
+  def seed_question(contact, question)
     body = question.body
-    person.received_messages.create!(
+    contact.person.received_messages.create!(
       body: body,
       sid: SecureRandom.uuid,
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
-      organization: organization
+      conversation: contact.conversation
     )
   end
 
@@ -110,18 +115,19 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
-      organization: organization
+      conversation: contact.conversation
     )
   end
 
-  def seed_answer(person, category, question)
+  def seed_answer(contact, category, question)
+    person = contact.person
     choice = person.candidacy.send(category.to_sym)
     return if choice.nil?
     choice = choice.to_sym if choice.respond_to?(:to_sym)
     answer = "Answer::#{category.camelcase}".constantize.new(question)
 
     body = answer_body(answer, choice, category)
-    create_answer(person, body)
+    create_answer(contact, body)
   end
 
   def answer_body(answer, choice, category)
@@ -133,7 +139,8 @@ class Seeder
     end
   end
 
-  def create_answer(person, body)
+  def create_answer(contact, body)
+    person = contact.person
     person.sent_messages.create!(
       body: body,
       sid: SecureRandom.uuid,
@@ -141,7 +148,7 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: person,
-      organization: organization
+      conversation: contact.conversation
     )
   end
 

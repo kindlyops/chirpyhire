@@ -1,18 +1,45 @@
 class ConversationsController < ApplicationController
   PAGE_LIMIT = 25
+  layout 'conversations', only: %i[show index]
+  decorates_assigned :conversation
 
   def index
-    @conversations = paginated(policy_scope(inbox_conversations))
+    @conversations = paginated(policy_scope(conversations))
 
-    respond_to do |format|
-      format.json
+    if inbox.conversations.exists?
+      respond_to do |format|
+        format.json
+        format.html { redirect_to current_conversation_path }
+      end
+    else
+      render :index
     end
+  end
+
+  def show
+    @conversation = authorize(conversations.find(params[:id]))
+    read_messages unless impersonating?
+    inbox_conversation.update(last_viewed_at: DateTime.current)
   end
 
   private
 
-  def inbox_conversations
-    inbox.inbox_conversations.joins(contact: :person).recently_viewed.by_handle
+  delegate :conversations, :inbox_conversations, to: :inbox
+
+  def read_messages
+    inbox_conversation.read_receipts.unread.each(&:read)
+  end
+
+  def inbox_conversation
+    inbox.inbox_conversations.find_by(conversation: @conversation)
+  end
+
+  def current_conversation_path
+    inbox_conversation_path(inbox, current_conversation)
+  end
+
+  def current_conversation
+    inbox_conversations.recently_viewed.first.conversation
   end
 
   def inbox

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_organization
+  helper_method :current_inbox
   helper_method :impersonating?
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -12,6 +13,10 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     @current_organization ||= current_account.organization
+  end
+
+  def current_inbox
+    @current_inbox ||= current_account.inbox
   end
 
   def impersonated

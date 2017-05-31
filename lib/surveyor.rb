@@ -5,7 +5,7 @@ class Surveyor
 
   def start
     if candidacy.complete?
-      notify_contact_ready_for_review(contact_team_conversations)
+      notify_contact_ready_for_review(contact_team_inbox_conversations)
       contact.update(screened: true)
       send_message(complete_welcome.body)
     elsif candidacy.pending?
@@ -30,7 +30,7 @@ class Surveyor
 
   private
 
-  def contact_team_conversations
+  def contact_team_inbox_conversations
     team.inbox_conversations.contact(contact)
   end
 
@@ -44,15 +44,18 @@ class Surveyor
     update_candidacy(message)
     survey.complete
 
-    notify_contact_ready_for_review(person_conversations)
+    notify_contact_ready_for_review(person_inbox_conversations)
   end
 
-  def person_conversations
+  def person_inbox_conversations
     account_ids = Membership.where(team: person.teams).pluck(:account_id)
     inbox_ids = Inbox.where(account_id: account_ids).pluck(:id)
     contact_ids = person.contacts.subscribed.pluck(:id)
+    conversation_ids = Conversation.where(contact_id: contact_ids).pluck(:id)
 
-    InboxConversation.where(inbox_id: inbox_ids, contact_id: contact_ids)
+    InboxConversation.where(
+      inbox_id: inbox_ids, conversation_id: conversation_ids
+    )
   end
 
   def send_message(message)
@@ -74,10 +77,14 @@ class Surveyor
     candidacy.update!(contact: contact, state: :in_progress)
   end
 
-  def notify_contact_ready_for_review(conversations)
-    conversations.find_each do |conversation|
-      NotificationMailer.contact_ready_for_review(conversation).deliver_later
+  def notify_contact_ready_for_review(inbox_conversations)
+    inbox_conversations.find_each do |inbox_conversation|
+      ready_for_review_mailer(inbox_conversation).deliver_later
     end
+  end
+
+  def ready_for_review_mailer(inbox_conversation)
+    NotificationMailer.contact_ready_for_review(inbox_conversation)
   end
 
   def complete_welcome

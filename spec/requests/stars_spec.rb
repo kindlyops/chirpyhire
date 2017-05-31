@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Stars' do
-  let(:account) { create(:account, :team) }
+  let(:account) { create(:account, :inbox, :team) }
   let(:team) { account.teams.first }
+  let(:inbox) { account.inbox }
 
   before do
     sign_in(account)
@@ -10,11 +11,16 @@ RSpec.describe 'Stars' do
 
   describe '#create' do
     let!(:contact) { create(:contact, team: team) }
+    let(:conversation) { inbox.conversation(contact) }
 
-    it 'redirects to messages path' do
+    before do
+      IceBreaker.call(contact)
+    end
+
+    it 'redirects to inbox conversation path' do
       post contact_star_path(contact)
 
-      expect(response).to redirect_to(message_path(contact))
+      expect(response).to redirect_to(inbox_conversation_path(inbox, conversation))
     end
 
     context 'contact starred' do
