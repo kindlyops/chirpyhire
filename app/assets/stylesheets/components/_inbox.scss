@@ -7,8 +7,8 @@
     flex-direction: column;
     min-width: 17.6rem;
     width: 17.6rem;
-    border-left: 1px solid #E1F4E6;
-    border-right: 1px solid #E1F4E6;
+    border-left: 1px solid #eeeeef;
+    border-right: 1px solid #eeeeef;
     height: 100vh;
 
     .autosizer-wrapper {
@@ -21,7 +21,7 @@
       overflow-y: auto;
 
       .InboxItem {
-        border-bottom: 1px solid #E1F4E6;
+        border-bottom: 1px solid #eeeeef;
         padding: 10px 10px 10px 15px;
         background-color: #fff;
         cursor: pointer;
@@ -46,7 +46,7 @@
 
         &:hover, &:focus {
           text-decoration: none;
-          background-color: lighten(#E1F4E6, 5%);
+          background-color: lighten(#eeeeef, 5%);
 
           .handle {
             color: darken($brand-primary, 10%);
@@ -105,7 +105,7 @@
     }
 
     .InboxDropdown {
-      border-bottom: 1px solid #E1F4E6;
+      border-bottom: 1px solid #eeeeef;
       height: auto;
       padding: 0;
       min-height: 1.7rem;

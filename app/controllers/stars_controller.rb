@@ -8,7 +8,7 @@ class StarsController < ApplicationController
   private
 
   def inbox
-    @inbox ||= current_account.inbox
+    @inbox ||= current_inbox
   end
 
   def conversation

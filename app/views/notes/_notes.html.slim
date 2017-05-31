@@ -5,7 +5,7 @@
         .heading_row
           h2#notes_tab_header.heading_text.overflow_ellipsis
             span.overflow_ellipsis Notes
-          = link_to message_path(@conversation.contact), class: 'btn-basic close', role: 'button' do
+          = link_to inbox_conversation_path(current_inbox, @conversation), class: 'btn-basic close', role: 'button' do
               span &times;
       #notes_scroller.flex_content_scroller
         #notes_container
@@ -22,7 +22,7 @@
           - if current_account.person.avatar.url.present?
             = image_tag current_account.person.avatar.url(:medium), class: 'no-repeat author_image thumb_36'
             .inline_message_input_container.less-negative-margin-top
-              = form_for @conversation.contact.notes.build(account: current_account), url: message_notes_path(@conversation.contact) do |f|
+              = form_for @conversation.contact.notes.build(account: current_account), url: contact_notes_path(@conversation.contact) do |f|
                 .message_input
                   = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
             .reply_container_info
@@ -31,7 +31,7 @@
           - else
             span class=="author_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
             .inline_message_input_container
-              = form_for @conversation.contact.notes.build(account: current_account), url: message_notes_path(@conversation.contact) do |f|
+              = form_for @conversation.contact.notes.build(account: current_account), url: contact_notes_path(@conversation.contact) do |f|
                 .message_input
                   = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
             .reply_container_info

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Messages' do
+RSpec.describe 'Conversations' do
   let(:account) { create(:account, :inbox, :team_with_phone_number) }
+  let(:inbox) { account.inbox }
   let(:team) { account.teams.first }
 
   before do
@@ -10,7 +11,7 @@ RSpec.describe 'Messages' do
 
   context 'without any caregivers' do
     it 'provides a useful empty state message' do
-      get messages_path
+      get inbox_conversations_path(inbox)
       expect(response.body).to include('No one to message yet...')
     end
   end
@@ -18,6 +19,7 @@ RSpec.describe 'Messages' do
   context 'with caregivers' do
     let!(:current_contact) { create(:contact, team: team) }
     let!(:with_unread_messages) { create(:contact, team: team) }
+    let(:current_conversation) { inbox.conversation(current_contact) }
 
     before do
       IceBreaker.call(current_contact)
@@ -27,19 +29,19 @@ RSpec.describe 'Messages' do
 
     context 'with a current conversation' do
       before do
-        get message_path(current_contact)
+        get inbox_conversation_path(inbox, current_conversation)
       end
 
       it 'redirects to the current conversation' do
-        get messages_path
-        expect(response).to redirect_to(message_path(current_contact))
+        get inbox_conversations_path(inbox)
+        expect(response).to redirect_to(inbox_conversation_path(inbox, current_conversation))
       end
     end
 
     context 'without a current conversation' do
       it 'redirects to the caregiver with unread messages' do
-        get messages_path
-        expect(response).to redirect_to(message_path(with_unread_messages))
+        get inbox_conversations_path(inbox)
+        expect(response).to redirect_to(inbox_conversation_path(inbox, current_conversation))
       end
     end
   end

@@ -1,9 +1,0 @@
-#messages_container role="main"
-  #msgs_scroller_div.message_pane_scroller data-channel='messages' data-contact-id==@conversation.contact_id
-    #end_div
-      #end_display_div
-        #end_display_padder
-        = render partial: "messages/end_display_meta", locals: { contact: @conversation.contact }
-        #end_display_status hidden=true Retrieving history...
-    #msgs_div.msgs_holder
-      = render partial: "messages/day", collection: @conversation.days

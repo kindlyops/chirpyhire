@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  layout 'messages', only: 'index'
+  layout 'conversations', only: 'index'
   decorates_assigned :conversation
 
   before_action :authorize_conversation
@@ -46,19 +46,19 @@ class NotesController < ApplicationController
   end
 
   def note_path
-    message_note_path(@conversation.contact, @note)
+    contact_note_path(@conversation.contact, @note)
   end
 
   def notes_path
-    message_notes_path(@conversation.contact)
+    contact_notes_path(@conversation.contact)
   end
 
   def fetch_conversation
-    current_account.inbox_conversations.find_by(contact: contact)
+    current_account.conversations.find_by(contact: contact)
   end
 
   def contact
-    @contact ||= authorize Contact.find(params[:message_contact_id]), :show?
+    @contact ||= authorize Contact.find(params[:contact_id]), :show?
   end
 
   def new_note

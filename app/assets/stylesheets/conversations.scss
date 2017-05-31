@@ -1,13 +1,13 @@
 $blue-gray: #91A3B0;
 
-@import "messages/client_body";
-@import "messages/header";
-@import "messages/container";
-@import "messages/footer";
-@import "messages/day";
-@import "messages/end_display_meta";
-@import "messages/notes";
-@import "messages/utilities";
+@import "conversations/client_body";
+@import "conversations/header";
+@import "conversations/container";
+@import "conversations/footer";
+@import "conversations/day";
+@import "conversations/end_display_meta";
+@import "conversations/notes";
+@import "conversations/utilities";
 
 .messages {
   display: flex;
