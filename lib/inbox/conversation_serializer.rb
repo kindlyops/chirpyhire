@@ -25,8 +25,12 @@ class Inbox::ConversationSerializer
   attr_reader :inbox_conversation
 
   def add_message(json)
-    json.timestamp message.conversation_day.label
+    json.timestamp timestamp
     json.summary message.summary
+  end
+
+  def timestamp
+    conversation.decorate.last_message_created_at.label
   end
 
   def message

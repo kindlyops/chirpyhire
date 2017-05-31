@@ -6,6 +6,10 @@ class Conversation < ApplicationRecord
 
   delegate :person, :handle, to: :contact
 
+  def self.by_recent_message
+    order(last_message_created_at: :desc)
+  end
+
   def unread_count(inbox)
     inbox_conversations.find_by(inbox: inbox).unread_count
   end

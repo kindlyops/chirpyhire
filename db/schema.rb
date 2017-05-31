@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170529223746) do
+ActiveRecord::Schema.define(version: 20170531215542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 20170529223746) do
 
   create_table "conversations", force: :cascade do |t|
     t.bigint "contact_id", null: false
+    t.datetime "last_message_created_at"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
   end
 

@@ -58,7 +58,7 @@ class Message < ApplicationRecord
   end
 
   def conversation_day
-    Conversation::Day.new([created_at, [self]])
+    Conversation::Day.new([created_at.to_date, [self]])
   end
 
   def summary
