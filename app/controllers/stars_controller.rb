@@ -2,17 +2,13 @@ class StarsController < ApplicationController
   def create
     contact.update(starred: !contact.starred)
 
-    redirect_to inbox_conversation_path(inbox, conversation)
+    redirect_to inbox_conversation_path(current_inbox, conversation)
   end
 
   private
 
-  def inbox
-    @inbox ||= current_inbox
-  end
-
   def conversation
-    @conversation ||= inbox.conversations.find_by(contact: contact)
+    @conversation ||= current_inbox.conversations.find_by(contact: contact)
   end
 
   def contact

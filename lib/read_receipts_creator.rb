@@ -17,21 +17,21 @@ class ReadReceiptsCreator
   end
 
   def call
-    contact_team_conversations.find_each do |conversation|
-      receipt = conversation.read_receipts.find_by(message: message)
+    contact_team_inbox_conversations.find_each do |inbox_conversation|
+      receipt = inbox_conversation.read_receipts.find_by(message: message)
       next if receipt.present?
 
-      create_read_receipt(conversation)
+      create_read_receipt(inbox_conversation)
     end
   end
 
-  def contact_team_conversations
+  def contact_team_inbox_conversations
     team.inbox_conversations.contact(contact)
   end
 
-  def create_read_receipt(conversation)
-    receipt = conversation.read_receipts.create!(message: message)
-    contact_waiting_job.perform_later(conversation, receipt)
+  def create_read_receipt(inbox_conversation)
+    receipt = inbox_conversation.read_receipts.create!(message: message)
+    contact_waiting_job.perform_later(inbox_conversation, receipt)
   end
 
   def contact_waiting_job

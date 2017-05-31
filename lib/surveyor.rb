@@ -78,9 +78,13 @@ class Surveyor
   end
 
   def notify_contact_ready_for_review(inbox_conversations)
-    inbox_conversations.find_each do |conversation|
-      NotificationMailer.contact_ready_for_review(conversation).deliver_later
+    inbox_conversations.find_each do |inbox_conversation|
+      ready_for_review_mailer(inbox_conversation).deliver_later
     end
+  end
+
+  def ready_for_review_mailer(inbox_conversation)
+    NotificationMailer.contact_ready_for_review(inbox_conversation)
   end
 
   def complete_welcome

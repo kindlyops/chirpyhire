@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ContactWaiting do
-  let(:conversation) { create(:inbox_conversation) }
-  let(:read_receipt) { create(:read_receipt, inbox_conversation: conversation) }
+  let(:inbox_conversation) { create(:inbox_conversation) }
+  let(:read_receipt) { create(:read_receipt, inbox_conversation: inbox_conversation) }
 
-  subject { ContactWaiting.new(conversation, read_receipt) }
+  subject { ContactWaiting.new(inbox_conversation, read_receipt) }
 
   describe '#call' do
     context 'read_receipt is read' do
@@ -12,7 +12,7 @@ RSpec.describe ContactWaiting do
         read_receipt.update(read_at: Time.current)
       end
 
-      it 'does not send an email to the conversation account' do
+      it 'does not send an email to the inbox_conversation account' do
         expect {
           subject.call
         }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
@@ -22,10 +22,10 @@ RSpec.describe ContactWaiting do
     context 'read_receipt is not read' do
       context 'and a more recent read_receipt is not read' do
         before do
-          create(:read_receipt, inbox_conversation: conversation, created_at: 5.minutes.from_now)
+          create(:read_receipt, inbox_conversation: inbox_conversation, created_at: 5.minutes.from_now)
         end
 
-        it 'does not send an email to the conversation account' do
+        it 'does not send an email to the inbox_conversation account' do
           expect {
             subject.call
           }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
@@ -34,10 +34,10 @@ RSpec.describe ContactWaiting do
 
       context 'and a past read_receipt is not read' do
         before do
-          create(:read_receipt, inbox_conversation: conversation, created_at: 10.days.ago)
+          create(:read_receipt, inbox_conversation: inbox_conversation, created_at: 10.days.ago)
         end
 
-        it 'sends an email to the conversation account' do
+        it 'sends an email to the inbox_conversation account' do
           expect {
             subject.call
           }.to have_enqueued_job(ActionMailer::DeliveryJob)
@@ -48,7 +48,7 @@ RSpec.describe ContactWaiting do
         end
       end
 
-      it 'sends an email to the conversation account' do
+      it 'sends an email to the inbox_conversation account' do
         expect {
           subject.call
         }.to have_enqueued_job(ActionMailer::DeliveryJob)

@@ -37,9 +37,7 @@ class Seeder
   def seed_demo_contact
     FactoryGirl.create(
       :contact, :complete,
-      subscribed: true,
-      organization: organization,
-      team: team
+      contact_params
     ).tap do |contact|
       contact.person.update(
         nickname: ENV.fetch('DEMO_NICKNAME'),
@@ -48,13 +46,19 @@ class Seeder
     end
   end
 
+  def contact_params
+    {
+      subscribed: true,
+      organization: organization,
+      team: team
+    }
+  end
+
   def complete_contacts
     seed_messages(seed_demo_contact)
     contacts = FactoryGirl.create_list(
       :contact, ENV.fetch('DEMO_SEED_AMOUNT').to_i, :complete,
-      subscribed: true,
-      organization: organization,
-      team: team
+      contact_params
     )
     contacts.each(&method(:seed_messages))
   end
