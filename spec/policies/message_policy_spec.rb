@@ -39,6 +39,10 @@ RSpec.describe MessagePolicy do
       let(:contact) { create(:contact, team: other_team) }
       let!(:message) { create(:message, conversation: contact.conversation, sender: contact.person) }
 
+      before do
+        IceBreaker.call(contact)
+      end
+
       context 'account is on a different team than the message contact' do
         it 'does include the message' do
           expect(subject.resolve).to include(message)

@@ -7,7 +7,7 @@ class MessagePolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(conversation: organization.conversations)
+      scope.where(conversation: account.conversations)
     end
   end
 end

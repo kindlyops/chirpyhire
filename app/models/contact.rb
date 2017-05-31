@@ -88,6 +88,18 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
+  def create_message(message, sender)
+    conversation.messages.create(
+      sid: message.sid,
+      body: message.body,
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      direction: message.direction,
+      sender: sender,
+      recipient: person
+    )
+  end
+
   private
 
   def set_last_reply_at

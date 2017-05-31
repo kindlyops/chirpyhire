@@ -33,7 +33,8 @@ class Organization < ApplicationRecord
       to: contact.phone_number, from: contact.team_phone_number, body: body
     )
     contact.update(reached: true) if sender != Chirpy.person
-    create_message(contact, sent_message, sender).tap do |message|
+
+    contact.create_message(sent_message, sender).tap do |message|
       Broadcaster::Message.broadcast(message)
     end
   end
@@ -47,18 +48,6 @@ class Organization < ApplicationRecord
   end
 
   private
-
-  def create_message(contact, message, sender)
-    contact.conversation.messages.create(
-      sid: message.sid,
-      body: message.body,
-      sent_at: message.date_sent,
-      external_created_at: message.date_created,
-      direction: message.direction,
-      sender: sender,
-      recipient: contact.person
-    )
-  end
 
   def messaging_client
     @messaging_client ||= Messaging::Client.new(self)
