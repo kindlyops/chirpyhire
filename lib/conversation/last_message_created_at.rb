@@ -8,6 +8,8 @@ class Conversation::LastMessageCreatedAt
   attr_reader :conversation
 
   def label
+    return '' if time.blank?
+
     return time_ago_format if past_hour?
     return short_format if today?
     return 'Yesterday' if yesterday?
