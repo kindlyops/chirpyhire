@@ -6,8 +6,6 @@ json.array! @conversations do |conversation|
   json.handle conversation.contact.handle
   json.timestamp conversation.decorate.last_message_created_at.label
   json.unread_count conversation.unread_count(current_inbox)
-  
-  if message.present?
-    json.summary message.summary 
-  end
+
+  json.summary(message.summary) if message.present?
 end
