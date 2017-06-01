@@ -141,6 +141,12 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
+      it 'creates a conversation' do
+        expect {
+          post :create, params: params
+        }.to change { Conversation.count }.by(1)
+      end
+
       it 'creates a candidacy' do
         expect {
           post :create, params: params
@@ -230,6 +236,12 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Person.count }.by(1)
+      end
+
+      it 'creates a conversation' do
+        expect {
+          delete :destroy, params: params
+        }.to change { Conversation.count }.by(1)
       end
 
       it 'creates a candidacy' do
