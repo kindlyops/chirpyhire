@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
     current_account
   end
 
+  def true_organization
+    @true_organization ||= true_account.organization
+  end
+
   private
 
   def user_not_authorized(exception)
@@ -48,9 +52,5 @@ class ApplicationController < ActionController::Base
 
   def impersonating?
     current_account != true_account
-  end
-
-  def true_organization
-    @true_organization ||= true_account.organization
   end
 end
