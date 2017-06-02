@@ -1,0 +1,332 @@
+.profile {
+  min-width: 24rem;
+  width: 24rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: 100vh;
+  padding: 0 1rem;
+
+  .profile-header {
+    padding: 1rem 0;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .profile-image {
+    height: 64px;
+  }
+
+  .profile-handle {
+    display: flex;
+    min-width: 1px;
+    user-select: text;
+    margin: 0 0 -2px;
+    line-height: 1.3;
+    font-size: 1.125rem;
+    font-weight: 900;
+    padding: 0 .1rem 0 1.3rem;
+    color: #2C2D30;
+    align-items: baseline;
+  }
+
+  .profile-star {
+    i.fa {
+      font-size: 2rem;
+    }
+  }
+
+  .profile-notes {
+    height: 20%;
+
+
+    .conversation {
+      display: block;
+
+      #note-edit-container {
+        border-top: 1px solid #D4D4D9;
+        border-bottom: 1px solid #D4D4D9;
+
+        form .btn {
+          margin-right: .25rem;
+        }
+
+        a.btn {
+          color: #fff;
+        }
+
+        .message_input {
+          overflow: auto;
+          min-height: 26px;
+          height: auto;
+          background: #fff;
+          user-select: auto;
+          width: 100%;
+          -webkit-appearance: none;
+          box-shadow: none;
+          outline: 0;
+          resize: none !important;
+          margin: 0 0 .5rem;
+          font-size: 15px;
+          line-height: 1.2rem;
+          color: #3D3C40;
+        }
+
+        .edit_note {
+          margin: 7px 0;
+          margin-left: 56px;
+          padding-right: .5rem;
+        }
+      }
+
+      .message {
+        padding-right: 10px;
+
+        .action_hover_container {
+          top: -8px;
+        }
+
+        .message_gutter {
+          width: 56px;
+        }
+
+        .message_content {
+          margin-left: 56px;
+        }
+
+        &.selected {
+          border-top: 0;
+          padding-top: 7px!important;
+          padding-bottom: 0!important;
+          padding-right: 10px;
+        }
+      }
+    }
+
+    .notes {
+      .day_container {
+        .message:first-child, .message:nth-child(2) {
+          margin-top: 10px;
+        }
+        .message {
+          padding-bottom: 4px;
+        }
+      }
+    }
+
+    .message_input {
+      width: 100%;
+      color: #3D3C40;
+      height: auto;
+      -webkit-appearance: none;
+      box-shadow: none;
+      outline: 0;
+      resize: none !important;
+      margin: 0 0 .5rem;
+      font-size: 15px;
+      line-height: 1.2rem;
+
+      textarea {
+        max-height: 10rem;
+        min-height: 36px;
+        padding: 7px 30px 7px 9px;
+        user-select: text;
+
+        &::placeholder {
+          opacity: .375;
+        }
+      }
+    }
+
+    #new_note {
+      textarea {
+        margin-top: 4px;
+      }
+    }
+
+    #reply_container {
+      min-height: 78px;
+      margin-top: 10px;
+      margin-bottom: 90px;
+      margin-left: 10px;
+
+      .inline_message_input_container {
+        margin-top: -46px;
+        margin-left: 46px;
+        position: relative;
+        z-index: 1;
+
+        &.less-negative-margin-top {
+          margin-top: -40px;
+        }
+
+        form {
+          margin-top: 4px;
+          margin-left: 0;
+          width: 100%;
+          padding-right: .5rem;
+          margin: 3px 0;
+        }
+      }
+
+      &.has_focus {
+        .author_image {
+          opacity: 1;
+        }
+
+        textarea {
+          &::placeholder {
+            opacity: 1;
+          }
+        }
+
+        .reply_container_info {
+          height: 32px;
+
+          .reply_broadcast_buttons_container {
+            margin-top: 0;
+            opacity: 1;
+          }
+        }
+      }
+
+      .reply_container_info {
+        margin-left: 46px;
+        position: relative;
+        padding-top: 3px;
+        font-size: 13px;
+        height: 0;
+        transition: height .15s ease-out 0s;
+
+        .reply_broadcast_label_container {
+          flex: 1;
+          margin-right: .5rem;
+          min-width: 0;
+          margin-bottom: 0;
+          font-weight: 400;
+          color: #555459;
+          display: flex;
+          align-items: center;
+        }
+
+        .reply_broadcast_buttons_container {
+          position: absolute;
+          width: 100%;
+          margin-top: -36px;
+          display: flex;
+          align-items: center;
+          opacity: 0;
+          transition: all .15s ease-out 0s;
+
+          .note_send {
+            float: right;
+            margin-right: .5rem;
+          }
+        }
+      }
+
+      .author_image {
+        opacity: .5;
+      }
+    }
+
+    .conversation_details {
+      display: block;
+      z-index: 50;
+      margin-top: 12px;
+      margin-left: 7px;
+      margin-right: 10px;
+
+      .author_image {
+        float: left;
+        margin: 0 .5rem 0 .3rem;
+        flex: none;
+      }
+
+      .member_info {
+        line-height: 1.2rem;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .profile-star, .profile-main-filters {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .profile-phone-number {
+    display: flex;
+    white-space: nowrap;
+    margin-right: .4rem;
+    align-items: center;
+    margin-top: 5px;
+    padding-left: 1.3rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.16;
+  }
+
+  .profile-detail-item {
+    display: flex;
+    justify-content: space-between;
+
+    .profile-detail-value.availability {
+      display: flex;
+
+      .profile-detail-subvalue {
+        padding: 0 .25rem;
+      }
+    }
+  }
+
+  .section-title {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: .25rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-bottom: .5rem;
+
+    &.profile-section-title {
+      display: flex;
+      justify-content: space-between;
+
+      .profile-main-filters {
+        font-weight: normal;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+
+        .profile-near-filter {
+          padding: 0 .25rem;
+        }
+      }
+    }
+  }
+
+  .profile-header {
+    display: flex;
+
+    .profile-header-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  .profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 6rem;
+  }
+
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  border-left: 1px solid #eeeeef;
+}

@@ -1,6 +1,9 @@
 class Person::CprFirstAid < Person::Attribute
   def label
-    'CPR / 1st Aid'
+    return 'Unknown' if candidacy.cpr_first_aid.nil?
+    return 'CPR / 1st Aid' if candidacy.cpr_first_aid.present?
+
+    'No CPR / 1st Aid'
   end
 
   def to_s
@@ -13,7 +16,8 @@ class Person::CprFirstAid < Person::Attribute
 
   def icon_class
     return 'fa-question' if candidacy.cpr_first_aid.nil?
+    return 'fa-medkit' if candidacy.cpr_first_aid.present?
 
-    'fa-medkit'
+    'fa-times-circle'
   end
 end

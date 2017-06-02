@@ -1,5 +1,5 @@
 $(document).on('ready', function() {
-  var notes = $('#notes_tab');
+  var notes = $('.profile-notes');
 
   if (notes.length) {
     $(document).on('focus', '#reply_container textarea', function() {

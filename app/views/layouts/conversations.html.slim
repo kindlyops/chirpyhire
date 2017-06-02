@@ -13,8 +13,7 @@ html
           .app-content-container
             .messages
               = content_tag :div, id: 'inbox', data: current_inbox.to_builder.target! do
-              main.conversation
-                = yield
+              = yield
     = render "components/account_dropdown"
     = render partial: "components/modal"
     = render "layouts/script" unless Rails.env.test?

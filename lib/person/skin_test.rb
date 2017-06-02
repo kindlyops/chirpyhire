@@ -1,6 +1,9 @@
 class Person::SkinTest < Person::Attribute
   def label
-    'Skin / TB Test'
+    return 'Unknown' if candidacy.skin_test.nil?
+    return 'Skin / TB Test' if candidacy.skin_test.present?
+
+    'No Skin / TB Test'
   end
 
   def to_s
@@ -13,7 +16,8 @@ class Person::SkinTest < Person::Attribute
 
   def icon_class
     return 'fa-question' if candidacy.skin_test.nil?
+    return 'fa-newspaper-o' if candidacy.skin_test.present?
 
-    'fa-newspaper-o'
+    'fa-times-circle'
   end
 end
