@@ -6,6 +6,10 @@ class Conversation < ApplicationRecord
 
   delegate :person, :handle, to: :contact
 
+  enum state: {
+    'Open' => 0, 'Closed' => 1
+  }
+
   def self.by_recent_message
     order(last_message_created_at: :desc)
   end
