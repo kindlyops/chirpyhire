@@ -45,12 +45,8 @@ class NotesController < ApplicationController
     @conversation = authorize fetch_conversation, :show?
   end
 
-  def note_path
-    contact_note_path(@conversation.contact, @note)
-  end
-
   def notes_path
-    contact_notes_path(@conversation.contact)
+    inbox_conversation_path(current_inbox, @conversation)
   end
 
   def fetch_conversation

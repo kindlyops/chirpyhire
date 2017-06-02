@@ -1,0 +1,105 @@
+.profile
+  .profile-header
+    .profile-image
+      - if conversation.contact.avatar.url.present?
+        = image_tag conversation.contact.avatar.url(:medium), class: 'author_image no-repeat thumb_64'
+      - elsif conversation.contact
+        div class=="author_image thumb_64 #{conversation.contact.decorate.hero_pattern_classes}"
+    .profile-header-details
+      .profile-handle = conversation.contact.handle
+      .profile-phone-number = conversation.contact.phone_number
+    .profile-actions
+      .profile-star
+        - if conversation.contact.starred?
+          = button_to contact_star_path(conversation.contact), class: 'star btn btn-link', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Unstar caregiver' do
+            i.fa.fa-star
+        - else
+          = button_to contact_star_path(conversation.contact), class: 'star btn btn-link', role: 'button', data: { toggle: 'tooltip', placement: 'left' }, title: 'Star caregiver' do
+            i.fa.fa-star-o
+  .profile-details
+    .section-title.profile-section-title
+      span Profile
+      .profile-main-filters
+        = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'left' }, title: 'View nearly identical caregivers.', class: 'profile-near-filter' do
+          i.fa.fa-fw.fa-bullseye.mr-1
+          | Near
+        = link_to caregivers_path(conversation.contact.broad_query_params), data: { toggle: 'tooltip', placement: 'left' }, title: 'View broadly similar caregivers.', class: 'profile-broad-filter' do
+          i.fa.fa-fw.fa-dot-circle-o.mr-1
+          | Broad
+    p.profile-detail-item
+      span.profile-detail-category Location:
+      span.profile-detail-value
+        = link_to caregivers_path(zipcode: conversation.contact.candidacy_zipcode.query), data: { toggle: 'tooltip', placement: 'left' }, title: "View caregivers in #{conversation.contact.candidacy_zipcode.tooltip_label}." do
+          i.fa.fa-fw.mr-1.fa-map-marker
+          = conversation.contact.candidacy_zipcode.label
+    p.profile-detail-item
+      span.profile-detail-category Certification:
+      span.profile-detail-value
+        = link_to caregivers_path(certification: [conversation.contact.certification.query]), data: { toggle: 'tooltip', placement: 'left' }, title: "View #{conversation.contact.certification.tooltip_label}." do
+          i class=="fa fa-fw mr-1 #{conversation.contact.certification.icon_class}"
+          = conversation.contact.certification.label
+    p.profile-detail-item
+      span.profile-detail-category Availability:
+      span.profile-detail-value.availability
+        span.profile-detail-subvalue
+          = link_to caregivers_path(availability: conversation.contact.availability.query_array), data: { toggle: 'tooltip', placement: 'left' }, title: "View caregivers #{conversation.contact.availability.tooltip_label}." do
+            i class=="fa fa-fw mr-1 #{conversation.contact.availability.icon_class}"
+            = conversation.contact.availability.label
+        span.profile-detail-subvalue
+          = link_to caregivers_path(availability: [conversation.contact.live_in.query]), data: { toggle: 'tooltip', placement: 'left' }, title: "View caregivers #{conversation.contact.live_in.tooltip_label}." do
+            i class=="fa fa-fw mr-1 #{conversation.contact.live_in.icon_class}"
+            = conversation.contact.live_in.label
+    p.profile-detail-item
+      span.profile-detail-category Experience:
+      span.profile-detail-value
+        = link_to caregivers_path(experience: [conversation.contact.experience.query]), data: { toggle: 'tooltip', placement: 'left' }, title: "View caregivers #{conversation.contact.experience.tooltip_label} experience." do
+          i class=="fa fa-fw mr-1 #{conversation.contact.experience.icon_class}"
+          = conversation.contact.experience.label
+    p.profile-detail-item
+      span.profile-detail-category Transportation:
+      span.profile-detail-value
+        = link_to caregivers_path(transportation: [conversation.contact.transportation.query]), data: { toggle: 'tooltip', placement: 'left' }, title: "View caregivers #{conversation.contact.transportation.tooltip_label} transportation." do
+          i class=="fa fa-fw mr-1 #{conversation.contact.transportation.icon_class}"
+          = conversation.contact.transportation.label
+    p.profile-detail-item
+      span.profile-detail-category CPR / 1st Aid:
+      span.profile-detail-value
+        i class=="fa fa-fw mr-1 #{conversation.contact.cpr_first_aid.icon_class}"
+        = conversation.contact.cpr_first_aid.label
+    p.profile-detail-item
+      span.profile-detail-category Skin / TB Test:
+      span.profile-detail-value
+        i class=="fa fa-fw mr-1 #{conversation.contact.skin_test.icon_class}"
+        = conversation.contact.skin_test.label
+  .profile-notes
+    .section-title
+      span 
+        | Notes
+        '
+        |(
+        = conversation.contact.notes.count
+        |)
+    .flex_content_scroller
+      #notes_container
+        .conversation
+          .notes
+            = render partial: "notes/day", collection: conversation.contact.notes.days
+      #reply_container
+        - if current_account.person.avatar.url.present?
+          = image_tag current_account.person.avatar.url(:medium), class: 'no-repeat author_image thumb_36'
+          .inline_message_input_container.less-negative-margin-top
+            = form_for @conversation.contact.notes.build(account: current_account), url: contact_notes_path(@conversation.contact) do |f|
+              .message_input
+                = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
+          .reply_container_info
+            .reply_broadcast_buttons_container.justify-content-end
+              button.note_send.btn.btn-small.btn-outline type="button" Save
+        - else
+          span class=="author_image thumb_36 #{current_account.person.decorate.hero_pattern_classes}"
+          .inline_message_input_container
+            = form_for @conversation.contact.notes.build(account: current_account), url: contact_notes_path(@conversation.contact) do |f|
+              .message_input
+                = f.text_area :body, rows: 1, placeholder: "Share a note with your team...", required: true, data: { autoresize: true }, class: 'form-control'
+          .reply_container_info
+            .reply_broadcast_buttons_container.justify-content-end
+              button.note_send.btn.btn-small.btn-outline type="button" Save
