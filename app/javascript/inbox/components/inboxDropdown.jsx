@@ -6,16 +6,17 @@ class InboxDropdown extends React.Component {
   constructor(props) {
     super(props);
 
-    this.logChange = this.logChange.bind(this);
+    this.filterConversations = this.filterConversations.bind(this);
     this.optionRenderer = this.optionRenderer.bind(this);
     this.valueRenderer = this.valueRenderer.bind(this);
+    this.arrowRenderer = this.arrowRenderer.bind(this);
   }
 
   valueRenderer(option) {
     return (
       <div className="view-title">
         <div className="view-count">
-          <span className='badge badge-default'>{option.count}</span>
+          <span className={option.countClassName}>{option.count}</span>
         </div>
         <div className="view-name">{option.label}</div>
       </div>
@@ -26,22 +27,28 @@ class InboxDropdown extends React.Component {
     return (
       <div className="view-title">
         <div className="view-count">
-          <span className='badge badge-default'>{option.count}</span>
+          <span className={option.countClassName}>{option.count}</span>
         </div>
         <div className="view-name">{option.label}</div>
       </div>
     )
   }
 
+  arrowRenderer({ onMouseDown, isOpen }) {
+    return (
+      <i className='fa fa-angle-down'></i>
+    )
+  }
+
   options() {
     return [
-      { value: 'closed', label: 'Closed', count: 120 },
-      { value: 'open', label: 'Open', count: 3 },
-      { value: 'all', label: 'All', count: 123 }
+      { value: 'Closed', label: 'Closed', count: 120, countClassName: 'badge badge-default' },
+      { value: 'Open', label: 'Open', count: 3, countClassName: 'badge badge-primary' },
+      { value: 'All', label: 'All', count: 123, countClassName: 'badge badge-success' }
     ]
   }
 
-  logChange(option) {
+  filterConversations(option) {
     console.log("Selected: " + option.label);
   }
 
@@ -54,9 +61,10 @@ class InboxDropdown extends React.Component {
         searchable={false}
         className="InboxDropdown"
         options={this.options()}
+        arrowRenderer={this.arrowRenderer}
         optionRenderer={this.optionRenderer}
         valueRenderer={this.valueRenderer}
-        onChange={this.logChange}
+        onChange={this.filterConversations}
       />
     )
   }
