@@ -108,6 +108,7 @@
       border-bottom: 1px solid #eeeeef;
       height: auto;
       padding: 0;
+      cursor: pointer;
       min-height: 1.7rem;
       justify-content: space-between;
       position: relative;
@@ -130,6 +131,15 @@
           justify-content: center;
           min-width: 28px;
           font-size: 1.25rem;
+        }
+
+        .filler {
+          flex: 1;
+        }
+
+        i {
+          font-size: 1.5rem;
+          flex-grow: 0;
         }
 
         .view-name {
