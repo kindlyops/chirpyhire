@@ -61,7 +61,7 @@ IntercomRails.config do |config|
   # in your controllers. 'Companies' are generic groupings of users, so this
   # could be a company, app or group.
   #
-  config.company.current = proc { current_organization }
+  config.company.current = proc { true_organization }
   #
   # Or if you are using devise you can just use the following config
   #

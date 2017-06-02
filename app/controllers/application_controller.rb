@@ -49,4 +49,8 @@ class ApplicationController < ActionController::Base
   def impersonating?
     current_account != true_account
   end
+
+  def true_organization
+    @true_organization ||= true_account.organization
+  end
 end
