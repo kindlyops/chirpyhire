@@ -19,6 +19,13 @@
   .profile-details
     .section-title.profile-section-title
       span Profile
+      .profile-main-filters
+        = link_to caregivers_path(conversation.contact.near_query_params), data: { toggle: 'tooltip', placement: 'left' }, title: 'View nearly identical caregivers.', class: 'profile-near-filter' do
+          i.fa.fa-fw.fa-bullseye.mr-1
+          | Near
+        = link_to caregivers_path(conversation.contact.broad_query_params), data: { toggle: 'tooltip', placement: 'left' }, title: 'View broadly similar caregivers.', class: 'profile-broad-filter' do
+          i.fa.fa-fw.fa-dot-circle-o.mr-1
+          | Broad
     p.profile-detail-item
       span.profile-detail-category Location:
       span.profile-detail-value
