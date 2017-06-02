@@ -3,9 +3,9 @@ class Notification::ThankYou < Notification::Base
     <<~BODY
       Ok. Great! We're all set. Now, let us get you the right opportunity!
 
-      If you don't hear back in a day or two, would you please text us back??
+      If you don't hear back in a day or two, please text us back.
 
-      We are incredibly busy helping caregivers help more families!
+      Oh... one more thing. I forgot to ask, what's your name? :)
     BODY
   end
 end
