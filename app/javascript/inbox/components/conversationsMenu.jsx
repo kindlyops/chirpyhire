@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
-class InboxDropdown extends React.Component {
+class ConversationsMenu extends React.Component {
   constructor(props) {
     super(props);
 
@@ -42,24 +42,38 @@ class InboxDropdown extends React.Component {
 
   options() {
     return [
-      { value: 'Closed', label: 'Closed', count: 120, countClassName: 'badge badge-default' },
-      { value: 'Open', label: 'Open', count: 3, countClassName: 'badge badge-primary' },
-      { value: 'All', label: 'All', count: 123, countClassName: 'badge badge-success' }
+      { value: 'Closed', label: 'Closed', count: this.closedConversationsCount(), countClassName: 'badge badge-default' },
+      { value: 'Open', label: 'Open', count: this.openConversationsCount(), countClassName: 'badge badge-primary' },
+      { value: 'All', label: 'All', count: this.conversationsCount(), countClassName: 'badge badge-success' }
     ]
   }
 
+  closedConversationsCount() {
+    let isClosed = ((conversation) => conversation.state === 'Closed');
+    return this.props.conversations.filter(isClosed).length;
+  }
+
+  openConversationsCount() {
+    let isOpen = ((conversation) => conversation.state === 'Open');
+    return this.props.conversations.filter(isOpen).length;
+  }
+  
+  conversationsCount() {
+    return this.props.conversations.length;
+  }
+
   filterConversations(option) {
-    console.log("Selected: " + option.label);
+    this.props.handleFilterChange(option.value);
   }
 
   render() {    
     return (
       <Select
         name="state"
-        value="all"
+        value={this.props.filter}
         clearable={false}
         searchable={false}
-        className="InboxDropdown"
+        className="ConversationsMenu"
         options={this.options()}
         arrowRenderer={this.arrowRenderer}
         optionRenderer={this.optionRenderer}
@@ -70,4 +84,4 @@ class InboxDropdown extends React.Component {
   }
 }
 
-export default InboxDropdown
+export default ConversationsMenu

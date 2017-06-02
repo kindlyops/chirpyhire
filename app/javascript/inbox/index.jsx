@@ -1,39 +1,58 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Inbox from './components/inbox'
-import InboxDropdown from './components/inboxDropdown'
+import Conversations from './components/conversations'
+import ConversationsList from './components/conversationsList'
+import ConversationsMenu from './components/conversationsMenu'
 
-class InboxWrapper extends React.Component {
+class Inbox extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { 
-      conversations_count: props.conversations_count,
-      conversations: props.conversations 
+      conversations: [],
+      filter: 'All'
     };
-    this.handleConversationsChange = this.handleConversationsChange.bind(this);
+
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+  }
+
+  inboxId() {
+    return this.props.match.params.inboxId;
+  }
+
+  id() {
+    return this.props.match.params.id;
   }
 
   render() {
-    return <div className="InboxWrapper">
-              <InboxDropdown conversations_count={this.state.conversations_count} />
-              <Inbox
-                inboxId={this.props.id}
-                conversations_count={this.state.conversations_count}
-                conversations={this.state.conversations}
-                onConversationsChange={this.handleConversationsChange}
-               />
+    return <div className="Inbox">
+              <Conversations>
+                <ConversationsMenu 
+                  filter={this.state.filter}
+                  conversations={this.state.conversations}
+                  handleFilterChange={this.handleFilterChange}
+                />        
+                <ConversationsList
+                  inboxId={this.inboxId()}
+                  filter={this.state.filter}
+                  conversations={this.state.conversations}
+                 />
+              </Conversations>
             </div>;
   }
 
-  handleConversationsChange(conversations) {
-    this.setState({ conversations: conversations });
+  inboxUrl() {
+    return `/inboxes/${this.inboxId()}/conversations`;
   }
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-  const node = document.getElementById('inbox')
-  const data = JSON.parse(node.getAttribute('data'))
+  componentDidMount() {
+    $.get(this.inboxUrl()).then((conversations) => {
+      this.setState({ conversations: conversations });
+    });
+  }
 
-  ReactDOM.render(<InboxWrapper {...data} />, node)
-})
+  handleFilterChange(filter) {
+    this.setState({ filter: filter });
+  }
+} 
+
+export default Inbox
