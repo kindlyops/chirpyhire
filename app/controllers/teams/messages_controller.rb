@@ -32,6 +32,7 @@ class Teams::MessagesController < ActionController::Base
   def create_subscribed_contact
     person.contacts.create(team: team).tap do |contact|
       contact.subscribe
+      contact.conversation
       IceBreakerJob.perform_later(contact)
     end
   end
