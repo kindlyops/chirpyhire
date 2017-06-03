@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import update from 'immutability-helper'
 
 import NoteDay from './noteDay'
 
@@ -30,17 +31,17 @@ class ProfileNotes extends React.Component {
             <div id="reply_container">
               <span className="author_image thumb_36 second hp-anchors-away"></span>
               <div className="inline_message_input_container">
-                <form className="new_note" data-remote="true" id="new_note" action={`/contacts/${this.props.contact.id}/notes`} acceptCharset="UTF-8" method="post">
+                <form className="new_note" id="new_note" action={`/contacts/${this.props.contact.id}/notes`} acceptCharset="UTF-8" method="post" data-remote="true">
                   <input name="utf8" type="hidden" value="✓" />
                   <div className="message_input">
                     <textarea rows="1" placeholder="Share a note with your team..." required="required" className="form-control" name="note[body]" id="note_body"></textarea>
                   </div>
+                  <div className="reply_container_info">
+                    <div className="reply_broadcast_buttons_container justify-content-end">
+                      <button className="note_send btn btn-small btn-outline" type="submit">Save</button>
+                    </div>
+                  </div>
                 </form>
-              </div>
-              <div className="reply_container_info">
-                <div className="reply_broadcast_buttons_container justify-content-end">
-                  <button className="note_send btn btn-small btn-outline" type="button">Save</button>
-                </div>
               </div>
             </div>
           </div>
@@ -51,7 +52,7 @@ class ProfileNotes extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(nextProps.contact.id && nextProps.contact.id !== this.props.contact.id) {
       this.load(nextProps.contact.id);
-      this.reconnect(this.props.contact.id);
+      this.reconnect(nextProps.contact.id);
     }
   }
 
@@ -108,8 +109,18 @@ class ProfileNotes extends React.Component {
     }
   }
  
-  _received(note) {
-    let notes = update(this.state.notes, { $push: [note] });
+  _received(receivedNote) {
+    let notes;
+    const index = this.state.notes.findIndex((note) => note.id === receivedNote.id);
+
+    if (Number.isInteger(index)) {
+      notes = update(this.state.notes, { $splice: [[index, 1, receivedNote]] });
+      $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).prop('hidden', true);
+      $(`#note-show-container[data-note-id="${receivedNote.id}"]`).removeProp('hidden');
+    } else {
+      notes = update(this.state.notes, { $push: [receivedNote] });
+      $('#reply_container textarea').val('');
+    }
 
     this.setState({ notes: notes });
   }
@@ -151,10 +162,6 @@ class ProfileNotes extends React.Component {
       var noteId = $(this).closest('#note-edit-container').data('note-id');
       $(this).closest('#note-edit-container').prop('hidden', true);
       $('#note-show-container[data-note-id="'+ noteId + '"').removeProp('hidden');
-    });
-
-    $(document).on('click', '#note-edit-container #commit_edit', function(e) {
-      $(this).closest('form').submit();
     });
 
     $(document).on('keydown', '#note-edit-container #note_body', function(e) {

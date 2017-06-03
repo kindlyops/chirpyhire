@@ -22,7 +22,7 @@ class Broadcaster::Note
   end
 
   def note_string
-    NotesController.render partial: 'notes/note', locals: {
+    NotesController.render partial: 'notes/note.json.jbuilder', locals: {
       note: note
     }
   end
