@@ -1,17 +1,9 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 class InboxItem extends React.Component {
   href() {
     return `/inboxes/${this.props.inboxId}/conversations/${this.props.id}`;
-  }
-
-  classNames() {
-    var classes = 'InboxItem';
-    if (location.pathname === this.href()) {
-      classes = classes + ' active';
-    }
-
-    return classes;
   }
 
   render() {
@@ -32,7 +24,7 @@ class InboxItem extends React.Component {
                 </div>
     }
 
-    return <a href={this.href()} className={this.classNames()}>
+    return <NavLink exact to={this.href()} className='InboxItem'>
       <div className='handle-and-timestamp'>
         <div className='handle'>
           {this.props.handle}
@@ -44,7 +36,7 @@ class InboxItem extends React.Component {
         </div>
       </div>
       {summary}
-    </a>;
+    </NavLink>;
   }
 }
 

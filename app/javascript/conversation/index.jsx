@@ -34,12 +34,22 @@ class Conversation extends React.Component {
     </div>);
   }
 
-  conversationUrl() {
-    return `/inboxes/${this.props.inboxId}/conversations/${this.props.id}`;
+  conversationUrl(id) {
+    return `/inboxes/${this.props.inboxId}/conversations/${id}`;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.id !== this.props.id) {
+      this.load(nextProps.id);
+    }
   }
 
   componentDidMount() {
-    $.get(this.conversationUrl()).then((conversation) => {
+    this.load(this.props.id);
+  }
+
+  load(id) {
+    $.get(this.conversationUrl(id)).then((conversation) => {
       this.setState({ conversation: conversation });
     });
   }
