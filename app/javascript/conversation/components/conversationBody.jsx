@@ -32,14 +32,13 @@ class ConversationBody extends React.Component {
   }
 
   componentDidMount() {
-    var composer = $('form.new_message .message-input');
-
+    let composer = $('form.new_message .message-input');
     composer.keydown(function(e) {
-      var combo = e.metaKey || e.ctrlKey || e.shiftKey;
+      let combo = e.metaKey || e.ctrlKey || e.shiftKey;
 
       if(e.keyCode === 13 && !combo) {
-        var $form = composer.closest('form');
-        var messageBody = $form.find('.message-input');
+        let $form = composer.closest('form');
+        let messageBody = $form.find('.message-input');
         e.preventDefault();
         if(messageBody.val().length) {
           $form.submit();
@@ -50,7 +49,6 @@ class ConversationBody extends React.Component {
 
     $(window).resize(this._resizeScroller);
     this._resizeScroller();
-    $('#msgs_scroller_div').scrollTop($('#msgs_div').prop('scrollHeight') + 100);
   }
 
   days() {

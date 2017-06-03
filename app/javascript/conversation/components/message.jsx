@@ -35,6 +35,10 @@ class Message extends React.Component {
       </div>
     )
   }
+
+  componentDidMount() {
+    $('#msgs_scroller_div').scrollTop($('#msgs_div').prop('scrollHeight') + 100);
+  }
 }
 
 export default Message
