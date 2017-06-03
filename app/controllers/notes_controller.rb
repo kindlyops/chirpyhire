@@ -19,6 +19,7 @@ class NotesController < ApplicationController
     @note.update(permitted_attributes(Note))
 
     Broadcaster::Note.broadcast(note)
+    head :ok
   end
 
   def create
@@ -26,6 +27,7 @@ class NotesController < ApplicationController
     @note.save
 
     Broadcaster::Note.broadcast(note)
+    head :ok
   end
 
   def destroy
@@ -33,6 +35,7 @@ class NotesController < ApplicationController
     @note.destroy
 
     Broadcaster::Note.broadcast(note)
+    head :ok
   end
 
   private

@@ -114,9 +114,15 @@ class ProfileNotes extends React.Component {
     const index = this.state.notes.findIndex((note) => note.id === receivedNote.id);
 
     if (Number.isInteger(index)) {
-      notes = update(this.state.notes, { $splice: [[index, 1, receivedNote]] });
-      $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).prop('hidden', true);
-      $(`#note-show-container[data-note-id="${receivedNote.id}"]`).removeProp('hidden');
+      if(receivedNote.deleted_at) {
+        notes = update(this.state.notes, { $splice: [[index, 1]] });
+        $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).remove();
+        $(`#note-show-container[data-note-id="${receivedNote.id}"]`).remove();
+      } else {
+        notes = update(this.state.notes, { $splice: [[index, 1, receivedNote]] });
+        $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).prop('hidden', true);
+        $(`#note-show-container[data-note-id="${receivedNote.id}"]`).removeProp('hidden');
+      }
     } else {
       notes = update(this.state.notes, { $push: [receivedNote] });
       $('#reply_container textarea').val('');
@@ -149,6 +155,7 @@ class ProfileNotes extends React.Component {
       modal.on('click', '.modal-footer button.delete', function(e) {
         e.preventDefault();
         noteToDelete.find('form.destroy-note').submit();
+        modal.modal('hide');
       });
     });
 
