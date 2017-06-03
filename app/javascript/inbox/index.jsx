@@ -24,6 +24,27 @@ class Inbox extends React.Component {
     return this.props.match.params.id;
   }
 
+  conversation() {
+    if(this.id()) {
+      return <Conversation id={this.id()} inboxId={this.inboxId()} />;
+    } else {
+      return this.emptyInbox();
+    }
+  }
+
+  emptyInbox() {
+    return (
+      <div className="empty-message d-flex flex-column align-items-center justify-content-center">
+        <h4>No one to message yet...</h4>
+        <blockquote className='blockquote mt-5'>
+          <p className='mb-0'>Believe you can</p>
+          <p className='mb-0'>and you're halfway there</p>
+          <footer className='mt-3 blockquote-footer'>Theodore Roosevelt</footer>
+        </blockquote>
+      </div>
+      )
+  }
+
   render() {
     return <div className="Inbox">
               <Conversations>
@@ -38,7 +59,7 @@ class Inbox extends React.Component {
                   conversations={this.state.conversations}
                  />
               </Conversations>
-              <Conversation id={this.id()} inboxId={this.inboxId()} />
+              {this.conversation()}
             </div>;
   }
 

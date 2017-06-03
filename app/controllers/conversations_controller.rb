@@ -6,13 +6,15 @@ class ConversationsController < ApplicationController
   def index
     @conversations = paginated(policy_scope(inbox.recent_conversations))
 
-    if inbox.conversations.exists?
-      respond_to do |format|
-        format.json
-        format.html { redirect_to current_conversation_path }
+    respond_to do |format|
+      format.json
+      format.html do 
+        if @conversations.exists?
+          redirect_to current_conversation_path 
+        else
+          render :index
+        end
       end
-    else
-      render :index
     end
   end
 

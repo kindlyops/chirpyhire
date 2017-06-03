@@ -10,7 +10,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   BrowserRouter as Router,
-  Route
+  Route,
+  Switch
 } from 'react-router-dom'
 
 import Inbox from 'inbox'
@@ -18,7 +19,10 @@ import Inbox from 'inbox'
 const App = () => (
   <Router>
     <div>
-      <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox}/>
+      <Switch>
+        <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
+        <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
+      </Switch>
     </div>
   </Router>
 )
