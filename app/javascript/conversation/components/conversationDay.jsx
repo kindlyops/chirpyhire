@@ -20,7 +20,7 @@ class ConversationDay extends React.Component {
   }
 
   byThought(first, second) {
-    return this.isWithinFiveMinutes(first, second) && this.isSameAuthor(first, second);
+    return this.isSameAuthor(first, second) && this.isWithinFiveMinutes(first, second);
   }
 
   isSameAuthor(first, second) {
@@ -32,7 +32,7 @@ class ConversationDay extends React.Component {
     let secondMoment = moment(second.external_created_at);
     let difference = moment.range(firstMoment, secondMoment).diff('minutes');
 
-    Math.abs(difference) < 5;
+    return Math.abs(difference) < 5;
   }
 
   render() {
