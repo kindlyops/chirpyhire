@@ -20,7 +20,7 @@ class ProfileDetails extends React.Component {
         <p className="profile-detail-item">
           <span className="profile-detail-category">Location:</span>
           <span className="profile-detail-value">
-            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?zipcode=${encodeURIComponent(this.props.contact.zipcode.label)}`} title={this.props.contact.zipcode.tooltip_label}>
+            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?zipcode=${encodeURIComponent(this.props.contact.zipcode.label)}`} data-original-title={`View caregivers in ${this.props.contact.zipcode.tooltip_label}.`}>
               <i className={`fa fa-fw mr-1 ${this.props.contact.zipcode.icon_class}`}></i>{this.props.contact.zipcode.label}
             </a>
           </span>
@@ -28,7 +28,7 @@ class ProfileDetails extends React.Component {
         <p className="profile-detail-item">
           <span className="profile-detail-category">Certification:</span>
           <span className="profile-detail-value">
-            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?certification%5B%5D=${encodeURIComponent(this.props.contact.certification.query)}`} title={this.props.contact.certification.tooltip_label}>
+            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?certification%5B%5D=${encodeURIComponent(this.props.contact.certification.query)}`} data-original-title={`View ${this.props.contact.certification.tooltip_label}.`}>
               <i className={`fa fa-fw mr-1 ${this.props.contact.certification.icon_class}`}></i>
               {this.props.contact.certification.label}
             </a>
@@ -38,13 +38,13 @@ class ProfileDetails extends React.Component {
           <span className="profile-detail-category">Availability:</span>
           <span className="profile-detail-value availability">
             <span className="profile-detail-subvalue">
-              <a data-toggle="tooltip" data-placement="left" href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.availability.query)}`} title={this.props.contact.availability.tooltip_label}>
+              <a data-toggle="tooltip" data-placement="left" href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.availability.query)}`} data-original-title={`View caregivers ${this.props.contact.availability.tooltip_label}.`}>
                 <i className={`fa fa-fw mr-1 ${this.props.contact.availability.icon_class}`}></i>
                 {this.props.contact.availability.label}
               </a>
             </span>
             <span className="profile-detail-subvalue">
-              <a data-toggle="tooltip" data-placement="left" href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.live_in.query)}`} title={this.props.contact.live_in.tooltip_label}>
+              <a data-toggle="tooltip" data-placement="left" href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.live_in.query)}`} data-original-title={`View caregivers ${this.props.contact.live_in.tooltip_label}.`}>
                 <i className={`fa fa-fw mr-1 ${this.props.contact.live_in.icon_class}`}></i>
                 {this.props.contact.live_in.label}
               </a>
@@ -54,7 +54,7 @@ class ProfileDetails extends React.Component {
         <p className="profile-detail-item">
           <span className="profile-detail-category">Experience:</span>
           <span className="profile-detail-value">
-            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?experience%5B%5D=${encodeURIComponent(this.props.contact.experience.query)}`} title={this.props.contact.experience.tooltip_label}>
+            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?experience%5B%5D=${encodeURIComponent(this.props.contact.experience.query)}`} data-original-title={`View caregivers ${this.props.contact.experience.tooltip_label} experience.`}>
               <i className={`fa fa-fw mr-1 ${this.props.contact.experience.icon_class}`}></i>
               {this.props.contact.experience.label}
             </a>
@@ -63,7 +63,7 @@ class ProfileDetails extends React.Component {
         <p className="profile-detail-item">
           <span className="profile-detail-category">Transportation:</span>
           <span className="profile-detail-value">
-            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?transportation%5B%5D=${encodeURIComponent(this.props.contact.transportation.query)}`} title={this.props.contact.transportation.tooltip_label}>
+            <a data-toggle="tooltip" data-placement="left" href={`/caregivers?transportation%5B%5D=${encodeURIComponent(this.props.contact.transportation.query)}`} data-original-title={`View caregivers ${this.props.contact.transportation.tooltip_label} transportation.`}>
               <i className={`fa fa-fw mr-1 ${this.props.contact.transportation.icon_class}`}></i>
               {this.props.contact.transportation.label}
             </a>
@@ -85,6 +85,12 @@ class ProfileDetails extends React.Component {
         </p>
       </div>
     )
+  }
+
+  componentDidUpdate() {
+    let toolTips = $('#inbox [data-toggle="tooltip"]');
+    toolTips.attr('data-animation', false);
+    toolTips.tooltip();
   }
 }
 

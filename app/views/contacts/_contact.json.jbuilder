@@ -2,6 +2,7 @@ json.id contact.id
 json.handle contact.handle.to_s
 json.phone_number contact.phone_number.to_s
 json.hero_pattern_classes contact.hero_pattern_classes
+json.starred contact.starred
 
 json.zipcode do
   json.label contact.candidacy_zipcode.label

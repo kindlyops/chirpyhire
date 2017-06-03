@@ -8,7 +8,8 @@ class Conversation extends React.Component {
     super(props);
 
     this.state = {
-      subscription: {},
+      messageSubscription: {},
+      contactSubscription: {},
       conversation: {
         contact: {
           zipcode: {},
@@ -58,30 +59,65 @@ class Conversation extends React.Component {
     });
   }
 
-  channelConfig() {
-    return {
-      received: this.received.bind(this)
-    }
-  }
-
   connect(id) {
-    let channel = { channel: 'MessagesChannel', conversation_id: id };
-    let subscription = App.cable.subscriptions.create(
-      channel, this.channelConfig()
-    );
-
-    this.setState({ subscription: subscription });
+    this._connectMessage(id);
+    this._connectContact(id);
   }
 
   reconnect(id) {
-    App.cable.subscriptions.remove(this.state.subscription);
+    this.disconnect();
     this.connect(id);
   }
 
-  received(receivedMessage) {
+  disconnect() {
+    App.cable.subscriptions.remove(this.state.messageSubscription);
+    App.cable.subscriptions.remove(this.state.contactSubscription);
+  }
+
+  _connectMessage(id) {
+    let channel = { channel: 'MessagesChannel', conversation_id: id };
+    let subscription = App.cable.subscriptions.create(
+      channel, this._messageChannelConfig()
+    );
+
+    this.setState({ messageSubscription: subscription });
+  }
+
+  _connectContact(id) {
+    let channel = { channel: 'ContactsChannel', conversation_id: id };
+    let subscription = App.cable.subscriptions.create(
+      channel, this._contactChannelConfig()
+    );
+
+    this.setState({ contactSubscription: subscription });
+  }
+
+  _messageChannelConfig() {
+    return {
+      received: this._messageReceived.bind(this)
+    }
+  }
+
+  _contactChannelConfig() {
+    return {
+      received: this._contactReceived.bind(this)
+    }
+  }
+
+  _messageReceived(receivedMessage) {
     let conversation = update(this.state.conversation, 
       { 
         messages: { $push: [receivedMessage] }
+      }
+    );
+
+    this.setState({ conversation: conversation });
+  }
+
+  _contactReceived(receivedContact) {
+    let conversation = update(this.state.conversation, 
+      { 
+        contact: { $set: receivedContact }
       }
     );
 

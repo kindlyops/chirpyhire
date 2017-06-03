@@ -20,7 +20,7 @@ class ConversationsController < ApplicationController
     @conversation = authorize(inbox.conversations.find(params[:id]))
     read_messages unless impersonating?
     inbox_conversation.update(last_viewed_at: DateTime.current)
-    
+
     respond_to do |format|
       format.json
       format.html

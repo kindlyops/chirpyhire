@@ -1,5 +1,27 @@
 .Conversation {
 
+  .star {
+    margin-left: 4px;
+    padding-top: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    &:hover {
+      .fa-star {
+        color: lighten($yellow, 15%);
+      }
+
+      .fa-star-o {
+        color: lighten(#717274, 15%);
+      }
+    }
+
+    i {
+      font-size: 1.5rem;
+      transition: all .3s ease-in-out;
+    }
+  }
+
   .chat-header {
     color: #717274;
     background: 0 0;
@@ -20,55 +42,6 @@
         margin-left: 1px;
         color: #717274;
         border-radius: .25rem;
-      }
-
-      .star {
-        margin-left: 4px;
-        padding-top: 4px;
-        padding-left: 6px;
-        padding-right: 6px;
-
-        &:hover {
-          .fa-star {
-            color: darken($yellow, 5%);
-          }
-
-          .fa-star-o {
-            color: darken(#717274, 30%);
-          }
-        }
-
-        i {
-          font-size: 1.5rem;
-          transition: all .2s ease-in-out;
-        }
-      }
-
-      #notes-toggle {
-        padding-top: 4px;
-        padding-left: 6px;
-        margin-right: 8px;
-
-        &.active {
-          background: #eeeeef;
-        }
-
-        &:not(.active):hover {
-          color: $green;
-        }
-
-        &:hover {
-          color: darken(#717274, 30%);
-        }
-
-        i.fa {
-          transition: all .2s ease-in-out;
-          font-size: 24px;
-
-          &:hover {
-            color: darken(#717274, 30%);
-          }
-        }
       }
 
       .messages-header {

@@ -13,6 +13,12 @@ class ConversationProfile extends React.Component {
     </div>
     )
   }
+
+  componentDidUpdate() {
+    let toolTips = $('#inbox [data-toggle="tooltip"]');
+    toolTips.attr('data-animation', false);
+    toolTips.tooltip();
+  }
 }
 
 export default ConversationProfile
