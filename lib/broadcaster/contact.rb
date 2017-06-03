@@ -22,8 +22,8 @@ class Broadcaster::Contact
   end
 
   def contact_string
-    ContactsController.render partial: 'contacts/contact', locals: {
-      contact: contact
+    CaregiversController.render partial: 'contacts/contact', locals: {
+      contact: contact.decorate
     }
   end
 end

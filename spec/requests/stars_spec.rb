@@ -17,10 +17,10 @@ RSpec.describe 'Stars' do
       IceBreaker.call(contact)
     end
 
-    it 'redirects to inbox conversation path' do
+    it 'is ok' do
       post contact_star_path(contact)
 
-      expect(response).to redirect_to(inbox_conversation_path(inbox, conversation))
+      expect(response).to be_ok
     end
 
     context 'contact starred' do

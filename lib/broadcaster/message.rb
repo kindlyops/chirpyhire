@@ -18,7 +18,8 @@ class Broadcaster::Message
   delegate :conversation, to: :message
 
   def message_hash
-    JSON.parse(message_string)
+    string = message_string
+    JSON.parse(string)
   end
 
   def message_string
