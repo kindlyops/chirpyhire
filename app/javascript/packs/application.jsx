@@ -14,13 +14,11 @@ import {
 } from 'react-router-dom'
 
 import Inbox from 'inbox'
-import Conversation from 'conversation'
 
 const App = () => (
   <Router>
     <div>
-      <Route path="/inboxes/:inboxId" component={Inbox}/>
-      <Route path="/conversations/:id" component={Conversation}/>
+      <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox}/>
     </div>
   </Router>
 )

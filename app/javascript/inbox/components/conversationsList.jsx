@@ -5,7 +5,8 @@ import { AutoSizer, List } from 'react-virtualized'
 class ConversationsList extends React.Component {
   constructor(props) {
     super(props);
-    this._rowRenderer = this._rowRenderer.bind(this)
+    this._rowRenderer = this._rowRenderer.bind(this);
+    this._byState = this._byState.bind(this);
   }
 
   render() {    
@@ -18,7 +19,7 @@ class ConversationsList extends React.Component {
               height={height}
               rowCount={this.rowCount()}
               rowHeight={70.59}
-              rowRenderer={this._rowRenderer.bind(this)}
+              rowRenderer={this._rowRenderer}
             />
           )}
         </AutoSizer>
@@ -46,7 +47,7 @@ class ConversationsList extends React.Component {
     if (this.props.filter === 'All') {
       return this.props.conversations;
     } else {
-      return this.props.conversations.filter(this._byState.bind(this));
+      return this.props.conversations.filter(this._byState);
     }
   }
 

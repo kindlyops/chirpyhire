@@ -2,6 +2,7 @@ import React from 'react'
 import Conversations from './components/conversations'
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
+import Conversation from 'conversation'
 
 class Inbox extends React.Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class Inbox extends React.Component {
                   conversations={this.state.conversations}
                  />
               </Conversations>
+              <Conversation id={this.id()} inboxId={this.inboxId()} />
             </div>;
   }
 

@@ -9,6 +9,8 @@ class Message < ApplicationRecord
   validates :recipient, presence: true, if: :outbound?
   validates :conversation, presence: true
 
+  delegate :handle, to: :sender, prefix: true
+
   def self.by_recency
     order(:external_created_at, :id)
   end

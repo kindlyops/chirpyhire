@@ -10,7 +10,7 @@ $blue-gray: #91A3B0;
 @import "conversations/utilities";
 @import "conversations/profile";
 
-#inbox {
+#inbox, .Inbox, [data-reactroot] {
   display: flex;
   overflow: hidden;
   min-height: 100vh;
@@ -19,7 +19,11 @@ $blue-gray: #91A3B0;
     min-height: 100vh;
   }
 
-  .conversation {
+  .Conversation {
+    display: flex;
+  }
+
+  .ConversationChat {
     position: relative;
     display: flex;
     flex-direction: column;
