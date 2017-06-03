@@ -1,38 +1,38 @@
 class NotesController < ApplicationController
   layout 'conversations', only: 'index'
   decorates_assigned :conversation
+  decorates_assigned :notes
+  decorates_assigned :note
 
   before_action :authorize_conversation
 
   def index
     @notes = policy_scope(contact.notes)
+
+    respond_to do |format|
+      format.json
+    end
   end
 
   def update
     @note = authorized_note
+    @note.update(permitted_attributes(Note))
 
-    if @note.update(permitted_attributes(Note))
-      redirect_to notes_path, notice: 'Nice! Note saved.'
-    else
-      render :index
-    end
+    Broadcaster::Note.broadcast(note)
   end
 
   def create
     @note = authorize new_note
+    @note.save
 
-    if @note.save
-      redirect_to notes_path, notice: 'Nice! Note saved.'
-    else
-      render :index
-    end
+    Broadcaster::Note.broadcast(note)
   end
 
   def destroy
     @note = authorized_note
     @note.destroy
 
-    redirect_to notes_path, notice: 'Note was successfully deleted.'
+    Broadcaster::Note.broadcast(note)
   end
 
   private
@@ -43,10 +43,6 @@ class NotesController < ApplicationController
 
   def authorize_conversation
     @conversation = authorize fetch_conversation, :show?
-  end
-
-  def notes_path
-    inbox_conversation_path(current_inbox, @conversation)
   end
 
   def fetch_conversation
