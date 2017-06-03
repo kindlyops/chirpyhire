@@ -1,6 +1,7 @@
 import React from 'react'
 import InboxItem from './inboxItem'
 import { AutoSizer, List } from 'react-virtualized'
+import { withRouter } from 'react-router-dom'
 
 class ConversationsList extends React.Component {
   constructor(props) {
@@ -12,9 +13,11 @@ class ConversationsList extends React.Component {
   render() {    
     return (
       <div className='autosizer-wrapper'>
-        <AutoSizer disableWidth>
+        <AutoSizer location={this.props.location} disableWidth>
           {({ height }) => (
-            <List className="ConversationsList"
+            <List 
+              location={this.props.location}
+              className="ConversationsList"
               width={280}
               height={height}
               rowCount={this.rowCount()}
@@ -32,7 +35,10 @@ class ConversationsList extends React.Component {
 
     return (
       <div key={key} style={style}>
-        <InboxItem inboxId={this.props.inboxId} {...conversations[index]} />
+        <InboxItem 
+          location={this.props.location} 
+          inboxId={this.props.inboxId} 
+          {...conversations[index]} />
       </div>
     )
   }
@@ -56,4 +62,4 @@ class ConversationsList extends React.Component {
   }
 }
 
-export default ConversationsList
+export default withRouter(ConversationsList)
