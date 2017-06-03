@@ -6,9 +6,18 @@ class Conversation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       conversation: {
-        contact: {},
+        contact: {
+          zipcode: {},
+          certification: {},
+          availability: {},
+          live_in: {},
+          experience: {},
+          transportation: {},
+          cpr_first_aid: {},
+          skin_test: {}
+        },
         messages: []
       }
     };
@@ -20,7 +29,7 @@ class Conversation extends React.Component {
         conversation={this.state.conversation}
       />
       <ConversationProfile 
-        conversation={this.state.conversation}
+        contact={this.state.conversation.contact}
       />
     </div>);
   }
