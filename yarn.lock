@@ -2237,6 +2237,12 @@ ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
 
+immutability-helper@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.2.2.tgz#e7e9da728b3de2fad34a216f4157b326dbccc892"
+  dependencies:
+    invariant "^2.2.0"
+
 immutable@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
@@ -3865,7 +3871,7 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-select@1.0.0-rc:
+react-select@1.0.0-rc.5:
   version "1.0.0-rc.5"
   resolved "https://registry.yarnpkg.com/react-select/-/react-select-1.0.0-rc.5.tgz#9d316f252b1adc372ddb5cdf1f119c6b7cfdb5d6"
   dependencies:

@@ -8,55 +8,22 @@ class Broadcaster::Message
   end
 
   def broadcast
-    MessagesChannel.broadcast_to(contact, render_message)
+    MessagesChannel.broadcast_to(conversation, message_hash)
   end
 
   private
 
   attr_reader :message
 
-  def day
-    conversation.day(message.external_created_at.to_date)
+  delegate :conversation, to: :message
+
+  def message_hash
+    JSON.parse(message_string)
   end
 
-  def thought
-    thoughts.find { |thought| thought.messages.include?(message) }
-  end
-
-  delegate :conversation, :person, to: :message
-  delegate :contact, to: :conversation
-  delegate :thoughts, to: :day
-
-  def render_message
-    return render_day if new_day?
-    return render_thought if new_thought?
-
-    MessagesController.render partial: 'conversations/message', locals: {
-      message: message, message_counter: message_counter
+  def message_string
+    MessagesController.render partial: 'messages/message', locals: {
+      message: message
     }
-  end
-
-  def render_day
-    MessagesController.render partial: 'conversations/day', locals: {
-      day: day
-    }
-  end
-
-  def render_thought
-    MessagesController.render partial: 'conversations/thought', locals: {
-      thought: thought
-    }
-  end
-
-  def new_day?
-    day.thoughts.first == thought
-  end
-
-  def new_thought?
-    thought.messages.first == message
-  end
-
-  def message_counter
-    thought.messages.find_index { |m| m == message } + 1
   end
 end
