@@ -83,6 +83,11 @@ class Conversation extends React.Component {
     this.disconnect();
   }
 
+  disconnect() {
+    App.cable.subscriptions.remove(this.state.messageSubscription);
+    App.cable.subscriptions.remove(this.state.contactSubscription);
+  }
+
   _connectMessages(inbox_conversation) {
     let channel = { channel: 'MessagesChannel', conversation_id: inbox_conversation.conversation_id };
     let subscription = App.cable.subscriptions.create(

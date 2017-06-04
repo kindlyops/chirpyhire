@@ -15,8 +15,6 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = authorize(inbox.conversations.find(params[:id]))
-    read_messages unless impersonating?
-    inbox_conversation.update(last_viewed_at: DateTime.current)
 
     respond_to do |format|
       format.json
@@ -27,14 +25,6 @@ class ConversationsController < ApplicationController
   private
 
   delegate :inbox_conversations, to: :inbox
-
-  def read_messages
-    inbox_conversation.read_receipts.unread.each(&:read)
-  end
-
-  def inbox_conversation
-    inbox.inbox_conversations.find_by(conversation: @conversation)
-  end
 
   def current_conversation_path
     inbox_conversation_path(inbox, current_conversation)
