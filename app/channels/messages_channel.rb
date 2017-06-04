@@ -9,6 +9,8 @@ class MessagesChannel < ApplicationCable::Channel
   private
 
   def conversation
-    @conversation ||= policy_scope(conversations.find(params[:conversation_id]))
+    @conversation ||= begin
+      authorize(conversations.find(params[:conversation_id]), :show?)
+    end
   end
 end

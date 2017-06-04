@@ -9,6 +9,6 @@ class ContactsChannel < ApplicationCable::Channel
   private
 
   def contact
-    @contact ||= policy_scope(contacts.find(params[:id]))
+    @contact ||= authorize(contacts.find(params[:id]), :show?)
   end
 end

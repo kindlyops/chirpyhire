@@ -9,6 +9,8 @@ class NotesChannel < ApplicationCable::Channel
   private
 
   def contact
-    @contact ||= policy_scope(contacts.find(params[:contact_id]))
+    @contact ||= begin
+      authorize(contacts.find(params[:contact_id]))
+    end
   end
 end

@@ -1,6 +1,12 @@
 class InboxConversationsChannel < ApplicationCable::Channel
   def subscribed
-    reject if current_account.inbox.blank?
-    stream_for current_account.inbox
+    reject if inbox.blank?
+    stream_for inbox
+  end
+
+  private
+
+  def inbox
+    @inbox ||= authorize(current_account.inbox)
   end
 end
