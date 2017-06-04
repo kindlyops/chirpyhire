@@ -9,6 +9,6 @@ class NotesChannel < ApplicationCable::Channel
   private
 
   def contact
-    @contact ||= contacts.find(params[:contact_id])
+    @contact ||= policy_scope(contacts.find(params[:contact_id]))
   end
 end

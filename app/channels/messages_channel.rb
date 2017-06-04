@@ -9,6 +9,6 @@ class MessagesChannel < ApplicationCable::Channel
   private
 
   def conversation
-    @conversation ||= conversations.find(params[:conversation_id])
+    @conversation ||= policy_scope(conversations.find(params[:conversation_id]))
   end
 end
