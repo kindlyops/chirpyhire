@@ -32,7 +32,7 @@ class ReadReceiptsCreator
   def create_read_receipt(inbox_conversation)
     receipt = inbox_conversation.read_receipts.create!(message: message)
     contact_waiting_job.perform_later(inbox_conversation, receipt)
-    Broadcaster::Conversation.broadcast(inbox_conversation.conversation)
+    Broadcaster::InboxConversation.broadcast(inbox_conversation)
   end
 
   def contact_waiting_job

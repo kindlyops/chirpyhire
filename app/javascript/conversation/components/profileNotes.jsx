@@ -161,7 +161,7 @@ class ProfileNotes extends React.Component {
     this.setState({ notes: notes });
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.disconnect()
   }
 

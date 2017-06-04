@@ -69,5 +69,9 @@ class Message < ApplicationRecord
 
   def touch_conversation
     conversation.update(last_message_created_at: created_at)
+
+    conversation.inbox_conversations.find_each do |inbox_conversation|
+      Broadcaster::InboxConversation.broadcast(inbox_conversation)
+    end
   end
 end

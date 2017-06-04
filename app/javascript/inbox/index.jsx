@@ -10,7 +10,7 @@ class Inbox extends React.Component {
 
     this.state = { 
       subscription: {},
-      conversations: [],
+      inbox_conversations: [],
       inbox: {},
       filter: 'All'
     };
@@ -27,13 +27,13 @@ class Inbox extends React.Component {
   }
 
   conversation() {
-    let conversation = this.state.conversations.find((conversation) => (
-      parseInt(this.id()) === conversation.id
+    let inbox_conversation = this.state.inbox_conversations.find((inbox_conversation) => (
+      parseInt(this.id()) === inbox_conversation.conversation_id
     ))
 
-    if(conversation) {
+    if(inbox_conversation) {
       return <Conversation 
-                conversation={conversation}
+                inbox_conversation={inbox_conversation}
                 inbox={this.state.inbox} />;
     } else {
       return this.emptyInbox();
@@ -58,21 +58,21 @@ class Inbox extends React.Component {
               <div className='Conversations'>
                 <ConversationsMenu 
                   filter={this.state.filter}
-                  conversations={this.state.conversations}
+                  inbox_conversations={this.state.inbox_conversations}
                   handleFilterChange={this.handleFilterChange}
                 />        
                 <ConversationsList
                   inboxId={this.inboxId()}
                   filter={this.state.filter}
-                  conversations={this.state.conversations}
+                  inbox_conversations={this.state.inbox_conversations}
                  />
               </div>
               {this.conversation()}
             </div>;
   }
 
-  conversationsURL() {
-    return `/inboxes/${this.inboxId()}/conversations`;
+  inboxConversationsURL() {
+    return `/inboxes/${this.inboxId()}/inbox_conversations`;
   }
 
   inboxURL() {
@@ -84,7 +84,7 @@ class Inbox extends React.Component {
     this.connect();
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.disconnect();
   }
 
@@ -97,13 +97,13 @@ class Inbox extends React.Component {
       this.setState({ inbox: inbox });
     });
     
-    $.get(this.conversationsURL()).then((conversations) => {
-      this.setState({ conversations: conversations });
+    $.get(this.inboxConversationsURL()).then((inbox_conversations) => {
+      this.setState({ inbox_conversations: inbox_conversations });
     });
   }
 
   connect() {
-    let channel = { channel: 'ConversationsChannel', id: this.id() };
+    let channel = { channel: 'InboxConversationsChannel' };
     let subscription = App.cable.subscriptions.create(
       channel, this._channelConfig()
     );
@@ -117,23 +117,23 @@ class Inbox extends React.Component {
     }
   }
 
-  _received(receivedConversation) {
-    let index = this.state.conversations.findIndex((conversation) => (
-      receivedConversation.id === conversation.id
+  _received(receivedInboxConversation) {
+    let index = this.state.inbox_conversations.findIndex((inbox_conversation) => (
+      receivedInboxConversation.id === inbox_conversation.id
     ))
 
     if(Number.isInteger(index)) {
-      let newConversations = update(
-        this.state.conversations,
-        { $splice: [[index, 1, receivedConversation]] }
+      let new_inbox_conversations = update(
+        this.state.inbox_conversations,
+        { $splice: [[index, 1, receivedInboxConversation]] }
       )
 
       this.setState({
-        conversations: newConversations
+        inbox_conversations: new_inbox_conversations
       })
     } else {
       this.setState({
-        conversations: this.state.conversations.concat([receivedConversation])
+        inbox_conversations: this.state.inbox_conversations.concat([receivedInboxConversation])
       })
     }
   }

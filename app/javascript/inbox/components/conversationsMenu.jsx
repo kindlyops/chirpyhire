@@ -50,16 +50,16 @@ class ConversationsMenu extends React.Component {
 
   closedConversationsCount() {
     let isClosed = ((conversation) => conversation.state === 'Closed');
-    return this.props.conversations.filter(isClosed).length;
+    return this.props.inbox_conversations.filter(isClosed).length;
   }
 
   openConversationsCount() {
     let isOpen = ((conversation) => conversation.state === 'Open');
-    return this.props.conversations.filter(isOpen).length;
+    return this.props.inbox_conversations.filter(isOpen).length;
   }
   
   conversationsCount() {
-    return this.props.conversations.length;
+    return this.props.inbox_conversations.length;
   }
 
   filterConversations(option) {

@@ -48,43 +48,43 @@ class Conversation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.conversation.id !== this.props.conversation.id) {
-      this.load(nextProps.conversation);
-      this.reconnect(nextProps.conversation);
+    if(nextProps.inbox_conversation.id !== this.props.inbox_conversation.id) {
+      this.load(nextProps.inbox_conversation);
+      this.reconnect(nextProps.inbox_conversation);
     }
   }
 
   componentDidMount() {
-    this.load(this.props.conversation);
-    this.connect(this.props.conversation);
+    this.load(this.props.inbox_conversation);
+    this.connect(this.props.inbox_conversation);
   }
 
-  load(conversation) {
-    $.get(this.contactUrl(conversation.contact_id)).then((contact) => {
+  load(inbox_conversation) {
+    $.get(this.contactUrl(inbox_conversation.contact_id)).then((contact) => {
       this.setState({ contact: contact });
     });    
 
-    $.get(this.messagesUrl(conversation.id)).then((messages) => {
+    $.get(this.messagesUrl(inbox_conversation.conversation_id)).then((messages) => {
       this.setState({ messages: messages });
     });
   }
 
-  connect(conversation) {
-    this._connectMessages(conversation);
-    this._connectContact(conversation);
+  connect(inbox_conversation) {
+    this._connectMessages(inbox_conversation);
+    this._connectContact(inbox_conversation);
   }
 
-  reconnect(conversation) {
+  reconnect(inbox_conversation) {
     this.disconnect();
-    this.connect(conversation);
+    this.connect(inbox_conversation);
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.disconnect();
   }
 
-  _connectMessages(conversation) {
-    let channel = { channel: 'MessagesChannel', conversation_id: conversation.id };
+  _connectMessages(inbox_conversation) {
+    let channel = { channel: 'MessagesChannel', conversation_id: inbox_conversation.conversation_id };
     let subscription = App.cable.subscriptions.create(
       channel, this._messageChannelConfig()
     );
@@ -92,8 +92,8 @@ class Conversation extends React.Component {
     this.setState({ messageSubscription: subscription });
   }
 
-  _connectContact(conversation) {
-    let channel = { channel: 'ContactsChannel', id: conversation.contact_id };
+  _connectContact(inbox_conversation) {
+    let channel = { channel: 'ContactsChannel', id: inbox_conversation.contact_id };
     let subscription = App.cable.subscriptions.create(
       channel, this._contactChannelConfig()
     );
