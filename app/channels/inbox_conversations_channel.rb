@@ -7,6 +7,6 @@ class InboxConversationsChannel < ApplicationCable::Channel
   private
 
   def inbox
-    @inbox ||= authorize(current_account.inbox)
+    @inbox ||= authorize(current_account.inbox, :show?)
   end
 end

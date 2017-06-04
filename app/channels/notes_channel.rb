@@ -10,7 +10,7 @@ class NotesChannel < ApplicationCable::Channel
 
   def contact
     @contact ||= begin
-      authorize(contacts.find(params[:contact_id]))
+      authorize(contacts.find(params[:contact_id]), :show?)
     end
   end
 end
