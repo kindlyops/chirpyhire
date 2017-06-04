@@ -1,4 +1,5 @@
 import React from 'react'
+import update from 'immutability-helper'
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
@@ -8,6 +9,7 @@ class Inbox extends React.Component {
     super(props);
 
     this.state = { 
+      subscription: {},
       conversations: [],
       inbox: {},
       filter: 'All'
@@ -78,6 +80,19 @@ class Inbox extends React.Component {
   }
 
   componentDidMount() {
+    this.load();
+    this.connect();
+  }
+
+  componentDidUnmount() {
+    this.disconnect();
+  }
+
+  disconnect() {
+    App.cable.subscriptions.remove(this.state.subscription);
+  }
+
+  load() {
     $.get(this.inboxURL()).then((inbox) => {
       this.setState({ inbox: inbox });
     });
@@ -85,6 +100,42 @@ class Inbox extends React.Component {
     $.get(this.conversationsURL()).then((conversations) => {
       this.setState({ conversations: conversations });
     });
+  }
+
+  connect() {
+    let channel = { channel: 'ConversationsChannel', id: this.id() };
+    let subscription = App.cable.subscriptions.create(
+      channel, this._channelConfig()
+    );
+
+    this.setState({ subscription: subscription });
+  }
+
+  _channelConfig() {
+    return {
+      received: this._received.bind(this)
+    }
+  }
+
+  _received(receivedConversation) {
+    let index = this.state.conversations.findIndex((conversation) => (
+      receivedConversation.id === conversation.id
+    ))
+
+    if(Number.isInteger(index)) {
+      let newConversations = update(
+        this.state.conversations,
+        { $splice: [[index, 1, receivedConversation]] }
+      )
+
+      this.setState({
+        conversations: newConversations
+      })
+    } else {
+      this.setState({
+        conversations: this.state.conversations.concat([receivedConversation])
+      })
+    }
   }
 
   handleFilterChange(filter) {

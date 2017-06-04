@@ -21,6 +21,9 @@ class Conversation extends React.Component {
       },
       messages: []
     };
+
+    this._messageReceived = this._messageReceived.bind(this)
+    this._contactReceived = this._contactReceived.bind(this)
   }
 
   render() {
@@ -67,7 +70,7 @@ class Conversation extends React.Component {
   }
 
   connect(conversation) {
-    this._connectMessage(conversation);
+    this._connectMessages(conversation);
     this._connectContact(conversation);
   }
 
@@ -76,12 +79,11 @@ class Conversation extends React.Component {
     this.connect(conversation);
   }
 
-  disconnect() {
-    App.cable.subscriptions.remove(this.state.messageSubscription);
-    App.cable.subscriptions.remove(this.state.contactSubscription);
+  componentDidUnmount() {
+    this.disconnect();
   }
 
-  _connectMessage(conversation) {
+  _connectMessages(conversation) {
     let channel = { channel: 'MessagesChannel', conversation_id: conversation.id };
     let subscription = App.cable.subscriptions.create(
       channel, this._messageChannelConfig()
@@ -101,13 +103,13 @@ class Conversation extends React.Component {
 
   _messageChannelConfig() {
     return {
-      received: this._messageReceived.bind(this)
+      received: this._messageReceived
     }
   }
 
   _contactChannelConfig() {
     return {
-      received: this._contactReceived.bind(this)
+      received: this._contactReceived
     }
   }
 

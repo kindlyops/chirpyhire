@@ -161,6 +161,10 @@ class ProfileNotes extends React.Component {
     this.setState({ notes: notes });
   }
 
+  componentDidUnmount() {
+    this.disconnect()
+  }
+
   _init() {
     $(document).on('focus', '#reply_container textarea', function() {
       $('#reply_container').addClass('has_focus');
