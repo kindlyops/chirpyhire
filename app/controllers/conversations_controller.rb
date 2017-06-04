@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
 
     respond_to do |format|
       format.json
-      format.html
+      format.html { render html: '', layout: true }
     end
   end
 
