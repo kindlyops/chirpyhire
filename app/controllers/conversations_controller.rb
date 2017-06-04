@@ -1,10 +1,9 @@
 class ConversationsController < ApplicationController
-  PAGE_LIMIT = 25
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
 
   def index
-    @conversations = paginated(policy_scope(inbox.recent_conversations))
+    @conversations = policy_scope(inbox.recent_conversations)
 
     respond_to_index
   end
@@ -55,13 +54,5 @@ class ConversationsController < ApplicationController
 
   def inbox
     @inbox ||= authorize(Inbox.find(params[:inbox_id]), :show?)
-  end
-
-  def paginated(scope)
-    scope.page(page).per(PAGE_LIMIT)
-  end
-
-  def page
-    params[:page].to_i || 1
   end
 end

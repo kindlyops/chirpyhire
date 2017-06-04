@@ -4,6 +4,8 @@ json.phone_number contact.phone_number.to_s
 json.hero_pattern_classes contact.hero_pattern_classes
 json.starred contact.starred
 
+json.url contact.avatar && contact.avatar.url(:medium)
+
 json.zipcode do
   json.label contact.candidacy_zipcode.label
   json.tooltip_label contact.candidacy_zipcode.tooltip_label

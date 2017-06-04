@@ -9,6 +9,11 @@ class AccountsController < ApplicationController
 
   def show
     @account = authorize Account.find(params[:id])
+
+    respond_to do |format|
+      format.json
+      format.html
+    end
   end
 
   def update

@@ -14,12 +14,25 @@ class Message extends React.Component {
     return moment(this.props.message.external_created_at).format('h:mm a');
   }
 
+  messageIcon() {
+    if(this.props.message.sender_url) {
+      return (
+        <img className='author_image no-repeat thumb_36' src={this.props.message.sender_url}></img>
+      );
+    } else {
+      return (
+        <div className={`author_image thumb_36 second ${this.props.message.sender_hero_pattern_classes}`}>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div className={this.classes()}>
         <div className="message_gutter">
           <div className="message-icon">
-            <div className={`author_image thumb_36 second ${this.props.message.sender_hero_pattern_classes}`}></div>
+            {this.messageIcon()}
           </div>
         <a className="timestamp">{this.timestamp()}</a>
         </div>

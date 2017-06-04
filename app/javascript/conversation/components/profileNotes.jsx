@@ -10,8 +10,30 @@ class ProfileNotes extends React.Component {
 
     this.state = {
       notes: [],
-      subscription: {}
+      subscription: {},
+      current_account: {}
     };
+  }
+
+  senderIcon() {
+    if(this.state.current_account.url) {
+      return (
+        <img className='author_image no-repeat thumb_36' src={this.state.current_account.url}></img>
+      );
+    } else {
+      return (
+        <span className={`author_image thumb_36 ${this.state.current_account.hero_pattern_classes}`}>
+        </span>
+      );
+    }
+  }
+
+  inputContainerClasses() {
+    if (this.state.current_account.url) {
+      return 'inline_message_input_container less-negative-margin-top';
+    } else {
+      return 'inline_message_input_container';
+    }
   }
 
   render() {
@@ -29,8 +51,8 @@ class ProfileNotes extends React.Component {
               </div>
             </div>
             <div id="reply_container">
-              <span className="author_image thumb_36 second hp-anchors-away"></span>
-              <div className="inline_message_input_container">
+              {this.senderIcon()}
+              <div className={this.inputContainerClasses()}>
                 <form className="new_note" id="new_note" action={`/contacts/${this.props.contact.id}/notes`} acceptCharset="UTF-8" method="post" data-remote="true">
                   <input name="utf8" type="hidden" value="✓" />
                   <div className="message_input">
@@ -68,10 +90,18 @@ class ProfileNotes extends React.Component {
     $.get(this.notesUrl(id)).then((notes) => {
       this.setState({ notes: notes });
     });
+
+    $.get(this.currentAccountUrl()).then((current_account) => {
+      this.setState({ current_account: current_account });
+    })
   }
 
   notesUrl(id) {
     return `/contacts/${id}/notes`;
+  }
+
+  currentAccountUrl() {
+    return `/accounts/${this.props.inbox.account_id}`;
   }
 
   connect(id) {

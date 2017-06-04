@@ -33,6 +33,7 @@ class Conversation extends React.Component {
       />
       <ConversationProfile 
         contact={this.state.conversation.contact}
+        inbox={this.props.inbox}
       />
     </div>);
   }

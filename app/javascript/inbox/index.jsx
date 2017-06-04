@@ -10,6 +10,7 @@ class Inbox extends React.Component {
 
     this.state = { 
       conversations: [],
+      inbox: {},
       filter: 'All'
     };
 
@@ -26,7 +27,10 @@ class Inbox extends React.Component {
 
   conversation() {
     if(this.id()) {
-      return <Conversation id={this.id()} inboxId={this.inboxId()} />;
+      return <Conversation 
+                id={this.id()} 
+                inboxId={this.inboxId()} 
+                inbox={this.state.inbox} />;
     } else {
       return this.emptyInbox();
     }
@@ -63,13 +67,21 @@ class Inbox extends React.Component {
             </div>;
   }
 
-  inboxUrl() {
+  conversationsURL() {
     return `/inboxes/${this.inboxId()}/conversations`;
   }
 
+  inboxURL() {
+    return `/inboxes/${this.inboxId()}`;
+  }
+
   componentDidMount() {
-    $.get(this.inboxUrl()).then((conversations) => {
+    $.get(this.conversationsURL()).then((conversations) => {
       this.setState({ conversations: conversations });
+    });
+
+    $.get(this.inboxURL()).then((inbox) => {
+      this.setState({ inbox: inbox });
     });
   }
 

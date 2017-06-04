@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :messages, only: :create
   end
 
-  resources :inboxes, only: [] do
+  resources :inboxes, only: [:show] do
     resources :conversations, only: %i[index show], concerns: :paginatable
   end
 
