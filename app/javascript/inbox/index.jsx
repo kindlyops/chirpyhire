@@ -130,7 +130,7 @@ class Inbox extends React.Component {
       receivedInboxConversation.id === inbox_conversation.id
     ))
 
-    if(Number.isInteger(index)) {
+    if(index !== -1) {
       let new_inbox_conversations = update(
         this.state.inbox_conversations,
         { $splice: [[index, 1, receivedInboxConversation]] }

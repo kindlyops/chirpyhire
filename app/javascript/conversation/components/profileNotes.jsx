@@ -143,7 +143,7 @@ class ProfileNotes extends React.Component {
     let notes;
     const index = this.state.notes.findIndex((note) => note.id === receivedNote.id);
 
-    if (Number.isInteger(index)) {
+    if (index !== -1) {
       if(receivedNote.deleted_at) {
         notes = update(this.state.notes, { $splice: [[index, 1]] });
         $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).remove();
@@ -153,7 +153,7 @@ class ProfileNotes extends React.Component {
         $(`#note-edit-container[data-note-id="${receivedNote.id}"]`).prop('hidden', true);
         $(`#note-show-container[data-note-id="${receivedNote.id}"]`).removeProp('hidden');
       }
-    } else {
+    } else if (!receivedNote.deleted_at) {
       notes = update(this.state.notes, { $push: [receivedNote] });
       $('#reply_container textarea').val('');
     }
@@ -166,6 +166,14 @@ class ProfileNotes extends React.Component {
   }
 
   _init() {
+    let modal = $('.modal').modal({ show: false });
+    modal.on('click', '.modal-footer button.delete', function(e) {
+      e.preventDefault();
+      modal.modal('hide');
+      let formId = modal.find('p[data-id]').data('id');
+      modal.find(`form.destroy-note#${formId}`).submit();
+    });
+
     $(document).on('focus', '#reply_container textarea', function() {
       $('#reply_container').addClass('has_focus');
     });
@@ -180,17 +188,10 @@ class ProfileNotes extends React.Component {
     $(document).on('click', '#note-show-container button.delete', function(e) {
       var noteToDelete = $(this).closest('#note-show-container').clone();
       noteToDelete.addClass('standalone');
-
-      var modal = $('.modal');
-      var notice = '<p class="mb-3">Are you sure you want to delete this note? This cannot be undone.</p>';
+      let formId = noteToDelete.find('form.destroy-note').attr('id');
+      var notice = `<p data-id="${formId}" class="mb-3">Are you sure you want to delete this note? This cannot be undone.</p>`;
       modal.find('.modal-body').empty().append(notice).append(noteToDelete);
-      modal.modal();
-
-      modal.on('click', '.modal-footer button.delete', function(e) {
-        e.preventDefault();
-        noteToDelete.find('form.destroy-note').submit();
-        modal.modal('hide');
-      });
+      modal.modal('show');
     });
 
     $(document).on('click', '#note-show-container button.edit', function(e) {
