@@ -30,7 +30,7 @@ const App = () => (
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('inbox')
 
-  ReactDOM.render(<App/>, node)
+  ReactDOM.render(<App />, node)
 })
 
 

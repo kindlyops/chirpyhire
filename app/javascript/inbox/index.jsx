@@ -1,5 +1,4 @@
 import React from 'react'
-import Conversations from './components/conversations'
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
@@ -26,10 +25,13 @@ class Inbox extends React.Component {
   }
 
   conversation() {
-    if(this.id()) {
+    let conversation = this.state.conversations.find((conversation) => (
+      parseInt(this.id()) === conversation.id
+    ))
+
+    if(conversation) {
       return <Conversation 
-                id={this.id()} 
-                inboxId={this.inboxId()} 
+                conversation={conversation}
                 inbox={this.state.inbox} />;
     } else {
       return this.emptyInbox();
@@ -51,7 +53,7 @@ class Inbox extends React.Component {
 
   render() {
     return <div className="Inbox">
-              <Conversations>
+              <div className='Conversations'>
                 <ConversationsMenu 
                   filter={this.state.filter}
                   conversations={this.state.conversations}
@@ -62,7 +64,7 @@ class Inbox extends React.Component {
                   filter={this.state.filter}
                   conversations={this.state.conversations}
                  />
-              </Conversations>
+              </div>
               {this.conversation()}
             </div>;
   }
@@ -76,12 +78,12 @@ class Inbox extends React.Component {
   }
 
   componentDidMount() {
-    $.get(this.conversationsURL()).then((conversations) => {
-      this.setState({ conversations: conversations });
-    });
-
     $.get(this.inboxURL()).then((inbox) => {
       this.setState({ inbox: inbox });
+    });
+    
+    $.get(this.conversationsURL()).then((conversations) => {
+      this.setState({ conversations: conversations });
     });
   }
 

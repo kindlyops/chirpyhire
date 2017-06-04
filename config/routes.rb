@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resource :dashboard
 
   resources :messages, only: %i[index show], param: :contact_id
-  resources :contacts, only: [] do
+  resources :contacts, only: [:show] do
     resources :notes, only: %i[index create update destroy]
     resource :star, only: :create
     resources :messages, only: :create
@@ -23,6 +23,10 @@ Rails.application.routes.draw do
 
   resources :inboxes, only: [:show] do
     resources :conversations, only: %i[index show], concerns: :paginatable
+  end
+
+  resources :conversations, only: [] do
+    resources :messages, only: [:index], controller: 'conversations/messages'
   end
 
   resources :organizations, only: %i[show update] do

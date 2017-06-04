@@ -1,14 +1,14 @@
 class ContactsChannel < ApplicationCable::Channel
   def subscribed
-    reject if conversation.blank?
-    stream_for conversation
+    reject if contact.blank?
+    stream_for contact
   end
 
-  delegate :conversations, to: :current_account
+  delegate :contacts, to: :current_account
 
   private
 
-  def conversation
-    @conversation ||= conversations.find(params[:conversation_id])
+  def contact
+    @contact ||= contacts.find(params[:id])
   end
 end

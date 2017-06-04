@@ -1,6 +1,7 @@
 class ConversationsController < ApplicationController
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
+  decorates_assigned :conversations
 
   def index
     @conversations = policy_scope(inbox.recent_conversations)

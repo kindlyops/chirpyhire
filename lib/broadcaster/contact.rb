@@ -8,14 +8,12 @@ class Broadcaster::Contact
   end
 
   def broadcast
-    ContactsChannel.broadcast_to(conversation, contact_hash)
+    ContactsChannel.broadcast_to(contact, contact_hash)
   end
 
   private
 
   attr_reader :contact
-
-  delegate :conversation, to: :contact
 
   def contact_hash
     JSON.parse(contact_string)

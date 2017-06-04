@@ -1,5 +1,4 @@
 import React from 'react'
-import update from 'immutability-helper'
 import ConversationChat from './components/conversationChat'
 import ConversationProfile from './components/conversationProfile'
 
@@ -10,64 +9,71 @@ class Conversation extends React.Component {
     this.state = {
       messageSubscription: {},
       contactSubscription: {},
-      conversation: {
-        contact: {
-          zipcode: {},
-          certification: {},
-          availability: {},
-          live_in: {},
-          experience: {},
-          transportation: {},
-          cpr_first_aid: {},
-          skin_test: {}
-        },
-        messages: []
-      }
+      contact: {
+        zipcode: {},
+        certification: {},
+        availability: {},
+        live_in: {},
+        experience: {},
+        transportation: {},
+        cpr_first_aid: {},
+        skin_test: {}
+      },
+      messages: []
     };
   }
 
   render() {
     return (<div className='Conversation'>
       <ConversationChat 
-        conversation={this.state.conversation}
+        contact={this.state.contact}
+        messages={this.state.messages}
       />
       <ConversationProfile 
-        contact={this.state.conversation.contact}
+        contact={this.state.contact}
         inbox={this.props.inbox}
       />
     </div>);
   }
 
-  conversationUrl(id) {
-    return `/inboxes/${this.props.inboxId}/conversations/${id}`;
+  contactUrl(id) {
+    return `/contacts/${id}`;
+  }
+
+  messagesUrl(id) {
+    return `/conversations/${id}/messages`;
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.id !== this.props.id) {
-      this.load(nextProps.id);
-      this.reconnect(this.props.id);
+    if(nextProps.conversation.id !== this.props.conversation.id) {
+      this.load(nextProps.conversation);
+      this.reconnect(nextProps.conversation);
     }
   }
 
   componentDidMount() {
-    this.load(this.props.id);
-    this.connect(this.props.id);
+    this.load(this.props.conversation);
+    this.connect(this.props.conversation);
   }
 
-  load(id) {
-    $.get(this.conversationUrl(id)).then((conversation) => {
-      this.setState({ conversation: conversation });
+  load(conversation) {
+    $.get(this.contactUrl(conversation.contact_id)).then((contact) => {
+      this.setState({ contact: contact });
+    });    
+
+    $.get(this.messagesUrl(conversation.id)).then((messages) => {
+      this.setState({ messages: messages });
     });
   }
 
-  connect(id) {
-    this._connectMessage(id);
-    this._connectContact(id);
+  connect(conversation) {
+    this._connectMessage(conversation);
+    this._connectContact(conversation);
   }
 
-  reconnect(id) {
+  reconnect(conversation) {
     this.disconnect();
-    this.connect(id);
+    this.connect(conversation);
   }
 
   disconnect() {
@@ -75,8 +81,8 @@ class Conversation extends React.Component {
     App.cable.subscriptions.remove(this.state.contactSubscription);
   }
 
-  _connectMessage(id) {
-    let channel = { channel: 'MessagesChannel', conversation_id: id };
+  _connectMessage(conversation) {
+    let channel = { channel: 'MessagesChannel', conversation_id: conversation.id };
     let subscription = App.cable.subscriptions.create(
       channel, this._messageChannelConfig()
     );
@@ -84,8 +90,8 @@ class Conversation extends React.Component {
     this.setState({ messageSubscription: subscription });
   }
 
-  _connectContact(id) {
-    let channel = { channel: 'ContactsChannel', conversation_id: id };
+  _connectContact(conversation) {
+    let channel = { channel: 'ContactsChannel', id: conversation.contact_id };
     let subscription = App.cable.subscriptions.create(
       channel, this._contactChannelConfig()
     );
@@ -106,23 +112,15 @@ class Conversation extends React.Component {
   }
 
   _messageReceived(receivedMessage) {
-    let conversation = update(this.state.conversation, 
-      { 
-        messages: { $push: [receivedMessage] }
-      }
-    );
-
-    this.setState({ conversation: conversation });
+    this.setState({
+      messages: this.state.messages.concat(receivedMessage)
+    });
   }
 
   _contactReceived(receivedContact) {
-    let conversation = update(this.state.conversation, 
-      { 
-        contact: { $set: receivedContact }
-      }
-    );
-
-    this.setState({ conversation: conversation });
+    this.setState({
+      contact: receivedContact
+    });
   }
 }
 
