@@ -1,5 +1,7 @@
 import React from 'react'
 import update from 'immutability-helper'
+import moment from 'moment'
+
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
@@ -40,6 +42,14 @@ class Inbox extends React.Component {
     }
   }
 
+  inboxConversationsByRecency() {
+    return this.state.inbox_conversations.sort((first, second) => (
+      moment(first.last_message_created_at).isAfter(
+        moment(second.last_message_created_at)
+      )
+    ))
+  }
+
   emptyInbox() {
     return (
       <div className="empty-message d-flex flex-column align-items-center justify-content-center">
@@ -64,7 +74,7 @@ class Inbox extends React.Component {
                 <ConversationsList
                   inboxId={this.inboxId()}
                   filter={this.state.filter}
-                  inbox_conversations={this.state.inbox_conversations}
+                  inbox_conversations={this.inboxConversationsByRecency()}
                  />
               </div>
               {this.conversation()}

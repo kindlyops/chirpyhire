@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ConversationsController do
+RSpec.describe Conversations::MessagesController do
   let(:team) { create(:team, :account) }
   let(:contact) { create(:contact, team: team) }
   let(:organization) { team.organization }
@@ -9,13 +9,14 @@ RSpec.describe ConversationsController do
   let(:conversation) { contact.conversation }
 
   before do
+    @request.env['HTTP_ACCEPT'] = 'application/json'
     sign_in(account)
     IceBreaker.call(contact)
   end
 
-  describe '#show' do
+  describe '#index' do
     let(:params) {
-      { inbox_id: inbox.id, id: conversation.id }
+      { conversation_id: conversation.id }
     }
 
     let(:inbox_conversation) { account.inbox_conversations.find_by(conversation: conversation) }
@@ -33,7 +34,7 @@ RSpec.describe ConversationsController do
 
         it 'does not mark the read receipts as read' do
           expect {
-            get :show, params: params
+            get :index, params: params
           }.not_to change { inbox_conversation.reload.read_receipts.unread.count }
 
           expect(inbox_conversation.read_receipts.unread.count).to eq(3)
@@ -43,7 +44,7 @@ RSpec.describe ConversationsController do
       context 'not impersonating' do
         it 'marks the read receipts as read' do
           expect {
-            get :show, params: params
+            get :index, params: params
           }.to change { inbox_conversation.reload.read_receipts.unread.count }.from(3).to(0)
         end
       end

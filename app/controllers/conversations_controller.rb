@@ -15,6 +15,7 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = authorize(inbox.conversations.find(params[:id]))
+    inbox_conversation.update(last_viewed_at: DateTime.current)
 
     respond_to do |format|
       format.json
@@ -25,6 +26,10 @@ class ConversationsController < ApplicationController
   private
 
   delegate :inbox_conversations, to: :inbox
+
+  def inbox_conversation
+    inbox_conversations.find_by(conversation: @conversation)
+  end
 
   def current_conversation_path
     inbox_conversation_path(inbox, current_conversation)
