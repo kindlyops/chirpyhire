@@ -1,7 +1,8 @@
 class AccountsController < ApplicationController
   before_action :require_super_admin!, only: :stop_impersonating
   skip_after_action :verify_authorized, only: :stop_impersonating
-
+  decorates_assigned :account
+  
   def stop_impersonating
     stop_impersonating_account
     redirect_to rails_admin.index_path('account')
