@@ -141,7 +141,7 @@ class ProfileNotes extends React.Component {
  
   _received(receivedNote) {
     let notes;
-    const index = this.state.notes.findIndex((note) => note.id === receivedNote.id);
+    const index = R.findIndex((note) => (note.id === receivedNote.id), this.state.notes);
 
     if (index !== -1) {
       if(receivedNote.deleted_at) {
