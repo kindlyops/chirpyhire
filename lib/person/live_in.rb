@@ -1,9 +1,5 @@
 class Person::LiveIn < Person::Attribute
   def label
-    'Live-In'
-  end
-
-  def label
     return 'Unknown' if candidacy.live_in.nil?
     return 'Live-In' if candidacy.live_in.present?
 
