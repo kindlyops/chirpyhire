@@ -2,7 +2,7 @@ class Conversations::MessagesController < ApplicationController
   decorates_assigned :messages
 
   def index
-    @messages = policy_scope(conversation.messages)
+    @messages = policy_scope(conversation.messages.by_recency)
     read_messages unless impersonating?
     inbox_conversation.update(last_viewed_at: DateTime.current)
     Broadcaster::InboxConversation.broadcast(inbox_conversation)

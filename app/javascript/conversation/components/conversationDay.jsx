@@ -35,6 +35,12 @@ class ConversationDay extends React.Component {
     return Math.abs(difference) < 5;
   }
 
+  orderedMessages(messages) {
+    return messages.sort((first, second) => (
+      moment(first.external_created_at) - moment(second.external_created_at)
+    ))
+  }
+
   render() {
     return (
       <div className="day_container">
@@ -45,7 +51,7 @@ class ConversationDay extends React.Component {
         </div>
         <div className="day_msgs">
         {this.thoughts().map((messages) =>
-          messages.map((message, index) =>
+          this.orderedMessages(messages).map((message, index) =>
               <Message thoughtId={index} key={message.id} message={message} />
             )
           )

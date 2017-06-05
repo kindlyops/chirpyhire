@@ -59,10 +59,6 @@ class Message < ApplicationRecord
     external_created_at.strftime('%I:%M')
   end
 
-  def conversation_day
-    Conversation::Day.new([created_at.to_date, [self]])
-  end
-
   def summary
     body && body[0..30] || ''
   end

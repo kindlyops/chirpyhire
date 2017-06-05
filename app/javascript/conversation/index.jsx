@@ -120,7 +120,7 @@ class Conversation extends React.Component {
 
   _messageReceived(receivedMessage) {
     this.setState({
-      messages: this.state.messages.concat(receivedMessage)
+      messages: this.state.messages.concat([receivedMessage])
     });
   }
 
