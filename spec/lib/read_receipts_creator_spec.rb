@@ -12,11 +12,12 @@ RSpec.describe ReadReceiptsCreator do
     context 'with multiple conversations on the organization' do
       let!(:accounts) { create_list(:account, 3, :inbox, organization: organization) }
       let!(:inboxes) { accounts.map(&:inbox) }
+      let(:conversation) { contact.conversation }
+
       let!(:conversations) {
         inboxes.map do |i|
-          conversation = create(:conversation, contact: contact)
           i.conversations << conversation
-          conversation
+          i.inbox_conversations.first
         end
       }
 

@@ -9,6 +9,8 @@ class Message < ApplicationRecord
   validates :recipient, presence: true, if: :outbound?
   validates :conversation, presence: true
 
+  delegate :handle, to: :sender, prefix: true
+
   def self.by_recency
     order(:external_created_at, :id)
   end
@@ -57,15 +59,15 @@ class Message < ApplicationRecord
     external_created_at.strftime('%I:%M')
   end
 
-  def conversation_day
-    Conversation::Day.new([created_at.to_date, [self]])
-  end
-
   def summary
     body && body[0..30] || ''
   end
 
   def touch_conversation
     conversation.update(last_message_created_at: created_at)
+
+    conversation.inbox_conversations.find_each do |inbox_conversation|
+      Broadcaster::InboxConversation.broadcast(inbox_conversation)
+    end
   end
 end

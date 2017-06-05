@@ -41,9 +41,7 @@
   .profile-notes {
     height: 20%;
 
-
-    .conversation {
-      display: block;
+    .notes {
 
       #note-edit-container {
         border-top: 1px solid #D4D4D9;
@@ -101,17 +99,6 @@
           padding-top: 7px!important;
           padding-bottom: 0!important;
           padding-right: 10px;
-        }
-      }
-    }
-
-    .notes {
-      .day_container {
-        .message:first-child, .message:nth-child(2) {
-          margin-top: 10px;
-        }
-        .message {
-          padding-bottom: 4px;
         }
       }
     }
@@ -214,7 +201,7 @@
         .reply_broadcast_buttons_container {
           position: absolute;
           width: 100%;
-          margin-top: -36px;
+          margin-top: -5px;
           display: flex;
           align-items: center;
           opacity: 0;
@@ -222,7 +209,6 @@
 
           .note_send {
             float: right;
-            margin-right: .5rem;
           }
         }
       }

@@ -10,21 +10,31 @@ $blue-gray: #91A3B0;
 @import "conversations/utilities";
 @import "conversations/profile";
 
-.messages {
+#inbox, .Inbox, [data-reactroot] {
   display: flex;
   overflow: hidden;
-  min-height: 100vh;
+  height: 100vh;
 
   .empty-message {
-    min-height: 100vh;
+    height: 100vh;
+    width: 100%;
   }
 
-  .conversation {
+  .Conversation {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    flex: 1;
+  }
+
+  .ConversationChat {
     position: relative;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     min-width: 1px;
+    overflow: hidden;
+    height: 100vh;
   }
 
   .msgs_holder {

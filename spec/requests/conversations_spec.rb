@@ -9,13 +9,6 @@ RSpec.describe 'Conversations' do
     sign_in(account)
   end
 
-  context 'without any caregivers' do
-    it 'provides a useful empty state message' do
-      get inbox_conversations_path(inbox)
-      expect(response.body).to include('No one to message yet...')
-    end
-  end
-
   context 'with caregivers' do
     let!(:current_contact) { create(:contact, team: team) }
     let!(:with_unread_messages) { create(:contact, team: team) }

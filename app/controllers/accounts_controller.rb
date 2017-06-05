@@ -1,6 +1,7 @@
 class AccountsController < ApplicationController
   before_action :require_super_admin!, only: :stop_impersonating
   skip_after_action :verify_authorized, only: :stop_impersonating
+  decorates_assigned :account
 
   def stop_impersonating
     stop_impersonating_account
@@ -9,6 +10,11 @@ class AccountsController < ApplicationController
 
   def show
     @account = authorize Account.find(params[:id])
+
+    respond_to do |format|
+      format.json
+      format.html
+    end
   end
 
   def update

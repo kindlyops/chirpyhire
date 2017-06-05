@@ -1,16 +1,13 @@
 class ConversationsController < ApplicationController
-  PAGE_LIMIT = 25
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
+  decorates_assigned :conversations
 
   def index
-    @conversations = paginated(policy_scope(inbox.recent_conversations))
+    @conversations = policy_scope(inbox.recent_conversations)
 
-    if inbox.conversations.exists?
-      respond_to do |format|
-        format.json
-        format.html { redirect_to current_conversation_path }
-      end
+    if @conversations.exists?
+      redirect_to current_conversation_path
     else
       render :index
     end
@@ -18,20 +15,20 @@ class ConversationsController < ApplicationController
 
   def show
     @conversation = authorize(inbox.conversations.find(params[:id]))
-    read_messages unless impersonating?
     inbox_conversation.update(last_viewed_at: DateTime.current)
+
+    respond_to do |format|
+      format.json
+      format.html { render html: '', layout: true }
+    end
   end
 
   private
 
   delegate :inbox_conversations, to: :inbox
 
-  def read_messages
-    inbox_conversation.read_receipts.unread.each(&:read)
-  end
-
   def inbox_conversation
-    inbox.inbox_conversations.find_by(conversation: @conversation)
+    inbox_conversations.find_by(conversation: @conversation)
   end
 
   def current_conversation_path
@@ -44,13 +41,5 @@ class ConversationsController < ApplicationController
 
   def inbox
     @inbox ||= authorize(Inbox.find(params[:inbox_id]), :show?)
-  end
-
-  def paginated(scope)
-    scope.page(page).per(PAGE_LIMIT)
-  end
-
-  def page
-    params[:page].to_i || 1
   end
 end

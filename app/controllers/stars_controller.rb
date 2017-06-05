@@ -1,8 +1,8 @@
 class StarsController < ApplicationController
   def create
     contact.update(starred: !contact.starred)
-
-    redirect_to inbox_conversation_path(current_inbox, conversation)
+    Broadcaster::Contact.broadcast(contact)
+    head :ok
   end
 
   private
