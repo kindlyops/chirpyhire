@@ -46,7 +46,7 @@ class ProfileNotes extends React.Component {
             <div>
               <div className="notes">
                 {this.days().map((day) =>
-                  <NoteDay key={day[0].created_at} notes={day} day={day[0].created_at} />
+                  <NoteDay key={day[0].created_at} current_account={this.state.current_account} notes={day} day={day[0].created_at} />
                 )}
               </div>
             </div>

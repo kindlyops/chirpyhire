@@ -6,7 +6,7 @@ class Note extends React.Component {
     return moment(this.props.note.created_at).format('h:mm a');
   }
 
-  render() {
+  editableNote() {
     return (
       <div>
         <div className="message first highlight" id='note-edit-container' data-note-id={this.props.note.id} hidden={true}>
@@ -56,6 +56,38 @@ class Note extends React.Component {
         </div>
       </div>
     )
+  }
+
+  nonEditableNote() {
+    return (
+      <div>
+        <div className='message first' id='note-show-container' data-note-id={this.props.note.id}>
+          <div className="message_gutter">
+            <div className="message-icon">
+              <div className={`author_image thumb_36 second ${this.props.note.sender_hero_pattern_classes}`}></div>
+            </div>
+            <a className="timestamp">{this.timestamp()}</a>
+          </div>
+          <div className="message_content">
+            <div className="message_content_header">
+              <div className="message_content_header_left">
+                <strong className="message-sender">{this.props.note.sender_handle}</strong>
+                <a className="timestamp">{this.timestamp()}</a>
+              </div>
+            </div>
+            <span className="message-body">{this.props.note.body}</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  render() {
+    if (this.props.note.sender_id === this.props.current_account.id) {
+      return this.editableNote();
+    } else {
+      return this.nonEditableNote();
+    }
   }
 }
 
