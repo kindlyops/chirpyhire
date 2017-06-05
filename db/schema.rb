@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531215542) do
+ActiveRecord::Schema.define(version: 20170602141732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,9 @@ ActiveRecord::Schema.define(version: 20170531215542) do
   create_table "conversations", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.datetime "last_message_created_at"
+    t.integer "state", default: 0, null: false
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
+    t.index ["state", "contact_id"], name: "index_conversations_on_state_and_contact_id", unique: true, where: "(state = 0)"
   end
 
   create_table "ideal_candidate_suggestions", id: :serial, force: :cascade do |t|

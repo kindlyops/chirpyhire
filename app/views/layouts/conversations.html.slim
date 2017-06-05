@@ -2,7 +2,8 @@ doctype html
 html
   head
     = render partial: "layouts/head"
-    = javascript_pack_tag 'inbox'
+    = stylesheet_pack_tag 'application'
+    = javascript_pack_tag 'application'
   body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
     = render "layouts/google_tag_manager/no_script"
     #app
@@ -11,9 +12,7 @@ html
         .app
           = render "components/sidebar"
           .app-content-container
-            .messages
-              = content_tag :div, id: 'inbox', data: current_inbox.to_builder.target! do
-              = yield
+            #inbox
     = render "components/account_dropdown"
     = render partial: "components/modal"
     = render "layouts/script" unless Rails.env.test?

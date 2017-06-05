@@ -1,17 +1,17 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 class InboxItem extends React.Component {
   href() {
-    return '/inboxes/' + this.props.inboxId + '/conversations/' + this.props.id;
+    return `/inboxes/${this.props.inboxId}/conversations/${this.props.id}`;
   }
 
-  classNames() {
-    var classes = 'InboxItem';
-    if (location.pathname === this.href()) {
-      classes = classes + ' active';
-    }
+  inactive() {
+    return parseInt(this.props.match.params.id) !== this.props.id;
+  }
 
-    return classes;
+  unread() {
+    return this.props.unread_count > 0;
   }
 
   render() {
@@ -20,8 +20,7 @@ class InboxItem extends React.Component {
                       {this.props.summary}
                     </div>
                   </div>;
-
-    if(this.props.unread_count > 0) {
+    if(this.unread() && this.inactive()) {
       summary = <div className='summary-and-unread-count'>
                   <div className='summary'>
                     {this.props.summary}
@@ -32,7 +31,7 @@ class InboxItem extends React.Component {
                 </div>
     }
 
-    return <a href={this.href()} className={this.classNames()}>
+    return <NavLink exact to={this.href()} className='InboxItem'>
       <div className='handle-and-timestamp'>
         <div className='handle'>
           {this.props.handle}
@@ -44,7 +43,7 @@ class InboxItem extends React.Component {
         </div>
       </div>
       {summary}
-    </a>;
+    </NavLink>;
   }
 }
 

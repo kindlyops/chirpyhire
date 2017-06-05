@@ -11,6 +11,10 @@ class Inbox < ApplicationRecord
     conversations.by_recent_message
   end
 
+  def recent_inbox_conversations
+    inbox_conversations.by_recent_message
+  end
+
   def to_builder
     conversations_json = recent_conversations.limit(25).map do |c|
       c.inbox_conversations.find_by(inbox: self).to_builder.attributes!

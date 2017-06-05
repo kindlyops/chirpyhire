@@ -70,6 +70,8 @@ class Surveyor
     survey.answer.format(message) do |formatted_answer|
       candidacy.assign_attributes(formatted_answer)
       candidacy.save!
+      Broadcaster::Contact.broadcast(contact)
+      candidacy
     end
   end
 

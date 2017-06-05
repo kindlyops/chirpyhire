@@ -1,21 +1,22 @@
-#inbox {
-  min-width: 17.6rem;
-  width: 17.6rem;
+#inbox, .Inbox, [data-reactroot] {
+  min-width: 100%;
+  width: 100%;
 
-  .InboxWrapper {
+  .Conversations {
     display: flex;
     flex-direction: column;
     min-width: 17.6rem;
     width: 17.6rem;
     border-left: 1px solid #eeeeef;
     border-right: 1px solid #eeeeef;
+    overflow: hidden;
     height: 100vh;
 
     .autosizer-wrapper {
       flex: 1 1 auto;
     }
 
-    .Inbox {
+    .ConversationsList {
       flex: 1;
       background-color: #f2f6f8;
       overflow-y: auto;
@@ -104,10 +105,11 @@
       }
     }
 
-    .InboxDropdown {
+    .ConversationsMenu {
       border-bottom: 1px solid #eeeeef;
       height: auto;
       padding: 0;
+      cursor: pointer;
       min-height: 1.7rem;
       justify-content: space-between;
       position: relative;
@@ -115,6 +117,10 @@
       width: auto;
       align-items: center;
       display: flex;
+
+      i {
+        font-size: 1.5rem;
+      }
 
       .view-title {
         align-items: center;
@@ -130,6 +136,10 @@
           justify-content: center;
           min-width: 28px;
           font-size: 1.25rem;
+        }
+
+        .filler {
+          flex: 1;
         }
 
         .view-name {

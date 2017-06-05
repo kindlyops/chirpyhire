@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe MessagesController do
+  render_views
+
   let(:team) { create(:team, :account) }
   let(:contact) { create(:contact, team: team) }
   let(:organization) { team.organization }

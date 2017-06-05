@@ -18,6 +18,11 @@ class Conversation::LastMessageCreatedAt
     long_format
   end
 
+  def iso_time
+    return nil if time.blank?
+    time.iso8601
+  end
+
   def past_hour?
     time > 1.hour.ago
   end
