@@ -3,6 +3,13 @@ class Person::LiveIn < Person::Attribute
     'Live-In'
   end
 
+  def label
+    return 'Unknown' if candidacy.live_in.nil?
+    return 'Live-In' if candidacy.live_in.present?
+
+    'No Live-In'
+  end
+
   def to_s
     candidacy.live_in.present?.to_s
   end
@@ -12,11 +19,11 @@ class Person::LiveIn < Person::Attribute
   end
 
   def query
-    'live_in'
+    'live_in' if candidacy.live_in.present?
   end
 
   def tooltip_label
-    'looking for live-in shifts'
+    'looking for live-in shifts' if candidacy.live_in.present?
   end
 
   def humanize_attribute(*)
@@ -25,7 +32,8 @@ class Person::LiveIn < Person::Attribute
 
   def icon_class
     return 'fa-question' if candidacy.live_in.nil?
+    return 'fa-home' if candidacy.live_in.present?
 
-    'fa-home'
+    'fa-times-circle'
   end
 end

@@ -1,6 +1,29 @@
 import React from 'react'
 
 class ProfileDetails extends React.Component {
+
+  liveInSubvalue() {
+    if (this.props.contact.live_in.query) {
+      return (
+        <span className="profile-detail-subvalue">
+          <a href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.live_in.query)}`} data-toggle='tooltip' data-placement='left' data-original-title={`View caregivers ${this.props.contact.live_in.tooltip_label}.`}>
+            <i className={`fa fa-fw mr-1 ${this.props.contact.live_in.icon_class}`}></i>
+            {this.props.contact.live_in.label}
+          </a>
+        </span>
+      )
+    } else {
+      return (
+        <span className="profile-detail-subvalue">
+          <span>
+            <i className={`fa fa-fw mr-1 ${this.props.contact.live_in.icon_class}`}></i>
+            {this.props.contact.live_in.label}
+          </span>
+        </span>
+      )
+    }
+  }
+
   render() {
     return (
         <div className="profile-details">
@@ -43,12 +66,7 @@ class ProfileDetails extends React.Component {
                 {this.props.contact.availability.label}
               </a>
             </span>
-            <span className="profile-detail-subvalue">
-              <a data-toggle="tooltip" data-placement="left" href={`/caregivers?availability%5B%5D=${encodeURIComponent(this.props.contact.live_in.query)}`} data-original-title={`View caregivers ${this.props.contact.live_in.tooltip_label}.`}>
-                <i className={`fa fa-fw mr-1 ${this.props.contact.live_in.icon_class}`}></i>
-                {this.props.contact.live_in.label}
-              </a>
-            </span>
+            {this.liveInSubvalue()}
           </span>
         </p>
         <p className="profile-detail-item">
