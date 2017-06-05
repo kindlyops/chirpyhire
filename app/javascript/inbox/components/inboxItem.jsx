@@ -6,14 +6,21 @@ class InboxItem extends React.Component {
     return `/inboxes/${this.props.inboxId}/conversations/${this.props.id}`;
   }
 
+  inactive() {
+    return parseInt(this.props.match.params.id) !== this.props.id;
+  }
+
+  unread() {
+    return this.props.unread_count > 0;
+  }
+
   render() {
     let summary = <div className='summary-and-unread-count'>
                     <div className='summary'>
                       {this.props.summary}
                     </div>
                   </div>;
-
-    if(this.props.unread_count > 0) {
+    if(this.unread() && this.inactive()) {
       summary = <div className='summary-and-unread-count'>
                   <div className='summary'>
                     {this.props.summary}

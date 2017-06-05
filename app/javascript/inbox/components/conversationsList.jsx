@@ -37,8 +37,9 @@ class ConversationsList extends React.Component {
     return (
       <div key={key} style={style}>
         <InboxItem 
-          location={this.props.location} 
-          inboxId={this.props.inboxId} 
+          location={this.props.location}
+          match={this.props.match}
+          inboxId={this.props.inboxId}
           {...conversations[index]} />
       </div>
     )
