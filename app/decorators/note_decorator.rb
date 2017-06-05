@@ -9,4 +9,8 @@ class NoteDecorator < Draper::Decorator
   def sender_handle
     account.handle
   end
+
+  def sender_id
+    account.id
+  end
 end

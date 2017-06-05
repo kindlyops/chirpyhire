@@ -9,7 +9,7 @@ class NoteDay extends React.Component {
   render() {
     return (
       <div className="day_container">
-        {this.props.notes.map((note) => <Note key={note.id} note={note} />)}
+        {this.props.notes.map((note) => <Note current_account={this.props.current_account} key={note.id} note={note} />)}
       </div>
     )
   }
