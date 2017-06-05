@@ -29,9 +29,9 @@ class Inbox extends React.Component {
   }
 
   conversation() {
-    let inbox_conversation = this.state.inbox_conversations.find((inbox_conversation) => (
+    let inbox_conversation = R.find((inbox_conversation) => (
       parseInt(this.id()) === inbox_conversation.conversation_id
-    ))
+    ), this.state.inbox_conversations)
 
     if(inbox_conversation) {
       return <Conversation 
@@ -134,9 +134,9 @@ class Inbox extends React.Component {
   }
 
   _received(receivedInboxConversation) {
-    let index = this.state.inbox_conversations.findIndex((inbox_conversation) => (
+    let index = R.findIndex((inbox_conversation) => (
       receivedInboxConversation.id === inbox_conversation.id
-    ))
+    ), this.state.inbox_conversations)
 
     if(index !== -1) {
       let new_inbox_conversations = update(
