@@ -1,17 +1,16 @@
 class Teams::SubscriptionsController < Teams::MessagesController
-  before_action :sync_message
-
   def create
     if contact.subscribed? && contact.candidacy.started?
-      AlreadySubscribedJob.perform_later(contact)
+      already_subscribed_job
     else
       contact.subscribe
-      SurveyorJob.perform_later(contact)
+      surveyor_job
     end
     head :ok
   end
 
   def destroy
+    sync_message
     contact.unsubscribe if contact.subscribed?
 
     head :ok
@@ -34,9 +33,17 @@ class Teams::SubscriptionsController < Teams::MessagesController
 
   def create_unsubscribed_contact
     person.contacts.create(team: team).tap do |contact|
-      contact.conversation
+      contact.open_conversation
       IceBreakerJob.perform_later(contact)
     end
+  end
+
+  def already_subscribed_job
+    AlreadySubscribedJob.perform_later(contact, params['MessageSid'])
+  end
+
+  def surveyor_job
+    SurveyorJob.perform_later(contact, params['MessageSid'])
   end
 
   def sync_message

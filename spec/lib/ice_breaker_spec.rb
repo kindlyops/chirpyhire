@@ -11,7 +11,7 @@ RSpec.describe IceBreaker do
       let!(:accounts) { create_list(:account, 3, :inbox, organization: contact.organization) }
       let(:count) { organization.accounts.count }
 
-      it 'creates a conversation for each account on the organization' do
+      it 'creates an inbox conversation for each account on the organization' do
         expect {
           subject.call
         }.to change { organization.reload.inbox_conversations.count }.by(count)
@@ -19,10 +19,10 @@ RSpec.describe IceBreaker do
 
       context 'with existing conversations' do
         before do
-          create(:inbox_conversation, inbox: accounts.first.inbox, conversation: contact.conversation)
+          create(:inbox_conversation, inbox: accounts.first.inbox, conversation: contact.open_conversation)
         end
 
-        it 'creates a conversation for just accounts without a conversation' do
+        it 'creates an inbox conversation for just accounts without a conversation' do
           expect {
             subject.call
           }.to change { organization.reload.inbox_conversations.count }.by(count - 1)
@@ -34,7 +34,7 @@ RSpec.describe IceBreaker do
       let!(:accounts) { create_list(:account, 3) }
       let(:count) { organization.accounts.count }
 
-      it 'only creates conversations for accounts on the organization' do
+      it 'only creates inbox conversations for accounts on the organization' do
         expect {
           subject.call
         }.to change { organization.reload.inbox_conversations.count }.by(count)

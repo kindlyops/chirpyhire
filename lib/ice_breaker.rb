@@ -16,7 +16,8 @@ class IceBreaker
   end
 
   def find_or_create_inbox_conversation(account)
-    inbox_conversations(account).find_or_create_by(conversation: conversation)
+    inbox_conversations(account)
+      .find_or_create_by(conversation: open_conversation)
   end
 
   def inbox_conversations(account)
@@ -27,6 +28,6 @@ class IceBreaker
     Broadcaster::InboxConversation.broadcast(inbox_conversation)
   end
 
-  delegate :organization, :conversation, to: :contact
+  delegate :organization, :open_conversation, to: :contact
   delegate :accounts, to: :organization
 end

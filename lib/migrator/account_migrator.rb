@@ -41,7 +41,7 @@ class Migrator::AccountMigrator
 
   def new_conversation_params(conversation, new_contact)
     {
-      conversation: new_contact.conversation,
+      conversation: new_contact.open_conversation,
       unread_count: conversation.unread_count,
       last_viewed_at: conversation.last_viewed_at,
       created_at: conversation.created_at,

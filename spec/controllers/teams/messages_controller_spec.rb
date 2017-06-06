@@ -27,10 +27,10 @@ RSpec.describe Teams::MessagesController, type: :controller do
         }.to change { Candidacy.count }.by(1)
       end
 
-      it 'creates a conversation' do
+      it 'creates an open conversation' do
         expect {
           post :create, params: params
-        }.to change { Conversation.count }.by(1)
+        }.to change { Conversation.opened.count }.by(1)
       end
 
       it 'creates a subscribed contact' do

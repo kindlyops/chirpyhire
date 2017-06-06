@@ -37,7 +37,7 @@ RSpec.describe MessagePolicy do
       let(:account) { team.accounts.first }
       let(:other_team) { create(:team, organization: team.organization) }
       let(:contact) { create(:contact, team: other_team) }
-      let!(:message) { create(:message, conversation: contact.conversation, sender: contact.person) }
+      let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
 
       before do
         IceBreaker.call(contact)
@@ -53,7 +53,7 @@ RSpec.describe MessagePolicy do
         let(:team) { create(:team, :account) }
         let(:account) { team.accounts.first }
         let(:contact) { create(:contact, team: team) }
-        let!(:message) { create(:message, conversation: contact.conversation, sender: contact.person) }
+        let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
 
         it 'does include the message' do
           expect(subject.resolve).to include(message)

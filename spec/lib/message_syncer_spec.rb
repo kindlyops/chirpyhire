@@ -35,4 +35,41 @@ RSpec.describe MessageSyncer do
       end
     end
   end
+
+  describe 'conversations' do
+    subject { MessageSyncer.new(contact, message_sid) }
+
+    context 'existing conversation' do
+      context 'open' do
+        it 'does not create a new conversation' do
+          expect {
+            subject.call
+          }.not_to change { Conversation.count }
+        end
+
+        it 'ties the message to the existing conversation' do
+          expect {
+            subject.call
+          }.to change { contact.open_conversation.reload.messages.count }.by(1)
+        end
+      end
+
+      context 'closed' do
+        before do
+          contact.conversations.each { |c| c.update(state: 'Closed') }
+        end
+
+        it 'creates a new open conversation' do
+          expect {
+            subject.call
+          }.to change { Conversation.opened.count }.by(1)
+        end
+
+        it 'ties the message to the new open conversation' do
+          subject.call
+          expect(Conversation.opened.last.messages.count).to eq(1)
+        end
+      end
+    end
+  end
 end

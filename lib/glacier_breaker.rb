@@ -11,7 +11,7 @@ class GlacierBreaker
 
   def call
     contacts.find_each do |contact|
-      conversation = contact.conversation
+      conversation = contact.open_conversation
       inbox_conversations(account).find_or_create_by(conversation: conversation)
     end
   end

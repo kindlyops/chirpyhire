@@ -89,9 +89,9 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: Chirpy.person,
-      conversation: contact.conversation
+      conversation: contact.open_conversation
     )
-    contact.conversation.update(last_message_created_at: DateTime.current)
+    contact.open_conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_question(contact, question)
@@ -103,9 +103,9 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
-      conversation: contact.conversation
+      conversation: contact.open_conversation
     )
-    contact.conversation.update(last_message_created_at: DateTime.current)
+    contact.open_conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_thank_you(contact)
@@ -117,9 +117,9 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
-      conversation: contact.conversation
+      conversation: contact.open_conversation
     )
-    contact.conversation.update(last_message_created_at: DateTime.current)
+    contact.open_conversation.update(last_message_created_at: DateTime.current)
   end
 
   def seed_answer(contact, category, question)
@@ -151,9 +151,9 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: person,
-      conversation: contact.conversation
+      conversation: contact.open_conversation
     )
-    contact.conversation.update(last_message_created_at: DateTime.current)
+    contact.open_conversation.update(last_message_created_at: DateTime.current)
   end
 
   def team_attributes

@@ -6,7 +6,7 @@ RSpec.describe Conversations::MessagesController do
   let(:organization) { team.organization }
   let(:account) { team.accounts.first }
   let(:inbox) { account.inbox }
-  let(:conversation) { contact.conversation }
+  let(:conversation) { contact.open_conversation }
 
   before do
     @request.env['HTTP_ACCEPT'] = 'application/json'

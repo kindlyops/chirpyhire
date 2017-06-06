@@ -15,12 +15,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
       }
     end
 
-    it 'creates a MessageSyncerJob to log the START message' do
-      expect {
-        post :create, params: params
-      }.to have_enqueued_job(MessageSyncerJob)
-    end
-
     context 'with a person' do
       let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
 
@@ -141,10 +135,10 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a conversation' do
+      it 'creates an open conversation' do
         expect {
           post :create, params: params
-        }.to change { Conversation.count }.by(1)
+        }.to change { Conversation.opened.count }.by(1)
       end
 
       it 'creates a candidacy' do
@@ -238,10 +232,10 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a conversation' do
+      it 'creates an open conversation' do
         expect {
           delete :destroy, params: params
-        }.to change { Conversation.count }.by(1)
+        }.to change { Conversation.opened.count }.by(1)
       end
 
       it 'creates a candidacy' do

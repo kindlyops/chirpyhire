@@ -28,7 +28,7 @@ class Migrator::ContactMigrator
       recipient: recipient
     )
 
-    new_message = new_contact.conversation.messages.create!(params)
+    new_message = new_contact.open_conversation.messages.create!(params)
     Rails.logger.info "Created New Message: #{new_message.id} for Message: #{message.id}"
   end
 
