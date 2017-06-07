@@ -3,6 +3,11 @@ class Inbox < ApplicationRecord
   has_many :inbox_conversations
   has_many :conversations, through: :inbox_conversations
 
+  def current_conversation(contact)
+    open_conversation = conversations.opened.find_by(contact: contact)
+    open_conversation || recent_conversations.where(contact: contact).first
+  end
+
   def recent_conversations
     conversations.by_recent_message
   end
