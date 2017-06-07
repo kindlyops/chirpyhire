@@ -4,6 +4,7 @@ class Inbox < ApplicationRecord
   has_many :conversations, through: :inbox_conversations
 
   def conversation(contact)
+    # TODO: update since contact can have multiple conversations in the inbox
     conversations.find_by(contact: contact)
   end
 
@@ -17,6 +18,8 @@ class Inbox < ApplicationRecord
 
   def to_builder
     conversations_json = recent_conversations.limit(25).map do |c|
+      # TODO: update since inbox can have multiple inbox_conversations 
+      # per conversation.
       c.inbox_conversations.find_by(inbox: self).to_builder.attributes!
     end
 

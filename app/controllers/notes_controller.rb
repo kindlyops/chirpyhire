@@ -4,8 +4,6 @@ class NotesController < ApplicationController
   decorates_assigned :notes
   decorates_assigned :note
 
-  before_action :authorize_conversation
-
   def index
     @notes = policy_scope(contact.notes)
 
@@ -42,14 +40,6 @@ class NotesController < ApplicationController
 
   def authorized_note
     authorize(contact.notes.find(params[:id]))
-  end
-
-  def authorize_conversation
-    @conversation = authorize fetch_conversation, :show?
-  end
-
-  def fetch_conversation
-    current_account.conversations.find_by(contact: contact)
   end
 
   def contact

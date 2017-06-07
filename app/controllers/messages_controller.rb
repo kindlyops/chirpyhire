@@ -52,7 +52,7 @@ class MessagesController < ApplicationController
   end
 
   def fetch_conversation
-    current_account.conversations.find_by(contact: contact)
+    contact.conversations.opened.first
   end
 
   def contact

@@ -24,6 +24,7 @@ class Conversation < ApplicationRecord
   end
 
   def unread_count(inbox)
+    # TODO: Look up exactly which inbox conversation
     inbox_conversations.find_by(inbox: inbox).unread_count
   end
 
