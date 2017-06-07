@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   end
 
   resources :inboxes, only: [:show] do
-    resources :conversations, only: %i[index show]
+    resources :conversations, only: %i[index show update]
     resources :inbox_conversations, only: :index
   end
 

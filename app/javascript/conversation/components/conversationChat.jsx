@@ -5,7 +5,8 @@ import ConversationBody from './conversationBody'
 class ConversationChat extends React.Component {
   render() {
     return (<div className='ConversationChat'>
-      <ConversationHeader 
+      <ConversationHeader
+        inbox_conversation={this.props.inbox_conversation}
         contact={this.props.contact}
       />
       <ConversationBody 

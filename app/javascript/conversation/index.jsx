@@ -28,7 +28,8 @@ class Conversation extends React.Component {
 
   render() {
     return (<div className='Conversation'>
-      <ConversationChat 
+      <ConversationChat
+        inbox_conversation={this.props.inbox_conversation}
         contact={this.state.contact}
         messages={this.state.messages}
       />

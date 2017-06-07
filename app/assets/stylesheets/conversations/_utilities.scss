@@ -38,6 +38,12 @@
     -webkit-appearance: none;
     -webkit-tap-highlight-color: transparent;
 
+    &.btn-default {
+      color: #2C2D30;
+      border: 1px #2C2D30 solid;
+      text-shadow: none;
+    }
+
     &:after {
       position: absolute;
       content: '';
