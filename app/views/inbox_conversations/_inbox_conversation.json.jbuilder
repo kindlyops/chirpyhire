@@ -11,5 +11,5 @@ json.last_message_created_at(
 )
 json.unread_count inbox_conversation.unread_count
 json.state inbox_conversation.conversation.state
-
+json.reopenable inbox_conversation.conversation.reopenable?
 json.summary(message.summary) if message.present?

@@ -34,4 +34,8 @@ class Conversation < ApplicationRecord
   def closed?
     state == 'Closed'
   end
+
+  def reopenable?
+    !contact.conversations.opened.exists?
+  end
 end

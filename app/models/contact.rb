@@ -23,7 +23,11 @@ class Contact < ApplicationRecord
   before_create :set_last_reply_at
 
   def open_conversation
-    conversations.opened.first || IceBreaker.call(self)
+    existing_open_conversation || IceBreaker.call(self)
+  end
+
+  def existing_open_conversation
+    conversations.opened.first
   end
 
   def self.recently_replied

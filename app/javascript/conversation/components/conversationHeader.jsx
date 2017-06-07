@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 class ConversationHeader extends React.Component {
   conversationUrl() {
@@ -13,15 +14,41 @@ class ConversationHeader extends React.Component {
     return this.props.inbox_conversation.conversation_id;
   }
 
-  closedButton() {
-    if(this.props.inbox_conversation.state !== 'Closed') {
-      return this.activeCloseButton();
+  existingOpenConversationId() {
+    return this.props.contact.existing_open_conversation_id;
+  }
+
+  existingOpenConversationUrl() {
+    return `/inboxes/${this.inboxId()}/conversations/${this.existingOpenConversationId()}`;
+  }
+
+  otherExistingConversation() {
+    let existingId = this.existingOpenConversationId();
+    return !!existingId && (existingId !== this.conversationId());
+  }
+
+  actionButton() {
+    if(this.props.inbox_conversation.state === 'Open') {
+      return this.closeButton();
+    } else if (this.otherExistingConversation()) {
+      return this.messageButton();
+    } else if (this.props.inbox_conversation.reopenable) {
+      return this.reopenButton();
     } else {
       return this.disabledClosedButton();
     }
   }
 
-  activeCloseButton() {
+  messageButton() {
+    return (
+      <Link to={this.existingOpenConversationUrl()} className='btn btn-primary'>
+        Message
+        <i className='fa fa-comment ml-2'></i>
+      </Link>
+    )
+  }
+
+  closeButton() {
     return (
       <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
         <input type="hidden" name="_method" value="put" />
@@ -29,6 +56,19 @@ class ConversationHeader extends React.Component {
         <button type="submit" className='btn btn-default'>
           <i className='fa fa-check mr-2'></i>
           Close
+        </button>
+      </form>
+    )
+  }
+
+  reopenButton() {
+    return (
+      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
+        <input type="hidden" name="_method" value="put" />
+        <input type="hidden" name="conversation[state]" value="Open" />
+        <button type="submit" className='btn btn-default'>
+          <i className='fa fa-inbox mr-2'></i>
+          Reopen
         </button>
       </form>
     )
@@ -62,7 +102,7 @@ class ConversationHeader extends React.Component {
                 </div>
               </div>
               <div className='channel-title-info mr-3'>
-                {this.closedButton()}
+                {this.actionButton()}
               </div>
             </div>
           </div>
