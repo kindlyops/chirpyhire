@@ -55,6 +55,24 @@ RSpec.describe MessagesController do
           post :create, params: params, xhr: true
         }.to change { FakeMessaging.messages.count }.by(1)
       end
+
+      context 'and the conversation is closed' do
+        before do
+          contact.conversations.each { |c| c.update(state: 'Closed') }
+        end
+
+        it 'does not create a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.not_to change { contact.messages.count }
+        end
+
+        it 'does not send a message' do
+          expect {
+            post :create, params: params, xhr: true
+          }.not_to change { FakeMessaging.messages.count }
+        end
+      end
     end
 
     context 'and the contact is not active' do

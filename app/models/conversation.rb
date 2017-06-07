@@ -26,4 +26,12 @@ class Conversation < ApplicationRecord
   def unread_count(inbox)
     inbox_conversations.find_by(inbox: inbox).unread_count
   end
+
+  def open?
+    state == 'Open'
+  end
+
+  def closed?
+    state == 'Closed'
+  end
 end

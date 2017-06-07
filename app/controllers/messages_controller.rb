@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
   def create
     @conversation = authorize fetch_conversation, :show?
     @message = scoped_messages.build
-    create_message if authorize @message
+    create_message if @message.valid? && authorize(@message)
 
     head :ok
   end
