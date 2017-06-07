@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   resources :contacts, only: [:show] do
     resources :notes, only: %i[index create update destroy]
     resource :star, only: :create
-    resources :messages, only: :create
   end
 
   resources :inboxes, only: [:show] do
@@ -27,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   resources :conversations, only: [] do
-    resources :messages, only: [:index], controller: 'conversations/messages'
+    resources :messages, only: %i[index create], controller: 'conversations/messages'
   end
 
   resources :organizations, only: %i[show update] do
