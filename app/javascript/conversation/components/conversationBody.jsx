@@ -35,21 +35,6 @@ class ConversationBody extends React.Component {
   }
 
   componentDidMount() {
-    let composer = $('form.new_message .message-input');
-    composer.keydown(function(e) {
-      let combo = e.metaKey || e.ctrlKey || e.shiftKey;
-
-      if(e.keyCode === 13 && !combo) {
-        let $form = composer.closest('form');
-        let messageBody = $form.find('.message-input');
-        e.preventDefault();
-        if(messageBody.val().length) {
-          $form.submit();
-          messageBody.val('');
-        }
-      }
-    });
-
     $(window).resize(this._resizeScroller);
     this._resizeScroller();
   }

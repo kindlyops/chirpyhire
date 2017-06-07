@@ -22,6 +22,22 @@ class ConversationFooter extends React.Component {
     )
   }
 
+  componentDidMount() {
+    $(document).on('keydown', 'form.new_message .message-input', function(e) {
+      let combo = e.metaKey || e.ctrlKey || e.shiftKey;
+
+      if(e.keyCode === 13 && !combo) {
+        let $form = $('form.new_message');
+        let messageBody = $form.find('.message-input');
+        e.preventDefault();
+        if(messageBody.val().length) {
+          $('form.new_message').submit();
+          messageBody.val('');
+        }
+      }
+    });
+  }
+
   disabledFooter() {
     return (
       <div className="footer">
