@@ -14,7 +14,7 @@ class Inbox extends React.Component {
       subscription: {},
       inbox_conversations: [],
       inbox: {},
-      filter: 'All'
+      filter: 'Open'
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -26,7 +26,7 @@ class Inbox extends React.Component {
     if(inbox_conversation) {
       return inbox_conversation.state;
     } else {
-      return 'All';
+      return 'Open';
     }
   }
 
