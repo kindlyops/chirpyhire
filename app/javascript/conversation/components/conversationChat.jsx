@@ -9,7 +9,8 @@ class ConversationChat extends React.Component {
         inbox_conversation={this.props.inbox_conversation}
         contact={this.props.contact}
       />
-      <ConversationBody 
+      <ConversationBody
+        inbox_conversation={this.props.inbox_conversation}
         contact={this.props.contact}
         messages={this.props.messages}
       />

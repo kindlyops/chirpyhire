@@ -14,7 +14,10 @@ class ConversationBody extends React.Component {
     return (
         <div className='client_body'>
           <div className='client_messages'>
-            <ConversationFooter contact={this.props.contact} />
+            <ConversationFooter
+              contact={this.props.contact}
+              inbox_conversation={this.props.inbox_conversation}
+            />
             <div id='messages_container'>
               <div id='msgs_scroller_div' className='message_pane_scroller'>
                 <ConversationEndCap contact={this.props.contact} />

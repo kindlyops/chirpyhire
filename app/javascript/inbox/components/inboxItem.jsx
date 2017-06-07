@@ -14,6 +14,14 @@ class InboxItem extends React.Component {
     return this.props.unread_count > 0;
   }
 
+  classes() {
+    if(this.props.state === 'Closed') {
+      return 'InboxItem closed';
+    } else {
+      return 'InboxItem';
+    }
+  }
+
   render() {
     let summary = <div className='summary-and-unread-count'>
                     <div className='summary'>
@@ -31,7 +39,7 @@ class InboxItem extends React.Component {
                 </div>
     }
 
-    return <NavLink exact to={this.href()} className='InboxItem'>
+    return <NavLink exact to={this.href()} className={this.classes()}>
       <div className='handle-and-timestamp'>
         <div className='handle'>
           {this.props.handle}

@@ -4,7 +4,7 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i(state)
+    %i[state]
   end
 
   class Scope < ApplicationPolicy::Scope

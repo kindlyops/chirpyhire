@@ -26,5 +26,4 @@ class Conversation < ApplicationRecord
   def unread_count(inbox)
     inbox_conversations.find_by(inbox: inbox).unread_count
   end
-
 end

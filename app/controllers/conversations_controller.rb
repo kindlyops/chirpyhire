@@ -30,7 +30,7 @@ class ConversationsController < ApplicationController
     @conversation.inbox_conversations.find_each do |inbox_conversation|
       Broadcaster::InboxConversation.broadcast(inbox_conversation)
     end
-    
+
     head :ok
   end
 

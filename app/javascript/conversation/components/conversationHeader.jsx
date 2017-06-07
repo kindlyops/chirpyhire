@@ -15,17 +15,32 @@ class ConversationHeader extends React.Component {
 
   closedButton() {
     if(this.props.inbox_conversation.state !== 'Closed') {
-      return (
-        <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-          <input type="hidden" name="_method" value="put" />
-          <input type="hidden" name="conversation[state]" value="Closed" />
-          <button type="submit" className='btn btn-default'>
-            <i className='fa fa-check mr-2'></i>
-            Close
-          </button>
-        </form>
-      )
+      return this.activeCloseButton();
+    } else {
+      return this.disabledClosedButton();
     }
+  }
+
+  activeCloseButton() {
+    return (
+      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
+        <input type="hidden" name="_method" value="put" />
+        <input type="hidden" name="conversation[state]" value="Closed" />
+        <button type="submit" className='btn btn-default'>
+          <i className='fa fa-check mr-2'></i>
+          Close
+        </button>
+      </form>
+    )
+  }
+
+  disabledClosedButton() {
+    return (
+      <a href="#" disabled={true} className='btn btn-default disabled'>
+        <i className='fa fa-ban mr-2'></i>
+        Closed
+      </a>
+    )
   }
 
   render() {
