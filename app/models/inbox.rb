@@ -5,7 +5,7 @@ class Inbox < ApplicationRecord
 
   def current_conversation(contact)
     open_conversation = conversations.opened.find_by(contact: contact)
-    open_conversation || recent_conversations.where(contact: contact).first
+    open_conversation || recent_conversations.find_by(contact: contact)
   end
 
   def recent_conversations
