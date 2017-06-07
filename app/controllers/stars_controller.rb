@@ -7,10 +7,6 @@ class StarsController < ApplicationController
 
   private
 
-  def conversation
-    @conversation ||= current_inbox.conversations.find_by(contact: contact)
-  end
-
   def contact
     @contact ||= authorize Contact.find(params[:contact_id])
   end

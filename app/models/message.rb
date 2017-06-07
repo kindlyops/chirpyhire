@@ -8,6 +8,7 @@ class Message < ApplicationRecord
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
   validates :conversation, presence: true
+  validate :open_conversation, on: :create
 
   delegate :handle, to: :sender, prefix: true
 
@@ -69,5 +70,11 @@ class Message < ApplicationRecord
     conversation.inbox_conversations.find_each do |inbox_conversation|
       Broadcaster::InboxConversation.broadcast(inbox_conversation)
     end
+  end
+
+  private
+
+  def open_conversation
+    errors.add(:conversation, 'must be open.') unless conversation.open?
   end
 end

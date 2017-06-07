@@ -5,6 +5,10 @@ class MessageSyncer
     @receipt      = receipt
   end
 
+  def self.call(contact, message_sid, receipt: false)
+    new(contact, message_sid, receipt: receipt).call
+  end
+
   def call
     existing_message = person.sent_messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
@@ -22,10 +26,10 @@ class MessageSyncer
   end
 
   attr_reader :contact, :message_sid, :receipt
-  delegate :person, :organization, :conversation, to: :contact
+  delegate :person, :organization, :open_conversation, to: :contact
 
   def sync_message
-    conversation.messages.create!(message_params).tap(&:touch_conversation)
+    open_conversation.messages.create!(message_params).tap(&:touch_conversation)
   end
 
   def message_params

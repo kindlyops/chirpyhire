@@ -14,7 +14,10 @@ class ConversationBody extends React.Component {
     return (
         <div className='client_body'>
           <div className='client_messages'>
-            <ConversationFooter contact={this.props.contact} />
+            <ConversationFooter
+              contact={this.props.contact}
+              inbox_conversation={this.props.inbox_conversation}
+            />
             <div id='messages_container'>
               <div id='msgs_scroller_div' className='message_pane_scroller'>
                 <ConversationEndCap contact={this.props.contact} />
@@ -32,21 +35,6 @@ class ConversationBody extends React.Component {
   }
 
   componentDidMount() {
-    let composer = $('form.new_message .message-input');
-    composer.keydown(function(e) {
-      let combo = e.metaKey || e.ctrlKey || e.shiftKey;
-
-      if(e.keyCode === 13 && !combo) {
-        let $form = composer.closest('form');
-        let messageBody = $form.find('.message-input');
-        e.preventDefault();
-        if(messageBody.val().length) {
-          $form.submit();
-          messageBody.val('');
-        }
-      }
-    });
-
     $(window).resize(this._resizeScroller);
     this._resizeScroller();
   }

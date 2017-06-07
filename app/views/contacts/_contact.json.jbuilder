@@ -5,6 +5,9 @@ json.hero_pattern_classes contact.hero_pattern_classes
 json.starred contact.starred
 
 json.url contact.avatar && contact.avatar.url(:medium)
+json.existing_open_conversation_id(
+  contact.existing_open_conversation && contact.existing_open_conversation.id
+)
 
 json.zipcode do
   json.label contact.candidacy_zipcode.label

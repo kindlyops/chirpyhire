@@ -22,8 +22,12 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
-  def conversation
-    conversations.first || conversations.create!
+  def open_conversation
+    existing_open_conversation || IceBreaker.call(self)
+  end
+
+  def existing_open_conversation
+    conversations.opened.first
   end
 
   def self.recently_replied
@@ -89,7 +93,7 @@ class Contact < ApplicationRecord
   end
 
   def create_message(message, sender)
-    conversation.messages.create(
+    open_conversation.messages.create(
       sid: message.sid,
       body: message.body,
       sent_at: message.date_sent,

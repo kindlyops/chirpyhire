@@ -27,7 +27,7 @@
               .card
                 div class=="card-img-top #{candidate.hero_pattern_classes}"
                 .card-block
-                  = link_to inbox_conversation_path(current_inbox, current_inbox.conversation(candidate)), class: 'btn btn-success float-right', role: 'button' do
+                  = link_to inbox_conversation_path(current_inbox, current_inbox.current_conversation(candidate)), class: 'btn btn-success float-right', role: 'button' do
                     span Message
                     i.fa.fa-comment.ml-2
                   h4.card-title = candidate.phone_number

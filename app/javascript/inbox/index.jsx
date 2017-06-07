@@ -14,10 +14,20 @@ class Inbox extends React.Component {
       subscription: {},
       inbox_conversations: [],
       inbox: {},
-      filter: 'All'
+      filter: 'Open'
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
+  }
+
+  currentFilter() {
+    let inbox_conversation = this.conversation();
+
+    if(inbox_conversation) {
+      return inbox_conversation.state;
+    } else {
+      return 'Open';
+    }
   }
 
   inboxId() {
@@ -28,18 +38,22 @@ class Inbox extends React.Component {
     return this.props.match.params.id;
   }
 
-  conversation() {
-    let inbox_conversation = R.find((inbox_conversation) => (
-      parseInt(this.id()) === inbox_conversation.conversation_id
-    ), this.state.inbox_conversations)
+  conversationComponent() {
+    let inbox_conversation = this.conversation();
 
-    if(inbox_conversation) {
+    if (inbox_conversation) {
       return <Conversation 
                 inbox_conversation={inbox_conversation}
-                inbox={this.state.inbox} />;
+                inbox={this.state.inbox} />
     } else {
       return this.emptyInbox();
     }
+  }
+
+  conversation() {
+    return R.find((inbox_conversation) => (
+      parseInt(this.id()) === inbox_conversation.conversation_id
+    ), this.state.inbox_conversations);
   }
 
   inboxConversationsByRecency() {
@@ -83,7 +97,7 @@ class Inbox extends React.Component {
                   inbox_conversations={this.inboxConversationsByRecency()}
                  />
               </div>
-              {this.conversation()}
+              {this.conversationComponent()}
             </div>;
   }
 
@@ -115,6 +129,7 @@ class Inbox extends React.Component {
     
     $.get(this.inboxConversationsURL()).then((inbox_conversations) => {
       this.setState({ inbox_conversations: inbox_conversations });
+      this.setState({ filter: this.currentFilter() });
     });
   }
 

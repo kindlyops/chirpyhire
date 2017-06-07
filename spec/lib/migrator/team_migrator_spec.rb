@@ -119,7 +119,7 @@ RSpec.describe Migrator::TeamMigrator do
 
         context 'with message' do
           context 'inbound message' do
-            let!(:message) { create(:message, sender: contact.person, conversation: contact.conversation) }
+            let!(:message) { create(:message, sender: contact.person, conversation: contact.open_conversation) }
             let!(:sid) { message.sid }
 
             it 'creates a new message' do
@@ -161,7 +161,7 @@ RSpec.describe Migrator::TeamMigrator do
               it 'is tied to the new conversation' do
                 subject.migrate
                 new_contact = to_organization.contacts.find_by(person: contact.person)
-                new_conversation = to_account_a.inbox_conversations.find_by(conversation: new_contact.conversation)
+                new_conversation = to_account_a.inbox_conversations.find_by(conversation: new_contact.open_conversation)
 
                 expect(ReadReceipt.last.inbox_conversation).to eq(new_conversation)
               end
@@ -169,7 +169,7 @@ RSpec.describe Migrator::TeamMigrator do
           end
 
           context 'outbound chirpy automated message' do
-            let!(:message) { create(:message, sender: Chirpy.person, recipient: contact.person, conversation: contact.conversation) }
+            let!(:message) { create(:message, sender: Chirpy.person, recipient: contact.person, conversation: contact.open_conversation) }
             let!(:sid) { message.sid }
 
             it 'creates a new message' do
@@ -195,7 +195,7 @@ RSpec.describe Migrator::TeamMigrator do
           end
 
           context 'outbound account message' do
-            let!(:message) { create(:message, sender: from_account_a.person, recipient: contact.person, conversation: contact.conversation) }
+            let!(:message) { create(:message, sender: from_account_a.person, recipient: contact.person, conversation: contact.open_conversation) }
             let!(:sid) { message.sid }
 
             it 'creates a new message' do

@@ -15,12 +15,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
       }
     end
 
-    it 'creates a MessageSyncerJob to log the START message' do
-      expect {
-        post :create, params: params
-      }.to have_enqueued_job(MessageSyncerJob)
-    end
-
     context 'with a person' do
       let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
 
@@ -57,12 +51,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.not_to change { Contact.count }
           end
 
-          it 'does not create an IceBreakerJob' do
-            expect {
-              post :create, params: params
-            }.not_to have_enqueued_job(IceBreakerJob)
-          end
-
           it 'adds the contact to the team' do
             post :create, params: params
             expect(team.contacts).to include(Contact.last)
@@ -91,12 +79,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.not_to change { Contact.count }
           end
 
-          it 'does not create an IceBreakerJob' do
-            expect {
-              post :create, params: params
-            }.not_to have_enqueued_job(IceBreakerJob)
-          end
-
           it 'adds the contact to the team' do
             post :create, params: params
             expect(team.contacts).to include(Contact.last)
@@ -112,12 +94,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             expect {
               post :create, params: params
             }.not_to have_enqueued_job(AlreadySubscribedJob)
-          end
-
-          it 'does not create an IceBreakerJob' do
-            expect {
-              post :create, params: params
-            }.not_to have_enqueued_job(IceBreakerJob)
           end
 
           it 'does create a SurveyorJob' do
@@ -141,12 +117,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a conversation' do
-        expect {
-          post :create, params: params
-        }.to change { Conversation.count }.by(1)
-      end
-
       it 'creates a candidacy' do
         expect {
           post :create, params: params
@@ -157,12 +127,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         expect {
           post :create, params: params
         }.to change { Contact.subscribed.count }.by(1)
-      end
-
-      it 'creates an IceBreakerJob' do
-        expect {
-          post :create, params: params
-        }.to have_enqueued_job(IceBreakerJob)
       end
 
       it 'does not create an AlreadySubscribedJob' do
@@ -236,12 +200,6 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Person.count }.by(1)
-      end
-
-      it 'creates a conversation' do
-        expect {
-          delete :destroy, params: params
-        }.to change { Conversation.count }.by(1)
       end
 
       it 'creates a candidacy' do

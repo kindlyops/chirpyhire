@@ -4,7 +4,7 @@ RSpec.describe ReadReceiptsCreator do
   let(:team) { create(:team) }
   let(:organization) { team.organization }
   let(:contact) { create(:contact, team: team) }
-  let!(:message) { create(:message, sender: contact.person, conversation: contact.conversation) }
+  let!(:message) { create(:message, sender: contact.person, conversation: contact.open_conversation) }
 
   subject { ReadReceiptsCreator.new(message, contact) }
 
@@ -12,7 +12,7 @@ RSpec.describe ReadReceiptsCreator do
     context 'with multiple conversations on the organization' do
       let!(:accounts) { create_list(:account, 3, :inbox, organization: organization) }
       let!(:inboxes) { accounts.map(&:inbox) }
-      let(:conversation) { contact.conversation }
+      let(:conversation) { contact.open_conversation }
 
       let!(:conversations) {
         inboxes.map do |i|

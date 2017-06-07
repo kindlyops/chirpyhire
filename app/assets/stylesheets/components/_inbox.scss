@@ -31,6 +31,11 @@
         transition: all .5s ease;
         height: 70.59px;
 
+        &.closed {
+          background-color: #f2f6f8;
+          color: $gray-darker;
+        }
+
         &.active {
           background-color: #f9fcfa;
 

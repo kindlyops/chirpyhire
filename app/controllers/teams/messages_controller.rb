@@ -30,11 +30,7 @@ class Teams::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(team: team).tap do |contact|
-      contact.subscribe
-      contact.conversation
-      IceBreakerJob.perform_later(contact)
-    end
+    person.contacts.create(team: team).tap(&:subscribe)
   end
 
   def set_header
