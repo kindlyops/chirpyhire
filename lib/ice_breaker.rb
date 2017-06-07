@@ -10,10 +10,8 @@ class IceBreaker
   attr_reader :contact
 
   def call
-    accounts.find_each do |account|
-      broadcast(find_or_create_inbox_conversation(account))
-    end
-
+    accounts.find_each(&method(:find_or_create_inbox_conversation))
+    contact.inbox_conversations.find_each(&method(:broadcast))
     open_conversation
   end
 
@@ -32,22 +30,8 @@ class IceBreaker
 
   def open_conversation
     @open_conversation ||= begin
-      existing_open_conversation = fetch_existing_open_conversation
-      return existing_open_conversation if existing_open_conversation.present?
-
-      inbox_conversations = fetch_inbox_conversations
-      contact.conversations.create!.tap do
-        inbox_conversations.find_each(&method(:broadcast))
-      end
+      contact.existing_open_conversation || contact.conversations.create!
     end
-  end
-
-  def fetch_inbox_conversations
-    contact.inbox_conversations
-  end
-
-  def fetch_existing_open_conversation
-    contact.existing_open_conversation
   end
 
   delegate :organization, to: :contact
