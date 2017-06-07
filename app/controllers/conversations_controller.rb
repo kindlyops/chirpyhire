@@ -18,7 +18,6 @@ class ConversationsController < ApplicationController
     inbox_conversation.update(last_viewed_at: DateTime.current)
 
     respond_to do |format|
-      format.json
       format.html { render html: '', layout: true }
     end
   end
