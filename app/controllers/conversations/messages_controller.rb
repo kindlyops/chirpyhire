@@ -20,8 +20,6 @@ class Conversations::MessagesController < ApplicationController
 
   def inbox_conversation
     @inbox_conversation ||= begin
-      # TODO: I need the actual ID of the inbox conversation to look up
-      # the right inbox conversation
       conversation.inbox_conversations.find_by(inbox: current_inbox)
     end
   end
