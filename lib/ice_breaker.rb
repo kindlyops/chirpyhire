@@ -32,8 +32,22 @@ class IceBreaker
 
   def open_conversation
     @open_conversation ||= begin
-      contact.conversations.opened.first || contact.conversations.create!
+      existing_open_conversation = fetch_existing_open_conversation
+      return existing_open_conversation if existing_open_conversation.present?
+
+      inbox_conversations = fetch_inbox_conversations
+      contact.conversations.create!.tap do
+        inbox_conversations.find_each(&method(:broadcast))
+      end
     end
+  end
+
+  def fetch_inbox_conversations
+    contact.inbox_conversations
+  end
+
+  def fetch_existing_open_conversation
+    contact.existing_open_conversation
   end
 
   delegate :organization, to: :contact
