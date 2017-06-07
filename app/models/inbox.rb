@@ -3,11 +3,6 @@ class Inbox < ApplicationRecord
   has_many :inbox_conversations
   has_many :conversations, through: :inbox_conversations
 
-  def conversation(contact)
-    # TODO: update since contact can have multiple conversations in the inbox
-    conversations.find_by(contact: contact)
-  end
-
   def recent_conversations
     conversations.by_recent_message
   end

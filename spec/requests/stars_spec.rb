@@ -11,7 +11,7 @@ RSpec.describe 'Stars' do
 
   describe '#create' do
     let!(:contact) { create(:contact, team: team) }
-    let(:conversation) { inbox.conversation(contact) }
+    let(:conversation) { contact.conversations.first }
 
     before do
       IceBreaker.call(contact)
