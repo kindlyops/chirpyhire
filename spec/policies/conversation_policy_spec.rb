@@ -27,10 +27,6 @@ RSpec.describe ConversationPolicy do
         let(:contact) { create(:contact, team: team) }
         let!(:conversation) { create(:conversation, contact: contact) }
 
-        before do
-          account.inbox.conversations << conversation
-        end
-
         it 'does include the conversation' do
           expect(subject.resolve).to include(conversation)
         end

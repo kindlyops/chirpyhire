@@ -13,6 +13,8 @@ class IceBreaker
     accounts.find_each do |account|
       broadcast(find_or_create_inbox_conversation(account))
     end
+
+    open_conversation
   end
 
   def find_or_create_inbox_conversation(account)
@@ -28,6 +30,12 @@ class IceBreaker
     Broadcaster::InboxConversation.broadcast(inbox_conversation)
   end
 
-  delegate :organization, :open_conversation, to: :contact
+  def open_conversation
+    @open_conversation ||= begin
+      contact.conversations.opened.first || contact.conversations.create!
+    end
+  end
+
+  delegate :organization, to: :contact
   delegate :accounts, to: :organization
 end

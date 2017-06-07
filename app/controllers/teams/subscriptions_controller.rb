@@ -32,10 +32,7 @@ class Teams::SubscriptionsController < Teams::MessagesController
   end
 
   def create_unsubscribed_contact
-    person.contacts.create(team: team).tap do |contact|
-      contact.open_conversation
-      IceBreakerJob.perform_later(contact)
-    end
+    person.contacts.create(team: team)
   end
 
   def already_subscribed_job

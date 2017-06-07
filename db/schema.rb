@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602141732) do
+ActiveRecord::Schema.define(version: 20170607000253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(version: 20170602141732) do
     t.integer "inbox_id"
     t.bigint "conversation_id", null: false
     t.index ["contact_id"], name: "index_inbox_conversations_on_contact_id"
+    t.index ["conversation_id", "inbox_id"], name: "index_inbox_conversations_on_conversation_id_and_inbox_id", unique: true
     t.index ["conversation_id"], name: "index_inbox_conversations_on_conversation_id"
     t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id"
   end

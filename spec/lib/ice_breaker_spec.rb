@@ -19,7 +19,7 @@ RSpec.describe IceBreaker do
 
       context 'with existing conversations' do
         before do
-          create(:inbox_conversation, inbox: accounts.first.inbox, conversation: contact.open_conversation)
+          create(:inbox_conversation, inbox: accounts.first.inbox, conversation: contact.conversations.create!)
         end
 
         it 'creates an inbox conversation for just accounts without a conversation' do

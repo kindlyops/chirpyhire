@@ -6,15 +6,7 @@ RSpec.describe MessageSyncer do
   let(:contact) { create(:contact, team: team) }
   let(:message_sid) { 'sid' }
 
-  before do
-    IceBreaker.call(contact)
-  end
-
   describe 'receipt' do
-    before do
-      IceBreaker.call(contact)
-    end
-
     context 'receipt requested' do
       subject { MessageSyncer.new(contact, message_sid, receipt: true) }
 
@@ -39,7 +31,19 @@ RSpec.describe MessageSyncer do
   describe 'conversations' do
     subject { MessageSyncer.new(contact, message_sid) }
 
+    context 'without an existing conversation' do
+      it 'creates an open conversation' do
+        expect {
+          subject.call
+        }.to change { Conversation.opened.count }.by(1)
+      end
+    end
+
     context 'existing conversation' do
+      before do
+        contact.open_conversation
+      end
+
       context 'open' do
         it 'does not create a new conversation' do
           expect {

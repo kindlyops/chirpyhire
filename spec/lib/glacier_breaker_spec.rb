@@ -19,7 +19,7 @@ RSpec.describe GlacierBreaker do
 
       context 'with existing conversations' do
         before do
-          create(:inbox_conversation, conversation: contacts.first.open_conversation, inbox: account.inbox)
+          create(:inbox_conversation, conversation: contacts.first.conversations.create!, inbox: account.inbox)
         end
 
         it 'creates an inbox conversation for just contacts without a conversation' do
