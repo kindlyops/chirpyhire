@@ -26,7 +26,7 @@ class ConversationsController < ApplicationController
     @conversation = authorize(inbox.conversations.find(params[:id]))
 
     @conversation.update(permitted_attributes(Conversation))
-    @conversation.contact.inbox_conversations.find_each do |inbox_conversation|
+    @conversation.team.inbox_conversations.find_each do |inbox_conversation|
       Broadcaster::InboxConversation.broadcast(inbox_conversation)
     end
 

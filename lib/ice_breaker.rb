@@ -11,7 +11,8 @@ class IceBreaker
 
   def call
     accounts.find_each(&method(:find_or_create_inbox_conversation))
-    contact.inbox_conversations.find_each(&method(:broadcast))
+
+    team.inbox_conversations.find_each(&method(:broadcast))
     open_conversation
   end
 
@@ -34,6 +35,6 @@ class IceBreaker
     end
   end
 
-  delegate :organization, to: :contact
+  delegate :organization, :team, to: :contact
   delegate :accounts, to: :organization
 end
