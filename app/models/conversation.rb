@@ -4,7 +4,7 @@ class Conversation < ApplicationRecord
   has_many :inboxes, through: :inbox_conversations
   has_many :messages
 
-  delegate :person, :handle, to: :contact
+  delegate :person, :handle, :team, to: :contact
   delegate :handle, to: :contact, prefix: true
 
   def contact_phone_number

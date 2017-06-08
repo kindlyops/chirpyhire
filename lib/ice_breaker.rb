@@ -11,7 +11,8 @@ class IceBreaker
 
   def call
     accounts.find_each(&method(:find_or_create_inbox_conversation))
-    contact.inbox_conversations.find_each(&method(:broadcast))
+
+    notifiable_inbox_conversations.find_each(&method(:broadcast))
     open_conversation
   end
 
@@ -24,6 +25,10 @@ class IceBreaker
     account.inbox.inbox_conversations
   end
 
+  def notifiable_inbox_conversations
+    team.inbox_conversations.where(conversation: contact.conversations)
+  end
+
   def broadcast(inbox_conversation)
     Broadcaster::InboxConversation.broadcast(inbox_conversation)
   end
@@ -34,6 +39,6 @@ class IceBreaker
     end
   end
 
-  delegate :organization, to: :contact
+  delegate :organization, :team, to: :contact
   delegate :accounts, to: :organization
 end

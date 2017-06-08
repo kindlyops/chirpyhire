@@ -26,7 +26,7 @@ class ConversationsController < ApplicationController
     @conversation = authorize(inbox.conversations.find(params[:id]))
 
     @conversation.update(permitted_attributes(Conversation))
-    @conversation.contact.inbox_conversations.find_each do |inbox_conversation|
+    notifiable_inbox_conversations.find_each do |inbox_conversation|
       Broadcaster::InboxConversation.broadcast(inbox_conversation)
     end
 
@@ -36,6 +36,12 @@ class ConversationsController < ApplicationController
   private
 
   delegate :inbox_conversations, to: :inbox
+
+  def notifiable_inbox_conversations
+    contact = @conversation.contact
+    team_inbox_conversations = @conversation.team.inbox_conversations
+    team_inbox_conversations.where(conversation: contact.conversations)
+  end
 
   def inbox_conversation
     inbox_conversations.find_by(conversation: @conversation)
