@@ -47,8 +47,9 @@
   }
 
   .search-field {
-    border-right: 0;
-    border-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 1px solid transparent;
     transition: all .5s ease;
     border-left: 0;
     width: 180px;
