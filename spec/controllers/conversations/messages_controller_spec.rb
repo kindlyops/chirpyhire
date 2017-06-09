@@ -127,11 +127,6 @@ RSpec.describe Conversations::MessagesController do
           post :create, params: params, xhr: true
         }.not_to change { FakeMessaging.messages.count }
       end
-
-      it 'lets the user know why' do
-        post :create, params: params, xhr: true
-        expect(response_json['error']).to include('unsubscribed')
-      end
     end
   end
 end

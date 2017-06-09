@@ -1,6 +1,5 @@
 class Conversations::MessagesController < ApplicationController
   decorates_assigned :messages
-  rescue_from Pundit::NotAuthorizedError, with: :message_not_authorized
 
   def index
     @messages = policy_scope(conversation.messages.by_recency)
@@ -61,14 +60,5 @@ class Conversations::MessagesController < ApplicationController
     @conversation ||= begin
       authorize(Conversation.find(params[:conversation_id]), :show?)
     end
-  end
-
-  def message_not_authorized
-    render json: { error: error_message }, status: 422
-  end
-
-  def error_message
-    "Unfortunately #{@conversation.handle} has unsubscribed! You can't "\
-    'text them using ChirpyHire.'
   end
 end
