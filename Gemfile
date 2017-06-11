@@ -19,7 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
-gem 'yajl-ruby'
+gem 'oj'
 
 group :development, :test, :demo do
   gem 'factory_girl_rails', '~> 4.0'
@@ -51,6 +51,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'brakeman', '~> 3.3.0'
+  gem 'bullet', '~> 5.5.1'
   gem 'listen', '~> 3.0.5'
   gem 'meta_request', '~> 0.4.2'
   gem 'spring'

@@ -4,7 +4,7 @@ class InboxConversation < ApplicationRecord
 
   has_many :read_receipts
 
-  delegate :contact, :messages, to: :conversation
+  delegate :contact, :messages, :recent_message, to: :conversation
   delegate :account, to: :inbox
 
   def self.by_recent_message

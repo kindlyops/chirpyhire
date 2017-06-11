@@ -2,7 +2,11 @@ class InboxConversationsController < ApplicationController
   decorates_assigned :inbox_conversations
 
   def index
-    @inbox_conversations = policy_scope(inbox.recent_inbox_conversations)
+    @inbox_conversations = policy_scope(
+      inbox.recent_inbox_conversations.includes(
+        conversation: [:recent_message, contact: %i[open_conversations person]]
+      )
+    )
 
     respond_to do |format|
       format.json

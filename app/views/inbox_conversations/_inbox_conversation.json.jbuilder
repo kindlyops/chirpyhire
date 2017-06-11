@@ -1,4 +1,4 @@
-message = inbox_conversation.messages.by_recency.last
+message = inbox_conversation.recent_message
 
 json.id inbox_conversation.id
 json.inbox_id inbox_conversation.inbox_id

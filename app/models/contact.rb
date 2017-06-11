@@ -9,6 +9,7 @@ class Contact < ApplicationRecord
   end
 
   has_many :conversations
+  has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :inbox_conversations, through: :conversations
   has_many :messages, through: :conversations
 
