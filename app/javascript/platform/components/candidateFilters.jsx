@@ -3,17 +3,17 @@ import React from 'react'
 import CandidateFilter from './candidateFilter'
 
 const CandidateFilters = props => (
-  <div className='CandidateFilters'>
+  <form className='CandidateFilters'>
     <div className='CandidateFiltersHeader'>
-      <h3>Caregiver Attributes</h3>
+      <h3 className='small-caps'>Candidate Attributes</h3>
     </div>
-    <CandidateFilter attribute='Location' />
-    <CandidateFilter attribute='Starred' />
-    <CandidateFilter attribute='Certification' />
-    <CandidateFilter attribute='Availability' />
-    <CandidateFilter attribute='Experience' />
-    <CandidateFilter attribute='Transportation' />
-  </div>
+    <CandidateFilter icon='fa-map-marker' attribute='Location' />
+    <CandidateFilter icon='fa-star' attribute='Starred' />
+    <CandidateFilter icon='fa-graduation-cap' attribute='Certification' />
+    <CandidateFilter icon='fa-calendar-check-o' attribute='Availability' />
+    <CandidateFilter icon='fa-level-up' attribute='Experience' />
+    <CandidateFilter icon='fa-road' attribute='Transportation' />
+  </form>
 )
 
 export default CandidateFilters
