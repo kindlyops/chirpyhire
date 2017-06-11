@@ -61,10 +61,43 @@
           margin-bottom: 0;
         }
       }
+
+      .CandidateFilter {
+        .predicate {
+          display: flex;
+          flex-direction: column;
+          background-color: #ecfef3;
+          padding-bottom: 2px;
+          margin-bottom: 12px;
+          margin-top: 2px;
+          padding-left: 20px;
+
+          .predicate-buttons {
+            display: flex;
+            justify-content: flex-end;
+
+            .close-predicate {
+              padding: 5px 8px;
+              cursor: pointer;
+
+              i {
+                font-size: 1rem;
+              }
+            }
+          }
+
+          .predicate-inner {
+            display: flex;
+            flex-direction: column;
+            padding-right: 22px;
+
+            .spacer-10 {
+              height: 10px;
+            }
+          }
+        }
+      }
     }
   }
 }
 
-
-// hsla(145, 38%, 52%, 1)
-// hsla(145, 84%, 34%, 1)

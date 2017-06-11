@@ -28,6 +28,7 @@
     "rails-erb-loader": "^5.0.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-geosuggest": "^2.2.0",
     "react-router-dom": "next",
     "react-select": "1.0.0-rc.5",
     "react-virtualized": "^9.7.6",
