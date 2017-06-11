@@ -3,6 +3,8 @@ class Conversation < ApplicationRecord
   has_many :inbox_conversations
   has_many :inboxes, through: :inbox_conversations
   has_many :messages
+  has_one :recent_message,
+          -> { by_recency.limit(1) }, class_name: 'Message'
 
   delegate :person, :handle, :team, to: :contact
   delegate :handle, to: :contact, prefix: true
@@ -36,6 +38,6 @@ class Conversation < ApplicationRecord
   end
 
   def reopenable?
-    !contact.conversations.opened.exists?
+    contact.open_conversations.none?
   end
 end

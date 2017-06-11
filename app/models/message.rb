@@ -13,6 +13,10 @@ class Message < ApplicationRecord
   delegate :handle, to: :sender, prefix: true
 
   def self.by_recency
+    order(external_created_at: :desc).order(:id)
+  end
+
+  def self.by_oldest
     order(:external_created_at, :id)
   end
 
@@ -53,7 +57,7 @@ class Message < ApplicationRecord
   end
 
   def self.last_reply_at
-    replies.by_recency.last.created_at
+    replies.by_recency.first.created_at
   end
 
   def time_ago
