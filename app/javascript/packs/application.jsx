@@ -15,11 +15,13 @@ import {
 } from 'react-router-dom'
 
 import Inbox from 'inbox'
+import Platform from 'platform'
 
 const App = () => (
   <Router>
     <div>
       <Switch>
+        <Route path="/caregivers" component={Platform} />
         <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
         <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
       </Switch>
@@ -28,7 +30,7 @@ const App = () => (
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  const node = document.getElementById('inbox')
+  const node = document.getElementById('app-container')
 
   ReactDOM.render(<App />, node)
 })

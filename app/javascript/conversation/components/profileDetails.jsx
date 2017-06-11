@@ -106,7 +106,7 @@ class ProfileDetails extends React.Component {
   }
 
   componentDidUpdate() {
-    let toolTips = $('#inbox [data-toggle="tooltip"]');
+    let toolTips = $('.Inbox [data-toggle="tooltip"]');
     toolTips.attr('data-animation', false);
     toolTips.tooltip();
   }

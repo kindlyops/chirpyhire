@@ -10,7 +10,7 @@ $blue-gray: #91A3B0;
 @import "conversations/utilities";
 @import "conversations/profile";
 
-#inbox, .Inbox, [data-reactroot] {
+.Inbox, [data-reactroot] {
   display: flex;
   overflow: hidden;
   height: 100vh;

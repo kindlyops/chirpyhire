@@ -1,10 +1,14 @@
 class CaregiversController < ApplicationController
+  layout 'candidates', only: %i[index]
   decorates_assigned :candidates
   PAGE_LIMIT = 9
 
   def index
     respond_to do |format|
-      format.html { @candidates = paginated_candidates }
+      format.html { 
+        @candidates = paginated_candidates
+        render html: '', layout: true 
+      }
       format.csv { index_csv }
     end
   end

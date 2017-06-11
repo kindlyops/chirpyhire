@@ -1,0 +1,21 @@
+.Platform {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .CandidateSegments {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+    background-color: $brand-primary;
+
+    .CandidateSegment {
+      color: $white;
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+}

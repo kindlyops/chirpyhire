@@ -4,7 +4,7 @@ html
     = render partial: "layouts/head"
     = stylesheet_pack_tag 'application'
     = javascript_pack_tag 'application'
-  body class==(content_for?(:body_class) ? content_for(:body_class) : 'chat')
+  body.white
     = render "layouts/google_tag_manager/no_script"
     #app
       .app-container
@@ -12,5 +12,4 @@ html
           = render "components/sidebar"
           #app-container.app-content-container
     = render "components/account_dropdown"
-    = render partial: "components/modal"
     = render "layouts/script" unless Rails.env.test?
