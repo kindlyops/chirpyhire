@@ -39,11 +39,7 @@ class Internal::Metric::Wau
 
   def new_weekly_active_users_count
     @new_weekly_active_users_count ||= begin
-      Account
-        .where('current_sign_in_at >= ?', 1.week.ago)
-        .where('created_at >= ?', 1.week.ago)
-        .where.not(id: excluded_ids)
-        .count
+      count - existing_weekly_active_users_count
     end
   end
 
