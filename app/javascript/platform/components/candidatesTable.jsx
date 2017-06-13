@@ -7,31 +7,31 @@ import { Link } from 'react-router-dom'
 import { Column, Table, AutoSizer } from 'react-virtualized'
 
 const list = [
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { nickname: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 }
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
+  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 }
 ];
 
 class CandidatesTable extends React.Component {
@@ -40,7 +40,7 @@ class CandidatesTable extends React.Component {
 
     this.state = {
       icons: {
-        nickname: 'fa-user',
+        handle: 'fa-user',
         last_messaged: 'fa-calendar',
         first_messaged: 'fa-calendar'
       }
@@ -49,7 +49,7 @@ class CandidatesTable extends React.Component {
     this.messageCellRenderer = this.messageCellRenderer.bind(this);
     this.headerRenderer = this.headerRenderer.bind(this);
     this.cellRenderer = this.cellRenderer.bind(this);
-    this.nicknameCellRenderer = this.nicknameCellRenderer.bind(this);
+    this.handleCellRenderer = this.handleCellRenderer.bind(this);
   }
 
   icon(dataKey) {
@@ -70,7 +70,7 @@ class CandidatesTable extends React.Component {
     )
   }
 
-  nicknameCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
+  handleCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
     return (
       <div className='candidateCell'>
         <span className='candidateAvatar mr-2'>
@@ -105,11 +105,11 @@ class CandidatesTable extends React.Component {
                 rowGetter={({ index }) => list[index]}
               >
                 <Column
-                  label='Nickname'
-                  dataKey='nickname'
+                  label='Handle'
+                  dataKey='handle'
                   width={150}
                   flexGrow={3}
-                  cellRenderer={this.nicknameCellRenderer}
+                  cellRenderer={this.handleCellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
