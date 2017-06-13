@@ -1,8 +1,5 @@
 import React from 'react'
 
-import CandidatesHeader from './candidatesHeader'
-import CandidatesList from './candidatesList'
-import CandidatesPagination from './CandidatesPagination'
 import { Link } from 'react-router-dom'
 import { Column, Table, AutoSizer } from 'react-virtualized'
 

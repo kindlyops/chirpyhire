@@ -19,7 +19,7 @@ const LocationCandidateFilter = props => (
       </div>
 
       <div className='predicate-inner'>
-        <Geosuggest />
+        <Geosuggest placeholder='Search' />
         <div className='spacer-10'></div>
       </div>
     </div>

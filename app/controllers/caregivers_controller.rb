@@ -5,10 +5,10 @@ class CaregiversController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html { 
+      format.html do
         @candidates = paginated_candidates
-        render html: '', layout: true 
-      }
+        render html: '', layout: true
+      end
       format.csv { index_csv }
     end
   end
