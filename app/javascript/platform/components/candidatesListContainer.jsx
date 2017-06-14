@@ -2,17 +2,29 @@ import React from 'react'
 
 import CandidatesMenu from './candidatesMenu'
 import CandidatesTable from './candidatesTable'
-import Pagination from '../../shared/pagination'
+import Pagination from 'react-js-pagination'
 
 const CandidatesListContainer = props => (
   <div className='CandidatesListContainer'>
     <CandidatesMenu total_count={props.total_count} />
     <CandidatesTable {...props} />
-    <Pagination 
-      current_page={props.current_page} 
-      total_count={props.total_count}
-      total_pages={props.total_pages}
-      />
+    <nav className='CandidatesListPagination'>
+      <Pagination
+        itemsCountPerPage={25}
+        totalItemsCount={props.total_count}
+        pageRangeDisplayed={5}
+        activePage={props.current_page} 
+        pageCount={props.total_pages}
+        itemClass={'page-item'}
+        linkClass={'page-link'}
+        nextPageText={'Next ›'}
+        lastPageText={'Last »'}
+        prevPageText={'‹ Prev'}
+        firstPageText={'« First'}
+        hideDisabled={true}
+        onChange={props.handlePageChange}
+        />
+    </nav>
   </div>
 )
 
