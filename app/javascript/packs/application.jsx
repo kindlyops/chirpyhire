@@ -24,7 +24,7 @@ const App = () => (
   <Router>
     <div>
       <Switch>
-        <Route path="/caregivers" component={Platform} />
+        <Route path="/candidates" component={Platform} />
         <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
         <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
       </Switch>

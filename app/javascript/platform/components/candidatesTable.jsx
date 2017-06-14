@@ -3,34 +3,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Column, Table, AutoSizer } from 'react-virtualized'
 
-const list = [
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Brian Vaughn', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 },
-  { handle: 'Harry Whelchel', last_messaged: '25 days ago', first_messaged: '25 days ago', conversation_id: 123 }
-];
-
 class CandidatesTable extends React.Component {
   constructor(props) {
     super(props);
@@ -40,7 +12,8 @@ class CandidatesTable extends React.Component {
         handle: 'fa-user',
         last_messaged: 'fa-calendar',
         first_messaged: 'fa-calendar'
-      }
+      },
+      candidates: []
     }
 
     this.messageCellRenderer = this.messageCellRenderer.bind(this);
@@ -87,6 +60,12 @@ class CandidatesTable extends React.Component {
     )
   }
 
+  componentDidMount() {
+    $.get('/candidates/search').then((candidates) => (
+      this.setState({ candidates: candidates })
+    ))
+  }
+
   render() {
     return (
       <div className='CandidatesTable'>
@@ -98,8 +77,8 @@ class CandidatesTable extends React.Component {
                 height={height}
                 headerHeight={50}
                 rowHeight={40}
-                rowCount={list.length}
-                rowGetter={({ index }) => list[index]}
+                rowCount={this.state.candidates.length}
+                rowGetter={({ index }) => this.state.candidates[index]}
               >
                 <Column
                   label='Handle'
@@ -114,7 +93,7 @@ class CandidatesTable extends React.Component {
                   label='Message'
                   cellRenderer={this.messageCellRenderer}
                   headerRenderer={() => {}}
-                  dataKey='conversation_id'
+                  dataKey='existing_open_conversation_id'
                 />
                 <Column
                   width={150}

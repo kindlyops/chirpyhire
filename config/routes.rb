@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   resource :health, only: :show
-  resources :caregivers, only: :index, concerns: :paginatable
+  resources :candidates, only: :index, concerns: :paginatable
   resource :candidate, only: %i[show update], controller: 'ideal_candidates'
   resources :recruiting_ads, only: %i[index update]
   resources :ideal_candidate_suggestions, only: :create
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resource :star, only: :create
   end
 
-  namespace :caregivers do
+  namespace :candidates do
     resources :search, only: :index
   end
 
@@ -60,5 +60,5 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
-  root to: redirect('/caregivers')
+  root to: redirect('/candidates')
 end
