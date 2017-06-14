@@ -3,7 +3,7 @@ import React from 'react'
 const CandidatesMenu = props => (
   <div className='CandidatesMenu'>
     <div className='CandidatesMenu--left'>
-      <h2 className='CandidatesCount'>12 candidates</h2>
+      <h2 className='CandidatesCount'>{props.total_count} candidates</h2>
     </div>
     <div className='CandidatesMenu--right'>
       <button className='btn btn-sm btn-primary export-caregivers' role="button">

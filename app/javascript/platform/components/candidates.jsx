@@ -6,7 +6,7 @@ import CandidatesListContainer from './candidatesListContainer'
 const Candidates = props => (
   <div className='Candidates'>
     <CandidateFilters />
-    <CandidatesListContainer />
+    <CandidatesListContainer {...props} />
   </div>
 )
 

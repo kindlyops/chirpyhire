@@ -7,23 +7,10 @@ class CandidatesTable extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      icons: {
-        handle: 'fa-user',
-        last_messaged: 'fa-calendar',
-        first_messaged: 'fa-calendar'
-      },
-      candidates: []
-    }
-
     this.messageCellRenderer = this.messageCellRenderer.bind(this);
     this.headerRenderer = this.headerRenderer.bind(this);
     this.cellRenderer = this.cellRenderer.bind(this);
-    this.handleCellRenderer = this.handleCellRenderer.bind(this);
-  }
-
-  icon(dataKey) {
-    return this.state.icons[dataKey];
+    this.nicknameCellRenderer = this.nicknameCellRenderer.bind(this);
   }
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
@@ -40,11 +27,11 @@ class CandidatesTable extends React.Component {
     )
   }
 
-  handleCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
+  nicknameCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
     return (
       <div className='candidateCell'>
         <span className='candidateAvatar mr-2'>
-          <span className='candidateAvatarImage'>HW</span>
+          <span className={`candidateAvatarImage ${rowData.hero_pattern_classes}`}>{this.initials(cellData)}</span>
         </span>
         {cellData}
       </div>
@@ -54,16 +41,13 @@ class CandidatesTable extends React.Component {
   headerRenderer({ columnData, dataKey, disableSort, label, sortBy, sortDirection }) {
     return (
       <span className='small-caps'>
-        <i className={`fa mr-2 ${this.icon(dataKey)}`}></i>
         {label}
       </span>
     )
   }
 
-  componentDidMount() {
-    $.get('/candidates/search').then((candidates) => (
-      this.setState({ candidates: candidates })
-    ))
+  initials(nickname) {
+    return nickname.split(' ').map(function (s) { return s.charAt(0); }).join('');
   }
 
   render() {
@@ -73,19 +57,18 @@ class CandidatesTable extends React.Component {
           <AutoSizer>
             {({ height, width }) => (  
               <Table
-                width={width}
+                width={1200}
                 height={height}
                 headerHeight={50}
                 rowHeight={40}
-                rowCount={this.state.candidates.length}
-                rowGetter={({ index }) => this.state.candidates[index]}
+                rowCount={this.props.candidates.length}
+                rowGetter={({ index }) => this.props.candidates[index]}
               >
                 <Column
-                  label='Handle'
-                  dataKey='handle'
-                  width={150}
-                  flexGrow={3}
-                  cellRenderer={this.handleCellRenderer}
+                  label='Nickname'
+                  dataKey='nickname'
+                  width={260}
+                  cellRenderer={this.nicknameCellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
@@ -93,19 +76,47 @@ class CandidatesTable extends React.Component {
                   label='Message'
                   cellRenderer={this.messageCellRenderer}
                   headerRenderer={() => {}}
-                  dataKey='existing_open_conversation_id'
+                  dataKey='current_conversation_id'
                 />
                 <Column
                   width={150}
-                  label='Last Messaged'
-                  dataKey='last_messaged'
+                  label='Certification'
+                  dataKey='certification'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
                   width={150}
-                  label='First Messaged'
-                  dataKey='first_messaged'
+                  label='Experience'
+                  dataKey='experience'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
+                <Column
+                  width={100}
+                  label='Zipcode'
+                  dataKey='zipcode'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
+                <Column
+                  width={120}
+                  label='Availability'
+                  dataKey='availability'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
+                <Column
+                  width={170}
+                  label='Last Seen'
+                  dataKey='last_seen_at_ago'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
+                <Column
+                  width={170}
+                  label='First Seen'
+                  dataKey='first_seen_at_ago'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
