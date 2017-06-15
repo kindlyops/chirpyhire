@@ -65,7 +65,7 @@ class CandidatesTable extends React.Component {
                 rowGetter={({ index }) => this.props.candidates[index]}
               >
                 <Column
-                  label='Nickname'
+                  label='Nickname (Internal)'
                   dataKey='nickname'
                   width={260}
                   flexGrow={2}
