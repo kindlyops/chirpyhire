@@ -7,7 +7,7 @@ class ConversationsController < ApplicationController
     @conversations = policy_scope(inbox.recent_conversations)
 
     if @conversations.exists?
-      redirect_to existing_open_conversation_path
+      redirect_to current_conversation_path
     else
       render :index
     end
@@ -47,11 +47,11 @@ class ConversationsController < ApplicationController
     inbox_conversations.find_by(conversation: @conversation)
   end
 
-  def existing_open_conversation_path
-    inbox_conversation_path(inbox, existing_open_conversation)
+  def current_conversation_path
+    inbox_conversation_path(inbox, current_conversation)
   end
 
-  def existing_open_conversation
+  def current_conversation
     inbox_conversations.recently_viewed.first.conversation
   end
 
