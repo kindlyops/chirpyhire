@@ -12,9 +12,6 @@ class CandidateFilters extends React.Component {
     super(props);
     this.state = configuration;
     this.toggle = this.toggle.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleStarChange = this.handleStarChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
   }
 
   toggle(event) {
@@ -24,49 +21,11 @@ class CandidateFilters extends React.Component {
         $set: event.target.checked
       }
     });
-    const newForm = update(this.state.form, {
-      $unset: [`${filter}`]
-    });
     const newState = Object.assign({}, this.state, {
-      [filter]: newFilter,
-      form: newForm
+      [filter]: newFilter
     });
 
-    this.setState(newState);
-  }
-
-  handleLocationChange(location) {
-    let newForm = update(this.state.form, { $unset: ['zipcode', 'city', 'state', 'county'] });
-    newForm = update(newForm, { $merge: location });
-    const newState = update(this.state, { form: { $set: newForm } });
-    this.setState(newState);
-  }
-
-  handleSelectChange(selectedOption) {
-    const filter = selectedOption.filter;
-    const newForm = update(this.state.form, { [filter]: {
-      $set: selectedOption.value
-    }});
-    const newState = Object.assign({}, this.state, {
-      form: newForm
-    });
-    this.setState(newState);
-  }
-
-  handleStarChange(event) {
-    const filter = event.target.name;
-    const isChecked = event.target.checked;
-    let newForm;
-    if(isChecked) {
-      newForm = update(this.state.form, { [filter]: {
-        $set: true
-      }});
-    } else {
-      newForm = update(this.state.form, { $unset: [`${filter}`]});
-    }
-    const newState = Object.assign({}, this.state, {
-      form: newForm
-    });
+    this.props.handleSelectChange({ filter: filter, value: null });
     this.setState(newState);
   }
 
@@ -78,33 +37,33 @@ class CandidateFilters extends React.Component {
             <h3 className='small-caps'>Candidate Attributes</h3>
           </div>
           <LocationCandidateFilter 
-            handleLocationChange={this.handleLocationChange}
+            handleLocationChange={this.props.handleLocationChange}
             toggle={this.toggle}
-            form={this.state.form}
+            form={this.props.form}
             {...this.state.location} />
           <StarredCandidateFilter 
-            handleStarChange={this.handleStarChange}
-            form={this.state.form}
+            handleStarChange={this.props.handleStarChange}
+            form={this.props.form}
             {...this.state.starred} />
           <CandidateFilter 
-            handleSelectChange={this.handleSelectChange}
+            handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
-            form={this.state.form}
+            form={this.props.form}
             {...this.state.certification} />
           <CandidateFilter 
-            handleSelectChange={this.handleSelectChange}
+            handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
-            form={this.state.form}
+            form={this.props.form}
             {...this.state.availability} />
           <CandidateFilter 
-            handleSelectChange={this.handleSelectChange}
+            handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
-            form={this.state.form}
+            form={this.props.form}
             {...this.state.experience} />
           <CandidateFilter 
-            handleSelectChange={this.handleSelectChange}
+            handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
-            form={this.state.form}
+            form={this.props.form}
             {...this.state.transportation} />
         </div>
         <CandidateFiltersActions />

@@ -22,7 +22,7 @@ class Contact::LastActiveAt < Contact::Attribute
   end
 
   def time_ago_format
-    time_ago_in_words(last_reply_at, include_seconds: true) << " ago"
+    time_ago_in_words(last_reply_at, include_seconds: true) << ' ago'
   end
 
   def short_format

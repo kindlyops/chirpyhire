@@ -1,5 +1,4 @@
 const configuration = {
-  form: {},
   certification: {
     icon: 'fa-graduation-cap',
     attribute: 'Certification',
