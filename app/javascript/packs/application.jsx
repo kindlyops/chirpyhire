@@ -34,7 +34,7 @@ const App = app => (
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
-  const data = Object.assign({}, node.dataset);
+  const data = R.merge({}, node.dataset);
 
   ReactDOM.render(<App {...data}/>, node)
 })
