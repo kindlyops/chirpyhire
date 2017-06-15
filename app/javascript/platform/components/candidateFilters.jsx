@@ -4,128 +4,70 @@ import CandidateFilter from './candidateFilter'
 import LocationCandidateFilter from './locationCandidateFilter'
 import StarredCandidateFilter from './starredCandidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
-
-const state = {
-  filters: {
-    certification: {
-      icon: 'fa-graduation-cap',
-      attribute: 'Certification',
-      options: [
-        {
-          label: 'PCA',
-          value: 'pca',
-          icon: 'fa-heart-o purple'
-        },
-        {
-          label: 'CNA',
-          value: 'cna',
-          icon: 'fa-heart-o'
-        },
-        {
-          label: 'HHA',
-          value: 'hha',
-          icon: 'fa-heart'
-        },
-        {
-          label: 'RN, LPN, Other',
-          value: 'other_certification',
-          icon: 'fa-heartbeat'
-        },
-        {
-          label: 'No Certification',
-          value: 'no_certification',
-          icon: 'fa-graduation-cap'
-        }
-      ]
-    },
-    location: {
-      icon: 'fa-map-marker',
-      attribute: 'Location'
-    },
-    starred: {
-      icon: 'fa-star',
-      attribute: 'Starred'
-    },
-    availability: {
-      icon: 'fa-calendar-check-o',
-      attribute: 'Availability',
-      options: [
-        {
-          label: 'Live-In',
-          value: 'live_in',
-          icon: 'fa-home'
-        },
-        {
-          label: 'AM',
-          value: 'hourly_am',
-          icon: 'fa-sun-o'
-        },
-        {
-          label: 'PM',
-          value: 'hourly_pm',
-          icon: 'fa-moon-o'
-        },
-        {
-          label: 'Open',
-          value: 'any_shift',
-          icon: 'fa-flag-checkered'
-        }
-      ]
-    },
-    experience: {
-      icon: 'fa-level-up',
-      attribute: 'Experience',
-      options: [
-        {
-          icon: 'fa-battery-quarter',
-          value: 'less_than_one',
-          label: '0 - 1 years'
-        },
-        {
-          icon: 'fa-battery-half',
-          value: 'one_to_five',
-          label: '1 - 5 years'
-        },
-        {
-          icon: 'fa-battery-full',
-          value: 'six_or_more',
-          label: '6+ years'
-        },
-        {
-          icon: 'fa-leaf',
-          value: 'no_experience',
-          label: 'No Experience'
-        }
-      ]
-    },
-    transportation: {
-      icon: 'fa-road',
-      attribute: 'Transportation',
-      options: [
-        {
-          icon: 'fa-car',
-          value: 'personal_transportation', 
-          label: 'Personal'
-        },
-        {
-          icon: 'fa-bus',
-          label: 'Public',
-          value: 'public_transportation'
-        },
-        {
-          icon: 'fa-thumbs-o-up',
-          label: 'No Transportation',
-          value: 'no_transportation'
-        }
-      ]
-    }
-  }
-}
+import configuration from '../configuration/segments'
+import update from 'immutability-helper'
 
 class CandidateFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = state;
+    this.state = configuration;
+    this.toggle = this.toggle.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleStarChange = this.handleStarChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+  }
+
+  toggle(event) {
+    const filter = event.target.name;
+    const newFilter = update(this.state[filter], {
+      checked: {
+        $set: event.target.checked
+      }
+    });
+    const newForm = update(this.state.form, {
+      $unset: [`${filter}`]
+    });
+    const newState = Object.assign({}, this.state, {
+      [filter]: newFilter,
+      form: newForm
+    });
+
+    this.setState(newState);
+  }
+
+  handleLocationChange(location) {
+    let newForm = update(this.state.form, { $unset: ['zipcode', 'city', 'state', 'county'] });
+    newForm = update(newForm, { $merge: location });
+    const newState = update(this.state, { form: { $set: newForm } });
+    this.setState(newState);
+  }
+
+  handleSelectChange(selectedOption) {
+    const filter = selectedOption.filter;
+    const newForm = update(this.state.form, { [filter]: {
+      $set: selectedOption.value
+    }});
+    const newState = Object.assign({}, this.state, {
+      form: newForm
+    });
+    this.setState(newState);
+  }
+
+  handleStarChange(event) {
+    const filter = event.target.name;
+    const isChecked = event.target.checked;
+    let newForm;
+    if(isChecked) {
+      newForm = update(this.state.form, { [filter]: {
+        $set: true
+      }});
+    } else {
+      newForm = update(this.state.form, { $unset: [`${filter}`]});
+    }
+    const newState = Object.assign({}, this.state, {
+      form: newForm
+    });
+    this.setState(newState);
   }
 
   render() {
@@ -135,12 +77,35 @@ class CandidateFilters extends React.Component {
           <div className='CandidateFiltersHeader'>
             <h3 className='small-caps'>Candidate Attributes</h3>
           </div>
-          <LocationCandidateFilter {...this.state.filters.location} />
-          <StarredCandidateFilter {...this.state.filters.starred} />
-          <CandidateFilter {...this.state.filters.certification} />
-          <CandidateFilter {...this.state.filters.availability} />
-          <CandidateFilter {...this.state.filters.experience} />
-          <CandidateFilter {...this.state.filters.transportation} />
+          <LocationCandidateFilter 
+            handleLocationChange={this.handleLocationChange}
+            toggle={this.toggle}
+            form={this.state.form}
+            {...this.state.location} />
+          <StarredCandidateFilter 
+            handleStarChange={this.handleStarChange}
+            form={this.state.form}
+            {...this.state.starred} />
+          <CandidateFilter 
+            handleSelectChange={this.handleSelectChange}
+            toggle={this.toggle}
+            form={this.state.form}
+            {...this.state.certification} />
+          <CandidateFilter 
+            handleSelectChange={this.handleSelectChange}
+            toggle={this.toggle}
+            form={this.state.form}
+            {...this.state.availability} />
+          <CandidateFilter 
+            handleSelectChange={this.handleSelectChange}
+            toggle={this.toggle}
+            form={this.state.form}
+            {...this.state.experience} />
+          <CandidateFilter 
+            handleSelectChange={this.handleSelectChange}
+            toggle={this.toggle}
+            form={this.state.form}
+            {...this.state.transportation} />
         </div>
         <CandidateFiltersActions />
       </form>

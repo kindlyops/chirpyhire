@@ -211,9 +211,11 @@
             display: flex;
             flex-direction: column;
             padding-right: 22px;
+            padding-top: 16px;
+            padding-bottom: 16px;
 
-            .spacer-10 {
-              height: 10px;
+            .filter-value {
+              font-size: 0.7rem;
             }
           }
         }

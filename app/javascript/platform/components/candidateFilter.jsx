@@ -7,10 +7,12 @@ class CandidateFilter extends React.Component {
 
     this.valueRenderer = this.valueRenderer.bind(this);
     this.optionRenderer = this.optionRenderer.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
   }
+
   valueRenderer(option) {
     return (
-      <div className='filter-option d-flex'>
+      <div className='filter-value d-flex align-items-center'>
         <i className={`fa mr-2 ${option.icon}`}></i>
         <span>{option.label}</span>
       </div>
@@ -26,35 +28,66 @@ class CandidateFilter extends React.Component {
     )
   }
 
+  predicate() {
+    if(this.isChecked()) {
+      return (
+        <div className='predicate'>
+          <div className='predicate-inner'>
+            <Select
+              multi={true}
+              name={this.name()}
+              options={this.props.options}
+              className="predicate-select"
+              value={this.value()}
+              optionRenderer={this.optionRenderer}
+              valueRenderer={this.valueRenderer}
+              onChange={this.handleSelectChange}
+            />
+          </div>
+        </div>
+      )
+    }
+  }
+
+  isChecked() {
+    return this.props.form[this.name()] || this.props.checked;
+  }
+
+  value() {
+    let value = this.props.form[this.name()];
+
+    if (value) {
+      if (Array.isArray(value)) {
+        return value.join(',');
+      } else {
+        return value;
+      }
+    } else {
+      return '';
+    }
+  }
+
+  handleSelectChange(options) {
+    const value = options && options.map(o => o.value);
+    const filter = this.name();
+    this.props.handleSelectChange({ value: value, filter: filter });
+  }
+
+  name() {
+    return this.props.attribute.toLowerCase();
+  }
+
   render() {
     return (
       <div className='CandidateFilter'>
         <div className='form-check small-caps'>
           <label className='form-check-label'>
-            <input className='form-check-input' type="checkbox" value="" />
+            <input className='form-check-input' name={this.name()} type="checkbox" onChange={this.props.toggle} checked={this.isChecked()} value="" />
             <i className={`fa fa-fw mr-1 ml-1 ${this.props.icon}`}></i>
             {` ${this.props.attribute}`}
           </label>
         </div>
-
-        <div className='predicate'>
-          <div className='predicate-buttons'>
-            <span className='close-predicate'>
-              <i className='fa fa-times'></i>
-            </span>
-          </div>
-
-          <div className='predicate-inner'>
-            <Select
-              name={this.props.attribute}
-              options={this.props.options}
-              className="predicate-select"
-              optionRenderer={this.optionRenderer}
-              valueRenderer={this.valueRenderer}
-            />
-            <div className='spacer-10'></div>
-          </div>
-        </div>
+        {this.predicate()}
       </div>
     )
   }

@@ -29,7 +29,7 @@
     "rails-erb-loader": "^5.0.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-geosuggest": "^2.2.0",
+    "react-geosuggest": "^2.3.0",
     "react-js-pagination": "^2.1.0",
     "react-router-dom": "next",
     "react-select": "1.0.0-rc.5",

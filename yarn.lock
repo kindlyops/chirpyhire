@@ -3852,9 +3852,9 @@ react-dom@^15.0.0, react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
-react-geosuggest@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-geosuggest/-/react-geosuggest-2.2.0.tgz#e295b306f0baea0ef0819ae331251d918161c00f"
+react-geosuggest@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-geosuggest/-/react-geosuggest-2.3.0.tgz#891383693c95b5446ae61a19a588711cc21e571b"
   dependencies:
     classnames "^2.2.3"
     lodash.debounce "^4.0.6"
