@@ -22,46 +22,20 @@ class Platform extends React.Component {
     this.exportCSV = this.exportCSV.bind(this);
   }
 
-  empty() {
-    return (
-      <div className='empty-candidates'>
-        <h3 className='text-muted'>No caregivers yet...</h3>
-        <blockquote className='blockquote'>
-          <p className='mb-0'>If you can dream it</p>
-          <p className='mb-0'>you can do it</p>
-          <footer className='mt-3 blockquote-footer'>Walt Disney</footer>
-        </blockquote>
-      </div>
-    )
-  }
-
-  candidates() {
-    return (
-      <Candidates 
-        {...this.state} 
-        handlePageChange={this.handlePageChange}
-        handleSelectChange={this.handleSelectChange}
-        handleStarChange={this.handleStarChange}
-        handleLocationChange={this.handleLocationChange}
-        exportCSV={this.exportCSV}
-      />
-    )
-  }
-
   render() {
-    let body;
-    if(this.state.candidates.length) {
-      body = this.candidates()
-    } else {
-      body = this.empty()
-    }
-
     return (
       <div className='Platform'>
         <div className='PlatformHeader'>
           <h1>Caregivers</h1>
         </div>
-        {body}
+        <Candidates 
+          {...this.state} 
+          handlePageChange={this.handlePageChange}
+          handleSelectChange={this.handleSelectChange}
+          handleStarChange={this.handleStarChange}
+          handleLocationChange={this.handleLocationChange}
+          exportCSV={this.exportCSV}
+        />
       </div>
     )
   }
