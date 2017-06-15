@@ -2,6 +2,7 @@ import React from 'react'
 
 import CandidateSegments from './components/candidateSegments'
 import Candidates from './components/candidates'
+import queryString from 'query-string'
 
 class Platform extends React.Component {
   constructor(props) {
@@ -29,22 +30,37 @@ class Platform extends React.Component {
     )
   }
 
-  handlePageChange(current_page) {
-    this.candidates(current_page);
+  handlePageChange(page) {
+    let searchParams = queryString.parse(this.props.location.search);
+    searchParams.page = page;
+    let search = queryString.stringify(searchParams);
+    let path = `${this.props.location.pathname}?${search}`;
+    this.props.history.push(path);
   }
 
   candidatesUrl(page = 1) {
-    return `/candidates/search?page=${page}`;
+    return `/candidates.json?page=${page}`;
   }
 
-  candidates(page = 1) {
-    return $.get(this.candidatesUrl(page)).then((candidates) => (
-      this.setState(candidates)
-    ));
+  fetchCandidates(search) {
+    const { page = 1 } = queryString.parse(search);
+
+    return $.get(this.candidatesUrl(page)).then(data => {
+      this.setState(data);
+    });
   }
 
   componentDidMount() {
-    this.candidates();
+    this.fetchCandidates(this.props.location.search);
+  }
+
+  componentWillUpdate(nextProps) {
+    let currentSearchParams = queryString.parse(this.props.location.search);
+    let newSearchParams = queryString.parse(nextProps.location.search);
+
+    if(!R.equals(currentSearchParams, newSearchParams)) {
+      this.fetchCandidates(nextProps.location.search);
+    }
   }
 }
 

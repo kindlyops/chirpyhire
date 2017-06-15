@@ -20,10 +20,6 @@ Rails.application.routes.draw do
     resource :star, only: :create
   end
 
-  namespace :candidates do
-    resources :search, only: :index
-  end
-
   resources :inboxes, only: [:show] do
     resources :conversations, only: %i[index show update]
     resources :inbox_conversations, only: :index
