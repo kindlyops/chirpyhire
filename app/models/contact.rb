@@ -32,7 +32,7 @@ class Contact < ApplicationRecord
   end
 
   def current_conversation
-    existing_open_conversation || conversations.order(created_at: :desc).first
+    existing_open_conversation || conversations.by_recent_message.first
   end
 
   def self.recently_replied
