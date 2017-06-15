@@ -8,7 +8,7 @@ class CandidatesController < ApplicationController
     respond_to do |format|
       format.html { render html: '', layout: true }
       format.json { @candidates = paginated_candidates }
-      # format.csv { index_csv }
+      format.csv { index_csv }
     end
   end
 

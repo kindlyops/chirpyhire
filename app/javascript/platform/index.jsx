@@ -16,6 +16,7 @@ class Platform extends React.Component {
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.exportCSV = this.exportCSV.bind(this);
   }
 
   render() {
@@ -25,9 +26,17 @@ class Platform extends React.Component {
           <h1>Caregivers</h1>
         </div>
         <CandidateSegments />
-        <Candidates {...this.state} handlePageChange={this.handlePageChange} />
+        <Candidates 
+          {...this.state} 
+          handlePageChange={this.handlePageChange}
+          exportCSV={this.exportCSV}
+        />
       </div>
     )
+  }
+
+  exportCSV() {
+    window.location.href = '/candidates.csv' + this.props.location.search;
   }
 
   handlePageChange(page) {

@@ -6,7 +6,7 @@ const CandidatesMenu = props => (
       <h2 className='CandidatesCount'>{props.total_count} candidates</h2>
     </div>
     <div className='CandidatesMenu--right'>
-      <button className='btn btn-sm btn-primary export-caregivers' role="button">
+      <button onClick={props.exportCSV} className='btn btn-sm btn-primary export-caregivers' role="button">
         Export
         <i className='fa fa-cloud-download ml-2'></i>
       </button>
