@@ -12,6 +12,17 @@ class CandidateFilters extends React.Component {
     super(props);
     this.state = configuration;
     this.toggle = this.toggle.bind(this);
+    this.toggleLocation = this.toggleLocation.bind(this);
+  }
+
+  toggleLocation(event) {
+    const newState = update(this.state, { location: {
+      checked: {
+        $set: event.target.checked
+      }
+    }});
+    this.setState(newState);
+    this.props.handleLocationChange({});
   }
 
   toggle(event) {
@@ -38,7 +49,7 @@ class CandidateFilters extends React.Component {
           </div>
           <LocationCandidateFilter 
             handleLocationChange={this.props.handleLocationChange}
-            toggle={this.toggle}
+            toggleLocation={this.toggleLocation}
             form={this.props.form}
             {...this.state.location} />
           <StarredCandidateFilter 
