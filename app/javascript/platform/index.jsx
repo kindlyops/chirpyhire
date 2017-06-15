@@ -47,14 +47,12 @@ class Platform extends React.Component {
     this.props.history.push(path);
   }
 
-  candidatesUrl(page = 1) {
-    return `/candidates.json?page=${page}`;
+  candidatesUrl(search) {
+    return `/candidates.json${search}`;
   }
 
   fetchCandidates(search) {
-    const { page = 1 } = queryString.parse(search);
-
-    return $.get(this.candidatesUrl(page)).then(data => {
+    return $.get(this.candidatesUrl(search)).then(data => {
       this.setState(data);
     });
   }
