@@ -135,7 +135,7 @@ class CandidatesController < ApplicationController
   end
 
   def format_html?
-    request.format == "html"
+    request.format == 'html'
   end
 
   def page
