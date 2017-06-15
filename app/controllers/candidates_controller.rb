@@ -1,5 +1,5 @@
 class CandidatesController < ApplicationController
-  skip_after_action :verify_policy_scoped, only: %i[index]
+  skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
   layout 'candidates', only: %i[index]
   PAGE_LIMIT = 24
   decorates_assigned :candidates
@@ -132,6 +132,10 @@ class CandidatesController < ApplicationController
 
   def paginated(scope)
     scope.page(page).per(PAGE_LIMIT)
+  end
+
+  def format_html?
+    request.format == "html"
   end
 
   def page
