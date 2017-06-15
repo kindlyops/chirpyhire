@@ -34,7 +34,7 @@ class Question::MultipleChoice < Question::Base
 
   def choices_body
     choices.each_with_object('') do |(letter, value), body|
-      body << "#{letter.capitalize}) #{value}\n"
+      body << "#{letter.capitalize} - #{value}\n"
     end
   end
 end
