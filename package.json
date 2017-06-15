@@ -33,6 +33,7 @@
     "react-js-pagination": "^2.1.0",
     "react-router-dom": "next",
     "react-select": "1.0.0-rc.5",
+    "react-transition-group": "^1.2.0",
     "react-virtualized": "^9.7.6",
     "reactstrap": "^4.6.2",
     "sass-loader": "^6.0.5",
