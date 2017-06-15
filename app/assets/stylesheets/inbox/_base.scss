@@ -1,4 +1,6 @@
-#inbox, .Inbox, [data-reactroot] {
+@import "inbox/react-select";
+
+.Inbox, [data-reactroot] {
   min-width: 100%;
   width: 100%;
 

@@ -1,0 +1,238 @@
+.Platform {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+
+  .small-caps {
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .PlatformHeader {
+    flex: 0 0 50px;
+    display: flex;
+    align-items: center;
+    background-color: $brand-primary;
+    color: $white;
+
+    h1 {
+      margin-bottom: 0;
+      margin-left: 1rem;
+      font-size: 20px;
+      font-weight: 400;
+    }
+  }
+
+  .CandidateSegments {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 0 0 45px;
+    background-color: #2B8360;
+
+    .CandidateSegment {
+      color: $white;
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  .empty-candidates {
+    height: 100vh;
+    width: 100%;
+    background-color: $white;
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .Candidates {
+    display: flex;
+    height: 100vh;
+
+    .CandidatesListContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: #eef6f2;
+
+      .CandidatesListPagination {
+        padding: 16px 12px 0;
+      }
+
+      .CandidatesTable {
+        height: 82vh;
+        padding: 0 12px 0;
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: auto;
+        margin-top: 8px;
+
+        .candidateAvatar {
+          width: 24px;
+          height: 24px;
+          line-height: 24px;
+          font-size: 10px;
+          display: flex;
+
+          .candidateAvatarImage {
+            width: 100%;
+            height: 100%;
+            border-radius: 2px;
+            color: $white;
+            text-align: center;
+            font-weight: 700;
+          }
+        }
+
+        .candidateCell {
+          display: flex;
+          justify-content: flex-start;
+          padding-left: 15px;
+          align-items: center;
+        }
+
+        .ReactVirtualized__Table__Grid:focus {
+          outline: none;
+        }
+
+        .ReactVirtualized__Table__headerColumn {
+          margin-right: 0 !important;
+        }
+
+        .ReactVirtualized__Table__row {
+          background-color: $white;
+
+          &:first-child {
+            .ReactVirtualized__Table__rowColumn {
+              border-top: 1px solid rgb(218, 218, 218);
+            }
+          }
+
+          .ReactVirtualized__Table__rowColumn {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            border-bottom: 1px solid rgb(218, 218, 218);
+            border-right: 1px solid rgb(218, 218, 218);
+
+            &:first-child {
+              border-left: 1px solid rgb(218, 218, 218);
+            }
+          }
+        }
+
+        .btn-outline-primary {
+          border: none;
+          border-radius: 0;
+          padding-right: 1.1rem;
+          padding-left: 1.1rem;
+          padding-top: 0.6rem;
+          padding-bottom: 0.6rem;
+        }
+
+        .autosizer-wrapper {
+          height: 82vh;
+        }
+      }
+
+      .CandidatesMenu {
+        flex: 0 0 50px;
+        background-color: #f9fbfa;
+        border-bottom: 1px solid rgb(218, 218, 218);
+        padding-right: 20px;
+        padding-left: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .CandidatesCount {
+          margin-bottom: 0;
+          font-size: 18px;
+          line-height: 28px;
+          font-weight: 700;
+        }
+      }
+    }
+
+
+    .CandidateFilters {
+      flex: 0 0 271px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      border-right: 1px solid rgb(218,218,218);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      .CandidateFilters--inner {
+        flex: 1;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 5px;
+      }
+
+      .CandidateFiltersActions {
+        padding: 1rem;
+        border-top: 1px solid rgb(218, 218, 218);
+      }
+
+      .CandidateFiltersHeader {
+        padding: 8px 0 4px;
+        h3 {
+          margin-bottom: 0;
+        }
+      }
+
+      .CandidateFilter {
+        .predicate {
+          display: flex;
+          flex-direction: column;
+          background-color: #ecfef3;
+          padding-bottom: 2px;
+          margin-bottom: 12px;
+          margin-top: 2px;
+          padding-left: 20px;
+
+          .predicate-buttons {
+            display: flex;
+            justify-content: flex-end;
+
+            .close-predicate {
+              padding: 5px 8px;
+              cursor: pointer;
+
+              i {
+                font-size: 1rem;
+              }
+            }
+          }
+
+          .predicate-inner {
+            display: flex;
+            flex-direction: column;
+            padding-right: 22px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+
+            .filter-value {
+              font-size: 0.7rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -1,10 +1,13 @@
-class CaregiversController < ApplicationController
+class CandidatesController < ApplicationController
+  skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
+  layout 'candidates', only: %i[index]
+  PAGE_LIMIT = 24
   decorates_assigned :candidates
-  PAGE_LIMIT = 9
 
   def index
     respond_to do |format|
-      format.html { @candidates = paginated_candidates }
+      format.html { render html: '', layout: true }
+      format.json { @candidates = paginated_candidates }
       format.csv { index_csv }
     end
   end
@@ -129,6 +132,10 @@ class CaregiversController < ApplicationController
 
   def paginated(scope)
     scope.page(page).per(PAGE_LIMIT)
+  end
+
+  def format_html?
+    request.format == 'html'
   end
 
   def page

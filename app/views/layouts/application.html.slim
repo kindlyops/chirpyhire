@@ -9,7 +9,7 @@ html
         = render partial: "layouts/alerts"
         .app
           = render "components/sidebar"
-          .app-content-container.container
+          #app-container.app-content-container.container
             .mt-4.mr-4.ml-4
               = yield
     = render "components/account_dropdown"

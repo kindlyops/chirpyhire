@@ -30,7 +30,7 @@ Style/FrozenStringLiteralComment:
 Metrics/ClassLength:
   Exclude:
     - 'lib/seeder.rb'
-    - 'app/controllers/caregivers_controller.rb'
+    - 'app/controllers/candidates_controller.rb'
 
 Metrics/MethodLength:
   Exclude:

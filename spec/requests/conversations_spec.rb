@@ -12,7 +12,7 @@ RSpec.describe 'Conversations' do
   context 'with caregivers' do
     let!(:current_contact) { create(:contact, team: team) }
     let!(:with_unread_messages) { create(:contact, team: team) }
-    let(:current_conversation) { inbox.current_conversation(current_contact) }
+    let(:existing_open_conversation) { inbox.existing_open_conversation(current_contact) }
 
     before do
       IceBreaker.call(current_contact)
@@ -22,17 +22,17 @@ RSpec.describe 'Conversations' do
 
     context 'with a current conversation' do
       before do
-        get inbox_conversation_path(inbox, current_conversation)
+        get inbox_conversation_path(inbox, existing_open_conversation)
       end
 
       it 'redirects to the current conversation' do
         get inbox_conversations_path(inbox)
-        expect(response).to redirect_to(inbox_conversation_path(inbox, current_conversation))
+        expect(response).to redirect_to(inbox_conversation_path(inbox, existing_open_conversation))
       end
     end
 
     context 'without a current conversation' do
-      let(:unread_conversation) { inbox.current_conversation(with_unread_messages) }
+      let(:unread_conversation) { inbox.existing_open_conversation(with_unread_messages) }
 
       it 'redirects to the caregiver with unread messages' do
         get inbox_conversations_path(inbox)

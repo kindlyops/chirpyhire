@@ -1,22 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Account Management', type: :feature, js: true do
-  feature 'sign in' do
-    context 'with an account' do
-      let(:account) { create(:account, :inbox, :team_with_phone_number) }
-      let(:organization) { account.organization }
-
-      scenario 'it progresses to the candidates' do
-        visit '/accounts/sign_in'
-
-        fill_in 'Email', with: account.email
-        fill_in 'Password', with: 'password'
-        click_button 'sign-in'
-        expect(page).to have_text('No caregivers found')
-      end
-    end
-  end
-
   feature 'forgot password' do
     scenario 'it gives the password reset message' do
       visit '/accounts/password/new'

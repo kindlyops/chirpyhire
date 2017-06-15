@@ -9,7 +9,7 @@
     min-width: 53px;
   }
 
-  background: linear-gradient(45deg, #2ba373, #75d0ab);
+  background-color: darken($brand-primary, 25%);
   
   display: flex;
   overflow-y: auto;
@@ -98,7 +98,7 @@
 
     &.active {
       .fa {
-        color: $brand-primary;
+        color: darken($brand-primary, 25%);
       }
       background-color: #f2f6f8;
     }

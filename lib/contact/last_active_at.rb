@@ -2,11 +2,6 @@ class Contact::LastActiveAt < Contact::Attribute
   include ActionView::Helpers::DateHelper
 
   def label
-    return time_ago_format if past_hour?
-    return short_format if today?
-    return 'Yesterday' if yesterday?
-    return medium_format if current_year?
-
     long_format
   end
 
@@ -27,7 +22,7 @@ class Contact::LastActiveAt < Contact::Attribute
   end
 
   def time_ago_format
-    time_ago_in_words(last_reply_at, include_seconds: true)
+    time_ago_in_words(last_reply_at, include_seconds: true) << ' ago'
   end
 
   def short_format
