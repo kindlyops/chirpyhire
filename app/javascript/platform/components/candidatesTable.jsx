@@ -55,9 +55,9 @@ class CandidatesTable extends React.Component {
       <div className='CandidatesTable'>
         <div className='autosizer-wrapper'>  
           <AutoSizer>
-            {({ height }) => (  
+            {({ height, width }) => (  
               <Table
-                width={1200}
+                width={width}
                 height={height}
                 headerHeight={50}
                 rowHeight={40}
@@ -87,23 +87,9 @@ class CandidatesTable extends React.Component {
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
-                  width={150}
-                  label='Experience'
-                  dataKey='experience'
-                  cellRenderer={this.cellRenderer}
-                  headerRenderer={this.headerRenderer}
-                />
-                <Column
                   width={100}
                   label='Zipcode'
                   dataKey='zipcode'
-                  cellRenderer={this.cellRenderer}
-                  headerRenderer={this.headerRenderer}
-                />
-                <Column
-                  width={120}
-                  label='Availability'
-                  dataKey='availability'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />

@@ -30,6 +30,7 @@ class LocationCandidateFilter extends React.Component {
               placeholder='Search' 
               types={['(regions)']}
               country={'us'}
+              highlightMatch={false}
               value={this.value(this.props.form)}
               autoActivateFirstSuggest={true}
               onSuggestSelect={this.handleLocationChange}

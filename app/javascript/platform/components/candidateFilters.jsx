@@ -3,7 +3,6 @@ import React from 'react'
 import CandidateFilter from './candidateFilter'
 import LocationCandidateFilter from './locationCandidateFilter'
 import StarredCandidateFilter from './starredCandidateFilter'
-import CandidateFiltersActions from './candidateFiltersActions'
 import configuration from '../configuration/segments'
 import update from 'immutability-helper'
 
@@ -77,7 +76,6 @@ class CandidateFilters extends React.Component {
             form={this.props.form}
             {...this.state.transportation} />
         </div>
-        <CandidateFiltersActions form={this.props.form} />
       </form>
     )
   }
