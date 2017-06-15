@@ -77,7 +77,7 @@ class CandidateFilters extends React.Component {
             form={this.props.form}
             {...this.state.transportation} />
         </div>
-        <CandidateFiltersActions />
+        <CandidateFiltersActions form={this.props.form} />
       </form>
     )
   }

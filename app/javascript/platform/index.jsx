@@ -52,14 +52,14 @@ class Platform extends React.Component {
   handleSelectChange(selectedOption) {
     const filter = selectedOption.filter;
     let newForm;
-    if(selectedOption.value) {
+    if(selectedOption.value && selectedOption.value.length) {
       newForm = update(this.state.form, { [filter]: {
         $set: selectedOption.value
       }});
     } else {
       newForm = update(this.state.form, { $unset: [`${filter}`]});
     }
-    
+
     const newState = Object.assign({}, this.state, {
       form: newForm
     });
