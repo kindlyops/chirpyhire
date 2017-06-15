@@ -20,7 +20,6 @@
 //= require ramda
 //= require cocoon
 //= require trianglify.min.js
-//= require jquery.scrollbar.min.js
 //= require_tree .
 
 
