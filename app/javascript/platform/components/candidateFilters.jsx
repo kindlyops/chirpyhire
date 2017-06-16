@@ -1,6 +1,7 @@
 import React from 'react'
 
 import CandidateFilter from './candidateFilter'
+import CandidateFiltersActions from './candidateFiltersActions'
 import LocationCandidateFilter from './locationCandidateFilter'
 import StarredCandidateFilter from './starredCandidateFilter'
 import configuration from '../configuration/segments'
@@ -41,8 +42,8 @@ class CandidateFilters extends React.Component {
 
   render() {
     return (
-      <form className='CandidateFilters'>
-        <div className='CandidateFilters--inner'>
+      <div className='CandidateFilters'>
+        <form className='CandidateFilters--inner'>
           <div className='CandidateFiltersHeader'>
             <h3 className='small-caps'>Candidate Attributes</h3>
           </div>
@@ -75,8 +76,12 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.transportation} />
-        </div>
-      </form>
+        </form>
+        <CandidateFiltersActions 
+          handleSegment={this.props.handleSegment} 
+          form={this.props.form} 
+        />
+      </div>
     )
   }
 }
