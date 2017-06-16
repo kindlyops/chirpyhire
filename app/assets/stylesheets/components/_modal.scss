@@ -1,4 +1,18 @@
-.modal {
+.modal--segments {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+
+  .modal-header {
+    border-bottom: 1px solid #eceeef;
+  }
+  .modal-footer {
+    border-top: 1px solid #eceeef;
+  }
+}
+
+.modal.modal--notes {
   @media only screen and (min-height: 700px) {
     top: 12%;
   }

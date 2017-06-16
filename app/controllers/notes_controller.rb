@@ -1,5 +1,4 @@
 class NotesController < ApplicationController
-  layout 'conversations', only: 'index'
   decorates_assigned :conversation
   decorates_assigned :notes
   decorates_assigned :note
@@ -25,7 +24,7 @@ class NotesController < ApplicationController
     @note.save
 
     Broadcaster::Note.broadcast(note)
-    head :ok
+    head :created
   end
 
   def destroy
@@ -33,7 +32,7 @@ class NotesController < ApplicationController
     @note.destroy
 
     Broadcaster::Note.broadcast(note)
-    head :ok
+    head :no_content
   end
 
   private

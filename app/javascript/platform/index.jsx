@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Candidates from './components/candidates'
+import CandidateSegments from './components/candidateSegments'
 import queryString from 'query-string'
 import update from 'immutability-helper'
 
@@ -12,6 +13,11 @@ class Platform extends React.Component {
       total_count: 0,
       current_page: 1,
       total_pages: 1,
+      segments: [{
+        id: 'all',
+        name: 'All',
+        form: {}
+      }],
       form: Object.assign({ page: 1 }, queryString.parse(this.props.location.search, { arrayFormat: 'bracket' }))
     }
 
@@ -19,6 +25,8 @@ class Platform extends React.Component {
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleStarChange = this.handleStarChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleSegmentChange = this.handleSegmentChange.bind(this);
+    this.handleSegment = this.handleSegment.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -28,9 +36,11 @@ class Platform extends React.Component {
         <div className='PlatformHeader'>
           <h1>Caregivers</h1>
         </div>
+        <CandidateSegments segments={this.state.segments} handleSegmentChange={this.handleSegmentChange} />
         <Candidates 
           {...this.state}
           inboxId={this.props.inboxId}
+          handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
           handleStarChange={this.handleStarChange}
@@ -41,9 +51,28 @@ class Platform extends React.Component {
     )
   }
 
+  handleSegmentChange(form) {
+    form.page = 1;
+    let newState = update(this.state, { form: { $set: form } });
+    this.setState(newState)
+  }
+
+  handleSegment(segment) {
+    const index = R.findIndex((s) => (s.id === segment.id), this.state.segments);
+    let newState;
+    if (index !== -1) {
+      newState = update(this.state, { segments: { $splice: [[index, 1, segment]] }});
+    } else {
+      newState = update(this.state, { segments: { $push: [segment] }});
+    }
+
+    this.setState(newState); 
+  }
+
   handleLocationChange(location) {
     let newForm = update(this.state.form, { $unset: ['zipcode', 'city', 'state', 'county'] });
     newForm = update(newForm, { $merge: location });
+    newForm.page = 1;
     const newState = update(this.state, { form: { $set: newForm } });
     this.setState(newState);
   }
@@ -58,7 +87,7 @@ class Platform extends React.Component {
     } else {
       newForm = update(this.state.form, { $unset: [`${filter}`]});
     }
-
+    newForm.page = 1;
     const newState = Object.assign({}, this.state, {
       form: newForm
     });
@@ -76,6 +105,7 @@ class Platform extends React.Component {
     } else {
       newForm = update(this.state.form, { $unset: [`${filter}`]});
     }
+    newForm.page = 1;
     const newState = Object.assign({}, this.state, {
       form: newForm
     });
@@ -101,6 +131,7 @@ class Platform extends React.Component {
 
     let search = `?${stringifyForm}`;
     let path = `${this.props.location.pathname}${search}`;
+
     this.props.history.push(path);
     this.fetchCandidates(search);
   }
@@ -121,7 +152,15 @@ class Platform extends React.Component {
     });
   }
 
+  fetchSegments() {
+    $.get('/segments').then((segments) => {
+      let newState = update(this.state, { segments: { $push: segments }});
+      this.setState(newState); 
+    });
+  }
+
   componentDidMount() {
+    this.fetchSegments();
     this.fetchCandidates(this.props.location.search);
   }
 }
