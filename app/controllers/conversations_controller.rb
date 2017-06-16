@@ -9,7 +9,7 @@ class ConversationsController < ApplicationController
     if @conversations.exists?
       redirect_to current_conversation_path
     else
-      render :index
+      render html: '', layout: true
     end
   end
 
