@@ -29,7 +29,8 @@ class Platform extends React.Component {
           <h1>Caregivers</h1>
         </div>
         <Candidates 
-          {...this.state} 
+          {...this.state}
+          inboxId={this.props.inboxId}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
           handleStarChange={this.handleStarChange}

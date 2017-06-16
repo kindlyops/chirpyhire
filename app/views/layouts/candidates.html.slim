@@ -10,6 +10,6 @@ html
       .app-container
         .app
           = render "components/sidebar"
-          #app-container.app-content-container
+          #app-container.app-content-container data-inbox-id==current_account.inbox.id
     = render "components/account_dropdown"
     = render "layouts/script" unless Rails.env.test?

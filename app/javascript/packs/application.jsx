@@ -20,11 +20,11 @@ import {
 import Inbox from 'inbox'
 import Platform from 'platform'
 
-const App = () => (
+const App = app => (
   <Router>
     <div>
       <Switch>
-        <Route path="/candidates" component={Platform} />
+        <Route path="/candidates" render={props => <Platform inboxId={app.inboxId} {...props} />} />
         <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
         <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
       </Switch>
@@ -34,8 +34,9 @@ const App = () => (
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
+  const data = R.merge({}, node.dataset);
 
-  ReactDOM.render(<App />, node)
+  ReactDOM.render(<App {...data}/>, node)
 })
 
 
