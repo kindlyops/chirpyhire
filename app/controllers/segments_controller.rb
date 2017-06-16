@@ -10,7 +10,7 @@ class SegmentsController < ApplicationController
   def create
     @segment = authorize new_segment
     @segment.save
-    
+
     respond_to do |format|
       format.json
     end
