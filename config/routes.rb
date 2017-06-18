@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     resources :conversations, only: %i[index show update]
   end
 
-  resources :conversations, only: %i[show] do
+  resources :conversations, only: [] do
     resources :messages, only: %i[index create], controller: 'conversations/messages'
   end
 
