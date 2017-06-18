@@ -25,7 +25,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      current_account: {}
+      current_account: { teams: [] }
     }
   }
 

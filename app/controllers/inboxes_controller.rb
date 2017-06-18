@@ -1,8 +1,8 @@
 class InboxesController < ApplicationController
-  decorates_assigned :inbox
+  decorates_assigned :inboxes
 
-  def show
-    @inbox = authorize(Inbox.find(params[:id]))
+  def index
+    @inboxes = policy_scope(Inbox)
 
     respond_to do |format|
       format.json

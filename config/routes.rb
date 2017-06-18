@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resource :star, only: :create
   end
 
-  resources :inboxes, only: [:show] do
+  resources :inboxes, only: %i[index] do
     resources :conversations, only: %i[index show update]
   end
 

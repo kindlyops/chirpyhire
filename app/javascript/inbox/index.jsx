@@ -5,6 +5,7 @@ import moment from 'moment'
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
+import Inboxes from './components/inboxes'
 
 class Inbox extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Inbox extends React.Component {
     this.state = { 
       subscription: {},
       conversations: [],
-      inbox: {},
+      inboxes: [],
       filter: 'Open'
     };
 
@@ -44,8 +45,7 @@ class Inbox extends React.Component {
     if (conversation) {
       return <Conversation
                 current_account={this.props.current_account}
-                conversation={conversation}
-                inbox={this.state.inbox} />
+                conversation={conversation} />
     } else {
       return this.emptyInbox();
     }
@@ -85,7 +85,9 @@ class Inbox extends React.Component {
   }
 
   render() {
-    return <div className="Inbox">
+    return <div className='Recruit'>
+            <Inboxes current_account={this.props.current_account} inboxes={this.state.inboxes} />
+            <div className="Inbox">
               <div className='Conversations'>
                 <ConversationsMenu 
                   filter={this.state.filter}
@@ -99,15 +101,16 @@ class Inbox extends React.Component {
                  />
               </div>
               {this.conversationComponent()}
-            </div>;
+            </div>
+          </div>
   }
 
   conversationsURL() {
     return `/inboxes/${this.inboxId()}/conversations.json`;
   }
 
-  inboxURL() {
-    return `/inboxes/${this.inboxId()}`;
+  inboxesURL() {
+    return `/inboxes`;
   }
 
   componentDidMount() {
@@ -124,8 +127,8 @@ class Inbox extends React.Component {
   }
 
   load() {
-    $.get(this.inboxURL()).then((inbox) => {
-      this.setState({ inbox: inbox });
+    $.get(this.inboxesURL()).then((inboxes) => {
+      this.setState({ inboxes: inboxes });
     });
     
     $.get(this.conversationsURL()).then((conversations) => {
