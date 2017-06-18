@@ -9,8 +9,7 @@ class ConversationPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(:contact)
-           .where(contacts: { team: account.teams })
+      scope.where(contact: organization.contacts)
     end
   end
 end

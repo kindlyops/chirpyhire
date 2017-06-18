@@ -30,6 +30,13 @@
 
       &:hover, &.active {
         text-decoration: none;
+      }
+
+      &:hover {
+        background-color: rgba(33, 102, 75, 0.5);
+      }
+
+      &.active {
         background-color: darken($brand-primary, 25%);
       }
 

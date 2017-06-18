@@ -39,6 +39,13 @@ class Inbox extends React.Component {
     return this.props.match.params.id;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.inboxId !== this.inboxId()) {
+      this.load(nextProps.match.params.inboxId);
+      this.reconnect(nextProps.match.params.inboxId);
+    }
+  }
+
   conversationComponent() {
     let conversation = this.conversation();
 
@@ -105,8 +112,8 @@ class Inbox extends React.Component {
           </div>
   }
 
-  conversationsURL() {
-    return `/inboxes/${this.inboxId()}/conversations.json`;
+  conversationsURL(inboxId) {
+    return `/inboxes/${inboxId}/conversations.json`;
   }
 
   inboxesURL() {
@@ -114,8 +121,8 @@ class Inbox extends React.Component {
   }
 
   componentDidMount() {
-    this.load();
-    this.connect();
+    this.load(this.inboxId());
+    this.connect(this.inboxId());
   }
 
   componentWillUnmount() {
@@ -126,19 +133,24 @@ class Inbox extends React.Component {
     App.cable.subscriptions.remove(this.state.subscription);
   }
 
-  load() {
+  load(inboxId) {
     $.get(this.inboxesURL()).then((inboxes) => {
       this.setState({ inboxes: inboxes });
     });
     
-    $.get(this.conversationsURL()).then((conversations) => {
+    $.get(this.conversationsURL(inboxId)).then((conversations) => {
       this.setState({ conversations: conversations });
       this.setState({ filter: this.currentFilter() });
     });
   }
 
-  connect() {
-    let channel = { channel: 'ConversationsChannel', inbox_id: this.inboxId() };
+  reconnect(inboxId) {
+    this.disconnect();
+    this.connect(inboxId);
+  }
+
+  connect(inboxId) {
+    let channel = { channel: 'ConversationsChannel', inbox_id: inboxId };
     let subscription = App.cable.subscriptions.create(
       channel, this._channelConfig()
     );
