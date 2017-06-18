@@ -12,8 +12,8 @@ RSpec.describe ConversationPolicy do
       let!(:conversation) { create(:conversation, inbox: other_team.inbox, contact: contact) }
 
       context 'account is on a different team than the conversation contact' do
-        it 'does not include the conversation' do
-          expect(subject.resolve).not_to include(conversation)
+        it 'does include the conversation' do
+          expect(subject.resolve).to include(conversation)
         end
       end
 
