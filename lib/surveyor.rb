@@ -48,8 +48,8 @@ class Surveyor
   end
 
   def notify_all_teams
-    person.teams.find_each do |team|
-      contact = team.contacts.find_by(person: person)
+    person.contacts.find_each do |contact|
+      team = contact.team
       conversation = contact.open_conversation
       notify_contact_ready_for_review(team.accounts, conversation)
     end
