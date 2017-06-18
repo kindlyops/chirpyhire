@@ -11,7 +11,7 @@ FactoryGirl.define do
 
     trait :inbox do
       after(:create) do |account|
-        create(:inbox, account: account)
+        create(:inbox, inboxable: account)
       end
     end
 

@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :inbox do
-    account
+    association :inboxable, factory: :account
   end
 end

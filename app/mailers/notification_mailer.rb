@@ -1,20 +1,22 @@
 class NotificationMailer < ApplicationMailer
   def contact_ready_for_review(inbox_conversation)
     @inbox_conversation = inbox_conversation
-    @account = inbox_conversation.inbox.account
+    @inboxable = inbox_conversation.inbox.inboxable
+    return unless @inboxable.is_a?(Account)
 
-    track user: @account
+    track user: @inboxable
     subject = 'Your new caregiver wants to chat 🌟'
-    mail(to: @account.email, subject: subject)
+    mail(to: @inboxable.email, subject: subject)
   end
 
   def contact_waiting(inbox_conversation)
     @inbox_conversation = inbox_conversation
-    @account = inbox_conversation.inbox.account
+    @inboxable = inbox_conversation.inbox.inboxable
+    return unless @inboxable.is_a?(Account)
 
-    track user: @account
+    track user: @inboxable
     subject = 'Hurry! Your caregiver is slipping away... ⏰'
-    mail(to: @account.email, subject: subject)
+    mail(to: @inboxable.email, subject: subject)
   end
 
   def team_created(team, owner)

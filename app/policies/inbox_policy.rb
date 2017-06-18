@@ -1,11 +1,11 @@
 class InboxPolicy < ApplicationPolicy
   def show?
-    record.account == account
+    record.inboxable == account
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(account: account)
+      scope.where(inboxable: account)
     end
   end
 end

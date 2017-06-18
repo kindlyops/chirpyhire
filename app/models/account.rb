@@ -11,7 +11,7 @@ class Account < ApplicationRecord
   has_many :teams, through: :memberships
   has_many :contacts, through: :teams
 
-  has_one :inbox
+  has_one :inbox, as: :inboxable
   has_many :inbox_conversations, through: :inbox
   has_many :conversations, through: :inbox
 
