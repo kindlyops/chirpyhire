@@ -9,7 +9,10 @@ class ConversationProfile extends React.Component {
       <div className="profile">
         <ProfileHeader contact={this.props.contact} />
         <ProfileDetails contact={this.props.contact} />
-        <ProfileNotes inbox={this.props.inbox} contact={this.props.contact} />
+        <ProfileNotes
+          current_account={this.props.current_account}
+          inbox={this.props.inbox}
+          contact={this.props.contact} />
     </div>
     )
   }

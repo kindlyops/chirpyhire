@@ -1,0 +1,30 @@
+@import "recruit/inbox";
+
+.Recruit {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  min-width: 100%;
+  width: 100%;
+
+  .Inboxes {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 0 0 45px;
+    background-color: #2B8360;
+
+    .InboxLink {
+      color: $white;
+
+      .fa {
+        color: $white;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+}

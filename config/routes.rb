@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     resource :star, only: :create
   end
 
+  resources :team_inboxes, only: [:index]
+
   resources :inboxes, only: [:show] do
     resources :conversations, only: %i[index show update]
     resources :inbox_conversations, only: :index
@@ -43,6 +45,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'teams/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'teams/messages#create'
 
+  resource :account, only: :show, controller: 'account'
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
 
   resources :accounts, only: %i[show update] do

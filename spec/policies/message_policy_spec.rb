@@ -44,8 +44,8 @@ RSpec.describe MessagePolicy do
       end
 
       context 'account is on a different team than the message contact' do
-        it 'does include the message' do
-          expect(subject.resolve).to include(message)
+        it 'does not include the message' do
+          expect(subject.resolve).not_to include(message)
         end
       end
 

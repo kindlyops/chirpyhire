@@ -209,6 +209,7 @@ class Seeder
   def setup_account
     setup_organization
     team.accounts << account
+    team.create_inbox
     account.create_inbox
     team.update(recruiter: account)
   end

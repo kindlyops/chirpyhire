@@ -4,6 +4,7 @@ import moment from 'moment'
 
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
+import Inboxes from './components/inboxes'
 import Conversation from 'conversation'
 
 class Inbox extends React.Component {
@@ -14,6 +15,7 @@ class Inbox extends React.Component {
       subscription: {},
       inbox_conversations: [],
       inbox: {},
+      team_inboxes: [],
       filter: 'Open'
     };
 
@@ -43,6 +45,7 @@ class Inbox extends React.Component {
 
     if (inbox_conversation) {
       return <Conversation 
+                current_account={this.props.current_account}
                 inbox_conversation={inbox_conversation}
                 inbox={this.state.inbox} />
     } else {
@@ -84,21 +87,24 @@ class Inbox extends React.Component {
   }
 
   render() {
-    return <div className="Inbox">
-              <div className='Conversations'>
-                <ConversationsMenu 
-                  filter={this.state.filter}
-                  inbox_conversations={this.state.inbox_conversations}
-                  handleFilterChange={this.handleFilterChange}
-                />        
-                <ConversationsList
-                  inboxId={this.inboxId()}
-                  filter={this.state.filter}
-                  inbox_conversations={this.inboxConversationsByRecency()}
-                 />
+    return <div className="Recruit">
+              <Inboxes inbox={this.state.inbox} team_inboxes={this.state.team_inboxes} />
+              <div className="Inbox">
+                <div className='Conversations'>
+                  <ConversationsMenu
+                    filter={this.state.filter}
+                    inbox_conversations={this.state.inbox_conversations}
+                    handleFilterChange={this.handleFilterChange}
+                  />
+                  <ConversationsList
+                    inboxId={this.inboxId()}
+                    filter={this.state.filter}
+                    inbox_conversations={this.inboxConversationsByRecency()}
+                   />
+                </div>
+                {this.conversationComponent()}
               </div>
-              {this.conversationComponent()}
-            </div>;
+          </div>;
   }
 
   inboxConversationsURL() {
@@ -107,6 +113,10 @@ class Inbox extends React.Component {
 
   inboxURL() {
     return `/inboxes/${this.inboxId()}`;
+  }
+
+  teamInboxesURL() {
+    return `/team_inboxes`;
   }
 
   componentDidMount() {
@@ -125,6 +135,10 @@ class Inbox extends React.Component {
   load() {
     $.get(this.inboxURL()).then((inbox) => {
       this.setState({ inbox: inbox });
+    });
+
+    $.get(this.teamInboxesURL()).then((team_inboxes) => {
+      this.setState({ team_inboxes: team_inboxes });
     });
     
     $.get(this.inboxConversationsURL()).then((inbox_conversations) => {

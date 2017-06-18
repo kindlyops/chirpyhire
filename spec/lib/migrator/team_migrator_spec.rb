@@ -92,6 +92,9 @@ RSpec.describe Migrator::TeamMigrator do
 
       context 'with conversations' do
         before do
+          team.accounts << from_account_a
+          team.accounts << from_account_b
+          team.accounts << from_account_c
           IceBreaker.call(contact)
         end
 

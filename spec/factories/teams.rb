@@ -3,6 +3,14 @@ FactoryGirl.define do
     organization
     name { Faker::Company.name }
 
+    transient do
+      with_inbox true
+    end
+
+    after(:create) do |team, evaluator|
+      team.create_inbox if evaluator.with_inbox
+    end
+
     before(:create) do |team|
       team.location_attributes = attributes_for(:location, postal_code: '30342')
     end

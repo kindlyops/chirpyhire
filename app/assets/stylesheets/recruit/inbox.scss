@@ -1,0 +1,64 @@
+@import "recruit/inbox/base";
+
+.Recruit {
+  .Inbox {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+
+    .empty-message {
+      height: 100vh;
+      width: 100%;
+    }
+
+    .Conversation {
+      display: flex;
+      overflow: hidden;
+      height: 100vh;
+      flex: 1;
+    }
+
+    .ConversationChat {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      min-width: 1px;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .msgs_holder {
+      padding: 0;
+      margin: 0;
+      clear: both;
+    }
+
+    .close {
+      span {
+        font-size: 1.5rem;
+        position: absolute;
+        top: 15px;
+        right: 18px;
+      }
+    }
+
+    .presence {
+      width: 9px;
+      height: 9px;
+      margin: 0 .15rem;
+      display: inline-block;
+      vertical-align: baseline;
+      background: 0 0;
+      position: relative;
+      color: #555459;
+      font-size: 0.75rem;
+      opacity: 0.98;
+
+      &.active {
+        color: #93cc93;
+      }
+    }
+  }
+}
+

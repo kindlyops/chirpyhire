@@ -12,16 +12,25 @@ class TeamRegistrar
   delegate :organization, to: :team
 
   def call
-    team.accounts << account
-    team.promote(account)
-    team.update(recruiter: account)
-    provision_phone_number
-    create_recruiting_ad
+    setup_team
+    setup_account_on_team
 
     NewTeamNotificationJob.perform_later(team)
   end
 
   private
+
+  def setup_team
+    team.create_inbox
+    provision_phone_number
+    create_recruiting_ad
+  end
+
+  def setup_account_on_team
+    team.accounts << account
+    team.promote(account)
+    team.update(recruiter: account)
+  end
 
   def create_recruiting_ad
     team.create_recruiting_ad(
