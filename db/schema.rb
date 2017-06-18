@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20170621144028) do
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "inbox_id"
+    t.bigint "inbox_id", null: false
     t.integer "unread_count", default: 0, null: false
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["state", "contact_id"], name: "index_conversations_on_state_and_contact_id", unique: true, where: "(state = 0)"
