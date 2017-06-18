@@ -11,8 +11,8 @@ RSpec.describe ContactPolicy do
       let!(:contact) { create(:contact, team: other_team) }
 
       context 'account is on a different team than the contact' do
-        it 'does not include the contact' do
-          expect(subject.resolve).not_to include(contact)
+        it 'does include the contact' do
+          expect(subject.resolve).to include(contact)
         end
       end
 
