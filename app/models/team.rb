@@ -11,6 +11,7 @@ class Team < ApplicationRecord
   has_many :contacts
   has_many :inbox_conversations, through: :accounts
 
+  has_one :inbox, as: :inboxable
   has_one :location
   validates_associated :location
   validates :location, presence: true
