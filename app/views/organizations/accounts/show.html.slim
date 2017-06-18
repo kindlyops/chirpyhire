@@ -53,11 +53,6 @@
 
           li.list-group-item.stats
             span.stat
-              i.fa.fa-heart-o.mr-2
-              = pluralize(@account.contacts.count, 'caregiver')
-              '
-              ' viewable
-            span.stat
               i.fa.fa-users.mr-2
               = pluralize(@account.teams.count, 'team')
 
