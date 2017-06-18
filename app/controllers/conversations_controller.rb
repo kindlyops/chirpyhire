@@ -4,7 +4,11 @@ class ConversationsController < ApplicationController
   decorates_assigned :conversations
 
   def index
-    @conversations = policy_scope(inbox.recent_conversations)
+    @conversations = policy_scope(
+      inbox.recent_conversations.includes(
+        :recent_message, contact: %i[open_conversations person]
+      )
+    )
 
     respond_to do |format|
       format.html { render html: '', layout: true }
