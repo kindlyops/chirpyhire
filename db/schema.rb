@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618011245) do
+ActiveRecord::Schema.define(version: 20170618013444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,14 +141,12 @@ ActiveRecord::Schema.define(version: 20170618011245) do
   end
 
   create_table "inbox_conversations", id: :serial, force: :cascade do |t|
-    t.integer "contact_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
     t.datetime "last_viewed_at"
     t.integer "inbox_id"
     t.bigint "conversation_id", null: false
-    t.index ["contact_id"], name: "index_inbox_conversations_on_contact_id"
     t.index ["conversation_id", "inbox_id"], name: "index_inbox_conversations_on_conversation_id_and_inbox_id", unique: true
     t.index ["conversation_id"], name: "index_inbox_conversations_on_conversation_id"
     t.index ["inbox_id"], name: "index_inbox_conversations_on_inbox_id"
@@ -336,7 +334,6 @@ ActiveRecord::Schema.define(version: 20170618011245) do
   add_foreign_key "ideal_candidate_suggestions", "organizations"
   add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
   add_foreign_key "ideal_candidates", "organizations"
-  add_foreign_key "inbox_conversations", "contacts"
   add_foreign_key "inbox_conversations", "conversations"
   add_foreign_key "inbox_conversations", "inboxes"
   add_foreign_key "inboxes", "accounts"

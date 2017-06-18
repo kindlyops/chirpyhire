@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TeamRegistrar do
   describe 'call' do
-    let(:organization) { create(:organization, :team) }
+    let(:organization) { create(:organization, :team_without_inbox) }
     let(:account) { create(:account, organization: organization) }
     let(:team) { organization.teams.first }
     subject { TeamRegistrar.new(team, account) }

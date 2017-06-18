@@ -8,6 +8,12 @@ FactoryGirl.define do
       end
     end
 
+    trait :team_without_inbox do
+      after(:create) do |organization|
+        create(:team, with_inbox: false, organization: organization)
+      end
+    end
+
     trait :team_with_phone_number_and_recruiting_ad do
       after(:create) do |organization|
         create(:team, :phone_number, :recruiting_ad, organization: organization)

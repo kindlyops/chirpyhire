@@ -14,6 +14,7 @@ class Migrator::TeamMigrator
       update_old_team_phone_number
       created_recruiting_ad
       create_memberships
+      created_team.create_inbox
       contacts.find_each do |contact|
         Migrator::ContactMigrator.new(self, contact).migrate
       end
