@@ -8,7 +8,7 @@ class Broadcaster::Conversation
   end
 
   def broadcast
-    ConversationsChannel.broadcast_to(conversation, conversation_hash)
+    ConversationsChannel.broadcast_to(inbox, conversation_hash)
   end
 
   private
@@ -28,4 +28,6 @@ class Broadcaster::Conversation
   def partial
     'conversations/conversation'
   end
+
+  delegate :inbox, to: :conversation
 end

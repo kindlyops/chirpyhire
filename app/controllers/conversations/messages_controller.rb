@@ -4,6 +4,7 @@ class Conversations::MessagesController < ApplicationController
   def index
     @messages = policy_scope(conversation.messages.by_oldest.includes(:sender))
     read_messages unless impersonating?
+    Broadcaster::Conversation.broadcast(conversation)
 
     respond_to do |format|
       format.json
