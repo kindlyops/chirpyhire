@@ -7,11 +7,11 @@ class ConversationHeader extends React.Component {
   }
 
   inboxId() {
-    return this.props.inbox_conversation.inbox_id;
+    return this.props.conversation.inbox_id;
   }
 
   conversationId() {
-    return this.props.inbox_conversation.conversation_id;
+    return this.props.conversation.id;
   }
 
   existingOpenConversationId() {
@@ -28,11 +28,11 @@ class ConversationHeader extends React.Component {
   }
 
   actionButton() {
-    if(this.props.inbox_conversation.state === 'Open') {
+    if(this.props.conversation.state === 'Open') {
       return this.closeButton();
     } else if (this.otherExistingConversation()) {
       return this.messageButton();
-    } else if (this.props.inbox_conversation.reopenable) {
+    } else if (this.props.conversation.reopenable) {
       return this.reopenButton();
     } else {
       return this.disabledClosedButton();

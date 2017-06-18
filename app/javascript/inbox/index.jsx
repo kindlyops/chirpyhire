@@ -12,7 +12,7 @@ class Inbox extends React.Component {
 
     this.state = { 
       subscription: {},
-      inbox_conversations: [],
+      conversations: [],
       inbox: {},
       filter: 'Open'
     };
@@ -21,10 +21,10 @@ class Inbox extends React.Component {
   }
 
   currentFilter() {
-    let inbox_conversation = this.conversation();
+    let conversation = this.conversation();
 
-    if(inbox_conversation) {
-      return inbox_conversation.state;
+    if(conversation) {
+      return conversation.state;
     } else {
       return 'Open';
     }
@@ -39,11 +39,12 @@ class Inbox extends React.Component {
   }
 
   conversationComponent() {
-    let inbox_conversation = this.conversation();
+    let conversation = this.conversation();
 
-    if (inbox_conversation) {
-      return <Conversation 
-                inbox_conversation={inbox_conversation}
+    if (conversation) {
+      return <Conversation
+                current_account={this.props.current_account}
+                conversation={conversation}
                 inbox={this.state.inbox} />
     } else {
       return this.emptyInbox();
@@ -51,13 +52,13 @@ class Inbox extends React.Component {
   }
 
   conversation() {
-    return R.find((inbox_conversation) => (
-      parseInt(this.id()) === inbox_conversation.conversation_id
-    ), this.state.inbox_conversations);
+    return R.find((conversation) => (
+      parseInt(this.id()) === conversation.id
+    ), this.state.conversations);
   }
 
-  inboxConversationsByRecency() {
-    return this.state.inbox_conversations.sort((first, second) => {
+  conversationsByRecency() {
+    return this.state.conversations.sort((first, second) => {
       let firstMoment = moment(first.last_message_created_at);
       let secondMoment = moment(second.last_message_created_at);
       let difference = secondMoment - firstMoment;
@@ -88,21 +89,21 @@ class Inbox extends React.Component {
               <div className='Conversations'>
                 <ConversationsMenu 
                   filter={this.state.filter}
-                  inbox_conversations={this.state.inbox_conversations}
+                  conversations={this.state.conversations}
                   handleFilterChange={this.handleFilterChange}
                 />        
                 <ConversationsList
                   inboxId={this.inboxId()}
                   filter={this.state.filter}
-                  inbox_conversations={this.inboxConversationsByRecency()}
+                  conversations={this.conversationsByRecency()}
                  />
               </div>
               {this.conversationComponent()}
             </div>;
   }
 
-  inboxConversationsURL() {
-    return `/inboxes/${this.inboxId()}/inbox_conversations`;
+  conversationsURL() {
+    return `/inboxes/${this.inboxId()}/conversations.json`;
   }
 
   inboxURL() {
@@ -127,14 +128,14 @@ class Inbox extends React.Component {
       this.setState({ inbox: inbox });
     });
     
-    $.get(this.inboxConversationsURL()).then((inbox_conversations) => {
-      this.setState({ inbox_conversations: inbox_conversations });
+    $.get(this.conversationsURL()).then((conversations) => {
+      this.setState({ conversations: conversations });
       this.setState({ filter: this.currentFilter() });
     });
   }
 
   connect() {
-    let channel = { channel: 'InboxConversationsChannel' };
+    let channel = { channel: 'ConversationsChannel', inbox_id: this.inboxId() };
     let subscription = App.cable.subscriptions.create(
       channel, this._channelConfig()
     );
@@ -148,23 +149,23 @@ class Inbox extends React.Component {
     }
   }
 
-  _received(receivedInboxConversation) {
-    let index = R.findIndex((inbox_conversation) => (
-      receivedInboxConversation.id === inbox_conversation.id
-    ), this.state.inbox_conversations)
+  _received(receivedConversation) {
+    let index = R.findIndex((conversation) => (
+      receivedConversation.id === conversation.id
+    ), this.state.conversations)
 
     if(index !== -1) {
-      let new_inbox_conversations = update(
-        this.state.inbox_conversations,
-        { $splice: [[index, 1, receivedInboxConversation]] }
+      let new_conversations = update(
+        this.state.conversations,
+        { $splice: [[index, 1, receivedConversation]] }
       )
 
       this.setState({
-        inbox_conversations: new_inbox_conversations
+        conversations: new_conversations
       })
     } else {
       this.setState({
-        inbox_conversations: this.state.inbox_conversations.concat([receivedInboxConversation])
+        conversations: this.state.conversations.concat([receivedConversation])
       })
     }
   }

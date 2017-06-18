@@ -39,7 +39,7 @@
       h4 Open Conversations
       .cta
         - if current_inbox.present?
-          = link_to "All Conversations", conversations_path(inbox: current_inbox), class: 'btn btn-primary'
+          = link_to "All Conversations", inbox_conversations_path(current_inbox), class: 'btn btn-primary'
     .card-block.d-flex.justify-content-center.align-items-center
       p.coming-soon.mt-5.mb-5 Coming Soon!
   .card.mt-4

@@ -20,24 +20,47 @@ import {
 import Inbox from 'inbox'
 import Platform from 'platform'
 
-const App = app => (
-  <Router>
-    <div>
-      <Switch>
-        <Route path="/candidates" render={props => <Platform inboxId={app.inboxId} {...props} />} />
-        <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
-        <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
-      </Switch>
-    </div>
-  </Router>
-)
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      current_account: {}
+    }
+  }
+
+  load() {
+    $.get(this.currentAccountUrl()).then(current_account => {
+      this.setState({current_account: current_account})
+    })
+  }
+
+  currentAccountUrl() {
+    return `/current_account`;
+  }
+
+  componentDidMount() {
+    this.load();
+  }
+
+  render() {
+    return (
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/candidates" render={props => <Platform current_account={this.state.current_account} {...props} />} />
+            <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
+            <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
+          </Switch>
+        </div>
+      </Router>
+    )
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
-  const data = R.merge({}, node.dataset);
-
-  ReactDOM.render(<App {...data}/>, node)
+  ReactDOM.render(<App/>, node)
 })
-
 
 

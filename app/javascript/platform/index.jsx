@@ -39,7 +39,6 @@ class Platform extends React.Component {
         <CandidateSegments segments={this.state.segments} handleSegmentChange={this.handleSegmentChange} />
         <Candidates 
           {...this.state}
-          inboxId={this.props.inboxId}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}

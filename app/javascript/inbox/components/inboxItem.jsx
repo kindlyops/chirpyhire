@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 class InboxItem extends React.Component {
   href() {
-    return `/inboxes/${this.props.inboxId}/conversations/${this.props.conversation_id}`;
+    return `/inboxes/${this.props.inboxId}/conversations/${this.props.id}`;
   }
 
   inactive() {

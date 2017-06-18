@@ -15,7 +15,7 @@ class CandidatesTable extends React.Component {
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
     return (
-      <Link to={`/inboxes/${this.props.inboxId}/conversations/${cellData}`} className='btn btn-outline-primary'>
+      <Link to={`/inboxes/${rowData.inbox_id}/conversations/${cellData}`} className='btn btn-outline-primary'>
         <i className='fa fa-comment'></i>
       </Link>
     )

@@ -6,7 +6,10 @@ class ConversationsController < ApplicationController
   def index
     @conversations = policy_scope(inbox.recent_conversations)
 
-    render html: '', layout: true
+    respond_to do |format|
+      format.html { render html: '', layout: true }
+      format.json
+    end
   end
 
   def show

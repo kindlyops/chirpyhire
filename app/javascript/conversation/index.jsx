@@ -29,13 +29,14 @@ class Conversation extends React.Component {
   render() {
     return (<div className='Conversation'>
       <ConversationChat
-        inbox_conversation={this.props.inbox_conversation}
+        conversation={this.props.conversation}
         contact={this.state.contact}
         messages={this.state.messages}
       />
       <ConversationProfile 
         contact={this.state.contact}
         inbox={this.props.inbox}
+        current_account={this.props.current_account}
       />
     </div>);
   }
@@ -49,35 +50,35 @@ class Conversation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.inbox_conversation.id !== this.props.inbox_conversation.id) {
-      this.load(nextProps.inbox_conversation);
-      this.reconnect(nextProps.inbox_conversation);
+    if(nextProps.conversation.id !== this.props.conversation.id) {
+      this.load(nextProps.conversation);
+      this.reconnect(nextProps.conversation);
     }
   }
 
   componentDidMount() {
-    this.load(this.props.inbox_conversation);
-    this.connect(this.props.inbox_conversation);
+    this.load(this.props.conversation);
+    this.connect(this.props.conversation);
   }
 
-  load(inbox_conversation) {
-    $.get(this.contactUrl(inbox_conversation.contact_id)).then((contact) => {
+  load(conversation) {
+    $.get(this.contactUrl(conversation.contact_id)).then((contact) => {
       this.setState({ contact: contact });
     });    
 
-    $.get(this.messagesUrl(inbox_conversation.conversation_id)).then((messages) => {
+    $.get(this.messagesUrl(conversation.id)).then((messages) => {
       this.setState({ messages: messages });
     });
   }
 
-  connect(inbox_conversation) {
-    this._connectMessages(inbox_conversation);
-    this._connectContact(inbox_conversation);
+  connect(conversation) {
+    this._connectMessages(conversation);
+    this._connectContact(conversation);
   }
 
-  reconnect(inbox_conversation) {
+  reconnect(conversation) {
     this.disconnect();
-    this.connect(inbox_conversation);
+    this.connect(conversation);
   }
 
   componentWillUnmount() {
@@ -89,8 +90,8 @@ class Conversation extends React.Component {
     App.cable.subscriptions.remove(this.state.contactSubscription);
   }
 
-  _connectMessages(inbox_conversation) {
-    let channel = { channel: 'MessagesChannel', conversation_id: inbox_conversation.conversation_id };
+  _connectMessages(conversation) {
+    let channel = { channel: 'MessagesChannel', conversation_id: conversation.id };
     let subscription = App.cable.subscriptions.create(
       channel, this._messageChannelConfig()
     );
@@ -98,8 +99,8 @@ class Conversation extends React.Component {
     this.setState({ messageSubscription: subscription });
   }
 
-  _connectContact(inbox_conversation) {
-    let channel = { channel: 'ContactsChannel', id: inbox_conversation.contact_id };
+  _connectContact(conversation) {
+    let channel = { channel: 'ContactsChannel', id: conversation.contact_id };
     let subscription = App.cable.subscriptions.create(
       channel, this._contactChannelConfig()
     );

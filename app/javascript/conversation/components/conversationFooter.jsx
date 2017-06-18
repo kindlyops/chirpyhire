@@ -2,7 +2,7 @@ import React from 'react'
 
 class ConversationFooter extends React.Component {
   conversationId() {
-    return this.props.inbox_conversation.conversation_id;
+    return this.props.conversation.id;
   }
 
   messagesUrl() {
@@ -47,7 +47,7 @@ class ConversationFooter extends React.Component {
   }
 
   render() {
-    if(this.props.inbox_conversation.state !== 'Closed') {
+    if(this.props.conversation.state !== 'Closed') {
       return this.activeFooter();
     } else {
       return this.disabledFooter();

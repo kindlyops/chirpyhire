@@ -13,7 +13,7 @@
     = nav_link_to candidates_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, { url_segment: 1, ignore_params: true } do
       i.fa.fa-users.fa-fw
     - if current_inbox.present?
-      = nav_link_to conversations_path(inbox: current_inbox), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Conversations' }, url_segment: 1 do
+      = nav_link_to inbox_conversations_path(current_inbox), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Conversations' }, url_segment: 1 do
         i.fa.fa-comment-o.fa-fw
         - if current_account.unread_count.positive?
           i.fa.fa-circle.fa-fw.unread-count

@@ -22,10 +22,10 @@ Rails.application.routes.draw do
   end
 
   resources :inboxes, only: [:show] do
-    resources :conversations, only: %i[show]
+    resources :conversations, only: %i[index show update]
   end
 
-  resources :conversations, only: %i[index show update] do
+  resources :conversations, only: %i[show] do
     resources :messages, only: %i[index create], controller: 'conversations/messages'
   end
 
@@ -41,6 +41,7 @@ Rails.application.routes.draw do
   post 'twilio/text', to: 'teams/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'teams/messages#create'
 
+  resource :current_account, only: :show, controller: 'current_account'
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
 
   resources :accounts, only: %i[show update] do

@@ -1,11 +1,11 @@
 class InboxPolicy < ApplicationPolicy
   def show?
-    record.account == account
+    account.teams.where(id: record.team.id).exists?
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(account: account)
+      scope.where(team: account.teams)
     end
   end
 end
