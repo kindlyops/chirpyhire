@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe IceBreaker do
-  let(:team) { create(:team, :inbox) }
+  let(:team) { create(:team) }
   let(:contact) { create(:contact, team: team) }
   let(:organization) { contact.organization }
 
@@ -10,21 +10,20 @@ RSpec.describe IceBreaker do
   describe '#call' do
     context 'with multiple accounts on the organization' do
       let!(:accounts) { create_list(:account, 3, :inbox, organization: contact.organization) }
-      let(:account_inboxes) { Inbox.where(inboxable_id: accounts.pluck(:id), inboxable_type: 'Account') }
       let(:count) { organization.accounts.count }
 
       context 'and none are on the contact team' do
         it 'does not create inbox conversations for the accounts' do
           expect {
             subject.call
-          }.not_to change { InboxConversation.where(inbox: account_inboxes).count }
+          }.not_to change { InboxConversation.count }
         end
 
-        it 'creates an inbox conversation only for the contact team inbox' do
+        it 'creates a team inbox conversation for the contact team inbox' do
           expect {
             subject.call
-          }.to change { InboxConversation.count }.by(1)
-          expect(InboxConversation.last.inbox).to eq(contact.team.inbox)
+          }.to change { TeamInboxConversation.count }.by(1)
+          expect(TeamInboxConversation.last.team_inbox).to eq(contact.team.inbox)
         end
       end
 
@@ -36,7 +35,7 @@ RSpec.describe IceBreaker do
         it 'creates an inbox conversation for each account on the organization' do
           expect {
             subject.call
-          }.to change { InboxConversation.where(inbox: account_inboxes).count }.by(count)
+          }.to change { InboxConversation.count }.by(count)
         end
 
         context 'with existing conversation' do
@@ -51,13 +50,13 @@ RSpec.describe IceBreaker do
               it 'creates an inbox conversations for accounts without a conversation tied to the open conversation' do
                 expect {
                   subject.call
-                }.to change { InboxConversation.where(inbox: account_inboxes).count }.by(count - 1)
+                }.to change { InboxConversation.count }.by(count - 1)
                 expect(InboxConversation.last.conversation).to eq(open_conversation)
               end
 
               it 'creates an inbox conversation for the contact team' do
                 subject.call
-                expect(contact.existing_open_conversation.inboxes).to include(contact.team.inbox)
+                expect(contact.existing_open_conversation.team_inboxes).to include(contact.team.inbox)
               end
             end
           end
@@ -67,12 +66,11 @@ RSpec.describe IceBreaker do
 
     context 'with accounts on other organizations' do
       let!(:accounts) { create_list(:account, 3) }
-      let(:account_inboxes) { Inbox.where(inboxable_id: accounts.pluck(:id), inboxable_type: 'Account') }
-      
+
       it 'does not create inbox conversations' do
         expect {
           subject.call
-        }.not_to change { InboxConversation.where(inbox: account_inboxes).count }
+        }.not_to change { InboxConversation.count }
       end
     end
   end

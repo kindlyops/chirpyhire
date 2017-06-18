@@ -2,6 +2,10 @@ class Conversation < ApplicationRecord
   belongs_to :contact
   has_many :inbox_conversations
   has_many :inboxes, through: :inbox_conversations
+
+  has_many :team_inbox_conversations
+  has_many :team_inboxes, through: :team_inbox_conversations
+
   has_many :messages
   has_one :recent_message,
           -> { by_recency.limit(1) }, class_name: 'Message'

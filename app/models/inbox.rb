@@ -1,6 +1,5 @@
 class Inbox < ApplicationRecord
-  belongs_to :inboxable, polymorphic: true
-
+  belongs_to :account
   has_many :inbox_conversations
   has_many :conversations, through: :inbox_conversations
 

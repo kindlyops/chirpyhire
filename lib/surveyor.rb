@@ -49,11 +49,7 @@ class Surveyor
 
   def person_inbox_conversations
     account_ids = Membership.where(team: person.teams).pluck(:account_id)
-    inbox_ids = Inbox.where(
-      inboxable_type: 'Account',
-      inboxable_id: account_ids
-    ).pluck(:id)
-
+    inbox_ids = Inbox.where(account_id: account_ids).pluck(:id)
     contact_ids = person.contacts.subscribed.pluck(:id)
     conversation_ids = Conversation.where(contact_id: contact_ids).pluck(:id)
 

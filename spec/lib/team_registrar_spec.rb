@@ -17,7 +17,7 @@ RSpec.describe TeamRegistrar do
     it 'creates the inbox' do
       expect {
         subject.call
-      }.to change { Inbox.count }.by(1)
+      }.to change { TeamInbox.count }.by(1)
     end
 
     it 'provisions a phone number for the team' do

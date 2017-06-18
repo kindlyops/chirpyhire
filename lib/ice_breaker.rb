@@ -11,18 +11,28 @@ class IceBreaker
 
   def call
     accounts.find_each(&method(:find_or_create_inbox_conversation))
-    find_or_create_inbox_conversation(team)
+    find_or_create_team_inbox_conversation(team)
+
     notifiable_inbox_conversations.find_each(&method(:broadcast))
     open_conversation
   end
 
-  def find_or_create_inbox_conversation(inboxable)
-    inbox_conversations(inboxable)
+  def find_or_create_inbox_conversation(account)
+    inbox_conversations(account)
       .find_or_create_by(conversation: open_conversation)
   end
 
-  def inbox_conversations(inboxable)
-    inboxable.inbox.inbox_conversations
+  def inbox_conversations(account)
+    account.inbox.inbox_conversations
+  end
+
+  def find_or_create_team_inbox_conversation(team)
+    team_inbox_conversations(team)
+      .find_or_create_by(conversation: open_conversation)
+  end
+
+  def team_inbox_conversations(team)
+    team.inbox.inbox_conversations
   end
 
   def notifiable_inbox_conversations

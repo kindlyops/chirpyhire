@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618013444) do
+ActiveRecord::Schema.define(version: 20170618021204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,14 +153,11 @@ ActiveRecord::Schema.define(version: 20170618013444) do
   end
 
   create_table "inboxes", force: :cascade do |t|
-    t.bigint "account_id"
+    t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
-    t.string "inboxable_type"
-    t.bigint "inboxable_id"
     t.index ["account_id"], name: "index_inboxes_on_account_id"
-    t.index ["inboxable_type", "inboxable_id"], name: "index_inboxes_on_inboxable_type_and_inboxable_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -292,6 +289,22 @@ ActiveRecord::Schema.define(version: 20170618013444) do
     t.index ["account_id"], name: "index_segments_on_account_id"
   end
 
+  create_table "team_inbox_conversations", force: :cascade do |t|
+    t.bigint "team_inbox_id", null: false
+    t.bigint "conversation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_team_inbox_conversations_on_conversation_id"
+    t.index ["team_inbox_id"], name: "index_team_inbox_conversations_on_team_inbox_id"
+  end
+
+  create_table "team_inboxes", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_team_inboxes_on_team_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
@@ -354,5 +367,8 @@ ActiveRecord::Schema.define(version: 20170618013444) do
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
   add_foreign_key "segments", "accounts"
+  add_foreign_key "team_inbox_conversations", "conversations"
+  add_foreign_key "team_inbox_conversations", "team_inboxes"
+  add_foreign_key "team_inboxes", "teams"
   add_foreign_key "teams", "organizations"
 end

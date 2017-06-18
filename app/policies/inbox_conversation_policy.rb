@@ -1,8 +1,7 @@
 class InboxConversationPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.joins(conversation: :contact)
-           .where(conversations: { contacts: { team: account.teams } })
+      scope.where(inbox: account.inbox)
     end
   end
 end
