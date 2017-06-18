@@ -36,6 +36,7 @@ class Conversation extends React.Component {
       <ConversationProfile 
         contact={this.state.contact}
         inbox={this.props.inbox}
+        current_account={this.props.current_account}
       />
     </div>);
   }

@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
-import InboxList from './components/inboxList'
+import Inboxes from './components/inboxes'
 import Conversation from 'conversation'
 
 class Inbox extends React.Component {
@@ -15,6 +15,7 @@ class Inbox extends React.Component {
       subscription: {},
       inbox_conversations: [],
       inbox: {},
+      team_inboxes: [],
       filter: 'Open'
     };
 
@@ -44,6 +45,7 @@ class Inbox extends React.Component {
 
     if (inbox_conversation) {
       return <Conversation 
+                current_account={this.props.current_account}
                 inbox_conversation={inbox_conversation}
                 inbox={this.state.inbox} />
     } else {
@@ -86,7 +88,7 @@ class Inbox extends React.Component {
 
   render() {
     return <div className="Recruit">
-              <InboxList />
+              <Inboxes inbox={this.state.inbox} team_inboxes={this.state.team_inboxes} />
               <div className="Inbox">
                 <div className='Conversations'>
                   <ConversationsMenu
@@ -113,6 +115,10 @@ class Inbox extends React.Component {
     return `/inboxes/${this.inboxId()}`;
   }
 
+  teamInboxesURL() {
+    return `/team_inboxes`;
+  }
+
   componentDidMount() {
     this.load();
     this.connect();
@@ -129,6 +135,10 @@ class Inbox extends React.Component {
   load() {
     $.get(this.inboxURL()).then((inbox) => {
       this.setState({ inbox: inbox });
+    });
+
+    $.get(this.teamInboxesURL()).then((team_inboxes) => {
+      this.setState({ team_inboxes: team_inboxes });
     });
     
     $.get(this.inboxConversationsURL()).then((inbox_conversations) => {
