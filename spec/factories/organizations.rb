@@ -4,19 +4,21 @@ FactoryGirl.define do
 
     trait :team do
       after(:create) do |organization|
-        create(:team, organization: organization)
+        create(:team, :inbox, organization: organization)
       end
     end
 
-    trait :team_with_phone_number_and_recruiting_ad do
+    trait :team_with_phone_number_and_recruiting_ad_and_inbox do
       after(:create) do |organization|
-        create(:team, :phone_number, :recruiting_ad, organization: organization)
+        create(:team, :phone_number, :recruiting_ad, :inbox, organization: organization)
       end
     end
 
     trait :account do
       after(:create) do |organization|
-        account = create(:account, :inbox, organization: organization)
+        team = create(:team, :phone_number, organization: organization)
+        account = create(:account, organization: organization)
+        team.accounts << account
         organization.update(recruiter: account)
       end
     end
@@ -25,10 +27,6 @@ FactoryGirl.define do
       after(:create) do |organization|
         create(:recruiting_ad, organization: organization)
       end
-    end
-
-    trait :phone_number do
-      phone_number { Faker::PhoneNumber.cell_phone }
     end
   end
 end

@@ -9,23 +9,17 @@ FactoryGirl.define do
       role :owner
     end
 
-    trait :inbox do
-      after(:create) do |account|
-        create(:inbox, account: account)
-      end
-    end
-
     trait :team do
       after(:create) do |account|
-        team = create(:team, organization: account.organization)
+        team = create(:team, :inbox, organization: account.organization)
         team.accounts << account
         team.update(recruiter: account)
       end
     end
 
-    trait :team_with_phone_number do
+    trait :team_with_phone_number_and_inbox do
       after(:create) do |account|
-        team = create(:team, :phone_number, organization: account.organization)
+        team = create(:team, :phone_number, :inbox, organization: account.organization)
         team.accounts << account
         team.update(recruiter: account)
       end

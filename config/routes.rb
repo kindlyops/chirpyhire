@@ -16,18 +16,16 @@ Rails.application.routes.draw do
 
   resources :segments
 
-  resources :messages, only: %i[index show], param: :contact_id
   resources :contacts, only: [:show] do
     resources :notes, only: %i[index create update destroy]
     resource :star, only: :create
   end
 
   resources :inboxes, only: [:show] do
-    resources :conversations, only: %i[index show update]
-    resources :inbox_conversations, only: :index
+    resources :conversations, only: %i[show]
   end
 
-  resources :conversations, only: [] do
+  resources :conversations, only: %i[index show update] do
     resources :messages, only: %i[index create], controller: 'conversations/messages'
   end
 

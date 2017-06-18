@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_inbox
-    @current_inbox ||= current_account.inbox
+    @current_inbox ||= current_account.inboxes.first
   end
 
   def impersonated

@@ -5,9 +5,9 @@ class Surveyor
 
   def start
     if candidacy.complete?
-      notify_contact_ready_for_review(contact_team_inbox_conversations)
       contact.update(screened: true)
       send_message(complete_welcome.body)
+      notify_team
     elsif candidacy.pending?
       lock_candidacy
       survey.ask
@@ -30,10 +30,6 @@ class Surveyor
 
   private
 
-  def contact_team_inbox_conversations
-    team.inbox_conversations.contact(contact)
-  end
-
   def restate_and_log(message)
     ReadReceiptsCreator.call(message, contact)
 
@@ -44,18 +40,19 @@ class Surveyor
     update_candidacy(message)
     survey.complete
 
-    notify_contact_ready_for_review(person_inbox_conversations)
+    notify_all_teams
   end
 
-  def person_inbox_conversations
-    account_ids = Membership.where(team: person.teams).pluck(:account_id)
-    inbox_ids = Inbox.where(account_id: account_ids).pluck(:id)
-    contact_ids = person.contacts.subscribed.pluck(:id)
-    conversation_ids = Conversation.where(contact_id: contact_ids).pluck(:id)
+  def notify_team
+    notify_contact_ready_for_review(team.accounts, contact.open_conversation)
+  end
 
-    InboxConversation.where(
-      inbox_id: inbox_ids, conversation_id: conversation_ids
-    )
+  def notify_all_teams
+    person.teams.find_each do |team|
+      contact = team.contacts.find_by(person: person)
+      conversation = contact.open_conversation
+      notify_contact_ready_for_review(team.accounts, conversation)
+    end
   end
 
   def send_message(message)
@@ -79,14 +76,14 @@ class Surveyor
     candidacy.update!(contact: contact, state: :in_progress)
   end
 
-  def notify_contact_ready_for_review(inbox_conversations)
-    inbox_conversations.find_each do |inbox_conversation|
-      ready_for_review_mailer(inbox_conversation).deliver_later
+  def notify_contact_ready_for_review(accounts, conversation)
+    accounts.find_each do |account|
+      ready_for_review_mailer(account, conversation).deliver_later
     end
   end
 
-  def ready_for_review_mailer(inbox_conversation)
-    NotificationMailer.contact_ready_for_review(inbox_conversation)
+  def ready_for_review_mailer(account, conversation)
+    NotificationMailer.contact_ready_for_review(account, conversation)
   end
 
   def complete_welcome

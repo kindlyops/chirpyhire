@@ -10,11 +10,8 @@ class Account < ApplicationRecord
   has_many :memberships
   has_many :teams, through: :memberships
   has_many :contacts, through: :teams
-
-  has_one :inbox
-  has_many :inbox_conversations, through: :inbox
-  has_many :conversations, through: :inbox
-
+  has_many :inboxes, through: :teams
+  has_many :conversations, through: :inboxes
   has_many :segments
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
@@ -24,7 +21,6 @@ class Account < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
-  delegate :unread_count, to: :inbox
 
   enum role: {
     member: 0, owner: 1, invited: 2
@@ -32,6 +28,10 @@ class Account < ApplicationRecord
 
   def on?(team)
     memberships.where(team: team).exists?
+  end
+
+  def unread_count
+    inboxes.map(&:unread_count).reduce(:+) || 0
   end
 
   def manages?(team)

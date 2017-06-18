@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Conversations::MessagesController do
-  let(:team) { create(:team, :account) }
+  let(:team) { create(:team, :inbox, :account) }
   let(:contact) { create(:contact, team: team) }
   let(:organization) { team.organization }
   let(:account) { team.accounts.first }
@@ -22,8 +22,7 @@ RSpec.describe Conversations::MessagesController do
       IceBreaker.call(contact)
     end
 
-    let(:inbox_conversation) { account.inbox_conversations.find_by(conversation: conversation) }
-    let!(:unread_receipts) { create_list(:read_receipt, 3, inbox_conversation: inbox_conversation) }
+    let!(:unread_receipts) { create_list(:read_receipt, 3, conversation: conversation) }
 
     context 'with outstanding read receipts for the conversation' do
       context 'impersonating' do
@@ -38,9 +37,9 @@ RSpec.describe Conversations::MessagesController do
         it 'does not mark the read receipts as read' do
           expect {
             get :index, params: params
-          }.not_to change { inbox_conversation.reload.read_receipts.unread.count }
+          }.not_to change { conversation.reload.read_receipts.unread.count }
 
-          expect(inbox_conversation.read_receipts.unread.count).to eq(3)
+          expect(conversation.read_receipts.unread.count).to eq(3)
         end
       end
 
@@ -48,7 +47,7 @@ RSpec.describe Conversations::MessagesController do
         it 'marks the read receipts as read' do
           expect {
             get :index, params: params
-          }.to change { inbox_conversation.reload.read_receipts.unread.count }.from(3).to(0)
+          }.to change { conversation.reload.read_receipts.unread.count }.from(3).to(0)
         end
       end
     end

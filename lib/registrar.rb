@@ -24,7 +24,6 @@ class Registrar
   end
 
   def setup_account
-    account.create_inbox
     team.accounts << account
     account.update(role: :owner)
   end

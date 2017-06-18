@@ -33,9 +33,9 @@ RSpec.describe MessagePolicy do
     subject { MessagePolicy::Scope.new(account, Message.all) }
 
     context 'teams' do
-      let(:team) { create(:team, :account) }
+      let(:team) { create(:team, :account, :inbox) }
       let(:account) { team.accounts.first }
-      let(:other_team) { create(:team, organization: team.organization) }
+      let(:other_team) { create(:team, :inbox, organization: team.organization) }
       let(:contact) { create(:contact, team: other_team) }
       let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
 
@@ -50,7 +50,7 @@ RSpec.describe MessagePolicy do
       end
 
       context 'account is on same team as the message contact' do
-        let(:team) { create(:team, :account) }
+        let(:team) { create(:team, :account, :inbox) }
         let(:account) { team.accounts.first }
         let(:contact) { create(:contact, team: team) }
         let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
