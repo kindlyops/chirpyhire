@@ -1,6 +1,6 @@
 class InboxPolicy < ApplicationPolicy
   def show?
-    account.teams.where(id: record.team.id).exists?
+    organization.teams.where(id: record.team.id).exists?
   end
 
   class Scope < ApplicationPolicy::Scope

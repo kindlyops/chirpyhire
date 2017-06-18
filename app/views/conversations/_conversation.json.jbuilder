@@ -8,6 +8,7 @@ json.timestamp conversation.last_message_created_at.label
 json.last_message_created_at(
   conversation.last_message_created_at.iso_time
 )
+json.unread_count conversation.unread_count
 json.state conversation.state
 json.reopenable conversation.reopenable?
 json.summary(message.summary) if message.present?
