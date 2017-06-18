@@ -4,6 +4,7 @@ import moment from 'moment'
 
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
+import InboxList from './components/inboxList'
 import Conversation from 'conversation'
 
 class Inbox extends React.Component {
@@ -84,21 +85,24 @@ class Inbox extends React.Component {
   }
 
   render() {
-    return <div className="Inbox">
-              <div className='Conversations'>
-                <ConversationsMenu 
-                  filter={this.state.filter}
-                  inbox_conversations={this.state.inbox_conversations}
-                  handleFilterChange={this.handleFilterChange}
-                />        
-                <ConversationsList
-                  inboxId={this.inboxId()}
-                  filter={this.state.filter}
-                  inbox_conversations={this.inboxConversationsByRecency()}
-                 />
+    return <div className="Recruit">
+              <InboxList />
+              <div className="Inbox">
+                <div className='Conversations'>
+                  <ConversationsMenu
+                    filter={this.state.filter}
+                    inbox_conversations={this.state.inbox_conversations}
+                    handleFilterChange={this.handleFilterChange}
+                  />
+                  <ConversationsList
+                    inboxId={this.inboxId()}
+                    filter={this.state.filter}
+                    inbox_conversations={this.inboxConversationsByRecency()}
+                   />
+                </div>
+                {this.conversationComponent()}
               </div>
-              {this.conversationComponent()}
-            </div>;
+          </div>;
   }
 
   inboxConversationsURL() {

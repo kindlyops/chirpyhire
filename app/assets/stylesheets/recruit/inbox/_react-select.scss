@@ -1,0 +1,47 @@
+.Recruit {
+  .Inbox {
+    .Select-control {
+      height: 68px !important;
+      cursor: pointer !important;
+      border: none !important;
+
+      .Select-placeholder {
+        line-height: 61px;
+      }
+
+      .Select-value {
+        line-height: 61px !important;
+
+        .Select-value-label {
+          line-height: 61px;
+        }
+      }
+
+      .Select-input {
+        height: 61px;
+      }
+    }
+
+    .Select-menu-outer {
+      max-height: 500px !important;
+    }
+
+    .Select-menu {
+      max-height: 498px !important;
+    }
+
+    .is-focused:not(.is-open) > .Select-control {
+      box-shadow: none !important;
+    }
+
+    .Select-option {
+      border-bottom: 1px solid #eeeeef !important;
+    }
+
+    .Select-arrow-zone {
+      width: 60px !important;
+    }
+  }
+}
+
+
