@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { Link } from 'react-router-dom'
 import { Column, Table, AutoSizer } from 'react-virtualized'
 
 class CandidatesTable extends React.Component {
@@ -15,9 +14,9 @@ class CandidatesTable extends React.Component {
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
     return (
-      <Link to={`/inboxes/${rowData.inbox_id}/conversations/${cellData}`} className='btn btn-outline-primary'>
+      <a href={`/inboxes/${rowData.inbox_id}/conversations/${cellData}`} className='btn btn-outline-primary'>
         <i className='fa fa-comment'></i>
-      </Link>
+      </a>
     )
   }
 
