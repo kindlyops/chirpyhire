@@ -1,14 +1,15 @@
 class TeamRegistrar
-  def self.call(team, account)
-    new(team, account).call
+  def self.call(team, account, notify: true)
+    new(team, account, notify: notify).call
   end
 
-  def initialize(team, account)
+  def initialize(team, account, notify: true)
     @team = team
     @account = account
+    @notify = notify
   end
 
-  attr_reader :team, :account
+  attr_reader :team, :account, :notify
   delegate :organization, to: :team
 
   def call
@@ -17,7 +18,7 @@ class TeamRegistrar
     provision_phone_number
     create_recruiting_ad
 
-    NewTeamNotificationJob.perform_later(team)
+    NewTeamNotificationJob.perform_later(team) if notify.present?
   end
 
   private
