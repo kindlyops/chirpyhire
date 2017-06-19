@@ -10,35 +10,21 @@ class IceBreaker
   attr_reader :contact
 
   def call
-    accounts.find_each(&method(:find_or_create_inbox_conversation))
-
-    notifiable_inbox_conversations.find_each(&method(:broadcast))
-    open_conversation
-  end
-
-  def find_or_create_inbox_conversation(account)
-    inbox_conversations(account)
-      .find_or_create_by(conversation: open_conversation)
-  end
-
-  def inbox_conversations(account)
-    account.inbox.inbox_conversations
-  end
-
-  def notifiable_inbox_conversations
-    team.inbox_conversations.where(conversation: contact.conversations)
-  end
-
-  def broadcast(inbox_conversation)
-    Broadcaster::InboxConversation.broadcast(inbox_conversation)
+    open_conversation.tap do |conversation|
+      Broadcaster::Conversation.broadcast(conversation)
+    end
   end
 
   def open_conversation
     @open_conversation ||= begin
-      contact.existing_open_conversation || contact.conversations.create!
+      contact.existing_open_conversation || create_conversation
     end
   end
 
-  delegate :organization, :team, to: :contact
-  delegate :accounts, to: :organization
+  def create_conversation
+    contact.conversations.create!(inbox: team.inbox)
+  end
+
+  delegate :team, to: :contact
+  delegate :inbox, to: :team
 end

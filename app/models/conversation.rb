@@ -1,8 +1,10 @@
 class Conversation < ApplicationRecord
   belongs_to :contact
-  has_many :inbox_conversations
-  has_many :inboxes, through: :inbox_conversations
+  belongs_to :inbox
+
   has_many :messages
+  has_many :read_receipts
+
   has_one :recent_message,
           -> { by_recency.limit(1) }, class_name: 'Message'
 
@@ -23,10 +25,6 @@ class Conversation < ApplicationRecord
 
   def self.by_recent_message
     order(last_message_created_at: :desc)
-  end
-
-  def unread_count(inbox)
-    inbox_conversations.find_by(inbox: inbox).unread_count
   end
 
   def open?

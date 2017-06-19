@@ -12,10 +12,11 @@
       i.fa.fa-magnet.fa-fw
     = nav_link_to candidates_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, { url_segment: 1, ignore_params: true } do
       i.fa.fa-users.fa-fw
-    = nav_link_to inbox_conversations_path(current_inbox), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Conversations' }, url_segment: 1 do
-      i.fa.fa-comment-o.fa-fw
-      - if current_account.unread_count.positive?
-        i.fa.fa-circle.fa-fw.unread-count
+    - if current_inbox.present?
+      = nav_link_to inbox_conversations_path(current_inbox), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Conversations' }, url_segment: 1 do
+        i.fa.fa-comment-o.fa-fw
+        - if current_account.unread_count.positive?
+          i.fa.fa-circle.fa-fw.unread-count
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
       i.fa.fa-bullhorn.fa-fw
     = nav_link_to account_path(current_account), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Settings' }, url_segment: 1 do

@@ -71,18 +71,10 @@ class Message < ApplicationRecord
   def touch_conversation
     conversation.update(last_message_created_at: created_at)
 
-    notifiable_inbox_conversations.find_each do |inbox_conversation|
-      Broadcaster::InboxConversation.broadcast(inbox_conversation)
-    end
+    Broadcaster::Conversation.broadcast(conversation)
   end
 
   private
-
-  def notifiable_inbox_conversations
-    contact = conversation.contact
-    team_inbox_conversations = conversation.team.inbox_conversations
-    team_inbox_conversations.where(conversation: contact.conversations)
-  end
 
   def open_conversation
     errors.add(:conversation, 'must be open.') unless conversation.open?

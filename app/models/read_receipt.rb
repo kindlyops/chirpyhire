@@ -1,13 +1,13 @@
 class ReadReceipt < ApplicationRecord
   belongs_to :message
-  belongs_to :inbox_conversation
+  belongs_to :conversation
 
-  counter_culture %i[inbox_conversation inbox],
+  counter_culture %i[conversation inbox],
                   column_name: proc { |model| 'unread_count' if model.unread? },
                   column_names: {
                     ['read_receipts.read_at IS NULL'] => 'unread_count'
                   }
-  counter_culture :inbox_conversation,
+  counter_culture %i[conversation],
                   column_name: proc { |model| 'unread_count' if model.unread? },
                   column_names: {
                     ['read_receipts.read_at IS NULL'] => 'unread_count'

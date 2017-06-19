@@ -13,7 +13,7 @@ class ConversationsList extends React.Component {
   render() {    
     return (
       <div className='autosizer-wrapper'>
-        <AutoSizer location={this.props.location} disableWidth conversations={this.props.inbox_conversations}>
+        <AutoSizer location={this.props.location} disableWidth conversations={this.props.conversations}>
           {({ height }) => (
             <List 
               location={this.props.location}
@@ -23,7 +23,7 @@ class ConversationsList extends React.Component {
               rowCount={this.rowCount()}
               rowHeight={70.59}
               rowRenderer={this._rowRenderer}
-              conversations={this.props.inbox_conversations}
+              conversations={this.props.conversations}
             />
           )}
         </AutoSizer>
@@ -53,9 +53,9 @@ class ConversationsList extends React.Component {
     let filter;
 
     if (this.props.filter === 'All') {
-      return this.props.inbox_conversations;
+      return this.props.conversations;
     } else {
-      return this.props.inbox_conversations.filter(this._byState);
+      return this.props.conversations.filter(this._byState);
     }
   }
 

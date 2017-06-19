@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :contact do
-    team
+    association :team, :inbox
     association :person, :with_candidacy
 
     transient do

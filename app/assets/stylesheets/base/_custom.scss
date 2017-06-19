@@ -11,3 +11,9 @@ $brand-primary: $green;
 $brand-success: darken(#428bca, 6.5%);
 $ch-table-gray: #dddddd;
 $bg-body: $white;
+
+a {
+  &:focus {
+    outline: none;
+  }
+}

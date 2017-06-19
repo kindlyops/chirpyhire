@@ -4,7 +4,7 @@ RSpec.describe Surveyor do
   subject { Surveyor.new(contact) }
 
   describe '#start' do
-    let(:team) { create(:team, :account) }
+    let(:team) { create(:team, :inbox, :account) }
     let(:contact) { create(:contact, team: team, subscribed: true) }
     let(:candidacy) { contact.person.candidacy }
 
@@ -76,7 +76,7 @@ RSpec.describe Surveyor do
       end
 
       context 'subscribed to multiple teams' do
-        let(:other_team) { create(:team, :account) }
+        let(:other_team) { create(:team, :inbox, :account) }
 
         before do
           other_contact = other_team.contacts.create(person: contact.person)
@@ -86,9 +86,8 @@ RSpec.describe Surveyor do
         context 'multiple teams' do
           context 'current team having multiple accounts' do
             before do
-              account = create(:account, :inbox, organization: team.organization)
+              account = create(:account, organization: team.organization)
               team.accounts << account
-              GlacierBreaker.call(account)
             end
 
             it 'sends an email to each account on the current team' do
@@ -123,9 +122,8 @@ RSpec.describe Surveyor do
 
           context 'other team having multiple accounts' do
             before do
-              account = create(:account, :inbox, organization: other_team.organization)
+              account = create(:account, organization: other_team.organization)
               other_team.accounts << account
-              GlacierBreaker.call(account)
             end
 
             it 'does not send an email to the other accounts' do
@@ -214,7 +212,7 @@ RSpec.describe Surveyor do
 
     before do
       contact.update(subscribed: true)
-      account = create(:account, :inbox, organization: team.organization)
+      account = create(:account, organization: team.organization)
       team.accounts << account
       IceBreaker.call(contact)
     end
@@ -244,7 +242,7 @@ RSpec.describe Surveyor do
         end
 
         context 'two teams same organization' do
-          let!(:other_team) { create(:team, :account, organization: team.organization) }
+          let!(:other_team) { create(:team, :inbox, :account, organization: team.organization) }
 
           before do
             IceBreaker.call(contact)
@@ -266,7 +264,7 @@ RSpec.describe Surveyor do
         end
 
         context 'subscribed to multiple teams' do
-          let(:other_team) { create(:team, :account) }
+          let(:other_team) { create(:team, :inbox, :account) }
 
           before do
             other_contact = other_team.contacts.create(subscribed: true, person: contact.person)
@@ -276,9 +274,8 @@ RSpec.describe Surveyor do
           context 'multiple teams' do
             context 'current team having multiple accounts' do
               before do
-                account = create(:account, :inbox, organization: team.organization)
+                account = create(:account, organization: team.organization)
                 team.accounts << account
-                GlacierBreaker.call(account)
               end
 
               it 'sends an email to each account on both teams' do

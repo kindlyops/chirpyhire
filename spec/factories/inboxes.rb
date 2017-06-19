@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :inbox do
-    account
+    team
   end
 end

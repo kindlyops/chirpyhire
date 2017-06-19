@@ -4,8 +4,7 @@ class Conversations::MessagesController < ApplicationController
   def index
     @messages = policy_scope(conversation.messages.by_oldest.includes(:sender))
     read_messages unless impersonating?
-    inbox_conversation.update(last_viewed_at: DateTime.current)
-    Broadcaster::InboxConversation.broadcast(inbox_conversation)
+    Broadcaster::Conversation.broadcast(conversation)
 
     respond_to do |format|
       format.json
@@ -21,6 +20,10 @@ class Conversations::MessagesController < ApplicationController
   end
 
   private
+
+  def read_messages
+    conversation.read_receipts.unread.each(&:read)
+  end
 
   def authorized_conversation
     authorize(Conversation.find(params[:conversation_id]), :show?)
@@ -44,16 +47,6 @@ class Conversations::MessagesController < ApplicationController
 
   def body
     params[:message][:body]
-  end
-
-  def read_messages
-    inbox_conversation.read_receipts.unread.each(&:read)
-  end
-
-  def inbox_conversation
-    @inbox_conversation ||= begin
-      conversation.inbox_conversations.find_by(inbox: current_inbox)
-    end
   end
 
   def conversation

@@ -6,11 +6,11 @@ class ConversationChat extends React.Component {
   render() {
     return (<div className='ConversationChat'>
       <ConversationHeader
-        inbox_conversation={this.props.inbox_conversation}
+        conversation={this.props.conversation}
         contact={this.props.contact}
       />
       <ConversationBody
-        inbox_conversation={this.props.inbox_conversation}
+        conversation={this.props.conversation}
         contact={this.props.contact}
         messages={this.props.messages}
       />

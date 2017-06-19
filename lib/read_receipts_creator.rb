@@ -17,26 +17,24 @@ class ReadReceiptsCreator
   end
 
   def call
-    contact_team_inbox_conversations.find_each do |inbox_conversation|
-      receipt = inbox_conversation.read_receipts.find_by(message: message)
-      next if receipt.present?
+    receipt = conversation.read_receipts.find_by(message: message)
+    return if receipt.present?
 
-      create_read_receipt(inbox_conversation)
-    end
+    create_read_receipt
   end
 
-  def contact_team_inbox_conversations
-    team.inbox_conversations.contact(contact)
-  end
-
-  def create_read_receipt(inbox_conversation)
-    receipt = inbox_conversation.read_receipts.create!(message: message)
-    contact_waiting_job.perform_later(inbox_conversation, receipt)
-    Broadcaster::InboxConversation.broadcast(inbox_conversation)
+  def create_read_receipt
+    receipt = conversation.read_receipts.create!(message: message)
+    contact_waiting_job.perform_later(conversation, receipt)
+    Broadcaster::Conversation.broadcast(conversation)
   end
 
   def contact_waiting_job
     ContactWaitingJob.set(wait_until: wait_until)
+  end
+
+  def conversation
+    @conversation ||= contact.open_conversation
   end
 
   attr_reader :message, :contact

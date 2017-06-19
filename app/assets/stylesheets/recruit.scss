@@ -1,0 +1,53 @@
+@import "recruit/inbox";
+
+.Recruit {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  min-width: 100%;
+  width: 100%;
+
+  .Inboxes {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 0 0 45px;
+    background-color: darken($brand-primary, 10%);
+
+    .InboxLink {
+      color: $white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px 6px 4px 4px;
+      border-radius: 3px;
+      font-size: 14px;
+      transition: all .3s ease;
+
+      .author_image {
+        margin-right: 0.5rem;
+      }
+
+      &:hover, &.active {
+        text-decoration: none;
+      }
+
+      &:hover {
+        background-color: rgba(33, 102, 75, 0.5);
+      }
+
+      &.active {
+        background-color: darken($brand-primary, 25%);
+      }
+
+      .fa {
+        color: $white;
+      }
+
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+}

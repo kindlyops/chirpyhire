@@ -16,7 +16,7 @@ class ConversationBody extends React.Component {
           <div className='client_messages'>
             <ConversationFooter
               contact={this.props.contact}
-              inbox_conversation={this.props.inbox_conversation}
+              conversation={this.props.conversation}
             />
             <div id='messages_container'>
               <div id='msgs_scroller_div' className='message_pane_scroller'>

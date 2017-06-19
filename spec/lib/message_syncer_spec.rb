@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MessageSyncer do
-  let(:team) { create(:team, :account) }
+  let(:team) { create(:team, :inbox, :account) }
   let(:organization) { team.organization }
   let(:contact) { create(:contact, team: team) }
   let(:message_sid) { 'sid' }

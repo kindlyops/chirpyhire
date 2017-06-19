@@ -1,16 +1,16 @@
 class NotificationMailer < ApplicationMailer
-  def contact_ready_for_review(inbox_conversation)
-    @inbox_conversation = inbox_conversation
-    @account = inbox_conversation.inbox.account
+  def contact_ready_for_review(account, conversation)
+    @conversation = conversation
+    @account = account
 
     track user: @account
     subject = 'Your new caregiver wants to chat 🌟'
     mail(to: @account.email, subject: subject)
   end
 
-  def contact_waiting(inbox_conversation)
-    @inbox_conversation = inbox_conversation
-    @account = inbox_conversation.inbox.account
+  def contact_waiting(account, conversation)
+    @conversation = conversation
+    @account = account
 
     track user: @account
     subject = 'Hurry! Your caregiver is slipping away... ⏰'

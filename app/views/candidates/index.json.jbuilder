@@ -10,6 +10,7 @@ json.candidates candidates do |candidate|
   json.first_seen_at candidate.joined_at.to_s
   json.first_seen_at_ago candidate.joined_at.time_ago_format
   json.current_conversation_id candidate.current_conversation.id
+  json.inbox_id candidate.current_conversation.inbox_id
   json.hero_pattern_classes candidate.hero_pattern_classes
 
   json.certification candidate.certification.to_s

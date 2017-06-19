@@ -10,26 +10,25 @@ class ProfileNotes extends React.Component {
 
     this.state = {
       notes: [],
-      subscription: {},
-      current_account: {}
+      subscription: {}
     };
   }
 
   senderIcon() {
-    if(this.state.current_account.url) {
+    if(this.props.current_account.url) {
       return (
-        <img className='author_image no-repeat thumb_36' src={this.state.current_account.url}></img>
+        <img className='author_image no-repeat thumb_36' src={this.props.current_account.url}></img>
       );
     } else {
       return (
-        <span className={`author_image thumb_36 ${this.state.current_account.hero_pattern_classes}`}>
+        <span className={`author_image thumb_36 ${this.props.current_account.hero_pattern_classes}`}>
         </span>
       );
     }
   }
 
   inputContainerClasses() {
-    if (this.state.current_account.url) {
+    if (this.props.current_account.url) {
       return 'inline_message_input_container less-negative-margin-top';
     } else {
       return 'inline_message_input_container';
@@ -46,7 +45,7 @@ class ProfileNotes extends React.Component {
             <div>
               <div className="notes">
                 {this.days().map((day) =>
-                  <NoteDay key={day[0].created_at} current_account={this.state.current_account} notes={day} day={day[0].created_at} />
+                  <NoteDay key={day[0].created_at} current_account={this.props.current_account} notes={day} day={day[0].created_at} />
                 )}
               </div>
             </div>
@@ -90,18 +89,10 @@ class ProfileNotes extends React.Component {
     $.get(this.notesUrl(id)).then((notes) => {
       this.setState({ notes: notes });
     });
-
-    $.get(this.currentAccountUrl()).then((current_account) => {
-      this.setState({ current_account: current_account });
-    })
   }
 
   notesUrl(id) {
     return `/contacts/${id}/notes`;
-  }
-
-  currentAccountUrl() {
-    return `/accounts/${this.props.inbox.account_id}`;
   }
 
   connect(id) {

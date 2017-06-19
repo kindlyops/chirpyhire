@@ -9,9 +9,11 @@ class Team < ApplicationRecord
   has_many :memberships
   has_many :accounts, through: :memberships
   has_many :contacts
-  has_many :inbox_conversations, through: :accounts
 
   has_one :location
+  has_one :inbox
+  has_many :conversations, through: :inbox
+
   validates_associated :location
   validates :location, presence: true
   accepts_nested_attributes_for :location,
