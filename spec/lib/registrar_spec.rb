@@ -76,6 +76,12 @@ RSpec.describe Registrar do
           subject.register
         }.to have_enqueued_job(NewOrganizationNotificationJob)
       end
+
+      it 'does not create a new team notification job' do
+        expect {
+          subject.register
+        }.not_to have_enqueued_job(NewTeamNotificationJob)
+      end
     end
   end
 end
