@@ -5,7 +5,7 @@ class Registrar
 
   def register
     return unless account.persisted?
-    TeamRegistrar.call(team, account)
+    TeamRegistrar.call(team, account, notify: false)
     setup_account
     create_ideal_candidate
     new_organization_notification_job
