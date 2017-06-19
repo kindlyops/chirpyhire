@@ -4,6 +4,7 @@ class Organization < ApplicationRecord
 
   has_many :teams
   has_many :contacts, through: :teams
+  has_many :inboxes, through: :teams
   has_many :conversations, through: :contacts
 
   has_many :locations, through: :teams

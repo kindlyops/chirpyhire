@@ -1,5 +1,7 @@
 class InboxPolicy < ApplicationPolicy
   def show?
+    return if record.team.blank?
+
     organization.teams.where(id: record.team.id).exists?
   end
 
