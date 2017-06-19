@@ -13,7 +13,7 @@ class inboxLink extends React.Component {
   }
 
   id() {
-    return parseInt(this.props.id);
+    return this.props.id;
   }
 
   isOnTeam() {
@@ -21,7 +21,7 @@ class inboxLink extends React.Component {
   }
 
   onTeam(team) {
-    return team.id === this.id();
+    return team.inbox_id === this.id();
   }
 
   teamIcon() {

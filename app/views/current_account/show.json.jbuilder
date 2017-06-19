@@ -5,4 +5,5 @@ json.hero_pattern_classes account.hero_pattern_classes
 json.teams account.teams do |team|
   json.id team.id
   json.name team.name
+  json.inbox_id team.inbox.id
 end
