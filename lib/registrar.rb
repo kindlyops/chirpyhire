@@ -5,7 +5,7 @@ class Registrar
 
   def register
     return unless account.persisted?
-    setup_team
+    TeamRegistrar.call(team, account)
     setup_account
     create_ideal_candidate
     new_organization_notification_job
@@ -17,14 +17,7 @@ class Registrar
 
   delegate :location, to: :organization
 
-  def setup_team
-    create_recruiter
-    provision_phone_number
-    create_recruiting_ad
-  end
-
   def setup_account
-    team.accounts << account
     account.update(role: :owner)
   end
 
@@ -32,21 +25,6 @@ class Registrar
     organization.create_ideal_candidate!(
       zipcodes_attributes: [{ value: team.zipcode }]
     )
-  end
-
-  def create_recruiter
-    organization.update(recruiter: account)
-    team.update(recruiter: account)
-  end
-
-  def create_recruiting_ad
-    team.create_recruiting_ad(
-      body: RecruitingAd.body(team), organization: organization
-    )
-  end
-
-  def provision_phone_number
-    PhoneNumberProvisioner.provision(team)
   end
 
   def new_organization_notification_job

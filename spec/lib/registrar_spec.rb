@@ -15,17 +15,6 @@ RSpec.describe Registrar do
     context 'account not persisted' do
       let!(:account) { build(:account, organization: organization) }
 
-      it 'does not create the team' do
-        expect {
-          subject.register
-        }.not_to change { organization.reload.teams.count }
-      end
-
-      it 'does not set the recruiter on the organization' do
-        subject.register
-        expect(organization.recruiter).to eq(nil)
-      end
-
       it 'does not create a new organization notification job' do
         expect {
           subject.register
@@ -48,6 +37,12 @@ RSpec.describe Registrar do
         }.to change { account.reload.owner? }.from(false).to(true)
       end
 
+      it 'creates an inbox' do
+        expect {
+          subject.register
+        }.to change { Inbox.count }.by(1)
+      end
+
       it 'provisions a phone number for the team' do
         subject.register
         expect(Team.last.phone_number.present?).to eq(true)
@@ -55,18 +50,12 @@ RSpec.describe Registrar do
 
       it 'sets the recruiter on the team' do
         subject.register
-        expect(Team.last.recruiter).to eq(organization.recruiter)
+        expect(Team.last.recruiter).to eq(account)
       end
 
       it 'creates a recruiting ad for the team' do
         subject.register
         expect(Team.last.recruiting_ad).to eq(organization.recruiting_ad)
-      end
-
-      it 'sets the recruiter on the organization' do
-        expect {
-          subject.register
-        }.to change { organization.reload.recruiter }.from(nil).to(account)
       end
 
       it 'creates a recruiting ad for the organization' do
