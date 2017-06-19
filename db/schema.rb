@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "inbox_id"
+    t.bigint "inbox_id"
     t.integer "unread_count", default: 0, null: false
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["state", "contact_id"], name: "index_conversations_on_state_and_contact_id", unique: true, where: "(state = 0)"
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
-    t.integer "team_id"
+    t.bigint "team_id"
     t.index ["account_id"], name: "index_inboxes_on_account_id"
   end
 
@@ -268,7 +268,7 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.datetime "read_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "conversation_id"
+    t.bigint "conversation_id"
     t.index ["inbox_conversation_id", "message_id"], name: "index_read_receipts_on_inbox_conversation_id_and_message_id", unique: true
     t.index ["inbox_conversation_id"], name: "index_read_receipts_on_inbox_conversation_id"
     t.index ["message_id"], name: "index_read_receipts_on_message_id"
