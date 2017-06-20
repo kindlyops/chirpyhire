@@ -19,6 +19,7 @@ import {
 
 import Inbox from 'inbox'
 import Platform from 'platform'
+import GettingStarted from 'getting_started'
 
 class App extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
+            <Route path="/getting_started" render={props => <GettingStarted current_account={this.state.current_account} {...props} />} />
             <Route path="/candidates" render={props => <Platform current_account={this.state.current_account} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox current_account={this.state.current_account} {...props} />} />

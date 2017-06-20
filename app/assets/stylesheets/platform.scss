@@ -1,45 +1,9 @@
 .Platform {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-
   .small-caps {
     font-size: 13px;
     line-height: 20px;
     font-weight: 500;
     text-transform: uppercase;
-  }
-
-  .PlatformHeader {
-    flex: 0 0 50px;
-    display: flex;
-    align-items: center;
-    background-color: $brand-primary;
-    color: $white;
-
-    h1 {
-      margin-bottom: 0;
-      margin-left: 1rem;
-      font-size: 20px;
-      font-weight: 400;
-    }
-  }
-
-  .CandidateSegments {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex: 0 0 45px;
-    background-color: #2B8360;
-
-    .CandidateSegment {
-      color: $white;
-
-      &:not(:last-child) {
-        margin-right: 1rem;
-      }
-    }
   }
 
   .empty-candidates {

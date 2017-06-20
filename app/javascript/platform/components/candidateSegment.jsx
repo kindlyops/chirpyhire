@@ -14,7 +14,7 @@ class CandidateSegment extends React.Component {
 
   render() {
     return (
-      <a role="button" className='CandidateSegment' tabIndex={0} onClick={this.handleSegmentChange}>
+      <a role="button" tabIndex={0} onClick={this.handleSegmentChange}>
         <i className='fa fa-pie-chart mr-2'></i>
         {this.props.name}
       </a>

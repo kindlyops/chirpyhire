@@ -32,8 +32,8 @@ class Platform extends React.Component {
 
   render() {
     return (
-      <div className='Platform'>
-        <div className='PlatformHeader'>
+      <div className='Platform ch--Page'>
+        <div className='ch--Header'>
           <h1>Caregivers</h1>
         </div>
         <CandidateSegments segments={this.state.segments} handleSegmentChange={this.handleSegmentChange} />

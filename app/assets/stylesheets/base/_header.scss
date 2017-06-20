@@ -1,0 +1,14 @@
+.ch--Header {
+  flex: 0 0 50px;
+  display: flex;
+  align-items: center;
+  background-color: $brand-primary;
+  color: $white;
+
+  h1 {
+    margin-bottom: 0;
+    margin-left: 1rem;
+    font-size: 20px;
+    font-weight: 400;
+  }
+}
