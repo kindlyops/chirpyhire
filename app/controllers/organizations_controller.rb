@@ -14,8 +14,7 @@ class OrganizationsController < ApplicationController
   private
 
   def success_response
-    current_account.organization.reload
-    Broadcaster::Account.broadcast(current_account)
+    Broadcaster::Organization.broadcast(@organization)
 
     respond_to do |format|
       format.html { redirect_to_organization }

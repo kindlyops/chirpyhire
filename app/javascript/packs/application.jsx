@@ -27,19 +27,28 @@ class App extends React.Component {
 
     this.state = {
       subscription: {},
-      current_account: { teams: [], organization: {} }
+      current_account: { teams: [] },
+      current_organization: {}
     }
   }
 
   load() {
     $.get(this.currentAccountUrl()).then(current_account => {
       this.setState({current_account: current_account});
+    });
+
+    $.get(this.currentOrganizationUrl()).then(current_organization => {
+      this.setState({current_organization: current_organization});
       this.connect();
-    })
+    });
   }
 
   currentAccountUrl() {
     return `/current_account`;
+  }
+
+  currentOrganizationUrl() {
+    return `/current_organization`;
   }
 
   componentDidMount() {
@@ -51,7 +60,7 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/getting_started" render={props => <GettingStarted current_account={this.state.current_account} {...props} />} />
+            <Route path="/getting_started" render={props => <GettingStarted current_organization={this.state.current_organization} {...props} />} />
             <Route path="/candidates" render={props => <Platform current_account={this.state.current_account} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
@@ -62,7 +71,7 @@ class App extends React.Component {
   }
 
   connect() {
-    let channel = { channel: 'AccountsChannel', id: this.state.current_account.id };
+    let channel = { channel: 'OrganizationsChannel', id: this.state.current_organization.id };
     let subscription = window.App.cable.subscriptions.create(
       channel, this._channelConfig()
     );
@@ -76,8 +85,8 @@ class App extends React.Component {
     }
   }
 
-  _received(account) {
-    this.setState({ current_account: account });
+  _received(organization) {
+    this.setState({ current_organization: organization });
   }
 
   disconnect() {
