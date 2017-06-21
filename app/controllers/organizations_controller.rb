@@ -5,13 +5,29 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(permitted_attributes(Organization))
-      redirect_to organization_path(@organization), notice: update_notice
+      success_response
     else
-      render :show
+      error_response
     end
   end
 
   private
+
+  def success_response
+    Broadcaster::Organization.broadcast(@organization)
+
+    respond_to do |format|
+      format.html { redirect_to_organization }
+      format.json { head :ok }
+    end
+  end
+
+  def error_response
+    respond_to do |format|
+      format.html { render :show }
+      format.json { head :unprocessable_entity }
+    end
+  end
 
   def fetch_organization
     @organization ||= authorize(Organization.find(params[:id]))
@@ -19,5 +35,9 @@ class OrganizationsController < ApplicationController
 
   def update_notice
     "#{@organization.name} updated!"
+  end
+
+  def redirect_to_organization
+    redirect_to organization_path(@organization), notice: update_notice
   end
 end

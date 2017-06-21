@@ -23,8 +23,6 @@ class Organization < ApplicationRecord
                     styles: { medium: '300x300#', thumb: '100x100#' },
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
-
-  delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
   def message(contact:, body:, sender: nil)
@@ -46,7 +44,16 @@ class Organization < ApplicationRecord
     twilio_account_sid.present?
   end
 
+  def sender_notice
+    return recruiter_notice if recruiter && recruiter.first_name
+    "This is #{name}."
+  end
+
   private
+
+  def recruiter_notice
+    "This is #{recruiter.first_name} with #{name}."
+  end
 
   def messaging_client
     @messaging_client ||= Messaging::Client.new(self)

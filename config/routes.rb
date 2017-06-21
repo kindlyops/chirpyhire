@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end
 
+  resource :getting_started, only: :show, controller: 'getting_started'
+
   resource :health, only: :show
   resources :candidates, only: :index, concerns: :paginatable
   resource :candidate, only: %i[show update], controller: 'ideal_candidates'
@@ -42,6 +44,8 @@ Rails.application.routes.draw do
   post 'twilio/text' => 'teams/messages#create'
 
   resource :current_account, only: :show, controller: 'current_account'
+  resource :current_organization, only: :show, controller: 'current_organization'
+
   devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
 
   resources :accounts, only: %i[show update] do

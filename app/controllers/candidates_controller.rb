@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
-  layout 'candidates', only: %i[index]
+  layout 'react', only: %i[index]
   PAGE_LIMIT = 24
   decorates_assigned :candidates
 

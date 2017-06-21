@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618210120) do
+ActiveRecord::Schema.define(version: 20170621023216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,6 +244,14 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.integer "screened_contacts_count", default: 0, null: false
     t.integer "reached_contacts_count", default: 0, null: false
     t.integer "starred_contacts_count", default: 0, null: false
+    t.boolean "certification", default: true, null: false
+    t.boolean "availability", default: true, null: false
+    t.boolean "live_in", default: true, null: false
+    t.boolean "experience", default: true, null: false
+    t.boolean "transportation", default: true, null: false
+    t.boolean "zipcode", default: true, null: false
+    t.boolean "cpr_first_aid", default: true, null: false
+    t.boolean "skin_test", default: true, null: false
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 
