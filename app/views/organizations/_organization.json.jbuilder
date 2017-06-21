@@ -10,4 +10,3 @@ json.zipcode organization.zipcode
 json.cpr_first_aid organization.cpr_first_aid
 json.skin_test organization.skin_test
 json.drivers_license organization.drivers_license
-
