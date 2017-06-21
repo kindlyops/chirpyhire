@@ -20,7 +20,7 @@ class Broadcaster::Account
   end
 
   def account_string
-    AccountsController.render partial: 'accounts/account', 
-    locals: { account: account.decorate }
+    AccountsController.render partial: 'accounts/account',
+                              locals: { account: account.decorate }
   end
 end

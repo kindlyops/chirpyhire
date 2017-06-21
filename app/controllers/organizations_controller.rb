@@ -5,22 +5,30 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(permitted_attributes(Organization))
-      current_account.organization.reload
-      Broadcaster::Account.broadcast(current_account)
-
-      respond_to do |format|
-        format.html { redirect_to_organization }
-        format.json { head :ok }
-      end
+      success_response
     else
-      respond_to do |format|
-        format.html { render :show }
-        format.json { head :unprocessable_entity }
-      end
+      error_response
     end
   end
 
   private
+
+  def success_response
+    current_account.organization.reload
+    Broadcaster::Account.broadcast(current_account)
+
+    respond_to do |format|
+      format.html { redirect_to_organization }
+      format.json { head :ok }
+    end
+  end
+
+  def error_response
+    respond_to do |format|
+      format.html { render :show }
+      format.json { head :unprocessable_entity }
+    end
+  end
 
   def fetch_organization
     @organization ||= authorize(Organization.find(params[:id]))
