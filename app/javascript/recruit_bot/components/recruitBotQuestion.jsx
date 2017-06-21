@@ -6,6 +6,7 @@ class RecruitBotQuestion extends React.Component {
     super(props);
 
     this.toggleQuestion = this.toggleQuestion.bind(this);
+    this.isActive = this.isActive.bind(this);
   }
 
   organizationId() {
@@ -39,6 +40,23 @@ class RecruitBotQuestion extends React.Component {
     return !!this.props.current_organization[this.props.type];
   }
 
+  keys() {
+    return ['certification', 'availability', 'live_in', 'experience',
+            'transportation', 'zipcode', 'cpr_first_aid', 'skin_test'];
+  }
+
+  isDisabled() {
+    return this.isChecked() && R.reduce(this.isActive, 0, this.keys()) <= 1;
+  }
+
+  isActive(count, key) {
+    if (this.props.current_organization[key]) {
+      return count + 1;
+    } else {
+      return count;
+    }
+  }
+
   render() {
     return (
       <div className='card'>
@@ -47,6 +65,7 @@ class RecruitBotQuestion extends React.Component {
           <label className='toggle'>
             <Toggle
               checked={this.isChecked()}
+              disabled={this.isDisabled()}
               onChange={this.toggleQuestion} />
           </label>
         </div>
