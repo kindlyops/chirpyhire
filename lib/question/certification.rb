@@ -1,8 +1,6 @@
 class Question::Certification < Question::MultipleChoice
   def question
     <<~QUESTION.strip
-      #{welcome}
-
       Are you certified?
     QUESTION
   end
@@ -23,9 +21,5 @@ class Question::Certification < Question::MultipleChoice
 
   def answer
     Answer::Certification.new(self)
-  end
-
-  def welcome
-    Notification::Welcome.new(contact).body
   end
 end

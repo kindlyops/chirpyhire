@@ -1,15 +1,13 @@
 class Survey
-  LAST_QUESTION = :skin_test
-
   def initialize(candidacy)
     @candidacy = candidacy
   end
 
-  def ask
+  def ask(welcome: false)
     return unless candidacy.in_progress?
 
     candidacy.update!(inquiry: next_question.inquiry)
-    send_message(next_question.body)
+    send_message(next_question.body(welcome: welcome))
   end
 
   def on?(inquiry)
@@ -38,23 +36,28 @@ class Survey
   delegate :answer, to: :current_question
 
   def questions
-    {
-      certification: certification,
-      availability: availability,
-      live_in: live_in,
-      experience: experience,
-      transportation: transportation,
-      zipcode: zipcode,
-      cpr_first_aid: cpr_first_aid,
-      skin_test: skin_test
-    }.with_indifferent_access
+    Hash[keys.map do |key|
+      question = "Question::#{key.to_s.camelcase}".constantize.new(contact)
+      [key, question]
+    end].with_indifferent_access
+  end
+
+  def next_question
+    @next_question ||= question_after(candidacy.inquiry)
+  end
+
+  def last_question?
+    return true if last_question.blank?
+    current_question.inquiry == last_question
+  end
+
+  def last_question
+    keys.reverse.find do |question|
+      active?(question)
+    end
   end
 
   private
-
-  def last_question?
-    current_question.inquiry == LAST_QUESTION
-  end
 
   def send_message(message)
     organization.message(
@@ -68,53 +71,29 @@ class Survey
     @current_question ||= questions[candidacy.inquiry]
   end
 
-  def next_question
-    @next_question ||= question_after[candidacy.inquiry]
+  def keys
+    %i[certification availability live_in experience
+       transportation zipcode cpr_first_aid skin_test]
   end
 
-  def question_after
-    {
-      nil => certification,
-      certification: availability,
-      availability: live_in,
-      live_in: experience,
-      experience: transportation,
-      transportation: zipcode,
-      zipcode: cpr_first_aid,
-      cpr_first_aid: skin_test
-    }.with_indifferent_access
+  def question_after(inquiry)
+    key = fetch_key(inquiry)
+    questions[key.to_sym]
   end
 
-  def experience
-    Question::Experience.new(contact)
+  def fetch_key(inquiry)
+    keys.find do |question|
+      after?(question, inquiry) && active?(question)
+    end
   end
 
-  def skin_test
-    Question::SkinTest.new(contact)
+  def after?(question, inquiry)
+    return true if inquiry.blank?
+    keys.find_index(question) > keys.find_index(inquiry.to_sym)
   end
 
-  def availability
-    Question::Availability.new(contact)
-  end
-
-  def live_in
-    Question::LiveIn.new(contact)
-  end
-
-  def transportation
-    Question::Transportation.new(contact)
-  end
-
-  def zipcode
-    Question::Zipcode.new(contact)
-  end
-
-  def cpr_first_aid
-    Question::CprFirstAid.new(contact)
-  end
-
-  def certification
-    Question::Certification.new(contact)
+  def active?(question)
+    organization.send("#{question}?")
   end
 
   def thank_you

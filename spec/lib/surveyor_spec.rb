@@ -52,128 +52,6 @@ RSpec.describe Surveyor do
       end
     end
 
-    context 'candidacy completed' do
-      before do
-        candidacy.update(state: :complete)
-      end
-
-      it 'marks the contact as screened' do
-        expect {
-          subject.start
-        }.to change { contact.reload.screened? }.from(false).to(true)
-      end
-
-      context 'but account is no longer on the same team as the contact' do
-        before do
-          team.accounts.destroy(team.accounts.first)
-        end
-
-        it 'does not send an email to the account' do
-          expect {
-            subject.start
-          }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
-        end
-      end
-
-      context 'subscribed to multiple teams' do
-        let(:other_team) { create(:team, :inbox, :account) }
-
-        before do
-          other_contact = other_team.contacts.create(person: contact.person)
-          IceBreaker.call(other_contact)
-        end
-
-        context 'multiple teams' do
-          context 'current team having multiple accounts' do
-            before do
-              account = create(:account, organization: team.organization)
-              team.accounts << account
-            end
-
-            it 'sends an email to each account on the current team' do
-              expect {
-                subject.start
-              }.to have_enqueued_job(ActionMailer::DeliveryJob)
-                .with { |mailer, mailer_method, *_args|
-                     expect(mailer).to eq('NotificationMailer')
-                     expect(mailer_method).to eq('contact_ready_for_review')
-                   }.exactly(2).times
-            end
-
-            context 'with 10 contacts with conversations' do
-              before do
-                contacts = create_list(:contact, 10, team: team)
-                contacts.each do |contact|
-                  IceBreaker.call(contact)
-                end
-              end
-
-              it 'sends an email to each account on the current team' do
-                expect {
-                  subject.start
-                }.to have_enqueued_job(ActionMailer::DeliveryJob)
-                  .with { |mailer, mailer_method, *_args|
-                       expect(mailer).to eq('NotificationMailer')
-                       expect(mailer_method).to eq('contact_ready_for_review')
-                     }.exactly(2).times
-              end
-            end
-          end
-
-          context 'other team having multiple accounts' do
-            before do
-              account = create(:account, organization: other_team.organization)
-              other_team.accounts << account
-            end
-
-            it 'does not send an email to the other accounts' do
-              expect {
-                subject.start
-              }.to have_enqueued_job(ActionMailer::DeliveryJob)
-                .with { |mailer, mailer_method, *_args|
-                     expect(mailer).to eq('NotificationMailer')
-                     expect(mailer_method).to eq('contact_ready_for_review')
-                   }.exactly(1).times
-            end
-          end
-        end
-      end
-
-      it 'does not change the candidacy contact' do
-        allow(subject.survey).to receive(:ask)
-
-        expect {
-          subject.start
-        }.not_to change { candidacy.reload.contact }
-      end
-
-      it 'does not change the candidacy state' do
-        allow(subject.survey).to receive(:ask)
-
-        expect {
-          subject.start
-        }.not_to change { candidacy.reload.state }
-      end
-
-      it 'does not ask a question in the survey' do
-        expect(subject.survey).not_to receive(:ask)
-
-        subject.start
-      end
-
-      it 'does send a welcome message' do
-        expect(subject).to receive(:send_message)
-
-        subject.start
-      end
-
-      it 'does not call ReadReceiptsCreator' do
-        expect(ReadReceiptsCreator).not_to receive(:call)
-
-        subject.start
-      end
-    end
-
     context 'candidacy not in progress' do
       it 'sets the candidacy to in progress' do
         allow(subject.survey).to receive(:ask)
@@ -201,6 +79,7 @@ RSpec.describe Surveyor do
     let(:contact) { create(:contact) }
     let(:candidacy) { contact.contact_candidacy }
     let(:team) { contact.team }
+    let(:survey) { subject.survey }
 
     before do
       contact.update(subscribed: true)
@@ -279,7 +158,7 @@ RSpec.describe Surveyor do
 
           context 'last question' do
             before do
-              candidacy.update(inquiry: Survey::LAST_QUESTION)
+              candidacy.update(inquiry: survey.last_question)
             end
 
             context 'and another valid answer has already come in' do
@@ -290,21 +169,21 @@ RSpec.describe Surveyor do
                 first_surveyor = Surveyor.new(contact)
                 allow(first_surveyor.survey).to receive(:send_message)
 
-                first_surveyor.consider_answer(Survey::LAST_QUESTION, first_message)
+                first_surveyor.consider_answer(survey.last_question, first_message)
               end
 
               it 'does not raise an error' do
                 allow(subject.survey).to receive(:ask)
 
                 expect {
-                  subject.consider_answer(Survey::LAST_QUESTION, second_message)
+                  subject.consider_answer(survey.last_question, second_message)
                 }.not_to raise_error
               end
 
               it 'does not send a message' do
                 expect(subject.survey).not_to receive(:send_message)
 
-                subject.consider_answer(Survey::LAST_QUESTION, second_message)
+                subject.consider_answer(survey.last_question, second_message)
               end
             end
           end

@@ -4,14 +4,10 @@ class Surveyor
   end
 
   def start
-    if contact_candidacy.complete?
-      contact.update(screened: true)
-      send_message(complete_welcome.body)
-      notify_team
-    elsif contact_candidacy.pending?
-      contact_candidacy.update!(state: :in_progress)
-      survey.ask
-    end
+    return unless contact_candidacy.pending?
+
+    contact_candidacy.update!(state: :in_progress)
+    survey.ask(welcome: true)
   end
 
   def consider_answer(inquiry, message)
@@ -72,10 +68,6 @@ class Surveyor
 
   def ready_for_review_mailer(account, conversation)
     NotificationMailer.contact_ready_for_review(account, conversation)
-  end
-
-  def complete_welcome
-    Notification::CompleteWelcome.new(contact)
   end
 
   attr_reader :contact
