@@ -60,8 +60,8 @@ class RecruitBot extends React.Component {
     return (
       <div className='RecruitBot--wrapper'>
         <div className='RecruitBot'>
-          <RecruitBotGreeting current_account={this.props.current_account} />
-          {questions.map(question => <RecruitBotQuestion key={question.type} current_account={this.props.current_account} {...question}/>)}
+          <RecruitBotGreeting current_organization={this.props.current_organization} />
+          {questions.map(question => <RecruitBotQuestion key={question.type} current_organization={this.props.current_organization} {...question}/>)}
           <RecruitBotGoal />
         </div>
       </div>

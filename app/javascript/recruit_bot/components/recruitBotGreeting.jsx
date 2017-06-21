@@ -2,11 +2,11 @@ import React from 'react'
 
 class RecruitBotGreeting extends React.Component {
   senderNotice() {
-    return this.props.current_account.organization.sender_notice;
+    return this.props.current_organization.sender_notice;
   }
 
   organizationName() {
-    return this.props.current_account.organization.name;
+    return this.props.current_organization.name;
   }
   
   render() {

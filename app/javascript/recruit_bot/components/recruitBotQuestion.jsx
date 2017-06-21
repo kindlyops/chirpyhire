@@ -9,7 +9,7 @@ class RecruitBotQuestion extends React.Component {
   }
 
   organizationId() {
-    return this.props.current_account.organization.id;
+    return this.props.current_organization.id;
   }
 
   organizationURL() {
@@ -36,7 +36,7 @@ class RecruitBotQuestion extends React.Component {
   }
 
   isChecked() {
-    return !!this.props.current_account.organization[this.props.type];
+    return !!this.props.current_organization[this.props.type];
   }
 
   render() {
