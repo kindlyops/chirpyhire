@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20170621144028) do
     t.integer "inquiry"
     t.integer "state", default: 0, null: false
     t.boolean "live_in"
+    t.boolean "drivers_license"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contact_id"], name: "index_contact_candidacies_on_contact_id"
@@ -266,6 +267,7 @@ ActiveRecord::Schema.define(version: 20170621144028) do
     t.boolean "live_in", default: true, null: false
     t.boolean "experience", default: true, null: false
     t.boolean "transportation", default: true, null: false
+    t.boolean "drivers_license", default: false, null: false
     t.boolean "zipcode", default: true, null: false
     t.boolean "cpr_first_aid", default: true, null: false
     t.boolean "skin_test", default: true, null: false

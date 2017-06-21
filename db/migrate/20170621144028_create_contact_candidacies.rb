@@ -12,6 +12,7 @@ class CreateContactCandidacies < ActiveRecord::Migration[5.1]
       t.integer :inquiry
       t.integer :state, null: false, default: 0
       t.boolean :live_in
+      t.boolean :drivers_license
       t.timestamps
     end
   end

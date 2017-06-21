@@ -6,6 +6,7 @@ class AddsQuestionFlagsToOrganizations < ActiveRecord::Migration[5.1]
       t.boolean :live_in, default: true, null: false
       t.boolean :experience, default: true, null: false
       t.boolean :transportation, default: true, null: false
+      t.boolean :drivers_license, default: false, null: false
       t.boolean :zipcode, default: true, null: false
       t.boolean :cpr_first_aid, default: true, null: false
       t.boolean :skin_test, default: true, null: false
