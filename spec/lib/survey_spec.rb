@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Survey do
-  let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-  let(:contact) { candidacy.contact }
+  let(:contact) { create(:contact) }
+  let(:candidacy) { contact.contact_candidacy }
   subject { Survey.new(candidacy) }
 
   describe '#ask' do

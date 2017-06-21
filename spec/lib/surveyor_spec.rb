@@ -6,7 +6,7 @@ RSpec.describe Surveyor do
   describe '#start' do
     let(:team) { create(:team, :inbox, :account) }
     let(:contact) { create(:contact, team: team, subscribed: true) }
-    let(:candidacy) { contact.person.candidacy }
+    let(:candidacy) { contact.contact_candidacy }
 
     before do
       IceBreaker.call(contact)
@@ -14,7 +14,7 @@ RSpec.describe Surveyor do
 
     context 'candidacy already in progress' do
       before do
-        candidacy.update(contact: contact, state: :in_progress)
+        candidacy.update(state: :in_progress)
       end
 
       it 'does not change the candidacy contact' do
@@ -54,7 +54,7 @@ RSpec.describe Surveyor do
 
     context 'candidacy completed' do
       before do
-        candidacy.update(contact: contact, state: :complete)
+        candidacy.update(state: :complete)
       end
 
       it 'marks the contact as screened' do
@@ -175,14 +175,6 @@ RSpec.describe Surveyor do
     end
 
     context 'candidacy not in progress' do
-      it 'locks the candidacy to the contact' do
-        allow(subject.survey).to receive(:ask)
-
-        expect {
-          subject.start
-        }.to change { candidacy.reload.contact }.from(nil).to(contact)
-      end
-
       it 'sets the candidacy to in progress' do
         allow(subject.survey).to receive(:ask)
 
@@ -206,8 +198,8 @@ RSpec.describe Surveyor do
   end
 
   describe '#consider_answer' do
-    let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-    let(:contact) { candidacy.contact }
+    let(:contact) { create(:contact) }
+    let(:candidacy) { contact.contact_candidacy }
     let(:team) { contact.team }
 
     before do
@@ -258,34 +250,6 @@ RSpec.describe Surveyor do
                        expect(mailer).to eq('NotificationMailer')
                        expect(mailer_method).to eq('contact_ready_for_review')
                      }.exactly(1).times
-              end
-            end
-          end
-        end
-
-        context 'subscribed to multiple teams' do
-          let(:other_team) { create(:team, :inbox, :account) }
-
-          before do
-            other_contact = other_team.contacts.create(subscribed: true, person: contact.person)
-            IceBreaker.call(other_contact)
-          end
-
-          context 'multiple teams' do
-            context 'current team having multiple accounts' do
-              before do
-                account = create(:account, organization: team.organization)
-                team.accounts << account
-              end
-
-              it 'sends an email to each account on both teams' do
-                expect {
-                  subject.consider_answer(inquiry, message)
-                }.to have_enqueued_job(ActionMailer::DeliveryJob)
-                  .with { |mailer, mailer_method, *_args|
-                       expect(mailer).to eq('NotificationMailer')
-                       expect(mailer_method).to eq('contact_ready_for_review')
-                     }.exactly(3).times
               end
             end
           end

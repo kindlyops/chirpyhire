@@ -1,4 +1,4 @@
-class Person::SkinTest < Person::Attribute
+class Contact::SkinTest < Contact::Attribute
   def label
     return 'Unknown' if candidacy.skin_test.nil?
     return 'Skin / TB Test' if candidacy.skin_test.present?

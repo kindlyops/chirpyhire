@@ -83,8 +83,8 @@ class CandidatesController < ApplicationController
   end
 
   def availability_clause(availabilities)
-    "(\"candidacies\".\"availability\" IN (#{availabilities.join(',')}) OR"\
-    ' "candidacies"."live_in" = \'t\')'
+    '("contact_candidacies"."availability" IN '\
+    "(#{availabilities.join(',')}) OR 'contact_candidacies'.'live_in' = \'t\')"
   end
 
   def enum_availabilities(availability)
@@ -98,7 +98,7 @@ class CandidatesController < ApplicationController
   def standard_candidacy(result)
     return {} if result.blank?
 
-    { people: { 'candidacies' => result } }
+    { 'contact_candidacies' => result }
   end
 
   def hourly?

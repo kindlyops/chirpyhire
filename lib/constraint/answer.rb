@@ -7,14 +7,16 @@ class Constraint::Answer < Constraint::Base
   private
 
   def surveying_contact?
-    contact_present? && same_contact?
+    contact_present?
   end
 
-  def same_contact?
-    person.subscribed_to(team) == candidacy.contact
+  def candidacy
+    contact.contact_candidacy
   end
 
-  delegate :candidacy, to: :person
+  def contact
+    person.subscribed_to(team)
+  end
 
   def contact_present?
     communicators_present? && person.subscribed_to?(team)

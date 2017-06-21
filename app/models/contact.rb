@@ -8,17 +8,16 @@ class Contact < ApplicationRecord
     super || team.organization
   end
 
+  has_one :contact_candidacy
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
 
   has_many :notes
 
-  delegate :handle, :phone_number, :candidacy_zipcode, :availability,
-           :experience, :certification, :skin_test, :avatar, :transportation,
-           :cpr_first_aid, :nickname, :candidacy, :live_in, to: :person
-  delegate :inquiry, to: :person, prefix: true
+  delegate :handle, :phone_number, :avatar, :nickname, to: :person
   delegate :phone_number, to: :team, prefix: true
+  delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
 
@@ -47,7 +46,7 @@ class Contact < ApplicationRecord
   def self.candidacy_filter(filter_clause)
     return current_scope if filter_clause.blank?
 
-    joins(person: :candidacy).where(filter_clause)
+    joins(:contact_candidacy).where(filter_clause)
   end
 
   def self.starred_filter(filter_params)
@@ -67,17 +66,13 @@ class Contact < ApplicationRecord
   end
 
   def self.incomplete
-    includes(person: :candidacy)
-      .where.not(people: { 'candidacies' => { state: :complete } })
+    includes(:contact_candidacy)
+      .where.not('contact_candidacies' => { state: :complete })
   end
 
   def self.complete
-    includes(person: :candidacy)
-      .where(people: { 'candidacies' => { state: :complete } })
-  end
-
-  def complete?
-    person.candidacy.complete?
+    includes(:contact_candidacy)
+      .where('contact_candidacies' => { state: :complete })
   end
 
   def self.subscribed

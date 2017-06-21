@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :contact do
     association :team, :inbox
-    association :person, :with_candidacy
+    association :person
 
     transient do
       phone_number nil
@@ -11,37 +11,38 @@ FactoryGirl.define do
       if evaluator.phone_number.present?
         contact.person.update(phone_number: evaluator.phone_number)
       end
+      create(:contact_candidacy, contact: contact)
     end
 
     trait :"30341" do
       after(:create) do |contact|
         create(:zipcode, :"30341")
-        ZipcodeFetcher.call(contact.person, '30341')
+        ZipcodeFetcher.call(contact, '30341')
       end
     end
 
     trait :"30342" do
       after(:create) do |contact|
         create(:zipcode, :"30342")
-        ZipcodeFetcher.call(contact.person, '30342')
+        ZipcodeFetcher.call(contact, '30342')
       end
     end
 
     trait :public_transportation do
       after(:create) do |contact|
-        contact.person.candidacy.update(transportation: :public_transportation)
+        contact.contact_candidacy.update(transportation: :public_transportation)
       end
     end
 
     trait :personal_transportation do
       after(:create) do |contact|
-        contact.person.candidacy.update(transportation: :personal_transportation)
+        contact.contact_candidacy.update(transportation: :personal_transportation)
       end
     end
 
     trait :incomplete do
       after(:create) do |contact|
-        candidacy = contact.person.candidacy
+        candidacy = contact.contact_candidacy
 
         just_started = {
           contact: contact,
@@ -87,7 +88,7 @@ FactoryGirl.define do
           subscribed: [true, false].sample
         )
 
-        candidacy = contact.person.candidacy
+        candidacy = contact.contact_candidacy
         zipcode = %w[30319 30324 30327 30328 30329
                      30338 30339 30340 30341 30342].sample
 
@@ -112,7 +113,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(certification: 'pca')
+        contact.contact_candidacy.update(certification: 'pca')
       end
     end
 
@@ -120,7 +121,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(certification: 'cna')
+        contact.contact_candidacy.update(certification: 'cna')
       end
     end
 
@@ -128,7 +129,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(live_in: false, availability: 'hourly_am')
+        contact.contact_candidacy.update(live_in: false, availability: 'hourly_am')
       end
     end
 
@@ -136,7 +137,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(experience: :six_or_more)
+        contact.contact_candidacy.update(experience: :six_or_more)
       end
     end
 
@@ -144,7 +145,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(experience: :less_than_one)
+        contact.contact_candidacy.update(experience: :less_than_one)
       end
     end
 
@@ -152,7 +153,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(live_in: false, availability: 'hourly_pm')
+        contact.contact_candidacy.update(live_in: false, availability: 'hourly_pm')
       end
     end
 
@@ -160,7 +161,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(live_in: false, availability: 'hourly')
+        contact.contact_candidacy.update(live_in: false, availability: 'hourly')
       end
     end
 
@@ -168,7 +169,7 @@ FactoryGirl.define do
       complete
 
       after(:create) do |contact|
-        contact.candidacy.update(live_in: true, availability: nil)
+        contact.contact_candidacy.update(live_in: true, availability: nil)
       end
     end
   end

@@ -16,13 +16,19 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
+      let!(:person) { create(:person, phone_number: phone_number) }
 
       context 'without a contact' do
         it 'creates a subscribed contact' do
           expect {
             post :create, params: params
           }.to change { person.contacts.subscribed.count }.by(1)
+        end
+
+        it 'creates a ContactCandidacy' do
+          expect {
+            post :create, params: params
+          }.to change { ContactCandidacy.count }.by(1)
         end
 
         it 'adds the contact to the team' do
@@ -36,7 +42,7 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
 
         context 'and an in progress candidacy' do
           before do
-            person.candidacy.update(state: :in_progress)
+            contact.contact_candidacy.update(state: :in_progress)
           end
 
           it 'creates an AlreadySubscribedJob' do
@@ -59,7 +65,7 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
 
         context 'and a completed candidacy' do
           before do
-            person.candidacy.update(state: :complete)
+            contact.contact_candidacy.update(state: :complete)
           end
 
           it 'creates an AlreadySubscribedJob' do
@@ -87,7 +93,7 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
 
         context 'and a pending candidacy' do
           before do
-            person.candidacy.update(state: :pending)
+            contact.contact_candidacy.update(state: :pending)
           end
 
           it 'does not create an AlreadySubscribedJob' do
@@ -117,10 +123,10 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a candidacy' do
+      it 'creates a contact candidacy' do
         expect {
           post :create, params: params
-        }.to change { Candidacy.count }.by(1)
+        }.to change { ContactCandidacy.count }.by(1)
       end
 
       it 'creates a subscribed contact' do
@@ -165,13 +171,19 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
     end
 
     context 'with a person' do
-      let!(:person) { create(:person, :with_candidacy, phone_number: phone_number) }
+      let!(:person) { create(:person, phone_number: phone_number) }
 
       context 'without a contact' do
         it 'create an unsubscribed contact' do
           expect {
             delete :destroy, params: params
           }.to change { person.contacts.unsubscribed.count }.by(1)
+        end
+
+        it 'create a ContactCandidacy' do
+          expect {
+            delete :destroy, params: params
+          }.to change { ContactCandidacy.count }.by(1)
         end
 
         it 'adds the contact to the team' do
@@ -202,10 +214,10 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a candidacy' do
+      it 'creates a contact candidacy' do
         expect {
           delete :destroy, params: params
-        }.to change { Candidacy.count }.by(1)
+        }.to change { ContactCandidacy.count }.by(1)
       end
 
       it 'creates an unsubscribed contact' do

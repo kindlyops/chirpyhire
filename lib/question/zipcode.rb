@@ -14,6 +14,6 @@ class Question::Zipcode < Question::Base
   alias restated body
 
   def answer
-    Answer::Zipcode.new(self)
+    Answer::Zipcode.new(self, contact)
   end
 end

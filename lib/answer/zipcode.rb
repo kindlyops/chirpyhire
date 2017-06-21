@@ -1,4 +1,9 @@
 class Answer::Zipcode < Answer::Base
+  def initialize(question, contact)
+    @question = question
+    @contact = contact
+  end
+
   def valid?(message)
     zipcode = fetch_zipcode(message)
 
@@ -16,6 +21,8 @@ class Answer::Zipcode < Answer::Base
 
   private
 
+  attr_reader :contact
+
   def after_format(message)
     zipcode_string = fetch_zipcode(message)
     zipcode = ::Zipcode.find_by(zipcode: zipcode_string)
@@ -23,7 +30,7 @@ class Answer::Zipcode < Answer::Base
     if zipcode.present?
       message.sender.update!(zipcode: zipcode)
     else
-      ZipcodeFetcherJob.perform_later(message.sender, zipcode_string)
+      ZipcodeFetcherJob.perform_later(contact, zipcode_string)
     end
   end
 

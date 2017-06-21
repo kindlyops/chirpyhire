@@ -123,5 +123,5 @@ class Survey
 
   attr_reader :candidacy
   delegate :contact, to: :candidacy
-  delegate :person, :organization, to: :contact
+  delegate :organization, to: :contact
 end
