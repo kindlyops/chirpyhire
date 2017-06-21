@@ -1,9 +1,4 @@
 class Answer::Zipcode < Answer::Base
-  def initialize(question, contact)
-    @question = question
-    @contact = contact
-  end
-
   def valid?(message)
     zipcode = fetch_zipcode(message)
 
@@ -21,7 +16,7 @@ class Answer::Zipcode < Answer::Base
 
   private
 
-  attr_reader :contact
+  delegate :contact, to: :question
 
   def after_format(message)
     zipcode_string = fetch_zipcode(message)

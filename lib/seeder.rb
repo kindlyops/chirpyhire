@@ -126,18 +126,10 @@ class Seeder
     choice = contact.contact_candidacy.send(category.to_sym)
     return if choice.nil?
     choice = choice.to_sym if choice.respond_to?(:to_sym)
-    answer = fetch_answer(contact, category, question)
+    answer = "Answer::#{category.camelcase}".constantize.new(question)
 
     body = answer_body(answer, choice, category)
     create_answer(contact, body)
-  end
-
-  def fetch_answer(contact, category, question)
-    if category == 'zipcode'
-      "Answer::#{category.camelcase}".constantize.new(question, contact)
-    else
-      "Answer::#{category.camelcase}".constantize.new(question)
-    end
   end
 
   def answer_body(answer, choice, category)
