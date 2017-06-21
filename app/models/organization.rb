@@ -23,8 +23,6 @@ class Organization < ApplicationRecord
                     styles: { medium: '300x300#', thumb: '100x100#' },
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
-
-  delegate :zipcode, to: :location
   delegate :person, to: :recruiter, prefix: true
 
   def message(contact:, body:, sender: nil)

@@ -5,9 +5,18 @@ class OrganizationsController < ApplicationController
 
   def update
     if @organization.update(permitted_attributes(Organization))
-      redirect_to organization_path(@organization), notice: update_notice
+      current_account.organization.reload
+      Broadcaster::Account.broadcast(current_account)
+
+      respond_to do |format|
+        format.html { redirect_to_organization }
+        format.json { head :ok }
+      end
     else
-      render :show
+      respond_to do |format|
+        format.html { render :show }
+        format.json { head :unprocessable_entity }
+      end
     end
   end
 
@@ -19,5 +28,9 @@ class OrganizationsController < ApplicationController
 
   def update_notice
     "#{@organization.name} updated!"
+  end
+
+  def redirect_to_organization
+    redirect_to organization_path(@organization), notice: update_notice
   end
 end

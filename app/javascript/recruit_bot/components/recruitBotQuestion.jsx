@@ -2,6 +2,43 @@ import React from 'react'
 import Toggle from 'react-toggle'
 
 class RecruitBotQuestion extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.toggleQuestion = this.toggleQuestion.bind(this);
+  }
+
+  organizationId() {
+    return this.props.current_account.organization.id;
+  }
+
+  organizationURL() {
+    return `/organizations/${this.organizationId()}.json`;
+  }
+
+  data() {
+    return JSON.stringify({
+      organization: {
+        [this.props.type]: !this.isChecked()
+      }
+    })
+  }
+
+  toggleQuestion() {
+    $.ajax({
+      url: this.organizationURL(),
+      type: 'PUT',
+      data: this.data(),
+      dataType: 'json',
+      accepts: 'application/json',
+      contentType: 'application/json'
+    });
+  }
+
+  isChecked() {
+    return !!this.props.current_account.organization[this.props.type];
+  }
+
   render() {
     return (
       <div className='card'>
@@ -9,8 +46,8 @@ class RecruitBotQuestion extends React.Component {
           <span className='question'>{`Question: ${this.props.question}`}</span>
           <label className='toggle'>
             <Toggle
-              defaultChecked={this.props.checked}
-              onChange={() => {}} />
+              checked={this.isChecked()}
+              onChange={this.toggleQuestion} />
           </label>
         </div>
         <div className='card-block'>

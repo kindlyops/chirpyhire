@@ -26,13 +26,15 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      subscription: {},
       current_account: { teams: [], organization: {} }
     }
   }
 
   load() {
     $.get(this.currentAccountUrl()).then(current_account => {
-      this.setState({current_account: current_account})
+      this.setState({current_account: current_account});
+      this.connect();
     })
   }
 
@@ -57,6 +59,33 @@ class App extends React.Component {
         </div>
       </Router>
     )
+  }
+
+  connect() {
+    let channel = { channel: 'AccountsChannel', id: this.state.current_account.id };
+    let subscription = window.App.cable.subscriptions.create(
+      channel, this._channelConfig()
+    );
+
+    this.setState({ subscription: subscription });
+  }
+
+  _channelConfig() {
+    return {
+      received: this._received.bind(this)
+    }
+  }
+
+  _received(account) {
+    this.setState({ current_account: account });
+  }
+
+  disconnect() {
+    window.App.cable.subscriptions.remove(this.state.subscription);
+  }
+
+  componentWillUnmount() {
+    this.disconnect();
   }
 }
 
