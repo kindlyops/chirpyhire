@@ -9,7 +9,7 @@ class GettingStarted extends React.Component {
         <div className='ch--Header'>
           <h1>Getting Started</h1>
         </div>
-        <RecruitBot />
+        <RecruitBot current_account={this.props.current_account} />
       </div>
     )
   }

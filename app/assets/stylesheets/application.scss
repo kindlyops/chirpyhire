@@ -2,6 +2,7 @@
 @import "bootstrap";
 @import "font-awesome";
 @import "polyfill/bootstrap3";
+@import "react-toggle";
 
 body {
   &.devise {
@@ -70,4 +71,4 @@ body {
 @import "dashboard";
 @import "platform";
 @import "recruit";
-
+@import "recruit_bot";

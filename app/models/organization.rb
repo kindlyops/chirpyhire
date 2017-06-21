@@ -46,7 +46,16 @@ class Organization < ApplicationRecord
     twilio_account_sid.present?
   end
 
+  def sender_notice
+    return recruiter_notice if recruiter && recruiter.first_name
+    "This is #{name}."
+  end
+
   private
+
+  def recruiter_notice
+    "This is #{recruiter.first_name} with #{name}."
+  end
 
   def messaging_client
     @messaging_client ||= Messaging::Client.new(self)

@@ -7,3 +7,8 @@ json.teams account.teams do |team|
   json.name team.name
   json.inbox_id team.inbox.id
 end
+json.organization do
+  json.id account.organization.id
+  json.name account.organization.name
+  json.sender_notice account.organization.sender_notice
+end
