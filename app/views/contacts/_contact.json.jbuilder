@@ -64,3 +64,10 @@ json.skin_test do
   json.icon_class contact.skin_test.icon_class
   json.query contact.skin_test.query
 end
+
+json.drivers_license do
+  json.label contact.drivers_license.label
+  json.tooltip_label contact.drivers_license.tooltip_label
+  json.icon_class contact.drivers_license.icon_class
+  json.query contact.drivers_license.query
+end

@@ -19,6 +19,6 @@ class OrganizationPolicy < ApplicationPolicy
 
   def question_attributes
     %i[certification availability live_in experience transportation zipcode
-       cpr_first_aid skin_test]
+       cpr_first_aid skin_test drivers_license]
   end
 end

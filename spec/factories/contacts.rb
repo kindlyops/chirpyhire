@@ -103,6 +103,7 @@ FactoryGirl.define do
           live_in: [true, false].sample,
           zipcode: zipcode,
           cpr_first_aid: [true, false].sample,
+          drivers_license: [true, false].sample,
           state: :complete
         )
         candidacy.save

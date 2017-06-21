@@ -58,6 +58,10 @@ class ContactDecorator < Draper::Decorator
     Contact::ZipCode.new(object)
   end
 
+  def drivers_license
+    Contact::DriversLicense.new(object)
+  end
+
   private
 
   def near_params

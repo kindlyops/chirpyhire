@@ -6,7 +6,7 @@ end
 
 headers = %i(nickname phone_number location availability live_in
   transportation experience certification skin_test cpr_first_aid
-  last_reply_at starred
+  drivers_license last_reply_at starred
 )
 
 csv.headers *headers.concat(notes)
@@ -22,6 +22,7 @@ csv.rows candidates do |csv, candidate|
   csv.cell :certification, candidate.certification.label
   csv.cell :skin_test, candidate.skin_test
   csv.cell :cpr_first_aid, candidate.cpr_first_aid
+  csv.cell :drivers_license, candidate.drivers_license
   csv.cell :last_reply_at, candidate.last_reply_at
   csv.cell :starred, candidate.starred
   candidate.notes.each_with_index do |note, i|

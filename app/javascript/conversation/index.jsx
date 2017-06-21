@@ -17,7 +17,8 @@ class Conversation extends React.Component {
         experience: {},
         transportation: {},
         cpr_first_aid: {},
-        skin_test: {}
+        skin_test: {},
+        drivers_license: {}
       },
       messages: []
     };
