@@ -1,0 +1,19 @@
+.ch--SecondaryHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex: 0 0 45px;
+  background-color: #2B8360;
+
+  a {
+    color: $white;
+
+    &:hover {
+      color: $white;
+    }
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}

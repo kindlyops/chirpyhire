@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170618210120) do
+ActiveRecord::Schema.define(version: 20170621144028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,24 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.integer "state", default: 0, null: false
     t.boolean "live_in"
     t.index ["person_id"], name: "index_candidacies_on_person_id"
+  end
+
+  create_table "contact_candidacies", force: :cascade do |t|
+    t.integer "experience"
+    t.boolean "skin_test"
+    t.integer "availability"
+    t.integer "transportation"
+    t.string "zipcode"
+    t.boolean "cpr_first_aid"
+    t.integer "certification"
+    t.bigint "contact_id", null: false
+    t.integer "inquiry"
+    t.integer "state", default: 0, null: false
+    t.boolean "live_in"
+    t.boolean "drivers_license"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_contact_candidacies_on_contact_id"
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -244,6 +262,15 @@ ActiveRecord::Schema.define(version: 20170618210120) do
     t.integer "screened_contacts_count", default: 0, null: false
     t.integer "reached_contacts_count", default: 0, null: false
     t.integer "starred_contacts_count", default: 0, null: false
+    t.boolean "certification", default: true, null: false
+    t.boolean "availability", default: true, null: false
+    t.boolean "live_in", default: true, null: false
+    t.boolean "experience", default: true, null: false
+    t.boolean "transportation", default: true, null: false
+    t.boolean "drivers_license", default: false, null: false
+    t.boolean "zipcode", default: true, null: false
+    t.boolean "cpr_first_aid", default: true, null: false
+    t.boolean "skin_test", default: true, null: false
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 
@@ -328,6 +355,7 @@ ActiveRecord::Schema.define(version: 20170618210120) do
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
   add_foreign_key "candidacies", "people"
+  add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"

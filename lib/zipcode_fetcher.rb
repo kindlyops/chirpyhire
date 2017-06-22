@@ -1,12 +1,12 @@
 class ZipcodeFetcher
-  def self.call(person, zipcode_string)
-    new(person, zipcode_string).call
+  def self.call(contact, zipcode_string)
+    new(contact, zipcode_string).call
   end
 
-  attr_reader :person, :zipcode_string
+  attr_reader :contact, :zipcode_string
 
-  def initialize(person, zipcode_string)
-    @person = person
+  def initialize(contact, zipcode_string)
+    @contact = contact
     @zipcode_string = zipcode_string
   end
 
@@ -14,16 +14,19 @@ class ZipcodeFetcher
     existing_zipcode = Zipcode.find_by(zipcode: zipcode_string)
 
     if existing_zipcode.present?
-      person.update!(zipcode: existing_zipcode)
+      update_zipcode(existing_zipcode)
     else
       lookup.zipcode = zipcode_string
       client.send_lookup(lookup)
-
-      person.update!(zipcode: created_zipcode)
+      update_zipcode(created_zipcode)
     end
   end
 
   private
+
+  def update_zipcode(zipcode)
+    contact.person.update!(zipcode: zipcode)
+  end
 
   def created_zipcode
     @created_zipcode ||= begin

@@ -11,47 +11,25 @@ RSpec.describe Constraint::Answer do
 
   describe '#matches?' do
     context 'with person present' do
-      let(:person) { create(:person, :with_candidacy) }
+      let(:person) { create(:person) }
       let(:parameters) { { 'From' => person.phone_number, 'To' => team.phone_number } }
 
       context 'with contact present' do
         let!(:contact) { create(:contact, person: person, team: team) }
 
-        context 'tied to the candidacy' do
-          before do
-            person.candidacy.update(contact: contact)
-          end
-
-          context 'without inquiry' do
-            it 'is false' do
-              expect(constraint.matches?(request)).to eq(false)
-            end
-          end
-
-          context 'with inquiry' do
-            before do
-              person.candidacy.update(inquiry: :experience)
-            end
-
-            it 'is true' do
-              expect(constraint.matches?(request)).to eq(true)
-            end
-          end
-        end
-
-        context 'candidacy tied to another contact' do
-          before do
-            person.candidacy.update(contact: create(:contact, person: person))
-          end
-
+        context 'without inquiry' do
           it 'is false' do
             expect(constraint.matches?(request)).to eq(false)
           end
         end
 
-        context 'candidacy not tied to a contact' do
-          it 'is false' do
-            expect(constraint.matches?(request)).to eq(false)
+        context 'with inquiry' do
+          before do
+            contact.contact_candidacy.update(inquiry: :experience)
+          end
+
+          it 'is true' do
+            expect(constraint.matches?(request)).to eq(true)
           end
         end
       end

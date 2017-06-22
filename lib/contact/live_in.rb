@@ -1,4 +1,4 @@
-class Person::LiveIn < Person::Attribute
+class Contact::LiveIn < Contact::Attribute
   def label
     return 'Unknown' if candidacy.live_in.nil?
     return 'Live-In' if candidacy.live_in.present?

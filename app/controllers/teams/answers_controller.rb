@@ -8,6 +8,6 @@ class Teams::AnswersController < Teams::MessagesController
   private
 
   def inquiry
-    contact.person_inquiry
+    contact.inquiry
   end
 end

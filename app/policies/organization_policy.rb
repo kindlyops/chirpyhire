@@ -8,8 +8,17 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attributes = %i[name avatar email description url]
+    attributes = basic_attributes.concat(question_attributes)
     attributes.push(:billing_email) if account.owner?
     attributes
+  end
+
+  def basic_attributes
+    %i[name avatar email description url]
+  end
+
+  def question_attributes
+    %i[certification availability live_in experience transportation zipcode
+       cpr_first_aid skin_test]
   end
 end

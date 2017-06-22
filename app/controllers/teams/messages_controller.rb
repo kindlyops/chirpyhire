@@ -18,11 +18,7 @@ class Teams::MessagesController < ActionController::Base
   end
 
   def person
-    @person ||= begin
-      person = Person.find_or_create_by(phone_number: params['From'])
-      person.candidacy || person.create_candidacy
-      person
-    end
+    @person ||= Person.find_or_create_by(phone_number: params['From'])
   end
 
   def team
@@ -30,7 +26,10 @@ class Teams::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(team: team).tap(&:subscribe)
+    person.contacts.create(team: team).tap do |contact|
+      contact.subscribe
+      contact.create_contact_candidacy
+    end
   end
 
   def set_header

@@ -1,7 +1,11 @@
 class Question::MultipleChoice < Question::Base
   POSTLUDE_BASE = 'Please reply with just the letter'.freeze
 
-  def body
+  def body(welcome: false)
+    super << question_body
+  end
+
+  def question_body
     <<~BODY.strip
       #{question}
 

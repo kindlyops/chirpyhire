@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Teams::AnswersController, type: :controller do
   let(:team) { create(:team, :account, phone_number: Faker::PhoneNumber.cell_phone) }
   let(:organization) { team.organization }
-  let(:person) { create(:person, :with_candidacy) }
+  let(:person) { create(:person) }
 
   let(:params) do
     {

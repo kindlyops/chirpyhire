@@ -1,5 +1,9 @@
 class Question::Zipcode < Question::Base
-  def body
+  def body(welcome: false)
+    super << question_body
+  end
+
+  def question_body
     <<~BODY
       What is your five-digit zipcode?
 

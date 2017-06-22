@@ -92,7 +92,7 @@ class Inbox extends React.Component {
   }
 
   render() {
-    return <div className='Recruit'>
+    return <div className='ch--Page Recruit'>
             <Inboxes current_account={this.props.current_account} inboxes={this.state.inboxes} />
             <div className="Inbox">
               <div className='Conversations'>

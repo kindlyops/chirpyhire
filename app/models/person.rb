@@ -13,12 +13,6 @@ class Person < ApplicationRecord
   belongs_to :zipcode, optional: true
 
   before_validation :add_nickname
-
-  delegate :inquiry, :availability, :experience, :transportation,
-           :certification, :skin_test, :cpr_first_aid, :live_in,
-           to: :candidacy
-  delegate :zipcode, to: :candidacy, prefix: true
-
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },
                     default_url: ''

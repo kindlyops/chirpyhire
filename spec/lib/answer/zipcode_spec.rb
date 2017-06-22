@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Answer::Zipcode do
   let(:contact) { create(:contact) }
   let(:question) { Question::Zipcode.new(contact) }
-  subject { Answer::Zipcode.new(question) }
+  subject { question.answer }
 
   describe '#valid?' do
     context '5 digits' do

@@ -4,14 +4,10 @@ class Surveyor
   end
 
   def start
-    if candidacy.complete?
-      contact.update(screened: true)
-      send_message(complete_welcome.body)
-      notify_team
-    elsif candidacy.pending?
-      lock_candidacy
-      survey.ask
-    end
+    return unless contact_candidacy.pending?
+
+    contact_candidacy.update!(state: :in_progress)
+    survey.ask(welcome: true)
   end
 
   def consider_answer(inquiry, message)
@@ -20,12 +16,12 @@ class Surveyor
     return complete_survey(message) if survey.just_finished?(message)
     return restate_and_log(message) unless survey.answer.valid?(message)
 
-    update_candidacy(message)
+    update_contact_candidacy(message)
     survey.ask
   end
 
   def survey
-    @survey ||= Survey.new(candidacy)
+    @survey ||= Survey.new(contact_candidacy)
   end
 
   private
@@ -37,22 +33,14 @@ class Surveyor
   end
 
   def complete_survey(message)
-    update_candidacy(message)
+    update_contact_candidacy(message)
     survey.complete
 
-    notify_all_teams
+    notify_team
   end
 
   def notify_team
     notify_contact_ready_for_review(team.accounts, contact.open_conversation)
-  end
-
-  def notify_all_teams
-    person.contacts.find_each do |contact|
-      team = contact.team
-      conversation = contact.open_conversation
-      notify_contact_ready_for_review(team.accounts, conversation)
-    end
   end
 
   def send_message(message)
@@ -63,17 +51,13 @@ class Surveyor
     )
   end
 
-  def update_candidacy(message)
+  def update_contact_candidacy(message)
     survey.answer.format(message) do |formatted_answer|
-      candidacy.assign_attributes(formatted_answer)
-      candidacy.save!
+      contact_candidacy.assign_attributes(formatted_answer)
+      contact_candidacy.save!
       Broadcaster::Contact.broadcast(contact)
-      candidacy
+      contact_candidacy
     end
-  end
-
-  def lock_candidacy
-    candidacy.update!(contact: contact, state: :in_progress)
   end
 
   def notify_contact_ready_for_review(accounts, conversation)
@@ -86,12 +70,7 @@ class Surveyor
     NotificationMailer.contact_ready_for_review(account, conversation)
   end
 
-  def complete_welcome
-    Notification::CompleteWelcome.new(contact)
-  end
-
   attr_reader :contact
 
-  delegate :person, :organization, :team, to: :contact
-  delegate :candidacy, to: :person
+  delegate :organization, :team, :contact_candidacy, to: :contact
 end

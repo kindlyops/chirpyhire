@@ -1,9 +1,7 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
   decorates_association :person
-  delegate :hero_pattern_classes, :availability, :certification,
-           :cpr_first_aid, :experience, :handle, :live_in, :phone_number,
-           :skin_test, :stats, :transportation, :candidacy_zipcode, to: :person
+  delegate :hero_pattern_classes, :handle, :phone_number, to: :person
 
   def broad_query_params
     {
@@ -22,6 +20,42 @@ class ContactDecorator < Draper::Decorator
 
   def last_active_at
     Contact::LastActiveAt.new(object)
+  end
+
+  def availability
+    Contact::Availability.new(object)
+  end
+
+  def certification
+    Contact::Certification.new(object)
+  end
+
+  def cpr_first_aid
+    Contact::CprFirstAid.new(object)
+  end
+
+  def experience
+    Contact::Experience.new(object)
+  end
+
+  def live_in
+    Contact::LiveIn.new(object)
+  end
+
+  def skin_test
+    Contact::SkinTest.new(object)
+  end
+
+  def stats
+    Contact::Stats.new(object)
+  end
+
+  def transportation
+    Contact::Transportation.new(object)
+  end
+
+  def candidacy_zipcode
+    Contact::ZipCode.new(object)
   end
 
   private

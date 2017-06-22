@@ -1,4 +1,4 @@
-class Person::ZipCode < Person::Attribute
+class Contact::ZipCode < Contact::Attribute
   def humanize_attribute(*)
     candidacy.zipcode
   end

@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ZipcodeFetcher do
-  let(:person) { create(:person) }
+  let(:contact) { create(:contact) }
+  let(:person) { contact.person }
 
   describe '#call' do
     context 'with an existing zipcode' do
       let(:zipcode) { create(:zipcode, '30342'.to_sym) }
-      subject { ZipcodeFetcher.new(person, zipcode.zipcode) }
+      subject { ZipcodeFetcher.new(contact, zipcode.zipcode) }
 
       it 'sets the person zipcode as existing zipcode' do
         expect {
@@ -16,7 +17,7 @@ RSpec.describe ZipcodeFetcher do
     end
 
     context 'when the zipcode does not exist', vcr: { cassette_name: 'ZipcodeFetcher' } do
-      subject { ZipcodeFetcher.new(person, '30342') }
+      subject { ZipcodeFetcher.new(contact, '30342') }
 
       it 'creates a new zipcode' do
         expect {

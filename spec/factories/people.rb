@@ -6,20 +6,6 @@ FactoryGirl.define do
       name { Faker::Name.name }
     end
 
-    trait :with_candidacy do
-      after(:create) do |person|
-        person.candidacy || person.create_candidacy
-      end
-    end
-
-    trait :with_subscribed_candidacy do
-      after(:create) do |person|
-        person.create_candidacy
-        contact = create(:contact, person: person)
-        person.candidacy.update(contact: contact)
-      end
-    end
-
     trait :with_zipcode do
       after(:create) do |person|
         zipcode = create(:zipcode)

@@ -1,4 +1,4 @@
-class Person::CprFirstAid < Person::Attribute
+class Contact::CprFirstAid < Contact::Attribute
   def label
     return 'Unknown' if candidacy.cpr_first_aid.nil?
     return 'CPR / 1st Aid' if candidacy.cpr_first_aid.present?

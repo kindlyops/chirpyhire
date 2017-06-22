@@ -1,6 +1,6 @@
 class CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
-  layout 'candidates', only: %i[index]
+  layout 'react', only: %i[index]
   PAGE_LIMIT = 24
   decorates_assigned :candidates
 
@@ -83,8 +83,8 @@ class CandidatesController < ApplicationController
   end
 
   def availability_clause(availabilities)
-    "(\"candidacies\".\"availability\" IN (#{availabilities.join(',')}) OR"\
-    ' "candidacies"."live_in" = \'t\')'
+    '("contact_candidacies"."availability" IN '\
+    "(#{availabilities.join(',')}) OR 'contact_candidacies'.'live_in' = \'t\')"
   end
 
   def enum_availabilities(availability)
@@ -98,7 +98,7 @@ class CandidatesController < ApplicationController
   def standard_candidacy(result)
     return {} if result.blank?
 
-    { people: { 'candidacies' => result } }
+    { 'contact_candidacies' => result }
   end
 
   def hourly?

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Survey do
-  let(:candidacy) { create(:person, :with_subscribed_candidacy).candidacy }
-  let(:contact) { candidacy.contact }
+  let(:contact) { create(:contact) }
+  let(:candidacy) { contact.contact_candidacy }
   subject { Survey.new(candidacy) }
 
   describe '#ask' do
@@ -92,7 +92,7 @@ RSpec.describe Survey do
   describe '#complete' do
     context 'in_progress' do
       before do
-        candidacy.update(inquiry: Survey::LAST_QUESTION, state: :in_progress)
+        candidacy.update(inquiry: subject.last_question, state: :in_progress)
       end
 
       let(:thank_you) { Notification::ThankYou.new(contact) }
@@ -128,7 +128,7 @@ RSpec.describe Survey do
 
       context 'last_question' do
         before do
-          candidacy.update(inquiry: Survey::LAST_QUESTION)
+          candidacy.update(inquiry: subject.last_question)
         end
 
         context 'invalid answer' do
@@ -157,6 +157,136 @@ RSpec.describe Survey do
 
         it 'is false' do
           expect(subject.just_finished?(message)).to eq(false)
+        end
+      end
+    end
+  end
+
+  describe '#next_question' do
+    let(:organization) { contact.organization }
+    context 'pristine contact_candidacy' do
+      it 'is Question::Certification' do
+        expect(subject.next_question).to be_a(Question::Certification)
+      end
+
+      context 'with certification disabled' do
+        before do
+          organization.update(certification: false)
+        end
+
+        it 'is Question::Availability' do
+          expect(subject.next_question).to be_a(Question::Availability)
+        end
+
+        context 'with availability disabled' do
+          before do
+            organization.update(availability: false)
+          end
+
+          it 'is Question::LiveIn' do
+            expect(subject.next_question).to be_a(Question::LiveIn)
+          end
+
+          context 'with live_in disabled' do
+            before do
+              organization.update(live_in: false)
+            end
+
+            it 'is Question::Experience' do
+              expect(subject.next_question).to be_a(Question::Experience)
+            end
+
+            context 'with experience disabled' do
+              before do
+                organization.update(experience: false)
+              end
+
+              it 'is Question::Transportation' do
+                expect(subject.next_question).to be_a(Question::Transportation)
+              end
+
+              context 'with transportation disabled' do
+                before do
+                  organization.update(transportation: false)
+                end
+
+                it 'is Question::Zipcode' do
+                  expect(subject.next_question).to be_a(Question::Zipcode)
+                end
+
+                context 'with zipcode disabled' do
+                  before do
+                    organization.update(zipcode: false)
+                  end
+
+                  it 'is Question::CprFirstAid' do
+                    expect(subject.next_question).to be_a(Question::CprFirstAid)
+                  end
+
+                  context 'with cpr_first_aid disabled' do
+                    before do
+                      organization.update(cpr_first_aid: false)
+                    end
+
+                    it 'is Question::SkinTest' do
+                      expect(subject.next_question).to be_a(Question::SkinTest)
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  describe '#last_question?' do
+    let(:organization) { contact.organization }
+    context 'asked one question contact_candidacy' do
+      before do
+        candidacy.update(inquiry: :certification)
+      end
+
+      it 'is false' do
+        expect(subject.last_question?).to eq(false)
+      end
+
+      context 'with all questions after disabled' do
+        before do
+          organization.update(
+            certification: true,
+            availability: false,
+            live_in: false,
+            experience: false,
+            transportation: false,
+            zipcode: false,
+            cpr_first_aid: false,
+            skin_test: false
+          )
+        end
+
+        it 'is true' do
+          expect(subject.last_question?).to eq(true)
+        end
+      end
+
+      context 'with all questions disabled' do
+        before do
+          organization.update(
+            certification: false,
+            availability: false,
+            live_in: false,
+            experience: false,
+            transportation: false,
+            zipcode: false,
+            cpr_first_aid: false,
+            skin_test: false
+          )
+        end
+
+        it 'is true' do
+          expect(subject.last_question?).to eq(true)
         end
       end
     end
