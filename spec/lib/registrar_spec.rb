@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Registrar do
   describe 'register' do
     subject { Registrar.new(account) }
-    let(:organization) { create(:organization, :team) }
+    let(:organization) { create(:organization, :team_without_inbox) }
 
     before do
       allow(PhoneNumberProvisioner).to receive(:provision) do |team|
