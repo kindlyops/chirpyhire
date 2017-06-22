@@ -10,12 +10,8 @@ Rails.application.routes.draw do
 
   resource :health, only: :show
   resources :candidates, only: :index, concerns: :paginatable
-  resource :candidate, only: %i[show update], controller: 'ideal_candidates'
-  post '/candidacies', to: 'candidacies#index', defaults: { format: 'csv' }
   resources :recruiting_ads, only: %i[index update]
-  resources :ideal_candidate_suggestions, only: :create
   resource :dashboard
-
   resources :segments
 
   resources :contacts, only: [:show] do
