@@ -8,7 +8,7 @@ class NewOrganizationNotificationJob < ApplicationJob
 
   def notifier
     @notifier ||= Slack::Notifier.new(
-      ENV.fetch('SLACK_WEBHOOK'), channel: '#general', username: 'freddy'
+      ENV.fetch('SLACK_WEBHOOK'), channel: '#metric', username: 'freddy'
     )
   end
 
