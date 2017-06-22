@@ -213,9 +213,6 @@ class Seeder
   end
 
   def setup_organization
-    organization.create_ideal_candidate!(
-      zipcodes_attributes: [{ value: '30341' }]
-    )
     organization.create_recruiting_ad(
       team: team, body: RecruitingAd.body(team)
     )

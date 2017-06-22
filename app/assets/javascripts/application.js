@@ -19,7 +19,6 @@
 //= require clipboard
 //= require ramda
 //= require cocoon
-//= require trianglify.min.js
 //= require_tree .
 
 
