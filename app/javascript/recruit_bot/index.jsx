@@ -31,6 +31,11 @@ let questions = [
       answers: "A - I have personal transportation\nB - I use public transportation\nC - I don't have a great way to get to work",
     },
     {
+      type: 'drivers_license',
+      question: "Do you have a current Driver's License?",
+      answers: "A - Yes, of course!\nB - No, but I want to get one!",
+    },
+    {
       type: 'zipcode',
       question: "What is your five-digit zipcode?",
       answers: ""

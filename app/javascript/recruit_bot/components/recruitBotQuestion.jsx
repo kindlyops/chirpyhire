@@ -42,7 +42,8 @@ class RecruitBotQuestion extends React.Component {
 
   keys() {
     return ['certification', 'availability', 'live_in', 'experience',
-            'transportation', 'zipcode', 'cpr_first_aid', 'skin_test'];
+            'transportation', 'zipcode', 'cpr_first_aid', 'skin_test',
+            'drivers_license'];
   }
 
   isDisabled() {

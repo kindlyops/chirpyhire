@@ -110,6 +110,13 @@ class ProfileDetails extends React.Component {
             {this.props.contact.skin_test.label}
           </span>
         </p>
+        <p className="profile-detail-item">
+          <span className="profile-detail-category">Driver's License:</span>
+          <span className="profile-detail-value">
+            <i className={`fa fa-fw mr-1 ${this.props.contact.drivers_license.icon_class}`}></i>
+            {this.props.contact.drivers_license.label}
+          </span>
+        </p>
       </div>
     )
   }

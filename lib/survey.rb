@@ -73,7 +73,7 @@ class Survey
 
   def keys
     %i[certification availability live_in experience
-       transportation zipcode cpr_first_aid skin_test]
+       transportation drivers_license zipcode cpr_first_aid skin_test]
   end
 
   def question_after(inquiry)
