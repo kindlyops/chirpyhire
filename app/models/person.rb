@@ -1,6 +1,5 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
-  has_one :candidacy
   has_one :account, inverse_of: :person
   has_many :contacts
 

@@ -63,12 +63,6 @@ RSpec.describe Teams::MessagesController, type: :controller do
         }.not_to change { Person.count }
       end
 
-      it 'does not create a candidacy' do
-        expect {
-          post :create, params: params
-        }.not_to change { Candidacy.count }
-      end
-
       it 'creates a subscribed contact' do
         expect {
           post :create, params: params

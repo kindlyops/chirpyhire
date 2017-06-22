@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622030132) do
+ActiveRecord::Schema.define(version: 20170622142710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,24 +71,6 @@ ActiveRecord::Schema.define(version: 20170622030132) do
     t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type"
   end
 
-  create_table "candidacies", id: :serial, force: :cascade do |t|
-    t.integer "experience"
-    t.boolean "skin_test"
-    t.integer "availability"
-    t.integer "transportation"
-    t.string "zipcode"
-    t.boolean "cpr_first_aid"
-    t.integer "certification"
-    t.integer "person_id", null: false
-    t.integer "inquiry"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "contact_id"
-    t.integer "state", default: 0, null: false
-    t.boolean "live_in"
-    t.index ["person_id"], name: "index_candidacies_on_person_id"
-  end
-
   create_table "contact_candidacies", force: :cascade do |t|
     t.integer "experience"
     t.boolean "skin_test"
@@ -136,35 +118,11 @@ ActiveRecord::Schema.define(version: 20170622030132) do
     t.index ["state", "contact_id"], name: "index_conversations_on_state_and_contact_id", unique: true, where: "(state = 0)"
   end
 
-  create_table "ideal_candidate_suggestions", id: :serial, force: :cascade do |t|
-    t.integer "organization_id", null: false
-    t.text "value", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_ideal_candidate_suggestions_on_organization_id"
-  end
-
-  create_table "ideal_candidate_zipcodes", id: :serial, force: :cascade do |t|
-    t.string "value", null: false
-    t.integer "ideal_candidate_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ideal_candidate_id", "value"], name: "index_ideal_candidate_zipcodes_on_ideal_candidate_id_and_value", unique: true
-    t.index ["ideal_candidate_id"], name: "index_ideal_candidate_zipcodes_on_ideal_candidate_id"
-  end
-
-  create_table "ideal_candidates", id: :serial, force: :cascade do |t|
-    t.integer "organization_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_ideal_candidates_on_organization_id"
-  end
-
   create_table "inboxes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
-    t.bigint "team_id"
+    t.bigint "team_id", null: false
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -177,11 +135,9 @@ ActiveRecord::Schema.define(version: 20170622030132) do
     t.string "postal_code", null: false
     t.string "country", null: false
     t.string "country_code"
-    t.integer "organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "team_id", null: false
-    t.index ["organization_id"], name: "index_locations_on_organization_id"
     t.index ["team_id"], name: "index_locations_on_team_id"
   end
 
@@ -335,16 +291,11 @@ ActiveRecord::Schema.define(version: 20170622030132) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
-  add_foreign_key "candidacies", "people"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "contacts"
-  add_foreign_key "ideal_candidate_suggestions", "organizations"
-  add_foreign_key "ideal_candidate_zipcodes", "ideal_candidates"
-  add_foreign_key "ideal_candidates", "organizations"
-  add_foreign_key "locations", "organizations"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"

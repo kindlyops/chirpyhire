@@ -1,10 +1,7 @@
 class Location < ApplicationRecord
   belongs_to :team
-  belongs_to :organization, optional: true
 
-  def organization
-    super || team.organization
-  end
+  delegate :organization, to: :team
 
   validates :latitude, presence: true
   validates :longitude, presence: true
