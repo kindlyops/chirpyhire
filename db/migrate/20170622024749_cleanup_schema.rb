@@ -4,6 +4,5 @@ class CleanupSchema < ActiveRecord::Migration[5.1]
     change_column_null :read_receipts, :conversation_id, false
     drop_table :inbox_conversations
     remove_column :inboxes, :account_id
-    change_column_null :inboxes, :team_id, false
   end
 end

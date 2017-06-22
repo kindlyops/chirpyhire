@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20170622024749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "unread_count", default: 0, null: false
-    t.bigint "team_id", null: false
+    t.bigint "team_id"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
