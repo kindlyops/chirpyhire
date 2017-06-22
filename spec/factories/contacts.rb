@@ -46,16 +46,16 @@ FactoryGirl.define do
 
         just_started = {
           contact: contact,
-          certification: Candidacy.certifications.keys.sample,
+          certification: ContactCandidacy.certifications.keys.sample,
           inquiry: :availability
         }
 
         midway = {
           contact: contact,
-          certification: Candidacy.certifications.keys.sample,
-          availability: Candidacy.availabilities.keys.sample,
+          certification: ContactCandidacy.certifications.keys.sample,
+          availability: ContactCandidacy.availabilities.keys.sample,
           live_in: [true, false].sample,
-          experience: Candidacy.experiences.keys.sample,
+          experience: ContactCandidacy.experiences.keys.sample,
           inquiry: :transportation
         }
 
@@ -64,10 +64,10 @@ FactoryGirl.define do
 
         almost_finished = {
           contact: contact,
-          certification: Candidacy.certifications.keys.sample,
-          availability: Candidacy.availabilities.keys.sample,
-          experience: Candidacy.experiences.keys.sample,
-          transportation: Candidacy.transportations.keys.sample,
+          certification: ContactCandidacy.certifications.keys.sample,
+          availability: ContactCandidacy.availabilities.keys.sample,
+          experience: ContactCandidacy.experiences.keys.sample,
+          transportation: ContactCandidacy.transportations.keys.sample,
           live_in: [true, false].sample,
           zipcode: zipcode,
           cpr_first_aid: [true, false].sample,
@@ -95,10 +95,10 @@ FactoryGirl.define do
         candidacy.assign_attributes(
           contact: contact,
           inquiry: nil,
-          experience: Candidacy.experiences.keys.sample,
-          availability: Candidacy.availabilities.keys.sample,
-          transportation: Candidacy.transportations.keys.sample,
-          certification: Candidacy.certifications.keys.sample,
+          experience: ContactCandidacy.experiences.keys.sample,
+          availability: ContactCandidacy.availabilities.keys.sample,
+          transportation: ContactCandidacy.transportations.keys.sample,
+          certification: ContactCandidacy.certifications.keys.sample,
           skin_test: [true, false].sample,
           live_in: [true, false].sample,
           zipcode: zipcode,

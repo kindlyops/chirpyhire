@@ -10,12 +10,8 @@ class Organization < ApplicationRecord
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
 
-  has_many :suggestions, class_name: 'IdealCandidateSuggestion'
-
   belongs_to :recruiter, class_name: 'Account'
-  has_one :ideal_candidate
   has_one :recruiting_ad
-  has_one :location
 
   accepts_nested_attributes_for :teams, reject_if: :all_blank
 

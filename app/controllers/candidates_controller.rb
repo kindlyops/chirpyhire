@@ -88,7 +88,7 @@ class CandidatesController < ApplicationController
   end
 
   def enum_availabilities(availability)
-    Candidacy.availabilities[availability]
+    ContactCandidacy.availabilities[availability]
   end
 
   def complex_availability?(result)
