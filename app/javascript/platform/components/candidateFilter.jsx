@@ -4,26 +4,7 @@ import Select from 'react-select'
 class CandidateFilter extends React.Component {
   constructor(props) {
     super(props);
-
-    this.valueRenderer = this.valueRenderer.bind(this);
-    this.optionRenderer = this.optionRenderer.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
-
-  valueRenderer(option) {
-    return (
-      <div className='filter-value d-flex align-items-center'>
-        <span>{option.name}</span>
-      </div>
-    )
-  }
-
-  optionRenderer(option) {
-    return (
-      <div className='filter-option'>
-        {option.name}
-      </div>
-    )
   }
 
   predicate() {
@@ -39,8 +20,6 @@ class CandidateFilter extends React.Component {
               options={this.props.options.map(o => { return { id: o.id.toString(), name: o.name }})}
               className="predicate-select"
               value={this.value()}
-              optionRenderer={this.optionRenderer}
-              valueRenderer={this.valueRenderer}
               onChange={this.handleSelectChange}
             />
           </div>
