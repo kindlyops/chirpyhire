@@ -311,6 +311,21 @@ RSpec.describe Surveyor do
                 }.to change { candidacy.reload.certification }.to('cna')
               end
             end
+
+            context 'drivers_license' do
+              let(:body) { 'b' }
+              let(:inquiry) { 'drivers_license' }
+              before do
+                candidacy.update(inquiry: inquiry)
+              end
+
+              it 'updates the value' do
+                allow(subject.survey).to receive(:complete)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { candidacy.reload.drivers_license }.to(false)
+              end
+            end
           end
         end
 
