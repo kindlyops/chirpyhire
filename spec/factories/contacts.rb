@@ -101,9 +101,9 @@ FactoryGirl.define do
         cpr_first_aid = { cpr_first_aid: [true, false].sample }
         drivers_license = { drivers_license: [true, false].sample }
 
-        tags = [experience, availability, transportation, 
-               certification, skin_test, live_in, cpr_first_aid, 
-               drivers_license]
+        tags = [experience, availability, transportation,
+                certification, skin_test, live_in, cpr_first_aid,
+                drivers_license]
 
         base = {
           contact: contact,
