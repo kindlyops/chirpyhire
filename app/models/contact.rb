@@ -45,10 +45,10 @@ class Contact < ApplicationRecord
       .count.values.max
   end
 
-  def self.candidacy_filter(filter_clause)
-    return current_scope if filter_clause.blank?
+  def self.tags_filter(tag_ids)
+    return current_scope if tag_ids.blank?
 
-    joins(:contact_candidacy).where(filter_clause)
+    joins(:tags).where('tags.id = ALL (array[?])', tag_ids.map(&:to_i))
   end
 
   def self.starred_filter(filter_params)

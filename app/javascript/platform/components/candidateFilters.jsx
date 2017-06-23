@@ -13,7 +13,12 @@ class CandidateFilters extends React.Component {
     this.state = {
       location: configuration.location,
       starred: configuration.starred,
-      tags: {}
+      tags: {
+        attribute: 'Tags',
+        checked: false,
+        icon: 'fa-tags',
+        options: []
+      }
     }
 
     this.toggle = this.toggle.bind(this);
@@ -31,7 +36,6 @@ class CandidateFilters extends React.Component {
   }
 
   toggle(event) {
-    debugger;
     const filter = event.target.name;
     const newFilter = update(this.state[filter], {
       checked: {
@@ -47,9 +51,10 @@ class CandidateFilters extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/tags').then(tags => 
-      this.setState({ tags: tags })
-    )
+    $.get('/tags').then(tags => {
+      let newState = update(this.state, { tags: { options: { $set: tags }}});
+      this.setState(newState);
+    })
   }
 
   render() {
