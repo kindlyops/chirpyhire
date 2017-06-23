@@ -206,6 +206,46 @@ RSpec.describe Surveyor do
                 }.to change { candidacy.reload.experience }.to('less_than_one')
               end
 
+              it 'adds a 0 - 1 years tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { contact.tags.find_by(name: '0 - 1 years').present? }.from(false).to(true)
+              end
+
+              context '1 - 5 years' do
+                let(:body) { 'b' }
+
+                it 'adds a 1 - 5 years tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: '1 - 5 years').present? }.from(false).to(true)
+                end
+              end
+
+              context '6+ years' do
+                let(:body) { 'c' }
+
+                it 'adds a 6+ years tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: '6+ years').present? }.from(false).to(true)
+                end
+              end
+
+              context 'No Experience' do
+                let(:body) { 'd' }
+
+                it 'adds a No Experience tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'No Experience').present? }.from(false).to(true)
+                end
+              end
+
               context 'and another valid answer has already come in' do
                 let(:first_message) { create(:message, body: 'A') }
                 let(:second_message) { create(:message, body: 'A') }
@@ -249,6 +289,35 @@ RSpec.describe Surveyor do
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.availability }.to('hourly_pm')
               end
+
+              it 'adds a PM tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { contact.tags.find_by(name: 'PM').present? }.from(false).to(true)
+              end
+
+              context 'AM' do
+                let(:body) { 'a' }
+
+                it 'adds a AM tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'AM').present? }.from(false).to(true)
+                end
+              end
+
+              context 'AM/PM' do
+                let(:body) { 'c' }
+
+                it 'adds a AM/PM tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'AM/PM').present? }.from(false).to(true)
+                end
+              end
             end
 
             context 'transportation' do
@@ -264,6 +333,35 @@ RSpec.describe Surveyor do
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.transportation }.to('no_transportation')
               end
+
+              it 'adds a No Transportation tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { contact.tags.find_by(name: 'No Transportation').present? }.from(false).to(true)
+              end
+
+              context 'Personal Transportation' do
+                let(:body) { 'a' }
+
+                it 'adds a Personal Transportation tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'Personal Transportation').present? }.from(false).to(true)
+                end
+              end
+
+              context 'Public Transportation' do
+                let(:body) { 'b' }
+
+                it 'adds a Public Transportation tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'Public Transportation').present? }.from(false).to(true)
+                end
+              end
             end
 
             context 'skin_test' do
@@ -278,6 +376,24 @@ RSpec.describe Surveyor do
                 expect {
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.skin_test }.to(true)
+              end
+
+              it 'adds a Skin / TB Test tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { contact.tags.find_by(name: 'Skin / TB Test').present? }.from(false).to(true)
+              end
+
+              context 'No Skin / TB Test' do
+                let(:body) { 'b' }
+
+                it 'adds a No Skin / TB Test tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'No Skin / TB Test').present? }.from(false).to(true)
+                end
               end
             end
 
@@ -295,6 +411,13 @@ RSpec.describe Surveyor do
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.zipcode }.to('30342')
               end
+
+              it 'does not add a 30342 tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.not_to change { contact.tags.count }
+              end
             end
 
             context 'certification' do
@@ -309,6 +432,144 @@ RSpec.describe Surveyor do
                 expect {
                   subject.consider_answer(inquiry, message)
                 }.to change { candidacy.reload.certification }.to('cna')
+              end
+
+              it 'adds a CNA tag to the contact' do
+                allow(subject.survey).to receive(:ask)
+                expect {
+                  subject.consider_answer(inquiry, message)
+                }.to change { contact.tags.find_by(name: 'CNA').present? }.from(false).to(true)
+              end
+
+              context 'HHA' do
+                let(:body) { 'b' }
+
+                it 'adds a HHA tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'HHA').present? }.from(false).to(true)
+                end
+              end
+
+              context 'PCA' do
+                let(:body) { 'c' }
+
+                it 'adds a PCA tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'PCA').present? }.from(false).to(true)
+                end
+              end
+
+              context 'No Certification' do
+                let(:body) { 'e' }
+
+                it 'adds a No Certification tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'No Certification').present? }.from(false).to(true)
+                end
+              end
+
+              context 'RN, LPN, Other' do
+                let(:body) { 'd' }
+
+                it 'adds a RN, LPN, Other tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'RN, LPN, Other').present? }.from(false).to(true)
+                end
+              end
+            end
+
+            context 'live_in' do
+              let(:inquiry) { 'live_in' }
+              before do
+                candidacy.update(inquiry: inquiry)
+              end
+
+              context 'Live-In' do
+                let(:body) { 'a' }
+
+                it 'adds a Live-In tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'Live-In').present? }.from(false).to(true)
+                end
+              end
+
+              context 'No Live-In' do
+                let(:body) { 'b' }
+
+                it 'adds a No Live-In tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'No Live-In').present? }.from(false).to(true)
+                end
+              end
+            end
+
+            context 'drivers_license' do
+              let(:inquiry) { 'drivers_license' }
+              before do
+                candidacy.update(inquiry: inquiry)
+              end
+
+              context "Driver's License" do
+                let(:body) { 'a' }
+
+                it "adds a Driver's License tag to the contact" do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: "Driver's License").present? }.from(false).to(true)
+                end
+              end
+
+              context "No Driver's License" do
+                let(:body) { 'b' }
+
+                it "adds a No Driver's License tag to the contact" do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: "No Driver's License").present? }.from(false).to(true)
+                end
+              end
+            end
+
+            context 'cpr_first_aid' do
+              let(:inquiry) { 'cpr_first_aid' }
+              before do
+                candidacy.update(inquiry: inquiry)
+              end
+
+              context 'CPR / 1st Aid' do
+                let(:body) { 'a' }
+
+                it 'adds a CPR / 1st Aid tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'CPR / 1st Aid').present? }.from(false).to(true)
+                end
+              end
+
+              context 'No CPR / 1st Aid' do
+                let(:body) { 'b' }
+
+                it 'adds a No CPR / 1st Aid tag to the contact' do
+                  allow(subject.survey).to receive(:ask)
+                  expect {
+                    subject.consider_answer(inquiry, message)
+                  }.to change { contact.tags.find_by(name: 'No CPR / 1st Aid').present? }.from(false).to(true)
+                end
               end
             end
 

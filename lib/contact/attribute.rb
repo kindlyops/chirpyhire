@@ -19,6 +19,10 @@ class Contact::Attribute
     humanize_attributes[attribute]
   end
 
+  def tag_attribute(attribute)
+    humanize_attribute(attribute)
+  end
+
   def tooltip_label
     tooltip_labels[query] || label
   end

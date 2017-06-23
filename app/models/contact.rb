@@ -12,6 +12,8 @@ class Contact < ApplicationRecord
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
+  has_many :taggings
+  has_many :tags, through: :taggings
 
   has_many :notes
 

@@ -22,4 +22,21 @@ class Contact::Transportation < Contact::Attribute
       no_transportation: 'without'
     }.with_indifferent_access
   end
+
+  def tag_attribute(attribute)
+    return if attribute.nil?
+    tag_attributes[attribute]
+  end
+
+  def self.tag_attributes
+    {
+      personal_transportation: 'Personal Transportation',
+      public_transportation: 'Public Transportation',
+      no_transportation: 'No Transportation'
+    }.with_indifferent_access
+  end
+
+  def tag_attributes
+    self.class.tag_attributes
+  end
 end

@@ -2,6 +2,7 @@ class Organization < ApplicationRecord
   has_many :accounts, inverse_of: :organization
   has_many :owners, -> { owner }, class_name: 'Account'
 
+  has_many :tags
   has_many :teams
   has_many :contacts, through: :teams
   has_many :inboxes, through: :teams

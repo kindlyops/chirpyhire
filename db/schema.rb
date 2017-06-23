@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170622142710) do
+ActiveRecord::Schema.define(version: 20170623010309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -257,6 +257,25 @@ ActiveRecord::Schema.define(version: 20170622142710) do
     t.index ["account_id"], name: "index_segments_on_account_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id", "tag_id"], name: "index_taggings_on_contact_id_and_tag_id", unique: true
+    t.index ["contact_id"], name: "index_taggings_on_contact_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "organization_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "name"], name: "index_tags_on_organization_id_and_name", unique: true
+    t.index ["organization_id"], name: "index_tags_on_organization_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
@@ -311,5 +330,8 @@ ActiveRecord::Schema.define(version: 20170622142710) do
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
   add_foreign_key "segments", "accounts"
+  add_foreign_key "taggings", "contacts"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "tags", "organizations"
   add_foreign_key "teams", "organizations"
 end
