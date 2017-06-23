@@ -45,7 +45,7 @@ class Contact < ApplicationRecord
       .count.values.max
   end
 
-  def self.tags_filter(tag_ids)
+  def self.tag_filter(tag_ids)
     return current_scope if tag_ids.blank?
 
     joins(:tags).where('tags.id = ALL (array[?])', tag_ids.map(&:to_i))
