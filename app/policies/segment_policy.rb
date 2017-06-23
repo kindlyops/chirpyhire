@@ -4,7 +4,7 @@ class SegmentPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, form: [:city, :state, :county, :zipcode, tag:[]]]
+    [:name, form: [:city, :state, :county, :zipcode, tag: []]]
   end
 
   class Scope < ApplicationPolicy::Scope
