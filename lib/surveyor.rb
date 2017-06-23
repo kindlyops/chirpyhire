@@ -55,8 +55,8 @@ class Surveyor
     survey.answer.format(message) do |formatted_answer|
       contact_candidacy.assign_attributes(formatted_answer)
       contact_candidacy.save!
-      Broadcaster::Contact.broadcast(contact)
       Tagger.call(contact, formatted_answer)
+      Broadcaster::Contact.broadcast(contact)
       contact_candidacy
     end
   end
