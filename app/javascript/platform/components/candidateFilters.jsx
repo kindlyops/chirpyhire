@@ -10,7 +10,12 @@ import update from 'immutability-helper'
 class CandidateFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = configuration;
+    this.state = {
+      location: configuration.location,
+      starred: configuration.starred,
+      tags: {}
+    }
+
     this.toggle = this.toggle.bind(this);
     this.toggleLocation = this.toggleLocation.bind(this);
   }
@@ -26,6 +31,7 @@ class CandidateFilters extends React.Component {
   }
 
   toggle(event) {
+    debugger;
     const filter = event.target.name;
     const newFilter = update(this.state[filter], {
       checked: {
@@ -38,6 +44,12 @@ class CandidateFilters extends React.Component {
 
     this.props.handleSelectChange({ filter: filter, value: null });
     this.setState(newState);
+  }
+
+  componentDidMount() {
+    $.get('/tags').then(tags => 
+      this.setState({ tags: tags })
+    )
   }
 
   render() {
@@ -60,22 +72,7 @@ class CandidateFilters extends React.Component {
             handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
             form={this.props.form}
-            {...this.state.certification} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.availability} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.experience} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.transportation} />
+            {...this.state.tags} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 

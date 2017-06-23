@@ -36,7 +36,7 @@ class CandidateFilter extends React.Component {
             <Select
               multi={true}
               name={this.name()}
-              options={this.props.options}
+              options={this.props.tags}
               className="predicate-select"
               value={this.value()}
               optionRenderer={this.optionRenderer}

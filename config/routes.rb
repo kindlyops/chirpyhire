@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :recruiting_ads, only: %i[index update]
   resource :dashboard
   resources :segments
+  resources :tags
 
   resources :contacts, only: [:show] do
     resources :notes, only: %i[index create update destroy]
