@@ -12,10 +12,12 @@ class Contact < ApplicationRecord
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
+  has_many :taggings
+  has_many :tags, through: :taggings
 
   has_many :notes
 
-  delegate :handle, :phone_number, :avatar, :nickname, to: :person
+  delegate :handle, :phone_number, :avatar, :nickname, :zipcode, to: :person
   delegate :phone_number, to: :team, prefix: true
   delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
