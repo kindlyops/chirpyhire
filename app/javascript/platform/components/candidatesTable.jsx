@@ -79,13 +79,6 @@ class CandidatesTable extends React.Component {
                   dataKey='current_conversation_id'
                 />
                 <Column
-                  width={150}
-                  label='Certification'
-                  dataKey='certification'
-                  cellRenderer={this.cellRenderer}
-                  headerRenderer={this.headerRenderer}
-                />
-                <Column
                   width={100}
                   label='Zipcode'
                   dataKey='zipcode'
@@ -93,14 +86,14 @@ class CandidatesTable extends React.Component {
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
-                  width={170}
+                  width={240}
                   label='Last Seen'
                   dataKey='last_seen_at_ago'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
-                  width={170}
+                  width={240}
                   label='First Seen'
                   dataKey='first_seen_at_ago'
                   cellRenderer={this.cellRenderer}

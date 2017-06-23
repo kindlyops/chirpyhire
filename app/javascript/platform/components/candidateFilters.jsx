@@ -3,14 +3,22 @@ import React from 'react'
 import CandidateFilter from './candidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
 import LocationCandidateFilter from './locationCandidateFilter'
-import StarredCandidateFilter from './starredCandidateFilter'
 import configuration from '../configuration/segments'
 import update from 'immutability-helper'
 
 class CandidateFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = configuration;
+    this.state = {
+      location: configuration.location,
+      tag: {
+        attribute: 'Tag',
+        checked: false,
+        icon: 'fa-tag',
+        options: []
+      }
+    }
+
     this.toggle = this.toggle.bind(this);
     this.toggleLocation = this.toggleLocation.bind(this);
   }
@@ -40,6 +48,13 @@ class CandidateFilters extends React.Component {
     this.setState(newState);
   }
 
+  componentDidMount() {
+    $.get('/tags').then(tags => {
+      let newState = update(this.state, { tag: { options: { $set: tags }}});
+      this.setState(newState);
+    })
+  }
+
   render() {
     return (
       <div className='CandidateFilters'>
@@ -52,30 +67,11 @@ class CandidateFilters extends React.Component {
             toggleLocation={this.toggleLocation}
             form={this.props.form}
             {...this.state.location} />
-          <StarredCandidateFilter 
-            handleStarChange={this.props.handleStarChange}
-            form={this.props.form}
-            {...this.state.starred} />
           <CandidateFilter 
             handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
             form={this.props.form}
-            {...this.state.certification} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.availability} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.experience} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.transportation} />
+            {...this.state.tag} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 

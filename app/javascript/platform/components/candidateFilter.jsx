@@ -4,28 +4,7 @@ import Select from 'react-select'
 class CandidateFilter extends React.Component {
   constructor(props) {
     super(props);
-
-    this.valueRenderer = this.valueRenderer.bind(this);
-    this.optionRenderer = this.optionRenderer.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
-  }
-
-  valueRenderer(option) {
-    return (
-      <div className='filter-value d-flex align-items-center'>
-        <i className={`fa mr-2 ${option.icon}`}></i>
-        <span>{option.label}</span>
-      </div>
-    )
-  }
-
-  optionRenderer(option) {
-    return (
-      <div className='filter-option'>
-        <i className={`fa mr-2 ${option.icon}`}></i>
-        {option.label}
-      </div>
-    )
   }
 
   predicate() {
@@ -34,13 +13,13 @@ class CandidateFilter extends React.Component {
         <div className='predicate'>
           <div className='predicate-inner'>
             <Select
+              labelKey={'name'}
+              valueKey={'id'}
               multi={true}
               name={this.name()}
-              options={this.props.options}
+              options={this.props.options.map(o => { return { id: o.id.toString(), name: o.name }})}
               className="predicate-select"
               value={this.value()}
-              optionRenderer={this.optionRenderer}
-              valueRenderer={this.valueRenderer}
               onChange={this.handleSelectChange}
             />
           </div>
@@ -57,19 +36,14 @@ class CandidateFilter extends React.Component {
     let value = this.props.form[this.name()];
 
     if (value) {
-      if (Array.isArray(value)) {
-        return value.join(',');
-      } else {
-        return value;
-      }
-    } else {
-      return '';
+      return value.join(',');
     }
   }
 
   handleSelectChange(options) {
-    const value = options && options.map(o => o.value);
+    const value = options && options.map(o => o.id);
     const filter = this.name();
+
     this.props.handleSelectChange({ value: value, filter: filter });
   }
 

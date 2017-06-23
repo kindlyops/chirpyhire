@@ -12,9 +12,5 @@ json.candidates candidates do |candidate|
   json.current_conversation_id candidate.current_conversation.id
   json.inbox_id candidate.current_conversation.inbox_id
   json.hero_pattern_classes candidate.hero_pattern_classes
-
-  json.certification candidate.certification.to_s
-  json.experience candidate.experience.to_s
   json.zipcode candidate.candidacy_zipcode.to_s
-  json.availability candidate.availability.to_s
 end

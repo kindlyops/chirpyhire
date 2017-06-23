@@ -309,9 +309,16 @@
     width: 6rem;
   }
 
-  .profile-details {
+  .profile-section {
     display: flex;
     flex-direction: column;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+
+    .tags {
+      flex-wrap: wrap;
+    }
   }
 
   border-left: 1px solid #eeeeef;

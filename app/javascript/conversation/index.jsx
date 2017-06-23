@@ -11,14 +11,7 @@ class Conversation extends React.Component {
       contactSubscription: {},
       contact: {
         zipcode: {},
-        certification: {},
-        availability: {},
-        live_in: {},
-        experience: {},
-        transportation: {},
-        cpr_first_aid: {},
-        skin_test: {},
-        drivers_license: {}
+        tags: []
       },
       messages: []
     };

@@ -92,21 +92,34 @@ FactoryGirl.define do
         zipcode = %w[30319 30324 30327 30328 30329
                      30338 30339 30340 30341 30342].sample
 
-        candidacy.assign_attributes(
+        experience = { experience: ContactCandidacy.experiences.keys.sample }
+        availability = { availability: ContactCandidacy.availabilities.keys.sample }
+        transportation = { transportation: ContactCandidacy.transportations.keys.sample }
+        certification = { certification: ContactCandidacy.certifications.keys.sample }
+        skin_test = { skin_test: [true, false].sample }
+        live_in = { live_in: [true, false].sample }
+        cpr_first_aid = { cpr_first_aid: [true, false].sample }
+        drivers_license = { drivers_license: [true, false].sample }
+
+        tags = [experience, availability, transportation,
+                certification, skin_test, live_in, cpr_first_aid,
+                drivers_license]
+
+        base = {
           contact: contact,
           inquiry: nil,
-          experience: ContactCandidacy.experiences.keys.sample,
-          availability: ContactCandidacy.availabilities.keys.sample,
-          transportation: ContactCandidacy.transportations.keys.sample,
-          certification: ContactCandidacy.certifications.keys.sample,
-          skin_test: [true, false].sample,
-          live_in: [true, false].sample,
           zipcode: zipcode,
-          cpr_first_aid: [true, false].sample,
-          drivers_license: [true, false].sample,
           state: :complete
+        }
+
+        candidacy.assign_attributes(
+          (tags + [base]).inject(&:merge)
         )
         candidacy.save
+
+        tags.each do |tag|
+          Tagger.call(contact, tag)
+        end
       end
     end
 

@@ -27,7 +27,7 @@ class CandidatesController < ApplicationController
     return scope if permitted_params.blank?
 
     scope
-      .candidacy_filter(candidacy_params)
+      .tag_filter(tag_params)
       .zipcode_filter(zipcode_params)
       .starred_filter(star_params)
   end
@@ -38,11 +38,7 @@ class CandidatesController < ApplicationController
 
   def permitted_params
     params.permit(
-      :city, :state, :county, :zipcode, :starred,
-      experience: [],
-      availability: [],
-      transportation: [],
-      certification: []
+      :city, :state, :county, :zipcode, :starred, tag: []
     )
   end
 
@@ -52,73 +48,8 @@ class CandidatesController < ApplicationController
     { starred: true }
   end
 
-  def candidacy_params
-    result = permitted_params.to_h.except(
-      :state, :city, :county, :zipcode, :starred
-    )
-
-    result[:availability] = (result[:availability] | hourly_params) if hourly?
-    result = handle_live_in_params(result)
-    handle_live_in_or_hourly(result)
-  end
-
-  def handle_live_in_params(result)
-    return result if result[:availability].blank?
-    if result[:availability].include?('live_in')
-      result[:live_in] = true
-      result[:availability] = result[:availability] - ['live_in']
-      result.delete(:availability) if result[:availability].blank?
-    end
-
-    result
-  end
-
-  def handle_live_in_or_hourly(result)
-    return standard_candidacy(result) unless complex_availability?(result)
-
-    availabilities = result[:availability]
-                     .map(&method(:enum_availabilities)).compact
-
-    availability_clause(availabilities)
-  end
-
-  def availability_clause(availabilities)
-    '("contact_candidacies"."availability" IN '\
-    "(#{availabilities.join(',')}) OR 'contact_candidacies'.'live_in' = \'t\')"
-  end
-
-  def enum_availabilities(availability)
-    ContactCandidacy.availabilities[availability]
-  end
-
-  def complex_availability?(result)
-    result[:availability].present? && result[:live_in].present?
-  end
-
-  def standard_candidacy(result)
-    return {} if result.blank?
-
-    { 'contact_candidacies' => result }
-  end
-
-  def hourly?
-    availability? && (am? || pm?)
-  end
-
-  def am?
-    permitted_params[:availability].include?('hourly_am')
-  end
-
-  def pm?
-    permitted_params[:availability].include?('hourly_pm')
-  end
-
-  def availability?
-    permitted_params[:availability].present?
-  end
-
-  def hourly_params
-    %w[hourly]
+  def tag_params
+    permitted_params.to_h[:tag]
   end
 
   def zipcode_params
