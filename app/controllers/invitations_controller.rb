@@ -23,13 +23,14 @@ class InvitationsController < Devise::InvitationsController
   def create
     super do |account|
       account.update(role: :invited)
-      account.teams << TeamFindOrCreator.call(organization)
+      account.teams << teams.first unless teams.empty?
     end
   end
 
   private
 
   delegate :organization, to: :current_inviter
+  delegate :teams, to: :organization
 
   def invite_params
     super.merge(organization: organization)
