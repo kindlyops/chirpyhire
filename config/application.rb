@@ -45,5 +45,9 @@ module Congaree
       s3_host_name: 's3.amazonaws.com',
       path: "/#{Rails.env}/:class/:attachment/:id_partition/:style/:filename"
     }
+
+    config.after_initialize do
+      Broadcaster::ClientVersion.broadcast(ENV.fetch('CLIENT_VERSION'))
+    end
   end
 end

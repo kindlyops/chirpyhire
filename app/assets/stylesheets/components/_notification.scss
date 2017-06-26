@@ -1,0 +1,10 @@
+.ch--notification {
+  padding: 8px 15px 8px 15px;
+  background-color: $brand-success;
+  color: $white;
+
+  a {
+    text-decoration: underline;
+    color: $white;
+  }
+}

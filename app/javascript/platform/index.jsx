@@ -4,6 +4,7 @@ import Candidates from './components/candidates'
 import CandidateSegments from './components/candidateSegments'
 import queryString from 'query-string'
 import update from 'immutability-helper'
+import RestartNotificationBar from '../restart_notification_bar'
 
 class Platform extends React.Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class Platform extends React.Component {
   render() {
     return (
       <div className='Platform ch--Page'>
+        <RestartNotificationBar {...this.props} />
         <div className='ch--Header'>
           <h1>Caregivers</h1>
         </div>
