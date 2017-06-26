@@ -9,6 +9,6 @@ class ClientVersionsController < ApplicationController
   private
 
   def client_version
-    ENV.fetch('CLIENT_VERSION')
+    ENV.fetch('CLIENT_VERSION').to_i
   end
 end
