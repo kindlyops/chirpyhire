@@ -127,4 +127,14 @@ RSpec.describe InvitationsController, type: :controller do
       expect(Account.last.agreed_to_terms?).to eq(true)
     end
   end
+
+  describe '#new' do
+    context 'not logged in' do
+      it 'does not raise an error' do
+        expect {
+          get :new
+        }.not_to raise_error
+      end
+    end
+  end
 end

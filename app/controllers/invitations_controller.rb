@@ -59,6 +59,6 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def authenticate_inviter!
-    current_account
+    authenticate_account!(force: true) && current_account
   end
 end
