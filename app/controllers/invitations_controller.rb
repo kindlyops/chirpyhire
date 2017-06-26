@@ -56,4 +56,8 @@ class InvitationsController < Devise::InvitationsController
   def devise_mapping
     Devise.mappings[:account]
   end
+
+  def authenticate_inviter!
+    current_account
+  end
 end

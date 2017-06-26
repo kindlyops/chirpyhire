@@ -68,7 +68,7 @@ gem 'rollbar', '~> 2.14.0'
 
 # Authentication
 gem 'devise', '~> 4.3.0'
-gem 'devise_invitable', '~> 1.6.0'
+gem 'devise_invitable', '~> 1.7.2'
 
 # Authorization
 gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'

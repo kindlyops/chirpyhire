@@ -41,6 +41,44 @@ RSpec.describe InvitationsController, type: :controller do
         post :create, params: invite_params
       }.to change { team.accounts.count }.by(1)
     end
+
+    context 'impersonating' do
+      let(:impersonator) { inviter }
+      let(:impersonatee) { create(:account, :team) }
+      let(:impersonatee_organization) { impersonatee.organization }
+      let(:impersonatee_team) { impersonatee.teams.first }
+      let(:impersonator_organization) { impersonator.organization }
+      let(:impersonator_team) { impersonator.teams.first }
+
+      before do
+        impersonator.update(super_admin: true)
+        controller.impersonate_account(impersonatee)
+      end
+
+      it 'ties the account to the impersonated organization' do
+        expect {
+          post :create, params: invite_params
+        }.to change { impersonatee_organization.accounts.count }.by(1)
+      end
+
+      it 'adds the account to the impersonated team' do
+        expect {
+          post :create, params: invite_params
+        }.to change { impersonatee_team.accounts.count }.by(1)
+      end
+
+      it 'does not add an account to the impersonator organization' do
+        expect {
+          post :create, params: invite_params
+        }.not_to change { impersonator_organization.accounts.count }
+      end
+
+      it 'does not add an account to the impersonator team' do
+        expect {
+          post :create, params: invite_params
+        }.not_to change { impersonator_team.accounts.count }
+      end
+    end
   end
 
   describe '#update' do
@@ -68,7 +106,7 @@ RSpec.describe InvitationsController, type: :controller do
 
     context 'and the role has not been changed' do
       it 'makes the account a member' do
-        post :create, params: invite_params
+        put :update, params: invite_params
         expect(Account.last.member?).to eq(true)
       end
     end
@@ -79,7 +117,7 @@ RSpec.describe InvitationsController, type: :controller do
       end
 
       it 'leaves the role as is' do
-        post :create, params: invite_params
+        put :update, params: invite_params
         expect(Account.last.owner?).to eq(true)
       end
     end
