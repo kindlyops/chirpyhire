@@ -26,9 +26,11 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      subscription: {},
+      organizationSubscription: {},
+      clientVersionSubscription: {},
       current_account: { teams: [] },
-      current_organization: {}
+      current_organization: {},
+      client_version: null
     }
   }
 
@@ -41,6 +43,10 @@ class App extends React.Component {
       this.setState({current_organization: current_organization});
       this.connect();
     });
+
+    $.get(this.versionURL()).then(client_version => {
+      this.setState({ client_version: client_version });
+    });
   }
 
   currentAccountUrl() {
@@ -49,6 +55,10 @@ class App extends React.Component {
 
   currentOrganizationUrl() {
     return `/current_organization`;
+  }
+
+  versionURL() {
+    return '/client_version';
   }
 
   componentDidMount() {
@@ -60,10 +70,10 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/getting_started" render={props => <GettingStarted current_organization={this.state.current_organization} {...props} />} />
-            <Route path="/candidates" render={props => <Platform current_account={this.state.current_account} {...props} />} />
-            <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
-            <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox current_account={this.state.current_account} {...props} />} />
+            <Route path="/getting_started" render={props => <GettingStarted {...this.state} {...props} />} />
+            <Route path="/candidates" render={props => <Platform {...this.state} {...props} />} />
+            <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
+            <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox {...this.state} {...props} />} />
           </Switch>
         </div>
       </Router>
@@ -71,26 +81,47 @@ class App extends React.Component {
   }
 
   connect() {
-    let channel = { channel: 'OrganizationsChannel', id: this.state.current_organization.id };
-    let subscription = window.App.cable.subscriptions.create(
-      channel, this._channelConfig()
+    let organizationChannel = { 
+        channel: 'OrganizationsChannel', 
+        id: this.state.current_organization.id 
+    };
+
+    let organizationSubscription = window.App.cable.subscriptions.create(
+      organizationChannel, this._organizationChannelConfig()
     );
 
-    this.setState({ subscription: subscription });
+    let clientVersionChannel = { channel: 'ClientVersionsChannel' };
+
+    let clientVersionSubscription = window.App.cable.subscriptions.create(
+      clientVersionChannel, this._clientVersionChannelConfig()
+    );
+
+    this.setState({ organizationSubscription: organizationSubscription });
   }
 
-  _channelConfig() {
+  _organizationChannelConfig() {
     return {
-      received: this._received.bind(this)
+      received: this._organizationReceived.bind(this)
     }
   }
 
-  _received(organization) {
+  _organizationReceived(organization) {
     this.setState({ current_organization: organization });
   }
 
+  _clientVersionChannelConfig() {
+    return {
+      received: this._clientVersionReceived.bind(this)
+    }
+  }
+
+  _clientVersionReceived(client_version) {
+    this.setState({ client_version: client_version });
+  }
+
   disconnect() {
-    window.App.cable.subscriptions.remove(this.state.subscription);
+    window.App.cable.subscriptions.remove(this.state.organizationSubscription);
+    window.App.cable.subscriptions.remove(this.state.clientVersionSubscription); 
   }
 
   componentWillUnmount() {

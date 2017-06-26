@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resource :getting_started, only: :show, controller: 'getting_started'
 
+  resource :client_version, only: :show
   resource :health, only: :show
   resources :candidates, only: :index, concerns: :paginatable
   resources :recruiting_ads, only: %i[index update]
