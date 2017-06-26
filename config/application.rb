@@ -47,7 +47,7 @@ module Congaree
     }
 
     config.after_initialize do
-      Broadcaster::ClientVersion.broadcast(ENV.fetch('CLIENT_VERSION'))
+      Broadcaster::ClientVersion.broadcast(ENV.fetch('CLIENT_VERSION').to_i)
     end
   end
 end
