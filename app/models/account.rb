@@ -3,7 +3,7 @@ class Account < ApplicationRecord
          :registerable, :recoverable, :trackable, :validatable
 
   belongs_to :organization, inverse_of: :accounts
-  belongs_to :person, inverse_of: :account
+  has_one :person, inverse_of: :account
 
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
@@ -21,6 +21,8 @@ class Account < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :handle, to: :person, allow_nil: true
+
+  before_validation { build_person if person.blank? }
 
   enum role: {
     member: 0, owner: 1, invited: 2

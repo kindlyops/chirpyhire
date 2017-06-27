@@ -1,6 +1,6 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
-  has_one :account, inverse_of: :person
+  belongs_to :account, inverse_of: :person, optional: true
   has_many :contacts
 
   has_many :sent_messages,
@@ -19,7 +19,6 @@ class Person < ApplicationRecord
 
   validates :name, presence: true, unless: :nickname_present?
   validates :nickname, presence: true, unless: :name_present?
-  validates :phone_number, presence: true, unless: :name_present?
 
   def subscribed_to?(teams)
     contacts.where(team: teams).exists?
