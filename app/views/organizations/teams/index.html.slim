@@ -5,7 +5,7 @@
     .ch--vertical-navigation
       .ch--vertical-navigation--inner
         .ch--vertical-navigation-header
-          h3.small-uppercase General
+          h3.small-uppercase App and Teams
         .ch--vertical-navigation-links
           = nav_link_to 'General settings', organization_path(@organization), class: 'ch--vertical-navigation-link'
           = nav_link_to 'Team members', organization_people_path(@organization), class: 'ch--vertical-navigation-link'
@@ -22,8 +22,6 @@
             span Create team
       .card.ch--sub-main-content
         .card-block
-          .mb-2 
-            strong All your teams
           .card
             ul.list-group.list-group-flush
               = render partial: "organizations/teams/team", collection: @teams, locals: { organization: @organization }
