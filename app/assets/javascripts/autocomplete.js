@@ -239,9 +239,11 @@ function initTeamSearch() {
 }
 
 function initAutocompletes() {
-  initZipcodeSearch();
-  initAccountSearch();
-  initTeamSearch();
+  $(document).on('ready', function() {
+    initZipcodeSearch();
+    initAccountSearch();
+    initTeamSearch();
+  });
 }
 
 $(document).on('ready', function() {
