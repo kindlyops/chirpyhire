@@ -4,7 +4,11 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def create?
-    account.owner?
+    record.organization == organization
+  end
+
+  def new?
+    record.new_record?
   end
 
   def permitted_attributes
