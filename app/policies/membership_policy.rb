@@ -1,25 +1,21 @@
 class MembershipPolicy < ApplicationPolicy
   def update?
-    show? && manager_on_team?
+    show?
   end
 
   def destroy?
-    show? && manager_on_team?
+    show?
   end
 
   def create?
-    manager_on_team?
+    organization.teams.where(id: record.team.id).exists?
   end
 
   def permitted_attributes
-    %i[account_id role]
+    %i[account_id]
   end
 
   private
-
-  def manager_on_team?
-    account.manages?(record.team)
-  end
 
   class Scope < ApplicationPolicy::Scope
     def resolve

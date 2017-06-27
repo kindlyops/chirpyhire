@@ -30,8 +30,8 @@ Rails.application.routes.draw do
   end
 
   resources :organizations, only: %i[show update] do
-    resources :teams, except: :destroy, controller: 'organizations/teams' do
-      resources :members, only: %i[create destroy index update new]
+    resources :teams, only: %i[index create new update], controller: 'organizations/teams' do
+      resources :members, only: %i[create destroy]
     end
     resources :people, only: %i[index update], controller: 'organizations/accounts'
     namespace :billing do

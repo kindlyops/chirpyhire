@@ -1,76 +1,35 @@
 .teams {
-  .team-phone-number {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .team {
-    .team-phone-number {
-      font-size: 1.25rem;
-      margin-bottom: 0;
-    }
-  }
-
-  .team-card {
-    display: flex;
-
-    .team-logo {
-      .logo {
-        width: 100px;
-        height: 100px;
-      }
-    }
-
-    .team-details {
-      display: flex;
-      flex-direction: column;
-      margin-left: 2rem;
-
-      .team-name {
-        font-size: 2rem;
-      }
-
-      .team-subdetails {
-        display: flex;
-        flex-direction: column;
-        margin-top: .25rem;
-      }
-    }
-  }
 
   .team {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     width: 100%;
   }
 
-  .members {
+  .team-phone-number {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .team-details {
     display: flex;
     align-items: center;
-    min-width: 110px;
+    justify-content: space-between;
   }
 
-  .card-header {
-    min-height: 50px;
+  .team-subdetails {
+    display: flex;
   }
 
-  .team {
-    .settings {
-      min-width: 120px;
-    }
+  .account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     
-    .team-details {
+    .account-details {
       display: flex;
       align-items: center;
-      min-width: 350px;
-      
-      .team-subdetails {
-        margin-left: 10px;
-        display: flex;
-        flex-direction: column;
-        min-width: 100px;
-      }
     }
   }
 }
