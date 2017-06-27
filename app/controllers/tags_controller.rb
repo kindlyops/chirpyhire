@@ -1,4 +1,4 @@
-class ContactTagsController < ApplicationController
+class TagsController < ApplicationController
   def index
     @tags = policy_scope(Tag).order(:name)
 
