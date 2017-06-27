@@ -11,66 +11,6 @@ RSpec.describe 'Team' do
     sign_in(account)
   end
 
-  describe 'editing a team' do
-    let(:name) { Faker::Name.name }
-    let(:description) { Faker::Lorem.sentence }
-    let(:recruiter_id) { team_member.id }
-
-    let(:params) {
-      {
-        organization_id: organization.id,
-        id: team.id,
-        team: {
-          name: name,
-          description: description,
-          recruiter_id: recruiter_id
-        }
-      }
-    }
-
-    it 'lets the user edit the name' do
-      expect {
-        put organization_team_path(organization, team), params: params
-      }.to change { team.reload.name }.to(name)
-    end
-
-    it 'lets the user edit the description' do
-      expect {
-        put organization_team_path(organization, team), params: params
-      }.to change { team.reload.description }.to(description)
-    end
-
-    it 'lets the user edit the recruiter' do
-      expect {
-        put organization_team_path(organization, team), params: params
-      }.to change { team.reload.recruiter }.to(team_member)
-    end
-
-    context 'not on the team' do
-      before do
-        team.memberships.destroy_all
-      end
-
-      it 'does not let the user edit the name' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.not_to change { team.reload.name }
-      end
-
-      it 'does not let the user edit the description' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.not_to change { team.reload.description }
-      end
-
-      it 'does not let the user edit the recruiter' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.not_to change { team.reload.recruiter }
-      end
-    end
-  end
-
   describe 'viewing teams' do
     it 'does show the "Create team" button' do
       get organization_teams_path(organization)
