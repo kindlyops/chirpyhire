@@ -47,7 +47,6 @@ ActiveRecord::Schema.define(version: 20170627212808) do
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id"
     t.index ["organization_id"], name: "index_accounts_on_organization_id"
-    t.index ["person_id"], name: "index_accounts_on_person_id"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
@@ -311,7 +310,6 @@ ActiveRecord::Schema.define(version: 20170627212808) do
   end
 
   add_foreign_key "accounts", "organizations"
-  add_foreign_key "accounts", "people"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"

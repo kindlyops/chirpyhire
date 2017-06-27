@@ -1,16 +1,6 @@
 = title "Your account · ChirpyHire"
 .ch--Page.settings.account
-  .ch--Header
-    h1 Settings
-    = nav_link_to account_path(@account), class: 'HeaderLink' do
-      i.fa.fa-gear.mr-2
-      | Your Settings
-    = nav_link_to organization_people_path(@account.organization), class: 'HeaderLink' do
-      i.fa.fa-briefcase.mr-2
-      | App Settings
-    = nav_link_to organization_billing_company_path(@account.organization), class: 'HeaderLink' do
-      i.fa.fa-credit-card.mr-2
-      | Billing
+  = render partial: "settings/header"
   .ch--main
     .ch--vertical-navigation
       .ch--vertical-navigation--inner
@@ -22,7 +12,7 @@
       .ch--main-menu
         .ch--main-menu--left
           h2 Your account
-      .card
+      .card.ch--sub-main-content
         .card-block
           .basic-details
             = form_for @account, url: account_path(@account) do |f|

@@ -9,9 +9,13 @@
     background-color: #eef6f2;
   }
 
-  &.account {
-    .card {
-      margin: 1.25rem;
+  .list-group-item {
+    border-bottom: 1px solid $gray;
+  }
+
+  .invite-team-member {
+    #account_email {
+      width: 41%;
     }
   }
 }

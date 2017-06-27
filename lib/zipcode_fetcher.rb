@@ -18,11 +18,19 @@ class ZipcodeFetcher
     else
       lookup.zipcode = zipcode_string
       client.send_lookup(lookup)
-      update_zipcode(created_zipcode) if result.zipcodes.present?
+      new_zipcode
     end
   end
 
   private
+
+  def new_zipcode
+    if result.zipcodes.present?
+      update_zipcode(created_zipcode)
+    else
+      false
+    end
+  end
 
   def update_zipcode(zipcode)
     contact.person.update!(zipcode: zipcode)

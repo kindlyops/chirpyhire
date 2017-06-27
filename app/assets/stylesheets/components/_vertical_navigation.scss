@@ -15,18 +15,24 @@
   }
 
   .ch--vertical-navigation-links {
-    margin-top: .75rem;
+    margin-top: .5rem;
   }
 
   .ch--vertical-navigation-link {
+    font-size: 14px;
     padding: 6px 10px;
     border-radius: 3px;
     text-decoration: none;
+    display: block;
+    color: $gray;
+
+    &:hover, &.active {
+      background-color: rgba(183, 250, 211, 0.25);
+    }
 
     &.active {
       font-weight: 700;
       color: $brand-primary;
-      background-color: rgba(183, 250, 211, 0.25);
     }
   }
 
