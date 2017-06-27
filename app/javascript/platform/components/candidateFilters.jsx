@@ -49,7 +49,7 @@ class CandidateFilters extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/tags.json').then(tags => {
+    $.get('/tags').then(tags => {
       let newState = update(this.state, { tag: { options: { $set: tags }}});
       this.setState(newState);
     })
