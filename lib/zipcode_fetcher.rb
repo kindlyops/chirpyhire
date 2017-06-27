@@ -18,7 +18,7 @@ class ZipcodeFetcher
     else
       lookup.zipcode = zipcode_string
       client.send_lookup(lookup)
-      update_zipcode(created_zipcode)
+      update_zipcode(created_zipcode) if result.zipcodes.present?
     end
   end
 

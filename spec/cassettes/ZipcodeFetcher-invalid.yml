@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://us-zipcode.api.smartystreets.com/lookup?auth-id=SMARTY_AUTH_ID&auth-token=SMARTY_AUTH_TOKEN
+    body:
+      encoding: UTF-8
+      string: '[{"city":null,"state":null,"zipcode":"02162"}]'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - smartystreets (sdk:ruby@2.0.3)
+      Host:
+      - us-zipcode.api.smartystreets.com
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 27 Jun 2017 02:36:09 GMT
+      Content-Length:
+      - '75'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: '[{"input_index":0,"status":"invalid_zipcode","reason":"Invalid ZIP
+        Code."}]'
+    http_version: 
+  recorded_at: Tue, 27 Jun 2017 02:36:09 GMT
+recorded_with: VCR 3.0.3

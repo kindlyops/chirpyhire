@@ -102,7 +102,6 @@ gem 'slim-rails', '~> 3.1.0'
 gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch: 'rearchitect-gem'
 gem 'twilio-ruby', '~> 4.11.0'
 gem 'webpacker', '~> 1.2.0'
-gem 'zip-codes', '~> 0.2.1'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.6.1'

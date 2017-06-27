@@ -400,6 +400,7 @@ RSpec.describe Surveyor do
             context 'zipcode' do
               let(:body) { '30342' }
               let(:inquiry) { 'zipcode' }
+              let!(:zipcode) { create(:zipcode, '30342'.to_sym) }
 
               before do
                 candidacy.update(inquiry: inquiry)
