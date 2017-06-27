@@ -1,5 +1,5 @@
 li.list-group-item
-  .team data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapse"
+  .team data-toggle="collapse" data-target="#team_collapse_#{team.id}" aria-expanded="false" aria-controls="team_collapse_#{team.id}"
     .team-details
       .team-subdetails
         .team-logo
@@ -19,26 +19,27 @@ li.list-group-item
               span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
                 | Your phone number
                 i.fa.fa-mobile.ml-2.white
-    .collapse#collapse
+    .collapse id="team_collapse_#{team.id}"
       .add-team-member.mt-3
         - if organization.accounts.not_on(team).exists?
           = form_for Membership.new(team: team), url: organization_team_members_path(organization, team), html: { class: 'form-inline' } do |f|
             = f.hidden_field :team_id, value: team.id
             = f.collection_select :account_id, organization.accounts.not_on(team), :id, :handle, { include_blank: 'Add your existing team member to this team' }, required: true, class: 'form-control mr-3'
             = f.submit 'Add team member', role: 'button', class: 'btn btn-primary'
-      .team-members.mt-3.card
-        ul.list-group.list-group-flush
-          - team.memberships.each do |member|
-            li.list-group-item
-              .account
-                .account-details
-                  .account-picture
-                    - if member.account.avatar.url.present?
-                      = image_tag member.account.avatar.url(:medium), class: 'd-flex thumb_36 profile-image'
-                    - else
-                      div class=="d-flex profile-image thumb_36 default #{member.account.person.decorate.hero_pattern_classes}"
-                  .account-name.ml-3
-                    strong = member.account.handle
-                .remove-from-team
-                  = link_to "Remove from this team", organization_team_member_path(organization, team, member), method: :delete, class: "btn btn-secondary btn-sm"
+      - if team.memberships.exists?
+        .team-members.mt-3.card
+          ul.list-group.list-group-flush
+            - team.memberships.each do |member|
+              li.list-group-item
+                .account
+                  .account-details
+                    .account-picture
+                      - if member.account.avatar.url.present?
+                        = image_tag member.account.avatar.url(:medium), class: 'd-flex thumb_36 profile-image'
+                      - else
+                        div class=="d-flex profile-image thumb_36 default #{member.account.person.decorate.hero_pattern_classes}"
+                    .account-name.ml-3
+                      strong = member.account.handle
+                  .remove-from-team
+                    = link_to "Remove from this team", organization_team_member_path(organization, team, member), method: :delete, class: "btn btn-secondary btn-sm"
 
