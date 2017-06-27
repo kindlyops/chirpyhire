@@ -1,0 +1,33 @@
+.ch--main {
+  display: flex;
+  height: 100vh;
+
+  .ch--main-menu {
+    flex: 0 0 50px;
+    background-color: #f9fbfa;
+    border-bottom: 1px solid rgb(218, 218, 218);
+    padding-right: 20px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      margin-bottom: 0;
+      font-size: 18px;
+      line-height: 28px;
+      font-weight: 700;
+    }
+  }
+
+  .ch--sub-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #eef6f2;
+
+    .ch--sub-main-content {
+      margin: 1.25rem;
+    }
+  }
+}

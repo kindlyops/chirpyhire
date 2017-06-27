@@ -14,13 +14,15 @@ class Account < ApplicationRecord
   has_many :conversations, through: :inboxes
   has_many :segments
 
+  before_validation { build_person if person.blank? }
+
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
 
   validates :email, uniqueness: true
 
   delegate :name, to: :organization, prefix: true
-  delegate :name, :avatar, :handle, to: :person, allow_nil: true
+  delegate :name, :avatar, :nickname, to: :person, allow_nil: true
 
   before_validation { build_person if person.blank? }
 
@@ -28,16 +30,16 @@ class Account < ApplicationRecord
     member: 0, owner: 1, invited: 2
   }
 
+  def self.not_on(team)
+    where.not(id: team.memberships.pluck(:account_id))
+  end
+
   def on?(team)
     memberships.where(team: team).exists?
   end
 
   def unread_count
     inboxes.map(&:unread_count).reduce(:+) || 0
-  end
-
-  def manages?(team)
-    on?(team) && memberships.find_by(team: team).manager?
   end
 
   def phone_numbers
@@ -55,5 +57,9 @@ class Account < ApplicationRecord
 
   def send_reset_password_instructions
     super if invitation_token.nil?
+  end
+
+  def handle
+    name || email
   end
 end

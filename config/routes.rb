@@ -30,10 +30,10 @@ Rails.application.routes.draw do
   end
 
   resources :organizations, only: %i[show update] do
-    resources :teams, except: :destroy, controller: 'organizations/teams' do
-      resources :members, only: %i[create destroy index update new]
+    resources :teams, only: %i[index create new], controller: 'organizations/teams' do
+      resources :members, only: %i[create destroy]
     end
-    resources :people, only: %i[index show update], controller: 'organizations/accounts'
+    resources :people, only: %i[index update], controller: 'organizations/accounts'
   end
 
   post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new

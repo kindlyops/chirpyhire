@@ -1,16 +1,29 @@
 = title "Teams · ChirpyHire"
-.settings.teams
-  h1 
-    i.fa.fa-gear.fa-fw.mr-2
-    | Settings
-  hr.mb-5
-  = render partial: "organizations/card", locals: { organization: @organization }
-  = render partial: "organizations/navigation", locals: { organization: @organization }
-  - if current_account.owner?
-    .d-flex.justify-content-end.mt-4
-      = link_to new_organization_team_path, class: 'btn btn-primary' do
-        span Create team
-  .card.mt-4
-    .card-header
-    ul.list-group.list-group-flush
-      = render partial: "organizations/teams/team", collection: @teams, locals: { organization: @organization }
+.ch--Page.settings.teams
+  = render partial: "settings/header"
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase App and Teams
+        .ch--vertical-navigation-links
+          = nav_link_to 'General settings', organization_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Team members', organization_people_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Teams', organization_teams_path(@organization), class: 'ch--vertical-navigation-link'
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Teams for
+            '
+            = @organization.name
+        .ch--main-menu--right
+          = link_to new_organization_team_path, class: 'btn btn-primary' do
+            span Create team
+      .card.ch--sub-main-content
+        .card-block
+          .card
+            ul.list-group.list-group-flush
+              = render partial: "organizations/teams/team", collection: @teams, locals: { organization: @organization }
+
+

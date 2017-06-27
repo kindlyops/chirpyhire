@@ -39,7 +39,7 @@ class CandidatesTable extends React.Component {
 
   headerRenderer({ columnData, dataKey, disableSort, label, sortBy, sortDirection }) {
     return (
-      <span className='small-caps'>
+      <span className='small-uppercase'>
         {label}
       </span>
     )

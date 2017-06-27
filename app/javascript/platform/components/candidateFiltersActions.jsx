@@ -75,7 +75,7 @@ class CandidateFiltersActions extends React.Component {
   actions() {
     if(this.hasActiveForm()) {
       return (
-        <div className='CandidateFiltersActions'>
+        <div className='ch--vertical-navigation-actions'>
           <button onClick={this.toggle} role="button" className='btn btn-block btn-primary'>
             <i className='fa fa-pie-chart mr-2'></i>
             <span>Create Segment</span>

@@ -66,7 +66,7 @@ class LocationCandidateFilter extends React.Component {
   render() {
     return (
       <div className='CandidateFilter CandidateFilter--location'>
-        <div className='form-check small-caps'>
+        <div className='form-check small-uppercase'>
           <label className='form-check-label'>
             <input onChange={this.props.toggleLocation} name={this.name()} className='form-check-input' type="checkbox" value="" checked={this.isChecked()} />
             <i className={`fa fa-fw mr-1 ml-1 ${this.props.icon}`}></i>

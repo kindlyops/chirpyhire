@@ -3,19 +3,6 @@ class Organizations::TeamsController < OrganizationsController
     @teams = policy_scope(organization.teams)
   end
 
-  def show
-    @team = authorize(Team.find(params[:id]))
-  end
-
-  def update
-    @team = authorize(Team.find(params[:id]))
-    if @team.update(permitted_attributes(Team))
-      redirect_to team_path, notice: update_notice
-    else
-      render :show
-    end
-  end
-
   def create
     @team = authorize new_team
 

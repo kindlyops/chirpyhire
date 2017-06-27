@@ -106,9 +106,9 @@ RSpec.describe 'Organization' do
         account.update(role: :member)
       end
 
-      it 'does not say "Manage"' do
+      it 'does not say "Role"' do
         get organization_people_path(organization)
-        expect(response.body).not_to include('Manage')
+        expect(response.body).not_to include('Role')
       end
     end
 
@@ -117,9 +117,9 @@ RSpec.describe 'Organization' do
         account.update(role: :owner)
       end
 
-      it 'says "Manage"' do
+      it 'says "Role"' do
         get organization_people_path(organization)
-        expect(response.body).to include('Manage')
+        expect(response.body).to include('Role')
       end
     end
   end

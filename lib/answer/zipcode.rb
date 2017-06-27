@@ -2,7 +2,7 @@ class Answer::Zipcode < Answer::Base
   def valid?(message)
     zipcode = fetch_zipcode(message)
 
-    zipcode.present? && !!ZipcodeFetcher.call(contact, zipcode)
+    zipcode.present? && ZipcodeFetcher.call(contact, zipcode)
   end
 
   def attribute(message)

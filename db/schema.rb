@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 20170627212808) do
     t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0, null: false
     t.index ["account_id", "team_id"], name: "index_memberships_on_account_id_and_team_id", unique: true
     t.index ["account_id"], name: "index_memberships_on_account_id"
     t.index ["team_id"], name: "index_memberships_on_team_id"

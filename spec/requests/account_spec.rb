@@ -89,10 +89,10 @@ RSpec.describe 'Account' do
 
   context 'your own profile' do
     describe 'editing your profile' do
-      let(:name) { Faker::Name.name }
+      let!(:name) { Faker::Name.name }
       let(:email) { Faker::Internet.email }
 
-      let(:params) {
+      let!(:params) {
         {
           account: {
             email: email,

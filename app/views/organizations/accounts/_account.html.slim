@@ -8,22 +8,39 @@ li.list-group-item
           span class=="author_image thumb_48 mr-3 #{account.person.decorate.hero_pattern_classes}"
       .account-subdetails
         .account-name
-          = link_to account.name, organization_person_path(organization, account)
+          = account.name || account.nickname
         .account-handle
-          span.text-muted = account.handle
+          span.text-muted = account.email
     .role
-      - if account.owner?
-        i.fa.fa-wrench.fa-fw.mr-2
-        span Owner
+      - if current_account.owner?
+        .dropdown.change-role
+          button#change-role.btn.btn-secondary.dropdown-toggle role="button" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" type="button" 
+            | Role:
+            '
+            strong = account.role.humanize
+          .dropdown-menu aria-labelledby="change-role"
+            h6.dropdown-header 
+              strong Organization role
+            .dropdown-divider
+            a.dropdown-item.owner href="#"
+              = form_for account, url: organization_person_path(@organization, account) do |f|
+                = f.hidden_field :role, value: :owner
+              strong Owner
+              '
+              span Has full administrative access to the entire organization.
+            .dropdown-divider
+            a.dropdown-item.member href="#"
+              = form_for account, url: organization_person_path(@organization, account) do |f|
+                = f.hidden_field :role, value: :member
+              strong Member
+              '
+              span Can see every team and member in the organization.
       - else
-        i.fa.fa-user.black.fa-fw.mr-2
-        span = account.role.humanize
-    .teams = pluralize(account.teams.count, "team")
-    .settings
-      = link_to organization_person_path(organization, account), class: "btn btn-secondary" do
-        - if current_account.owner?
-          | Manage
-          i.fa.fa-gear.fa-fw.ml-1
+        - if account.owner?
+          i.fa.fa-wrench.fa-fw.mr-2
+          span Owner
         - else
-          | View
-          i.fa.fa-id-card-o.fa-fw.ml-1
+          i.fa.fa-user.black.fa-fw.mr-2
+          span = account.role.humanize
+
+    .teams = pluralize(account.teams.count, "team")

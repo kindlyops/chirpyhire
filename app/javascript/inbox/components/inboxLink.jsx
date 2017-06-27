@@ -47,7 +47,7 @@ class inboxLink extends React.Component {
 
   render() {
     return (
-      <NavLink to={this.inboxURL()} role="button" className='InboxLink' tabIndex={0}>
+      <NavLink to={this.inboxURL()} role="button" className='HeaderLink' tabIndex={0}>
         {this.teamIcon()}
         {this.props.name}
         {this.icon()}

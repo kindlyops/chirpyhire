@@ -1,0 +1,50 @@
+.ch--vertical-navigation {
+  flex: 0 0 271px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-right: 1px solid rgb(218,218,218);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .ch--vertical-navigation--inner {
+    flex: 1;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 5px;
+  }
+
+  .ch--vertical-navigation-links {
+    margin-top: .5rem;
+  }
+
+  .ch--vertical-navigation-link {
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    display: block;
+    color: $gray;
+
+    &:hover, &.active {
+      background-color: rgba(183, 250, 211, 0.25);
+    }
+
+    &.active {
+      font-weight: 700;
+      color: $brand-primary;
+    }
+  }
+
+  .ch--vertical-navigation-actions {
+    padding: 1rem;
+    border-top: 1px solid rgb(218, 218, 218);
+  }
+
+  .ch--vertical-navigation-header {
+    padding: 8px 0 4px;
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+}
