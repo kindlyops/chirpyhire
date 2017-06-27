@@ -59,5 +59,6 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
+  get '/caregivers', to: redirect('/candidates', status: 301)
   root to: redirect('/candidates')
 end
