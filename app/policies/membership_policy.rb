@@ -15,8 +15,6 @@ class MembershipPolicy < ApplicationPolicy
     %i[account_id]
   end
 
-  private
-
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.joins(:team).where(teams: { organization: organization })

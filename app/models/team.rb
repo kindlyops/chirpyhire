@@ -29,10 +29,4 @@ class Team < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :zipcode, to: :location
-
-  def promote(account)
-    return unless account.organization == organization
-    accounts << account unless account.on?(self)
-    memberships.find_by(account: account).update(role: :manager)
-  end
 end

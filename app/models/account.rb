@@ -14,7 +14,7 @@ class Account < ApplicationRecord
   has_many :conversations, through: :inboxes
   has_many :segments
 
-  before_validation { build_person unless person.present? }
+  before_validation { build_person if person.blank? }
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank

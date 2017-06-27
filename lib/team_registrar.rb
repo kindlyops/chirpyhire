@@ -25,7 +25,6 @@ class TeamRegistrar
 
   def setup_account_on_team
     team.accounts << account
-    team.promote(account)
     team.update(recruiter: account)
   end
 

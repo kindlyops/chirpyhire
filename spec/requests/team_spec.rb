@@ -28,52 +28,22 @@ RSpec.describe 'Team' do
       }
     }
 
-    context 'as a team member' do
-      before do
-        account.memberships.each { |m| m.update(role: :member) }
-      end
-
-      it 'lets the user edit the name' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.name }.to(name)
-      end
-
-      it 'lets the user edit the description' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.description }.to(description)
-      end
-
-      it 'lets the user edit the recruiter' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.recruiter }.to(team_member)
-      end
+    it 'lets the user edit the name' do
+      expect {
+        put organization_team_path(organization, team), params: params
+      }.to change { team.reload.name }.to(name)
     end
 
-    context 'as a team manager' do
-      before do
-        account.memberships.each { |m| m.update(role: :manager) }
-      end
+    it 'lets the user edit the description' do
+      expect {
+        put organization_team_path(organization, team), params: params
+      }.to change { team.reload.description }.to(description)
+    end
 
-      it 'lets the user edit the name' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.name }.to(name)
-      end
-
-      it 'lets the user edit the description' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.description }.to(description)
-      end
-
-      it 'lets the user edit the recruiter' do
-        expect {
-          put organization_team_path(organization, team), params: params
-        }.to change { team.reload.recruiter }.to(team_member)
-      end
+    it 'lets the user edit the recruiter' do
+      expect {
+        put organization_team_path(organization, team), params: params
+      }.to change { team.reload.recruiter }.to(team_member)
     end
 
     context 'not on the team' do
@@ -102,48 +72,9 @@ RSpec.describe 'Team' do
   end
 
   describe 'viewing teams' do
-    context 'as an organization owner' do
-      before do
-        account.update(role: :owner)
-      end
-
-      it 'does not show the "Create team" button' do
-        get organization_teams_path(organization)
-        expect(response.body).to include('Create team')
-      end
-    end
-
-    context 'as an organization member' do
-      before do
-        account.update(role: :member)
-      end
-
-      it 'does not show the "Create team" button' do
-        get organization_teams_path(organization)
-        expect(response.body).not_to include('Create team')
-      end
-    end
-
-    context 'as a member' do
-      before do
-        account.memberships.each { |m| m.update(role: :member) }
-      end
-
-      it 'does not say "Manage"' do
-        get organization_teams_path(organization)
-        expect(response.body).not_to include('Manage')
-      end
-    end
-
-    context 'as a team manager' do
-      before do
-        account.memberships.each { |m| m.update(role: :manager) }
-      end
-
-      it 'says "Manage"' do
-        get organization_teams_path(organization)
-        expect(response.body).to include('Manage')
-      end
+    it 'does show the "Create team" button' do
+      get organization_teams_path(organization)
+      expect(response.body).to include('Create team')
     end
   end
 
@@ -176,60 +107,37 @@ RSpec.describe 'Team' do
       }
     }
 
-    context 'as an owner' do
-      before do
-        account.update(role: :owner)
-      end
-
-      it 'creates a team' do
-        expect {
-          post organization_teams_path(organization), params: params
-        }.to change { organization.reload.teams.count }
-      end
-
-      it 'sets the phone number on the team' do
+    it 'creates a team' do
+      expect {
         post organization_teams_path(organization), params: params
-        expect(Team.last.phone_number.present?).to eq(true)
-      end
-
-      it 'creates a recruiting ad' do
-        expect {
-          post organization_teams_path(organization), params: params
-        }.to change { organization.reload.recruiting_ads.count }
-      end
-
-      it 'creates a location' do
-        expect {
-          post organization_teams_path(organization), params: params
-        }.to change { organization.reload.locations.count }
-      end
-
-      it 'adds the creator to the team' do
-        post organization_teams_path(organization), params: params
-        expect(Team.last.accounts).to include(account)
-      end
-
-      it 'adds the creator to the team as a manager' do
-        post organization_teams_path(organization), params: params
-        expect(account.manages?(Team.last)).to eq(true)
-      end
-
-      it 'sets the creator as the recruiter' do
-        post organization_teams_path(organization), params: params
-        expect(Team.last.recruiter).to eq(account)
-      end
+      }.to change { organization.reload.teams.count }
     end
 
-    context 'as a member' do
-      before do
-        account.update(role: :member)
-      end
+    it 'sets the phone number on the team' do
+      post organization_teams_path(organization), params: params
+      expect(Team.last.phone_number.present?).to eq(true)
+    end
 
-      it 'does not create a team' do
-        expect {
-          post organization_teams_path(organization), params: params
-        }.not_to change { organization.reload.teams.count }
-      end
+    it 'creates a recruiting ad' do
+      expect {
+        post organization_teams_path(organization), params: params
+      }.to change { organization.reload.recruiting_ads.count }
+    end
+
+    it 'creates a location' do
+      expect {
+        post organization_teams_path(organization), params: params
+      }.to change { organization.reload.locations.count }
+    end
+
+    it 'adds the creator to the team' do
+      post organization_teams_path(organization), params: params
+      expect(Team.last.accounts).to include(account)
+    end
+
+    it 'sets the creator as the recruiter' do
+      post organization_teams_path(organization), params: params
+      expect(Team.last.recruiter).to eq(account)
     end
   end
 end

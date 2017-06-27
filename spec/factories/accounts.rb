@@ -8,10 +8,6 @@ FactoryGirl.define do
       role :owner
     end
 
-    after(:create) do |account|
-      create(:person, :with_name, account: account)
-    end
-
     trait :team do
       after(:create) do |account|
         team = create(:team, :inbox, organization: account.organization)
