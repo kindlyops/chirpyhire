@@ -9,14 +9,15 @@ RSpec.describe Answer::Zipcode do
     context '5 digits' do
       context 'valid zipcode' do
         let(:message) { create(:message, body: '30342') }
+        let!(:zipcode) { create(:zipcode, '30342'.to_sym) }
 
         it 'is true' do
           expect(subject.valid?(message)).to eq(true)
         end
       end
 
-      context 'not a zipcode' do
-        let(:message) { create(:message, body: '11111') }
+      context 'not a zipcode', vcr: { cassette_name: 'ZipcodeFetcher-invalid' } do
+        let(:message) { create(:message, body: '02162') }
         it 'is false' do
           expect(subject.valid?(message)).to eq(false)
         end
@@ -40,29 +41,6 @@ RSpec.describe Answer::Zipcode do
         it 'is true' do
           expect(subject.attribute(message)[:zipcode]).to eq('30342')
         end
-      end
-    end
-  end
-
-  describe '#format' do
-    let(:person) { contact.person }
-    let!(:message) { create(:message, sender: person, body: '30342') }
-
-    context 'zipcode present' do
-      let!(:zipcode) { create(:zipcode, '30342'.to_sym) }
-
-      it 'sets the zipcode on the person' do
-        expect {
-          subject.format(message)
-        }.to change { person.reload.zipcode }.from(nil).to(zipcode)
-      end
-    end
-
-    context 'zipcode not present' do
-      it 'calls the ZipcodeFetcherJob' do
-        expect {
-          subject.format(message)
-        }.to have_enqueued_job(ZipcodeFetcherJob)
       end
     end
   end

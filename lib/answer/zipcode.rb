@@ -2,32 +2,16 @@ class Answer::Zipcode < Answer::Base
   def valid?(message)
     zipcode = fetch_zipcode(message)
 
-    zipcode.present? && ZipCodes.identify(zipcode).present?
+    zipcode.present? && !!ZipcodeFetcher.call(contact, zipcode)
   end
 
   def attribute(message)
     { zipcode: fetch_zipcode(message) }
   end
 
-  def format(message)
-    super
-    after_format(message)
-  end
-
   private
 
   delegate :contact, to: :question
-
-  def after_format(message)
-    zipcode_string = fetch_zipcode(message)
-    zipcode = ::Zipcode.find_by(zipcode: zipcode_string)
-
-    if zipcode.present?
-      message.sender.update!(zipcode: zipcode)
-    else
-      ZipcodeFetcherJob.perform_later(contact, zipcode_string)
-    end
-  end
 
   def zipcode_regexp
     /\A(\d{5})\z/
