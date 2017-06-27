@@ -1,75 +1,55 @@
-= title "Your Profile · ChirpyHire"
-.settings.account
-  h1 
-    i.fa.fa-gear.fa-fw.mr-2
-    | Settings
-  hr.mb-5
-  = render partial: "organizations/accounts/card", locals: { account: @account, organization: @account.organization }
-  .row.mt-4
-    .col-3
-      .card.settings-sidebar
-        .card-header 
-          strong Personal settings
-        .list-group.list-group-flush
-          li.list-group-item
-            = link_to "Profile", account_path(@account)
-          li.list-group-item
-            = link_to "Password", account_settings_password_path(@account) 
-      .card.settings-sidebar.mt-4
-        .card-header 
-          strong Team settings
-        .list-group.list-group-flush
-          - @account.teams.each do |team|
-            li.list-group-item
-              = link_to organization_team_path(current_organization, team) do
-                .organization-profile-link
-                  - if team.avatar.url.present?
-                    = image_tag team.avatar.url(:medium), class: 'thumb_36 logo'
-                  - else
-                    div class=="logo thumb_36 #{team.decorate.hero_pattern_classes}"
-                  = team.name
-      .card.settings-sidebar.mt-4
-        .card-header
-          strong Organization settings
-        .list-group.list-group-flush
-          li.list-group-item
-            = link_to organization_path(current_organization) do
-              .organization-profile-link
-                - if current_organization.avatar.url.present?
-                  = image_tag current_organization.avatar.url(:medium), class: 'thumb_36 logo'
-                - else
-                  div class=="logo thumb_36 #{current_organization.decorate.hero_pattern_classes}"
-                = current_organization.name
-    .col-9
-      h2.mb-4 Your profile
-      hr
-      .row
-        .col-8
-          = form_for @account, url: account_path(@account) do |f|
-            = content_for :validation_errors do
-              = render partial: "common/validation_errors", locals: { model: @account }
-            = f.fields_for :person do |p|
+= title "Your account · ChirpyHire"
+.ch--Page.settings.account
+  .ch--Header
+    h1 Settings
+    = nav_link_to account_path(@account), class: 'HeaderLink' do
+      i.fa.fa-gear.mr-2
+      | Your Settings
+    = nav_link_to organization_people_path(@account.organization), class: 'HeaderLink' do
+      i.fa.fa-briefcase.mr-2
+      | App Settings
+    = nav_link_to organization_billing_company_path(@account.organization), class: 'HeaderLink' do
+      i.fa.fa-credit-card.mr-2
+      | Billing
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase General
+        .ch--vertical-navigation-links
+          = nav_link_to 'Your account', account_path(@account), class: 'ch--vertical-navigation-link'
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 Your account
+      .card
+        .card-block
+          .basic-details
+            = form_for @account, url: account_path(@account) do |f|
+              = content_for :validation_errors do
+                = render partial: "common/validation_errors", locals: { model: @account }
+              = f.fields_for :person do |p|
+                .form-group
+                  strong = p.label :name, class: "col-form-label small-uppercase"
+                  = p.text_field :name, required: true, class: "form-control"
               .form-group
-                strong = p.label :name, class: "col-form-label"
-                = p.text_field :name, required: true, class: "form-control"
-            .form-group
-              strong = f.label :email, class: "col-form-label"
-              = f.email_field :email, class: "form-control"
-            .form-group
-              strong = f.label :bio, "Short Bio / Quote", class: "col-form-label"
-              = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
-            .form-group
-              = f.submit "Update profile", class: 'btn btn-block btn-lg btn-primary', role: 'button'
-        .col-4
-          = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
-            = f.fields_for :person do |p|
+                strong = f.label :email, class: "col-form-label small-uppercase"
+                = f.email_field :email, class: "form-control"
               .form-group
-                h6 = p.label :avatar, "Profile picture"
-                .profile-picture.text-center.d-flex.justify-content-center
-                  - if @account.avatar.url.present?
-                    = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_200 profile-image'
-                  - else
-                    div class=="d-flex profile-image thumb_200 default #{@account.decorate.hero_pattern_classes}"
-                a.btn.btn-success.btn-block#upload.mt-4 role="button" href="#" Upload new picture
-                = p.file_field :avatar, class: "form-control", id: "avatar", hidden: true
-
+                strong = f.label :bio, "Short Bio / Quote", class: "col-form-label small-uppercase"
+                = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
+              .form-group
+                = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
+          hr
+          .photo
+            = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
+              = f.fields_for :person do |p|
+                .form-group
+                  h6 = p.label :avatar, "Photo", class: "col-form-label small-uppercase"
+                  .profile-picture.text-center.d-flex
+                    - if @account.avatar.url.present?
+                      = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
+                    - else
+                      div class=="d-flex profile-image thumb_48 default #{@account.decorate.hero_pattern_classes}"
+                  a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new photo
+                  = p.file_field :avatar, class: "form-control", id: "avatar", hidden: true

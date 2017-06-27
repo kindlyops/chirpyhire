@@ -32,7 +32,7 @@ class Candidates extends React.Component {
     }
 
     return (
-      <div className='Candidates'>
+      <div className='Candidates ch--main'>
         <CandidateFilters {...this.props} />
         {body}
       </div>

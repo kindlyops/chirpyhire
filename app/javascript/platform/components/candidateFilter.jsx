@@ -54,7 +54,7 @@ class CandidateFilter extends React.Component {
   render() {
     return (
       <div className='CandidateFilter'>
-        <div className='form-check small-caps'>
+        <div className='form-check small-uppercase'>
           <label className='form-check-label'>
             <input className='form-check-input' name={this.name()} type="checkbox" onChange={this.props.toggle} checked={this.isChecked()} value="" />
             <i className={`fa fa-fw mr-1 ml-1 ${this.props.icon}`}></i>

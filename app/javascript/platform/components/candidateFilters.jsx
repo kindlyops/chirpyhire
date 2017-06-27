@@ -57,10 +57,10 @@ class CandidateFilters extends React.Component {
 
   render() {
     return (
-      <div className='CandidateFilters'>
-        <form className='CandidateFilters--inner'>
-          <div className='CandidateFiltersHeader'>
-            <h3 className='small-caps'>Candidate Attributes</h3>
+      <div className='CandidateFilters ch--vertical-navigation'>
+        <form className='ch--vertical-navigation--inner'>
+          <div className='ch--vertical-navigation-header'>
+            <h3 className='small-uppercase'>Candidate Attributes</h3>
           </div>
           <LocationCandidateFilter 
             handleLocationChange={this.props.handleLocationChange}

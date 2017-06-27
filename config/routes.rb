@@ -34,6 +34,10 @@ Rails.application.routes.draw do
       resources :members, only: %i[create destroy index update new]
     end
     resources :people, only: %i[index show update], controller: 'organizations/accounts'
+    namespace :billing do
+      resource :summary
+      resource :company
+    end
   end
 
   post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new
