@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170623010309) do
+ActiveRecord::Schema.define(version: 20170627210314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,8 @@ ActiveRecord::Schema.define(version: 20170623010309) do
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer "account_id"
+    t.index ["account_id"], name: "index_people_on_account_id", unique: true
     t.index ["phone_number"], name: "index_people_on_phone_number", unique: true
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id"
   end
@@ -325,6 +327,7 @@ ActiveRecord::Schema.define(version: 20170623010309) do
   add_foreign_key "notes", "accounts"
   add_foreign_key "notes", "contacts"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
+  add_foreign_key "people", "accounts"
   add_foreign_key "people", "zipcodes"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
