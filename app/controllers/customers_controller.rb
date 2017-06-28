@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
   def create
-    customer = create_customer
-    create_payment_card(customer.sources.first)
+    organization.update(stripe_customer_id: customer.id)
+    create_payment_card
     Internal::Notification::Customer.call(organization)
   rescue Stripe::CardError => e
     flash[:error] = e.message
@@ -11,19 +11,17 @@ class CustomersController < ApplicationController
 
   private
 
-  def create_customer
-    customer = Stripe::Customer.create(
-      email: params[:stripeEmail],
-      source: params[:stripeToken],
-      description: organization.name
-    )
-    Rails.logger.debug("STRIPE_CUSTOMER: #{customer.to_hash}")
-
-    organization.update(stripe_customer_id: customer.id)
-    customer
+  def customer
+    @customer ||= begin
+      Stripe::Customer.create(
+        email: params[:stripeEmail],
+        source: params[:stripeToken],
+        description: organization.name
+      )
+    end
   end
 
-  def create_payment_card(card)
+  def create_payment_card
     organization.payment_cards.create(
       stripe_id: card.id,
       brand: card.brand,
@@ -31,6 +29,10 @@ class CustomersController < ApplicationController
       exp_year: card.exp_year,
       last4: card.last4
     )
+  end
+
+  def card
+    customer.sources.first
   end
 
   def organization
