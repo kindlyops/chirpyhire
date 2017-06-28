@@ -42,7 +42,6 @@ Rails.application.routes.draw do
     end
 
     namespace :billing do
-      resource :summary
       resource :company
     end
   end
