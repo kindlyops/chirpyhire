@@ -1,5 +1,5 @@
 class Settings::GeneralsController < ApplicationController
-  before_action :fetch_organization, only: %i[show update]
+  before_action :fetch_organization, only: %i[show]
 
   def show; end
 

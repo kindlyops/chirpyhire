@@ -218,9 +218,9 @@ ActiveRecord::Schema.define(version: 20170628141156) do
     t.bigint "organization_id", null: false
     t.string "stripe_id", null: false
     t.string "brand", null: false
-    t.integer "exp_month"
-    t.integer "exp_year"
-    t.integer "last4"
+    t.integer "exp_month", null: false
+    t.integer "exp_year", null: false
+    t.integer "last4", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_payment_cards_on_organization_id"

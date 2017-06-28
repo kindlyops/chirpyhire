@@ -27,7 +27,7 @@ class Organizations::TeamsController < OrganizationsController
   end
 
   def team_index_path
-    organization_settings_teams_path(current_organization)
+    organization_settings_teams_path(organization)
   end
 
   def create_notice
