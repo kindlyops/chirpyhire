@@ -6,10 +6,10 @@ $gray-dark:     lighten($gray-base, 20%) !default;
 $gray:          lighten($gray-base, 33.5%) !default;
 $gray-light:    lighten($gray-base, 46.7%) !default;
 $gray-lighter:  lighten($gray-base, 93.5%) !default;
+$table-border-color: #dddddd;
 $body-color: $gray-dark;
 $brand-primary: $green;
 $brand-success: darken(#428bca, 6.5%);
-$ch-table-gray: #dddddd;
 $bg-body: $white;
 
 a {

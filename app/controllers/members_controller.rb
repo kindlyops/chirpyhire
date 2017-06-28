@@ -42,6 +42,6 @@ class MembersController < ApplicationController
   end
 
   def member_index_path
-    organization_teams_path(organization)
+    organization_settings_teams_path(organization)
   end
 end

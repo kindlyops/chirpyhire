@@ -7,9 +7,9 @@
         .ch--vertical-navigation-header
           h3.small-uppercase App and Teams
         .ch--vertical-navigation-links
-          = nav_link_to 'General settings', organization_path(@organization), class: 'ch--vertical-navigation-link'
-          = nav_link_to 'Team members', organization_people_path(@organization), class: 'ch--vertical-navigation-link'
-          = nav_link_to 'Teams', organization_teams_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'General settings', organization_settings_general_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Team members', organization_settings_team_members_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Teams', organization_settings_teams_path(@organization), class: 'ch--vertical-navigation-link'
     .ch--sub-main
       .ch--main-menu
         .ch--main-menu--left

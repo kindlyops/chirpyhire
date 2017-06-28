@@ -1,8 +1,11 @@
 .ch--Header
   h1 Settings
-  = nav_link_to account_path(current_account), class: 'HeaderLink' do
+  = nav_link_to account_path(current_account), { class: 'HeaderLink' }, url_segment: 3 do
     i.fa.fa-gear.mr-2
     | Your Settings
-  = nav_link_to organization_path(current_organization), { class: 'HeaderLink' }, url_segment: 1 do
+  = nav_link_to organization_settings_general_path(current_organization), { class: 'HeaderLink' }, url_segment: 3 do
     i.fa.fa-briefcase.mr-2
     | App Settings
+  = nav_link_to organization_billing_company_path(current_organization), { class: 'HeaderLink' }, url_segment: 3 do
+    i.fa.fa-credit-card.mr-2
+    | Billing

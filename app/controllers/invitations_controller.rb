@@ -37,7 +37,7 @@ class InvitationsController < Devise::InvitationsController
   end
 
   def after_invite_path_for(*)
-    organization_people_path(organization)
+    organization_settings_team_members_path(organization)
   end
 
   def add_accept_params

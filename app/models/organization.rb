@@ -7,6 +7,7 @@ class Organization < ApplicationRecord
   has_many :contacts, through: :teams
   has_many :inboxes, through: :teams
   has_many :conversations, through: :contacts
+  has_many :payment_cards
 
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
@@ -44,6 +45,14 @@ class Organization < ApplicationRecord
   def sender_notice
     return recruiter_notice if recruiter && recruiter.first_name
     "This is #{name}."
+  end
+
+  def trialing?
+    stripe_customer_id.blank?
+  end
+
+  def payment_card
+    payment_cards.first
   end
 
   private

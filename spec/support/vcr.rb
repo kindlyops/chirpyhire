@@ -41,6 +41,18 @@ VCR.configure do |c|
   c.filter_sensitive_data('SMARTY_AUTH_TOKEN') do
     ENV['SMARTY_AUTH_TOKEN']
   end
+
+  c.filter_sensitive_data('STRIPE_SECRET_KEY') do
+    ENV['STRIPE_SECRET_KEY']
+  end
+
+  c.filter_sensitive_data('STRIPE_WEBHOOK_SECRET') do
+    ENV['STRIPE_WEBHOOK_SECRET']
+  end
+
+  c.filter_sensitive_data('STRIPE_PUBLISHABLE_KEY') do
+    ENV['STRIPE_PUBLISHABLE_KEY']
+  end
 end
 
 RSpec.configure do |config|

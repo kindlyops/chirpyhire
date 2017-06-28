@@ -13,7 +13,7 @@ RSpec.describe 'Team' do
 
   describe 'viewing teams' do
     it 'does show the "Create team" button' do
-      get organization_teams_path(organization)
+      get organization_settings_teams_path(organization)
       expect(response.body).to include('Create team')
     end
   end
