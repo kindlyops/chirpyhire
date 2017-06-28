@@ -17,6 +17,7 @@ class CustomersController < ApplicationController
       source: params[:stripeToken],
       description: organization.name
     )
+    Rails.logger.debug("STRIPE_CUSTOMER: #{customer.to_hash}")
 
     organization.update(stripe_customer_id: customer.id)
     customer
