@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       resources :members, only: %i[create destroy]
     end
     resources :people, only: %i[update], controller: 'organizations/accounts'
-    
+
     namespace :settings do
       resource :general
       resources :team_members

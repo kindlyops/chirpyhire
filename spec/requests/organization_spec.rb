@@ -107,7 +107,7 @@ RSpec.describe 'Organization' do
       end
 
       it 'does not say "Role"' do
-        get organization_people_path(organization)
+        get organization_settings_team_members_path(organization)
         expect(response.body).not_to include('Role')
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe 'Organization' do
       end
 
       it 'says "Role"' do
-        get organization_people_path(organization)
+        get organization_settings_team_members_path(organization)
         expect(response.body).to include('Role')
       end
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627212808) do
+ActiveRecord::Schema.define(version: 20170628004501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 20170627212808) do
     t.boolean "zipcode", default: true, null: false
     t.boolean "cpr_first_aid", default: true, null: false
     t.boolean "skin_test", default: true, null: false
+    t.string "stripe_customer_id"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 
