@@ -15,7 +15,7 @@ table.body-wrap
           | team!
         p Hit reply and let us know how we can help make your new team a success.
         p.callout
-          = link_to "View the #{@team.name} Team", organization_teams_url(@team.organization, @team), class: 'btn', target: '_blank'
+          = link_to "View the #{@team.name} Team", organization_settings_teams_url(@team.organization, @team), class: 'btn', target: '_blank'
         p To infinity and beyond,
         p The ChirpyHire Team
         br

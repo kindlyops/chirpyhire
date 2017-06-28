@@ -36,7 +36,7 @@
 
           &.closed {
             background-color: #f2f6f8;
-            color: $gray-darker;
+            color: lighten($gray-base, 13.5%);
           }
 
           &.active {

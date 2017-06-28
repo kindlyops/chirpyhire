@@ -17,9 +17,27 @@
             = @organization.name
       .card.ch--sub-main-content
         .card-block
-          = form_tag organization_customer_path(@organization) do
-            article
-              - if flash[:error].present?
-                #error_explanation
-                  p= flash[:error]
-            script.stripe-button data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" src="https://checkout.stripe.com/checkout.js" data-description="Let's hire caregivers!" data-name="ChirpyHire" data-panel-label="Add Payment Details" data-label="Add Payment Details" data-allow-remember-me="false" data-image="https://app.chirpyhire.com/images/favicon-512.png"
+          - if @organization.trialing?
+            = form_tag organization_customer_path(@organization) do
+              article
+                - if flash[:error].present?
+                  #error_explanation
+                    p= flash[:error]
+              script.stripe-button data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" src="https://checkout.stripe.com/checkout.js" data-description="Let's hire caregivers!" data-name="ChirpyHire" data-panel-label="Add Payment Details" data-label="Add Payment Details" data-allow-remember-me="false" data-image="https://app.chirpyhire.com/images/favicon-512.png"
+          - else
+            table.table.table-bordered.table-responsive
+              thead
+                tr
+                  th Card
+                  th Expires
+              tbody
+                tr
+                  td
+                    i.fa.fa-credit-card.mr-2
+                    = @organization.payment_card.brand
+                    '
+                    ' ending in
+                    = @organization.payment_card.last4
+                  td
+                    = "#{@organization.payment_card.humanized_exp_month} #{@organization.payment_card.exp_year}"
+
