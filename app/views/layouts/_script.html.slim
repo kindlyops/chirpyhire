@@ -9,3 +9,6 @@ javascript:
   };
   try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
   catch(e){window.attachEvent("onload", $buo_f)}
+script type="text/javascript" src="https://js.stripe.com/v3/"
+javascript:
+  stripe = Stripe("#{ENV.fetch('STRIPE_PUBLISHABLE_KEY')}");
