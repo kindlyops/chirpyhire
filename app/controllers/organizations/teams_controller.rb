@@ -1,8 +1,4 @@
 class Organizations::TeamsController < OrganizationsController
-  def index
-    @teams = policy_scope(organization.teams)
-  end
-
   def create
     @team = authorize new_team
 
@@ -24,10 +20,6 @@ class Organizations::TeamsController < OrganizationsController
     organization.teams.build(permitted_attributes(Team))
   end
 
-  def fetch_organization
-    @organization ||= authorize(Organization.find(params[:organization_id]))
-  end
-
   def organization
     @organization ||= begin
       authorize(Organization.find(params[:organization_id]), :show?)
@@ -35,15 +27,7 @@ class Organizations::TeamsController < OrganizationsController
   end
 
   def team_index_path
-    organization_teams_path(current_organization)
-  end
-
-  def team_path
-    organization_team_path(current_organization, @team)
-  end
-
-  def update_notice
-    "#{@team.name} updated!"
+    organization_settings_teams_path(current_organization)
   end
 
   def create_notice

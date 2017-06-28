@@ -1,15 +1,14 @@
-= title "General settings · ChirpyHire"
+= title "Payment preferences · ChirpyHire"
 .ch--Page.settings
   = render partial: "settings/header"
   .ch--main
     .ch--vertical-navigation
       .ch--vertical-navigation--inner
         .ch--vertical-navigation-header
-          h3.small-uppercase App and Teams
+          h3.small-uppercase Billing
         .ch--vertical-navigation-links
-          = nav_link_to 'General settings', organization_path(@organization), class: 'ch--vertical-navigation-link'
-          = nav_link_to 'Team members', organization_people_path(@organization), class: 'ch--vertical-navigation-link'
-          = nav_link_to 'Teams', organization_teams_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Subscription', organization_billing_summary_path(@organization), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Payment preferences', organization_billing_company_path(@organization), class: 'ch--vertical-navigation-link'
     .ch--sub-main
       .ch--main-menu
         .ch--main-menu--left

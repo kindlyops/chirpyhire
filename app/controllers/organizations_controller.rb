@@ -1,7 +1,5 @@
 class OrganizationsController < ApplicationController
-  before_action :fetch_organization, only: %i[show update]
-
-  def show; end
+  before_action :fetch_organization, only: %i[update]
 
   def update
     if @organization.update(permitted_attributes(Organization))
@@ -38,6 +36,10 @@ class OrganizationsController < ApplicationController
   end
 
   def redirect_to_organization
-    redirect_to organization_path(@organization), notice: update_notice
+    redirect_to settings_path, notice: update_notice
+  end
+
+  def settings_path
+    organization_settings_general_path(@organization)
   end
 end

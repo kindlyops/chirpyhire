@@ -1,8 +1,4 @@
 class Organizations::AccountsController < OrganizationsController
-  def index
-    @accounts = policy_scope(organization.accounts)
-  end
-
   def show
     @account = authorize Account.find(params[:id])
   end
@@ -18,10 +14,6 @@ class Organizations::AccountsController < OrganizationsController
   end
 
   private
-
-  def fetch_organization
-    @organization ||= authorize(Organization.find(params[:organization_id]))
-  end
 
   def organization
     @organization ||= begin
