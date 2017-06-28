@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     namespace :billing do
       resource :company
     end
+
+    resource :customer
   end
 
   post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new

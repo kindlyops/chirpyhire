@@ -1,5 +1,13 @@
 class Billing::CompaniesController < ApplicationController
   def show
-    @organization = authorize(current_organization)
+    @organization = authorize(organization)
+  end
+
+  private
+
+  def organization
+    @organization ||= begin
+      authorize(Organization.find(params[:organization_id]), :show?)
+    end
   end
 end
