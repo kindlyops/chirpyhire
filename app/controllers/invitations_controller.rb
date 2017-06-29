@@ -16,8 +16,6 @@ class InvitationsController < Devise::InvitationsController
 
   def update
     super do |account|
-      return handle_update_errors if account.errors.present?
-
       account.update(role: :member) if account.invited?
     end
   end
@@ -35,10 +33,6 @@ class InvitationsController < Devise::InvitationsController
 
   delegate :organization, to: :current_inviter
   delegate :teams, to: :organization
-
-  def handle_update_errors
-    redirect_to organization_settings_team_members_path(organization)
-  end
 
   def handle_create_errors
     flash[:alert] = "Oops! The user's email is already taken."
