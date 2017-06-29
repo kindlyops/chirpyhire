@@ -22,6 +22,8 @@ class InvitationsController < Devise::InvitationsController
 
   def create
     super do |account|
+      return handle_create_errors if account.errors.present?
+
       account.update(role: :invited)
       account.teams << teams.first unless teams.empty?
     end
@@ -31,6 +33,11 @@ class InvitationsController < Devise::InvitationsController
 
   delegate :organization, to: :current_inviter
   delegate :teams, to: :organization
+
+  def handle_create_errors
+    flash[:alert] = "Oops! The user's email is already taken."
+    redirect_to organization_settings_team_members_path(organization)
+  end
 
   def invite_params
     super.merge(organization: organization)

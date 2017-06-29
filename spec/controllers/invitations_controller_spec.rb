@@ -79,6 +79,37 @@ RSpec.describe InvitationsController, type: :controller do
         }.not_to change { impersonator_team.accounts.count }
       end
     end
+
+    context 'inviting an existing account' do
+      let(:invite_params) do
+        {
+          account: {
+            email: inviter.email,
+            person_attributes: {
+              name: Faker::Name.name
+            }
+          }
+        }
+      end
+
+      it 'does not raise an error' do
+        expect {
+          post :create, params: invite_params
+        }.not_to raise_error
+      end
+
+      it 'says the email is taken' do
+        post :create, params: invite_params
+
+        expect(flash[:alert]).to include('email is already taken.')
+      end
+
+      it 'redirects to the organization team members settings' do
+        post :create, params: invite_params
+
+        expect(response).to redirect_to organization_settings_team_members_path(organization)
+      end
+    end
   end
 
   describe '#update' do
