@@ -1,0 +1,2 @@
+class ZipcodeQuestion < Question
+end

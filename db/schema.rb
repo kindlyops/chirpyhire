@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "accounts", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -81,27 +82,17 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
 
-  create_table "bot_actions", force: :cascade do |t|
-    t.bigint "bot_id", null: false
-    t.bigint "question_id"
-    t.bigint "goal_id"
-    t.integer "category", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["bot_id"], name: "index_bot_actions_on_bot_id"
-    t.index ["goal_id"], name: "index_bot_actions_on_goal_id"
-    t.index ["question_id"], name: "index_bot_actions_on_question_id"
-  end
-
   create_table "bots", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
-    t.string "keyword", default: "Start", null: false
-    t.datetime "last_edited_at", null: false
-    t.integer "last_edited_by_id", null: false
+    t.citext "keyword", default: "start", null: false
+    t.datetime "last_edited_at"
+    t.integer "last_edited_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["keyword", "organization_id"], name: "index_bots_on_keyword_and_organization_id", unique: true
     t.index ["last_edited_by_id"], name: "index_bots_on_last_edited_by_id"
+    t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_bots_on_organization_id"
   end
 
@@ -156,10 +147,15 @@ ActiveRecord::Schema.define(version: 20170702032841) do
 
   create_table "follow_ups", force: :cascade do |t|
     t.bigint "question_id", null: false
+    t.integer "next_question_id"
+    t.bigint "goal_id"
     t.string "body", null: false
     t.string "response", null: false
+    t.integer "action", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
+    t.index ["next_question_id"], name: "index_follow_ups_on_next_question_id"
     t.index ["question_id"], name: "index_follow_ups_on_question_id"
   end
 
@@ -337,9 +333,13 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   create_table "questions", force: :cascade do |t|
     t.bigint "bot_id", null: false
     t.text "body", null: false
+    t.integer "rank", null: false
+    t.string "type", default: "ChoiceQuestion", null: false
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_questions_on_bot_id"
+    t.index ["rank", "bot_id"], name: "index_questions_on_rank_and_bot_id", unique: true
   end
 
   create_table "read_receipts", id: :serial, force: :cascade do |t|
@@ -423,9 +423,6 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
-  add_foreign_key "bot_actions", "bots"
-  add_foreign_key "bot_actions", "goals"
-  add_foreign_key "bot_actions", "questions"
   add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
   add_foreign_key "contact_candidacies", "contacts"
@@ -434,7 +431,9 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
+  add_foreign_key "follow_ups", "goals"
   add_foreign_key "follow_ups", "questions"
+  add_foreign_key "follow_ups", "questions", column: "next_question_id"
   add_foreign_key "follow_ups_tags", "follow_ups"
   add_foreign_key "follow_ups_tags", "tags"
   add_foreign_key "goals", "bots"
