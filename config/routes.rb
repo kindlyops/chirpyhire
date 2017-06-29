@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   resources :organizations, only: %i[show update] do
-    resources :teams, only: %i[create new], controller: 'organizations/teams' do
+    resources :teams, only: %i[create], controller: 'organizations/teams' do
       resources :members, only: %i[create destroy]
     end
     resources :people, only: %i[update], controller: 'organizations/accounts'

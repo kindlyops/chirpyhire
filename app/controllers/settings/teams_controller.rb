@@ -3,6 +3,10 @@ class Settings::TeamsController < ApplicationController
     @teams = policy_scope(organization.teams)
   end
 
+  def new
+    @team = authorize organization.teams.build
+  end
+
   private
 
   def organization

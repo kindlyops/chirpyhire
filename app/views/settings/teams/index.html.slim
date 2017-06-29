@@ -18,7 +18,7 @@
             '
             = @organization.name
         .ch--main-menu--right
-          = link_to new_organization_team_path, class: 'btn btn-primary' do
+          = link_to new_organization_settings_team_path(@organization), class: 'btn btn-primary' do
             span Create team
       .card.ch--sub-main-content
         .card-block
