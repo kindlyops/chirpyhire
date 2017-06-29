@@ -17,6 +17,7 @@ class InvitationsController < Devise::InvitationsController
   def update
     super do |account|
       account.update(role: :member) if account.invited?
+      Internal::Notification::Account.call(account)
     end
   end
 
