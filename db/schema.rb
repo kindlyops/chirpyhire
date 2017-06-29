@@ -81,6 +81,30 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
 
+  create_table "bot_actions", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "question_id"
+    t.bigint "goal_id"
+    t.integer "category", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_bot_actions_on_bot_id"
+    t.index ["goal_id"], name: "index_bot_actions_on_goal_id"
+    t.index ["question_id"], name: "index_bot_actions_on_question_id"
+  end
+
+  create_table "bots", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "name", null: false
+    t.string "keyword", default: "Start", null: false
+    t.datetime "last_edited_at", null: false
+    t.integer "last_edited_by_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["last_edited_by_id"], name: "index_bots_on_last_edited_by_id"
+    t.index ["organization_id"], name: "index_bots_on_organization_id"
+  end
+
   create_table "contact_candidacies", force: :cascade do |t|
     t.integer "experience"
     t.boolean "skin_test"
@@ -128,6 +152,49 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["phone_number_id"], name: "index_conversations_on_phone_number_id"
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"
+  end
+
+  create_table "follow_ups", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "body", null: false
+    t.string "response", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_follow_ups_on_question_id"
+  end
+
+  create_table "follow_ups_tags", force: :cascade do |t|
+    t.bigint "follow_up_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follow_up_id"], name: "index_follow_ups_tags_on_follow_up_id"
+    t.index ["tag_id"], name: "index_follow_ups_tags_on_tag_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_goals_on_bot_id"
+  end
+
+  create_table "goals_tags", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_goals_tags_on_goal_id"
+    t.index ["tag_id"], name: "index_goals_tags_on_tag_id"
+  end
+
+  create_table "greetings", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_greetings_on_bot_id"
   end
 
   create_table "inboxes", force: :cascade do |t|
@@ -267,6 +334,14 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_questions_on_bot_id"
+  end
+
   create_table "read_receipts", id: :serial, force: :cascade do |t|
     t.integer "message_id", null: false
     t.datetime "read_at"
@@ -348,12 +423,24 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
+  add_foreign_key "bot_actions", "bots"
+  add_foreign_key "bot_actions", "goals"
+  add_foreign_key "bot_actions", "questions"
+  add_foreign_key "bots", "accounts", column: "last_edited_by_id"
+  add_foreign_key "bots", "organizations"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
+  add_foreign_key "follow_ups", "questions"
+  add_foreign_key "follow_ups_tags", "follow_ups"
+  add_foreign_key "follow_ups_tags", "tags"
+  add_foreign_key "goals", "bots"
+  add_foreign_key "goals_tags", "goals"
+  add_foreign_key "goals_tags", "tags"
+  add_foreign_key "greetings", "bots"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
@@ -368,6 +455,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "people", "accounts"
   add_foreign_key "people", "zipcodes"
   add_foreign_key "phone_numbers", "organizations"
+  add_foreign_key "questions", "bots"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"

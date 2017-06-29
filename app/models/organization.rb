@@ -10,6 +10,7 @@ class Organization < ApplicationRecord
   has_many :payment_cards
   has_many :phone_numbers
   has_many :assignment_rules
+  has_many :bots
 
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
