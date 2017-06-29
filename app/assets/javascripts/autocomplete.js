@@ -168,10 +168,13 @@ function initTeamSearch() {
 }
 
 function initAutocompletes() {
+  // Timing issues cause FF and IE to need the functions loaded immediately.
+  // Chrome loads them after the ready event.
   initAccountSearch();
   initTeamSearch();
 
   $(function() {
+    initAccountSearch();
     initTeamSearch();
-  })
+  });
 }
