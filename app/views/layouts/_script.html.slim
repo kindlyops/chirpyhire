@@ -9,3 +9,9 @@ javascript:
   };
   try {document.addEventListener("DOMContentLoaded", $buo_f,false)}
   catch(e){window.attachEvent("onload", $buo_f)}
+- if Rails.env.production? && current_account.present?
+  javascript:
+    FS.identify("#{current_account.id}", {
+      displayName: "#{current_account.name}",
+      email: "#{current_account.email}"
+    });
