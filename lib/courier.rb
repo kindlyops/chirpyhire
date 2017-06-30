@@ -1,14 +1,14 @@
 class Courier
-  def self.call(contact, message_sid)
-    new(contact, message_sid).call
+  def self.call(contact, message)
+    new(contact, message).call
   end
 
-  def initialize(contact, message_sid)
+  def initialize(contact, message)
     @contact = contact
-    @message_sid = message_sid
+    @message = message
   end
 
-  attr_reader :contact, :message_sid
+  attr_reader :contact, :message
 
   def call
     # 1. Handle chatting into a bot

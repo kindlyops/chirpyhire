@@ -82,6 +82,16 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
 
+  create_table "bot_campaigns", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "campaign_id"], name: "index_bot_campaigns_on_bot_id_and_campaign_id", unique: true
+    t.index ["bot_id"], name: "index_bot_campaigns_on_bot_id"
+    t.index ["campaign_id"], name: "index_bot_campaigns_on_campaign_id"
+  end
+
   create_table "bots", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
@@ -90,10 +100,26 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.integer "last_edited_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["keyword", "organization_id"], name: "index_bots_on_keyword_and_organization_id", unique: true
     t.index ["last_edited_by_id"], name: "index_bots_on_last_edited_by_id"
     t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_bots_on_organization_id"
+  end
+
+  create_table "campaign_contacts", force: :cascade do |t|
+    t.bigint "campaign_id", null: false
+    t.bigint "contact_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
+    t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
+    t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_campaigns_on_name"
   end
 
   create_table "contact_candidacies", force: :cascade do |t|
@@ -260,6 +286,16 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["deleted_at"], name: "index_notes_on_deleted_at"
   end
 
+  create_table "on_calls", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "inbox_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "inbox_id"], name: "index_on_calls_on_bot_id_and_inbox_id", unique: true
+    t.index ["bot_id"], name: "index_on_calls_on_bot_id"
+    t.index ["inbox_id"], name: "index_on_calls_on_inbox_id"
+  end
+
   create_table "organizations", id: :serial, force: :cascade do |t|
     t.string "name", null: false
     t.string "twilio_account_sid"
@@ -423,8 +459,12 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
+  add_foreign_key "bot_campaigns", "bots"
+  add_foreign_key "bot_campaigns", "campaigns"
   add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
+  add_foreign_key "campaign_contacts", "campaigns"
+  add_foreign_key "campaign_contacts", "contacts"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
@@ -449,6 +489,8 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "messages", "people", column: "sender_id"
   add_foreign_key "notes", "accounts"
   add_foreign_key "notes", "contacts"
+  add_foreign_key "on_calls", "bots"
+  add_foreign_key "on_calls", "inboxes"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
   add_foreign_key "payment_cards", "organizations"
   add_foreign_key "people", "accounts"

@@ -13,6 +13,5 @@ class CreateBots < ActiveRecord::Migration[5.1]
 
     add_foreign_key :bots, :accounts, column: :last_edited_by_id
     add_index :bots, [:name, :organization_id], unique: true
-    add_index :bots, [:keyword, :organization_id], unique: true
   end
 end
