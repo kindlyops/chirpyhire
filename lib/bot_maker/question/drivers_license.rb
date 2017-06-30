@@ -7,8 +7,8 @@ class BotMaker::Question::DriversLicense < BotMaker::Question
 
   def responses_and_tags
     [
-     ['Yes, of course!', "Driver's License", yes_follow_up_body], 
-     ['No, but I want to get one!', "No Driver's License", "Ok great"]
+      ['Yes, of course!', "Driver's License", yes_follow_up_body],
+      ['No, but I want to get one!', "No Driver's License", 'Ok great']
     ]
   end
 

@@ -7,9 +7,9 @@ class BotMaker::Question::Availability < BotMaker::Question
 
   def responses_and_tags
     [
-     ['Morning (AM) shifts are great!', 'AM', am_follow_up_body], 
-     ['Evening (PM) shifts are great!', 'PM', pm_follow_up_body], 
-     ["I'm wide open for AM or PM shifts!", open_follow_up_body]
+      ['Morning (AM) shifts are great!', 'AM', am_follow_up_body],
+      ['Evening (PM) shifts are great!', 'PM', pm_follow_up_body],
+      ["I'm wide open for AM or PM shifts!", 'AM/PM', open_follow_up_body]
     ]
   end
 
@@ -22,6 +22,6 @@ class BotMaker::Question::Availability < BotMaker::Question
   end
 
   def open_follow_up_body
-    "Nice! I appreciate your flexibility!"
+    'Nice! I appreciate your flexibility!'
   end
 end

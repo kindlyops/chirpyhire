@@ -1,5 +1,4 @@
 class BotMaker::DefaultBot
-
   def self.call(organization)
     new(organization).call
   end
@@ -27,7 +26,7 @@ class BotMaker::DefaultBot
 
   def questions
     %w[Certification Availability LiveIn Experience Transportation
-      DriversLicense Zipcode CprFirstAid SkinTest]
+       DriversLicense Zipcode CprFirstAid SkinTest]
   end
 
   def bot
@@ -52,5 +51,4 @@ class BotMaker::DefaultBot
       Oh... one more thing. I forgot to ask, what's your name? :)
     BODY
   end
-
 end

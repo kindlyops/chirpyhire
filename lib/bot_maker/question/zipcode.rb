@@ -6,4 +6,14 @@ class BotMaker::Question::Zipcode < BotMaker::Question
       This helps us find the best cases for you!
     BODY
   end
+
+  def call
+    question = bot.questions.create(body: body, rank: rank)
+    question.follow_ups.create(body: follow_up_body, type: 'ZipcodeFollowUp')
+  end
+
+  def follow_up_body
+    "Thank you. It's not always possible, "\
+    'but we do our best to get you convenient cases.'
+  end
 end

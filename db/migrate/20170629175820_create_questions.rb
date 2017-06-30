@@ -4,7 +4,6 @@ class CreateQuestions < ActiveRecord::Migration[5.1]
       t.belongs_to :bot, null: false, index: true, foreign_key: true
       t.text :body, null: false
       t.integer :rank, null: false
-      t.string :type, null: false, default: 'ChoiceQuestion'
       t.boolean :active, null: false, default: true
       t.timestamps
     end

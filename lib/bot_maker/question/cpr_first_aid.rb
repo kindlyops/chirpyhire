@@ -7,8 +7,8 @@ class BotMaker::Question::CprFirstAid < BotMaker::Question
 
   def responses_and_tags
     [
-     ['Yes, of course!', 'CPR / 1st Aid', yes_follow_up_body], 
-     ['No, but I want it to be!', 'No CPR / 1st Aid', "Ok thanks"]
+      ['Yes, of course!', 'CPR / 1st Aid', yes_follow_up_body],
+      ['No, but I want it to be!', 'No CPR / 1st Aid', 'Ok thanks']
     ]
   end
 

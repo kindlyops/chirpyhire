@@ -149,9 +149,10 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.bigint "question_id", null: false
     t.integer "next_question_id"
     t.bigint "goal_id"
+    t.string "response"
     t.string "body", null: false
-    t.string "response", null: false
     t.integer "action", default: 0, null: false
+    t.string "type", default: "ChoiceFollowUp", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
@@ -334,7 +335,6 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.bigint "bot_id", null: false
     t.text "body", null: false
     t.integer "rank", null: false
-    t.string "type", default: "ChoiceQuestion", null: false
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

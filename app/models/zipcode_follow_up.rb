@@ -1,0 +1,2 @@
+class ZipcodeFollowUp < FollowUp
+end

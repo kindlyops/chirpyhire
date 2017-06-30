@@ -1,2 +1,0 @@
-class ZipcodeQuestion < Question
-end
