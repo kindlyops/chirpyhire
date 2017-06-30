@@ -1,5 +1,6 @@
 class Inbox < ApplicationRecord
   belongs_to :team
+  has_many :assignment_rules
   has_many :conversations
 
   delegate :name, to: :team
