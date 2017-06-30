@@ -19,7 +19,7 @@ class Platform extends React.Component {
         name: 'All',
         form: {}
       }],
-      form: Object.assign({ page: 1 }, queryString.parse(this.props.location.search, { arrayFormat: 'bracket' }))
+      form: R.merge({ page: 1 }, queryString.parse(this.props.location.search, { arrayFormat: 'bracket' }))
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -89,9 +89,9 @@ class Platform extends React.Component {
       newForm = update(this.state.form, { $unset: [`${filter}`]});
     }
     newForm.page = 1;
-    const newState = Object.assign({}, this.state, {
+    const newState = R.mergeAll([{}, this.state, {
       form: newForm
-    });
+    }]);
     this.setState(newState);
   }
 
@@ -107,9 +107,9 @@ class Platform extends React.Component {
       newForm = update(this.state.form, { $unset: [`${filter}`]});
     }
     newForm.page = 1;
-    const newState = Object.assign({}, this.state, {
+    const newState = R.mergeAll([{}, this.state, {
       form: newForm
-    });
+    }]);
     this.setState(newState);
   }
 
@@ -148,7 +148,7 @@ class Platform extends React.Component {
 
   fetchCandidates(search) {
     return $.get(this.candidatesUrl(search)).then(data => {
-      let newState = Object.assign({}, this.state, data);
+      let newState = R.mergeAll([{}, this.state, data]);
       this.setState(newState);
     });
   }

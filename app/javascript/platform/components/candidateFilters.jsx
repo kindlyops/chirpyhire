@@ -40,9 +40,9 @@ class CandidateFilters extends React.Component {
         $set: event.target.checked
       }
     });
-    const newState = Object.assign({}, this.state, {
+    const newState = R.mergeAll([{}, this.state, {
       [filter]: newFilter
-    });
+    }]);
 
     this.props.handleSelectChange({ filter: filter, value: null });
     this.setState(newState);
