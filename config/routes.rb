@@ -48,15 +48,18 @@ Rails.application.routes.draw do
     resource :customer
   end
 
-  post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
   post 'twilio/text' => 'organizations/messages#create'
 
   resource :current_account, only: :show, controller: 'current_account'
   resource :current_organization, only: :show, controller: 'current_organization'
 
-  devise_for :accounts, controllers: { passwords: 'passwords', sessions: 'sessions', registrations: 'registrations', invitations: 'invitations' }
+  devise_for :accounts, controllers: {
+    passwords: 'passwords',
+    sessions: 'sessions',
+    registrations: 'registrations',
+    invitations: 'invitations'
+  }
 
   resources :accounts, only: %i[show update] do
     post :stop_impersonating, on: :collection
