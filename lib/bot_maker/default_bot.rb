@@ -1,5 +1,9 @@
 class BotMaker::DefaultBot
 
+  def self.call(organization)
+    new(organization).call
+  end
+
   def initialize(organization)
     @organization = organization
   end
@@ -16,15 +20,14 @@ class BotMaker::DefaultBot
   attr_reader :organization
 
   def create_questions
-    BotMaker::Question::Certification.call(bot, rank: 1)
-    BotMaker::Question::Availability.call(bot, rank: 2)
-    BotMaker::Question::LiveIn.call(bot, rank: 3)
-    BotMaker::Question::Experience.call(bot, rank: 4)
-    BotMaker::Question::Transportation.call(bot, rank: 5)
-    BotMaker::Question::DriversLicense.call(bot, rank: 6)
-    BotMaker::Question::ZipcodeQuestion.call(bot, rank: 7)
-    BotMaker::Question::CprFirstAid.call(bot, rank: 8)
-    BotMaker::Question::SkinTest.call(bot, rank: 9)
+    questions.each_with_index do |klass, index|
+      "BotMaker::Question::#{klass}".constantize.call(bot, rank: index + 1)
+    end
+  end
+
+  def questions
+    %w[Certification Availability LiveIn Experience Transportation
+      DriversLicense Zipcode CprFirstAid SkinTest]
   end
 
   def bot

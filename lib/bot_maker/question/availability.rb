@@ -1,37 +1,27 @@
-class BotMaker::Question::Availability
-  def self.call(bot, rank:)
-    new(bot, rank: rank).call
-  end
-
-  def initialize(bot, rank:)
-    @bot = bot
-    @rank = rank
-  end
-
-  attr_reader :bot, :rank
-  delegate :organization, to: :bot
-
-  def call
-    question = bot.create_question(body: body, rank: rank)
-    responses_and_tags.each do |response, tag|
-      follow_up = question.follow_ups.create(response: response)
-      follow_up.tags << organization.tags.find_or_create_by(name: tag)
-    end
-  end
-
+class BotMaker::Question::Availability < BotMaker::Question
   def body
     <<~QUESTION.strip
-      Are you certified?
+      What shifts are you interested in?
     QUESTION
   end
 
   def responses_and_tags
     [
-     ['Yes, CNA', 'CNA'], 
-     ['Yes, HHA', 'HHA'], 
-     ['Yes, PCA', 'PCA'], 
-     ['Yes, Other (MA, LPN, RN, etc.)', 'RN, LPN, Other'],
-     ['Not yet, but I want to be!', 'No Certification']
+     ['Morning (AM) shifts are great!', 'AM', am_follow_up_body], 
+     ['Evening (PM) shifts are great!', 'PM', pm_follow_up_body], 
+     ["I'm wide open for AM or PM shifts!", open_follow_up_body]
     ]
+  end
+
+  def am_follow_up_body
+    "Nice! I've made a note you are interested in AM shifts"
+  end
+
+  def pm_follow_up_body
+    "Nice! I've made a note you are interested in PM shifts"
+  end
+
+  def open_follow_up_body
+    "Nice! I appreciate your flexibility!"
   end
 end
