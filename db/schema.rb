@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628141156) do
+ActiveRecord::Schema.define(version: 20170630220807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,17 @@ ActiveRecord::Schema.define(version: 20170628141156) do
     t.datetime "clicked_at"
     t.index ["token"], name: "index_ahoy_messages_on_token"
     t.index ["user_id", "user_type"], name: "index_ahoy_messages_on_user_id_and_user_type"
+  end
+
+  create_table "assignment_rules", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "inbox_id", null: false
+    t.bigint "phone_number_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["inbox_id"], name: "index_assignment_rules_on_inbox_id"
+    t.index ["organization_id"], name: "index_assignment_rules_on_organization_id"
+    t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
 
   create_table "contact_candidacies", force: :cascade do |t|
@@ -243,6 +254,15 @@ ActiveRecord::Schema.define(version: 20170628141156) do
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id"
   end
 
+  create_table "phone_numbers", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "sid", null: false
+    t.string "phone_number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_phone_numbers_on_organization_id"
+  end
+
   create_table "read_receipts", id: :serial, force: :cascade do |t|
     t.integer "message_id", null: false
     t.datetime "read_at"
@@ -324,6 +344,9 @@ ActiveRecord::Schema.define(version: 20170628141156) do
 
   add_foreign_key "accounts", "organizations"
   add_foreign_key "accounts", "people"
+  add_foreign_key "assignment_rules", "inboxes"
+  add_foreign_key "assignment_rules", "organizations"
+  add_foreign_key "assignment_rules", "phone_numbers"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
@@ -342,6 +365,7 @@ ActiveRecord::Schema.define(version: 20170628141156) do
   add_foreign_key "payment_cards", "organizations"
   add_foreign_key "people", "accounts"
   add_foreign_key "people", "zipcodes"
+  add_foreign_key "phone_numbers", "organizations"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
