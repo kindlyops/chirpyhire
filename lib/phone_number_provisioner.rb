@@ -10,11 +10,11 @@ class PhoneNumberProvisioner
   def provision
     return if team.phone_number.present?
 
-    sub_account.incoming_phone_numbers.create(phone_number_attributes)
-    organization.assignment_rules.create!(
-      phone_number: phone_number, inbox: inbox
-    )
-    phone_number
+    phone_number.tap do |phone_number|
+      organization.assignment_rules.create!(
+        phone_number: phone_number, inbox: inbox
+      )
+    end
   end
 
   private
@@ -78,10 +78,16 @@ class PhoneNumberProvisioner
     @inbox ||= (team.inbox || team.create_inbox!)
   end
 
+  def new_twilio_number
+    @new_twilio_number ||= begin
+      sub_account.incoming_phone_numbers.create(phone_number_attributes)
+    end
+  end
+
   def phone_params
     {
-      phone_number: available_local_phone_number.phone_number,
-      sid: available_local_phone_number.sid
+      phone_number: new_twilio_number.phone_number,
+      sid: new_twilio_number.sid
     }
   end
 
