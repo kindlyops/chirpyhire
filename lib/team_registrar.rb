@@ -15,8 +15,8 @@ class TeamRegistrar
   def call
     setup_account_on_team
     team.create_inbox
-    provision_phone_number
-    create_recruiting_ad
+    phone_number = provision_phone_number
+    create_recruiting_ad(phone_number)
 
     NewTeamNotificationJob.perform_later(team) if notify.present?
   end
@@ -28,9 +28,9 @@ class TeamRegistrar
     team.update(recruiter: account)
   end
 
-  def create_recruiting_ad
+  def create_recruiting_ad(phone_number)
     team.create_recruiting_ad(
-      body: RecruitingAd.body(team), organization: organization
+      body: RecruitingAd.body(team, phone_number), organization: organization
     )
   end
 

@@ -7,13 +7,15 @@ RSpec.describe Registrar do
 
     before do
       allow(PhoneNumberProvisioner).to receive(:provision) do |team|
-        phone_number = organization.phone_numbers.create(
+        organization = team.organization
+        organization.phone_numbers.create(
           sid: Faker::Number.number(10),
           phone_number: Faker::PhoneNumber.cell_phone
-        )
-        organization.assignment_rules.create(
-          phone_number: phone_number, inbox: team.inbox
-        )
+        ).tap do |phone_number|
+          organization.assignment_rules.create(
+            phone_number: phone_number, inbox: team.inbox
+          )
+        end
       end
     end
 

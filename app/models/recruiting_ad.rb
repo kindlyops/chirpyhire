@@ -8,13 +8,13 @@ class RecruitingAd < ApplicationRecord
     super || team.organization
   end
 
-  def self.body(team)
+  def self.body(team, phone_number)
     <<~BODY
       #{team.organization_name} is hiring Caregivers! Our CNAs are as important to us as our clients. Openings PT/FT for M-F day shifts and weekends.
 
       *********************************
 
-      For immediate opportunities, text START to #{team.phone_number.phony_formatted}.
+      For immediate opportunities, text START to #{phone_number.phone_number.phony_formatted}.
 
       *********************************
 

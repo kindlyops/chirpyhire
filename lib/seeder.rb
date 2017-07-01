@@ -213,12 +213,13 @@ class Seeder
   end
 
   def create_team_associations
+    phone_number = organization.phone_numbers.first
     team.create_inbox
     organization.assignment_rules.create(
-      inbox: team.inbox, phone_number: organization.phone_numbers.first
+      inbox: team.inbox, phone_number: phone_number
     )
     organization.create_recruiting_ad(
-      team: team, body: RecruitingAd.body(team)
+      team: team, body: RecruitingAd.body(team, phone_number)
     )
   end
 
