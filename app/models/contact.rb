@@ -100,6 +100,8 @@ class Contact < ApplicationRecord
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       direction: message.direction,
+      to: message.to,
+      from: message.from,
       sender: sender,
       recipient: person
     ).tap(&:touch_conversation)
