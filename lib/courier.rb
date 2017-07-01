@@ -17,4 +17,18 @@ class Courier
     #   - If not, trigger the bot campaign to start.
     # 2. Otherwise log a regular message
   end
+
+  def triggered_bot
+    bots.find_by(keyword: message.body)
+  end
+
+  def rule
+    organization.assignment_rules.find_by(phone_number: message.to)
+  end
+
+  def team; end
+
+  delegate :organization, to: :contact
+  delegate :bots, to: :organization
+  delegate :inbox, to: :rule
 end
