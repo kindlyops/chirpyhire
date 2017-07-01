@@ -6,5 +6,7 @@ FactoryGirl.define do
     sent_at { DateTime.current }
     external_created_at { DateTime.current }
     conversation
+    from { Faker::PhoneNumber.cell_phone }
+    to { Faker::PhoneNumber.cell_phone }
   end
 end
