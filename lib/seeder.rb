@@ -156,7 +156,7 @@ class Seeder
   end
 
   def team_attributes
-    { name: 'Atlanta', phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE') }
+    { name: 'Atlanta' }
   end
 
   def team_params
@@ -208,13 +208,24 @@ class Seeder
   def setup_account
     setup_organization
     team.accounts << account
-    team.create_inbox
+    create_team_associations
     team.update(recruiter: account)
   end
 
-  def setup_organization
+  def create_team_associations
+    team.create_inbox
+    organization.assignment_rules.create(
+      inbox: team.inbox, phone_number: organization.phone_numbers.first
+    )
     organization.create_recruiting_ad(
       team: team, body: RecruitingAd.body(team)
+    )
+  end
+
+  def setup_organization
+    organization.phone_numbers.create(
+      sid: ENV.fetch('DEMO_ORGANIZATION_PHONE_SID'),
+      phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')
     )
     organization.update(recruiter: account)
   end

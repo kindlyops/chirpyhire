@@ -4,7 +4,9 @@ FactoryGirl.define do
     name { Faker::Company.name }
 
     trait :inbox do
-      after(:create, &:create_inbox)
+      after(:create) do |team|
+        team.create_inbox if team.inbox.blank?
+      end
     end
 
     before(:create) do |team|
@@ -34,7 +36,11 @@ FactoryGirl.define do
     end
 
     trait :phone_number do
-      phone_number { Faker::PhoneNumber.cell_phone }
+      after(:create) do |team|
+        team.create_inbox if team.inbox.blank?
+        phone_number = create(:phone_number, organization: team.organization)
+        create(:assignment_rule, organization: team.organization, inbox: team.inbox, phone_number: phone_number)
+      end
     end
   end
 end

@@ -7,8 +7,13 @@ RSpec.describe Registrar do
 
     before do
       allow(PhoneNumberProvisioner).to receive(:provision) do |team|
-        phone = Faker::PhoneNumber.cell_phone
-        team.update(phone_number: phone)
+        phone_number = organization.phone_numbers.create(
+          sid: Faker::Number.number(10),
+          phone_number: Faker::PhoneNumber.cell_phone
+        )
+        organization.assignment_rules.create(
+          phone_number: phone_number, inbox: team.inbox
+        )
       end
     end
 
@@ -43,9 +48,16 @@ RSpec.describe Registrar do
         }.to change { Inbox.count }.by(1)
       end
 
-      it 'provisions a phone number for the team' do
-        subject.register
-        expect(Team.last.phone_number.present?).to eq(true)
+      it 'creates an assignment rule' do
+        expect {
+          subject.register
+        }.to change { organization.assignment_rules.count }.by(1)
+      end
+
+      it 'creates a phone number' do
+        expect {
+          subject.register
+        }.to change { organization.phone_numbers.count }.by(1)
       end
 
       it 'sets the recruiter on the team' do

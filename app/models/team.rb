@@ -1,5 +1,4 @@
 class Team < ApplicationRecord
-  phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :organization
   belongs_to :recruiter, class_name: 'Account'
 
@@ -29,4 +28,9 @@ class Team < ApplicationRecord
 
   delegate :name, to: :organization, prefix: true
   delegate :zipcode, to: :location
+
+  def phone_number
+    return unless inbox && inbox.assignment_rules.present?
+    inbox.assignment_rules.first.phone_number.phone_number
+  end
 end

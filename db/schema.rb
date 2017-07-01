@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170630220807) do
+ActiveRecord::Schema.define(version: 20170701002411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 20170630220807) do
     t.integer "invited_by_id"
     t.integer "invitations_count", default: 0
     t.integer "organization_id", null: false
-    t.integer "person_id"
     t.integer "role", default: 0, null: false
     t.text "bio"
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -47,7 +46,6 @@ ActiveRecord::Schema.define(version: 20170630220807) do
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id"
     t.index ["organization_id"], name: "index_accounts_on_organization_id"
-    t.index ["person_id"], name: "index_accounts_on_person_id"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
@@ -78,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170630220807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["inbox_id"], name: "index_assignment_rules_on_inbox_id"
+    t.index ["organization_id", "phone_number_id", "inbox_id"], name: "unique_assignment_rules", unique: true
     t.index ["organization_id"], name: "index_assignment_rules_on_organization_id"
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
@@ -261,6 +260,7 @@ ActiveRecord::Schema.define(version: 20170630220807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_phone_numbers_on_organization_id"
+    t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end
 
   create_table "read_receipts", id: :serial, force: :cascade do |t|
@@ -313,7 +313,6 @@ ActiveRecord::Schema.define(version: 20170630220807) do
   create_table "teams", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
-    t.string "phone_number"
     t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -324,7 +323,6 @@ ActiveRecord::Schema.define(version: 20170630220807) do
     t.string "description"
     t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"
-    t.index ["phone_number"], name: "index_teams_on_phone_number", unique: true
     t.index ["recruiter_id"], name: "index_teams_on_recruiter_id"
   end
 
@@ -343,7 +341,6 @@ ActiveRecord::Schema.define(version: 20170630220807) do
   end
 
   add_foreign_key "accounts", "organizations"
-  add_foreign_key "accounts", "people"
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
