@@ -27,7 +27,11 @@ class Constraint::Answer < Constraint::Base
   end
 
   def team
-    Team.find_by(phone_number: to)
+    phone_number.assignment_rule.team
+  end
+
+  def phone_number
+    PhoneNumber.find_by(phone_number: to)
   end
 
   def person

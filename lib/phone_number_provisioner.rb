@@ -11,7 +11,9 @@ class PhoneNumberProvisioner
     return if team.phone_number.present?
 
     sub_account.incoming_phone_numbers.create(phone_number_attributes)
-    team.update(phone_params)
+    organization.assignment_rules.create(
+      phone_number: phone_number, inbox: team.inbox
+    )
   end
 
   private
@@ -64,11 +66,18 @@ class PhoneNumberProvisioner
   end
 
   def available_local_phone_number
-    available_local_phone_numbers[0].phone_number
+    @available_local_phone_number ||= available_local_phone_numbers[0]
+  end
+
+  def phone_number
+    @phone_number ||= organization.phone_numbers.create(phone_params)
   end
 
   def phone_params
-    { phone_number: available_local_phone_number }
+    {
+      phone_number: available_local_phone_number.phone_number,
+      sid: available_local_phone_number.sid
+    }
   end
 
   def master_client

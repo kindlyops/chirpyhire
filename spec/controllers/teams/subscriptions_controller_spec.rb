@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Teams::SubscriptionsController, type: :controller do
-  let!(:team) { create(:team, :account, phone_number: Faker::PhoneNumber.cell_phone) }
+  let!(:team) { create(:team, :account, :phone_number) }
   let(:organization) { team.organization }
   let(:phone_number) { '+15555555555' }
 

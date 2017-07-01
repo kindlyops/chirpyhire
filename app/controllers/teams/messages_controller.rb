@@ -21,8 +21,15 @@ class Teams::MessagesController < ActionController::Base
     @person ||= Person.find_or_create_by(phone_number: params['From'])
   end
 
+  def phone_number
+    @phone_number ||= PhoneNumber.find_by(phone_number: params['To'])
+  end
+
   def team
-    @team ||= Team.find_by(phone_number: params['To'])
+    @team ||= begin
+      return unless phone_number && phone_number.assignment_rule
+      phone_number.assignment_rule.team
+    end
   end
 
   def create_subscribed_contact

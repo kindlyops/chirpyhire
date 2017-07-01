@@ -8,6 +8,6 @@ class PersonDecorator < Draper::Decorator
   end
 
   def phone_number
-    Person::PhoneNumber.new(object)
+    Person::PhoneNumberAttribute.new(object)
   end
 end
