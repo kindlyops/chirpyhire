@@ -9,6 +9,8 @@ class Message < ApplicationRecord
   validates :recipient, presence: true, if: :outbound?
   validates :conversation, presence: true
   validate :open_conversation, on: :create
+  phony_normalize :to, default_country_code: 'US'
+  phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
 

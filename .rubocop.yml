@@ -32,6 +32,10 @@ Metrics/ClassLength:
     - 'lib/seeder.rb'
     - 'app/controllers/candidates_controller.rb'
 
+Metrics/AbcSize:
+  Exclude:
+    - 'lib/seeder.rb'
+
 Metrics/MethodLength:
   Exclude:
     - 'lib/answer/certification.rb'

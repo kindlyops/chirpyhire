@@ -12,7 +12,8 @@ class Messaging::Message
     Messaging::Media.new(message.media)
   end
 
-  delegate :sid, :body, :direction, :date_sent, :date_created, to: :message
+  delegate :sid, :body, :from, :to, :direction,
+           :date_sent, :date_created, to: :message
 
   private
 

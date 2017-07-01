@@ -32,14 +32,22 @@ class MessageSyncer
     open_conversation.messages.create!(message_params).tap(&:touch_conversation)
   end
 
+  def param_keys
+    %i[sid to from body direction]
+  end
+
+  def base_message_params
+    param_keys.each_with_object({}) do |key, hash|
+      hash[key] = external_message.send(key)
+    end
+  end
+
   def message_params
-    {
-      sid: external_message.sid,
-      body: external_message.body,
-      direction: external_message.direction,
+    base_message_params.merge(
       sent_at: external_message.date_sent,
-      external_created_at: external_message.date_created
-    }.merge(sender: person)
+      external_created_at: external_message.date_created,
+      sender: person
+    )
   end
 
   def create_read_receipts(message)

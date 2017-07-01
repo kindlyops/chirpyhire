@@ -89,6 +89,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: Chirpy.person,
+      to: organization.phone_numbers.first.phone_number,
+      from: person.phone_number,
       conversation: contact.open_conversation
     )
     contact.open_conversation.update(last_message_created_at: DateTime.current)
@@ -103,6 +105,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
+      from: organization.phone_numbers.first.phone_number,
+      to: contact.person.phone_number,
       conversation: contact.open_conversation
     )
     contact.open_conversation.update(last_message_created_at: DateTime.current)
@@ -117,6 +121,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'outbound-api',
       sender: Chirpy.person,
+      from: organization.phone_numbers.first.phone_number,
+      to: contact.person.phone_number,
       conversation: contact.open_conversation
     )
     contact.open_conversation.update(last_message_created_at: DateTime.current)
@@ -150,6 +156,8 @@ class Seeder
       external_created_at: DateTime.current,
       direction: 'inbound',
       sender: person,
+      to: organization.phone_numbers.first.phone_number,
+      from: person.phone_number,
       conversation: contact.open_conversation
     )
     contact.open_conversation.update(last_message_created_at: DateTime.current)
@@ -213,7 +221,6 @@ class Seeder
   end
 
   def create_team_associations
-    phone_number = organization.phone_numbers.first
     team.create_inbox
     organization.assignment_rules.create(
       inbox: team.inbox, phone_number: phone_number
@@ -221,6 +228,10 @@ class Seeder
     organization.create_recruiting_ad(
       team: team, body: RecruitingAd.body(team, phone_number)
     )
+  end
+
+  def phone_number
+    organization.phone_numbers.first
   end
 
   def setup_organization
