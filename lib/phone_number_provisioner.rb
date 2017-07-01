@@ -11,9 +11,10 @@ class PhoneNumberProvisioner
     return if team.phone_number.present?
 
     sub_account.incoming_phone_numbers.create(phone_number_attributes)
-    organization.assignment_rules.create(
-      phone_number: phone_number, inbox: team.inbox
+    organization.assignment_rules.create!(
+      phone_number: phone_number, inbox: inbox
     )
+    phone_number
   end
 
   private
@@ -70,7 +71,11 @@ class PhoneNumberProvisioner
   end
 
   def phone_number
-    @phone_number ||= organization.phone_numbers.create(phone_params)
+    @phone_number ||= organization.phone_numbers.create!(phone_params)
+  end
+
+  def inbox
+    @inbox ||= (team.inbox || team.create_inbox!)
   end
 
   def phone_params
