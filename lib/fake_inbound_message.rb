@@ -8,11 +8,11 @@ class FakeInboundMessage < FakeMessage
   end
 
   def from
-    'from'
+    Faker::PhoneNumber.cell_phone
   end
 
   def to
-    'to'
+    Faker::PhoneNumber.cell_phone
   end
 
   def body

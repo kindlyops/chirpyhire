@@ -6,6 +6,22 @@ RSpec.describe MessageSyncer do
   let(:contact) { create(:contact, team: team) }
   let(:message_sid) { 'sid' }
 
+  describe 'call' do
+    subject { MessageSyncer.new(contact, message_sid) }
+
+    it "sets 'from' on the message" do
+      subject.call
+
+      expect(Message.last.from).to be_present
+    end
+
+    it "sets 'to' on the message" do
+      subject.call
+
+      expect(Message.last.to).to be_present
+    end
+  end
+
   describe 'receipt' do
     context 'receipt requested' do
       subject { MessageSyncer.new(contact, message_sid, receipt: true) }
