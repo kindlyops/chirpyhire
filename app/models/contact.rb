@@ -1,12 +1,7 @@
 class Contact < ApplicationRecord
   belongs_to :person
-  belongs_to :team
-  belongs_to :organization, optional: true
+  belongs_to :organization
   include RecruitingCounts
-
-  def organization
-    super || team.organization
-  end
 
   has_one :contact_candidacy
   has_many :conversations
@@ -18,22 +13,9 @@ class Contact < ApplicationRecord
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person
-  delegate :phone_number, to: :team, prefix: true
   delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
-
-  def open_conversation
-    existing_open_conversation || IceBreaker.call(self)
-  end
-
-  def existing_open_conversation
-    conversations.opened.first
-  end
-
-  def current_conversation
-    existing_open_conversation || conversations.by_recent_message.first
-  end
 
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')

@@ -7,14 +7,14 @@ RSpec.describe MessagePolicy do
 
     context 'contact on same team' do
       context 'contact not actively subscribed' do
-        let(:contact) { create(:contact, subscribed: false, team: account.teams.first) }
+        let(:contact) { create(:contact, subscribed: false, organization: account.organization) }
         let!(:message) { build(:message, recipient: contact.person) }
 
         it { is_expected.to forbid_action(:create) }
       end
 
       context 'contact is actively subscribed' do
-        let(:contact) { create(:contact, subscribed: true, team: account.teams.first) }
+        let(:contact) { create(:contact, subscribed: true, organization: account.organization) }
         let!(:message) { build(:message, recipient: contact.person) }
 
         it { is_expected.to permit_action(:create) }
@@ -32,27 +32,27 @@ RSpec.describe MessagePolicy do
   describe 'scope' do
     subject { MessagePolicy::Scope.new(account, Message.all) }
 
-    context 'teams' do
-      let(:team) { create(:team, :account, :inbox) }
+    context 'organizations' do
+      let(:team) { create(:organization, :team, :account) }
       let(:account) { team.accounts.first }
-      let(:other_team) { create(:team, :inbox, organization: team.organization) }
-      let(:contact) { create(:contact, team: other_team) }
+      let(:other_organization) { create(:organization, :inbox) }
+      let(:contact) { create(:contact, team: other_organization) }
       let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
 
       before do
         IceBreaker.call(contact)
       end
 
-      context 'account is on a different team than the message contact' do
+      context 'account is on a different organization than the message contact' do
         it 'does include the message' do
           expect(subject.resolve).to include(message)
         end
       end
 
-      context 'account is on same team as the message contact' do
-        let(:team) { create(:team, :account, :inbox) }
-        let(:account) { team.accounts.first }
-        let(:contact) { create(:contact, team: team) }
+      context 'account is on same organization as the message contact' do
+        let(:organization) { create(:organization, :account, :team) }
+        let(:account) { organization.accounts.first }
+        let(:contact) { create(:contact, organization: organization) }
         let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
 
         it 'does include the message' do

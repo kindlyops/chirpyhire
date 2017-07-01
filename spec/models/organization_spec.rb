@@ -6,7 +6,7 @@ RSpec.describe Organization do
   let!(:account) { subject.accounts.first }
 
   describe '#message' do
-    let(:contact) { create(:contact, team: team) }
+    let(:contact) { create(:contact, organization: subject) }
 
     before do
       allow(Broadcaster::Message).to receive(:broadcast)

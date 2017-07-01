@@ -1,6 +1,7 @@
 class Surveyor
-  def initialize(contact)
+  def initialize(contact, message)
     @contact = contact
+    @message = message
   end
 
   def start
@@ -10,7 +11,7 @@ class Surveyor
     survey.ask(welcome: true)
   end
 
-  def consider_answer(inquiry, message)
+  def consider_answer(inquiry)
     return unless survey.on?(inquiry)
 
     return complete_survey(message) if survey.just_finished?(message)
@@ -71,7 +72,14 @@ class Surveyor
     NotificationMailer.contact_ready_for_review(account, conversation)
   end
 
-  attr_reader :contact
+  def assignment_rule
+    assignment_rules.find_by(phone_number: organization_phone_number)
+  end
 
-  delegate :organization, :team, :contact_candidacy, to: :contact
+  attr_reader :contact, :message
+
+  delegate :organization, :contact_candidacy, to: :contact
+  delegate :assignment_rules, to: :organization
+  delegate :team, to: :assignment_rule
+  delegate :organization_phone_number, to: :message
 end

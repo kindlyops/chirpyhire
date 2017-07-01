@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Conversations::MessagesController do
   let(:team) { create(:team, :inbox, :account) }
-  let(:contact) { create(:contact, team: team) }
+  let(:contact) { create(:contact, organization: organization) }
   let(:organization) { team.organization }
   let(:account) { team.accounts.first }
   let(:inbox) { account.inbox }

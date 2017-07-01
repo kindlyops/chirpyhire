@@ -48,10 +48,10 @@ Rails.application.routes.draw do
     resource :customer
   end
 
-  post 'twilio/text', to: 'teams/subscriptions#create', constraints: Constraint::OptIn.new
-  post 'twilio/text', to: 'teams/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text', to: 'teams/answers#create', constraints: Constraint::Answer.new
-  post 'twilio/text' => 'teams/messages#create'
+  post 'twilio/text', to: 'organizations/subscriptions#create', constraints: Constraint::OptIn.new
+  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text', to: 'organizations/answers#create', constraints: Constraint::Answer.new
+  post 'twilio/text' => 'organizations/messages#create'
 
   resource :current_account, only: :show, controller: 'current_account'
   resource :current_organization, only: :show, controller: 'current_organization'

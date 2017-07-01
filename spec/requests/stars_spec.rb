@@ -10,7 +10,7 @@ RSpec.describe 'Stars' do
   end
 
   describe '#create' do
-    let!(:contact) { create(:contact, team: team) }
+    let!(:contact) { create(:contact, organization: organization) }
     let(:conversation) { inbox.existing_open_conversation(contact) }
 
     before do

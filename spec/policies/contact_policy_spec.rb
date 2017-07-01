@@ -19,7 +19,7 @@ RSpec.describe ContactPolicy do
       context 'account is on same team as the contact' do
         let(:team) { create(:team, :account) }
         let(:account) { team.accounts.first }
-        let!(:contact) { create(:contact, team: team) }
+        let!(:contact) { create(:contact, organization: organization) }
 
         it 'does include the contact' do
           expect(subject.resolve).to include(contact)

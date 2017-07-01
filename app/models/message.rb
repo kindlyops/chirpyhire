@@ -13,6 +13,7 @@ class Message < ApplicationRecord
   phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
+  delegate :organization, to: :conversation
 
   def self.by_recency
     order(external_created_at: :desc).order(:id)
@@ -74,6 +75,11 @@ class Message < ApplicationRecord
     conversation.update(last_message_created_at: created_at)
 
     Broadcaster::Conversation.broadcast(conversation)
+  end
+
+  def organization_phone_number
+    return organization.phone_numbers.find_by(phone_number: to) if inbound?
+    organization.phone_numbers.find_by(phone_number: from)
   end
 
   private

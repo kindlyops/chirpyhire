@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ReadReceiptsCreator do
   let(:team) { create(:team, :inbox) }
   let(:organization) { team.organization }
-  let(:contact) { create(:contact, team: team) }
+  let(:contact) { create(:contact, organization: organization) }
   let!(:message) { create(:message, sender: contact.person, conversation: contact.open_conversation) }
 
   subject { ReadReceiptsCreator.new(message, contact) }

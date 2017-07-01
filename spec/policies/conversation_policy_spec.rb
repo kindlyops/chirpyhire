@@ -20,7 +20,7 @@ RSpec.describe ConversationPolicy do
       context 'account is on same team as the conversation contact' do
         let(:team) { create(:team, :inbox, :account) }
         let(:account) { team.accounts.first }
-        let(:contact) { create(:contact, team: team) }
+        let(:contact) { create(:contact, organization: organization) }
         let!(:conversation) { create(:conversation, inbox: team.inbox, contact: contact) }
 
         it 'does include the conversation' do

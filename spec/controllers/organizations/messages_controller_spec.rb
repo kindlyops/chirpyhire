@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Teams::MessagesController, type: :controller do
+RSpec.describe Organizations::MessagesController, type: :controller do
   let(:team) { create(:team, :account, :phone_number) }
   let!(:organization) { team.organization }
 

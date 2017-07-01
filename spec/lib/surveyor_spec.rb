@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Surveyor do
-  subject { Surveyor.new(contact) }
+  subject { Surveyor.new(contact, message) }
 
   describe '#start' do
     let(:team) { create(:team, :inbox, :account) }
-    let(:contact) { create(:contact, team: team, subscribed: true) }
+    let(:contact) { create(:contact, organization: organization, subscribed: true) }
+    let(:message) { create(:message, sender: contact.person, body: 'start', conversation: contact.open_conversation) }
     let(:candidacy) { contact.contact_candidacy }
 
     before do
