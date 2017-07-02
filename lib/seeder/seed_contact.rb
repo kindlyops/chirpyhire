@@ -58,12 +58,12 @@ class Seeder::SeedContact
 
   def fetch_choice(category)
     choice = contact.contact_candidacy.send(category.to_sym)
-    choice.to_sym if choice.respond_to?(:to_sym)
+    return choice.to_sym if choice.respond_to?(:to_sym)
+    choice
   end
 
   def answer_body(answer, choice, category)
     return zipcodes.sample if category == 'zipcode'
-
     answer.question.choices.invert[answer.choice_map.invert[choice]]
   end
 
