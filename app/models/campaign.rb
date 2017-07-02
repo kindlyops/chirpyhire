@@ -4,4 +4,6 @@ class Campaign < ApplicationRecord
 
   has_many :campaign_conversations
   has_many :conversations, through: :campaign_conversations
+
+  has_many :messages
 end

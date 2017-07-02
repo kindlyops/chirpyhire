@@ -253,6 +253,8 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.bigint "conversation_id", null: false
     t.string "from", null: false
     t.string "to", null: false
+    t.bigint "campaign_id"
+    t.index ["campaign_id"], name: "index_messages_on_campaign_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
@@ -460,6 +462,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "messages", "campaigns"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"

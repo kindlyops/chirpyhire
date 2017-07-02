@@ -1,0 +1,91 @@
+require 'rails_helper'
+
+RSpec.describe Bot::Receiver do
+  let(:bot_campaign) { create(:bot_campaign) }
+  let!(:inbox) { bot_campaign.inbox }
+  let!(:campaign) { bot_campaign.campaign }
+  let!(:bot) { bot_campaign.bot }
+
+  subject { Bot::Receiver.new(bot, message) }
+
+  describe 'call' do
+    context 'conversation is not in the bot campaign' do
+      let(:conversation) { create(:conversation, inbox: inbox) }
+      let!(:message) { create(:message, conversation: conversation) }
+
+      it 'creates a pending campaign conversation' do
+        expect {
+          subject.call
+        }.to change { conversation.reload.campaign_conversations.pending.count }.by(1)
+      end
+
+      it 'updates the message to be tied to the campaign' do
+        expect {
+          subject.call
+        }.to change { message.reload.campaign }.from(nil).to(campaign)
+      end
+
+      it 'ties the new campaign to the bot campaign' do
+        subject.call
+
+        expect(CampaignConversation.last.campaign).to eq(campaign)
+      end
+
+      it 'calls Bot::Responder' do
+        expect(Bot::Responder).to receive(:call)
+
+        subject.call
+      end
+    end
+
+    context 'conversation is in the bot campaign' do
+      let(:conversation) { create(:conversation, inbox: inbox) }
+      let!(:campaign_conversation) { create(:campaign_conversation, conversation: conversation, campaign: campaign) }
+      let!(:message) { create(:message, conversation: conversation) }
+
+      context 'exited' do
+        before do
+          campaign_conversation.update(state: :exited)
+        end
+
+        it 'does not create a campaign conversation' do
+          expect {
+            subject.call
+          }.not_to change { conversation.reload.campaigns.count }
+        end
+
+        it 'updates the message to be tied to the campaign' do
+          expect {
+            subject.call
+          }.to change { message.reload.campaign }.from(nil).to(campaign)
+        end
+
+        it 'does not call the Bot::Responder' do
+          expect(Bot::Responder).not_to receive(:call)
+
+          subject.call
+        end
+      end
+
+      context 'active' do
+        it 'does not create a campaign conversation' do
+          expect {
+            subject.call
+          }.not_to change { conversation.reload.campaigns.count }
+        end
+
+        it 'updates the message to be tied to the campaign' do
+          expect {
+            subject.call
+          }.to change { message.reload.campaign }.from(nil).to(campaign)
+        end
+
+        it 'calls Bot::Responder' do
+          expect(Bot::Responder).to receive(:call)
+
+          subject.call
+        end
+      end
+    end
+  end
+end

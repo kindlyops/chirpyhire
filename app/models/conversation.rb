@@ -53,4 +53,27 @@ class Conversation < ApplicationRecord
   def reopenable?
     contact.open_conversations.where(phone_number: phone_number).none?
   end
+
+  def create_message(message, sender)
+    messages.create(
+      message_params(message, sender)
+    ).tap(&:touch_conversation)
+  end
+
+  private
+
+  def message_params(message, sender)
+    base_message_params(message).merge(
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      sender: sender,
+      recipient: person
+    )
+  end
+
+  def base_message_params(message)
+    %i[sid body direction to from].each_with_object({}) do |key, hash|
+      hash[key] = message.send(key)
+    end
+  end
 end

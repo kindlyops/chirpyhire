@@ -15,8 +15,8 @@ RSpec.describe InboxDeliveryAgent do
         context 'and the message would trigger the bot (START)' do
           let!(:message) { create(:message, body: 'start', conversation: conversation) }
 
-          it 'calls BotDeliveryAgent' do
-            expect(BotDeliveryAgent).to receive(:call).with(bot, message)
+          it 'calls Bot::Receiver' do
+            expect(Bot::Receiver).to receive(:call).with(bot, message)
 
             subject.call
           end
@@ -57,8 +57,8 @@ RSpec.describe InboxDeliveryAgent do
         context 'and the message is anything' do
           let!(:message) { create(:message, conversation: conversation) }
 
-          it 'calls BotDeliveryAgent' do
-            expect(BotDeliveryAgent).to receive(:call).with(bot, message)
+          it 'calls Bot::Receiver' do
+            expect(Bot::Receiver).to receive(:call).with(bot, message)
 
             subject.call
           end

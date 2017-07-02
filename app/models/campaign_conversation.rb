@@ -3,6 +3,6 @@ class CampaignConversation < ApplicationRecord
   belongs_to :conversation
 
   enum state: {
-    active: 0, exited: 1
+    pending: 0, active: 1, exited: 2
   }
 end

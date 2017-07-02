@@ -72,28 +72,7 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def create_message(message, sender, phone_number)
-    IceBreaker.call(self, phone_number).messages.create(
-      message_params(message, sender)
-    ).tap(&:touch_conversation)
-  end
-
   private
-
-  def message_params(message, sender)
-    base_message_params(message).merge(
-      sent_at: message.date_sent,
-      external_created_at: message.date_created,
-      sender: sender,
-      recipient: person
-    )
-  end
-
-  def base_message_params(message)
-    %i[sid body direction to from].each_with_object({}) do |key, hash|
-      hash[key] = message.send(key)
-    end
-  end
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
