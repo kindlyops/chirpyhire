@@ -14,7 +14,7 @@ class Bot::Receiver
     message.update!(campaign: campaign_conversation.campaign)
     return if campaign_conversation.exited?
 
-    Bot::Responder.call(bot, message)
+    Bot::Responder.call(bot, message, campaign_conversation)
   end
 
   def campaign_conversation

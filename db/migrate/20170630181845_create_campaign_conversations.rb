@@ -3,6 +3,7 @@ class CreateCampaignConversations < ActiveRecord::Migration[5.1]
     create_table :campaign_conversations do |t|
       t.belongs_to :campaign, null: false, index: true, foreign_key: true
       t.belongs_to :conversation, null: false, index: true, foreign_key: true
+      t.belongs_to :question, null: true, index: true, foreign_key: true
       t.integer :state, null: false, default: 0
       t.timestamps
     end
