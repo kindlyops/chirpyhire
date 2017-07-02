@@ -8,5 +8,6 @@ FactoryGirl.define do
     conversation
     from { Faker::PhoneNumber.cell_phone }
     to { Faker::PhoneNumber.cell_phone }
+    body { Faker::Lorem.sentence }
   end
 end

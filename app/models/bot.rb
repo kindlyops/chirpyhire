@@ -7,5 +7,6 @@ class Bot < ApplicationRecord
   has_many :goals
 
   has_many :bot_campaigns
+  has_many :inboxes, through: :bot_campaigns
   has_many :campaigns, through: :bot_campaigns
 end

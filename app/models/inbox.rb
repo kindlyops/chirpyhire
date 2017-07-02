@@ -14,4 +14,8 @@ class Inbox < ApplicationRecord
   def recent_conversations
     conversations.by_recent_message
   end
+
+  def receive(message)
+    InboxDeliveryAgent.call(self, message)
+  end
 end

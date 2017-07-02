@@ -3,7 +3,7 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    CourierJob.perform_later(contact, params['MessageSid'])
+    DeliveryAgentJob.perform_later(contact, params['MessageSid'])
 
     head :ok
   end
