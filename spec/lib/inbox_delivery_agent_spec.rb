@@ -51,7 +51,7 @@ RSpec.describe InboxDeliveryAgent do
 
       context 'and the conversation is in an active campaign for the bot' do
         before do
-          create(:campaign_conversation, campaign: campaign, conversation: conversation)
+          create(:campaign_conversation, state: :active, campaign: campaign, conversation: conversation)
         end
 
         context 'and the message is anything' do
