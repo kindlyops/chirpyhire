@@ -1,23 +1,24 @@
 class AlreadySubscribed
-  def self.call(contact)
-    new(contact).call
+  def self.call(contact, message)
+    new(contact, message).call
   end
 
-  def initialize(contact)
+  def initialize(contact, message)
+    @message = message
     @contact = contact
   end
 
   def call
     organization.message(
       sender: Chirpy.person,
-      contact: contact,
+      conversation: message.conversation,
       body: already_subscribed
     )
   end
 
   private
 
-  attr_reader :contact
+  attr_reader :contact, :message
   delegate :organization, to: :contact
   delegate :recruiter, to: :organization
 

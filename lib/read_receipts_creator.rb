@@ -33,10 +33,6 @@ class ReadReceiptsCreator
     ContactWaitingJob.set(wait_until: wait_until)
   end
 
-  def conversation
-    @conversation ||= contact.open_conversation
-  end
-
   attr_reader :message, :contact
-  delegate :team, to: :contact
+  delegate :conversation, to: :message
 end

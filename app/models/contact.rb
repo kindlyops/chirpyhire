@@ -17,6 +17,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  def existing_open_conversation
+    conversations.opened.first
+  end
+
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')
   end
@@ -75,8 +79,8 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def create_message(message, sender)
-    open_conversation.messages.create(
+  def create_message(message, sender, phone_number)
+    IceBreaker.call(self, phone_number).messages.create(
       message_params(message, sender)
     ).tap(&:touch_conversation)
   end

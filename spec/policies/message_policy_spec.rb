@@ -33,27 +33,26 @@ RSpec.describe MessagePolicy do
     subject { MessagePolicy::Scope.new(account, Message.all) }
 
     context 'organizations' do
-      let(:team) { create(:organization, :team, :account) }
-      let(:account) { team.accounts.first }
-      let(:other_organization) { create(:organization, :inbox) }
-      let(:contact) { create(:contact, team: other_organization) }
-      let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
-
-      before do
-        IceBreaker.call(contact)
-      end
+      let(:organization) { create(:organization, :team, :account) }
+      let(:phone_number) { organization.phone_numbers.first }
+      let(:account) { organization.accounts.first }
+      let(:other_organization) { create(:organization) }
+      let(:contact) { create(:contact, organization: other_organization) }
+      let(:conversation) { create(:conversation, contact: contact) }
+      let!(:message) { create(:message, conversation: conversation, sender: contact.person) }
 
       context 'account is on a different organization than the message contact' do
-        it 'does include the message' do
-          expect(subject.resolve).to include(message)
+        it 'does not include the message' do
+          expect(subject.resolve).not_to include(message)
         end
       end
 
       context 'account is on same organization as the message contact' do
-        let(:organization) { create(:organization, :account, :team) }
+        let(:organization) { create(:organization, :account) }
         let(:account) { organization.accounts.first }
         let(:contact) { create(:contact, organization: organization) }
-        let!(:message) { create(:message, conversation: contact.open_conversation, sender: contact.person) }
+        let(:conversation) { create(:conversation, contact: contact) }
+        let!(:message) { create(:message, conversation: conversation, sender: contact.person) }
 
         it 'does include the message' do
           expect(subject.resolve).to include(message)

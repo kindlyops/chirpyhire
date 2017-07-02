@@ -4,13 +4,12 @@ RSpec.describe ReadReceiptsCreator do
   let(:team) { create(:team, :inbox) }
   let(:organization) { team.organization }
   let(:contact) { create(:contact, organization: organization) }
-  let!(:message) { create(:message, sender: contact.person, conversation: contact.open_conversation) }
+  let(:conversation) { create(:conversation, contact: contact, inbox: team.inbox) }
+  let!(:message) { create(:message, sender: contact.person, conversation: conversation) }
 
   subject { ReadReceiptsCreator.new(message, contact) }
 
   describe '#call' do
-    let(:conversation) { contact.open_conversation }
-
     context 'and the read receipt does not exist' do
       it 'creates one' do
         expect {

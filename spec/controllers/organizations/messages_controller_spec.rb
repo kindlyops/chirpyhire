@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Organizations::MessagesController, type: :controller do
-  let(:team) { create(:team, :account, :phone_number) }
-  let!(:organization) { team.organization }
+  let(:organization) { create(:organization, :account, :phone_number) }
+  let!(:phone_number) { organization.phone_numbers.first.phone_number }
 
   describe '#create' do
     context 'new person' do
       let(:params) do
         {
-          'To' => team.phone_number,
+          'To' => phone_number,
           'From' => '+14041234567',
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
@@ -35,7 +35,7 @@ RSpec.describe Organizations::MessagesController, type: :controller do
 
       it 'adds the contact to the existing team' do
         post :create, params: params
-        expect(team.contacts).to include(Contact.last)
+        expect(organization.contacts).to include(Contact.last)
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Organizations::MessagesController, type: :controller do
 
       let(:params) do
         {
-          'To' => team.phone_number,
+          'To' => phone_number,
           'From' => person.phone_number,
           'Body' => 'Answer',
           'MessageSid' => 'MESSAGE_SID'
@@ -77,7 +77,7 @@ RSpec.describe Organizations::MessagesController, type: :controller do
 
       it 'adds the contact to the existing team' do
         post :create, params: params
-        expect(team.contacts).to include(Contact.last)
+        expect(organization.contacts).to include(Contact.last)
       end
     end
   end

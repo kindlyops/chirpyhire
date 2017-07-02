@@ -14,45 +14,45 @@ class Surveyor
   def consider_answer(inquiry)
     return unless survey.on?(inquiry)
 
-    return complete_survey(message) if survey.just_finished?(message)
-    return restate_and_log(message) unless survey.answer.valid?(message)
+    return complete_survey if survey.just_finished?
+    return restate_and_log unless survey.answer.valid?(message)
 
-    update_contact_candidacy(message)
+    update_contact_candidacy
     survey.ask
   end
 
   def survey
-    @survey ||= Survey.new(contact_candidacy)
+    @survey ||= Survey.new(contact, message)
   end
 
   private
 
-  def restate_and_log(message)
+  def restate_and_log
     ReadReceiptsCreator.call(message, contact)
 
     survey.restate
   end
 
-  def complete_survey(message)
-    update_contact_candidacy(message)
+  def complete_survey
+    update_contact_candidacy
     survey.complete
 
     notify_team
   end
 
   def notify_team
-    notify_contact_ready_for_review(team.accounts, contact.open_conversation)
+    notify_contact_ready_for_review(team.accounts, message.conversation)
   end
 
-  def send_message(message)
+  def send_message(message_body)
     organization.message(
       sender: Chirpy.person,
-      contact: contact,
-      body: message
+      conversation: message.conversation,
+      body: message_body
     )
   end
 
-  def update_contact_candidacy(message)
+  def update_contact_candidacy
     survey.answer.format(message) do |formatted_answer|
       contact_candidacy.assign_attributes(formatted_answer)
       contact_candidacy.save!

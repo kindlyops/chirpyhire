@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Survey do
   let(:contact) { create(:contact) }
   let(:candidacy) { contact.contact_candidacy }
-  subject { Survey.new(candidacy) }
+  let(:message) { create(:message, body: 'a') }
+
+  subject { Survey.new(contact, message) }
 
   describe '#ask' do
     context 'in_progress' do
@@ -135,7 +137,7 @@ RSpec.describe Survey do
           let(:message) { create(:message, body: 'e') }
 
           it 'is false' do
-            expect(subject.just_finished?(message)).to eq(false)
+            expect(subject.just_finished?).to eq(false)
           end
         end
 
@@ -143,7 +145,7 @@ RSpec.describe Survey do
           let(:message) { create(:message, body: 'a') }
 
           it 'is true' do
-            expect(subject.just_finished?(message)).to eq(true)
+            expect(subject.just_finished?).to eq(true)
           end
         end
       end
@@ -156,7 +158,7 @@ RSpec.describe Survey do
         let(:message) { create(:message, body: 'a') }
 
         it 'is false' do
-          expect(subject.just_finished?(message)).to eq(false)
+          expect(subject.just_finished?).to eq(false)
         end
       end
     end

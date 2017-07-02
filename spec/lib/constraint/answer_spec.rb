@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Constraint::Answer do
   let(:request) { ActionDispatch::Request.new({}) }
   let(:constraint) { Constraint::Answer.new }
-  let(:team) { create(:team, :phone_number) }
+  let(:organization) { create(:organization, :phone_number) }
+  let!(:phone_number) { organization.phone_numbers.first.phone_number }
 
   before do
     allow(request).to receive(:request_parameters).and_return(parameters)
@@ -12,10 +13,10 @@ RSpec.describe Constraint::Answer do
   describe '#matches?' do
     context 'with person present' do
       let(:person) { create(:person) }
-      let(:parameters) { { 'From' => person.phone_number, 'To' => team.phone_number } }
+      let(:parameters) { { 'From' => person.phone_number, 'To' => phone_number } }
 
       context 'with contact present' do
-        let!(:contact) { create(:contact, person: person, team: team) }
+        let!(:contact) { create(:contact, person: person, organization: organization) }
 
         context 'without inquiry' do
           it 'is false' do
@@ -42,7 +43,7 @@ RSpec.describe Constraint::Answer do
     end
 
     context 'without person present' do
-      let(:parameters) { { 'From' => '+14041111111', 'To' => team.phone_number } }
+      let(:parameters) { { 'From' => '+14041111111', 'To' => phone_number } }
 
       it 'is false' do
         expect(constraint.matches?(request)).to eq(false)

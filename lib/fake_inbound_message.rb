@@ -8,11 +8,11 @@ class FakeInboundMessage < FakeMessage
   end
 
   def from
-    Faker::PhoneNumber.cell_phone
+    '+14041234567'
   end
 
   def to
-    Faker::PhoneNumber.cell_phone
+    ENV.fetch('DEMO_ORGANIZATION_PHONE')
   end
 
   def body

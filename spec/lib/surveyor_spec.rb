@@ -4,14 +4,13 @@ RSpec.describe Surveyor do
   subject { Surveyor.new(contact, message) }
 
   describe '#start' do
-    let(:team) { create(:team, :inbox, :account) }
+    let(:organization) { create(:organization, :team, :account) }
+    let(:team) { organization.teams.first }
+    let(:phone_number) { organization.phone_numbers.first }
     let(:contact) { create(:contact, organization: organization, subscribed: true) }
-    let(:message) { create(:message, sender: contact.person, body: 'start', conversation: contact.open_conversation) }
+    let(:conversation) { IceBreaker.call(contact, phone_number) }
+    let!(:message) { create(:message, body: 'start', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
     let(:candidacy) { contact.contact_candidacy }
-
-    before do
-      IceBreaker.call(contact)
-    end
 
     context 'candidacy already in progress' do
       before do
@@ -77,25 +76,23 @@ RSpec.describe Surveyor do
   end
 
   describe '#consider_answer' do
-    let(:contact) { create(:contact) }
+    let(:organization) { create(:organization, :team, :account) }
+    let(:account) { organization.accounts.first }
+    let(:team) { organization.teams.first }
+    let(:phone_number) { organization.phone_numbers.first }
+    let(:contact) { create(:contact, organization: organization, subscribed: true) }
+    let(:conversation) { IceBreaker.call(contact, phone_number) }
     let(:candidacy) { contact.contact_candidacy }
-    let(:team) { contact.team }
     let(:survey) { subject.survey }
-
-    before do
-      contact.update(subscribed: true)
-      account = create(:account, organization: team.organization)
-      team.accounts << account
-      IceBreaker.call(contact)
-    end
 
     context 'in_progress' do
       before do
+        team.accounts << account
         candidacy.update(state: :in_progress)
       end
 
       describe 'completed survey' do
-        let(:message) { create(:message, body: 'a') }
+        let(:message) { create(:message, body: 'a', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
         let(:inquiry) { 'skin_test' }
         before do
           candidacy.update(inquiry: inquiry)
@@ -104,27 +101,27 @@ RSpec.describe Surveyor do
         it 'completes the survey' do
           expect(subject.survey).to receive(:complete)
 
-          subject.consider_answer(inquiry, message)
+          subject.consider_answer(inquiry)
         end
 
         it 'does not call ReadReceiptsCreator' do
           expect(ReadReceiptsCreator).not_to receive(:call)
 
-          subject.consider_answer(inquiry, message)
+          subject.consider_answer(inquiry)
         end
 
         context 'two teams same organization' do
           let!(:other_team) { create(:team, :inbox, :account, organization: team.organization) }
 
           before do
-            IceBreaker.call(contact)
+            IceBreaker.call(contact, phone_number)
           end
 
           context 'account on each team' do
             context 'contact on one team' do
               it 'sends an email to the account on the same team only' do
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to have_enqueued_job(ActionMailer::DeliveryJob)
                   .with { |mailer, mailer_method, *_args|
                        expect(mailer).to eq('NotificationMailer')
@@ -143,18 +140,18 @@ RSpec.describe Surveyor do
         end
 
         describe 'valid answer' do
-          let(:message) { create(:message, body: 'a') }
+          let(:message) { create(:message, body: 'a', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
 
           it 'asks the next question' do
             expect(subject.survey).to receive(:ask)
 
-            subject.consider_answer(inquiry, message)
+            subject.consider_answer(inquiry)
           end
 
           it 'does not call ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).not_to receive(:call)
 
-            subject.consider_answer(inquiry, message)
+            subject.consider_answer(inquiry)
           end
 
           context 'last question' do
@@ -163,34 +160,34 @@ RSpec.describe Surveyor do
             end
 
             context 'and another valid answer has already come in' do
-              let(:first_message) { create(:message, body: 'Y') }
-              let(:second_message) { create(:message, body: 'A') }
+              let(:first_message) { create(:message, body: 'Y', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
+              let(:second_message) { create(:message, body: 'A', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
 
               before do
-                first_surveyor = Surveyor.new(contact)
+                first_surveyor = Surveyor.new(contact, first_message)
                 allow(first_surveyor.survey).to receive(:send_message)
 
-                first_surveyor.consider_answer(survey.last_question, first_message)
+                first_surveyor.consider_answer(survey.last_question)
               end
 
               it 'does not raise an error' do
                 allow(subject.survey).to receive(:ask)
 
                 expect {
-                  subject.consider_answer(survey.last_question, second_message)
+                  subject.consider_answer(survey.last_question)
                 }.not_to raise_error
               end
 
               it 'does not send a message' do
                 expect(subject.survey).not_to receive(:send_message)
 
-                subject.consider_answer(survey.last_question, second_message)
+                subject.consider_answer(survey.last_question)
               end
             end
           end
 
           context 'attributes' do
-            let(:message) { create(:message, body: body) }
+            let(:message) { create(:message, body: body, to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
 
             context 'experience' do
               let(:body) { 'a' }
@@ -203,14 +200,14 @@ RSpec.describe Surveyor do
               it 'updates the experience' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.experience }.to('less_than_one')
               end
 
               it 'adds a 0 - 1 years tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { contact.tags.find_by(name: '0 - 1 years').present? }.from(false).to(true)
               end
 
@@ -220,7 +217,7 @@ RSpec.describe Surveyor do
                 it 'adds a 1 - 5 years tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: '1 - 5 years').present? }.from(false).to(true)
                 end
               end
@@ -231,7 +228,7 @@ RSpec.describe Surveyor do
                 it 'adds a 6+ years tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: '6+ years').present? }.from(false).to(true)
                 end
               end
@@ -242,27 +239,27 @@ RSpec.describe Surveyor do
                 it 'adds a No Experience tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'No Experience').present? }.from(false).to(true)
                 end
               end
 
               context 'and another valid answer has already come in' do
-                let(:first_message) { create(:message, body: 'A') }
-                let(:second_message) { create(:message, body: 'A') }
+                let(:first_message) { create(:message, body: 'A', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
+                let(:second_message) { create(:message, body: 'A', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
 
                 before do
-                  first_surveyor = Surveyor.new(contact)
+                  first_surveyor = Surveyor.new(contact, first_message)
                   allow(first_surveyor.survey).to receive(:send_message)
 
-                  first_surveyor.consider_answer(inquiry, first_message)
+                  first_surveyor.consider_answer(inquiry)
                 end
 
                 it 'does not raise an error' do
                   allow(subject.survey).to receive(:ask)
 
                   expect {
-                    subject.consider_answer(inquiry, second_message)
+                    subject.consider_answer(inquiry)
                   }.not_to raise_error
                 end
 
@@ -270,7 +267,7 @@ RSpec.describe Surveyor do
                   allow(subject.survey).to receive(:ask)
 
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.not_to change { candidacy.reload.experience }
                 end
               end
@@ -287,14 +284,14 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.availability }.to('hourly_pm')
               end
 
               it 'adds a PM tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { contact.tags.find_by(name: 'PM').present? }.from(false).to(true)
               end
 
@@ -304,7 +301,7 @@ RSpec.describe Surveyor do
                 it 'adds a AM tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'AM').present? }.from(false).to(true)
                 end
               end
@@ -315,7 +312,7 @@ RSpec.describe Surveyor do
                 it 'adds a AM/PM tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'AM/PM').present? }.from(false).to(true)
                 end
               end
@@ -331,14 +328,14 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.transportation }.to('no_transportation')
               end
 
               it 'adds a No Transportation tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { contact.tags.find_by(name: 'No Transportation').present? }.from(false).to(true)
               end
 
@@ -348,7 +345,7 @@ RSpec.describe Surveyor do
                 it 'adds a Personal Transportation tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'Personal Transportation').present? }.from(false).to(true)
                 end
               end
@@ -359,7 +356,7 @@ RSpec.describe Surveyor do
                 it 'adds a Public Transportation tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'Public Transportation').present? }.from(false).to(true)
                 end
               end
@@ -375,14 +372,14 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.skin_test }.to(true)
               end
 
               it 'adds a Skin / TB Test tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { contact.tags.find_by(name: 'Skin / TB Test').present? }.from(false).to(true)
               end
 
@@ -392,7 +389,7 @@ RSpec.describe Surveyor do
                 it 'adds a No Skin / TB Test tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'No Skin / TB Test').present? }.from(false).to(true)
                 end
               end
@@ -410,14 +407,14 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.zipcode }.to('30342')
               end
 
               it 'does not add a 30342 tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.not_to change { contact.tags.count }
               end
             end
@@ -432,14 +429,14 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:complete)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.certification }.to('cna')
               end
 
               it 'adds a CNA tag to the contact' do
                 allow(subject.survey).to receive(:ask)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { contact.tags.find_by(name: 'CNA').present? }.from(false).to(true)
               end
 
@@ -449,7 +446,7 @@ RSpec.describe Surveyor do
                 it 'adds a HHA tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'HHA').present? }.from(false).to(true)
                 end
               end
@@ -460,7 +457,7 @@ RSpec.describe Surveyor do
                 it 'adds a PCA tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'PCA').present? }.from(false).to(true)
                 end
               end
@@ -471,7 +468,7 @@ RSpec.describe Surveyor do
                 it 'adds a No Certification tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'No Certification').present? }.from(false).to(true)
                 end
               end
@@ -482,7 +479,7 @@ RSpec.describe Surveyor do
                 it 'adds a RN, LPN, Other tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'RN, LPN, Other').present? }.from(false).to(true)
                 end
               end
@@ -500,7 +497,7 @@ RSpec.describe Surveyor do
                 it 'adds a Live-In tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'Live-In').present? }.from(false).to(true)
                 end
               end
@@ -511,7 +508,7 @@ RSpec.describe Surveyor do
                 it 'adds a No Live-In tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'No Live-In').present? }.from(false).to(true)
                 end
               end
@@ -529,7 +526,7 @@ RSpec.describe Surveyor do
                 it "adds a Driver's License tag to the contact" do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: "Driver's License").present? }.from(false).to(true)
                 end
               end
@@ -540,7 +537,7 @@ RSpec.describe Surveyor do
                 it "adds a No Driver's License tag to the contact" do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: "No Driver's License").present? }.from(false).to(true)
                 end
               end
@@ -558,7 +555,7 @@ RSpec.describe Surveyor do
                 it 'adds a CPR / 1st Aid tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'CPR / 1st Aid').present? }.from(false).to(true)
                 end
               end
@@ -569,7 +566,7 @@ RSpec.describe Surveyor do
                 it 'adds a No CPR / 1st Aid tag to the contact' do
                   allow(subject.survey).to receive(:ask)
                   expect {
-                    subject.consider_answer(inquiry, message)
+                    subject.consider_answer(inquiry)
                   }.to change { contact.tags.find_by(name: 'No CPR / 1st Aid').present? }.from(false).to(true)
                 end
               end
@@ -585,7 +582,7 @@ RSpec.describe Surveyor do
               it 'updates the value' do
                 allow(subject.survey).to receive(:complete)
                 expect {
-                  subject.consider_answer(inquiry, message)
+                  subject.consider_answer(inquiry)
                 }.to change { candidacy.reload.drivers_license }.to(false)
               end
             end
@@ -593,19 +590,19 @@ RSpec.describe Surveyor do
         end
 
         describe 'invalid answer' do
-          let(:message) { create(:message, body: 'q') }
+          let(:message) { create(:message, body: 'q', to: phone_number.phone_number, conversation: conversation, sender: contact.person) }
           let(:inquiry) { 'skin_test' }
 
           it 'restates the question' do
             expect(subject.survey).to receive(:restate)
 
-            subject.consider_answer(inquiry, message)
+            subject.consider_answer(inquiry)
           end
 
           it 'calls ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).to receive(:call)
 
-            subject.consider_answer(inquiry, message)
+            subject.consider_answer(inquiry)
           end
         end
       end

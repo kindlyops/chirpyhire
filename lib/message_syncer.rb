@@ -33,7 +33,7 @@ class MessageSyncer
   end
 
   def open_conversation
-    IceBreaker.call(self, phone_number)
+    IceBreaker.call(contact, phone_number)
   end
 
   def phone_number

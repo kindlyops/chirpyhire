@@ -1,6 +1,7 @@
 class Survey
-  def initialize(candidacy)
-    @candidacy = candidacy
+  def initialize(contact, message)
+    @contact = contact
+    @message = message
   end
 
   def ask(welcome: false)
@@ -27,7 +28,7 @@ class Survey
     send_message(thank_you.body)
   end
 
-  def just_finished?(message)
+  def just_finished?
     return unless candidacy.in_progress?
 
     last_question? && answer.valid?(message)
@@ -36,10 +37,7 @@ class Survey
   delegate :answer, to: :current_question
 
   def questions
-    Hash[keys.map do |key|
-      question = "Question::#{key.to_s.camelcase}".constantize.new(contact)
-      [key, question]
-    end].with_indifferent_access
+    @questions ||= Survey::Questions.call(contact)
   end
 
   def next_question
@@ -59,21 +57,16 @@ class Survey
 
   private
 
-  def send_message(message)
+  def send_message(message_body)
     organization.message(
       sender: Chirpy.person,
-      contact: contact,
-      body: message
+      conversation: message.conversation,
+      body: message_body
     )
   end
 
   def current_question
     @current_question ||= questions[candidacy.inquiry]
-  end
-
-  def keys
-    %i[certification availability live_in experience
-       transportation drivers_license zipcode cpr_first_aid skin_test]
   end
 
   def question_after(inquiry)
@@ -100,7 +93,14 @@ class Survey
     Notification::ThankYou.new(contact)
   end
 
-  attr_reader :candidacy
-  delegate :contact, to: :candidacy
+  def candidacy
+    contact.contact_candidacy
+  end
+
+  def keys
+    questions.keys.map(&:to_sym)
+  end
+
+  attr_reader :contact, :message
   delegate :organization, to: :contact
 end
