@@ -7,15 +7,15 @@ class Conversation < ApplicationRecord
   has_many :campaigns, through: :campaign_conversations
 
   has_one :active_campaign_conversation, -> { active },
-           class_name: 'CampaignConversation'
+          class_name: 'CampaignConversation'
   has_one :active_campaign, through: :active_campaign_conversation,
-                              class_name: 'Campaign', source: :campaign
+                            class_name: 'Campaign', source: :campaign
   has_one :active_bot_campaign, through: :active_campaign,
-                                  class_name: 'BotCampaign',
-                                  source: :bot_campaign
+                                class_name: 'BotCampaign',
+                                source: :bot_campaign
   has_one :active_bot, through: :active_bot_campaign,
-                                  class_name: 'Bot',
-                                  source: :bot
+                       class_name: 'Bot',
+                       source: :bot
 
   has_many :messages
   has_many :read_receipts
