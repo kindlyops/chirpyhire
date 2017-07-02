@@ -30,7 +30,7 @@ class BotMaker::DefaultBot
   end
 
   def bot
-    @bot ||= organization.bots.create(name: 'chirpy', keyword: 'start')
+    @bot ||= organization.bots.create(name: 'chirpy')
   end
 
   def greeting_body
