@@ -5,6 +5,7 @@ class Contact < ApplicationRecord
 
   has_one :contact_candidacy
   has_many :conversations
+  has_many :campaigns, through: :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
   has_many :taggings

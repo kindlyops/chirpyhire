@@ -15,6 +15,6 @@ class Bot < ApplicationRecord
   end
 
   def activated?(message)
-    Bot::Trigger.new(message).activated?
+    Bot::Trigger.new(self, message).activated?
   end
 end

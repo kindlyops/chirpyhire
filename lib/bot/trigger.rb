@@ -1,15 +1,21 @@
 class Bot::Trigger
   KEYWORD = %w[START].freeze
 
-  def initialize(message)
+  def initialize(bot, message)
+    @bot = bot
     @message = message
   end
 
-  attr_reader :message
-  delegate :body, to: :message
+  attr_reader :message, :bot
+  delegate :body, :contact, to: :message
+  delegate :campaigns, to: :bot
 
   def activated?
-    match.present?
+    no_prior_campaign? && match.present?
+  end
+
+  def no_prior_campaign?
+    campaigns.merge(contact.campaigns).empty?
   end
 
   def match
