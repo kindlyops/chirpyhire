@@ -7,11 +7,13 @@ RSpec.describe InboxDeliveryAgent do
     context 'with a bot tied to the inbox' do
       let(:bot) { create(:bot) }
       let(:bot_campaign) { create(:bot_campaign, bot: bot) }
+      let(:campaign) { bot_campaign.campaign }
       let!(:inbox) { bot_campaign.inbox }
+      let(:conversation) { create(:conversation, inbox: inbox) }
 
-      context 'and the contact is not in a campaign for the bot' do
+      context 'and the conversation is not in a campaign for the bot' do
         context 'and the message would trigger the bot (START)' do
-          let!(:message) { create(:message, body: 'start') }
+          let!(:message) { create(:message, body: 'start', conversation: conversation) }
 
           it 'calls BotDeliveryAgent' do
             expect(BotDeliveryAgent).to receive(:call).with(bot, message)
@@ -21,7 +23,7 @@ RSpec.describe InboxDeliveryAgent do
         end
 
         context 'and the message would not trigger the bot' do
-          let!(:message) { create(:message, body: 'I am interested in work') }
+          let!(:message) { create(:message, body: 'I am interested in work', conversation: conversation) }
 
           it 'calls ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).to receive(:call)
@@ -31,13 +33,13 @@ RSpec.describe InboxDeliveryAgent do
         end
       end
 
-      context 'and the contact is in a campaign for the bot' do
+      context 'and the conversation is in a campaign for the bot' do
         before do
-          create(:campaign_contact, contact: message.conversation.contact)
+          create(:campaign_conversation, campaign: campaign, conversation: conversation)
         end
 
         context 'and the message is anything' do
-          let!(:message) { create(:message) }
+          let!(:message) { create(:message, conversation: conversation) }
 
           it 'calls BotDeliveryAgent' do
             expect(BotDeliveryAgent).to receive(:call).with(bot, message)

@@ -10,13 +10,36 @@ class InboxDeliveryAgent
 
   attr_reader :message, :inbox
 
-  def call; end
-end
+  def call
+    return existing_bot.receive(message) if existing_bot.present?
+    return activated_bot.receive(message) if activated_bot.present?
 
-# 1. Handle chatting into a bot
-#   - Can only be in one bot campaign at a time per phone number.
-#   - If already in a bot campaign send the message through as a regular message.
-#   - If not, trigger the bot campaign to start.
-# 2. Otherwise log a regular message
-# Using assignment rules route message to appropriate Inbox
-# Once at the Inbox see if there are any bots to handle the message or log a regular message.
+    ReadReceiptsCreator.call(message, contact)
+  end
+
+  private
+
+  def activated_bot
+    @activated_bot ||= begin
+      bots.find { |bot| bot.activated?(message) }
+    end
+  end
+
+  def existing_bot
+    @existing_bot ||= begin
+      return if bot_campaign.blank?
+      bot_campaign.bot
+    end
+  end
+
+  def bot_campaign
+    @bot_campaign ||= begin
+      conversation
+        .active_bot_campaigns
+        .merge(inbox.bot_campaigns).first
+    end
+  end
+
+  delegate :conversation, :contact, to: :message
+  delegate :bots, to: :inbox
+end

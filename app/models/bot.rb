@@ -9,4 +9,12 @@ class Bot < ApplicationRecord
   has_many :bot_campaigns
   has_many :inboxes, through: :bot_campaigns
   has_many :campaigns, through: :bot_campaigns
+
+  def receive(message)
+    BotDeliveryAgent.call(self, message)
+  end
+
+  def activated?(message)
+    Bot::Trigger.new(message).activated?
+  end
 end

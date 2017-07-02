@@ -3,6 +3,17 @@ class Conversation < ApplicationRecord
   belongs_to :inbox
   belongs_to :phone_number
 
+  has_many :campaign_conversations
+  has_many :campaigns, through: :campaign_conversations
+
+  has_many :active_campaign_conversations, -> { active },
+           class_name: 'CampaignConversation'
+  has_many :active_campaigns, through: :active_campaign_conversations,
+                              class_name: 'Campaign', source: :campaign
+  has_many :active_bot_campaigns, through: :active_campaigns,
+                                  class_name: 'BotCampaign',
+                                  source: :bot_campaign
+
   has_many :messages
   has_many :read_receipts
 

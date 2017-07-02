@@ -13,7 +13,7 @@ class Message < ApplicationRecord
   phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
-  delegate :organization, to: :conversation
+  delegate :organization, :contact, to: :conversation
 
   def self.by_recency
     order(external_created_at: :desc).order(:id)

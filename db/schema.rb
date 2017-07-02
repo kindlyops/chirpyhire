@@ -105,15 +105,15 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["organization_id"], name: "index_bots_on_organization_id"
   end
 
-  create_table "campaign_contacts", force: :cascade do |t|
+  create_table "campaign_conversations", force: :cascade do |t|
     t.bigint "campaign_id", null: false
-    t.bigint "contact_id", null: false
+    t.bigint "conversation_id", null: false
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
-    t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
-    t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
+    t.index ["campaign_id", "conversation_id"], name: "index_campaign_conversations_on_campaign_id_and_conversation_id", unique: true
+    t.index ["campaign_id"], name: "index_campaign_conversations_on_campaign_id"
+    t.index ["conversation_id"], name: "index_campaign_conversations_on_conversation_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -455,8 +455,8 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "bot_campaigns", "inboxes"
   add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
-  add_foreign_key "campaign_contacts", "campaigns"
-  add_foreign_key "campaign_contacts", "contacts"
+  add_foreign_key "campaign_conversations", "campaigns"
+  add_foreign_key "campaign_conversations", "conversations"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"

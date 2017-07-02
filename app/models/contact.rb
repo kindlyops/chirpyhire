@@ -10,9 +10,6 @@ class Contact < ApplicationRecord
   has_many :taggings
   has_many :tags, through: :taggings
 
-  has_many :campaign_contacts
-  has_many :campaigns, through: :campaign_contacts
-
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person

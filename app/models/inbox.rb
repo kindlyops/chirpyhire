@@ -3,6 +3,7 @@ class Inbox < ApplicationRecord
   has_many :assignment_rules
   has_many :conversations
   has_many :bot_campaigns
+  has_many :bots, through: :bot_campaigns
 
   delegate :name, to: :team
 
