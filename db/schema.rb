@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170701182334) do
+ActiveRecord::Schema.define(version: 20170701181657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,11 +107,13 @@ ActiveRecord::Schema.define(version: 20170701182334) do
     t.datetime "updated_at", null: false
     t.datetime "last_reply_at"
     t.boolean "starred", default: false, null: false
+    t.bigint "team_id"
     t.boolean "screened", default: false, null: false
     t.boolean "reached", default: false, null: false
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
+    t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -122,7 +124,7 @@ ActiveRecord::Schema.define(version: 20170701182334) do
     t.datetime "updated_at", null: false
     t.bigint "inbox_id", null: false
     t.integer "unread_count", default: 0, null: false
-    t.bigint "phone_number_id", null: false
+    t.bigint "phone_number_id"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["phone_number_id"], name: "index_conversations_on_phone_number_id"
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"
@@ -349,6 +351,7 @@ ActiveRecord::Schema.define(version: 20170701182334) do
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
+  add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
   add_foreign_key "locations", "teams"
