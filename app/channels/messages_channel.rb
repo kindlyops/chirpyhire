@@ -4,7 +4,7 @@ class MessagesChannel < ApplicationCable::Channel
     stream_for conversation
   end
 
-  delegate :conversations, to: :current_account
+  delegate :conversations, to: :current_organization
 
   private
 

@@ -15,19 +15,19 @@ class Constraint::Answer < Constraint::Base
   end
 
   def contact
-    person.subscribed_to(team)
+    person.subscribed_to(organization)
   end
 
   def contact_present?
-    communicators_present? && person.subscribed_to?(team)
+    communicators_present? && person.subscribed_to?(organization)
   end
 
   def communicators_present?
-    team.present? && person.present?
+    organization.present? && person.present?
   end
 
-  def team
-    phone_number.assignment_rule.team
+  def organization
+    phone_number.organization
   end
 
   def phone_number

@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe NotePolicy do
-  let(:account) { create(:account, :team) }
-  let(:team) { account.teams.first }
+  let(:account) { create(:account) }
+  let(:organization) { account.organization }
 
   describe '.scope' do
     let(:resolved_scope) { NotePolicy::Scope.new(account, Note.all).resolve }
 
-    context 'note is by another account on the team' do
-      let(:contact) { create(:contact, team: team) }
-      let(:team_member) { create(:account, organization: team.organization) }
+    context 'note is by another account on the organization' do
+      let(:contact) { create(:contact, organization: organization) }
+      let(:organization_member) { create(:account, organization: organization) }
 
-      let!(:note) { create(:note, account: team_member, contact: contact) }
+      let!(:note) { create(:note, account: organization_member, contact: contact) }
 
       it 'includes note in resolved scope' do
         expect(resolved_scope).to include(note)
@@ -19,7 +19,7 @@ RSpec.describe NotePolicy do
     end
 
     context 'note is by the account' do
-      let(:contact) { create(:contact, team: team) }
+      let(:contact) { create(:contact, organization: organization) }
       let!(:note) { create(:note, account: account, contact: contact) }
 
       it 'includes note in resolved scope' do
@@ -27,7 +27,7 @@ RSpec.describe NotePolicy do
       end
     end
 
-    context 'note is by an account on another team' do
+    context 'note is by an account on another organization' do
       let(:contact) { create(:contact) }
       let!(:note) { create(:note, contact: contact) }
 
@@ -39,7 +39,7 @@ RSpec.describe NotePolicy do
 
   describe 'policies' do
     context 'as the note author' do
-      let(:contact) { create(:contact, team: team) }
+      let(:contact) { create(:contact, organization: organization) }
       let!(:note) { create(:note, account: account, contact: contact) }
       subject { described_class.new(account, note) }
 
@@ -49,11 +49,11 @@ RSpec.describe NotePolicy do
     end
 
     context 'not the note author' do
-      context 'on the same team' do
-        let(:contact) { create(:contact, team: team) }
-        let(:team_member) { create(:account, organization: team.organization) }
+      context 'on the same organization' do
+        let(:contact) { create(:contact, organization: organization) }
+        let(:organization_member) { create(:account, organization: organization) }
 
-        let!(:note) { create(:note, account: team_member, contact: contact) }
+        let!(:note) { create(:note, account: organization_member, contact: contact) }
         subject { described_class.new(account, note) }
 
         it { is_expected.to permit_action(:show) }
@@ -61,10 +61,10 @@ RSpec.describe NotePolicy do
         it { is_expected.to forbid_action(:destroy) }
       end
 
-      context 'on a different team' do
+      context 'on a different organization' do
         let(:contact) { create(:contact) }
         let!(:note) { create(:note, contact: contact) }
-        let(:other_team) { note.account }
+        let(:other_organization) { note.account }
         subject { described_class.new(account, note) }
 
         it { is_expected.to forbid_action(:show) }

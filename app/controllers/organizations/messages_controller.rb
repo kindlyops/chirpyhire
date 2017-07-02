@@ -1,4 +1,4 @@
-class Teams::MessagesController < ActionController::Base
+class Organizations::MessagesController < ActionController::Base
   protect_from_forgery with: :null_session
   after_action :set_header
 
@@ -12,7 +12,7 @@ class Teams::MessagesController < ActionController::Base
 
   def contact
     @contact ||= begin
-      contact = person.contacts.find_by(team: team)
+      contact = person.contacts.find_by(organization: organization)
       contact || create_subscribed_contact
     end
   end
@@ -25,15 +25,8 @@ class Teams::MessagesController < ActionController::Base
     @phone_number ||= PhoneNumber.find_by(phone_number: params['To'])
   end
 
-  def team
-    @team ||= begin
-      return unless phone_number && phone_number.assignment_rule
-      phone_number.assignment_rule.team
-    end
-  end
-
   def create_subscribed_contact
-    person.contacts.create(team: team).tap do |contact|
+    person.contacts.create(organization: organization).tap do |contact|
       contact.subscribe
       contact.create_contact_candidacy
     end
@@ -42,4 +35,6 @@ class Teams::MessagesController < ActionController::Base
   def set_header
     response.headers['Content-Type'] = 'text/xml'
   end
+
+  delegate :organization, to: :phone_number
 end

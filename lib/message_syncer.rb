@@ -26,10 +26,20 @@ class MessageSyncer
   end
 
   attr_reader :contact, :message_sid, :receipt
-  delegate :person, :organization, :open_conversation, to: :contact
+  delegate :person, :organization, to: :contact
 
   def sync_message
     open_conversation.messages.create!(message_params).tap(&:touch_conversation)
+  end
+
+  def open_conversation
+    IceBreaker.call(contact, phone_number)
+  end
+
+  def phone_number
+    @phone_number ||= begin
+      organization.phone_numbers.find_by(phone_number: external_message.to)
+    end
   end
 
   def param_keys

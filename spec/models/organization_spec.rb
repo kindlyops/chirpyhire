@@ -6,7 +6,8 @@ RSpec.describe Organization do
   let!(:account) { subject.accounts.first }
 
   describe '#message' do
-    let(:contact) { create(:contact, team: team) }
+    let(:contact) { create(:contact, organization: subject) }
+    let(:conversation) { create(:conversation, contact: contact, inbox: team.inbox) }
 
     before do
       allow(Broadcaster::Message).to receive(:broadcast)
@@ -16,7 +17,7 @@ RSpec.describe Organization do
         context 'and reached is false' do
           it 'leaves reached at false' do
             expect {
-              subject.message(contact: contact, body: 'body', sender: Chirpy.person)
+              subject.message(conversation: conversation, body: 'body', sender: Chirpy.person)
             }.not_to change { contact.reload.reached? }
             expect(contact.reached?).to eq(false)
           end
@@ -27,7 +28,7 @@ RSpec.describe Organization do
         context 'and reached is false' do
           it 'sets reached to true' do
             expect {
-              subject.message(contact: contact, body: 'body', sender: account.person)
+              subject.message(conversation: conversation, body: 'body', sender: account.person)
             }.to change { contact.reload.reached? }.from(false).to(true)
           end
         end

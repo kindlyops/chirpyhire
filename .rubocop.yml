@@ -29,17 +29,11 @@ Style/FrozenStringLiteralComment:
 
 Metrics/ClassLength:
   Exclude:
-    - 'lib/seeder.rb'
     - 'app/controllers/candidates_controller.rb'
-
-Metrics/AbcSize:
-  Exclude:
-    - 'lib/seeder.rb'
 
 Metrics/MethodLength:
   Exclude:
     - 'lib/answer/certification.rb'
-    - 'lib/seeder.rb'
 
 Metrics/LineLength:
   Exclude:
@@ -59,10 +53,6 @@ Style/BlockDelimiters:
 
 Style/ClassAndModuleChildren:
   Enabled: false
-
-Rails/Output:
-  Exclude:
-    - 'lib/seeder.rb'
 
 Rails/DynamicFindBy:
   Whitelist:

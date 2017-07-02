@@ -20,16 +20,16 @@ class Person < ApplicationRecord
   validates :name, presence: true, unless: :nickname_present?
   validates :nickname, presence: true, unless: :name_present?
 
-  def subscribed_to?(teams)
-    contacts.where(team: teams).exists?
+  def subscribed_to?(organization)
+    contacts.where(organization: organization).exists?
   end
 
-  def actively_subscribed_to?(teams)
-    contacts.subscribed.where(team: teams).exists?
+  def actively_subscribed_to?(organization)
+    contacts.subscribed.where(organization: organization).exists?
   end
 
-  def subscribed_to(teams)
-    contacts.find_by(team: teams)
+  def subscribed_to(organization)
+    contacts.find_by(organization: organization)
   end
 
   def handle

@@ -1,7 +1,7 @@
 class SurveyorJob < ApplicationJob
   def perform(contact, message_sid)
-    MessageSyncer.call(contact, message_sid)
+    message = MessageSyncer.call(contact, message_sid)
 
-    Surveyor.new(contact).start
+    Surveyor.new(contact, message).start
   end
 end

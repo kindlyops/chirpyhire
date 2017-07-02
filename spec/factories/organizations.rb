@@ -4,7 +4,13 @@ FactoryGirl.define do
 
     trait :team do
       after(:create) do |organization|
-        create(:team, :inbox, organization: organization)
+        create(:team, :phone_number, organization: organization)
+      end
+    end
+
+    trait :phone_number do
+      after(:create) do |organization|
+        create(:phone_number, organization: organization)
       end
     end
 

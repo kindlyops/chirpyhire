@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Teams::SubscriptionsController, type: :controller do
+RSpec.describe Organizations::SubscriptionsController, type: :controller do
   let!(:team) { create(:team, :account, :phone_number) }
   let(:organization) { team.organization }
   let(:phone_number) { '+15555555555' }
@@ -31,14 +31,14 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
           }.to change { ContactCandidacy.count }.by(1)
         end
 
-        it 'adds the contact to the team' do
+        it 'adds the contact to the organization' do
           post :create, params: params
-          expect(team.contacts).to include(Contact.last)
+          expect(organization.contacts).to include(Contact.last)
         end
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, subscribed: true, person: person, team: team) }
+        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
 
         context 'and an in progress candidacy' do
           before do
@@ -57,9 +57,9 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.not_to change { Contact.count }
           end
 
-          it 'adds the contact to the team' do
+          it 'adds the contact to the organization' do
             post :create, params: params
-            expect(team.contacts).to include(Contact.last)
+            expect(organization.contacts).to include(Contact.last)
           end
         end
 
@@ -85,9 +85,9 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.not_to change { Contact.count }
           end
 
-          it 'adds the contact to the team' do
+          it 'adds the contact to the organization' do
             post :create, params: params
-            expect(team.contacts).to include(Contact.last)
+            expect(organization.contacts).to include(Contact.last)
           end
         end
 
@@ -108,9 +108,9 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
             }.to have_enqueued_job(SurveyorJob)
           end
 
-          it 'adds the contact to the team' do
+          it 'adds the contact to the organization' do
             post :create, params: params
-            expect(team.contacts).to include(Contact.last)
+            expect(organization.contacts).to include(Contact.last)
           end
         end
       end
@@ -147,9 +147,9 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to have_enqueued_job(SurveyorJob)
       end
 
-      it 'adds the contact to the team' do
+      it 'adds the contact to the organization' do
         post :create, params: params
-        expect(team.contacts).to include(Contact.last)
+        expect(organization.contacts).to include(Contact.last)
       end
     end
   end
@@ -186,23 +186,23 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
           }.to change { ContactCandidacy.count }.by(1)
         end
 
-        it 'adds the contact to the team' do
+        it 'adds the contact to the organization' do
           post :create, params: params
-          expect(team.contacts).to include(Contact.last)
+          expect(organization.contacts).to include(Contact.last)
         end
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, subscribed: true, person: person, team: team) }
+        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
         it 'unsubscribes the contact' do
           expect {
             delete :destroy, params: params
           }.to change { contact.reload.subscribed? }.from(true).to(false)
         end
 
-        it 'adds the contact to the team' do
+        it 'adds the contact to the organization' do
           post :create, params: params
-          expect(team.contacts).to include(Contact.last)
+          expect(organization.contacts).to include(Contact.last)
         end
       end
     end
@@ -226,9 +226,9 @@ RSpec.describe Teams::SubscriptionsController, type: :controller do
         }.to change { Contact.unsubscribed.count }.by(1)
       end
 
-      it 'adds the contact to the team' do
+      it 'adds the contact to the organization' do
         post :create, params: params
-        expect(team.contacts).to include(Contact.last)
+        expect(organization.contacts).to include(Contact.last)
       end
     end
   end

@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Conversations::MessagesController do
-  let(:team) { create(:team, :inbox, :account) }
-  let(:contact) { create(:contact, team: team) }
-  let(:organization) { team.organization }
-  let(:account) { team.accounts.first }
-  let(:inbox) { account.inbox }
-  let(:conversation) { contact.open_conversation }
+  let(:organization) { create(:organization, :team, :account) }
+  let(:phone_number) { organization.phone_numbers.first }
+  let(:account) { organization.accounts.first }
+  let(:contact) { create(:contact, organization: organization) }
+  let(:conversation) { create(:conversation, contact: contact) }
 
   before do
     @request.env['HTTP_ACCEPT'] = 'application/json'
@@ -19,7 +18,7 @@ RSpec.describe Conversations::MessagesController do
     }
 
     before do
-      IceBreaker.call(contact)
+      IceBreaker.call(contact, phone_number)
     end
 
     let!(:unread_receipts) { create_list(:read_receipt, 3, conversation: conversation) }

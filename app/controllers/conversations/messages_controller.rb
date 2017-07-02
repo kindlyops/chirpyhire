@@ -40,7 +40,7 @@ class Conversations::MessagesController < ApplicationController
   def create_message
     current_organization.message(
       sender: current_account.person,
-      contact: @conversation.contact,
+      conversation: @conversation,
       body: body
     )
   end

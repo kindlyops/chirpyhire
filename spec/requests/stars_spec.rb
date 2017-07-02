@@ -1,20 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Stars' do
-  let(:account) { create(:account, :team) }
-  let(:team) { account.teams.first }
-  let(:inbox) { account.inbox }
+  let(:organization) { create(:organization, :team, :account) }
+  let(:phone_number) { organization.phone_numbers.first }
+  let(:account) { organization.accounts.first }
 
   before do
     sign_in(account)
   end
 
   describe '#create' do
-    let!(:contact) { create(:contact, team: team) }
-    let(:conversation) { inbox.existing_open_conversation(contact) }
+    let!(:contact) { create(:contact, organization: organization) }
 
     before do
-      IceBreaker.call(contact)
+      IceBreaker.call(contact, phone_number)
     end
 
     it 'is ok' do

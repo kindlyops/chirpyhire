@@ -1,13 +1,14 @@
 class IceBreaker
-  def self.call(contact)
-    new(contact).call
+  def self.call(contact, phone_number)
+    new(contact, phone_number).call
   end
 
-  def initialize(contact)
+  def initialize(contact, phone_number)
     @contact = contact
+    @phone_number = phone_number
   end
 
-  attr_reader :contact
+  attr_reader :contact, :phone_number
 
   def call
     open_conversation.tap do |conversation|
@@ -17,14 +18,23 @@ class IceBreaker
 
   def open_conversation
     @open_conversation ||= begin
-      contact.existing_open_conversation || create_conversation
+      existing_open_conversation || create_conversation
     end
   end
 
-  def create_conversation
-    contact.conversations.create!(inbox: team.inbox)
+  def existing_open_conversation
+    open_conversations.find_by(phone_number: phone_number)
   end
 
-  delegate :team, to: :contact
-  delegate :inbox, to: :team
+  def assignment_rule
+    assignment_rules.find_by(phone_number: phone_number)
+  end
+
+  def create_conversation
+    conversations.create!(inbox: inbox, phone_number: phone_number)
+  end
+
+  delegate :organization, :conversations, :open_conversations, to: :contact
+  delegate :assignment_rules, to: :organization
+  delegate :inbox, to: :assignment_rule
 end

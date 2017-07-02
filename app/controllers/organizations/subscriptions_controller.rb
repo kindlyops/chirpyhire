@@ -1,4 +1,4 @@
-class Teams::SubscriptionsController < Teams::MessagesController
+class Organizations::SubscriptionsController < Organizations::MessagesController
   def create
     if contact.subscribed? && contact.started?
       already_subscribed_job
@@ -26,13 +26,16 @@ class Teams::SubscriptionsController < Teams::MessagesController
   end
 
   def find_contact
-    contact = person.contacts.find_by(team: team)
+    contact = person.contacts.find_by(organization: organization)
     contact.update(screened: true) if contact && contact.complete?
     contact
   end
 
   def create_unsubscribed_contact
-    person.contacts.create(team: team).tap(&:create_contact_candidacy)
+    person
+      .contacts
+      .create(organization: organization)
+      .tap(&:create_contact_candidacy)
   end
 
   def already_subscribed_job

@@ -1,6 +1,7 @@
 class Conversation < ApplicationRecord
   belongs_to :contact
   belongs_to :inbox
+  belongs_to :phone_number, optional: true
 
   has_many :messages
   has_many :read_receipts
@@ -8,7 +9,7 @@ class Conversation < ApplicationRecord
   has_one :recent_message,
           -> { by_recency.limit(1) }, class_name: 'Message'
 
-  delegate :person, :handle, :team, to: :contact
+  delegate :person, :handle, :organization, to: :contact
   delegate :handle, to: :contact, prefix: true
 
   def contact_phone_number
@@ -36,6 +37,6 @@ class Conversation < ApplicationRecord
   end
 
   def reopenable?
-    contact.open_conversations.none?
+    contact.open_conversations.where(phone_number: phone_number).none?
   end
 end
