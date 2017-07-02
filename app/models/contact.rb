@@ -21,6 +21,10 @@ class Contact < ApplicationRecord
     conversations.opened.first
   end
 
+  def current_conversation
+    existing_open_conversation || conversations.by_recent_message.first
+  end
+
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')
   end
