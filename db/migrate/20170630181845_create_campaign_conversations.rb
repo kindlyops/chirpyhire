@@ -8,5 +8,6 @@ class CreateCampaignConversations < ActiveRecord::Migration[5.1]
     end
 
     add_index :campaign_conversations, [:campaign_id, :conversation_id], unique: true
+    add_index :campaign_conversations, [:conversation_id, :state], where: 'state = 0', unique: true
   end
 end

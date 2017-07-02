@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.datetime "updated_at", null: false
     t.index ["campaign_id", "conversation_id"], name: "index_campaign_conversations_on_campaign_id_and_conversation_id", unique: true
     t.index ["campaign_id"], name: "index_campaign_conversations_on_campaign_id"
+    t.index ["conversation_id", "state"], name: "index_campaign_conversations_on_conversation_id_and_state", unique: true, where: "(state = 0)"
     t.index ["conversation_id"], name: "index_campaign_conversations_on_conversation_id"
   end
 

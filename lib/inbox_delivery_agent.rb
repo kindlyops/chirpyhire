@@ -11,7 +11,7 @@ class InboxDeliveryAgent
   attr_reader :message, :inbox
 
   def call
-    return existing_bot.receive(message) if existing_bot.present?
+    return active_bot.receive(message) if active_bot.present?
     return activated_bot.receive(message) if activated_bot.present?
 
     ReadReceiptsCreator.call(message, contact)
@@ -25,21 +25,7 @@ class InboxDeliveryAgent
     end
   end
 
-  def existing_bot
-    @existing_bot ||= begin
-      return if bot_campaign.blank?
-      bot_campaign.bot
-    end
-  end
-
-  def bot_campaign
-    @bot_campaign ||= begin
-      conversation
-        .active_bot_campaigns
-        .merge(inbox.bot_campaigns).first
-    end
-  end
-
   delegate :conversation, :contact, to: :message
+  delegate :active_bot, to: :conversation
   delegate :bots, to: :inbox
 end
