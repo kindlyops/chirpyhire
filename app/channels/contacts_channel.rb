@@ -4,7 +4,7 @@ class ContactsChannel < ApplicationCable::Channel
     stream_for contact
   end
 
-  delegate :contacts, to: :current_account
+  delegate :contacts, to: :current_organization
 
   private
 
