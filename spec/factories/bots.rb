@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :bot do
     organization
+    person
     name { Faker::Name.name }
 
     after(:create) do |bot|

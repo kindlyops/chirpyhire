@@ -32,8 +32,8 @@ class Organization < ApplicationRecord
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    contact.update(reached: true) if sender != Chirpy.person
-    contact.create_message(sent_message, sender, phone_number).tap do |message|
+    contact.update(reached: true) if sender.bot.blank?
+    conversation.create_message(sent_message, sender).tap do |message|
       Broadcaster::Message.broadcast(message)
     end
   end

@@ -8,10 +8,7 @@ class Contact::Attribute
   end
 
   attr_reader :contact
-
-  def candidacy
-    @candidacy ||= contact.contact_candidacy
-  end
+  delegate :person, to: :contact
 
   def humanize_attribute(attribute)
     return if attribute.nil?

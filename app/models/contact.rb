@@ -3,7 +3,6 @@ class Contact < ApplicationRecord
   belongs_to :organization
   include RecruitingCounts
 
-  has_one :contact_candidacy
   has_many :conversations
   has_many :campaigns, through: :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
@@ -14,7 +13,6 @@ class Contact < ApplicationRecord
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person
-  delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
 
@@ -56,16 +54,6 @@ class Contact < ApplicationRecord
     end.join(' AND ')
 
     joins(person: :zipcode).where(filters)
-  end
-
-  def self.incomplete
-    includes(:contact_candidacy)
-      .where.not('contact_candidacies' => { state: :complete })
-  end
-
-  def self.complete
-    includes(:contact_candidacy)
-      .where('contact_candidacies' => { state: :complete })
   end
 
   def self.subscribed

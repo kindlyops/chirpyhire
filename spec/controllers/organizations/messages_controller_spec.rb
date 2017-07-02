@@ -21,12 +21,6 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         }.to change { Person.count }.by(1)
       end
 
-      it 'creates a contact candidacy' do
-        expect {
-          post :create, params: params
-        }.to change { ContactCandidacy.count }.by(1)
-      end
-
       it 'creates a subscribed contact' do
         expect {
           post :create, params: params
@@ -67,12 +61,6 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         expect {
           post :create, params: params
         }.to change { person.contacts.subscribed.count }.by(1)
-      end
-
-      it 'creates a contact candidacy' do
-        expect {
-          post :create, params: params
-        }.to change { ContactCandidacy.count }.by(1)
       end
 
       it 'adds the contact to the existing team' do

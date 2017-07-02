@@ -13,9 +13,9 @@ RSpec.describe Organization do
       allow(Broadcaster::Message).to receive(:broadcast)
     end
     context 'reached' do
-      context 'sent by chirpy' do
+      context 'sent by bot' do
         context 'and reached is false' do
-          it 'leaves reached at false' do
+          xit 'leaves reached at false' do
             expect {
               subject.message(conversation: conversation, body: 'body', sender: Chirpy.person)
             }.not_to change { contact.reload.reached? }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702032841) do
+ActiveRecord::Schema.define(version: 20170702204733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   end
 
   create_table "bots", force: :cascade do |t|
+    t.bigint "person_id", null: false
     t.bigint "organization_id", null: false
     t.string "name", null: false
     t.datetime "last_edited_at"
@@ -103,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["last_edited_by_id"], name: "index_bots_on_last_edited_by_id"
     t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_bots_on_organization_id"
+    t.index ["person_id"], name: "index_bots_on_person_id"
   end
 
   create_table "campaign_conversations", force: :cascade do |t|
@@ -122,24 +124,6 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_campaigns_on_name"
-  end
-
-  create_table "contact_candidacies", force: :cascade do |t|
-    t.integer "experience"
-    t.boolean "skin_test"
-    t.integer "availability"
-    t.integer "transportation"
-    t.string "zipcode"
-    t.boolean "cpr_first_aid"
-    t.integer "certification"
-    t.bigint "contact_id", null: false
-    t.integer "inquiry"
-    t.integer "state", default: 0, null: false
-    t.boolean "live_in"
-    t.boolean "drivers_license"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contact_id"], name: "index_contact_candidacies_on_contact_id"
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -456,9 +440,9 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "bot_campaigns", "inboxes"
   add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
+  add_foreign_key "bots", "people"
   add_foreign_key "campaign_conversations", "campaigns"
   add_foreign_key "campaign_conversations", "conversations"
-  add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"

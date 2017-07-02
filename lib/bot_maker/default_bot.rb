@@ -30,7 +30,11 @@ class BotMaker::DefaultBot
   end
 
   def bot
-    @bot ||= organization.bots.create(name: 'chirpy')
+    @bot ||= organization.bots.create(name: 'chirpy', person: bot_person)
+  end
+
+  def bot_person
+    Person.find_or_create_by(name: 'Chirpy')
   end
 
   def greeting_body

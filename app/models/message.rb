@@ -32,7 +32,7 @@ class Message < ApplicationRecord
   end
 
   def author
-    return :bot if outbound? && sender == Chirpy.person
+    return :bot if outbound? && sender.bot.present?
     return :organization if outbound?
     :person
   end
