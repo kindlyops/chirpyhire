@@ -13,7 +13,14 @@ class Bot::Greet
   delegate :first_question, to: :bot
 
   def call
+    return null_greeting unless campaign_contact.pending?
+    campaign_contact.update(state: :active)
+
     "#{bot.greeting.body}\n\n#{next_body}"
+  end
+
+  def null_greeting
+    ''
   end
 
   def next_body

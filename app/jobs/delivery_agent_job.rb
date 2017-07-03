@@ -1,7 +1,7 @@
 class DeliveryAgentJob < ApplicationJob
-  def perform(contact, message_sid, question = nil)
+  def perform(contact, message_sid)
     message = MessageSyncer.call(contact, message_sid)
 
-    DeliveryAgent.call(message, question)
+    DeliveryAgent.call(message)
   end
 end

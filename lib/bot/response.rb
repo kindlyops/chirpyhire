@@ -14,8 +14,12 @@ class Bot::Response
   end
 
   def body
-    return bot.greet(message, campaign_contact) if question.blank?
-
-    question.follow_up(message, campaign_contact)
+    @body ||= begin
+      if question.present?
+        question.follow_up(message, campaign_contact)
+      else
+        bot.greet(message, campaign_contact)
+      end
+    end
   end
 end

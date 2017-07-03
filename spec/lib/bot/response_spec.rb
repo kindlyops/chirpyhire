@@ -29,6 +29,15 @@ RSpec.describe Bot::Response do
 
         subject.body
       end
+
+      context 'calling body twice' do
+        it 'only greets the candidate once' do
+          expect(bot).to receive(:greet).exactly(:once) { 'greeting' }
+
+          subject.body
+          subject.body
+        end
+      end
     end
 
     context 'campaign contact does have a question' do
@@ -49,6 +58,15 @@ RSpec.describe Bot::Response do
         expect(question).to receive(:follow_up)
 
         subject.body
+      end
+
+      context 'calling body twice' do
+        it 'follows up with the candidate once' do
+          expect(question).to receive(:follow_up).exactly(:once) { 'follow up' }
+
+          subject.body
+          subject.body
+        end
       end
     end
   end

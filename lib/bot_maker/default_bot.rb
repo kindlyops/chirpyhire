@@ -12,11 +12,25 @@ class BotMaker::DefaultBot
 
     bot.create_greeting(body: greeting_body)
     create_questions
+    create_goal_tags
+    create_bot_campaigns
+  end
 
-    goal.tags << organization.tags.find_or_create_by(name: 'Screened')
+  def create_bot_campaigns
+    organization.teams.find_each do |team|
+      bot.bot_campaigns.create(inbox: team.inbox, campaign: campaign)
+    end
+  end
+
+  def campaign
+    @campaign ||= organization.campaigns.create(name: bot.name)
   end
 
   attr_reader :organization
+
+  def create_goal_tags
+    goal.tags << organization.tags.find_or_create_by(name: 'Screened')
+  end
 
   def goal
     @goal ||= bot.goals.create(body: goal_body)
