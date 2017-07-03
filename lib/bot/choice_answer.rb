@@ -14,20 +14,7 @@ class Bot::ChoiceAnswer
   private
 
   def choice?(message)
-    choice == fetch_choice(message)
-  end
-
-  def multiple_choice_regexp
-    Regexp.new("\\A([#{choice}])(\\z|[\\W]+.*\\z)")
-  end
-
-  def fetch_choice(message)
-    return if match(message).blank?
-    match(message)[1].to_sym
-  end
-
-  def match(message)
-    multiple_choice_regexp.match(clean(message.body))
+    choice.to_s == clean(message.body)
   end
 
   def clean(string)

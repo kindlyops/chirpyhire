@@ -9,7 +9,7 @@ RSpec.describe Bot::FollowUpTrigger do
   let(:message) { create(:message) }
   let(:contact) { message.contact }
   let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
-  let(:follow_up) { create(:follow_up, :choice, question: question) }
+  let(:follow_up) { create(:choice_follow_up, question: question) }
 
   subject { Bot::FollowUpTrigger.new(follow_up, message, campaign_contact) }
 
@@ -25,7 +25,7 @@ RSpec.describe Bot::FollowUpTrigger do
     end
 
     context 'follow up activated' do
-      let!(:another_question) { create(:question, :choice, bot: bot) }
+      let!(:another_question) { create(:choice_question, bot: bot) }
       before do
         allow(follow_up).to receive(:activated?) { true }
       end
@@ -54,7 +54,7 @@ RSpec.describe Bot::FollowUpTrigger do
       end
 
       context 'follow_up question' do
-        let!(:third_question) { create(:question, :choice, bot: bot) }
+        let!(:third_question) { create(:choice_question, bot: bot) }
         before do
           follow_up.update(action: :question, question: third_question)
         end

@@ -1,5 +1,5 @@
 class ZipcodeQuestion < Question
-  alias restated body
+  alias_attribute :restated, :body
 
   def follow_up_type
     'ZipcodeFollowUp'

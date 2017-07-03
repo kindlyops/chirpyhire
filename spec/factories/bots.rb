@@ -11,7 +11,7 @@ FactoryGirl.define do
 
     trait :question do
       after(:create) do |bot|
-        create(:question, bot: bot, rank: bot.next_question_rank)
+        create(:choice_question, bot: bot)
       end
     end
   end

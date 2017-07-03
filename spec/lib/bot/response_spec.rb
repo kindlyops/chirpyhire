@@ -32,7 +32,7 @@ RSpec.describe Bot::Response do
     end
 
     context 'campaign contact does have a question' do
-      let!(:question) { create(:question, :choice, bot: bot) }
+      let!(:question) { create(:choice_question, bot: bot) }
 
       before do
         campaign_contact.update(question: question)

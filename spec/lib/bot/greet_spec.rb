@@ -20,7 +20,7 @@ RSpec.describe Bot::Greet do
     end
 
     context 'bot has questions' do
-      let!(:question) { create(:question, :choice, bot: bot) }
+      let!(:question) { create(:choice_question, bot: bot) }
 
       it 'triggers the question' do
         allow(subject).to receive(:first_question) { question }
