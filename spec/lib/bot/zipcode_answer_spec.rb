@@ -4,7 +4,7 @@ RSpec.describe Bot::ZipcodeAnswer do
   let(:follow_up) { create(:zipcode_follow_up) }
   let(:message) { create(:message, body: body) }
   let(:person) { message.contact.person }
-  
+
   subject { Bot::ZipcodeAnswer.new(follow_up) }
 
   describe 'activated?' do
