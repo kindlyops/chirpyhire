@@ -13,10 +13,14 @@ class BotMaker::DefaultBot
     bot.create_greeting(body: greeting_body)
     create_questions
 
-    bot.goals.create(body: goal_body)
+    goal.tags << organization.tags.find_or_create_by(name: 'Screened')
   end
 
   attr_reader :organization
+
+  def goal
+    @goal ||= bot.goals.create(body: goal_body)
+  end
 
   def create_questions
     questions.each_with_index do |klass, index|
