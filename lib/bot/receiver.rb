@@ -11,24 +11,27 @@ class Bot::Receiver
   attr_reader :message, :bot
 
   def call
-    message.update!(campaign: campaign_conversation.campaign)
-    return if campaign_conversation.exited?
+    message.update!(campaign: campaign_contact.campaign)
+    return if campaign_contact.exited?
 
-    Bot::Responder.call(bot, message, campaign_conversation)
+    Bot::Responder.call(bot, message, campaign_contact)
   end
 
-  def campaign_conversation
-    @campaign_conversation ||= begin
-      existing_campaign_conversation || pending_campaign_conversation
+  def campaign_contact
+    @campaign_contact ||= begin
+      existing_campaign_contact || pending_campaign_contact
     end
   end
 
-  def existing_campaign_conversation
-    campaign_conversations.find_by(campaign: bot_campaign.campaign)
+  def existing_campaign_contact
+    campaign_contacts.find_by(campaign: bot_campaign.campaign)
   end
 
-  def pending_campaign_conversation
-    campaign_conversations.create!(campaign: bot_campaign.campaign)
+  def pending_campaign_contact
+    campaign_contacts.create!(
+      campaign: bot_campaign.campaign,
+      phone_number: organization_phone_number
+    )
   end
 
   def bot_campaign
@@ -37,7 +40,8 @@ class Bot::Receiver
     end
   end
 
-  delegate :conversation, :contact, to: :message
+  delegate :contact, :organization_phone_number, :conversation, to: :message
   delegate :bot_campaigns, to: :bot
-  delegate :campaign_conversations, :inbox, to: :conversation
+  delegate :inbox, to: :conversation
+  delegate :campaign_contacts, to: :contact
 end

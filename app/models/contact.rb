@@ -4,11 +4,16 @@ class Contact < ApplicationRecord
   include RecruitingCounts
 
   has_many :conversations
-  has_many :campaigns, through: :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
   has_many :taggings
   has_many :tags, through: :taggings
+
+  has_many :campaign_contacts
+  has_many :campaigns, through: :campaign_contacts
+
+  has_many :active_campaign_contacts, -> { active },
+           class_name: 'CampaignContact'
 
   has_many :notes
 

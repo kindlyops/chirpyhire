@@ -11,12 +11,13 @@ RSpec.describe Bot::Receiver do
   describe 'call' do
     context 'conversation is not in the bot campaign' do
       let(:conversation) { create(:conversation, inbox: inbox) }
-      let!(:message) { create(:message, conversation: conversation) }
+      let(:contact) { conversation.contact }
+      let!(:message) { create(:message, :to, conversation: conversation) }
 
-      it 'creates a pending campaign conversation' do
+      it 'creates a pending campaign contact' do
         expect {
           subject.call
-        }.to change { conversation.reload.campaign_conversations.pending.count }.by(1)
+        }.to change { contact.reload.campaign_contacts.pending.count }.by(1)
       end
 
       it 'updates the message to be tied to the campaign' do
@@ -28,7 +29,7 @@ RSpec.describe Bot::Receiver do
       it 'ties the new campaign to the bot campaign' do
         subject.call
 
-        expect(CampaignConversation.last.campaign).to eq(campaign)
+        expect(CampaignContact.last.campaign).to eq(campaign)
       end
 
       it 'calls Bot::Responder' do
@@ -40,18 +41,19 @@ RSpec.describe Bot::Receiver do
 
     context 'conversation is in the bot campaign' do
       let(:conversation) { create(:conversation, inbox: inbox) }
-      let!(:campaign_conversation) { create(:campaign_conversation, conversation: conversation, campaign: campaign) }
-      let!(:message) { create(:message, conversation: conversation) }
+      let(:contact) { conversation.contact }
+      let!(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
+      let!(:message) { create(:message, :to, conversation: conversation) }
 
       context 'exited' do
         before do
-          campaign_conversation.update(state: :exited)
+          campaign_contact.update(state: :exited)
         end
 
-        it 'does not create a campaign conversation' do
+        it 'does not create a campaign contact' do
           expect {
             subject.call
-          }.not_to change { conversation.reload.campaigns.count }
+          }.not_to change { contact.reload.campaigns.count }
         end
 
         it 'updates the message to be tied to the campaign' do
@@ -68,10 +70,10 @@ RSpec.describe Bot::Receiver do
       end
 
       context 'active' do
-        it 'does not create a campaign conversation' do
+        it 'does not create a campaign contact' do
           expect {
             subject.call
-          }.not_to change { conversation.reload.campaigns.count }
+          }.not_to change { contact.reload.campaigns.count }
         end
 
         it 'updates the message to be tied to the campaign' do

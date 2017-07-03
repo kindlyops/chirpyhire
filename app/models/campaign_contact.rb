@@ -1,6 +1,7 @@
-class CampaignConversation < ApplicationRecord
+class CampaignContact < ApplicationRecord
   belongs_to :campaign
-  belongs_to :conversation
+  belongs_to :contact
+  belongs_to :phone_number
   belongs_to :question, optional: true
 
   enum state: {

@@ -1,83 +1,58 @@
 class Bot::Responder
-  def self.call(bot, message, campaign_conversation)
-    new(bot, message, campaign_conversation).call
+  def self.call(bot, message, campaign_contact)
+    new(bot, message, campaign_contact).call
   end
 
-  def initialize(bot, message, campaign_conversation)
+  def initialize(bot, message, campaign_contact)
     @bot = bot
     @message = message
-    @campaign_conversation = campaign_conversation
+    @campaign_contact = campaign_contact
   end
 
-  attr_reader :message, :bot, :campaign_conversation
+  attr_reader :message, :bot, :campaign_contact
 
   def call
-    consider_answer if campaign_conversation.active?
-    start if campaign_conversation.pending?
+    # consider_answer if campaign_contact.active?
+    # start if campaign_contact.pending?
   end
 
   def start
-    campaign_conversation.update(state: :active)
-    survey.ask(welcome: true)
+    campaign.reply(response)
+    campaign_contact.update(state: :active)
   end
 
   def consider_answer
-    return complete_survey if survey.just_finished?
-    return restate_and_log unless survey.answer.valid?
-
-    update_contact
-    survey.ask
+    tagger.call
+    logger.call
+    notifier.call
+    campaign.reply(response)
   end
 
-  def complete_survey
-    update_contact
-    survey.complete
-
-    notify_team
-  end
-
-  def restate_and_log
-    ReadReceiptsCreator.call(message, contact)
-    
-    survey.restate
-  end
-
-  def notify_team
-    notify_contact_ready_for_review(team.accounts, message.conversation)
-  end
-
-  def notify_contact_ready_for_review(accounts, conversation)
-    accounts.find_each do |account|
-      ready_for_review_mailer(account, conversation).deliver_later
+  def notifier
+    @notifier ||= begin
+      Bot::Notifier.new(contact, response)
     end
   end
 
-  def ready_for_review_mailer(account, conversation)
-    NotificationMailer.contact_ready_for_review(account, conversation)
-  end
-
-  def survey
-    @survey ||= begin
-      Bot::Survey.new(bot, message, campaign_conversation)
+  def logger
+    @logger ||= begin
+      Bot::Logger.new(contact, response)
     end
   end
 
-  def reply
-    organization.message(
-      sender: bot.person,
-      conversation: survey.conversation,
-      body: survey.body
-    )
-  end
-
-  def update_contact
-    survey.answer.format do |formatted_answer|
-      Tagger.call(contact, formatted_answer)
-      Broadcaster::Contact.broadcast(contact)
+  def tagger
+    @tagger ||= begin
+      Bot::Tagger.new(contact, response)
     end
   end
 
-  delegate :current_question, to: :campaign_conversation
+  def response
+    @response ||= begin
+      Bot::Response.new(bot, message, campaign_contact)
+    end
+  end
+
+  delegate :question, :campaign, to: :campaign_contact
   delegate :organization, to: :bot
   delegate :contact, to: :message
 end

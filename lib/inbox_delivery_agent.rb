@@ -25,7 +25,17 @@ class InboxDeliveryAgent
     end
   end
 
-  delegate :conversation, :contact, to: :message
-  delegate :active_bot, to: :conversation
+  def active_bot
+    @active_bot ||= active_campaign_contact&.campaign&.bot
+  end
+
+  def active_campaign_contact
+    @active_campaign_contact ||= begin
+      active_campaign_contacts.find_by(phone_number: organization_phone_number)
+    end
+  end
+
+  delegate :conversation, :contact, :organization_phone_number, to: :message
+  delegate :active_campaign_contacts, to: :contact
   delegate :bots, to: :inbox
 end

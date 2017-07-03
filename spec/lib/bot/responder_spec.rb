@@ -6,19 +6,19 @@ RSpec.describe Bot::Responder do
   let(:greeting) { bot.greeting }
   let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let(:campaign) { bot_campaign.campaign }
-  let(:campaign_conversation) { create(:campaign_conversation, campaign: campaign) }
+  let(:campaign_contact) { create(:campaign_contact, campaign: campaign) }
 
-  let(:conversation) { campaign_conversation.conversation }
+  let(:conversation) { create(:conversation, contact: campaign_contact.contact) }
   let!(:message) { create(:message, conversation: conversation) }
 
-  subject { Bot::Responder.new(bot, message, campaign_conversation) }
+  subject { Bot::Responder.new(bot, message, campaign_contact) }
 
   describe 'pending campaign conversation' do
-    it 'does changes the campaign_conversation state' do
+    it 'does changes the campaign_contact state' do
       allow(subject).to receive(:reply)
       expect {
         subject.call
-      }.to change { campaign_conversation.reload.state }.from("pending").to("active")
+      }.to change { campaign_contact.reload.state }.from('pending').to('active')
     end
 
     it 'does send a message' do
@@ -30,17 +30,17 @@ RSpec.describe Bot::Responder do
 
   describe 'active campaign conversation' do
     before do
-      campaign_conversation.update(state: :active)
+      campaign_contact.update(state: :active)
     end
   end
 
   describe 'exited campaign conversation' do
-    let(:campaign_conversation) { create(:campaign_conversation, state: :exited) }
+    let(:campaign_contact) { create(:campaign_contact, state: :exited) }
 
-    it 'does not change the campaign_conversation state' do
+    it 'does not change the campaign_contact state' do
       expect {
         subject.call
-      }.not_to change { campaign_conversation.reload.state }
+      }.not_to change { campaign_contact.reload.state }
     end
 
     it 'does not send a message' do

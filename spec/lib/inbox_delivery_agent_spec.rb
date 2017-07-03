@@ -35,7 +35,7 @@ RSpec.describe InboxDeliveryAgent do
 
       context 'and the conversation is in an exited campaign for the bot' do
         before do
-          create(:campaign_conversation, state: :exited, campaign: campaign, conversation: conversation)
+          create(:campaign_contact, state: :exited, campaign: campaign, contact: conversation.contact)
         end
 
         context 'and the message would trigger the bot' do
@@ -46,21 +46,58 @@ RSpec.describe InboxDeliveryAgent do
 
             subject.call
           end
+
+          it 'does not call Bot::Receiver' do
+            expect(Bot::Receiver).not_to receive(:call)
+
+            subject.call
+          end
         end
       end
 
       context 'and the conversation is in an active campaign for the bot' do
-        before do
-          create(:campaign_conversation, state: :active, campaign: campaign, conversation: conversation)
+        context 'for the same phone number as the message' do
+          before do
+            create(:campaign_contact,
+                   state: :active,
+                   phone_number: message.organization_phone_number,
+                   campaign: campaign,
+                   contact: conversation.contact)
+          end
+
+          context 'and the message is anything' do
+            let!(:message) { create(:message, :to, conversation: conversation) }
+
+            it 'calls Bot::Receiver' do
+              expect(Bot::Receiver).to receive(:call).with(bot, message)
+
+              subject.call
+            end
+          end
         end
 
-        context 'and the message is anything' do
-          let!(:message) { create(:message, conversation: conversation) }
+        context 'different phone number than the message' do
+          before do
+            create(:campaign_contact,
+                   state: :active,
+                   campaign: campaign,
+                   contact: conversation.contact)
+          end
 
-          it 'calls Bot::Receiver' do
-            expect(Bot::Receiver).to receive(:call).with(bot, message)
+          context 'and the message is anything' do
+            let!(:message) { create(:message, :to, conversation: conversation) }
 
-            subject.call
+            it 'does not call Bot::Receiver' do
+              expect(Bot::Receiver).not_to receive(:call)
+
+              subject.call
+            end
+
+            it 'calls ReadReceiptsCreator' do
+              expect(ReadReceiptsCreator).to receive(:call)
+
+              subject.call
+            end
           end
         end
       end

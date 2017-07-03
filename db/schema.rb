@@ -107,23 +107,29 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.index ["person_id"], name: "index_bots_on_person_id"
   end
 
-  create_table "campaign_conversations", force: :cascade do |t|
+  create_table "campaign_contacts", force: :cascade do |t|
     t.bigint "campaign_id", null: false
-    t.bigint "conversation_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "phone_number_id", null: false
+    t.bigint "question_id"
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id", "conversation_id"], name: "index_campaign_conversations_on_campaign_id_and_conversation_id", unique: true
-    t.index ["campaign_id"], name: "index_campaign_conversations_on_campaign_id"
-    t.index ["conversation_id", "state"], name: "index_campaign_conversations_on_conversation_id_and_state", unique: true, where: "(state = 0)"
-    t.index ["conversation_id"], name: "index_campaign_conversations_on_conversation_id"
+    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
+    t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
+    t.index ["contact_id", "phone_number_id"], name: "index_campaign_contacts_on_contact_id_and_phone_number_id", unique: true, where: "(state = 1)"
+    t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
+    t.index ["phone_number_id"], name: "index_campaign_contacts_on_phone_number_id"
+    t.index ["question_id"], name: "index_campaign_contacts_on_question_id"
   end
 
   create_table "campaigns", force: :cascade do |t|
+    t.bigint "organization_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_campaigns_on_name"
+    t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
@@ -443,8 +449,11 @@ ActiveRecord::Schema.define(version: 20170702204733) do
   add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
   add_foreign_key "bots", "people"
-  add_foreign_key "campaign_conversations", "campaigns"
-  add_foreign_key "campaign_conversations", "conversations"
+  add_foreign_key "campaign_contacts", "campaigns"
+  add_foreign_key "campaign_contacts", "contacts"
+  add_foreign_key "campaign_contacts", "phone_numbers"
+  add_foreign_key "campaign_contacts", "questions"
+  add_foreign_key "campaigns", "organizations"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
