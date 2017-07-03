@@ -12,7 +12,7 @@ class BotMaker::Question::Zipcode < BotMaker::Question
       body: body, type: 'ZipcodeQuestion', rank: rank
     )
     question.follow_ups.create(
-      body: follow_up_body, type: question.follow_up_type
+      body: follow_up_body, type: question.follow_up_type, rank: 1
     )
   end
 

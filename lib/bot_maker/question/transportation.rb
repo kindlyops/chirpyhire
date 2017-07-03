@@ -9,7 +9,7 @@ class BotMaker::Question::Transportation < BotMaker::Question
     [
       ['I have personal transportation', personal_tag, personal_follow_up_body],
       ['I use public transportation', public_tag, public_follow_up_body],
-      ["I don't have a great way to get to work", no_tag, 'Ok cool.']
+      ["I don't have a great way to get to work", no_tag, 'Ok cool']
     ]
   end
 

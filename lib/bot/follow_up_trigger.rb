@@ -1,6 +1,6 @@
 class Bot::FollowUpTrigger
   def self.call(follow_up, message, campaign_contact)
-    new(follow_up, message, campaign_contact)
+    new(follow_up, message, campaign_contact).call
   end
 
   def initialize(follow_up, message, campaign_contact)
@@ -38,7 +38,7 @@ class Bot::FollowUpTrigger
   end
 
   def trigger_next_question
-    return null_step if next_question.blank?
+    return trigger_first_goal if next_question.blank?
     next_question.trigger(message, campaign_contact)
   end
 
@@ -46,8 +46,13 @@ class Bot::FollowUpTrigger
     bot.question_after(campaign_contact.question)
   end
 
+  def trigger_first_goal
+    first_goal.trigger(message, campaign_contact)
+  end
+
   attr_reader :follow_up, :message, :campaign_contact
   delegate :bot, :question, :goal, to: :follow_up
+  delegate :first_goal, to: :bot
   delegate :contact, to: :campaign_contact
 
   private
@@ -58,6 +63,6 @@ class Bot::FollowUpTrigger
   end
 
   def null_step
-    OpenStruct.new(body: '')
+    ''
   end
 end

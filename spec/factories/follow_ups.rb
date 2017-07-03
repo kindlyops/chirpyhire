@@ -7,6 +7,10 @@ FactoryGirl.define do
   factory :zipcode_follow_up, parent: :follow_up, class: 'ZipcodeFollowUp' do
     association :question, factory: :zipcode_question
     type { 'ZipcodeFollowUp' }
+    before(:create) do |follow_up|
+      next if follow_up.rank.present?
+      follow_up.rank = follow_up.question.next_follow_up_rank
+    end
   end
 
   factory :choice_follow_up, parent: :follow_up, class: 'ChoiceFollowUp' do

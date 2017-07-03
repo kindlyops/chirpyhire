@@ -38,18 +38,39 @@ RSpec.describe Bot::FollowUpTrigger do
       end
 
       context 'with another question' do
-        it 'triggers the next question' do
+        before do
           allow(bot).to receive(:question_after) { another_question }
+        end
+
+        it 'triggers the next question' do
           expect(another_question).to receive(:trigger) { another_question.body }
 
           subject.call
         end
 
         it 'includes the next question body' do
-          allow(bot).to receive(:question_after) { another_question }
           allow(another_question).to receive(:trigger) { another_question.body }
 
           expect(subject.call).to include(another_question.body)
+        end
+      end
+
+      context 'without another question' do
+        before do
+          allow(bot).to receive(:question_after) { nil }
+        end
+
+        it 'triggers the goal' do
+          allow(subject).to receive(:first_goal) { goal }
+          expect(goal).to receive(:trigger) { goal.body }
+
+          subject.call
+        end
+
+        it 'includes the goal body' do
+          allow(subject).to receive(:first_goal) { goal }
+          allow(goal).to receive(:trigger) { goal.body }
+          expect(subject.call).to include(goal.body)
         end
       end
 
@@ -57,17 +78,16 @@ RSpec.describe Bot::FollowUpTrigger do
         let!(:third_question) { create(:choice_question, bot: bot) }
         before do
           follow_up.update(action: :question, question: third_question)
+          allow(campaign_contact).to receive(:question) { third_question }
         end
 
         it 'triggers the third question' do
-          allow(campaign_contact).to receive(:question) { third_question }
           expect(third_question).to receive(:trigger) { third_question.body }
 
           subject.call
         end
 
         it 'includes the third question body' do
-          allow(campaign_contact).to receive(:question) { third_question }
           allow(third_question).to receive(:trigger) { third_question.body }
 
           expect(subject.call).to include(third_question.body)
@@ -77,17 +97,16 @@ RSpec.describe Bot::FollowUpTrigger do
       context 'follow_up goal' do
         before do
           follow_up.update(action: :goal, goal: goal)
+          allow(subject).to receive(:goal) { goal }
         end
 
         it 'triggers the goal' do
-          allow(subject).to receive(:goal) { goal }
           expect(goal).to receive(:trigger) { goal.body }
 
           subject.call
         end
 
         it 'includes the goal body' do
-          allow(subject).to receive(:goal) { goal }
           allow(goal).to receive(:trigger) { goal.body }
           expect(subject.call).to include(goal.body)
         end

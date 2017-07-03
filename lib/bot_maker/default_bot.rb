@@ -11,8 +11,8 @@ class BotMaker::DefaultBot
     return if organization.bots.where(name: 'chirpy').exists?
 
     bot.create_greeting(body: greeting_body)
-    create_questions
     create_goal_tags
+    create_questions
     create_bot_campaigns
   end
 
@@ -33,7 +33,7 @@ class BotMaker::DefaultBot
   end
 
   def goal
-    @goal ||= bot.goals.create(body: goal_body)
+    @goal ||= bot.goals.create(body: goal_body, rank: bot.next_goal_rank)
   end
 
   def create_questions

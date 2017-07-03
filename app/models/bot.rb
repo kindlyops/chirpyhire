@@ -35,9 +35,23 @@ class Bot < ApplicationRecord
     questions.order(:rank).last
   end
 
+  def first_goal
+    goals.order(:rank).first
+  end
+
+  def last_goal
+    goals.order(:rank).last
+  end
+
   def next_question_rank
     return 1 if last_question.blank?
 
     last_question.rank + 1
+  end
+
+  def next_goal_rank
+    return 1 if last_goal.blank?
+
+    last_goal.rank + 1
   end
 end

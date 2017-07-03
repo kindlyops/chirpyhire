@@ -1,6 +1,5 @@
 class ChoiceQuestion < Question
   POSTLUDE_BASE = 'Please reply with just the letter'.freeze
-  validates :rank, presence: true
 
   def body(formatted: true)
     return self[:body] if formatted.blank?
@@ -20,16 +19,6 @@ class ChoiceQuestion < Question
 
   def follow_up_type
     'ChoiceFollowUp'
-  end
-
-  def last_follow_up
-    follow_ups.order(:rank).last
-  end
-
-  def next_follow_up_rank
-    return 1 if last_follow_up.blank?
-
-    last_follow_up.rank + 1
   end
 
   private

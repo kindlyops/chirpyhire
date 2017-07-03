@@ -7,8 +7,8 @@ class BotMaker::Question::LiveIn < BotMaker::Question
 
   def responses_and_tags
     [
-      ["Yes, I'd love to!", 'Live-In', "Excellent! I've made a note of this."],
-      ['No, not for now!', 'No Live-In', "Excellent! I've made a note of this."]
+      ["Yes, I'd love to!", 'Live-In', "Excellent! I've made a note of this"],
+      ['No, not for now!', 'No Live-In', "Excellent! I've made a note of this"]
     ]
   end
 end

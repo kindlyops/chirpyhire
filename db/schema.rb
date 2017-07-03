@@ -170,12 +170,13 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.string "type", default: "ChoiceFollowUp", null: false
     t.integer "next_question_id"
     t.bigint "goal_id"
+    t.integer "rank", null: false
     t.string "response"
-    t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
     t.index ["next_question_id"], name: "index_follow_ups_on_next_question_id"
+    t.index ["question_id", "rank"], name: "index_follow_ups_on_question_id_and_rank", unique: true
     t.index ["question_id"], name: "index_follow_ups_on_question_id"
   end
 
@@ -191,8 +192,10 @@ ActiveRecord::Schema.define(version: 20170702204733) do
   create_table "goals", force: :cascade do |t|
     t.bigint "bot_id", null: false
     t.text "body", null: false
+    t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
     t.index ["bot_id"], name: "index_goals_on_bot_id"
   end
 
