@@ -22,6 +22,16 @@ class ChoiceQuestion < Question
     'ChoiceFollowUp'
   end
 
+  def last_follow_up
+    follow_ups.order(:rank).last
+  end
+
+  def next_follow_up_rank
+    return 1 if last_follow_up.blank?
+
+    last_follow_up.rank + 1
+  end
+
   private
 
   def choices_body

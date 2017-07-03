@@ -1,0 +1,56 @@
+require 'rails_helper'
+
+RSpec.describe Bot::Greet do
+  let(:bot) { create(:bot) }
+  let(:goal) { bot.goals.first }
+  let(:bot_campaign) { create(:bot_campaign, bot: bot) }
+  let(:campaign) { bot_campaign.campaign }
+  let(:message) { create(:message) }
+  let(:contact) { message.contact }
+  let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
+
+  subject { Bot::Greet.new(bot, message, campaign_contact) }
+
+  describe '#call' do
+    it 'includes the bot greeting' do
+      allow(subject).to receive(:goal) { goal }
+      allow(goal).to receive(:trigger) { goal }
+
+      expect(subject.call).to include(bot.greeting.body)
+    end
+
+    context 'bot has questions' do
+      let!(:question) { create(:question, :choice, bot: bot) }
+
+      it 'triggers the question' do
+        allow(subject).to receive(:first_question) { question }
+        expect(question).to receive(:trigger) { question }
+
+        subject.call
+      end
+
+      it 'includes the question body' do
+        allow(subject).to receive(:first_question) { question }
+        allow(question).to receive(:trigger) { question }
+
+        expect(subject.call).to include(question.body)
+      end
+    end
+
+    context 'bot has no questions' do
+      it 'triggers the goal' do
+        allow(subject).to receive(:goal) { goal }
+        expect(goal).to receive(:trigger) { goal }
+
+        subject.call
+      end
+
+      it 'includes the goal body' do
+        allow(subject).to receive(:goal) { goal }
+        allow(goal).to receive(:trigger) { goal }
+
+        expect(subject.call).to include(goal.body)
+      end
+    end
+  end
+end

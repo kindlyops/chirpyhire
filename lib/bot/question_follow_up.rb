@@ -13,19 +13,24 @@ class Bot::QuestionFollowUp
   delegate :bot, :follow_ups, to: :question
 
   def call
-    return restated_question if follow_up.blank?
+    return null_response if follow_ups.blank?
+    return restate_question if follow_up.blank?
 
-    follow_up.trigger(message, campaign_contact).body
+    follow_up.trigger(message, campaign_contact)
   end
 
-  def restated_question
+  def null_response
     log_message
+    ''
+  end
 
+  def restate_question
+    log_message
     question.restated
   end
 
   def log_message
-    ReadReceiptCreator.call(message, campaign_contact.contact)
+    ReadReceiptsCreator.call(message, campaign_contact.contact)
   end
 
   def follow_up

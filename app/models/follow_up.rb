@@ -7,6 +7,8 @@ class FollowUp < ApplicationRecord
   belongs_to :next_question, optional: true, class_name: 'Question'
   belongs_to :goal, optional: true
 
+  validates :body, presence: true
+
   enum action: {
     next_question: 0, question: 1, goal: 2
   }

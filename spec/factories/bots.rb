@@ -8,5 +8,11 @@ FactoryGirl.define do
       create(:greeting, bot: bot)
       create(:goal, bot: bot)
     end
+
+    trait :question do
+      after(:create) do |bot|
+        create(:question, bot: bot, rank: bot.next_question_rank)
+      end
+    end
   end
 end

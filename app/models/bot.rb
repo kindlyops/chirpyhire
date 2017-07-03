@@ -30,4 +30,14 @@ class Bot < ApplicationRecord
   def first_question
     questions.order(:rank).first
   end
+
+  def last_question
+    questions.order(:rank).last
+  end
+
+  def next_question_rank
+    return 1 if last_question.blank?
+
+    last_question.rank + 1
+  end
 end

@@ -10,13 +10,17 @@ class Bot::FollowUpTrigger
   end
 
   def call
-    return unless follow_up.activated?(message)
+    return '' unless follow_up.activated?(message)
 
     tag_and_broadcast
-    trigger_next_step
+    next_step_body
   end
 
-  def trigger_next_step
+  def next_step_body
+    "#{follow_up.body}\n\n#{next_step.body}"
+  end
+
+  def next_step
     return trigger_next_question if follow_up.next_question?
     return trigger_goal if follow_up.goal?
 
