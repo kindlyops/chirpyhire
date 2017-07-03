@@ -36,7 +36,7 @@ class ChoiceQuestion < Question
 
   def choices_body
     follow_ups.each_with_object('') do |follow_up, body|
-      body << "#{follow_up.letter.capitalize} - #{follow_up.response}\n"
+      body << "#{follow_up.choice.capitalize} - #{follow_up.response}\n"
     end
   end
 
