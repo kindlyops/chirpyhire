@@ -10,4 +10,14 @@ class FollowUp < ApplicationRecord
   enum action: {
     next_question: 0, question: 1, goal: 2
   }
+
+  delegate :bot, to: :question
+
+  def tag(contact)
+    contact.tags << follow_up.tags
+  end
+
+  def trigger(message, campaign_contact)
+    Bot::FollowUpTrigger.call(self, message, campaign_contact)
+  end
 end

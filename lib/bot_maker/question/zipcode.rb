@@ -8,8 +8,12 @@ class BotMaker::Question::Zipcode < BotMaker::Question
   end
 
   def call
-    question = bot.questions.create(body: body, rank: rank)
-    question.follow_ups.create(body: follow_up_body, type: 'ZipcodeFollowUp')
+    question = bot.questions.create(
+      body: body, type: 'ZipcodeQuestion'
+    )
+    question.follow_ups.create(
+      body: follow_up_body, type: question.follow_up_type
+    )
   end
 
   def follow_up_body

@@ -1,4 +1,4 @@
-class Bot::Trigger
+class Bot::Keyword
   KEYWORD = %w[START].freeze
 
   def initialize(bot, message)

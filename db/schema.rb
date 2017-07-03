@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.string "body", null: false
     t.integer "action", default: 0, null: false
     t.string "type", default: "ChoiceFollowUp", null: false
+    t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
@@ -354,8 +355,9 @@ ActiveRecord::Schema.define(version: 20170702204733) do
   create_table "questions", force: :cascade do |t|
     t.bigint "bot_id", null: false
     t.text "body", null: false
-    t.integer "rank", null: false
     t.boolean "active", default: true, null: false
+    t.string "type", default: "ChoiceQuestion", null: false
+    t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_questions_on_bot_id"

@@ -2,12 +2,13 @@ class CreateFollowUps < ActiveRecord::Migration[5.1]
   def change
     create_table :follow_ups do |t|
       t.belongs_to :question, null: false, index: true, foreign_key: true
-      t.integer :next_question_id, null: true, index: true
-      t.belongs_to :goal, null: true, index: true, foreign_key: true
-      t.string :response
       t.string :body, null: false
       t.integer :action, null: false, default: 0
       t.string :type, null: false, default: 'ChoiceFollowUp'
+      t.integer :next_question_id, null: true, index: true
+      t.belongs_to :goal, null: true, index: true, foreign_key: true
+      t.string :response
+      t.integer :rank
       t.timestamps
     end
 

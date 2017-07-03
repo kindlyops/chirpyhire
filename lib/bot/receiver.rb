@@ -14,7 +14,7 @@ class Bot::Receiver
     message.update!(campaign: campaign_contact.campaign)
     return if campaign_contact.exited?
 
-    Bot::Responder.call(bot, message, campaign_contact)
+    reply(Bot::Response.new(bot, message, campaign_contact))
   end
 
   def campaign_contact
@@ -40,8 +40,18 @@ class Bot::Receiver
     end
   end
 
+  def reply(response)
+    return if response.body.blank?
+
+    organization.message(
+      sender: response.sender,
+      conversation: response.conversation,
+      body: response.body
+    )
+  end
+
   delegate :contact, :organization_phone_number, :conversation, to: :message
   delegate :bot_campaigns, to: :bot
-  delegate :inbox, to: :conversation
+  delegate :inbox, :organization, to: :conversation
   delegate :campaign_contacts, to: :contact
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Bot::Responder do
+RSpec.describe Bot::Response do
   let(:bot) { create(:bot) }
   let(:goal) { bot.goals.first }
   let(:greeting) { bot.greeting }
@@ -11,7 +11,7 @@ RSpec.describe Bot::Responder do
   let(:conversation) { create(:conversation, contact: campaign_contact.contact) }
   let!(:message) { create(:message, conversation: conversation) }
 
-  subject { Bot::Responder.new(bot, message, campaign_contact) }
+  subject { Bot::Response.new(bot, message, campaign_contact) }
 
   describe 'pending campaign conversation' do
     it 'does changes the campaign_contact state' do

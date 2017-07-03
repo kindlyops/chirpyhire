@@ -12,10 +12,18 @@ class Bot < ApplicationRecord
   has_many :campaigns, through: :bot_campaigns
 
   def receive(message)
-    Bot::Receiver.call(self, message)
+    Bot::Receive.call(self, message)
   end
 
   def activated?(message)
-    Bot::Trigger.new(self, message).activated?
+    Bot::Keyword.new(self, message).activated?
+  end
+
+  def greet(message, campaign_contact)
+    Bot::Greet.call(self, message, campaign_contact)
+  end
+
+  def question_after(question)
+    questions.find_by(rank: question.rank + 1)
   end
 end
