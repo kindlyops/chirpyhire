@@ -165,12 +165,12 @@ ActiveRecord::Schema.define(version: 20170702204733) do
 
   create_table "follow_ups", force: :cascade do |t|
     t.bigint "question_id", null: false
-    t.integer "next_question_id"
-    t.bigint "goal_id"
-    t.string "response"
     t.string "body", null: false
     t.integer "action", default: 0, null: false
     t.string "type", default: "ChoiceFollowUp", null: false
+    t.integer "next_question_id"
+    t.bigint "goal_id"
+    t.string "response"
     t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -357,7 +357,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.text "body", null: false
     t.boolean "active", default: true, null: false
     t.string "type", default: "ChoiceQuestion", null: false
-    t.integer "rank"
+    t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_questions_on_bot_id"
