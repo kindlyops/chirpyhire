@@ -12,7 +12,7 @@ class Bot < ApplicationRecord
   has_many :campaigns, through: :bot_campaigns
 
   def receive(message)
-    Bot::Receive.call(self, message)
+    Bot::Receiver.call(self, message)
   end
 
   def activated?(message)
@@ -25,5 +25,9 @@ class Bot < ApplicationRecord
 
   def question_after(question)
     questions.find_by(rank: question.rank + 1)
+  end
+
+  def first_question
+    questions.order(:rank).first
   end
 end

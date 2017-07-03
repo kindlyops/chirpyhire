@@ -2,51 +2,54 @@ require 'rails_helper'
 
 RSpec.describe Bot::Response do
   let(:bot) { create(:bot) }
-  let(:goal) { bot.goals.first }
-  let(:greeting) { bot.greeting }
   let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let(:campaign) { bot_campaign.campaign }
-  let(:campaign_contact) { create(:campaign_contact, campaign: campaign) }
-
-  let(:conversation) { create(:conversation, contact: campaign_contact.contact) }
-  let!(:message) { create(:message, conversation: conversation) }
+  let(:message) { create(:message) }
+  let(:contact) { message.contact }
+  let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
 
   subject { Bot::Response.new(bot, message, campaign_contact) }
 
-  describe 'pending campaign conversation' do
-    it 'does changes the campaign_contact state' do
-      allow(subject).to receive(:reply)
-      expect {
-        subject.call
-      }.to change { campaign_contact.reload.state }.from('pending').to('active')
-    end
-
-    it 'does send a message' do
-      expect(subject).to receive(:reply)
-
-      subject.call
+  describe '#sender' do
+    it 'is the bot person' do
+      expect(subject.sender).to eq(bot.person)
     end
   end
 
-  describe 'active campaign conversation' do
-    before do
-      campaign_contact.update(state: :active)
+  describe '#conversation' do
+    it 'is the message conversation' do
+      expect(subject.conversation).to eq(message.conversation)
     end
   end
 
-  describe 'exited campaign conversation' do
-    let(:campaign_contact) { create(:campaign_contact, state: :exited) }
+  describe '#body' do
+    context 'campaign contact does not have a question' do
+      it 'greets the candidate' do
+        expect(bot).to receive(:greet)
 
-    it 'does not change the campaign_contact state' do
-      expect {
-        subject.call
-      }.not_to change { campaign_contact.reload.state }
+        subject.body
+      end
     end
 
-    it 'does not send a message' do
-      expect(subject).not_to receive(:reply)
+    context 'campaign contact does have a question' do
+      let!(:question) { create(:question, bot: bot) }
+      
+      before do
+        campaign_contact.update(question: question)
+      end
 
-      subject.call
+      it 'does not greet the candidate' do
+        allow(question).to receive(:follow_up)
+        expect(bot).not_to receive(:greet)
+
+        subject.body
+      end
+
+      it 'follows up on the question' do
+        expect(question).to receive(:follow_up)
+
+        subject.body
+      end
     end
   end
 end

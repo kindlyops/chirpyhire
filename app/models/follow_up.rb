@@ -14,7 +14,7 @@ class FollowUp < ApplicationRecord
   delegate :bot, to: :question
 
   def tag(contact)
-    contact.tags << follow_up.tags
+    contact.tags << tags
   end
 
   def trigger(message, campaign_contact)

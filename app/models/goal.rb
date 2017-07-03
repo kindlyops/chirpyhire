@@ -9,6 +9,6 @@ class Goal < ApplicationRecord
   end
 
   def tag(contact)
-    contact.tags << goal.tags
+    contact.tags << tags
   end
 end

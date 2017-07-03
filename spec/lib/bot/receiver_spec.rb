@@ -15,25 +15,28 @@ RSpec.describe Bot::Receiver do
       let!(:message) { create(:message, :to, conversation: conversation) }
 
       it 'creates a pending campaign contact' do
+        allow(subject).to receive(:reply)
         expect {
           subject.call
         }.to change { contact.reload.campaign_contacts.pending.count }.by(1)
       end
 
       it 'updates the message to be tied to the campaign' do
+        allow(subject).to receive(:reply)
         expect {
           subject.call
         }.to change { message.reload.campaign }.from(nil).to(campaign)
       end
 
-      it 'ties the new campaign to the bot campaign' do
+      it 'ties the new campaign contact to the bot campaign' do
+        allow(subject).to receive(:reply)
         subject.call
 
         expect(CampaignContact.last.campaign).to eq(campaign)
       end
 
-      it 'calls Bot::Responder' do
-        expect(Bot::Responder).to receive(:call)
+      it 'replies' do
+        expect(subject).to receive(:reply)
 
         subject.call
       end
@@ -62,8 +65,8 @@ RSpec.describe Bot::Receiver do
           }.to change { message.reload.campaign }.from(nil).to(campaign)
         end
 
-        it 'does not call the Bot::Responder' do
-          expect(Bot::Responder).not_to receive(:call)
+        it 'does not reply' do
+          expect(subject).not_to receive(:reply)
 
           subject.call
         end
@@ -71,19 +74,21 @@ RSpec.describe Bot::Receiver do
 
       context 'active' do
         it 'does not create a campaign contact' do
+          allow(subject).to receive(:reply)
           expect {
             subject.call
           }.not_to change { contact.reload.campaigns.count }
         end
 
         it 'updates the message to be tied to the campaign' do
+          allow(subject).to receive(:reply)
           expect {
             subject.call
           }.to change { message.reload.campaign }.from(nil).to(campaign)
         end
 
-        it 'calls Bot::Responder' do
-          expect(Bot::Responder).to receive(:call)
+        it 'replies' do
+          expect(subject).to receive(:reply)
 
           subject.call
         end
