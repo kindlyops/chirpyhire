@@ -17,10 +17,10 @@ class Bot::FollowUpTrigger
   end
 
   def next_step_body
-    "#{follow_up.body}\n\n#{next_step.body}"
+    "#{follow_up.body}\n\n#{next_body}"
   end
 
-  def next_step
+  def next_body
     return trigger_next_question if follow_up.next_question?
     return trigger_goal if follow_up.goal?
 

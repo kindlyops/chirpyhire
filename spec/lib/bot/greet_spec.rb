@@ -14,7 +14,7 @@ RSpec.describe Bot::Greet do
   describe '#call' do
     it 'includes the bot greeting' do
       allow(subject).to receive(:goal) { goal }
-      allow(goal).to receive(:trigger) { goal }
+      allow(goal).to receive(:trigger) { goal.body }
 
       expect(subject.call).to include(bot.greeting.body)
     end
@@ -24,14 +24,14 @@ RSpec.describe Bot::Greet do
 
       it 'triggers the question' do
         allow(subject).to receive(:first_question) { question }
-        expect(question).to receive(:trigger) { question }
+        expect(question).to receive(:trigger) { question.body }
 
         subject.call
       end
 
       it 'includes the question body' do
         allow(subject).to receive(:first_question) { question }
-        allow(question).to receive(:trigger) { question }
+        allow(question).to receive(:trigger) { question.body }
 
         expect(subject.call).to include(question.body)
       end
@@ -40,14 +40,14 @@ RSpec.describe Bot::Greet do
     context 'bot has no questions' do
       it 'triggers the goal' do
         allow(subject).to receive(:goal) { goal }
-        expect(goal).to receive(:trigger) { goal }
+        expect(goal).to receive(:trigger) { goal.body }
 
         subject.call
       end
 
       it 'includes the goal body' do
         allow(subject).to receive(:goal) { goal }
-        allow(goal).to receive(:trigger) { goal }
+        allow(goal).to receive(:trigger) { goal.body }
 
         expect(subject.call).to include(goal.body)
       end

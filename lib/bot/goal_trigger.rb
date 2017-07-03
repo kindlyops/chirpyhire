@@ -15,10 +15,10 @@ class Bot::GoalTrigger
   delegate :team, to: :assignment_rule
 
   def call
-    goal.tap do
-      tag_and_broadcast
-      notify_team
-    end
+    tag_and_broadcast
+    notify_team
+
+    goal.body
   end
 
   def notify_team

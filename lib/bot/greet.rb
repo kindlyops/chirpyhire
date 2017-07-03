@@ -17,7 +17,7 @@ class Bot::Greet
   end
 
   def next_body
-    next_step.trigger(message, campaign_contact).body
+    next_step.trigger(message, campaign_contact)
   end
 
   def next_step

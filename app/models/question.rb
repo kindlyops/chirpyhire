@@ -5,7 +5,7 @@ class Question < ApplicationRecord
 
   def trigger(_message, campaign_contact)
     campaign_contact.update(question: self)
-    self
+    body
   end
 
   def follow_up(message, campaign_contact)

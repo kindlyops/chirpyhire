@@ -20,6 +20,10 @@ RSpec.describe Bot::GoalTrigger do
   subject { Bot::GoalTrigger.new(goal, message, campaign_contact) }
 
   describe '#call' do
+    it 'is the goal body' do
+      expect(subject.call).to eq(goal.body)
+    end
+
     context 'with multiple accounts on the team' do
       before do
         team.accounts << create_list(:account, rand(1..3))
