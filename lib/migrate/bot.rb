@@ -82,7 +82,7 @@ class Migrate::Bot
   end
 
   def state_for(contact)
-    return :exited if contact.screened?
+    return :exited if contact&.contact_candidacy&.complete?
     return :active if contact&.contact_candidacy&.in_progress?
     :pending
   end
