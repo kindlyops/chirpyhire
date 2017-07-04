@@ -11,6 +11,7 @@ FactoryGirl.define do
       if evaluator.phone_number.present?
         contact.person.update(phone_number: evaluator.phone_number)
       end
+      create(:contact_candidacy, contact: contact)
     end
 
     trait :complete do
