@@ -21,17 +21,25 @@ class Migrate::Bot
       next if message.blank?
       phone_number = phone_number_for(message)
       next if phone_number.blank?
+      inbox = fetch_inbox(phone_number)
+      next if inbox.blank?
+      campaign = inbox.bot_campaigns.first.campaign
       state = state_for(contact)
       question = question_for(contact)
-      create_or_update_campaign_contact(contact, phone_number, state, question)
+      create_or_update_campaign_contact(campaign, contact, phone_number, state, question)
       contact.taggings.find_or_create_by(tag: screened_tag) if contact.screened?
     end
   end
 
-  def create_or_update_campaign_contact(contact, phone_number, state, question)
+  def fetch_inbox(phone_number)
+    rule = organization.assignment_rules.find_by(phone_number: phone_number)
+    rule && rule.inbox
+  end
+
+  def create_or_update_campaign_contact(campaign, contact, phone_number, state, question)
     existing = existing_campaign?(contact, campaign, phone_number)
-    return create(contact, phone_number, state, question) unless existing
-    update(contact, phone_number, state, question)
+    return create(campaign, contact, phone_number, state, question) unless existing
+    update(campaign, contact, phone_number, state, question)
   end
 
   def existing_campaign?(contact, campaign, phone_number)
@@ -41,7 +49,7 @@ class Migrate::Bot
       .exists?
   end
 
-  def update(contact, phone_number, state, question)
+  def update(campaign, contact, phone_number, state, question)
     campaign_contact = contact
                        .campaign_contacts
                        .find_by(campaign: campaign, phone_number: phone_number)
@@ -52,7 +60,7 @@ class Migrate::Bot
     )
   end
 
-  def create(contact, phone_number, state, question)
+  def create(campaign, contact, phone_number, state, question)
     contact.campaign_contacts.create(
       campaign: campaign,
       phone_number: phone_number,
@@ -70,7 +78,7 @@ class Migrate::Bot
     end
   end
 
-  def fetch_campaign
+  def fetch_campaign(team)
     name = "#{bot.name} on call: #{team.name}"
     organization.campaigns.find_or_create_by(name: name)
   end

@@ -6,6 +6,7 @@ AllCops:
     - '**/Rakefile'
     - '**/config.ru'
   Exclude:
+    - 'lib/migrate/bot.rb'
     - 'db/**/*'
     - 'script/**/*'
     - 'bin/**/*'
