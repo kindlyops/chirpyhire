@@ -12,7 +12,7 @@ RSpec.describe Organization do
     before do
       allow(Broadcaster::Message).to receive(:broadcast)
     end
-    
+
     context 'campaign' do
       let(:campaign) { create(:campaign) }
       it 'assigns the message to the campaign' do
