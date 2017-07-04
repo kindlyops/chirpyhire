@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     resource :customer
   end
 
-  resources :bots, only: %i[index] do
+  resources :bots, only: %i[index show] do
     resources :questions, only: %i[update]
   end
 

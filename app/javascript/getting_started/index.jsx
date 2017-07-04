@@ -8,13 +8,7 @@ class GettingStarted extends React.Component {
     super(props);
 
     this.state = {
-      bots: [{
-        greeting: {
-          body: ''
-        },
-        goals: [{body: ''}],
-        questions: []
-      }]
+      bots: []
     }
   }
 
@@ -35,7 +29,7 @@ class GettingStarted extends React.Component {
         <div className='ch--Header'>
           <h1>Getting Started</h1>
         </div>
-        <RecruitBot {...this.state.bots[0]} />
+        {this.state.bots.slice(0, 1).map(bot => <RecruitBot key={bot.id} id={bot.id} />)}
       </div>
     )
   }

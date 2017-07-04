@@ -12,8 +12,12 @@ class RecruitBotQuestion extends React.Component {
     return this.props.id;
   }
 
+  botId() {
+    return this.props.bot_id;
+  }
+
   questionURL() {
-    return `/questions/${this.questionId()}.json`;
+    return `bots/${this.botId()}/questions/${this.questionId()}.json`;
   }
 
   data() {
