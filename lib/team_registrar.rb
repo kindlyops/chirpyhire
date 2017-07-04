@@ -28,11 +28,15 @@ class TeamRegistrar
   end
 
   def campaign
-    @campaign ||= organization.campaigns.find_or_create_by(name: bot.name)
+    @campaign ||= organization.campaigns.find_or_create_by(name: name)
   end
 
   def bot
     @bot ||= organization.bots.first
+  end
+
+  def name
+    "#{bot.name} on call: #{team.name}"
   end
 
   def setup_account_on_team
