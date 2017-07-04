@@ -43,8 +43,8 @@ class Migrate::Bot
 
   def update(contact, phone_number, state, question)
     campaign_contact = contact
-               .campaign_contacts
-               .find_by(campaign: campaign, phone_number: phone_number)
+                       .campaign_contacts
+                       .find_by(campaign: campaign, phone_number: phone_number)
 
     campaign_contact.update(
       state: state,
