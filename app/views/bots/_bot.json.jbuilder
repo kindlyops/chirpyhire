@@ -15,4 +15,3 @@ json.goals bot.goals do |goal|
   json.id goal.id
   json.body goal.body
 end
-
