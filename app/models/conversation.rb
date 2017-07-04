@@ -40,20 +40,21 @@ class Conversation < ApplicationRecord
     contact.open_conversations.where(phone_number: phone_number).none?
   end
 
-  def create_message(message, sender)
+  def create_message(message, sender, campaign)
     messages.create(
-      message_params(message, sender)
+      message_params(message, sender, campaign)
     ).tap(&:touch_conversation)
   end
 
   private
 
-  def message_params(message, sender)
+  def message_params(message, sender, campaign)
     base_message_params(message).merge(
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       sender: sender,
-      recipient: person
+      recipient: person,
+      campaign: campaign
     )
   end
 

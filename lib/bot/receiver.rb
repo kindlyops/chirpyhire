@@ -50,7 +50,8 @@ class Bot::Receiver
     organization.message(
       sender: response.sender,
       conversation: response.conversation,
-      body: response.body
+      body: response.body,
+      campaign: response.campaign
     )
   end
 

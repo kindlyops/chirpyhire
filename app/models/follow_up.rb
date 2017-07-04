@@ -8,6 +8,7 @@ class FollowUp < ApplicationRecord
   belongs_to :goal, optional: true
 
   validates :body, presence: true
+  validates :type, inclusion: { in: %w[ZipcodeFollowUp ChoiceFollowUp] }
 
   enum action: {
     next_question: 0, question: 1, goal: 2

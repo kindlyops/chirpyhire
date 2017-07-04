@@ -7,12 +7,4 @@ class Campaign < ApplicationRecord
   has_many :contact, through: :campaign_contacts
 
   has_many :messages
-
-  def reply(response)
-    organization.message(
-      sender: response.sender,
-      conversation: response.conversation,
-      body: response.body
-    )
-  end
 end

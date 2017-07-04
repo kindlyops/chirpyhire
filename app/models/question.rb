@@ -3,6 +3,7 @@ class Question < ApplicationRecord
   has_many :campaign_contacts
   has_many :follow_ups
   validates :rank, presence: true
+  validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
 
   def body(*)
     self[:body]

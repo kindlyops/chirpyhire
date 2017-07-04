@@ -7,7 +7,7 @@ class Bot::Response
 
   attr_reader :message, :bot, :campaign_contact
   delegate :conversation, to: :message
-  delegate :question, to: :campaign_contact
+  delegate :question, :campaign, to: :campaign_contact
 
   def sender
     bot.person

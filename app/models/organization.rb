@@ -31,14 +31,14 @@ class Organization < ApplicationRecord
     contacts.screened.count
   end
 
-  def message(conversation:, body:, sender: nil)
+  def message(conversation:, body:, sender: nil, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
     contact.update(reached: true) if sender.bot.blank?
-    conversation.create_message(sent_message, sender).tap do |message|
+    conversation.create_message(sent_message, sender, campaign).tap do |message|
       Broadcaster::Message.broadcast(message)
     end
   end

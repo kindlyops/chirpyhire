@@ -97,11 +97,8 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.bigint "person_id", null: false
     t.bigint "organization_id", null: false
     t.string "name", null: false
-    t.datetime "last_edited_at"
-    t.integer "last_edited_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["last_edited_by_id"], name: "index_bots_on_last_edited_by_id"
     t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_bots_on_organization_id"
     t.index ["person_id"], name: "index_bots_on_person_id"
@@ -129,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_campaigns_on_name"
+    t.index ["organization_id", "name"], name: "index_campaigns_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
@@ -185,6 +183,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["follow_up_id", "tag_id"], name: "index_follow_ups_tags_on_follow_up_id_and_tag_id", unique: true
     t.index ["follow_up_id"], name: "index_follow_ups_tags_on_follow_up_id"
     t.index ["tag_id"], name: "index_follow_ups_tags_on_tag_id"
   end
@@ -204,6 +203,7 @@ ActiveRecord::Schema.define(version: 20170702204733) do
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["goal_id", "tag_id"], name: "index_goals_tags_on_goal_id_and_tag_id", unique: true
     t.index ["goal_id"], name: "index_goals_tags_on_goal_id"
     t.index ["tag_id"], name: "index_goals_tags_on_tag_id"
   end
@@ -451,7 +451,6 @@ ActiveRecord::Schema.define(version: 20170702204733) do
   add_foreign_key "bot_campaigns", "bots"
   add_foreign_key "bot_campaigns", "campaigns"
   add_foreign_key "bot_campaigns", "inboxes"
-  add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
   add_foreign_key "bots", "people"
   add_foreign_key "campaign_contacts", "campaigns"

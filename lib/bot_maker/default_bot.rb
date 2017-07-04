@@ -48,7 +48,7 @@ class BotMaker::DefaultBot
   end
 
   def bot
-    @bot ||= organization.bots.create(name: 'chirpy', person: bot_person)
+    @bot ||= organization.bots.create(name: 'Chirpy', person: bot_person)
   end
 
   def bot_person

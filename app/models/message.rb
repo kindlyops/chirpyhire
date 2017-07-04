@@ -24,18 +24,8 @@ class Message < ApplicationRecord
     order(:external_created_at, :id)
   end
 
-  def self.manual
-    where.not(sender: Chirpy.person)
-  end
-
-  def self.replies
-    where(direction: 'inbound')
-  end
-
-  def author
-    return :bot if outbound? && sender.bot.present?
-    return :organization if outbound?
-    :person
+  def self.last_reply_at
+    replies.by_recency.first.created_at
   end
 
   def day
@@ -58,10 +48,6 @@ class Message < ApplicationRecord
   def person
     return recipient if outbound?
     sender
-  end
-
-  def self.last_reply_at
-    replies.by_recency.first.created_at
   end
 
   def time_ago

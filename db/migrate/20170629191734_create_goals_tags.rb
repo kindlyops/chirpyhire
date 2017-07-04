@@ -5,5 +5,7 @@ class CreateGoalsTags < ActiveRecord::Migration[5.1]
       t.belongs_to :tag, null: false, index: true, foreign_key: true
       t.timestamps
     end
+
+    add_index :goals_tags, [:goal_id, :tag_id], unique: true
   end
 end

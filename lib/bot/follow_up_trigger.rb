@@ -10,7 +10,7 @@ class Bot::FollowUpTrigger
   end
 
   def call
-    return '' unless follow_up.activated?(message)
+    return null_step unless follow_up.activated?(message)
 
     tag_and_broadcast
     next_step_body
