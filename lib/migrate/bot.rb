@@ -64,13 +64,19 @@ class Migrate::Bot
   def connect_teams_to_bot
     teams.find_each do |team|
       next if existing_bot_campaign?(team)
+      campaign = fetch_campaign(team)
 
       bot.bot_campaigns.create(inbox: team.inbox, campaign: campaign)
     end
   end
 
+  def fetch_campaign
+    name = "#{bot.name} on call: #{team.name}"
+    organization.campaigns.find_or_create_by(name: name)
+  end
+
   def existing_bot_campaign?(team)
-    bot.bot_campaigns.where(inbox: team.inbox, campaign: campaign).exists?
+    bot.bot_campaigns.where(inbox: team.inbox).exists?
   end
 
   def most_recent_inbound_message(contact)
@@ -91,10 +97,6 @@ class Migrate::Bot
     inquiry = contact.contact_candidacy.inquiry
     return if inquiry.nil?
     bot.questions[inquiries[inquiry.to_sym]]
-  end
-
-  def campaign
-    @campaign ||= organization.campaigns.find_or_create_by(name: bot.name)
   end
 
   def bot
