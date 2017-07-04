@@ -5,8 +5,8 @@ class Registrar
 
   def register
     return unless account.persisted?
-    TeamRegistrar.call(team, account, notify: false)
     setup_account
+    TeamRegistrar.call(team, account, notify: false)
     new_organization_notification_job
   end
 
@@ -18,6 +18,7 @@ class Registrar
 
   def setup_account
     account.update(role: :owner)
+    BotMaker::DefaultBot.call(organization)
   end
 
   def new_organization_notification_job

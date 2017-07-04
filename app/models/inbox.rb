@@ -2,6 +2,8 @@ class Inbox < ApplicationRecord
   belongs_to :team
   has_many :assignment_rules
   has_many :conversations
+  has_many :bot_campaigns
+  has_many :bots, through: :bot_campaigns
 
   delegate :name, to: :team
 
@@ -12,5 +14,9 @@ class Inbox < ApplicationRecord
 
   def recent_conversations
     conversations.by_recent_message
+  end
+
+  def receive(message)
+    InboxDeliveryAgent.call(self, message)
   end
 end

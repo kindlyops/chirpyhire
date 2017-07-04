@@ -17,11 +17,23 @@ class TeamRegistrar
     team.create_inbox
     phone_number = provision_phone_number
     create_recruiting_ad(phone_number)
-
+    create_bot_campaign
     NewTeamNotificationJob.perform_later(team) if notify.present?
   end
 
   private
+
+  def create_bot_campaign
+    bot.bot_campaigns.create(inbox: team.inbox, campaign: campaign)
+  end
+
+  def campaign
+    @campaign ||= organization.campaigns.find_or_create_by(name: bot.name)
+  end
+
+  def bot
+    @bot ||= organization.bots.first
+  end
 
   def setup_account_on_team
     team.accounts << account

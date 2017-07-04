@@ -10,12 +10,22 @@ class Contact < ApplicationRecord
   has_many :taggings
   has_many :tags, through: :taggings
 
+  has_many :campaign_contacts
+  has_many :campaigns, through: :campaign_contacts
+
+  has_many :active_campaign_contacts, -> { active },
+           class_name: 'CampaignContact'
+
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person
   delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
+
+  def self.screened
+    joins(taggings: :tag).merge(Tag.screened)
+  end
 
   def existing_open_conversation
     conversations.opened.first
@@ -83,20 +93,21 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def create_message(message, sender, phone_number)
+  def create_message(message, sender, phone_number, campaign)
     IceBreaker.call(self, phone_number).messages.create(
-      message_params(message, sender)
+      message_params(message, sender, campaign)
     ).tap(&:touch_conversation)
   end
 
   private
 
-  def message_params(message, sender)
+  def message_params(message, sender, campaign)
     base_message_params(message).merge(
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       sender: sender,
-      recipient: person
+      recipient: person,
+      campaign: campaign
     )
   end
 

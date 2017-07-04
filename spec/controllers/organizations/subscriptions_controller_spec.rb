@@ -187,7 +187,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         end
 
         it 'adds the contact to the organization' do
-          post :create, params: params
+          delete :destroy, params: params
           expect(organization.contacts).to include(Contact.last)
         end
       end
@@ -201,7 +201,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         end
 
         it 'adds the contact to the organization' do
-          post :create, params: params
+          delete :destroy, params: params
           expect(organization.contacts).to include(Contact.last)
         end
       end
@@ -227,7 +227,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       end
 
       it 'adds the contact to the organization' do
-        post :create, params: params
+        delete :destroy, params: params
         expect(organization.contacts).to include(Contact.last)
       end
     end

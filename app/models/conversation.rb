@@ -1,7 +1,7 @@
 class Conversation < ApplicationRecord
   belongs_to :contact
   belongs_to :inbox
-  belongs_to :phone_number, optional: true
+  belongs_to :phone_number
 
   has_many :messages
   has_many :read_receipts
