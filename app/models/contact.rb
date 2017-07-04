@@ -3,7 +3,6 @@ class Contact < ApplicationRecord
   belongs_to :organization
   include RecruitingCounts
 
-  has_one :contact_candidacy
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
@@ -19,7 +18,6 @@ class Contact < ApplicationRecord
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person
-  delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
 
@@ -67,16 +65,6 @@ class Contact < ApplicationRecord
     joins(person: :zipcode).where(filters)
   end
 
-  def self.incomplete
-    includes(:contact_candidacy)
-      .where.not('contact_candidacies' => { state: :complete })
-  end
-
-  def self.complete
-    includes(:contact_candidacy)
-      .where('contact_candidacies' => { state: :complete })
-  end
-
   def self.subscribed
     where(subscribed: true)
   end
@@ -93,29 +81,7 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
-  def create_message(message, sender, phone_number, campaign)
-    IceBreaker.call(self, phone_number).messages.create(
-      message_params(message, sender, campaign)
-    ).tap(&:touch_conversation)
-  end
-
   private
-
-  def message_params(message, sender, campaign)
-    base_message_params(message).merge(
-      sent_at: message.date_sent,
-      external_created_at: message.date_created,
-      sender: sender,
-      recipient: person,
-      campaign: campaign
-    )
-  end
-
-  def base_message_params(message)
-    %i[sid body direction to from].each_with_object({}) do |key, hash|
-      hash[key] = message.send(key)
-    end
-  end
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current

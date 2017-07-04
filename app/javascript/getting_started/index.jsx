@@ -4,6 +4,24 @@ import RecruitBot from '../recruit_bot'
 import RestartNotificationBar from '../restart_notification_bar'
 
 class GettingStarted extends React.Component {
+  constructor(props) { 
+    super(props);
+
+    this.state = {
+      bots: []
+    }
+  }
+
+  botsUrl() {
+    return `/bots`;
+  }
+
+  componentDidMount() {
+    $.get(this.botsUrl()).then(bots => {
+      this.setState({ bots: bots });
+    });
+  }
+
   render() {
     return (
       <div className='ch--Page'>
@@ -11,7 +29,7 @@ class GettingStarted extends React.Component {
         <div className='ch--Header'>
           <h1>Getting Started</h1>
         </div>
-        <RecruitBot current_organization={this.props.current_organization} />
+        {this.state.bots.slice(0, 1).map(bot => <RecruitBot key={bot.id} id={bot.id} />)}
       </div>
     )
   }
