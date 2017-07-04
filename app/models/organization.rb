@@ -10,6 +10,8 @@ class Organization < ApplicationRecord
   has_many :payment_cards
   has_many :phone_numbers
   has_many :assignment_rules
+  has_many :bots
+  has_many :campaigns
 
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
@@ -25,14 +27,14 @@ class Organization < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
 
-  def message(conversation:, body:, sender: nil)
+  def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
     contact.update(reached: true) if sender != Chirpy.person
-    contact.create_message(sent_message, sender, phone_number).tap do |message|
+    contact.create_message(sent_message, sender, phone_number, campaign).tap do |message|
       Broadcaster::Message.broadcast(message)
     end
   end

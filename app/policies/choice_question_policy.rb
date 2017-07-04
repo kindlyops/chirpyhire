@@ -1,0 +1,2 @@
+class ChoiceQuestionPolicy < QuestionPolicy
+end

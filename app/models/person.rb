@@ -2,6 +2,7 @@ class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :account, inverse_of: :person, optional: true
   has_many :contacts
+  has_one :bot
 
   has_many :sent_messages,
            class_name: 'Message', foreign_key: :sender_id, inverse_of: :sender

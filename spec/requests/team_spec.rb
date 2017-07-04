@@ -7,6 +7,7 @@ RSpec.describe 'Team' do
   let(:team) { account.teams.first }
 
   before do
+    create(:bot, organization: organization)
     team.accounts << team_member
     sign_in(account)
   end

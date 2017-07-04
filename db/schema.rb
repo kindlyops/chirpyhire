@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170702032841) do
+ActiveRecord::Schema.define(version: 20170704185303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,55 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
   end
 
+  create_table "bot_campaigns", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.bigint "inbox_id", null: false
+    t.bigint "campaign_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "campaign_id"], name: "index_bot_campaigns_on_bot_id_and_campaign_id", unique: true
+    t.index ["bot_id"], name: "index_bot_campaigns_on_bot_id"
+    t.index ["campaign_id"], name: "index_bot_campaigns_on_campaign_id"
+    t.index ["inbox_id"], name: "index_bot_campaigns_on_inbox_id"
+  end
+
+  create_table "bots", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.bigint "organization_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
+    t.index ["organization_id"], name: "index_bots_on_organization_id"
+    t.index ["person_id"], name: "index_bots_on_person_id"
+  end
+
+  create_table "campaign_contacts", force: :cascade do |t|
+    t.bigint "campaign_id", null: false
+    t.bigint "contact_id", null: false
+    t.bigint "phone_number_id", null: false
+    t.bigint "question_id"
+    t.integer "state", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
+    t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
+    t.index ["contact_id", "phone_number_id"], name: "index_campaign_contacts_on_contact_id_and_phone_number_id", unique: true, where: "(state = 1)"
+    t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
+    t.index ["phone_number_id"], name: "index_campaign_contacts_on_phone_number_id"
+    t.index ["question_id"], name: "index_campaign_contacts_on_question_id"
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_campaigns_on_name"
+    t.index ["organization_id", "name"], name: "index_campaigns_on_organization_id_and_name", unique: true
+    t.index ["organization_id"], name: "index_campaigns_on_organization_id"
+  end
+
   create_table "contact_candidacies", force: :cascade do |t|
     t.integer "experience"
     t.boolean "skin_test"
@@ -130,6 +179,61 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"
   end
 
+  create_table "follow_ups", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.string "body", null: false
+    t.integer "action", default: 0, null: false
+    t.string "type", default: "ChoiceFollowUp", null: false
+    t.integer "next_question_id"
+    t.bigint "goal_id"
+    t.integer "rank", null: false
+    t.string "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
+    t.index ["next_question_id"], name: "index_follow_ups_on_next_question_id"
+    t.index ["question_id", "rank"], name: "index_follow_ups_on_question_id_and_rank", unique: true
+    t.index ["question_id"], name: "index_follow_ups_on_question_id"
+  end
+
+  create_table "follow_ups_tags", force: :cascade do |t|
+    t.bigint "follow_up_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follow_up_id", "tag_id"], name: "index_follow_ups_tags_on_follow_up_id_and_tag_id", unique: true
+    t.index ["follow_up_id"], name: "index_follow_ups_tags_on_follow_up_id"
+    t.index ["tag_id"], name: "index_follow_ups_tags_on_tag_id"
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.integer "rank", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
+    t.index ["bot_id"], name: "index_goals_on_bot_id"
+  end
+
+  create_table "goals_tags", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id", "tag_id"], name: "index_goals_tags_on_goal_id_and_tag_id", unique: true
+    t.index ["goal_id"], name: "index_goals_tags_on_goal_id"
+    t.index ["tag_id"], name: "index_goals_tags_on_tag_id"
+  end
+
+  create_table "greetings", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_greetings_on_bot_id"
+  end
+
   create_table "inboxes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -177,6 +281,8 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.bigint "conversation_id", null: false
     t.string "from", null: false
     t.string "to", null: false
+    t.bigint "campaign_id"
+    t.index ["campaign_id"], name: "index_messages_on_campaign_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
@@ -267,6 +373,18 @@ ActiveRecord::Schema.define(version: 20170702032841) do
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.text "body", null: false
+    t.boolean "active", default: true, null: false
+    t.string "type", default: "ChoiceQuestion", null: false
+    t.integer "rank", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_questions_on_bot_id"
+    t.index ["rank", "bot_id"], name: "index_questions_on_rank_and_bot_id", unique: true
+  end
+
   create_table "read_receipts", id: :serial, force: :cascade do |t|
     t.integer "message_id", null: false
     t.datetime "read_at"
@@ -348,15 +466,35 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
+  add_foreign_key "bot_campaigns", "bots"
+  add_foreign_key "bot_campaigns", "campaigns"
+  add_foreign_key "bot_campaigns", "inboxes"
+  add_foreign_key "bots", "organizations"
+  add_foreign_key "bots", "people"
+  add_foreign_key "campaign_contacts", "campaigns"
+  add_foreign_key "campaign_contacts", "contacts"
+  add_foreign_key "campaign_contacts", "phone_numbers"
+  add_foreign_key "campaign_contacts", "questions"
+  add_foreign_key "campaigns", "organizations"
   add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
+  add_foreign_key "follow_ups", "goals"
+  add_foreign_key "follow_ups", "questions"
+  add_foreign_key "follow_ups", "questions", column: "next_question_id"
+  add_foreign_key "follow_ups_tags", "follow_ups"
+  add_foreign_key "follow_ups_tags", "tags"
+  add_foreign_key "goals", "bots"
+  add_foreign_key "goals_tags", "goals"
+  add_foreign_key "goals_tags", "tags"
+  add_foreign_key "greetings", "bots"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
+  add_foreign_key "messages", "campaigns"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
@@ -368,6 +506,7 @@ ActiveRecord::Schema.define(version: 20170702032841) do
   add_foreign_key "people", "accounts"
   add_foreign_key "people", "zipcodes"
   add_foreign_key "phone_numbers", "organizations"
+  add_foreign_key "questions", "bots"
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
