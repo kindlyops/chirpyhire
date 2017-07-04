@@ -8,6 +8,28 @@ RSpec.describe Bot::Receiver do
 
   subject { Bot::Receiver.new(bot, message) }
 
+  describe 'reply' do
+    let(:conversation) { create(:conversation, inbox: inbox) }
+    let(:organization) { conversation.organization }
+    let!(:message) { create(:message, :to, conversation: conversation) }
+    let!(:response) {
+      OpenStruct.new(
+        body: 'body',
+        campaign: campaign,
+        conversation: message.conversation,
+        sender: bot.person
+      )
+    }
+
+    it 'passes the campaign to organization#message' do
+      allow(subject).to receive(:response) { response }
+      allow(subject).to receive(:organization) { organization }
+      expect(organization).to receive(:message).with(hash_including(campaign: campaign))
+
+      subject.reply
+    end
+  end
+
   describe 'call' do
     context 'conversation is not in the bot campaign' do
       let(:conversation) { create(:conversation, inbox: inbox) }

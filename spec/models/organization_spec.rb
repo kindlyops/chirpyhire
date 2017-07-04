@@ -12,6 +12,16 @@ RSpec.describe Organization do
     before do
       allow(Broadcaster::Message).to receive(:broadcast)
     end
+
+    context 'campaign' do
+      let(:campaign) { create(:campaign) }
+      it 'assigns the message to the campaign' do
+        expect {
+          subject.message(conversation: conversation, body: 'body', sender: account.person, campaign: campaign)
+        }.to change { campaign.reload.messages.count }.by(1)
+      end
+    end
+
     context 'reached' do
       context 'sent by bot' do
         let(:bot) { create(:bot, organization: subject) }

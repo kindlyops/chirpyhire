@@ -31,7 +31,7 @@ class Organization < ApplicationRecord
     contacts.screened.count
   end
 
-  def message(conversation:, body:, sender: nil, campaign: nil)
+  def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
