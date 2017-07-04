@@ -10,7 +10,8 @@ class BotMaker::DefaultBot
   end
 
   def call
-    return if organization.bots.where(name: DEFAULT_NAME).exists?
+    existing_bot = organization.bots.find_by(name: DEFAULT_NAME)
+    return existing_bot if existing_bot.present?
 
     bot.create_greeting(body: greeting_body)
     create_goal_tags

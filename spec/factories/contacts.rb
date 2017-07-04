@@ -85,7 +85,8 @@ FactoryGirl.define do
     trait :complete do
       after(:create) do |contact|
         contact.update(
-          subscribed: [true, false].sample
+          subscribed: [true, false].sample,
+          screened: true
         )
 
         candidacy = contact.contact_candidacy
