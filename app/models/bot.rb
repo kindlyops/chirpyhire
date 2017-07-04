@@ -24,7 +24,7 @@ class Bot < ApplicationRecord
   end
 
   def question_after(question)
-    questions.find_by(rank: question.rank + 1)
+    questions.active.where('rank > ?', question.rank).order(:rank).first
   end
 
   def first_question

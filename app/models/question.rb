@@ -8,6 +8,10 @@ class Question < ApplicationRecord
     self[:body]
   end
 
+  def self.active
+    where(active: true)
+  end
+
   def trigger(_message, campaign_contact)
     campaign_contact.update(question: self)
     body
