@@ -1,6 +1,6 @@
 class Contact::ZipCode < Contact::Attribute
   def humanize_attribute(*)
-    person.zipcode
+    person.zipcode && person.zipcode.zipcode
   end
 
   def query

@@ -10,10 +10,40 @@ class Seeder::SeedContact
 
   def call
     create_sent_message('Start')
-    create_received_message(thank_you)
+    create_received_message(thank_you) if seed_questions_and_answers
   end
 
   private
+
+  delegate :organization, to: :account
+  delegate :bots, to: :organization
+
+  def seed_questions_and_answers
+    questions.each do |question|
+      create_received_message(question.body)
+      break if seed_answer(question).blank?
+    end
+  end
+
+  def questions
+    @questions ||= bot.questions
+  end
+
+  def bot
+    @bot ||= bots.first
+  end
+
+  def seed_answer(question)
+    create_sent_message(fetch_choice(question))
+  end
+
+  def fetch_choice(question)
+    return zipcode if question.is_a?(ZipcodeQuestion)
+    follow_ups = question.follow_ups
+    follow_up = follow_ups.find { |f| f.tags.merge(contact.tags).exists? }
+
+    follow_up.choice.to_s.upcase
+  end
 
   def conversation
     @conversation ||= IceBreaker.call(contact, phone_number)
@@ -27,9 +57,8 @@ class Seeder::SeedContact
     organization.phone_numbers.first
   end
 
-  def zipcodes
-    %w[30319 30324 30327 30328 30329
-       30338 30339 30340 30341 30342]
+  def zipcode
+    contact.person.zipcode.zipcode
   end
 
   def thank_you
@@ -55,7 +84,7 @@ class Seeder::SeedContact
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      sender: Chirpy.person,
+      sender: bot.person,
       from: phone_number.phone_number,
       to: person.phone_number,
       conversation: conversation
