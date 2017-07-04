@@ -1,4 +1,6 @@
 class BotMaker::DefaultBot
+  DEFAULT_NAME = 'Chirpy'.freeze
+
   def self.call(organization)
     new(organization).call
   end
@@ -8,7 +10,7 @@ class BotMaker::DefaultBot
   end
 
   def call
-    return if organization.bots.where(name: 'chirpy').exists?
+    return if organization.bots.where(name: DEFAULT_NAME).exists?
 
     bot.create_greeting(body: greeting_body)
     create_goal_tags
@@ -38,11 +40,11 @@ class BotMaker::DefaultBot
   end
 
   def bot
-    @bot ||= organization.bots.create(name: 'Chirpy', person: bot_person)
+    @bot ||= organization.bots.create(name: DEFAULT_NAME, person: bot_person)
   end
 
   def bot_person
-    Person.find_or_create_by(name: 'Chirpy')
+    Person.find_or_create_by(name: DEFAULT_NAME)
   end
 
   def greeting_body

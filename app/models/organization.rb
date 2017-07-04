@@ -34,9 +34,9 @@ class Organization < ApplicationRecord
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
     contact.update(reached: true) if sender != Chirpy.person
-    contact.create_message(sent_message, sender, phone_number, campaign).tap do |message|
-      Broadcaster::Message.broadcast(message)
-    end
+    contact.create_message(
+      sent_message, sender, phone_number, campaign
+    ).tap { |message| Broadcaster::Message.broadcast(message) }
   end
 
   def get_message(sid)
