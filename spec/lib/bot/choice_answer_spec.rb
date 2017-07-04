@@ -10,59 +10,24 @@ RSpec.describe Bot::ChoiceAnswer do
     context 'rank is 1' do
       let(:rank) { 1 }
 
-      context 'message is A' do
-        let(:body) { 'A' }
+      ['A', "A\nJazz", '  A', 'A  ', "A\n", 
+        "\nA", 'A OK'].each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
 
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
+          it 'is true' do
+            expect(subject.activated?(message)).to eq(true)
+          end
         end
       end
 
-      context 'message is space space A' do
-        let(:body) { '  A' }
+      ['Another one bites the dust'].each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
 
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is A space space' do
-        let(:body) { 'A  ' }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is A newline' do
-        let(:body) { "A\n" }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is newline A' do
-        let(:body) { "\nA" }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is Another one bites the dust' do
-        let(:body) { 'Another one bites the dust' }
-
-        it 'is false' do
-          expect(subject.activated?(message)).to eq(false)
-        end
-      end
-
-      context 'message is A OK' do
-        let(:body) { 'A OK' }
-
-        it 'is false' do
-          expect(subject.activated?(message)).to eq(false)
+          it 'is false' do
+            expect(subject.activated?(message)).to eq(false)
+          end
         end
       end
     end
@@ -70,59 +35,24 @@ RSpec.describe Bot::ChoiceAnswer do
     context 'rank is 5' do
       let(:rank) { 5 }
 
-      context 'message is E' do
-        let(:body) { 'E' }
+      ['E', "E\nJazz", '  E', 'E  ', "E\n", 
+        "\nE", 'E OK'].each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
 
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
+          it 'is true' do
+            expect(subject.activated?(message)).to eq(true)
+          end
         end
       end
 
-      context 'message is space space E' do
-        let(:body) { '  E' }
+      ['Eewwwww'].each do |body|
+        context body do
+          let(:message) { create(:message, body: body) }
 
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is E space space' do
-        let(:body) { 'E  ' }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is E newline' do
-        let(:body) { "E\n" }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is newline E' do
-        let(:body) { "\nE" }
-
-        it 'is true' do
-          expect(subject.activated?(message)).to eq(true)
-        end
-      end
-
-      context 'message is E veryday' do
-        let(:body) { 'E veryday' }
-
-        it 'is false' do
-          expect(subject.activated?(message)).to eq(false)
-        end
-      end
-
-      context 'message is Eewwwww' do
-        let(:body) { 'Eewwwww' }
-
-        it 'is false' do
-          expect(subject.activated?(message)).to eq(false)
+          it 'is false' do
+            expect(subject.activated?(message)).to eq(false)
+          end
         end
       end
     end
