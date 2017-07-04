@@ -3,7 +3,7 @@ class Organizations::MessagesController < ActionController::Base
   after_action :set_header
 
   def create
-    MessageSyncerJob.perform_later(contact, params['MessageSid'], receipt: true)
+    DeliveryAgentJob.perform_later(contact, params['MessageSid'])
 
     head :ok
   end
@@ -26,10 +26,7 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
-      contact.subscribe
-      contact.create_contact_candidacy
-    end
+    person.contacts.create(organization: organization).tap(&:subscribe)
   end
 
   def set_header

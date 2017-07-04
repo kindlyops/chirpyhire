@@ -1,7 +1,7 @@
-class AlreadySubscribedJob < ApplicationJob
+class DeliveryAgentJob < ApplicationJob
   def perform(contact, message_sid)
     message = MessageSyncer.call(contact, message_sid)
 
-    AlreadySubscribed.call(contact, message)
+    DeliveryAgent.call(message)
   end
 end

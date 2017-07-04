@@ -130,24 +130,6 @@ ActiveRecord::Schema.define(version: 20170704185303) do
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
-  create_table "contact_candidacies", force: :cascade do |t|
-    t.integer "experience"
-    t.boolean "skin_test"
-    t.integer "availability"
-    t.integer "transportation"
-    t.string "zipcode"
-    t.boolean "cpr_first_aid"
-    t.integer "certification"
-    t.bigint "contact_id", null: false
-    t.integer "inquiry"
-    t.integer "state", default: 0, null: false
-    t.boolean "live_in"
-    t.boolean "drivers_license"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contact_id"], name: "index_contact_candidacies_on_contact_id"
-  end
-
   create_table "contacts", id: :serial, force: :cascade do |t|
     t.integer "person_id", null: false
     t.integer "organization_id", null: false
@@ -476,7 +458,6 @@ ActiveRecord::Schema.define(version: 20170704185303) do
   add_foreign_key "campaign_contacts", "phone_numbers"
   add_foreign_key "campaign_contacts", "questions"
   add_foreign_key "campaigns", "organizations"
-  add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"

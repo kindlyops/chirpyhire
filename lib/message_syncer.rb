@@ -10,16 +10,23 @@ class MessageSyncer
   end
 
   def call
-    existing_message = person.sent_messages.find_by(sid: message_sid)
     return existing_message if existing_message.present?
-    message = sync_message
-    contact.update(last_reply_at: message.created_at)
-    create_read_receipts(message) if receipt_requested?
-    Broadcaster::Message.new(message).broadcast
-    message
+
+    contact.update(last_reply_at: new_message.created_at)
+    create_read_receipts if receipt_requested?
+    broadcast_message
+    new_message
   end
 
   private
+
+  def broadcast_message
+    Broadcaster::Message.new(new_message).broadcast
+  end
+
+  def existing_message
+    @existing_message ||= person.sent_messages.find_by(sid: message_sid)
+  end
 
   def external_message
     @external_message ||= organization.get_message(message_sid)
@@ -28,8 +35,13 @@ class MessageSyncer
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
 
-  def sync_message
-    open_conversation.messages.create!(message_params).tap(&:touch_conversation)
+  def new_message
+    @new_message ||= begin
+      open_conversation
+        .messages
+        .create!(message_params)
+        .tap(&:touch_conversation)
+    end
   end
 
   def open_conversation
@@ -60,8 +72,8 @@ class MessageSyncer
     )
   end
 
-  def create_read_receipts(message)
-    ReadReceiptsCreator.call(message, contact) if receipt_requested?
+  def create_read_receipts
+    ReadReceiptsCreator.call(new_message, contact)
   end
 
   def receipt_requested?

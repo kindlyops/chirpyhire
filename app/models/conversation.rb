@@ -9,16 +9,16 @@ class Conversation < ApplicationRecord
   has_one :recent_message,
           -> { by_recency.limit(1) }, class_name: 'Message'
 
+  enum state: {
+    'Open' => 0, 'Closed' => 1
+  }
+
   delegate :person, :handle, :organization, to: :contact
   delegate :handle, to: :contact, prefix: true
 
   def contact_phone_number
     contact.phone_number.phony_formatted
   end
-
-  enum state: {
-    'Open' => 0, 'Closed' => 1
-  }
 
   def self.opened
     where(state: 'Open')
@@ -38,5 +38,29 @@ class Conversation < ApplicationRecord
 
   def reopenable?
     contact.open_conversations.where(phone_number: phone_number).none?
+  end
+
+  def create_message(message, sender, campaign)
+    messages.create(
+      message_params(message, sender, campaign)
+    ).tap(&:touch_conversation)
+  end
+
+  private
+
+  def message_params(message, sender, campaign)
+    base_message_params(message).merge(
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      sender: sender,
+      recipient: person,
+      campaign: campaign
+    )
+  end
+
+  def base_message_params(message)
+    %i[sid body direction to from].each_with_object({}) do |key, hash|
+      hash[key] = message.send(key)
+    end
   end
 end
