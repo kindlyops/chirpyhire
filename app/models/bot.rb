@@ -27,8 +27,8 @@ class Bot < ApplicationRecord
     questions.active.where('rank > ?', question.rank).order(:rank).first
   end
 
-  def first_question
-    questions.order(:rank).first
+  def first_active_question
+    questions.active.order(:rank).first
   end
 
   def last_question

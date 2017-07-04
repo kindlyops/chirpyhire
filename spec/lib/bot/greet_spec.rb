@@ -33,14 +33,14 @@ RSpec.describe Bot::Greet do
         let!(:question) { create(:choice_question, bot: bot) }
 
         it 'triggers the question' do
-          allow(subject).to receive(:first_question) { question }
+          allow(subject).to receive(:first_active_question) { question }
           expect(question).to receive(:trigger) { question.body }
 
           subject.call
         end
 
         it 'includes the question body' do
-          allow(subject).to receive(:first_question) { question }
+          allow(subject).to receive(:first_active_question) { question }
           allow(question).to receive(:trigger) { question.body }
 
           expect(subject.call).to include(question.body)

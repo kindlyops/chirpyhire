@@ -10,7 +10,7 @@ class Bot::Greet
   end
 
   attr_reader :bot, :message, :campaign_contact
-  delegate :first_question, to: :bot
+  delegate :first_active_question, to: :bot
 
   def call
     return null_greeting unless campaign_contact.pending?
@@ -28,7 +28,7 @@ class Bot::Greet
   end
 
   def next_step
-    first_question || goal
+    first_active_question || goal
   end
 
   def goal
