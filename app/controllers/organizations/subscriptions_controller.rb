@@ -15,11 +15,16 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   end
 
   def find_contact
-    person.contacts.find_by(organization: organization)
+    contact = person.contacts.find_by(organization: organization)
+    contact.update(screened: true) if contact && contact.complete?
+    contact
   end
 
   def create_unsubscribed_contact
-    person.contacts.create(organization: organization)
+    person
+      .contacts
+      .create(organization: organization)
+      .tap(&:create_contact_candidacy)
   end
 
   def sync_message
