@@ -6,28 +6,27 @@ class RecruitBotQuestion extends React.Component {
     super(props);
 
     this.toggleQuestion = this.toggleQuestion.bind(this);
-    this.isActive = this.isActive.bind(this);
   }
 
-  organizationId() {
-    return this.props.current_organization.id;
+  questionId() {
+    return this.props.id;
   }
 
-  organizationURL() {
-    return `/organizations/${this.organizationId()}.json`;
+  questionURL() {
+    return `/questions/${this.questionId()}.json`;
   }
 
   data() {
     return JSON.stringify({
-      organization: {
-        [this.props.type]: !this.isChecked()
+      question: {
+        active: !this.isChecked()
       }
     })
   }
 
   toggleQuestion() {
     $.ajax({
-      url: this.organizationURL(),
+      url: this.questionURL(),
       type: 'PUT',
       data: this.data(),
       dataType: 'json',
@@ -37,36 +36,17 @@ class RecruitBotQuestion extends React.Component {
   }
 
   isChecked() {
-    return !!this.props.current_organization[this.props.type];
-  }
-
-  keys() {
-    return ['certification', 'availability', 'live_in', 'experience',
-            'transportation', 'zipcode', 'cpr_first_aid', 'skin_test',
-            'drivers_license'];
-  }
-
-  isDisabled() {
-    return this.isChecked() && R.reduce(this.isActive, 0, this.keys()) <= 1;
-  }
-
-  isActive(count, key) {
-    if (this.props.current_organization[key]) {
-      return count + 1;
-    } else {
-      return count;
-    }
+    return this.props.active;
   }
 
   render() {
     return (
       <div className='card'>
         <div className='card-header'>
-          <span className='question'>{`Question: ${this.props.question}`}</span>
+          <span className='question'>{`Question: ${this.props.body}`}</span>
           <label className='toggle'>
             <Toggle
               checked={this.isChecked()}
-              disabled={this.isDisabled()}
               onChange={this.toggleQuestion} />
           </label>
         </div>

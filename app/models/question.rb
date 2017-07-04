@@ -4,6 +4,10 @@ class Question < ApplicationRecord
   has_many :follow_ups
   validates :rank, presence: true
 
+  def body(*)
+    self[:body]
+  end
+
   def trigger(_message, campaign_contact)
     campaign_contact.update(question: self)
     body
@@ -21,5 +25,9 @@ class Question < ApplicationRecord
     return 1 if last_follow_up.blank?
 
     last_follow_up.rank + 1
+  end
+
+  def answers
+    ''
   end
 end

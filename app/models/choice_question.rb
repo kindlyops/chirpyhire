@@ -7,7 +7,7 @@ class ChoiceQuestion < Question
     <<~BODY.strip
       #{self[:body]}
 
-      #{choices_body}
+      #{answers}
       #{postlude}
     BODY
   end
@@ -21,13 +21,13 @@ class ChoiceQuestion < Question
     'ChoiceFollowUp'
   end
 
-  private
-
-  def choices_body
+  def answers
     follow_ups.each_with_object('') do |follow_up, body|
       body << "#{follow_up.choice.capitalize} - #{follow_up.response}\n"
     end
   end
+
+  private
 
   def choices_sentence
     follow_ups.map(&:choice).map(&:upcase).to_sentence(
