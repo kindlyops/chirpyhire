@@ -6,6 +6,7 @@ class CreateQuestions < ActiveRecord::Migration[5.1]
       t.boolean :active, null: false, default: true
       t.string :type, null: false, default: 'ChoiceQuestion'
       t.integer :rank, null: false
+      t.boolean :active, null: false, default: true
       t.timestamps
     end
 

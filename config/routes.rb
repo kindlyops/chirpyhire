@@ -48,6 +48,10 @@ Rails.application.routes.draw do
     resource :customer
   end
 
+  resources :bots, only: %i[show] do
+    resources :questions, only: %i[update]
+  end
+
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text' => 'organizations/messages#create'
 
