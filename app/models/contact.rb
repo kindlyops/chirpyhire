@@ -21,6 +21,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  def self.screened
+    joins(taggings: :tag).merge(Tag.screened)
+  end
+
   def existing_open_conversation
     conversations.opened.first
   end

@@ -27,6 +27,10 @@ class Organization < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
 
+  def screened_contacts_count
+    contacts.screened.count
+  end
+
   def message(conversation:, body:, sender: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
