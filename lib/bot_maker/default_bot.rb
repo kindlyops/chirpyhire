@@ -13,17 +13,7 @@ class BotMaker::DefaultBot
     bot.create_greeting(body: greeting_body)
     create_goal_tags
     create_questions
-    create_bot_campaigns
-  end
-
-  def create_bot_campaigns
-    organization.teams.find_each do |team|
-      bot.bot_campaigns.create(inbox: team.inbox, campaign: campaign)
-    end
-  end
-
-  def campaign
-    @campaign ||= organization.campaigns.create(name: bot.name)
+    bot
   end
 
   attr_reader :organization

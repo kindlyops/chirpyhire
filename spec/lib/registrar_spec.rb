@@ -50,6 +50,11 @@ RSpec.describe Registrar do
         }.to change { organization.reload.bots.count }.by(1)
       end
 
+      it 'ties the team inbox to the bot' do
+        subject.register
+        expect(BotCampaign.last.inbox).to eq(Team.last.inbox)
+      end
+
       it 'creates an inbox' do
         expect {
           subject.register
