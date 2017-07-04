@@ -38,9 +38,9 @@ class Organization < ApplicationRecord
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
     contact.update(reached: true) if sender.bot.blank?
-    conversation.create_message(sent_message, sender, campaign).tap do |message|
-      Broadcaster::Message.broadcast(message)
-    end
+    conversation.create_message(
+      sent_message, sender, campaign
+    ).tap { |message| Broadcaster::Message.broadcast(message) }
   end
 
   def get_message(sid)

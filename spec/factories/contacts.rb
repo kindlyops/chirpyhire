@@ -17,7 +17,7 @@ FactoryGirl.define do
     trait :complete do
       after(:create) do |contact|
         organization = contact.organization
-        contact.update(subscribed: true)
+        contact.update(subscribed: true, screened: true)
 
         %w[Availability Experience Transportation Certification
            SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
