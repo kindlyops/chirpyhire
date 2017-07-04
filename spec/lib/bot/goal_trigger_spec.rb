@@ -15,13 +15,19 @@ RSpec.describe Bot::GoalTrigger do
   let(:conversation) { create(:conversation, inbox: inbox, contact: contact) }
 
   let(:message) { create(:message, conversation: conversation) }
-  let(:campaign_contact) { create(:campaign_contact, phone_number: phone_number, contact: contact, campaign: campaign) }
+  let(:campaign_contact) { create(:campaign_contact, :active, phone_number: phone_number, contact: contact, campaign: campaign) }
 
   subject { Bot::GoalTrigger.new(goal, message, campaign_contact) }
 
   describe '#call' do
     it 'is the goal body' do
       expect(subject.call).to eq(goal.body)
+    end
+
+    it 'sets the campaign_contact to exited' do
+      expect {
+        subject.call
+      }.to change { campaign_contact.state }.from('active').to('exited')
     end
 
     context 'with multiple accounts on the team' do

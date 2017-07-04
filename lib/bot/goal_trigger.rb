@@ -17,6 +17,7 @@ class Bot::GoalTrigger
   def call
     tag_and_broadcast
     notify_team
+    campaign_contact.update(state: :exited)
 
     goal.body
   end

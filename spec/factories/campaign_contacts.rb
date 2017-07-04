@@ -3,5 +3,9 @@ FactoryGirl.define do
     campaign
     contact
     phone_number
+
+    trait :active do
+      state { :active }
+    end
   end
 end
