@@ -63,10 +63,14 @@ class Migrate::Bot
 
   def connect_teams_to_bot
     teams.find_each do |team|
-      next if team.inbox.bot_campaigns.where(bot: bot).exists?
+      next if existing_bot_campaign?(team)
 
       bot.bot_campaigns.create(inbox: team.inbox, campaign: campaign)
     end
+  end
+
+  def existing_bot_campaign?(team)
+    bot.bot_campaigns.where(inbox: team.inbox, campaign: campaign).exists?
   end
 
   def most_recent_inbound_message(contact)
@@ -79,14 +83,14 @@ class Migrate::Bot
 
   def state_for(contact)
     return :exited if contact.screened?
-    return :active if contact.contact_candidacy.in_progress?
+    return :active if contact&.contact_candidacy&.in_progress?
     :pending
   end
 
   def question_for(contact)
     inquiry = contact.contact_candidacy.inquiry
     return if inquiry.nil?
-    bot.questions[inquiries[inquiry]]
+    bot.questions[inquiries[inquiry.to_sym]]
   end
 
   def campaign
