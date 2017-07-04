@@ -10,8 +10,8 @@ RSpec.describe Bot::ChoiceAnswer do
     context 'rank is 1' do
       let(:rank) { 1 }
 
-      ['A', "A\nJazz", '  A', 'A  ', "A\n", 
-        "\nA", 'A OK'].each do |body|
+      ['A', "A\nJazz", '  A', 'A  ', "A\n",
+       "\nA", 'A OK'].each do |body|
         context body do
           let(:message) { create(:message, body: body) }
 
@@ -35,8 +35,8 @@ RSpec.describe Bot::ChoiceAnswer do
     context 'rank is 5' do
       let(:rank) { 5 }
 
-      ['E', "E\nJazz", '  E', 'E  ', "E\n", 
-        "\nE", 'E OK'].each do |body|
+      ['E', "E\nJazz", '  E', 'E  ', "E\n",
+       "\nE", 'E OK'].each do |body|
         context body do
           let(:message) { create(:message, body: body) }
 
