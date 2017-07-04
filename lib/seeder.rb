@@ -3,6 +3,6 @@ class Seeder
     account = Seeder::SeedAccount.call
     BotMaker::DefaultBot.call(account.organization)
     # Seeder::SeedContacts.call(account)
-    # Seeder::SeedMetrics.call(account)
+    Seeder::SeedMetrics.call(account)
   end
 end
