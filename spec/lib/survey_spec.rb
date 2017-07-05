@@ -212,8 +212,8 @@ RSpec.describe Survey do
                   organization.update(transportation: false)
                 end
 
-                it 'is Question::Zipcode' do
-                  expect(subject.next_question).to be_a(Question::Zipcode)
+                it 'is Question::ZipCode' do
+                  expect(subject.next_question).to be_a(Question::ZipCode)
                 end
 
                 context 'with zipcode disabled' do

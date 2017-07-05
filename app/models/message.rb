@@ -1,6 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
+  belongs_to :campaign, optional: true
   belongs_to :conversation
   belongs_to :campaign, optional: true
 
@@ -24,18 +25,8 @@ class Message < ApplicationRecord
     order(:external_created_at, :id)
   end
 
-  def self.manual
-    where.not(sender: Chirpy.person)
-  end
-
-  def self.replies
-    where(direction: 'inbound')
-  end
-
-  def author
-    return :bot if outbound? && sender == Chirpy.person
-    return :organization if outbound?
-    :person
+  def self.last_reply_at
+    replies.by_recency.first.created_at
   end
 
   def day
@@ -58,10 +49,6 @@ class Message < ApplicationRecord
   def person
     return recipient if outbound?
     sender
-  end
-
-  def self.last_reply_at
-    replies.by_recency.first.created_at
   end
 
   def time_ago

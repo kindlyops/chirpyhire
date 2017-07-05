@@ -1,6 +1,6 @@
 class Contact::ZipCode < Contact::Attribute
   def humanize_attribute(*)
-    candidacy.zipcode
+    person.zipcode && person.zipcode.zipcode
   end
 
   def query
@@ -8,7 +8,7 @@ class Contact::ZipCode < Contact::Attribute
   end
 
   def icon_class
-    return 'fa-question' if candidacy.zipcode.blank?
+    return 'fa-question' if person.zipcode.blank?
 
     'fa-map-marker'
   end

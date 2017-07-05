@@ -23,11 +23,12 @@ RSpec.describe Organization do
     end
 
     context 'reached' do
-      context 'sent by chirpy' do
+      context 'sent by bot' do
+        let(:bot) { create(:bot, organization: subject) }
         context 'and reached is false' do
           it 'leaves reached at false' do
             expect {
-              subject.message(conversation: conversation, body: 'body', sender: Chirpy.person)
+              subject.message(conversation: conversation, body: 'body', sender: bot.person)
             }.not_to change { contact.reload.reached? }
             expect(contact.reached?).to eq(false)
           end

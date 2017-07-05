@@ -1,14 +1,4 @@
 class Organizations::SubscriptionsController < Organizations::MessagesController
-  def create
-    if contact.subscribed? && contact.started?
-      already_subscribed_job
-    else
-      contact.subscribe
-      surveyor_job
-    end
-    head :ok
-  end
-
   def destroy
     sync_message
     contact.unsubscribe if contact.subscribed?
@@ -20,8 +10,7 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
 
   def contact
     @contact ||= begin
-      contact = find_contact
-      contact || create_unsubscribed_contact
+      find_contact || create_unsubscribed_contact
     end
   end
 
@@ -36,14 +25,6 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
       .contacts
       .create(organization: organization)
       .tap(&:create_contact_candidacy)
-  end
-
-  def already_subscribed_job
-    AlreadySubscribedJob.perform_later(contact, params['MessageSid'])
-  end
-
-  def surveyor_job
-    SurveyorJob.perform_later(contact, params['MessageSid'])
   end
 
   def sync_message

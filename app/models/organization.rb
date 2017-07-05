@@ -27,15 +27,19 @@ class Organization < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
 
+  def screened_contacts_count
+    contacts.screened.count
+  end
+
   def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    contact.update(reached: true) if sender != Chirpy.person
-    contact.create_message(
-      sent_message, sender, phone_number, campaign
+    contact.update(reached: true) if sender.bot.blank?
+    conversation.create_message(
+      sent_message, sender, campaign
     ).tap { |message| Broadcaster::Message.broadcast(message) }
   end
 

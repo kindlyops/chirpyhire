@@ -1,4 +1,4 @@
-class Question::Zipcode < Question::Base
+class Question::ZipCode < Question::Base
   def body(welcome: false)
     super << question_body
   end

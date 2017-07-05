@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Answer::Zipcode do
   let(:contact) { create(:contact) }
-  let(:question) { Question::Zipcode.new(contact) }
+  let(:question) { Question::ZipCode.new(contact) }
   subject { question.answer }
 
   describe '#valid?' do

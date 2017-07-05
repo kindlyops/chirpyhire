@@ -51,10 +51,10 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         }
       end
 
-      it 'creates a MessageSyncerJob' do
+      it 'creates a DeliveryAgentJob' do
         expect {
           post :create, params: params
-        }.to have_enqueued_job(MessageSyncerJob)
+        }.to have_enqueued_job(DeliveryAgentJob)
       end
 
       it 'does not create a person' do

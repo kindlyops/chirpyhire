@@ -73,11 +73,6 @@ RSpec.describe Conversations::MessagesController do
         }.to change { contact.messages.count }.by(1)
       end
 
-      it 'is a author organization message' do
-        post :create, params: params, xhr: true
-        expect(contact.messages.last.author).to eq(:organization)
-      end
-
       it 'is sent from the account' do
         post :create, params: params, xhr: true
         expect(contact.messages.last.sender).to eq(account.person)

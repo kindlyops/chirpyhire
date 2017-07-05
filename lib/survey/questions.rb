@@ -11,7 +11,9 @@ class Survey::Questions
 
   def call
     Hash[keys.map do |key|
-      question = "Question::#{key.to_s.camelcase}".constantize.new(contact)
+      klass = :zip_code if key == :zipcode
+      klass ||= key
+      question = "Question::#{klass.to_s.camelcase}".constantize.new(contact)
       [key, question]
     end].with_indifferent_access
   end
