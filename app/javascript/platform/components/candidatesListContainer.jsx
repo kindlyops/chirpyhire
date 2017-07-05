@@ -3,9 +3,10 @@ import React from 'react'
 import CandidatesMenu from './candidatesMenu'
 import CandidatesTable from './candidatesTable'
 import Pagination from 'react-js-pagination'
+import SubMain from '../../presentational/subMain'
 
 const CandidatesListContainer = props => (
-  <div className='CandidatesListContainer ch--sub-main'>
+  <SubMain className='CandidatesListContainer'>
     <CandidatesMenu 
       {...props}
       total_count={props.total_count} 
@@ -29,7 +30,7 @@ const CandidatesListContainer = props => (
       onChange={props.handlePageChange}
       />
     </nav>
-  </div>
+  </SubMain>
 )
 
 export default CandidatesListContainer
