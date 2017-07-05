@@ -16,6 +16,10 @@ class FollowUp < ApplicationRecord
 
   delegate :bot, to: :question
 
+  def self.ranked
+    order(:rank)
+  end
+
   def tag(contact)
     contact.tags << tags
   end

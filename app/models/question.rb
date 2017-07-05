@@ -2,6 +2,7 @@ class Question < ApplicationRecord
   belongs_to :bot
   has_many :campaign_contacts
   has_many :follow_ups
+  has_many :ranked_follow_ups, -> { ranked }, class_name: 'FollowUp'
   validates :rank, presence: true
   validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
 
@@ -27,7 +28,7 @@ class Question < ApplicationRecord
   end
 
   def last_follow_up
-    follow_ups.order(:rank).last
+    ranked_follow_ups.last
   end
 
   def next_follow_up_rank
