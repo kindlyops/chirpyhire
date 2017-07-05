@@ -1,16 +1,19 @@
-class BotMaker::DefaultBot
-  DEFAULT_NAME = 'Chirpy'.freeze
+class BotFactory::Maker
+  NAME = 'Chirpy'.freeze
 
-  def self.call(organization)
-    new(organization).call
+  def self.call(o, name: NAME, team_name: o.name, notice: o.sender_notice)
+    new(o, name: name, team_name: team_name, notice: notice).call
   end
 
-  def initialize(organization)
+  def initialize(organization, name:, team_name:, notice:)
     @organization = organization
+    @name = name
+    @team_name = team_name
+    @notice = notice
   end
 
   def call
-    existing_bot = organization.bots.find_by(name: DEFAULT_NAME)
+    existing_bot = organization.bots.find_by(name: name)
     return existing_bot if existing_bot.present?
 
     bot.create_greeting(body: greeting_body)
@@ -19,7 +22,7 @@ class BotMaker::DefaultBot
     bot
   end
 
-  attr_reader :organization
+  attr_reader :organization, :notice, :name, :team_name
 
   def create_goal_tags
     goal.tags << organization.tags.find_or_create_by(name: 'Screened')
@@ -31,7 +34,7 @@ class BotMaker::DefaultBot
 
   def create_questions
     questions.each_with_index do |klass, index|
-      "BotMaker::Question::#{klass}".constantize.call(bot, rank: index + 1)
+      "BotFactory::Question::#{klass}".constantize.call(bot, rank: index + 1)
     end
   end
 
@@ -41,17 +44,17 @@ class BotMaker::DefaultBot
   end
 
   def bot
-    @bot ||= organization.bots.create(name: DEFAULT_NAME, person: bot_person)
+    @bot ||= organization.bots.create(name: name, person: bot_person)
   end
 
   def bot_person
-    Person.find_or_create_by(name: DEFAULT_NAME)
+    Person.find_or_create_by(name: name)
   end
 
   def greeting_body
     <<~BODY.strip
-      Hey there! #{organization.sender_notice}
-      Want to join the #{organization.name} team?
+      Hey there! #{notice}
+      Want to join the #{team_name} team?
       Well, let's get started.
       Please tell us more about yourself.
     BODY

@@ -1,4 +1,4 @@
-class BotMaker::Question::Zipcode < BotMaker::Question
+class BotFactory::Question::Zipcode < BotFactory::Question
   def body
     <<~BODY
       What is your five-digit zipcode?

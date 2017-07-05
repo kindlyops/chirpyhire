@@ -1,4 +1,4 @@
-class BotMaker::Question::Transportation < BotMaker::Question
+class BotFactory::Question::Transportation < BotFactory::Question
   def body
     <<~QUESTION.strip
       How do you plan to get to work?

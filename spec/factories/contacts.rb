@@ -21,7 +21,7 @@ FactoryGirl.define do
 
         %w[Availability Experience Transportation Certification
            SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
-          question = "BotMaker::Question::#{klass}".constantize.new(nil, rank: nil)
+          question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
           tag_name = question.responses_and_tags.map { |_, tag, _| tag }.sample
           contact.tags << organization.tags.find_or_create_by(name: tag_name)
         end

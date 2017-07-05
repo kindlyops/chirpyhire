@@ -1,4 +1,4 @@
-class BotMaker::Question
+class BotFactory::Question
   def self.call(bot, rank:)
     new(bot, rank: rank).call
   end

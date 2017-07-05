@@ -1,7 +1,7 @@
 class Seeder
   def seed
     account = Seeder::SeedAccount.call
-    bot = BotMaker::DefaultBot.call(account.organization)
+    bot = BotFactory::Maker.call(account.organization)
     create_bot_campaigns(account.organization, bot)
     Seeder::SeedContacts.call(account)
     Seeder::SeedMetrics.call(account)

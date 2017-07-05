@@ -1,4 +1,4 @@
-class BotMaker::Question::Certification < BotMaker::Question
+class BotFactory::Question::Certification < BotFactory::Question
   def body
     <<~QUESTION.strip
       Are you certified?
