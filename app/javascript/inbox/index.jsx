@@ -8,6 +8,8 @@ import Conversation from 'conversation'
 import Inboxes from './components/inboxes'
 import RestartNotificationBar from '../restart_notification_bar'
 
+import Page from '../presentational/page'
+
 class Inbox extends React.Component {
   constructor(props) {
     super(props);
@@ -93,7 +95,7 @@ class Inbox extends React.Component {
   }
 
   render() {
-    return <div className='ch--Page Recruit'>
+    return <Page className='Recruit'>
             <RestartNotificationBar {...this.props} />
             <Inboxes current_account={this.props.current_account} inboxes={this.state.inboxes} />
             <div className="Inbox">
@@ -111,7 +113,7 @@ class Inbox extends React.Component {
               </div>
               {this.conversationComponent()}
             </div>
-          </div>
+          </Page>
   }
 
   conversationsURL(inboxId) {

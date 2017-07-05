@@ -6,6 +6,10 @@ import queryString from 'query-string'
 import update from 'immutability-helper'
 import RestartNotificationBar from '../restart_notification_bar'
 
+import Page from '../presentational/page'
+import Header from '../presentational/header'
+import Main from '../presentational/main'
+
 class Platform extends React.Component {
   constructor(props) {
     super(props);
@@ -33,11 +37,11 @@ class Platform extends React.Component {
 
   render() {
     return (
-      <div className='Platform ch--Page'>
+      <Page className='Platform'>
         <RestartNotificationBar {...this.props} />
-        <div className='ch--Header'>
+        <Header>
           <h1>Caregivers</h1>
-        </div>
+        </Header>
         <CandidateSegments segments={this.state.segments} handleSegmentChange={this.handleSegmentChange} />
         <Candidates 
           {...this.state}
@@ -48,7 +52,7 @@ class Platform extends React.Component {
           handleLocationChange={this.handleLocationChange}
           exportCSV={this.exportCSV}
         />
-      </div>
+      </Page>
     )
   }
 

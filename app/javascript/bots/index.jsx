@@ -5,7 +5,7 @@ import RestartNotificationBar from '../restart_notification_bar'
 import Page from '../presentational/page'
 import Header from '../presentational/header'
 
-class GettingStarted extends React.Component {
+class Bots extends React.Component {
   constructor(props) { 
     super(props);
 
@@ -29,12 +29,12 @@ class GettingStarted extends React.Component {
       <Page>
         <RestartNotificationBar {...this.props} />
         <Header>
-          <h1>Getting Started</h1>
+          <h1>Bots</h1>
         </Header>
-        {this.state.bots.slice(0, 1).map(bot => <RecruitBot key={bot.id} id={bot.id} />)}
+        {this.state.bots.map(bot => <RecruitBot key={bot.id} id={bot.id} />)}
       </Page>
     )
   }
 }
 
-export default GettingStarted
+export default Bots
