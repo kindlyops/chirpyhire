@@ -5,6 +5,10 @@ class Question < ApplicationRecord
   validates :rank, presence: true
   validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
 
+  def self.ranked
+    order(:rank)
+  end
+
   def body(*)
     self[:body]
   end

@@ -104,7 +104,7 @@ class Migrate::Bot
   def question_for(contact)
     inquiry = contact.contact_candidacy.inquiry
     return if inquiry.nil?
-    bot.questions[inquiries[inquiry.to_sym]]
+    bot.ranked_questions[inquiries[inquiry.to_sym]]
   end
 
   def bot

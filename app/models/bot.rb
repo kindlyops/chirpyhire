@@ -5,7 +5,9 @@ class Bot < ApplicationRecord
 
   has_one :greeting
   has_many :questions
+  has_many :ranked_questions, -> { ranked }, class_name: 'Question'
   has_many :goals
+  has_many :ranked_goals, -> { ranked }, class_name: 'Goal'
 
   has_many :bot_campaigns
   has_many :inboxes, through: :bot_campaigns
@@ -24,23 +26,23 @@ class Bot < ApplicationRecord
   end
 
   def question_after(question)
-    questions.active.where('rank > ?', question.rank).order(:rank).first
+    ranked_questions.active.find_by('rank > ?', question.rank)
   end
 
   def first_active_question
-    questions.active.order(:rank).first
+    ranked_questions.active.first
   end
 
   def last_question
-    questions.order(:rank).last
+    ranked_questions.last
   end
 
   def first_goal
-    goals.order(:rank).first
+    ranked_goals.first
   end
 
   def last_goal
-    goals.order(:rank).last
+    ranked_goals.last
   end
 
   def next_question_rank
