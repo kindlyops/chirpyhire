@@ -22,7 +22,7 @@ class ChoiceQuestion < Question
   end
 
   def answers
-    follow_ups.each_with_object('') do |follow_up, body|
+    ranked_follow_ups.each_with_object('') do |follow_up, body|
       body << "#{follow_up.choice.capitalize} - #{follow_up.response}\n"
     end
   end
@@ -30,7 +30,7 @@ class ChoiceQuestion < Question
   private
 
   def choices_sentence
-    follow_ups.map(&:choice).map(&:upcase).to_sentence(
+    ranked_follow_ups.map(&:choice).map(&:upcase).to_sentence(
       last_word_connector: ' or ',
       two_words_connector: ' or '
     )
