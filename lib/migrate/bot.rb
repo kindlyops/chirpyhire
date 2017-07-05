@@ -108,7 +108,7 @@ class Migrate::Bot
   end
 
   def bot
-    @bot ||= BotMaker::DefaultBot.call(organization)
+    @bot ||= BotFactory::Maker.call(organization)
   end
 
   def screened_tag

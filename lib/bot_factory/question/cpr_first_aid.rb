@@ -1,4 +1,4 @@
-class BotMaker::Question::CprFirstAid < BotMaker::Question
+class BotFactory::Question::CprFirstAid < BotFactory::Question
   def body
     <<~QUESTION.strip
       Is your CPR / First Aid certification up to date?

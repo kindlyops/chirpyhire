@@ -1,4 +1,4 @@
-class BotMaker::Question::Experience < BotMaker::Question
+class BotFactory::Question::Experience < BotFactory::Question
   def body
     <<~QUESTION.strip
       How many years of professional caregiving experience do you have?

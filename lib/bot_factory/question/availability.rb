@@ -1,4 +1,4 @@
-class BotMaker::Question::Availability < BotMaker::Question
+class BotFactory::Question::Availability < BotFactory::Question
   def body
     <<~QUESTION.strip
       What shifts are you interested in?

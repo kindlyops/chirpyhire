@@ -1,4 +1,4 @@
-class BotMaker::Question::SkinTest < BotMaker::Question
+class BotFactory::Question::SkinTest < BotFactory::Question
   def body
     <<~QUESTION.strip
       Is your TB skin test or X-ray up to date?

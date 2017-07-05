@@ -1,4 +1,4 @@
-class BotMaker::Question::LiveIn < BotMaker::Question
+class BotFactory::Question::LiveIn < BotFactory::Question
   def body
     <<~QUESTION.strip
       Are you interested in Live-In work?

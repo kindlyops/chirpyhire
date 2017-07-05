@@ -1,4 +1,4 @@
-class BotMaker::Question::DriversLicense < BotMaker::Question
+class BotFactory::Question::DriversLicense < BotFactory::Question
   def body
     <<~QUESTION.strip
       Do you have a current Driver's License?
