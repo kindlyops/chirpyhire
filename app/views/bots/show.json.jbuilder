@@ -3,7 +3,7 @@ json.greeting do
   json.body @bot.greeting.body
 end
 
-json.questions @bot.questions do |question|
+json.questions @bot.ranked_questions do |question|
   json.id question.id
   json.bot_id question.bot_id
   json.body question.body(formatted: false)
