@@ -40,7 +40,7 @@ class BotQuestion extends React.Component {
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>
             <h5 className='card-title'>What the bot asks:</h5>
-            <h6 className="card-subtitle mb-4 text-muted">Ask a meaningful question to pre-screen candidates.</h6>
+            <h6 className="card-subtitle mb-3 text-muted">Ask a meaningful question to pre-screen candidates.</h6>
             <div className='card-text'>
               <Textarea
                 onChange={this.props.onChange}
@@ -55,7 +55,7 @@ class BotQuestion extends React.Component {
           <hr />
           <div className='card-block'>
             <h5 className='card-title'>Follow ups based on the candidate's answer:</h5>
-            <h6 className="card-subtitle mb-4 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
+            <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
             <div className='card-text'>
             </div>
           </div>

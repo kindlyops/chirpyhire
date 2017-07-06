@@ -40,7 +40,7 @@ class BotGoal extends React.Component {
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>
             <h5 className='card-title'>Send Message:</h5>
-            <h6 className="card-subtitle mb-4 text-muted">Create a meaningful message to end the bot conversation for candidates who hit this goal.</h6>
+            <h6 className="card-subtitle mb-3 text-muted">Create a meaningful message to end the bot conversation for candidates who hit this goal.</h6>
             <div className='card-text'>
               <Textarea
                 onChange={this.props.onChange}
