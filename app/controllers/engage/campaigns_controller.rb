@@ -8,7 +8,7 @@ class Engage::CampaignsController < ApplicationController
       format.html { render html: '', layout: true }
     end
   end
-  
+
   def show
     @campaign = authorize(Campaign.find(params[:id]))
 

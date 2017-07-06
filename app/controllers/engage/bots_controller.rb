@@ -1,10 +1,11 @@
 class Engage::BotsController < ApplicationController
+  layout 'react'
+
   def index
     @bots = policy_scope(Bot)
 
     respond_to do |format|
       format.json
-      format.html { render html: '', layout: true }
     end
   end
 
@@ -13,6 +14,7 @@ class Engage::BotsController < ApplicationController
 
     respond_to do |format|
       format.json
+      format.html { render html: '', layout: true }
     end
   end
 

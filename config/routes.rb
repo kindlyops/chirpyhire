@@ -6,8 +6,6 @@ Rails.application.routes.draw do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end
 
-  resource :getting_started, only: :show, controller: 'getting_started'
-
   resource :client_version, only: :show
   resource :health, only: :show
   resources :candidates, only: :index, concerns: :paginatable
