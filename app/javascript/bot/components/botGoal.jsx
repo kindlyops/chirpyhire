@@ -47,6 +47,7 @@ class BotGoal extends React.Component {
                 name="bot[goals_attributes][][body]"
                 id={this.props.id}
                 className='form-control'
+                placeholder='Write a meaningful message...'
                 value={this.props.body}
               />
             </div>
