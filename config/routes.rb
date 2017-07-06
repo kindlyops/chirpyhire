@@ -50,7 +50,7 @@ Rails.application.routes.draw do
     resources :questions, only: %i[update]
   end
   resources :campaigns, controller: 'engage/campaigns'
-  
+
   namespace :engage do
     resources :campaigns
     resources :bots
