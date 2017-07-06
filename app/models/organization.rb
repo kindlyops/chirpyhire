@@ -35,10 +35,6 @@ class Organization < ApplicationRecord
     campaigns.recent.first
   end
 
-  def recent_bot
-    bots.recent.first
-  end
-
   def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
