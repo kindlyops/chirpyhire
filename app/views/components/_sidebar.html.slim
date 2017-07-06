@@ -4,7 +4,7 @@
       i
         = inline_svg "mini_logo.svg"
   div
-    = nav_link_to getting_started_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Start here' }, url_segment: 1 do
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
       i.fa.fa-map-signs.fa-fw
     = nav_link_to dashboard_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Dashboard' }, url_segment: 1 do
       i.fa.fa-dashboard.fa-fw
@@ -17,8 +17,8 @@
         i.fa.fa-comment-o.fa-fw
         - if current_account.unread_count.positive?
           i.fa.fa-circle.fa-fw.unread-count
-    - if current_organization.recent_campaign.present?
-      = nav_link_to engage_campaign_path(current_organization.recent_campaign), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Engage' }, url_segment: 1 do
+    - if current_organization.recent_bot.present?
+      = nav_link_to engage_bot_path(current_organization.recent_bot), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Engage' }, url_segment: 1 do
         i.fa.fa-rocket.fa-fw
     - else
       = nav_link_to new_engage_campaign_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Engage' }, url_segment: 1 do

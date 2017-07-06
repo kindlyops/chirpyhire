@@ -7,12 +7,30 @@ import NewCampaignContainer from './components/newCampaignContainer'
 import BotContainer from './components/botContainer'
 import NewBotContainer from './components/newBotContainer'
 
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Page from '../presentational/page'
 import Header from '../presentational/header'
 import Main from '../presentational/main'
 
 class Engage extends React.Component {
+  constructor(props) { 
+    super(props);
+
+    this.state = {
+      bots: []
+    }
+  }
+
+  botsUrl() {
+    return `/bots`;
+  }
+
+  componentDidMount() {
+    $.get(this.botsUrl()).then(bots => {
+      this.setState({ bots: bots });
+    });
+  }
+
   render() {
     return (
       <Page>
@@ -21,13 +39,9 @@ class Engage extends React.Component {
           <h1>Engage</h1>
         </Header>
         <Main>
-          <EngageNavigation />
-          <Switch>
-            <Route path={this.props.match.url + '/campaigns/new'} component={NewCampaignContainer} />
-            <Route path={this.props.match.url + '/campaigns/:campaignId'} component={CampaignContainer} />
-            <Route path={this.props.match.url + '/bots/new'} component={NewBotContainer} />
-            <Route path={this.props.match.url + '/bots/:campaignId'} component={BotContainer} />
-          </Switch>
+          <EngageNavigation bots={this.state.bots} />
+          <Route path={this.props.match.url + '/bots/:botId'} component={BotContainer} />
+          <Route path={this.props.match.url + '/campaigns/:campaignId'} component={CampaignContainer} />
         </Main>
       </Page>
     )

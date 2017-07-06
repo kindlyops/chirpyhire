@@ -13,6 +13,10 @@ class Bot < ApplicationRecord
   has_many :inboxes, through: :bot_campaigns
   has_many :campaigns, through: :bot_campaigns
 
+  def self.recent
+    order(created_at: :desc)
+  end
+
   def receive(message)
     Bot::Receiver.call(self, message)
   end
