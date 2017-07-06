@@ -46,6 +46,7 @@ class BotQuestion extends React.Component {
                 name="bot[questions_attributes][][body]"
                 id={this.props.id}
                 className='form-control'
+                placeholder='Ask a question...'
                 value={this.props.body}
               />
             </div>

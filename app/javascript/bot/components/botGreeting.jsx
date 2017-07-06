@@ -43,7 +43,7 @@ class BotGreeting extends React.Component {
               <Textarea
                 onChange={this.props.onChange}
                 className='form-control'
-                placeholder='Enter a greeting for your candidates...'
+                placeholder='Write a friendly greeting...'
                 value={this.props.body}
               />
             </div>

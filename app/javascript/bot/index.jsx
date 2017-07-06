@@ -16,18 +16,22 @@ class Bot extends React.Component {
           <BotGreeting 
             onChange={this.props.onGreetingChange}
             {...this.props.greeting} />
-          {this.props.questions.map(question => 
-            <BotQuestion 
-              onChange={this.props.onQuestionChange}
-              key={question.id} 
-              {...question} 
-            />
-          )}
-          {this.props.goals.map(goal => 
-            <BotGoal 
-              key={goal.id}
-              onChange={this.props.onGoalChange}
-              {...goal} />)}
+            <div>
+              {this.props.questions.map(question =>
+                <BotQuestion
+                  onChange={this.props.onQuestionChange}
+                  key={question.id}
+                  {...question}
+                />
+              )}
+            </div>
+            <div>
+              {this.props.goals.map(goal =>
+                <BotGoal
+                  key={goal.id}
+                  onChange={this.props.onGoalChange}
+                  {...goal} />)}
+            </div>
         </div>
       </SubMain>
     )
@@ -35,10 +39,7 @@ class Bot extends React.Component {
 }
 
 Bot.defaultProps = {
-  greeting: {
-    body: ''
-  },
-  goals: [{body: ''}],
+  goals: [],
   questions: []
 }
 
