@@ -20,6 +20,7 @@ class Broadcaster::Bot
   end
 
   def bot_string
-    BotsController.render partial: 'bots/bot', locals: { bot: bot }
+    Engage::BotsController.render partial: 'engage/bots/bot', 
+                                  locals: { bot: bot }
   end
 end
