@@ -40,6 +40,8 @@ class BotGreeting extends React.Component {
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>
             <div className='card-text'>
+              <h5 className='card-title'>Create a friendly greeting:</h5>
+              <h6 className="card-subtitle mb-4 text-muted">Make a great first impression with every candidate.</h6>
               <Textarea
                 onChange={this.props.onChange}
                 className='form-control'
