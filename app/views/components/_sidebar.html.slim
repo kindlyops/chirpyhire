@@ -17,12 +17,8 @@
         i.fa.fa-comment-o.fa-fw
         - if current_account.unread_count.positive?
           i.fa.fa-circle.fa-fw.unread-count
-    - if current_organization.recent_bot.present?
-      = nav_link_to engage_bot_path(current_organization.recent_bot), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Engage' }, url_segment: 1 do
-        i.fa.fa-rocket.fa-fw
-    - else
-      = nav_link_to new_engage_campaign_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Engage' }, url_segment: 1 do
-        i.fa.fa-rocket.fa-fw
+    = nav_link_to engage_bot_path(current_organization.recent_bot), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Campaigns' }, url_segment: 1 do
+      i.fa.fa-bullhorn.fa-fw
   .sidebar--bottom.flex-column.d-flex.justify-content-end
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Search (coming soon)"
       i.fa.fa-search.fa-fw
