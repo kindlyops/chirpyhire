@@ -1,0 +1,24 @@
+.Campaign {
+  width: 80%;
+  margin: auto;
+
+  margin-top: 2.25rem;
+
+  .CampaignHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+  }
+
+  .Select {
+    margin-top: .5rem;
+  }
+
+  .card {
+    margin-bottom: 2rem;
+
+    .card-title {
+      margin-bottom: 1.75rem;
+    }
+  }
+}

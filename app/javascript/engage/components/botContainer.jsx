@@ -17,7 +17,7 @@ class BotContainer extends React.Component {
   }
 
   botId() {
-    return this.props.match.params.botId;
+    return this.props.match.params.id;
   }
 
   botUrl(botId) {
@@ -25,7 +25,7 @@ class BotContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let nextBotId = nextProps.match.params.botId;
+    let nextBotId = nextProps.match.params.id;
     let botId = this.botId();
 
     if(nextBotId !== botId) {

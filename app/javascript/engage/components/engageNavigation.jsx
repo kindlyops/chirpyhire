@@ -8,6 +8,19 @@ class EngageNavigation extends React.Component {
       <div className='EngageNavigation ch--vertical-navigation'>
         <div className='ch--vertical-navigation--inner'>
           <div className='ch--vertical-navigation-header'>
+            <h3 className='small-uppercase'>Campaigns</h3>
+          </div>
+          <div className='ch--vertical-navigation-links'>
+            {this.props.campaigns.map(campaign => 
+              <NavLink 
+                className='ch--vertical-navigation-link' 
+                key={campaign.id} 
+                to={`/engage/campaigns/${campaign.id}`}>{campaign.name}</NavLink>
+            )}
+          </div>
+        </div>
+        <div className='ch--vertical-navigation--inner'>
+          <div className='ch--vertical-navigation-header'>
             <h3 className='small-uppercase'>Recruitbots</h3>
           </div>
           <div className='ch--vertical-navigation-links'>
@@ -20,10 +33,14 @@ class EngageNavigation extends React.Component {
           </div>
         </div>
 
-        
       </div>
     )
   }
+}
+
+EngageNavigation.defaultProps = {
+  bots: [],
+  campaigns: []
 }
 
 export default EngageNavigation

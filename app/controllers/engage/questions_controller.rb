@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class Engage::QuestionsController < ApplicationController
   def update
     question.update(permitted_attributes(Question))
 

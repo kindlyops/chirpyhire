@@ -1,20 +1,22 @@
 class Engage::CampaignsController < ApplicationController
   layout 'react'
 
-  def new
-    @campaign = authorize(current_organization.campaigns.build)
+  def index
+    @campaigns = policy_scope(Campaign)
 
     respond_to do |format|
-      format.html { render html: '', layout: true }
+      format.json
     end
   end
 
   def show
-    @campaign = authorize(Campaign.find(params[:id]))
+    @campaign = authorize(campaigns.find(params[:id]))
 
     respond_to do |format|
       format.json
       format.html { render html: '', layout: true }
     end
   end
+
+  delegate :campaigns, to: :current_organization
 end

@@ -46,13 +46,14 @@ Rails.application.routes.draw do
     resource :customer
   end
 
+  resources :bots, controller: 'engage/bots'
+  resources :campaigns, controller: 'engage/campaigns'
+  
   namespace :engage do
     resources :campaigns
-    resources :bots
-  end
-
-  resources :bots, only: %i[index show] do
-    resources :questions, only: %i[update]
+    resources :bots do
+      resources :questions, only: %i[update]
+    end
   end
 
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
