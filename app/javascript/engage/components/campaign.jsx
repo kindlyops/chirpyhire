@@ -10,10 +10,6 @@ class Campaign extends React.Component {
         <div className='Campaign'>
           <div className='CampaignHeader'>
             <h2 className='CampaignName'>{this.props.name}</h2>
-            <button disabled={true} className='btn btn-warning'>
-              <i className='fa fa-pause mr-2'></i>
-              Pause
-            </button>
           </div>
           <div className='card CampaignSettings'>
             <div className='card-block'>
