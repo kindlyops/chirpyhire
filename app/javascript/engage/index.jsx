@@ -16,18 +16,32 @@ class Engage extends React.Component {
   constructor(props) { 
     super(props);
 
-    this.state = {
-      bots: []
-    }
+    this.state = {}
   }
 
   botsUrl() {
     return `/bots`;
   }
 
+  campaignsUrl() {
+    return `/campaigns`;
+  }
+
+  inboxesUrl() {
+    return `/inboxes`;
+  }
+
   componentDidMount() {
     $.get(this.botsUrl()).then(bots => {
       this.setState({ bots: bots });
+    });
+
+    $.get(this.campaignsUrl()).then(campaigns => {
+      this.setState({ campaigns: campaigns });
+    });
+
+    $.get(this.inboxesUrl()).then(inboxes => {
+      this.setState({ inboxes: inboxes });
     });
   }
 
@@ -39,9 +53,9 @@ class Engage extends React.Component {
           <h1>Engage</h1>
         </Header>
         <Main>
-          <EngageNavigation bots={this.state.bots} />
-          <Route path={this.props.match.url + '/bots/:botId'} component={BotContainer} />
-          <Route path={this.props.match.url + '/campaigns/:campaignId'} component={CampaignContainer} />
+          <EngageNavigation {...this.state} />
+          <Route path={this.props.match.url + '/bots/:id'} render={props => <BotContainer {...this.state} {...props} />} />
+          <Route path={this.props.match.url + '/campaigns/:id'} render={props => <CampaignContainer {...this.state} {...props} />} />
         </Main>
       </Page>
     )

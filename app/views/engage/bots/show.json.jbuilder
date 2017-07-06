@@ -1,3 +1,6 @@
+json.id @bot.id
+json.name @bot.name
+
 json.greeting do
   json.id @bot.greeting.id
   json.body @bot.greeting.body
