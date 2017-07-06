@@ -1,5 +1,5 @@
 import React from 'react'
-import PlainText from '../../plain_text'
+import Textarea from 'react-textarea-autosize'
 import { Collapse } from 'reactstrap'
 
 class BotGreeting extends React.Component {
@@ -31,7 +31,7 @@ class BotGreeting extends React.Component {
         <div className='card-header greeting--header'>
           <div className='bot-card--label-title'>
             <span className='bot-card--label'>Greeting:</span>
-            <span className='bot-card--title'>{this.props.greeting.body}</span>
+            <span className='bot-card--title'>{this.props.body}</span>
           </div>
           <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
             <i className={this.iconClasses()}></i>
@@ -40,11 +40,11 @@ class BotGreeting extends React.Component {
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>
             <div className='card-text'>
-              <PlainText
-                onDocumentChange={this.props.onDocumentChange}
+              <Textarea
+                onChange={this.props.onChange}
                 className='form-control'
                 placeholder='Enter a greeting for your candidates...'
-                value={this.props.greeting.body}
+                value={this.props.body}
               />
             </div>
           </div>
@@ -55,9 +55,7 @@ class BotGreeting extends React.Component {
 }
 
 BotGreeting.defaultProps = {
-  greeting: {
-    body: ''
-  }
+  body: ''
 }
 
 export default BotGreeting

@@ -11,15 +11,51 @@ class BotContainer extends React.Component {
       subscription: {},
       bot: {}
     }
-    this.onGreetingDocumentChange = this.onGreetingDocumentChange.bind(this);
+    this.onGreetingChange = this.onGreetingChange.bind(this);
+    this.onQuestionChange = this.onQuestionChange.bind(this);
+    this.onGoalChange = this.onGoalChange.bind(this);
   }
 
-  onGreetingDocumentChange(body) {
+  onGreetingChange(event) {
     this.setState(update(this.state, {
       bot: {
         greeting: {
           body: {
-            $set: body
+            $set: event.target.value
+          }
+        }
+      }
+    }));
+  }
+
+  onQuestionChange(event) {
+    let id = parseInt(event.target.id);
+    let index = R.findIndex(R.propEq('id', id), this.state.bot.questions);
+
+    this.setState(update(this.state, {
+      bot: {
+        questions: {
+          [index]: {
+            body: {
+              $set: event.target.value
+            }
+          }
+        }
+      }
+    }));
+  }
+
+  onGoalChange(event) {
+    let id = parseInt(event.target.id);
+    let index = R.findIndex(R.propEq('id', id), this.state.bot.goals);
+
+    this.setState(update(this.state, {
+      bot: {
+        goals: {
+          [index]: {
+            body: {
+              $set: event.target.value
+            }
           }
         }
       }
@@ -27,7 +63,14 @@ class BotContainer extends React.Component {
   }
 
   render() {
-    return(<Bot onGreetingDocumentChange={this.onGreetingDocumentChange} {...this.state.bot}></Bot>)
+    return(
+      <Bot 
+        onQuestionChange={this.onQuestionChange}
+        onGreetingChange={this.onGreetingChange}
+        onGoalChange={this.onGoalChange}
+        {...this.state.bot}>
+      </Bot>
+    )
   }
 
   botId() {
