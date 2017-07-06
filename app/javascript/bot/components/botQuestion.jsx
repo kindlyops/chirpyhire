@@ -1,7 +1,7 @@
 import React from 'react'
 import Toggle from 'react-toggle'
 
-class RecruitBotQuestion extends React.Component {
+class BotQuestion extends React.Component {
   constructor(props) {
     super(props);
 
@@ -46,13 +46,9 @@ class RecruitBotQuestion extends React.Component {
   render() {
     return (
       <div className='card'>
-        <div className='card-header'>
-          <span className='question'>{`Question: ${this.props.body}`}</span>
-          <label className='toggle'>
-            <Toggle
-              checked={this.isChecked()}
-              onChange={this.toggleQuestion} />
-          </label>
+        <div className='card-header question--header'>
+          <span className='bot-card--label'>Question:</span>
+          <span className='bot-card--title'>{this.props.body}</span>
         </div>
         <div className='card-block'>
           <div className='card-text'>
@@ -64,4 +60,4 @@ class RecruitBotQuestion extends React.Component {
   }
 }
 
-export default RecruitBotQuestion
+export default BotQuestion
