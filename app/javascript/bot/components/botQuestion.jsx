@@ -1,60 +1,56 @@
 import React from 'react'
-import Toggle from 'react-toggle'
+import Textarea from 'react-textarea-autosize'
+import { Collapse } from 'reactstrap'
 
 class BotQuestion extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleQuestion = this.toggleQuestion.bind(this);
+    this.state = {
+      collapse: true
+    }
+
+    this.onClick = this.onClick.bind(this);
   }
 
-  questionId() {
-    return this.props.id;
+  onClick() {
+    this.setState({ collapse: !this.state.collapse });
   }
 
-  botId() {
-    return this.props.bot_id;
-  }
-
-  questionURL() {
-    return `/bots/${this.botId()}/questions/${this.questionId()}.json`;
-  }
-
-  data() {
-    return JSON.stringify({
-      question: {
-        active: !this.isChecked()
-      }
-    })
-  }
-
-  toggleQuestion() {
-    $.ajax({
-      url: this.questionURL(),
-      type: 'PUT',
-      data: this.data(),
-      dataType: 'json',
-      accepts: 'application/json',
-      contentType: 'application/json'
-    });
-  }
-
-  isChecked() {
-    return this.props.active;
+  iconClasses() {
+    if (this.state.collapse) {
+      return 'fa fa-angle-down';
+    } else {
+      return 'fa fa-angle-up';
+    }
   }
 
   render() {
     return (
       <div className='card'>
         <div className='card-header question--header'>
-          <span className='bot-card--label'>Question:</span>
-          <span className='bot-card--title'>{this.props.body}</span>
-        </div>
-        <div className='card-block'>
-          <div className='card-text'>
-            {`${this.props.answers}`}
+          <div className='bot-card--label-title'>
+            <span className='bot-card--label'>Question:</span>
+            <span className='bot-card--title'>{this.props.body}</span>
           </div>
+          <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
+            <i className={this.iconClasses()}></i>
+          </a>
         </div>
+        <Collapse isOpen={this.state.collapse}>
+          <div className='card-block'>
+            <h5 className='card-title'>What the bot asks:</h5>
+            <div className='card-text'>
+              <Textarea
+                onChange={this.props.onChange}
+                name="bot[questions_attributes][][body]"
+                id={this.props.id}
+                className='form-control'
+                value={this.props.body}
+              />
+            </div>
+          </div>
+        </Collapse>
       </div>
     )
   }
