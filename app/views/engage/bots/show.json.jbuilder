@@ -12,6 +12,16 @@ json.questions @bot.ranked_questions do |question|
   json.body question.body(formatted: false)
   json.answers question.answers
   json.active question.active
+  json.follow_ups question.follow_ups do |follow_up|
+    json.id follow_up.id
+    json.body follow_up.body
+    json.action follow_up.action
+    json.type follow_up.type
+    json.rank follow_up.rank
+    json.next_question_id follow_up.next_question_id
+    json.goal_id follow_up.goal_id
+    json.response follow_up.response
+  end
 end
 
 json.goals @bot.goals do |goal|

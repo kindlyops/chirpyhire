@@ -1,6 +1,7 @@
 import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { Collapse } from 'reactstrap'
+import BotFollowUp from './botFollowUp'
 
 class BotQuestion extends React.Component {
   constructor(props) {
@@ -57,12 +58,19 @@ class BotQuestion extends React.Component {
             <h5 className='card-title'>Follow ups based on the candidate's answer:</h5>
             <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
             <div className='card-text'>
+              {this.props.follow_ups.map(follow_up =>
+                <BotFollowUp key={follow_up.id} {...follow_up} />
+              )}
             </div>
           </div>
         </Collapse>
       </div>
     )
   }
+}
+
+BotQuestion.defaultProps = {
+  follow_ups: []
 }
 
 export default BotQuestion
