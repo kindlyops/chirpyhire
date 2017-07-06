@@ -38,7 +38,7 @@
     "react-virtualized": "^9.8.0",
     "reactstrap": "^4.6.2",
     "sass-loader": "^6.0.5",
-    "slate": "^0.19.30",
+    "slate": "^0.20.4",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
     "webpack-manifest-plugin": "^1.1.0",

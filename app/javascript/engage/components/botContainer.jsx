@@ -1,6 +1,7 @@
 import React from 'react'
 
-import RecruitBot from '../../recruit_bot'
+import Bot from '../../bot'
+import update from 'immutability-helper'
 
 class BotContainer extends React.Component {
   constructor(props) {
@@ -10,10 +11,23 @@ class BotContainer extends React.Component {
       subscription: {},
       bot: {}
     }
+    this.onGreetingDocumentChange = this.onGreetingDocumentChange.bind(this);
+  }
+
+  onGreetingDocumentChange(body) {
+    this.setState(update(this.state, {
+      bot: {
+        greeting: {
+          body: {
+            $set: body
+          }
+        }
+      }
+    }));
   }
 
   render() {
-    return(<RecruitBot {...this.state.bot}></RecruitBot>)
+    return(<Bot onGreetingDocumentChange={this.onGreetingDocumentChange} {...this.state.bot}></Bot>)
   }
 
   botId() {

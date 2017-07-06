@@ -1,0 +1,61 @@
+.Bot {
+  width: 80%;
+  margin: auto;
+
+  margin-top: 2.25rem;
+
+  .BotHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+  }
+
+  .bot-card--label {
+    color: #dddddd;
+    margin-right: .5rem;
+  }
+
+  .bot-card--title {
+    color: $white;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-card--label-title {
+    display: flex;
+  }
+
+  .bot-card--toggle-body {
+    i {
+      color: $white;
+    }
+  }
+
+  .greeting--header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $brand-success;
+  }
+
+  .question--header {
+    display: flex;
+    justify-content: space-between;
+    background-color: mix($brand-success, $brand-primary);
+  }
+
+  .goal--header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $brand-primary;
+  }
+
+  .card {
+    margin-bottom: 2rem;
+
+    .card-text {
+      white-space: pre-wrap;
+    }
+  }
+}
