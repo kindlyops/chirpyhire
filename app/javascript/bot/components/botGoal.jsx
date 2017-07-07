@@ -33,9 +33,14 @@ class BotGoal extends React.Component {
             <span className='bot-card--label'>Goal:</span>
             <span className='bot-card--title'>{this.props.body}</span>
           </div>
-          <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
-            <i className={this.iconClasses()}></i>
-          </a>
+          <div className='bot-card--actions'>
+            <a role="button" className='bot-card--settings'>
+              ⋯
+            </a>
+            <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
+              <i className={this.iconClasses()}></i>
+            </a>
+          </div>
         </div>
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>

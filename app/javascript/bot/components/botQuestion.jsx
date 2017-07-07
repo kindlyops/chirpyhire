@@ -34,9 +34,14 @@ class BotQuestion extends React.Component {
             <span className='bot-card--label'>Question:</span>
             <span className='bot-card--title'>{this.props.body}</span>
           </div>
-          <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
-            <i className={this.iconClasses()}></i>
-          </a>
+          <div className='bot-card--actions'>
+            <a role="button" className='bot-card--settings'>
+              ⋯
+            </a>
+            <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
+              <i className={this.iconClasses()}></i>
+            </a>
+          </div>
         </div>
         <Collapse isOpen={this.state.collapse}>
           <div className='card-block'>
@@ -58,9 +63,15 @@ class BotQuestion extends React.Component {
             <h5 className='card-title'>Follow ups based on the candidate's answer:</h5>
             <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
             <div className='card-text'>
-              {this.props.follow_ups.map(follow_up =>
-                <BotFollowUp onChange={this.props.onFollowUpChange} key={follow_up.id} {...follow_up} />
-              )}
+              <div>
+                {this.props.follow_ups.map(follow_up =>
+                  <BotFollowUp onChange={this.props.onFollowUpChange} key={follow_up.id} {...follow_up} />
+                )}
+              </div>
+              <button role="button" className='btn btn-default'>
+                <i className='fa fa-plus mr-2'></i>
+                New Follow Up
+              </button>
             </div>
           </div>
         </Collapse>
