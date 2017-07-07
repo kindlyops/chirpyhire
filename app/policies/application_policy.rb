@@ -47,6 +47,7 @@ class ApplicationPolicy
 
   class Scope
     attr_reader :account, :scope, :organization
+    delegate :canceled?, to: :organization
 
     def initialize(account, scope)
       @account = account

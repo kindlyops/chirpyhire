@@ -5,7 +5,12 @@ class ContactPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(organization: organization)
+      if canceled?
+        scope.where(organization: organization)
+             .where('contacts.created_at < ?', organization.canceled_at)
+      else
+        scope.where(organization: organization)
+      end
     end
   end
 end

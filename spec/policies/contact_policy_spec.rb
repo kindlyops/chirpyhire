@@ -24,6 +24,20 @@ RSpec.describe ContactPolicy do
         it 'does include the contact' do
           expect(subject.resolve).to include(contact)
         end
+
+        context 'organization is canceled' do
+          before do
+            organization.subscription.update(
+              status: :canceled, canceled_at: 1.year.ago
+            )
+          end
+
+          context 'and contact is created after canceled at' do
+            it 'does not include the contact' do
+              expect(subject.resolve).not_to include(contact)
+            end
+          end
+        end
       end
     end
 
