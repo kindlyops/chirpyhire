@@ -43,6 +43,8 @@ class ApplicationPolicy
     Pundit.policy_scope!(account, record.class)
   end
 
+  delegate :canceled?, to: :organization
+
   class Scope
     attr_reader :account, :scope, :organization
 

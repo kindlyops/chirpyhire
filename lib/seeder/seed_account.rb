@@ -10,6 +10,7 @@ class Seeder::SeedAccount
   def call
     account.tap do
       organization.update(recruiter: account)
+      organization.create_subscription
       setup_team
       setup_zipcodes
     end
