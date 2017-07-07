@@ -5,7 +5,7 @@ RSpec.describe ContactPolicy do
     subject { ContactPolicy::Scope.new(account, Contact.all) }
 
     context 'organizations' do
-      let(:organization) { create(:organization, :account) }
+      let(:organization) { create(:organization, :subscription, :account) }
       let(:account) { organization.accounts.first }
       let(:other_organization) { create(:organization) }
       let!(:contact) { create(:contact, organization: other_organization) }
@@ -17,7 +17,7 @@ RSpec.describe ContactPolicy do
       end
 
       context 'account is on same organization as the contact' do
-        let(:organization) { create(:organization, :account) }
+        let(:organization) { create(:organization, :subscription, :account) }
         let(:account) { organization.accounts.first }
         let!(:contact) { create(:contact, organization: organization) }
 

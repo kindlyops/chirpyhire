@@ -2,8 +2,10 @@ FactoryGirl.define do
   factory :organization do
     name { Faker::Company.name }
 
-    after(:create) do |organization|
-      organization.subscription || organization.create_subscription
+    trait :subscription do
+      after(:create) do |organization|
+        create(:subscription, organization: organization)
+      end
     end
 
     trait :team do

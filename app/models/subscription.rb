@@ -4,4 +4,8 @@ class Subscription < ApplicationRecord
   enum status: {
     trialing: 0, active: 1, past_due: 2, canceled: 3, unpaid: 4
   }
+
+  def cancel
+    update(status: :canceled, canceled_at: DateTime.current)
+  end
 end

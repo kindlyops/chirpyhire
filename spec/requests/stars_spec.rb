@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Stars' do
-  let(:organization) { create(:organization, :team, :account) }
+  let(:organization) { create(:organization, :subscription, :team, :account) }
   let(:phone_number) { organization.phone_numbers.first }
   let(:account) { organization.accounts.first }
 

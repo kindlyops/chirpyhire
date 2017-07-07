@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :account do
     email { Faker::Internet.email }
     password 'password'
-    organization
+    association :organization, :subscription
 
     trait :owner do
       role :owner

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Conversations' do
-  let(:organization) { create(:organization, :team, :account) }
+  let(:organization) { create(:organization, :subscription, :team, :account) }
   let(:account) { organization.accounts.first }
   let!(:inbox) { organization.teams.first.inbox }
 
