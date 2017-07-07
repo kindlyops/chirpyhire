@@ -20,6 +20,7 @@ class Bot extends React.Component {
               {this.props.questions.map(question =>
                 <BotQuestion
                   onChange={this.props.onQuestionChange}
+                  onFollowUpChange={this.props.onFollowUpChange}
                   key={question.id}
                   {...question}
                 />

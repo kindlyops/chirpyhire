@@ -59,7 +59,7 @@ class BotQuestion extends React.Component {
             <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
             <div className='card-text'>
               {this.props.follow_ups.map(follow_up =>
-                <BotFollowUp key={follow_up.id} {...follow_up} />
+                <BotFollowUp onChange={this.props.onFollowUpChange} key={follow_up.id} {...follow_up} />
               )}
             </div>
           </div>

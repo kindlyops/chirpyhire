@@ -20,6 +20,10 @@ class FollowUp < ApplicationRecord
     order(:rank)
   end
 
+  def humanized_action
+    action.titlecase
+  end
+
   def tag(contact)
     contact.tags << tags
   end
