@@ -44,6 +44,12 @@ RSpec.describe Registrar do
         }.to change { account.reload.owner? }.from(false).to(true)
       end
 
+      it 'creates a subscription' do
+        expect {
+          subject.register
+        }.to change { organization.reload.subscription.present? }.from(false).to(true)
+      end
+
       it 'creates a bot' do
         expect {
           subject.register
