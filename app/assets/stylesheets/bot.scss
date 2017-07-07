@@ -15,6 +15,15 @@
     margin-right: .5rem;
   }
 
+  .bot-card--actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 45px;
+    color: $white;
+    font-size: 1.25rem;
+  }
+
   .bot-card--title {
     color: $white;
     width: 350px;
@@ -25,9 +34,11 @@
 
   .bot-card--label-title {
     display: flex;
+    align-items: center;
   }
 
   .bot-card--toggle-body {
+    font-size: 1.25rem;
     i {
       color: $white;
     }
