@@ -4,6 +4,7 @@ class ConversationsController < ApplicationController
   decorates_assigned :conversations
 
   before_action :handle_old_account_inboxes, only: :show
+  before_action :ensure_not_canceled
 
   def index
     @conversations = policy_scope(
@@ -35,6 +36,20 @@ class ConversationsController < ApplicationController
   end
 
   private
+
+  def ensure_not_canceled
+    redirect_to billing_path, alert: billing_notice if canceled?
+  end
+
+  def billing_notice
+    'Your trial has ended. To chat caregivers please sign up for ChirpyHire.'
+  end
+
+  delegate :canceled?, to: :current_organization
+
+  def billing_path
+    organization_billing_company_path(current_organization)
+  end
 
   def handle_old_account_inboxes
     old_inbox = Inbox.find(params[:inbox_id])

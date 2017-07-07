@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe MessagePolicy do
   describe 'policies' do
     let(:account) { create(:account, :team) }
+    let(:organization) { account.organization }
     subject { described_class.new(account, message) }
 
     context 'contact on same team' do
@@ -18,6 +19,13 @@ RSpec.describe MessagePolicy do
         let!(:message) { build(:message, recipient: contact.person) }
 
         it { is_expected.to permit_action(:create) }
+
+        context 'and the subscription is canceled' do
+          before do
+            organization.subscription.update(status: :canceled)
+          end
+          it { is_expected.to forbid_action(:create) }
+        end
       end
     end
 

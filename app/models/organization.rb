@@ -27,6 +27,7 @@ class Organization < ApplicationRecord
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
+  delegate :canceled?, :canceled_at, to: :subscription
 
   def screened_contacts_count
     contacts.screened.count
