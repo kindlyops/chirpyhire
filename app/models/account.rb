@@ -18,8 +18,7 @@ class Account < ApplicationRecord
   accepts_nested_attributes_for :organization, reject_if: :all_blank
   accepts_nested_attributes_for :person, reject_if: :all_blank
 
-  validates :email, uniqueness: true
-
+  validates :email, uniqueness: true, company_email: true
   delegate :name, to: :organization, prefix: true
   delegate :name, :avatar, :nickname, to: :person, allow_nil: true
 

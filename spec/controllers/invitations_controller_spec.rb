@@ -113,7 +113,7 @@ RSpec.describe InvitationsController, type: :controller do
   end
 
   describe '#update' do
-    let(:email) { 'bob@someemail.com' }
+    let(:email) { 'bob@chirpyhire.com' }
 
     let(:account_attributes) do
       { email: email, organization: organization, person_attributes: {

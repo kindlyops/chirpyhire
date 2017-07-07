@@ -51,14 +51,14 @@ class InvitationsController < Devise::InvitationsController
   def add_accept_params
     devise_parameter_sanitizer.permit(
       :accept_invitation,
-      keys: [:agreed_to_terms, :email, person_attributes: %i[name]]
+      keys: [:agreed_to_terms, person_attributes: %i[name]]
     )
   end
 
   def add_invite_params
     devise_parameter_sanitizer.permit(
       :invite,
-      keys: [:email, person_attributes: %i[name]]
+      keys: [person_attributes: %i[name]]
     )
   end
 
