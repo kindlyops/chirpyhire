@@ -42,7 +42,7 @@ class ConversationsController < ApplicationController
   end
 
   def billing_notice
-    'To chat caregivers please sign up for a paid subscription.'
+    'Your trial has ended. To chat caregivers please sign up for ChirpyHire.'
   end
 
   delegate :canceled?, to: :current_organization
