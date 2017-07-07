@@ -1,7 +1,7 @@
 .card.registrations
   .card-block
     h3.text-center.card-title Join ChirpyHire
-    p.text-center.card-subtitle The best way to prescreen caregivers.
+    p.text-center.card-subtitle The best way to text-interview caregivers.
     = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
       = f.hidden_field :agreed_to_terms, value: true
       hr
