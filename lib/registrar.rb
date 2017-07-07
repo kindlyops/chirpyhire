@@ -6,6 +6,7 @@ class Registrar
   def register
     return unless account.persisted?
     setup_account
+    organization.create_subscription
     TeamRegistrar.call(team, account, notify: false)
     new_organization_notification_job
   end

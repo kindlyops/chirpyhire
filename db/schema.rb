@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170707190713) do
+ActiveRecord::Schema.define(version: 20170707195427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -415,6 +415,14 @@ ActiveRecord::Schema.define(version: 20170707190713) do
     t.index ["account_id"], name: "index_segments_on_account_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.bigint "tag_id", null: false
@@ -513,6 +521,7 @@ ActiveRecord::Schema.define(version: 20170707190713) do
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
   add_foreign_key "segments", "accounts"
+  add_foreign_key "subscriptions", "organizations"
   add_foreign_key "taggings", "contacts"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "organizations"
