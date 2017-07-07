@@ -15,6 +15,7 @@ class Organization < ApplicationRecord
 
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
+  has_one :subscription
 
   belongs_to :recruiter, class_name: 'Account'
   has_one :recruiting_ad
