@@ -14,13 +14,19 @@ json.questions @bot.ranked_questions do |question|
   json.active question.active
   json.follow_ups question.follow_ups do |follow_up|
     json.id follow_up.id
+    json.question_id follow_up.question_id
     json.body follow_up.body
     json.action follow_up.action
+    json.humanized_action follow_up.humanized_action
     json.type follow_up.type
     json.rank follow_up.rank
     json.next_question_id follow_up.next_question_id
     json.goal_id follow_up.goal_id
     json.response follow_up.response
+    json.tags follow_up.tags do |tag|
+      json.id tag.id
+      json.name tag.name
+    end
   end
 end
 

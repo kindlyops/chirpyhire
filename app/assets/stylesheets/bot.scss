@@ -33,6 +33,49 @@
     }
   }
 
+  .FollowUp--footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .FollowUp--actions {
+      a {
+        padding: .2rem .4rem;
+        font-size: 1.25rem;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+          background-color: #dddddd;
+        }
+      }
+    }
+
+    .FollowUp--details {
+      font-size: 1.25rem;
+      padding: .5rem 0;
+      >:not(:last-child) {
+        margin-right: .25rem;
+      }
+
+      .ch-tag {
+        font-size: 1rem;
+      }
+    }
+  }
+
+
+  .badge-next-question {
+    background-color: $brand-success;
+  }
+
+  .badge-question {
+    background-color: mix($brand-success, $brand-primary)
+  }
+
+  .badge-goal {
+    background-color: $brand-primary;
+  }
+
   .greeting--header {
     display: flex;
     justify-content: space-between;

@@ -14,6 +14,31 @@ class BotContainer extends React.Component {
     this.onGreetingChange = this.onGreetingChange.bind(this);
     this.onQuestionChange = this.onQuestionChange.bind(this);
     this.onGoalChange = this.onGoalChange.bind(this);
+    this.onFollowUpChange = this.onFollowUpChange.bind(this);
+  }
+
+  onFollowUpChange(event) {
+    let id = parseInt(event.target.id);
+    let qId = parseInt(event.target.dataset.questionId);
+    let qIndex = R.findIndex(R.propEq('id', qId), this.state.bot.questions);
+    let follow_ups = this.state.bot.questions[qIndex].follow_ups;
+    let index = R.findIndex(R.propEq('id', id), follow_ups);
+
+    this.setState(update(this.state, {
+      bot: {
+        questions: {
+          [qIndex]: {
+            follow_ups: {
+              [index]: {
+                body: {
+                  $set: event.target.value
+                }
+              }
+            }
+          }
+        }
+      }
+    }));
   }
 
   onGreetingChange(event) {
@@ -68,6 +93,7 @@ class BotContainer extends React.Component {
         onQuestionChange={this.onQuestionChange}
         onGreetingChange={this.onGreetingChange}
         onGoalChange={this.onGoalChange}
+        onFollowUpChange={this.onFollowUpChange}
         {...this.state.bot}>
       </Bot>
     )
