@@ -2,6 +2,7 @@ class Account < ApplicationRecord
   devise :invitable, :rememberable, :database_authenticatable,
          :registerable, :recoverable, :trackable, :validatable
 
+  phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :organization, inverse_of: :accounts
   has_one :person, inverse_of: :account
 

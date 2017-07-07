@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170704185303) do
+ActiveRecord::Schema.define(version: 20170707190713) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170704185303) do
     t.integer "organization_id", null: false
     t.integer "role", default: 0, null: false
     t.text "bio"
+    t.string "phone_number"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
@@ -331,6 +332,7 @@ ActiveRecord::Schema.define(version: 20170704185303) do
     t.boolean "cpr_first_aid", default: true, null: false
     t.boolean "skin_test", default: true, null: false
     t.string "stripe_customer_id"
+    t.string "size"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 

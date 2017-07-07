@@ -1,8 +1,6 @@
 class CompanyEmailValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    if value =~ BLOCKED_DOMAINS
-      record.errors[attribute] << message
-    end
+    record.errors[attribute] << message if value.match?(BLOCKED_DOMAINS)
   end
 
   def message

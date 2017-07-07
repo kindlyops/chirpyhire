@@ -14,6 +14,9 @@
         strong = f.label :email, class: "col-form-label"
         = f.email_field :email, required: true, class: "form-control"
       .form-group
+        strong = f.label :phone_number, "Phone Number", class: "col-form-label"
+        = f.phone_field :phone_number, required: true, class: "form-control"
+      .form-group
         strong = f.label :password, class: "col-form-label"
         = f.password_field :password, autocomplete: "off", placeholder: "#{@minimum_password_length} characters minimum", class: "form-control"
       hr
@@ -22,6 +25,9 @@
         .form-group
           strong = o.label :name, "Organization name", class: "col-form-label"
           = o.text_field :name, required: true, class: "form-control"
+        .form-group
+          strong = o.label :size, "Organization size", class: "col-form-label"
+          = o.select :size, options_for_select([['0-30', '0-30'], ['31-50','31-50'], ['51-100', '51-100'], ['101-250', '101-250'], ['251-500', '251-500'], ['500+', '500+']]), { required: true }, class: "form-control"
         = o.fields_for :teams, o.object.teams.build do |t|
           = t.hidden_field :name
           = t.fields_for :location, t.object.build_location do |l|
