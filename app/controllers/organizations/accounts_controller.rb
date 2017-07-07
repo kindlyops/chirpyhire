@@ -7,15 +7,19 @@ class Organizations::AccountsController < OrganizationsController
     @account = authorize Account.find(params[:id])
 
     if @account.update(permitted_attributes(Account))
-      redirect_to organization_people_path(organization), notice: update_notice
+      redirect_to team_members_path, notice: update_notice
     else
-      render :show
+      redirect_to team_members_path
     end
   end
 
   private
 
-  def organization
+  def team_members_path
+    organization_settings_team_members_path(@organization)
+  end
+
+  def fetch_organization
     @organization ||= begin
       authorize(Organization.find(params[:organization_id]), :show?)
     end
