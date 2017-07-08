@@ -2,7 +2,7 @@ import React from 'react'
 
 import CandidateFilters from './candidateFilters'
 import CandidatesListContainer from './candidatesListContainer'
-import Main from '../../presentational/main'
+import Main from '../../../components/main'
 
 class Candidates extends React.Component {
   empty() {

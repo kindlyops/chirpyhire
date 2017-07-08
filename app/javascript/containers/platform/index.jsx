@@ -6,9 +6,9 @@ import queryString from 'query-string'
 import update from 'immutability-helper'
 import RestartNotificationBar from '../restart_notification_bar'
 
-import Page from '../presentational/page'
-import Header from '../presentational/header'
-import Main from '../presentational/main'
+import Page from '../../components/page'
+import Header from '../../components/header'
+import Main from '../../components/main'
 
 class Platform extends React.Component {
   constructor(props) {

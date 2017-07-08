@@ -6,9 +6,9 @@ import CampaignContainer from './components/campaignContainer'
 import BotContainer from './components/botContainer'
 
 import { Route } from 'react-router-dom'
-import Page from '../presentational/page'
-import Header from '../presentational/header'
-import Main from '../presentational/main'
+import Page from '../../components/page'
+import Header from '../../components/header'
+import Main from '../../components/main'
 
 class Engage extends React.Component {
   constructor(props) { 

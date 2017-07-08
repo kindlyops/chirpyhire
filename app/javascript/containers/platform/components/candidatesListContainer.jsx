@@ -3,7 +3,7 @@ import React from 'react'
 import CandidatesMenu from './candidatesMenu'
 import CandidatesTable from './candidatesTable'
 import Pagination from 'react-js-pagination'
-import SubMain from '../../presentational/subMain'
+import SubMain from '../../../components/subMain'
 
 const CandidatesListContainer = props => (
   <SubMain className='CandidatesListContainer'>

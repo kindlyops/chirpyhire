@@ -4,11 +4,11 @@ import moment from 'moment'
 
 import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
-import Conversation from 'conversation'
+import Conversation from '../conversation'
 import Inboxes from './components/inboxes'
 import RestartNotificationBar from '../restart_notification_bar'
 
-import Page from '../presentational/page'
+import Page from '../../components/page'
 
 class Inbox extends React.Component {
   constructor(props) {

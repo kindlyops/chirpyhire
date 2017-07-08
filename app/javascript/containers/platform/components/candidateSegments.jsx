@@ -2,7 +2,7 @@ import React from 'react'
 
 import CandidateSegment from './candidateSegment'
 import update from 'immutability-helper'
-import SecondaryHeader from '../../presentational/secondaryHeader'
+import SecondaryHeader from '../../../components/secondaryHeader'
 
 class CandidateSegments extends React.Component {
   render() {

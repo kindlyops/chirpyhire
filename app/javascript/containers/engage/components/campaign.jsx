@@ -1,6 +1,6 @@
 import React from 'react'
 import Select from 'react-select'
-import SubMain from '../../presentational/subMain'
+import SubMain from '../../../components/subMain'
 
 class Campaign extends React.Component {
 
