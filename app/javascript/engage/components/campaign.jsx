@@ -9,12 +9,12 @@ class Campaign extends React.Component {
       <SubMain>
         <div className='Campaign'>
           <div className='CampaignHeader'>
-            <h2 className='CampaignName'>{this.props.name}</h2>
+            <h2 className='CampaignName mb-3'>{this.props.name}</h2>
           </div>
           <div className='card CampaignSettings'>
             <div className='card-block'>
               <h5 className='card-title'>Campaign Settings</h5>
-              <h6 className='card-subtitle'>Recruitbot</h6>
+              <h6 className='card-subtitle mb-3'>Recruitbot</h6>
               <Select
                 labelKey='name'
                 valueKey='id'
@@ -25,7 +25,7 @@ class Campaign extends React.Component {
               />
             </div>
             <div className='card-block'>
-              <h6 className='card-subtitle'>Inbox</h6>
+              <h6 className='card-subtitle mb-3'>Inbox</h6>
               <Select
                 labelKey='name'
                 valueKey='id'

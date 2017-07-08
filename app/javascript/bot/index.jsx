@@ -11,7 +11,7 @@ class Bot extends React.Component {
       <SubMain>
         <div className='Bot'>
           <div className='BotHeader'>
-            <h2 className='BotName'>{this.props.name}</h2>
+            <h2 className='BotName mb-3'>{this.props.name}</h2>
           </div>
           <BotGreeting 
             onChange={this.props.onGreetingChange}
