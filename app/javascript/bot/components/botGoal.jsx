@@ -1,16 +1,22 @@
 import React from 'react'
 import Textarea from 'react-textarea-autosize'
-import { Collapse } from 'reactstrap'
+import { Collapse, Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
 
 class BotGoal extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      collapse: true
+      collapse: true,
+      dropdownOpen: false
     }
 
+    this.toggle = this.toggle.bind(this);
     this.onClick = this.onClick.bind(this);
+  }
+
+  toggle() {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
   }
 
   onClick() {
@@ -34,9 +40,20 @@ class BotGoal extends React.Component {
             <span className='bot-card--title'>{this.props.body}</span>
           </div>
           <div className='bot-card--actions'>
-            <a role="button" className='bot-card--settings'>
-              ⋯
-            </a>
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <a onClick={this.toggle}
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded={this.state.dropdownOpen} role="button" className='bot-card--settings'>
+                ⋯
+              </a>
+              <DropdownMenu right>
+                <DropdownItem role='button'>
+                  <i className='fa fa-times mr-2'></i>
+                  Remove Goal
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
             <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
               <i className={this.iconClasses()}></i>
             </a>
