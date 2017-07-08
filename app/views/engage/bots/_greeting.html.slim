@@ -1,0 +1,42 @@
+.card
+  .card-header.greeting--header
+    .bot-card--label-title
+      span.bot-card--label Greeting:
+      span.bot-card--title = greeting.body
+    a.bot-card--toggle-body role="button"
+      i.fa.fa-angle-down
+  .card-block
+    .card-text
+      h5.card-title Create a friendly greeting:
+      h6.card-subtitle.mb-3.text-muted Make a great first impression with every candidate.
+      textarea.form-control placeholder='Write a friendly greeting...'
+        = greeting.body
+
+
+
+
+<div className='card'>
+  <div className='card-header greeting--header'>
+    <div className='bot-card--label-title'>
+      <span className='bot-card--label'>Greeting:</span>
+      <span className='bot-card--title'>{this.props.body}</span>
+    </div>
+    <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
+      <i className={this.iconClasses()}></i>
+    </a>
+  </div>
+  <Collapse isOpen={this.state.collapse}>
+    <div className='card-block'>
+      <div className='card-text'>
+        <h5 className='card-title'>Create a friendly greeting:</h5>
+        <h6 className="card-subtitle mb-3 text-muted">Make a great first impression with every candidate.</h6>
+        <Textarea
+          onChange={this.props.onChange}
+          className='form-control'
+          placeholder='Write a friendly greeting...'
+          value={this.props.body}
+        />
+      </div>
+    </div>
+  </Collapse>
+</div>

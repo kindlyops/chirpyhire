@@ -1,0 +1,19 @@
+.ch--Page
+  .ch--Header
+    h1 Engage
+  .ch--main
+    = render partial: "engage/navigation"
+    .ch--sub-main
+      = form_for @campaign, url: engage_campaign_path(@campaign) do |f|
+        .Campaign
+          .CampaignHeader
+            h2.CampaignName.mb-3 = @campaign.name
+          = f.fields_for :bot_campaign do |b|
+            .card.CampaignSettings
+              .card-block
+                h5.card-title Campaign Settings
+                h6.card-subtitle.mb-2 Recruitbot
+                = b.select :bot_id, options_from_collection_for_select(current_organization.bots, :id, :name), {}, disabled: true, class: 'form-control'
+              .card-block
+                h6.card-subtitle.mb-2 Inbox
+                = b.select :inbox_id, options_from_collection_for_select(current_organization.inboxes, :id, :name), {}, disabled: true, class: 'form-control'

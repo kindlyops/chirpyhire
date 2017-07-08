@@ -1,0 +1,13 @@
+.EngageNavigation.ch--vertical-navigation
+  .ch--vertical-navigation--inner
+    .ch-vertical-navigation-header
+      h3.small-uppercase Campaigns
+      .ch--vertical-navigation-links
+        - current_organization.campaigns.each do |campaign|
+          = nav_link_to campaign.name, engage_campaign_path(campaign), class: 'ch--vertical-navigation-link' 
+  .ch--vertical-navigation--inner
+    .ch-vertical-navigation-header
+      h3.small-uppercase Bots
+      .ch--vertical-navigation-links
+        - current_organization.bots.each do |bot|
+          = nav_link_to bot.name, engage_bot_path(bot), class: 'ch--vertical-navigation-link'

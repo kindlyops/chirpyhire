@@ -19,7 +19,6 @@ import {
 
 import Inbox from 'inbox'
 import Platform from 'platform'
-import Engage from 'engage'
 
 class App extends React.Component {
   constructor(props) {
@@ -71,7 +70,6 @@ class App extends React.Component {
         <div>
           <Switch>
             <Route path="/candidates" render={props => <Platform {...this.state} {...props} />} />
-            <Route path="/engage" render={props => <Engage {...this.state} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox {...this.state} {...props} />} />
           </Switch>

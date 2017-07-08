@@ -1,0 +1,14 @@
+.ch--Page
+  .ch--Header
+    h1 Engage
+  .ch--main
+    = render partial: "engage/navigation"
+    .ch--sub-main
+      .Bot
+        .BotHeader
+          h2.BotName = @bot.name
+        = render partial: "engage/bots/greeting", locals: { greeting: @bot.greeting }
+        div
+          = render partial: "engage/bots/question", collection: @bot.questions
+        div
+          = render partial: "engage/bots/goal", collection: @bot.goals
