@@ -1,7 +1,5 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { connect } from 'react-redux'
-import { load as loadBot } from '../reducers/bot'
 
 let BotForm = props => {
   const { handleSubmit } = props
@@ -27,12 +25,5 @@ let BotForm = props => {
 BotForm = reduxForm({
   form: 'bot'
 })(BotForm)
-
-// BotForm = connect(
-//   state => ({
-//     initialValues: state.bot.data // pull initial values from account reducer
-//   }),
-//   { load: loadBot } // bind account loading action creator
-// )(BotForm)
 
 export default BotForm

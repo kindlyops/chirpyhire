@@ -5,8 +5,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import Root from '../containers/root'
-import store from '../store'
+import configureStore from '../store/configureStore'
 import history from '../store/history'
+
+const store = configureStore();
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
