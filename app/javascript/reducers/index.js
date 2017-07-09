@@ -11,19 +11,6 @@ import bots from './bots'
 import campaigns from './campaigns'
 import inboxes from './inboxes'
 
-// const initialEntities = { 
-//   greetings: {}, follow_ups: {}, questions: {}, goals: {}, bots: {}, 
-//   campaigns: {}, inboxes: {}
-// }
-
-// const entities = (state = initialEntities, action) => {
-//   if (action.payload && action.payload.entities) {
-//     return R.mergeAll([{}, state, action.payload.entities])
-//   }
-
-//   return state
-// }
-
 const entities = combineReducers({
   greetings,
   follow_ups,

@@ -1,6 +1,7 @@
 import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { Collapse } from 'reactstrap'
+import { Field } from 'redux-form'
 
 class BotGreeting extends React.Component {
   constructor(props) {
@@ -42,12 +43,7 @@ class BotGreeting extends React.Component {
             <div className='card-text'>
               <h5 className='card-title'>Create a friendly greeting:</h5>
               <h6 className="card-subtitle mb-3 text-muted">Make a great first impression with every candidate.</h6>
-              <Textarea
-                onChange={this.props.onChange}
-                className='form-control'
-                placeholder='Write a friendly greeting...'
-                value={this.props.body}
-              />
+              <Field name="greeting.body" component="textarea" className='form-control' placeholder='Write a friendly greeting...' />
             </div>
           </div>
         </Collapse>
