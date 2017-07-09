@@ -1,5 +1,6 @@
 import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
+import 'babel-polyfill'
 
 import React from 'react'
 import ReactDOM from 'react-dom'

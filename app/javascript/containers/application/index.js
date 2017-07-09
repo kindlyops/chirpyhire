@@ -1,15 +1,11 @@
 import React from 'react'
-
-import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router'
 
-import { ConnectedRouter } from 'react-router-redux'
-
+import Engage from '../engage'
 import Platform from '../platform'
 import Inbox from '../inbox'
-import Engage from '../engage'
 
-class Root extends React.Component {
+class Application extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,20 +19,12 @@ class Root extends React.Component {
   }
 
   render() {
-    return (
-      <Provider store={this.props.store}>
-        <ConnectedRouter history={this.props.history}>
-          <div>
-            <Switch>
-              <Route path="/candidates" render={props => <Platform {...this.state} {...props} />} />
+    return (<Switch>
               <Route path="/engage" render={props => <Engage {...this.state} {...props} />} />
-              <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
+              <Route path="/candidates" render={props => <Platform {...this.state} {...props} />} />
               <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox {...this.state} {...props} />} />
-            </Switch>
-          </div>
-        </ConnectedRouter>
-    </Provider>
-    )
+              <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
+            </Switch>);
   }
 
   load() {
@@ -119,4 +107,4 @@ class Root extends React.Component {
   }
 }
 
-export default Root;
+export default Application;
