@@ -1,5 +1,7 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, initialize } from 'redux-form'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 let BotForm = props => {
   const { handleSubmit } = props
@@ -26,4 +28,13 @@ BotForm = reduxForm({
   form: 'bot'
 })(BotForm)
 
-export default BotForm
+const mapStateToProps = (state, { match: { params } }) => {
+  const {
+    entities: { bots }
+  } = state
+
+  const bot = bots.byId[params.id]
+  return { initialValues: bot }
+}
+
+export default withRouter(connect(mapStateToProps, {})(BotForm))

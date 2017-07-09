@@ -32,21 +32,25 @@ class Engage extends React.Component {
           <h1>Engage</h1>
         </Header>
         <Main>
-          <EngageNavigation {...this.state} />
-          <Route path={this.props.match.url + '/bots/:id'} render={props => <BotContainer {...this.state} {...props} />} />
-          <Route path={this.props.match.url + '/campaigns/:id'} render={props => <CampaignContainer {...this.state} {...props} />} />
+          <EngageNavigation {...this.props} />
+          <Route path={this.props.match.url + '/bots/:id'} render={props => <BotContainer {...this.props} {...props} />} />
+          <Route path={this.props.match.url + '/campaigns/:id'} render={props => <CampaignContainer {...this.props} {...props} />} />
         </Main>
       </Page>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ourProps) => {
   const {
-    entities: { bots, campaigns, inboxes }
+    entities: { campaigns, inboxes, bots }
   } = state
 
-  return { bots, campaigns, inboxes }
+  let c = campaigns.allIds.map(id => campaigns.byId[id]);
+  let b = bots.allIds.map(id => bots.byId[id]);
+  let i = inboxes.allIds.map(id => inboxes.byId[id]);
+
+  return { campaigns: c, inboxes: i, bots: b }
 }
 
 export default connect(mapStateToProps, {

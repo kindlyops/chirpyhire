@@ -3,15 +3,36 @@ import { combineReducers } from 'redux'
 import { routerReducer as router } from 'react-router-redux'
 import { reducer as form } from 'redux-form'
 
-const entities = (state = { 
-  greetings: {}, follow_ups: {}, questions: {}, goals: {}, bots: {}, 
-  campaigns: {}, inboxes: {} }, action) => {
-  if (action.response && action.response.entities) {
-    return R.mergeAll([{}, state, action.response.entities])
-  }
+import greetings from './greetings'
+import follow_ups from './follow_ups'
+import questions from './questions'
+import goals from './goals'
+import bots from './bots'
+import campaigns from './campaigns'
+import inboxes from './inboxes'
 
-  return state
-}
+// const initialEntities = { 
+//   greetings: {}, follow_ups: {}, questions: {}, goals: {}, bots: {}, 
+//   campaigns: {}, inboxes: {}
+// }
+
+// const entities = (state = initialEntities, action) => {
+//   if (action.payload && action.payload.entities) {
+//     return R.mergeAll([{}, state, action.payload.entities])
+//   }
+
+//   return state
+// }
+
+const entities = combineReducers({
+  greetings,
+  follow_ups,
+  questions,
+  goals,
+  bots,
+  campaigns,
+  inboxes
+})
 
 const rootReducer = combineReducers({
   entities,

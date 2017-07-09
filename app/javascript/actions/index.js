@@ -1,38 +1,44 @@
-import { CALL_API, getJSON } from 'redux-api-middleware'
-import { schema, normalize } from 'normalizr';
+import { CALL_API, getJSON } from 'redux-api-middleware';
+import { normalize } from 'normalizr';
+import { 
+  arrayOfBotsSchema, arrayOfInboxesSchema, arrayOfCampaignsSchema,
+  botSchema
+} from './schema';
 
-const botSchema = new schema.Entity('bots')
+const SUCCESS = '@@congaree/SUCCESS';
+const REQUEST = '@@congaree/REQUEST';
+const FAILURE = '@@congaree/FAILURE';
 
-const greetingSchema = new schema.Entity('greetings', {
-  bot: botSchema
-})
-
-const goalSchema = new schema.Entity('goals', {
-  bot: botSchema
-})
-
-const questionSchema = new schema.Entity('questions', {
-  bot: botSchema
-})
-
-const followUpSchema = new schema.Entity('follow_ups', {
-  question: questionSchema
-})
-
-const campaignSchema = new schema.Entity('campaigns')
-const inboxSchema    = new schema.Entity('inboxes')
+export const updateBot = (bot) => ({
+  type: SUCCESS, 
+  payload: normalize(bot, botSchema)
+});
 
 export const getBots = () => ({
   [CALL_API]: {
     endpoint: `/bots`,
     method: 'GET',
     credentials: 'same-origin',
-    types: ['REQUEST', {
-        type: 'SUCCESS',
+    types: [REQUEST, {
+        type: SUCCESS,
         payload: (action, state, res) => {
-          return getJSON(res).then((json) => normalize(json, { bots: [botSchema] }));
+          return getJSON(res).then((json) => normalize(json, arrayOfBotsSchema));
         }
-      }, 'FAILURE']
+      }, FAILURE]
+  }
+})
+
+export const getBot = (id) => ({
+  [CALL_API]: {
+    endpoint: `/bots/${id}`,
+    method: 'GET',
+    credentials: 'same-origin',
+    types: [REQUEST, {
+        type: SUCCESS,
+        payload: (action, state, res) => {
+          return getJSON(res).then((json) => normalize(json, botSchema));
+        }
+      }, FAILURE]
   }
 })
 
@@ -41,12 +47,12 @@ export const getCampaigns = () => ({
     endpoint: `/campaigns`,
     method: 'GET',
     credentials: 'same-origin',
-    types: ['REQUEST', {
-        type: 'SUCCESS',
+    types: [REQUEST, {
+        type: SUCCESS,
         payload: (action, state, res) => {
-          return getJSON(res).then((json) => normalize(json, { campaigns: [campaignSchema] }));
+          return getJSON(res).then((json) => normalize(json, arrayOfCampaignsSchema));
         }
-      }, 'FAILURE']
+      }, FAILURE]
   }
 })
 
@@ -55,11 +61,11 @@ export const getInboxes = () => ({
     endpoint: `/inboxes`,
     method: 'GET',
     credentials: 'same-origin',
-    types: ['REQUEST', {
-        type: 'SUCCESS',
+    types: [REQUEST, {
+        type: SUCCESS,
         payload: (action, state, res) => {
-          return getJSON(res).then((json) => normalize(json, { inboxes: [inboxSchema] }));
+          return getJSON(res).then((json) => normalize(json, arrayOfInboxesSchema));
         }
-      }, 'FAILURE']
+      }, FAILURE]
   }
 })

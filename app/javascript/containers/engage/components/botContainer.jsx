@@ -1,17 +1,19 @@
 import React from 'react'
 
 import Bot from '../../bot'
-import update from 'immutability-helper'
+import { getBot, updateBot } from '../../../actions'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
+const getData = ({ getBot, match: { params } }) => {
+  getBot(params.id);
+}
 
 class BotContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      subscription: {},
-      bot: {}
-    }
-
+    this.state = { subscription: {} }
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -23,7 +25,7 @@ class BotContainer extends React.Component {
     return(
       <Bot 
         onSubmit={this.onSubmit}
-        {...this.state.bot}>
+        {...this.props.bot}>
       </Bot>
     )
   }
@@ -32,33 +34,20 @@ class BotContainer extends React.Component {
     return this.props.match.params.id;
   }
 
-  botUrl(botId) {
-    return `/bots/${botId}`;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    let nextBotId = nextProps.match.params.id;
+  componentDidUpdate({ match: { params }}) {
     let botId = this.botId();
-
-    if(nextBotId !== botId) {
-      this.load(nextBotId);
-      this.reconnect(nextBotId);
+    if(params.id !== botId) {
+      this.reconnect(botId);
     }
   }
 
   componentDidMount() {
-    this.load(this.botId());
+    getData(this.props);
     this.connect(this.botId());
   }
 
   componentWillUnmount() {
     this.disconnect();
-  }
-
-  load(botId) {
-    $.get(this.botUrl(botId)).then(bot => {
-      this.setState({ bot: bot });
-    });
   }
 
   disconnect() {
@@ -81,13 +70,21 @@ class BotContainer extends React.Component {
 
   _channelConfig() {
     return {
-      received: this._received.bind(this)
+      received: this.props.updateBot.bind(this)
     }
-  }
-
-  _received(receivedBot) {
-    this.setState({ bot: receivedBot });
   }
 }
 
-export default BotContainer
+const mapStateToProps = (state, { match: { params } }) => {
+  const {
+    entities: { bots }
+  } = state
+
+  const bot = bots.byId[params.id]
+  return { bot }
+}
+
+export default withRouter(connect(mapStateToProps, {
+  getBot,
+  updateBot
+})(BotContainer))
