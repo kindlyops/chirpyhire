@@ -10,37 +10,18 @@ import Page from '../../components/page'
 import Header from '../../components/header'
 import Main from '../../components/main'
 
+import { getBots, getCampaigns, getInboxes } from '../../actions'
+import { connect } from 'react-redux'
+
+const getData = ({ getBots, getCampaigns, getInboxes }) => {
+  getBots();
+  getCampaigns();
+  getInboxes();
+}
+
 class Engage extends React.Component {
-  constructor(props) { 
-    super(props);
-
-    this.state = {}
-  }
-
-  botsUrl() {
-    return `/bots`;
-  }
-
-  campaignsUrl() {
-    return `/campaigns`;
-  }
-
-  inboxesUrl() {
-    return `/inboxes`;
-  }
-
-  componentDidMount() {
-    $.get(this.botsUrl()).then(bots => {
-      this.setState({ bots: bots });
-    });
-
-    $.get(this.campaignsUrl()).then(campaigns => {
-      this.setState({ campaigns: campaigns });
-    });
-
-    $.get(this.inboxesUrl()).then(inboxes => {
-      this.setState({ inboxes: inboxes });
-    });
+  componentWillMount() {
+    getData(this.props);
   }
 
   render() {
@@ -60,4 +41,16 @@ class Engage extends React.Component {
   }
 }
 
-export default Engage
+const mapStateToProps = (state, ownProps) => {
+  const {
+    entities: { bots, campaigns, inboxes }
+  } = state
+
+  return { bots, campaigns, inboxes }
+}
+
+export default connect(mapStateToProps, {
+  getBots,
+  getCampaigns,
+  getInboxes
+})(Engage)
