@@ -12,7 +12,9 @@ const questionSchema = new schema.Entity('questions', {
 
 const greetingSchema = new schema.Entity('greetings')
 
-const goalSchema = new schema.Entity('goals')
+const goalSchema = new schema.Entity('goals', {
+  tags: [tagSchema]
+})
 
 export const botSchema = new schema.Entity('bots', {
   questions: [questionSchema],

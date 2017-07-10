@@ -74,9 +74,17 @@ const mapStateToProps = (state, { match: { params } }) => {
       return question;
     }
 
+    const toGoal = (id) => {
+      const goal = goals.byId[id];
+      const tags_attributes = goal.tags && goal.tags.map(uid => tags.byId[uid]) || [];
+      goal.tags_attributes = tags_attributes;
+      delete goal.tags;
+      return goal
+    }
+
     const questions_attributes = bot.questions && bot.questions.map(toQuestion) || [];
     bot.questions_attributes = questions_attributes;
-    const goals_attributes = bot.goals && bot.goals.map(id => goals.byId[id]) || []; 
+    const goals_attributes = bot.goals && bot.goals.map(toGoal) || []; 
     bot.goals_attributes = goals_attributes;
     delete bot.goals;
     delete bot.greeting;

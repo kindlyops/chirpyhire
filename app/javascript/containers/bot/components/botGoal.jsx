@@ -2,9 +2,26 @@ import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { Collapse, Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
 import { Field } from 'redux-form'
+import Select from 'react-select'
 
 const renderTextarea = ({ input, meta, ...rest }) =>
   <Textarea {...input} {...rest}/>
+
+const getTags = (input, callback) => {
+  return $.get('/tags').then((response) => {
+    return callback(null, { options: response })
+  });
+}
+
+const renderSelect = ({ input, meta, ...rest }) => (
+  <Select.Async 
+    {...input}
+    {...rest}
+    valueKey='id'
+    labelKey='name'
+    multi={true}
+    loadOptions={getTags} />
+)
 
 class BotGoal extends React.Component {
   constructor(props) {
@@ -88,6 +105,12 @@ class BotGoal extends React.Component {
           </div>
         </div>
         <Collapse isOpen={this.state.collapse}>
+          <div className='card-block'>
+            <h5 className='card-title'>Tags:</h5>
+            <h6 className="card-subtitle mb-3 text-muted">Add one or more useful tags to apply to candidates who hit this goal.</h6>
+            <Field name={`${this.props.goal}.tags_attributes`} component={renderSelect} />
+          </div>
+          <hr />
           <div className='card-block'>
             <h5 className='card-title'>Send Message:</h5>
             <h6 className="card-subtitle mb-3 text-muted">Create a meaningful message to end the bot conversation for candidates who hit this goal.</h6>

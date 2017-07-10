@@ -34,5 +34,10 @@ json.array! @bots do |bot|
   json.goals bot.goals do |goal|
     json.id goal.id
     json.body goal.body
+
+    json.tags goal.tags do |tag|
+      json.id tag.id
+      json.name tag.name
+    end
   end
 end
