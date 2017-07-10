@@ -26,8 +26,12 @@ class Bot extends React.Component {
       <SubMain>
         <form className='Bot' onSubmit={ handleSubmit }>
           <div className='BotHeader'>
-            <label htmlFor="bot.name" className='sr-only'>Bot Name</label>
-            <Field className='BotName mb-2' name="bot.name" component="input" type="text" />
+            <div className='BotHeader--name'>
+              <label htmlFor="bot.name" className='sr-only'>Bot Name</label>
+              <Field className='BotName mb-2' name="bot.name" component="input" type="text" />
+            </div>
+            <div className='BotHeader--actions'>
+            </div>
           </div>
           <BotGreeting {...this.props} />
           <FieldArray name="bot.questions_attributes" props={this.props} component={renderBotQuestions} />
