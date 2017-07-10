@@ -11,7 +11,8 @@ class Conversation extends React.Component {
       contactSubscription: {},
       contact: {
         zipcode: {},
-        tags: []
+        tags: [],
+        outcomes: []
       },
       messages: []
     };

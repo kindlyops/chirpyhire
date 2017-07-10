@@ -3,6 +3,14 @@ class ContactPolicy < ApplicationPolicy
     show?
   end
 
+  def update?
+    show?
+  end
+
+  def permitted_attributes
+    %i[outcome]
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       if canceled?

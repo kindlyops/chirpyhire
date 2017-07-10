@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileStar from './profileStar'
+import ProfileOutcome from './profileOutcome'
 
 class ProfileHeader extends React.Component {
 
@@ -19,16 +19,16 @@ class ProfileHeader extends React.Component {
   render() {
     return (
       <div className="profile-header">
-        <div className="profile-image">
-          {this.profileImage()}
+        <div className='profile-header--inner'>
+          <div className="profile-image">
+            {this.profileImage()}
+          </div>
+          <div className="profile-header-details">
+            <div className="profile-handle">{this.props.contact.handle}</div>
+            <div className="profile-phone-number">{this.props.contact.phone_number}</div>
+          </div>
         </div>
-        <div className="profile-header-details">
-          <div className="profile-handle">{this.props.contact.handle}</div>
-          <div className="profile-phone-number">{this.props.contact.phone_number}</div>
-        </div>
-        <div className="profile-actions">
-          <ProfileStar contact={this.props.contact} />
-        </div>
+        <ProfileOutcome contact={this.props.contact} />
       </div>
     )
   }

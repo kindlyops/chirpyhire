@@ -5,6 +5,10 @@ class Goal < ApplicationRecord
   has_many :tags, through: :goals_tags
   validates :rank, presence: true
 
+  enum outcome: {
+    'New' => 0, 'Screened' => 1, 'Not Now' => 2, 'Scheduled' => 3
+  }
+
   def self.ranked
     order(:rank)
   end
@@ -14,6 +18,7 @@ class Goal < ApplicationRecord
   end
 
   def tag(contact)
+    contact.update(outcome: outcome)
     contact.tags << tags
   end
 end

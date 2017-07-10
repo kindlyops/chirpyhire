@@ -294,19 +294,17 @@
 
   .profile-header {
     display: flex;
+    flex-direction: column;
+
+    .profile-header--inner {
+      display: flex;
+    }
 
     .profile-header-details {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-  }
-
-  .profile-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    width: 6rem;
   }
 
   .profile-section {
