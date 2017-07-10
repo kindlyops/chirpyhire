@@ -7,15 +7,15 @@ import BotGreeting from './components/botGreeting'
 import BotQuestion from './components/botQuestion'
 import BotGoal from './components/botGoal'
 
-const renderBotQuestions = ({ formValues, fields, meta: { error, submitFailed } }) => (
+const renderBotQuestions = ({ change, formValues, fields, meta: { error, submitFailed } }) => (
   <div>
-    {fields.map((question, index) => (<BotQuestion formValues={formValues} question={question} index={index} key={index} />))}
+    {fields.map((question, index) => (<BotQuestion change={change} formValues={formValues} question={question} index={index} key={index} />))}
   </div>
 )
 
-const renderBotGoals = ({ formValues, fields, meta: { error, submitFailed } }) => (
+const renderBotGoals = ({ change, formValues, fields, meta: { error, submitFailed } }) => (
   <div>
-    {fields.map((goal, index) => (<BotGoal formValues={formValues} goal={goal} index={index} key={index} />))}
+    {fields.map((goal, index) => (<BotGoal change={change} formValues={formValues} goal={goal} index={index} key={index} />))}
   </div>
 )
 

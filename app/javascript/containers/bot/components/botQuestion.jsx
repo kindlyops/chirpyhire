@@ -7,9 +7,9 @@ import { Field, FieldArray } from 'redux-form'
 const renderTextarea = ({ input, meta, ...rest }) =>
   <Textarea {...input} {...rest}/>
 
-const renderBotFollowUps = ({ index, formValues, fields, meta: { error, submitFailed } }) => (
+const renderBotFollowUps = ({ change, index, formValues, fields, meta: { error, submitFailed } }) => (
   <div>
-    {fields.map((follow_up, i) => (<BotFollowUp questionIndex={index} formValues={formValues} follow_up={follow_up} index={i} key={i} />))}
+    {fields.map((follow_up, i) => (<BotFollowUp change={change} questionIndex={index} formValues={formValues} follow_up={follow_up} index={i} key={i} />))}
   </div>
 )
 
@@ -24,7 +24,18 @@ class BotQuestion extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.onRemoveClick = this.onRemoveClick.bind(this);
+    this.question = this.question.bind(this);
     this.questionBody = this.questionBody.bind(this);
+    this.isMarkedForDeletion = this.isMarkedForDeletion.bind(this);
+  }
+
+  isMarkedForDeletion() {
+    return !!this.question()._destroy;
+  }
+
+  onRemoveClick() {
+    this.props.change(`${this.props.question}._destroy`, true);
   }
 
   toggle() {
@@ -43,18 +54,20 @@ class BotQuestion extends React.Component {
     }
   }
 
-  questionBody() {
+  question() {
     const formValues = this.props.formValues || {};
     const bot = formValues.bot || {};
     const questions_attributes = bot.questions_attributes || [];
-    const question = questions_attributes[this.props.index] || {};
+    return questions_attributes[this.props.index] || {};
+  }
 
-    return question.body || '';
+  questionBody() {
+    return this.question().body || '';
   }
 
   render() {
     return (
-      <div className='card'>
+      <div className='card' hidden={this.isMarkedForDeletion()}>
         <div className='card-header question--header'>
           <div className='bot-card--label-title'>
             <span className='bot-card--label'>Question:</span>
@@ -69,7 +82,8 @@ class BotQuestion extends React.Component {
                 ⋯
               </a>
               <DropdownMenu right>
-                <DropdownItem role='button'>
+                <DropdownItem role='button' onClick={this.onRemoveClick}>
+                  <Field name={`${this.props.question}._destroy`} component="input" type="checkbox" hidden={true} />
                   <i className='fa fa-times mr-2'></i>
                   Remove Question
                 </DropdownItem>

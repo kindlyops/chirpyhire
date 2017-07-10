@@ -17,7 +17,18 @@ class BotGoal extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.goal = this.goal.bind(this);
     this.goalBody = this.goalBody.bind(this);
+    this.onRemoveClick = this.onRemoveClick.bind(this);
+    this.isMarkedForDeletion = this.isMarkedForDeletion.bind(this);
+  }
+
+  isMarkedForDeletion() {
+    return !!this.goal()._destroy;
+  }
+
+  onRemoveClick() {
+    this.props.change(`${this.props.goal}._destroy`, true);
   }
 
   toggle() {
@@ -36,18 +47,20 @@ class BotGoal extends React.Component {
     }
   }
 
-  goalBody() {
+  goal() {
     const formValues = this.props.formValues || {};
     const bot = formValues.bot || {};
     const goals_attributes = bot.goals_attributes || [];
-    const goal = goals_attributes[this.props.index] || {};
+    return goals_attributes[this.props.index] || {};
+  }
 
-    return goal.body || '';
+  goalBody() {
+    return this.goal().body || '';
   }
 
   render() {
     return (
-      <div className='card'>
+      <div className='card' hidden={this.isMarkedForDeletion()}>
         <div className='card-header goal--header'>
           <div className='bot-card--label-title'>
             <span className='bot-card--label'>Goal:</span>
@@ -62,7 +75,8 @@ class BotGoal extends React.Component {
                 ⋯
               </a>
               <DropdownMenu right>
-                <DropdownItem role='button'>
+                <DropdownItem role='button' onClick={this.onRemoveClick}>
+                  <Field name={`${this.props.goal}._destroy`} component="input" type="checkbox" hidden={true} />
                   <i className='fa fa-times mr-2'></i>
                   Remove Goal
                 </DropdownItem>

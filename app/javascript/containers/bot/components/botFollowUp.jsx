@@ -9,6 +9,16 @@ class BotFollowUp extends React.Component {
     this.followUp = this.followUp.bind(this);
     this.action = this.action.bind(this);
     this.response = this.response.bind(this);
+    this.onRemoveClick = this.onRemoveClick.bind(this);
+    this.isMarkedForDeletion = this.isMarkedForDeletion.bind(this);
+  }
+
+  isMarkedForDeletion() {
+    return !!this.followUp()._destroy;
+  }
+
+  onRemoveClick() {
+    this.props.change(`${this.props.follow_up}._destroy`, true);
   }
 
   actionClasses() {
@@ -51,7 +61,7 @@ class BotFollowUp extends React.Component {
   }
 
   render() {
-    return(<div className='FollowUp mb-2'>
+    return(<div className='FollowUp mb-2' hidden={this.isMarkedForDeletion()}>
             <Field name={`${this.props.follow_up}.body`} component="input" className='form-control' placeholder='Add a follow up...' />
             <div className='FollowUp--footer'>
               <div className='FollowUp--details'>
@@ -74,7 +84,8 @@ class BotFollowUp extends React.Component {
                 <a role="button">
                   <i className='fa fa-sliders'></i>
                 </a>
-                <a role="button">
+                <a role="button" onClick={this.onRemoveClick}>
+                  <Field name={`${this.props.follow_up}._destroy`} component="input" type="checkbox" hidden={true} />
                   <i className='fa fa-trash-o'></i>
                 </a>
               </div>
