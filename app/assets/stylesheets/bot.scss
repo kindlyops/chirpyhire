@@ -8,6 +8,20 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: .5rem;
+
+    .BotName {
+      border: none;
+      background-color: #eef6f2;
+      font-size: 1.5rem;
+
+      &:hover, &:focus {
+        border-bottom: 1px dashed $gray;
+      }
+
+      &:focus {
+        outline: none
+      }
+    }
   }
 
   .bot-card--label {
