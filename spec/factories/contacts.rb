@@ -18,7 +18,7 @@ FactoryGirl.define do
       after(:create) do |contact|
         organization = contact.organization
         contact.update(subscribed: true, screened: true)
-
+        contact.update(outcome: 'Screened')
         %w[Availability Experience Transportation Certification
            SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
           question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
