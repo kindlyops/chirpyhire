@@ -23,6 +23,10 @@ class Contact < ApplicationRecord
 
   before_create :set_last_reply_at
 
+  enum outcome: {
+    'New' => 0, 'Screened' => 1, 'Not Now' => 2, 'Scheduled' => 3
+  }
+
   def self.screened
     joins(taggings: :tag).merge(Tag.screened)
   end
