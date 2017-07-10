@@ -52,6 +52,12 @@ RSpec.describe Bot::GoalTrigger do
       subject.call
     end
 
+    it 'changes the outcome on the contact' do
+      expect {
+        subject.call
+      }.to change { contact.reload.outcome }.from('New').to('Screened')
+    end
+
     context 'with tags' do
       before do
         goal.tags << create_list(:tag, rand(2..4))
