@@ -10,6 +10,7 @@ import goals from './goals'
 import bots from './bots'
 import campaigns from './campaigns'
 import inboxes from './inboxes'
+import tags from './tags'
 
 const entities = combineReducers({
   greetings,
@@ -18,7 +19,8 @@ const entities = combineReducers({
   goals,
   bots,
   campaigns,
-  inboxes
+  inboxes,
+  tags
 })
 
 const rootReducer = combineReducers({

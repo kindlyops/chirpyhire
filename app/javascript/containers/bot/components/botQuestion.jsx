@@ -2,6 +2,16 @@ import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { Collapse, Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
 import BotFollowUp from './botFollowUp'
+import { Field, FieldArray } from 'redux-form'
+
+const renderTextarea = ({ input, meta, ...rest }) =>
+  <Textarea {...input} {...rest}/>
+
+const renderBotFollowUps = ({ index, formValues, fields, meta: { error, submitFailed } }) => (
+  <div>
+    {fields.map((follow_up, i) => (<BotFollowUp questionIndex={index} formValues={formValues} follow_up={follow_up} index={i} key={i} />))}
+  </div>
+)
 
 class BotQuestion extends React.Component {
   constructor(props) {
@@ -14,6 +24,7 @@ class BotQuestion extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.questionBody = this.questionBody.bind(this);
   }
 
   toggle() {
@@ -32,13 +43,22 @@ class BotQuestion extends React.Component {
     }
   }
 
+  questionBody() {
+    const formValues = this.props.formValues || {};
+    const bot = formValues.bot || {};
+    const questions_attributes = bot.questions_attributes || [];
+    const question = questions_attributes[this.props.index] || {};
+
+    return question.body || '';
+  }
+
   render() {
     return (
       <div className='card'>
         <div className='card-header question--header'>
           <div className='bot-card--label-title'>
             <span className='bot-card--label'>Question:</span>
-            <span className='bot-card--title'>{this.props.body}</span>
+            <span className='bot-card--title'>{this.questionBody()}</span>
           </div>
           <div className='bot-card--actions'>
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -65,14 +85,7 @@ class BotQuestion extends React.Component {
             <h5 className='card-title'>What the bot asks:</h5>
             <h6 className="card-subtitle mb-3 text-muted">Ask a meaningful question to interview candidates.</h6>
             <div className='card-text'>
-              <Textarea
-                onChange={this.props.onChange}
-                name="bot[questions_attributes][][body]"
-                id={this.props.id}
-                className='form-control'
-                placeholder='Ask a question...'
-                value={this.props.body}
-              />
+              <Field name={`${this.props.question}.body`} component={renderTextarea} className='form-control' placeholder='Ask a question...' />
             </div>
           </div>
           <hr />
@@ -81,9 +94,7 @@ class BotQuestion extends React.Component {
             <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
             <div className='card-text'>
               <div>
-                {this.props.follow_ups.map(follow_up =>
-                  <BotFollowUp onChange={this.props.onFollowUpChange} key={follow_up.id} {...follow_up} />
-                )}
+                <FieldArray name={`${this.props.question}.follow_ups_attributes`} props={this.props} component={renderBotFollowUps} />
               </div>
               <button role="button" className='btn btn-default'>
                 <i className='fa fa-plus mr-2'></i>
@@ -95,10 +106,6 @@ class BotQuestion extends React.Component {
       </div>
     )
   }
-}
-
-BotQuestion.defaultProps = {
-  follow_ups: []
 }
 
 export default BotQuestion

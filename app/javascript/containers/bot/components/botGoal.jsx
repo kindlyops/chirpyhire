@@ -1,6 +1,10 @@
 import React from 'react'
 import Textarea from 'react-textarea-autosize'
 import { Collapse, Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Field } from 'redux-form'
+
+const renderTextarea = ({ input, meta, ...rest }) =>
+  <Textarea {...input} {...rest}/>
 
 class BotGoal extends React.Component {
   constructor(props) {
@@ -13,6 +17,7 @@ class BotGoal extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.goalBody = this.goalBody.bind(this);
   }
 
   toggle() {
@@ -31,13 +36,22 @@ class BotGoal extends React.Component {
     }
   }
 
+  goalBody() {
+    const formValues = this.props.formValues || {};
+    const bot = formValues.bot || {};
+    const goals_attributes = bot.goals_attributes || [];
+    const goal = goals_attributes[this.props.index] || {};
+
+    return goal.body || '';
+  }
+
   render() {
     return (
       <div className='card'>
         <div className='card-header goal--header'>
           <div className='bot-card--label-title'>
             <span className='bot-card--label'>Goal:</span>
-            <span className='bot-card--title'>{this.props.body}</span>
+            <span className='bot-card--title'>{this.goalBody()}</span>
           </div>
           <div className='bot-card--actions'>
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -64,14 +78,7 @@ class BotGoal extends React.Component {
             <h5 className='card-title'>Send Message:</h5>
             <h6 className="card-subtitle mb-3 text-muted">Create a meaningful message to end the bot conversation for candidates who hit this goal.</h6>
             <div className='card-text'>
-              <Textarea
-                onChange={this.props.onChange}
-                name="bot[goals_attributes][][body]"
-                id={this.props.id}
-                className='form-control'
-                placeholder='Write a meaningful message...'
-                value={this.props.body}
-              />
+              <Field name={`${this.props.goal}.body`} component={renderTextarea} className='form-control' placeholder='Write a meaningful message...' />
             </div>
           </div>
         </Collapse>

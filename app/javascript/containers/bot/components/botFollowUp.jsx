@@ -1,8 +1,18 @@
 import React from 'react'
+import { Field } from 'redux-form'
 
 class BotFollowUp extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.tags = this.tags.bind(this);
+    this.followUp = this.followUp.bind(this);
+    this.action = this.action.bind(this);
+    this.response = this.response.bind(this);
+  }
+
   actionClasses() {
-    switch(this.props.action) {
+    switch(this.action()) {
       case 'next_question':
         return 'FollowUp--action badge badge-next-question';
         break;
@@ -14,28 +24,45 @@ class BotFollowUp extends React.Component {
         break;
     }
   }
+
+  tags() {
+    return this.followUp().tags_attributes || [];
+  }
+
+  followUp() {
+    const formValues = this.props.formValues || {};
+    const bot = formValues.bot || {};
+    const questions_attributes = bot.questions_attributes || [];
+    const question = questions_attributes[this.props.questionIndex] || {};
+    const follow_ups_attributes = question.follow_ups_attributes || [];
+    return follow_ups_attributes[this.props.index] || {};
+  }
+
+  humanizedAction() {
+    return this.followUp().humanized_action || '';
+  }
+
+  action() {
+    return this.followUp().action || '';
+  }
+
+  response() {
+    return this.followUp().response || '';
+  }
+
   render() {
     return(<div className='FollowUp mb-2'>
-            <input 
-              name="bot[questions_attributes][][follow_ups_attributes][][body]"
-              type="text"
-              className='form-control'
-              id={this.props.id}
-              data-question-id={this.props.question_id}
-              value={this.props.body}
-              onChange={this.props.onChange}
-              placeholder='Add a follow up...'
-            />
+            <Field name={`${this.props.follow_up}.body`} component="input" className='form-control' placeholder='Add a follow up...' />
             <div className='FollowUp--footer'>
               <div className='FollowUp--details'>
                 <span className='FollowUp--response badge badge-default'>
-                  {this.props.response}
+                  {this.response()}
                 </span>
                 <span className={this.actionClasses()}>
-                  {this.props.humanized_action}
+                  {this.humanizedAction()}
                 </span>
                 <span className='FollowUp--tags'>
-                  {this.props.tags.map(tag =>
+                  {this.tags().map(tag =>
                     <span key={tag.id} className='ch-tag'>
                       <i className='fa fa-tag mr-2'></i>
                       {tag.name}

@@ -1,6 +1,10 @@
 import { schema } from 'normalizr';
 
-const followUpSchema = new schema.Entity('follow_ups')
+const tagSchema = new schema.Entity('tags')
+
+const followUpSchema = new schema.Entity('follow_ups', {
+  tags: [tagSchema]
+})
 
 const questionSchema = new schema.Entity('questions', {
   follow_ups: [followUpSchema]
