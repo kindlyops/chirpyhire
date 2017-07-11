@@ -7,6 +7,7 @@ import Pagination from 'react-js-pagination'
 const CandidatesListContainer = props => (
   <div className='CandidatesListContainer ch--sub-main'>
     <CandidatesMenu 
+      {...props}
       total_count={props.total_count} 
       exportCSV={props.exportCSV}
     />
