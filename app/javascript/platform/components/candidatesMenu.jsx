@@ -8,7 +8,10 @@ class CandidatesMenu extends React.Component {
   }
 
   isDisabled() {
-    return this.props.current_organization.subscription.status === 'canceled';
+    const organization = this.props.current_organization || {};
+    const subscription = organization.subscription || {};
+
+    return subscription.status === 'canceled';
   }
 
   render() {
