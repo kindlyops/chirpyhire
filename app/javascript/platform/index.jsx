@@ -41,6 +41,7 @@ class Platform extends React.Component {
         <CandidateSegments segments={this.state.segments} handleSegmentChange={this.handleSegmentChange} />
         <Candidates 
           {...this.state}
+          {...this.props}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
