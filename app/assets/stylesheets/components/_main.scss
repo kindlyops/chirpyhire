@@ -24,6 +24,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     background-color: #eef6f2;
 
     .ch--sub-main-content {
