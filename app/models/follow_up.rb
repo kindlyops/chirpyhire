@@ -20,8 +20,8 @@ class FollowUp < ApplicationRecord
     order(:rank)
   end
 
-  def tag(contact)
-    contact.tags << tags
+  def tag(contact, message)
+    TemplateTagger.call(self, contact, message)
   end
 
   def trigger(message, campaign_contact)
