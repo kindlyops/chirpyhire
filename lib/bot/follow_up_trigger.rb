@@ -33,8 +33,8 @@ class Bot::FollowUpTrigger
   end
 
   def trigger_question
-    return null_step if question.blank?
-    question.trigger(message, campaign_contact)
+    return null_step if follow_up.next_question.blank?
+    follow_up.next_question.trigger(message, campaign_contact)
   end
 
   def trigger_next_question
