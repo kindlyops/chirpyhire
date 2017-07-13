@@ -1,0 +1,104 @@
+import React from 'react'
+import Textarea from 'react-textarea-autosize'
+import { Collapse, Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
+import BotFollowUp from './botFollowUp'
+
+class BotQuestion extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      collapse: true,
+      dropdownOpen: false
+    }
+
+    this.toggle = this.toggle.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  toggle() {
+    this.setState({ dropdownOpen: !this.state.dropdownOpen });
+  }
+
+  onClick() {
+    this.setState({ collapse: !this.state.collapse });
+  }
+
+  iconClasses() {
+    if (this.state.collapse) {
+      return 'fa fa-angle-down';
+    } else {
+      return 'fa fa-angle-up';
+    }
+  }
+
+  render() {
+    return (
+      <div className='card'>
+        <div className='card-header question--header'>
+          <div className='bot-card--label-title'>
+            <span className='bot-card--label'>Question:</span>
+            <span className='bot-card--title'>{this.props.body}</span>
+          </div>
+          <div className='bot-card--actions'>
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <a onClick={this.toggle}
+                 data-toggle="dropdown"
+                 aria-haspopup="true"
+                 aria-expanded={this.state.dropdownOpen} role="button" className='bot-card--settings'>
+                ⋯
+              </a>
+              <DropdownMenu right>
+                <DropdownItem role='button'>
+                  <i className='fa fa-times mr-2'></i>
+                  Remove Question
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <a onClick={this.onClick} role="button" className='bot-card--toggle-body'>
+              <i className={this.iconClasses()}></i>
+            </a>
+          </div>
+        </div>
+        <Collapse isOpen={this.state.collapse}>
+          <div className='card-block'>
+            <h5 className='card-title'>What the bot asks:</h5>
+            <h6 className="card-subtitle mb-3 text-muted">Ask a meaningful question to interview candidates.</h6>
+            <div className='card-text'>
+              <Textarea
+                onChange={this.props.onChange}
+                name="bot[questions_attributes][][body]"
+                id={this.props.id}
+                className='form-control'
+                placeholder='Ask a question...'
+                value={this.props.body}
+              />
+            </div>
+          </div>
+          <hr />
+          <div className='card-block'>
+            <h5 className='card-title'>Follow ups based on the candidate's answer:</h5>
+            <h6 className="card-subtitle mb-3 text-muted">Make your conversations sincere. Configure potential follow ups below.</h6>
+            <div className='card-text'>
+              <div>
+                {this.props.follow_ups.map(follow_up =>
+                  <BotFollowUp onChange={this.props.onFollowUpChange} key={follow_up.id} {...follow_up} />
+                )}
+              </div>
+              <button role="button" className='btn btn-default'>
+                <i className='fa fa-plus mr-2'></i>
+                New Follow Up
+              </button>
+            </div>
+          </div>
+        </Collapse>
+      </div>
+    )
+  }
+}
+
+BotQuestion.defaultProps = {
+  follow_ups: []
+}
+
+export default BotQuestion

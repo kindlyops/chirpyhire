@@ -2,6 +2,7 @@ import React from 'react'
 
 import CandidateFilters from './candidateFilters'
 import CandidatesListContainer from './candidatesListContainer'
+import Main from '../../presentational/main'
 
 class Candidates extends React.Component {
   empty() {
@@ -32,10 +33,10 @@ class Candidates extends React.Component {
     }
 
     return (
-      <div className='Candidates ch--main'>
+      <Main className='Candidates'>
         <CandidateFilters {...this.props} />
         {body}
-      </div>
+      </Main>
     )
   }
 }

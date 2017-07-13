@@ -4,7 +4,7 @@
       i
         = inline_svg "mini_logo.svg"
   div
-    = nav_link_to getting_started_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Start here' }, url_segment: 1 do
+    a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
       i.fa.fa-map-signs.fa-fw
     = nav_link_to dashboard_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Dashboard' }, url_segment: 1 do
       i.fa.fa-dashboard.fa-fw
@@ -17,7 +17,7 @@
         i.fa.fa-comment-o.fa-fw
         - if current_account.unread_count.positive?
           i.fa.fa-circle.fa-fw.unread-count
-    a.section href="#" data-toggle="tooltip" data-placement="right" title="Campaigns (coming soon)"
+    = nav_link_to engage_campaign_path(current_organization.recent_campaign), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Campaigns' }, url_segment: 1 do
       i.fa.fa-bullhorn.fa-fw
   .sidebar--bottom.flex-column.d-flex.justify-content-end
     a.section href="#" data-toggle="tooltip" data-placement="right" title="Search (coming soon)"

@@ -2,11 +2,12 @@ import React from 'react'
 
 import CandidateSegment from './candidateSegment'
 import update from 'immutability-helper'
+import SecondaryHeader from '../../presentational/secondaryHeader'
 
 class CandidateSegments extends React.Component {
   render() {
     return (
-      <div className='pl-3 ch--SecondaryHeader'>
+      <SecondaryHeader className='pl-3'>
         {
           this.props.segments.map((segment) =>
             <CandidateSegment 
@@ -16,7 +17,7 @@ class CandidateSegments extends React.Component {
             />
           )
         }
-      </div>
+      </SecondaryHeader>
     )
   }
 }
