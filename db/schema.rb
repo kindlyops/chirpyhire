@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170710201842) do
+ActiveRecord::Schema.define(version: 20170713170750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20170710201842) do
     t.string "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "location", default: true, null: false
     t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
     t.index ["next_question_id"], name: "index_follow_ups_on_next_question_id"
     t.index ["question_id", "rank"], name: "index_follow_ups_on_question_id_and_rank", unique: true

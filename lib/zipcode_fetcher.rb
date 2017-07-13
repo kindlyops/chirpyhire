@@ -1,13 +1,14 @@
 class ZipcodeFetcher
-  def self.call(contact, zipcode_string)
-    new(contact, zipcode_string).call
+  def self.call(contact, zipcode_string, location: true)
+    new(contact, zipcode_string, location: location).call
   end
 
-  attr_reader :contact, :zipcode_string
+  attr_reader :contact, :zipcode_string, :location
 
-  def initialize(contact, zipcode_string)
+  def initialize(contact, zipcode_string, location: true)
     @contact = contact
     @zipcode_string = zipcode_string
+    @location = location
   end
 
   def call
@@ -33,7 +34,8 @@ class ZipcodeFetcher
   end
 
   def update_zipcode(zipcode)
-    contact.person.update!(zipcode: zipcode)
+    contact.person.update!(zipcode: zipcode) if location
+    true
   end
 
   def created_zipcode

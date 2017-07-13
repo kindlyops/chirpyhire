@@ -17,10 +17,25 @@ RSpec.describe Bot::ZipcodeAnswer do
           expect(subject.activated?(message)).to eq(true)
         end
 
-        it 'sets the zipcode for the message person' do
-          expect {
-            subject.activated?(message)
-          }.to change { person.reload.zipcode.present? }.from(false).to(true)
+        context 'and follow up location flag is true' do
+          it 'sets the zipcode for the message person' do
+            expect {
+              subject.activated?(message)
+            }.to change { person.reload.zipcode.present? }.from(false).to(true)
+          end
+        end
+
+        context 'and follow up location flag is false' do
+          before do
+            follow_up.update(location: false)
+          end
+
+          it 'does not set the zipcode for the message person' do
+            expect {
+              subject.activated?(message)
+            }.not_to change { person.reload.zipcode.present? }
+            expect(person.zipcode.present?).to eq(false)
+          end
         end
       end
 
