@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Organization' do
-  let(:organization) { create(:organization, :account, :team) }
+  let(:organization) { create(:organization, :subscription, :account, :team) }
   let(:account) { organization.accounts.first }
 
   before do
