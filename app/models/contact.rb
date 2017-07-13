@@ -18,7 +18,7 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :phone_number, :avatar, :nickname, :zipcode, to: :person
+  delegate :handle, :phone_number, :avatar, :nickname, to: :person
   delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at

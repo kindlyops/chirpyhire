@@ -58,7 +58,7 @@ class Bot::FollowUpTrigger
   private
 
   def tag_and_broadcast
-    follow_up.tag(contact)
+    follow_up.tag(contact, message)
     Broadcaster::Contact.broadcast(contact)
   end
 
