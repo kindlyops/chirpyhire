@@ -77,8 +77,8 @@ RSpec.describe Bot::FollowUpTrigger do
       context 'follow_up question' do
         let!(:third_question) { create(:choice_question, bot: bot) }
         before do
-          follow_up.update(action: :question, question: third_question)
-          allow(campaign_contact).to receive(:question) { third_question }
+          follow_up.update(action: :question, next_question: third_question)
+          allow(follow_up).to receive(:next_question) { third_question }
         end
 
         it 'triggers the third question' do
