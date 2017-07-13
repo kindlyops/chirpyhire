@@ -6,18 +6,22 @@ class Bot::ZipcodeAnswer
   attr_reader :follow_up
 
   def activated?(message)
-    zipcode = fetch_zipcode(message)
+    zipcode = parse_zipcode(message)
 
-    zipcode.present? && ZipcodeFetcher.call(message.contact, zipcode)
+    zipcode.present? && fetch_zipcode(message, zipcode)
   end
 
   private
+
+  def fetch_zipcode(message, zipcode)
+    ZipcodeFetcher.call(message.contact, zipcode, location: follow_up.location?)
+  end
 
   def zipcode_regexp
     /\A(\d{5})\z/
   end
 
-  def fetch_zipcode(message)
+  def parse_zipcode(message)
     result = zipcode_regexp.match(clean_body(message))
     return if result.blank?
 
