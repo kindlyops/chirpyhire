@@ -25,4 +25,35 @@ RSpec.describe 'Conversations' do
       end
     end
   end
+
+  describe 'update' do
+    let(:contact) { create(:contact, organization: organization) }
+    let!(:conversation) { create(:conversation, inbox: inbox, contact: contact) }
+
+    let(:params) do
+      {
+        conversation: {
+          state: 'Closed',
+          contact_attributes: {
+            id: contact.id,
+            outcome: 'Screened'
+          }
+        }
+      }
+    end
+
+    context 'changing the contact outcome' do
+      it 'updates the conversation to closed' do
+        expect {
+          put inbox_conversation_path(inbox, conversation), params: params
+        }.to change { conversation.reload.state }.from('Open').to('Closed')
+      end
+
+      it 'changes the contact outcome to Screened' do
+        expect {
+          put inbox_conversation_path(inbox, conversation), params: params
+        }.to change { contact.reload.outcome }.from('New').to('Screened')
+      end
+    end
+  end
 end
