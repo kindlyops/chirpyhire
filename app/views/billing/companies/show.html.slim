@@ -1,5 +1,5 @@
 = title "Payment preferences · ChirpyHire"
-.ch--Page.settings
+.ch--Page.settings.pricing
   = render partial: "settings/header"
   .ch--main
     .ch--vertical-navigation
@@ -15,6 +15,41 @@
             | Payment preferences for
             '
             = @organization.name
+      .card.ch--sub-main-content
+        .card-block
+          h4.card-title Estimate your audience size
+          p.card-text.text-muted 
+            | Pricing is based on your audience size: the number of 
+            strong active candidates 
+            ' who have sent or received a message in the 
+            strong past 90 days 
+            ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
+          h4.card-text.mb-3
+            ' Start with
+            strong.candidates--number 50
+            '
+            strong active candidates
+          input.active-candidates-slider role="button" type="range" min="50" max="4000" value="50" step="10"
+          hr
+          p.card-text.d-flex.justify-content-between
+            span Team members
+            strong Unlimited
+          hr
+          p.card-text.d-flex.justify-content-between
+            span Messaging
+            strong Unlimited
+          hr
+          p.card-text.d-flex.justify-content-between
+            span Candidates
+            strong.candidates--number 50
+          hr
+          p.card-text.d-flex.justify-content-between
+            span Price
+            strong.candidates--price $125 / mo
+          p.card-text.d-flex.justify-content-between
+            span.spacer
+            span.badge.badge-success.small-uppercase Free For 14 Days
+
       .card.ch--sub-main-content
         .card-block
           - if @organization.trialing?
