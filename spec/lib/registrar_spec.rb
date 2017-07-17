@@ -50,6 +50,11 @@ RSpec.describe Registrar do
         }.to change { organization.reload.subscription.present? }.from(false).to(true)
       end
 
+      it 'sets the trial ends at on the subscription' do
+        subject.register
+        expect(organization.reload.subscription.trial_ends_at).to be_present
+      end
+
       it 'creates a bot' do
         expect {
           subject.register
