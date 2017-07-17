@@ -31,6 +31,7 @@ class ConversationsController < ApplicationController
     @conversation = authorize(inbox.conversations.find(params[:id]))
     @conversation.update(permitted_attributes(Conversation))
     Broadcaster::Conversation.broadcast(@conversation)
+    Broadcaster::Contact.broadcast(@conversation.contact)
 
     head :ok
   end

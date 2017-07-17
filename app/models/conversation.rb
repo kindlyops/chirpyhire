@@ -16,6 +16,8 @@ class Conversation < ApplicationRecord
   delegate :person, :handle, :organization, to: :contact
   delegate :handle, to: :contact, prefix: true
 
+  accepts_nested_attributes_for :contact
+
   def contact_phone_number
     contact.phone_number.phony_formatted
   end

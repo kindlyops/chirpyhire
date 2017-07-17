@@ -4,7 +4,11 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[state]
+    %i[state].push(contact_attributes: contact_attributes)
+  end
+
+  def contact_attributes
+    %i[id outcome]
   end
 
   class Scope < ApplicationPolicy::Scope
