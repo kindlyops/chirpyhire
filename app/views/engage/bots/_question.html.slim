@@ -4,6 +4,11 @@
     .bot-card--label-title
       span.bot-card--label Question:
       span.bot-card--title = q.object.body(formatted: false)
+    .bot-card--actions
+      .active-switch
+        = q.check_box :active, class: 'ch-toggle ch-toggle-round', id: "question-#{q.object.id}-active"
+        label.ch-toggle-label for="question-#{q.object.id}-active"
+
   .card-block
     h5.card-title What the bot asks:
     h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.

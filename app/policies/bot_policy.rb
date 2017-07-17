@@ -27,7 +27,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def questions_attributes
-    %i[body id].push(follow_ups)
+    %i[body id active].push(follow_ups)
   end
 
   def follow_ups

@@ -19,7 +19,6 @@ import {
 
 import Inbox from 'inbox'
 import Platform from 'platform'
-import GettingStarted from 'getting_started'
 
 class App extends React.Component {
   constructor(props) {
@@ -70,7 +69,6 @@ class App extends React.Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/getting_started" render={props => <GettingStarted {...this.state} {...props} />} />
             <Route path="/candidates" render={props => <Platform {...this.state} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox {...this.state} {...props} />} />
