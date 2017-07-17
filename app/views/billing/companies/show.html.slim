@@ -29,7 +29,7 @@
             strong.candidates--number 50
             '
             strong active candidates
-          input.active-candidates-slider role="button" type="range" min="50" max="4000" value="50" step="10"
+          input.active-candidates-slider role="button" type="range" min="50" max="4000" value==@organization.contacts.active.count step="10"
           hr
           p.card-text.d-flex.justify-content-between
             span Team members
