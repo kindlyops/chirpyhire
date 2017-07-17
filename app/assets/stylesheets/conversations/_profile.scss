@@ -7,6 +7,10 @@
   height: 100vh;
   padding: 0 1rem;
 
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+
   .profile-header {
     padding: 1rem 0;
   }

@@ -1,5 +1,7 @@
 .sidebar {
-  
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
   .fa {
     color: $white;
   }
