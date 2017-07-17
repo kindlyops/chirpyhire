@@ -11,9 +11,9 @@
     .card-block.d-flex.justify-content-between
       .metric
         h4.card-title.d-flex.justify-content-between
-          | Contacts
+          | New
           i.fa.fa-user
-        p.card-text = current_organization.contacts_count
+        p.card-text = current_organization.contacts.where(outcome: 'New').count
       .d-flex.align-items-center.funnel-angle.justify-content-center
         i.fa.fa-angle-right.fa-fw.fa-2x
       .metric
