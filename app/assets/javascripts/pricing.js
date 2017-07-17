@@ -1,7 +1,8 @@
 $(function() {
   $(document).on('change', '.settings.pricing .active-candidates-slider', function(e) {
     var candidatesCount = parseInt($(this).val());
-    $('.settings.pricing .candidates--number').text(candidatesCount);
+    $('.settings.pricing .candidates--number').text(candidatesCount.toLocaleString());
+
     if(candidatesCount <= 50) {
       $('.settings.pricing .candidates--price').text('$125 / mo');
     } else if(candidatesCount <= 100) {
