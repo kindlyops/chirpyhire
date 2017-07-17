@@ -1,0 +1,16 @@
+= f.fields_for :goal, goal do |g|
+  .card
+    .card-header.goal--header
+      .bot-card--label-title
+        span.bot-card--label Goal:
+        span.bot-card--title = goal.body
+    .card-block
+      h5.card-title Outcome:
+      h6.card-subtitle.mb-3.text-muted Set the best outcome for candidates that reach this goal.
+      = g.collection_select :outcome, Goal.outcomes.keys, :itself, :itself, { include_blank: false }, class: 'form-control'
+    .card-block
+      h5.card-title Send Message:
+      h6.card-subtitle.mb-3.text-muted Create a meaningful message to end the bot conversation for candidates who reach this goal.
+      .card-text
+        = g.text_area :body, class: 'form-control', placeholder: 'Write a meaningful...', data: { autoresize: true }
+

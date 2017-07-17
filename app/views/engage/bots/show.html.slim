@@ -1,0 +1,20 @@
+.ch--Page
+  .ch--Header
+    h1 Engage
+  .ch--main
+    = render partial: "engage/navigation"
+    .ch--sub-main
+      .Bot
+        = form_for @bot do |f|
+          .BotHeader
+            .BotHeader--name
+              = f.label :name, class: 'sr-only'
+              = f.text_field :name, class: 'BotName mb-2', required: true
+            .BotHeader--actions
+              = link_to "Cancel", engage_bot_path(@bot), class: 'btn btn-secondary mr-2'
+              = f.submit "Save", class: 'btn btn-primary', role: 'button'
+          = render partial: "engage/bots/greeting", locals: { f: f, greeting: @bot.greeting }
+          div
+            = render partial: "engage/bots/question", collection: @bot.questions, locals: { f: f }
+          div
+            = render partial: "engage/bots/goal", collection: @bot.goals, locals: { f: f }
