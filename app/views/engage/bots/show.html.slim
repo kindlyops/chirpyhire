@@ -5,7 +5,7 @@
     = render partial: "engage/navigation"
     .ch--sub-main
       .Bot
-        = form_for @bot do |f|
+        = form_for @bot, url: engage_bot_path(@bot) do |f|
           .BotHeader
             .BotHeader--name
               = f.label :name, class: 'sr-only'
@@ -15,6 +15,8 @@
               = f.submit "Save", class: 'btn btn-primary', role: 'button'
           = render partial: "engage/bots/greeting", locals: { f: f, greeting: @bot.greeting }
           div
-            = render partial: "engage/bots/question", collection: @bot.questions, locals: { f: f }
+            = f.fields_for :questions do |q|
+              = render partial: "engage/bots/question", locals: { q: q }
           div
-            = render partial: "engage/bots/goal", collection: @bot.goals, locals: { f: f }
+            = f.fields_for :goals do |g|
+              = render partial: "engage/bots/goal", locals: { g: g }

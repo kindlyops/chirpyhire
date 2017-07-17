@@ -13,6 +13,13 @@ class Bot < ApplicationRecord
   has_many :inboxes, through: :bot_campaigns
   has_many :campaigns, through: :bot_campaigns
 
+  accepts_nested_attributes_for :greeting
+  accepts_nested_attributes_for :questions
+  accepts_nested_attributes_for :goals
+
+  validates :goals, length: { minimum: 1 }
+  validates :questions, length: { minimum: 1 } 
+
   def receive(message)
     Bot::Receiver.call(self, message)
   end
