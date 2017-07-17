@@ -27,6 +27,10 @@ class Contact < ApplicationRecord
     'New' => 0, 'Screened' => 1, 'Not Now' => 2, 'Scheduled' => 3
   }
 
+  def self.active
+    joins(conversations: :messages).merge(Message.active).distinct
+  end
+
   def self.screened
     joins(taggings: :tag).merge(Tag.screened)
   end

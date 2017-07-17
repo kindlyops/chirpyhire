@@ -17,6 +17,10 @@ class Message < ApplicationRecord
   delegate :handle, to: :sender, prefix: true
   delegate :organization, :contact, to: :conversation
 
+  def self.active
+    where('messages.created_at >= ?', 90.days.ago)
+  end
+
   def self.by_recency
     order(external_created_at: :desc).order(:id)
   end
