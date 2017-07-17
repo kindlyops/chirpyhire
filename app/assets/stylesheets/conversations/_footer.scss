@@ -5,6 +5,10 @@
     background-image: linear-gradient(to bottom, rgba(255,255,255,0), #fff 6px);
     .spacer {
       height: 1.375rem;
+
+      @include media-breakpoint-down(md) {
+        display: none;
+      }
     }
 
     form.new_message {
