@@ -1,5 +1,4 @@
 class SubscriptionSweeper
-
   def self.call
     new.call
   end
@@ -13,5 +12,4 @@ class SubscriptionSweeper
   def ended_trials
     Subscription.trialing.where('trial_ends_at <= ?', DateTime.current)
   end
-
 end

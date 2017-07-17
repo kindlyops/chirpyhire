@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SubscriptionSweeper do
   subject { SubscriptionSweeper.new }
-  
+
   describe 'call' do
     context 'with trial subscription' do
       let!(:subscription) { create(:subscription) }
