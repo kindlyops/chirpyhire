@@ -17,8 +17,8 @@ class Bot < ApplicationRecord
   accepts_nested_attributes_for :questions
   accepts_nested_attributes_for :goals
 
-  validates :goals, length: { minimum: 1 }
-  validates :questions, length: { minimum: 1 } 
+  validates :goals, length: { minimum: 1 }, on: :update
+  validates :questions, length: { minimum: 1 }, on: :update
 
   def receive(message)
     Bot::Receiver.call(self, message)
