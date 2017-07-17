@@ -1,9 +1,7 @@
 class GettingStartedController < ApplicationController
-  layout 'react'
+  skip_after_action :verify_authorized
 
   def show
-    @organization = authorize(current_organization)
-
-    render html: '', layout: true
+    redirect_to engage_bot_path(current_organization.recent_bot)
   end
 end
