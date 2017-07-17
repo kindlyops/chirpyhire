@@ -6,7 +6,7 @@ class Registrar
   def register
     return unless account.persisted?
     setup_account
-    organization.create_subscription
+    organization.create_subscription(trial_ends_at: trial_length)
     TeamRegistrar.call(team, account, notify: false)
     new_organization_notification_job
   end
@@ -16,6 +16,10 @@ class Registrar
   attr_reader :account
 
   delegate :location, to: :organization
+
+  def trial_length
+    14.days.from_now
+  end
 
   def setup_account
     account.update(role: :owner)
