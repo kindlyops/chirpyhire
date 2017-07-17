@@ -33,6 +33,14 @@ class Organization < ApplicationRecord
     contacts.screened.count
   end
 
+  def recent_bot
+    bots.recent.first
+  end
+
+  def recent_campaign
+    campaigns.recent.first
+  end
+
   def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number

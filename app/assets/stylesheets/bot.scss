@@ -1,0 +1,131 @@
+.Bot {
+  width: 80%;
+  margin: auto;
+
+  margin-top: 2.25rem;
+
+  .BotHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+
+    .BotName {
+      border: none;
+      background-color: #eef6f2;
+      font-size: 1.5rem;
+
+      &:hover, &:focus {
+        height: 38px;
+        border-bottom: 1px dashed $gray;
+      }
+
+      &:focus {
+        outline: none
+      }
+    }
+  }
+
+  .bot-card--label {
+    color: #dddddd;
+    margin-right: .5rem;
+  }
+
+  .bot-card--actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 45px;
+    color: $white;
+    font-size: 1.25rem;
+  }
+
+  .bot-card--title {
+    color: $white;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-card--label-title {
+    display: flex;
+    align-items: center;
+  }
+
+  .bot-card--toggle-body {
+    font-size: 1.25rem;
+    i {
+      color: $white;
+    }
+  }
+
+  .FollowUp--footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .FollowUp--actions {
+      a {
+        padding: .2rem .4rem;
+        font-size: 1.25rem;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+          background-color: #dddddd;
+        }
+      }
+    }
+
+    .FollowUp--details {
+      font-size: 1.25rem;
+      padding: .5rem 0;
+      >:not(:last-child) {
+        margin-right: .25rem;
+      }
+
+      .ch-tag {
+        font-size: 1rem;
+      }
+    }
+  }
+
+
+  .badge-next-question {
+    background-color: $brand-success;
+  }
+
+  .badge-question {
+    background-color: mix($brand-success, $brand-primary)
+  }
+
+  .badge-goal {
+    background-color: $brand-primary;
+  }
+
+  .greeting--header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $brand-success;
+  }
+
+  .question--header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: mix($brand-success, $brand-primary);
+  }
+
+  .goal--header {
+    display: flex;
+    justify-content: space-between;
+    background-color: $brand-primary;
+  }
+
+  .card {
+    margin-bottom: 2rem;
+
+    .card-text {
+      white-space: pre-wrap;
+    }
+  }
+}

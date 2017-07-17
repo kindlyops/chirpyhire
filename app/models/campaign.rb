@@ -7,4 +7,8 @@ class Campaign < ApplicationRecord
   has_many :contact, through: :campaign_contacts
 
   has_many :messages
+
+  def self.recent
+    order(created_at: :desc)
+  end
 end

@@ -40,6 +40,9 @@ FactoryGirl.define do
         team.create_inbox if team.inbox.blank?
         phone_number = create(:phone_number, organization: team.organization)
         create(:assignment_rule, organization: team.organization, inbox: team.inbox, phone_number: phone_number)
+        bot = team.organization.bots.first || create(:bot, organization: team.organization)
+        campaign = create(:campaign, organization: team.organization)
+        bot.bot_campaigns.create(campaign: campaign, inbox: team.inbox)
       end
     end
   end

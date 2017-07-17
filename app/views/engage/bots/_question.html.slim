@@ -1,0 +1,24 @@
+.card
+  = q.hidden_field :id
+  .card-header.question--header
+    .bot-card--label-title
+      span.bot-card--label Question:
+      span.bot-card--title = q.object.body(formatted: false)
+    .bot-card--actions
+      .active-switch
+        = q.check_box :active, class: 'ch-toggle ch-toggle-round', id: "question-#{q.object.id}-active"
+        label.ch-toggle-label for="question-#{q.object.id}-active"
+
+  .card-block
+    h5.card-title What the bot asks:
+    h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
+    .card-text
+      = q.text_area :body, value: q.object.body(formatted: false), class: 'form-control', placeholder: 'Ask a question...', data: { autoresize: true }
+  .card-block
+    h5.card-title Follow ups based on the candidate's answer:
+    h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
+    .card-text
+      div
+        - q.object.follow_ups.each do |follow_up|
+          = q.fields_for :follow_ups, follow_up do |u|
+            = render partial: "engage/bots/follow_up", locals: { u: u }

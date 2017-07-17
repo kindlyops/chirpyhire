@@ -1,0 +1,12 @@
+= f.fields_for :greeting, greeting do |g| 
+  = g.hidden_field :id
+  .card
+    .card-header.greeting--header
+      .bot-card--label-title
+        span.bot-card--label Greeting:
+        span.bot-card--title = greeting.body
+    .card-block
+      .card-text
+        h5.card-title Create a friendly greeting:
+        h6.card-subtitle.mb-3.text-muted Make a great first impression with every candidate.
+        = g.text_area :body, class: 'form-control', placeholder: 'Write a friendly greeting...', data: { autoresize: true }

@@ -48,6 +48,11 @@ Rails.application.routes.draw do
     resource :customer
   end
 
+  namespace :engage do
+    resources :campaigns
+    resources :bots
+  end
+
   resources :bots, only: %i[index show] do
     resources :questions, only: %i[update]
   end
