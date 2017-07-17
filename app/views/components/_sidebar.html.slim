@@ -4,7 +4,7 @@
       i
         = inline_svg "mini_logo.svg"
   div
-    a.section href="#" data-toggle="tooltip" data-placement="right" title="Start here (coming soon)"
+    = link_to engage_bot_path(current_organization.recent_bot), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Start here' }, url_segment: 1 do
       i.fa.fa-map-signs.fa-fw
     = nav_link_to dashboard_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Dashboard' }, url_segment: 1 do
       i.fa.fa-dashboard.fa-fw

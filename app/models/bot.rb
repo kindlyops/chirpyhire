@@ -20,6 +20,10 @@ class Bot < ApplicationRecord
   validates :goals, length: { minimum: 1 }, on: :update
   validates :questions, length: { minimum: 1 }, on: :update
 
+  def self.recent
+    order(created_at: :desc)
+  end
+
   def receive(message)
     Bot::Receiver.call(self, message)
   end
