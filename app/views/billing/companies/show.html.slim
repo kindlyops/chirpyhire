@@ -26,7 +26,7 @@
             ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
           h4.card-text.mb-3
             ' Start with
-            strong.candidates--number 50
+            strong.candidates--number = @organization.contacts.active.count
             '
             strong active candidates
           input.active-candidates-slider role="button" type="range" min="50" max="4000" value==@organization.contacts.active.count step="10"
@@ -41,7 +41,7 @@
           hr
           p.card-text.d-flex.justify-content-between
             span Candidates
-            strong.candidates--number 50
+            strong.candidates--number = @organization.contacts.active.count
           hr
           p.card-text.d-flex.justify-content-between
             span Price
