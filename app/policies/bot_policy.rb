@@ -3,6 +3,10 @@ class BotPolicy < ApplicationPolicy
     show?
   end
 
+  def clone?
+    show?
+  end
+
   def permitted_attributes
     %i[name]
       .push(greeting)

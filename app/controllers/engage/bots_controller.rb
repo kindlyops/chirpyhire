@@ -13,7 +13,22 @@ class Engage::BotsController < ApplicationController
     end
   end
 
+  def clone
+    @bot = authorize(bots.find(params[:bot_id]))
+
+    @cloned_bot = BotFactory::Cloner.call(@bot)
+    if @cloned_bot.valid?
+      redirect_to engage_bot_path(@cloned_bot), notice: clone_notice
+    else
+      render :show
+    end
+  end
+
   private
+
+  def clone_notice
+    "#{@bot.name} cloned successfully!"
+  end
 
   def bot_notice
     "#{@bot.name} saved!"
