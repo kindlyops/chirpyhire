@@ -8,17 +8,20 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: .5rem;
-  }
 
-  .Select {
-    margin-top: .5rem;
-  }
+    .CampaignName {
+      border: none;
+      background-color: #eef6f2;
+      font-size: 1.5rem;
 
-  .card {
-    margin-bottom: 2rem;
+      &:hover, &:focus {
+        height: 38px;
+        border-bottom: 1px dashed $gray;
+      }
 
-    .card-title {
-      margin-bottom: 1.75rem;
+      &:focus {
+        outline: none
+      }
     }
   }
 }
