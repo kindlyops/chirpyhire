@@ -50,7 +50,9 @@ Rails.application.routes.draw do
 
   namespace :engage do
     resources :campaigns
-    resources :bots
+    resources :bots do
+      post :clone
+    end
   end
 
   resources :bots, only: %i[index show] do
