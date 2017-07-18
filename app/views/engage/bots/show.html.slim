@@ -15,8 +15,8 @@
               = f.submit "Save", class: 'btn btn-primary', role: 'button'
           = render partial: "engage/bots/greeting", locals: { f: f, greeting: @bot.greeting }
           div
-            = f.fields_for :questions do |q|
+            = f.fields_for :questions, @bot.ranked_questions do |q|
               = render partial: "engage/bots/question", locals: { q: q }
           div
-            = f.fields_for :goals do |g|
+            = f.fields_for :goals, @bot.ranked_goals do |g|
               = render partial: "engage/bots/goal", locals: { g: g }

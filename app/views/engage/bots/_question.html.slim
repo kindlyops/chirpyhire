@@ -19,6 +19,6 @@
     h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
     .card-text
       div
-        - q.object.follow_ups.each do |follow_up|
+        - q.object.ranked_follow_ups.each do |follow_up|
           = q.fields_for :follow_ups, follow_up do |u|
             = render partial: "engage/bots/follow_up", locals: { u: u }
