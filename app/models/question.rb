@@ -6,7 +6,8 @@ class Question < ApplicationRecord
   validates :rank, presence: true
   validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
 
-  accepts_nested_attributes_for :follow_ups
+  accepts_nested_attributes_for :follow_ups,
+                                reject_if: :all_blank, allow_destroy: true
 
   def self.ranked
     order(:rank)

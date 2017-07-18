@@ -16,7 +16,34 @@
           = render partial: "engage/bots/greeting", locals: { f: f, greeting: @bot.greeting }
           div
             = f.fields_for :questions, @bot.ranked_questions do |q|
-              = render partial: "engage/bots/question", locals: { q: q }
+              = render partial: "engage/bots/question", locals: { f: q }
           div
             = f.fields_for :goals, @bot.ranked_goals do |g|
               = render partial: "engage/bots/goal", locals: { g: g }
+#edit-follow-up-modal.modal.fade aria-hidden="true" aria-labelledby="edit-follow-up-label" role="dialog" tabindex="-1" 
+  .modal-dialog.modal-lg role="document" 
+    form#edit-follow-up-form
+      .modal-content
+        .modal-header
+          h5#edit-follow-up-label.modal-title Advanced Follow Up Settings
+          button.close aria-label="Close" data-dismiss="modal" type="button" 
+            span aria-hidden="true" &times;
+        .modal-body
+          .form-group.mb-3
+            label for="response" 
+              h5 Response
+              p.text-muted Enter a multiple choice response. Candidates will be able to select this choice from their mobile phone.
+            input.form-control#response required=true placeholder="Enter a simple response" type="text" 
+          .form-group.mb-3
+            label for="next-step" 
+              h5 Next Step
+              p.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
+            = select_tag :next_step, options_for_select([['Next Question', 'next_question']].concat(@bot.questions.map { |q| ["Q#{q.rank}: #{q.body(formatted: false)[0..25]}...", 'question', { data: { 'question-id': q.id } }] }).concat(@bot.goals.map { |g| ["G#{g.rank}: #{g.body[0..25]}...", 'goal', { data: {'goal-id': g.id } }] })), class: 'form-control', id: 'next-step', disabled: true, required: true
+          .form-group.mb-3
+            label for="tags" 
+              h5 Tags
+              p.text-muted If a candidate matches this follow up, apply one or more tags to the candidate.
+            = select_tag :tags, options_from_collection_for_select(current_organization.tags, :id, :name), id: 'tags', class: 'form-control', required: true, disabled: true, multiple: 'multiple'
+        .modal-footer
+          button.btn.btn-secondary data-dismiss="modal" type="button" role="button" Cancel
+          button.btn.btn-primary type="submit" role="button" Update Follow Up

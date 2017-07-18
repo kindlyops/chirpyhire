@@ -3,10 +3,10 @@ class Bot < ApplicationRecord
   belongs_to :person
   belongs_to :last_edited_by, optional: true, class_name: 'Account'
 
-  has_one :greeting
-  has_many :questions
+  has_one :greeting, inverse_of: :bot
+  has_many :questions, inverse_of: :bot
   has_many :ranked_questions, -> { ranked }, class_name: 'Question'
-  has_many :goals
+  has_many :goals, inverse_of: :bot
   has_many :ranked_goals, -> { ranked }, class_name: 'Goal'
 
   has_many :bot_campaigns

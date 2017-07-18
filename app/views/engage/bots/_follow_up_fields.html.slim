@@ -1,0 +1,29 @@
+.FollowUp.mb-2.nested-fields id="question-#{f.object.question_id}-follow-up-#{f.index}"
+  = f.hidden_field :id
+  = f.hidden_field :rank
+  = f.hidden_field :response, class: 'response'
+  = f.hidden_field :action, class: 'action'
+  = f.hidden_field :next_question_id, class: 'next_question_id'
+  = f.hidden_field :goal_id, class: 'goal_id'
+  = f.fields_for :follow_ups_tags do |t|
+    .tag
+      = t.hidden_field :id
+      = t.hidden_field :tag_id, class: 'tag_id'
+      = t.hidden_field :follow_up_id
+  = f.text_field :body, class: 'body form-control', required: true, placeholder: 'Add a follow up...'
+  .FollowUp--footer
+    .FollowUp--details
+      span.FollowUp--response.badge.badge-default
+        = f.object.response
+      span class==f.object.decorate.action_classes
+        = f.object.decorate.humanized_action
+      span.FollowUp--tags
+        - f.object.tags.each do |tag|
+          span.ch-tag
+            i.fa.fa-tag.mr-2
+            = tag.name
+    .FollowUp--actions
+      a#advanced-settings role="button" data-target="#edit-follow-up-modal" data-toggle="modal" data-question-id="#{f.object.question_id}" data-index="#{f.index}"
+        i.fa.fa-sliders
+      = link_to_remove_association f, { data: { toggle: 'tooltip', placement: 'bottom' }, title: 'Delete' } do
+        i.fa.fa-trash-o

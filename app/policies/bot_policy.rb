@@ -35,7 +35,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def follow_ups_attributes
-    %i[body id]
+    %i[body id _destroy]
   end
 
   def goals_attributes
