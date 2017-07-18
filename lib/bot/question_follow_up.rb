@@ -34,6 +34,8 @@ class Bot::QuestionFollowUp
   end
 
   def follow_up
-    @follow_up ||= follow_ups.find { |follow_up| follow_up.activated?(message) }
+    @follow_up ||= begin
+      follow_ups.with_deleted.find { |follow_up| follow_up.activated?(message) }
+    end
   end
 end
