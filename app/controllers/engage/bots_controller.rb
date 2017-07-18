@@ -14,7 +14,7 @@ class Engage::BotsController < ApplicationController
   end
 
   def clone
-    @bot = authorize(bots.find(params[:id]))
+    @bot = authorize(bots.find(params[:bot_id]))
 
     @cloned_bot = BotFactory::Cloner.call(@bot)
     if @cloned_bot.valid?
