@@ -11,6 +11,23 @@ RSpec.describe Bot::QuestionFollowUp do
 
   subject { Bot::QuestionFollowUp.new(question, message, campaign_contact) }
 
+  describe '#follow_up' do
+    let(:rank) { question.next_follow_up_rank }
+    let(:message) { create(:message, body: Hash[(1..26).zip(:a..:z)][rank]) }
+    let(:response) { Faker::Lorem.word }
+    let!(:follow_up) { create(:follow_up, question: question, rank: rank) }
+
+    context 'and the follow_up is deleted' do
+      before do
+        follow_up.destroy
+      end
+
+      it 'still looks up the follow up' do
+        expect(subject.follow_up.id).to eq(follow_up.id)
+      end
+    end
+  end
+
   describe '#call' do
     context 'question has follow ups' do
       let(:response) { Faker::Lorem.word }
