@@ -9,6 +9,9 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :follow_ups,
                                 reject_if: :all_blank, allow_destroy: true
 
+  validates :follow_ups, presence: true, on: :update
+  validate :unformatted_body
+
   def self.ranked
     order(:rank)
   end
@@ -42,5 +45,11 @@ class Question < ApplicationRecord
 
   def answers
     ''
+  end
+
+  private
+
+  def unformatted_body
+    errors.add(:body, "can't be blank") if body(formatted: false).blank?
   end
 end

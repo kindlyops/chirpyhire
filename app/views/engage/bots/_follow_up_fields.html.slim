@@ -1,6 +1,7 @@
 .FollowUp.mb-2.nested-fields id="question-#{f.object.question_id}-follow-up-#{f.index}"
   = f.hidden_field :id
   = f.hidden_field :rank
+  = f.hidden_field :type
   = f.hidden_field :response, class: 'response'
   = f.hidden_field :action, class: 'action'
   = f.hidden_field :next_question_id, class: 'next_question_id'

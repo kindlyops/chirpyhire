@@ -1,5 +1,6 @@
 .card
   = f.hidden_field :id
+  = f.hidden_field :type
   .card-header.question--header
     .bot-card--label-title
       span.bot-card--label Question:
@@ -13,7 +14,7 @@
     h5.card-title What the bot asks:
     h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
     .card-text
-      = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', placeholder: 'Ask a question...', data: { autoresize: true }
+      = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autoresize: true }
   .card-block
     h5.card-title Follow ups based on the candidate's answer:
     h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.

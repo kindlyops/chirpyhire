@@ -6,6 +6,8 @@
     .ch--sub-main
       .Bot
         = form_for @bot, url: engage_bot_path(@bot) do |f|
+          = content_for :validation_errors do
+            = render partial: "common/validation_errors", locals: { model: @bot }
           .BotHeader
             .BotHeader--name
               = f.label :name, class: 'sr-only'

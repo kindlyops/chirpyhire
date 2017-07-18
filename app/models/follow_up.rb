@@ -2,7 +2,7 @@ class FollowUp < ApplicationRecord
   acts_as_paranoid
   belongs_to :question
 
-  has_many :follow_ups_tags, inverse_of: :follow_up
+  has_many :follow_ups_tags
   has_many :tags, through: :follow_ups_tags
 
   belongs_to :next_question, optional: true, class_name: 'Question'

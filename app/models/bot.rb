@@ -3,10 +3,10 @@ class Bot < ApplicationRecord
   belongs_to :person
   belongs_to :last_edited_by, optional: true, class_name: 'Account'
 
-  has_one :greeting, inverse_of: :bot
-  has_many :questions, inverse_of: :bot
+  has_one :greeting
+  has_many :questions
   has_many :ranked_questions, -> { ranked }, class_name: 'Question'
-  has_many :goals, inverse_of: :bot
+  has_many :goals
   has_many :ranked_goals, -> { ranked }, class_name: 'Goal'
 
   has_many :bot_campaigns
@@ -17,8 +17,12 @@ class Bot < ApplicationRecord
   accepts_nested_attributes_for :questions
   accepts_nested_attributes_for :goals
 
-  validates :goals, length: { minimum: 1 }, on: :update
-  validates :questions, length: { minimum: 1 }, on: :update
+  validates_associated :greeting
+  validates_associated :questions
+  validates_associated :goals
+  validates :goals, presence: true, on: :update
+  validates :questions, presence: true, on: :update
+  validates :name, presence: true
 
   def self.recent
     order(created_at: :desc)

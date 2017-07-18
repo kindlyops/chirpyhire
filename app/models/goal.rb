@@ -3,7 +3,7 @@ class Goal < ApplicationRecord
 
   has_many :goals_tags
   has_many :tags, through: :goals_tags
-  validates :rank, presence: true
+  validates :rank, :body, presence: true
 
   enum outcome: {
     'New' => 0, 'Screened' => 1, 'Not Now' => 2, 'Scheduled' => 3
