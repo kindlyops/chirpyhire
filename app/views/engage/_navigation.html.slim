@@ -7,7 +7,7 @@
           = nav_link_to campaign.name, engage_campaign_path(campaign), class: 'ch--vertical-navigation-link' 
   .ch--vertical-navigation--inner
     .ch-vertical-navigation-header
-      h3.small-uppercase Recruitbots
+      h3.small-uppercase Surveys
       .ch--vertical-navigation-links
         - current_organization.bots.each do |bot|
           = nav_link_to bot.name, engage_bot_path(bot), class: 'ch--vertical-navigation-link'

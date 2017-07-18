@@ -5,15 +5,25 @@
     = render partial: "engage/navigation"
     .ch--sub-main
       = form_for @campaign, url: engage_campaign_path(@campaign) do |f|
+        = content_for :validation_errors do
+          = render partial: "common/validation_errors", locals: { model: @campaign }
         .Campaign
           .CampaignHeader
-            h2.CampaignName.mb-3 = @campaign.name
+            .CampaignHeader--name
+              = f.label :name, class: 'sr-only'
+              = f.text_field :name, class: 'CampaignName mb-2', required: true
+            .CampaignHeader--actions
+              = link_to "Cancel", engage_campaign_path(@campaign), class: 'btn btn-secondary mr-2'
+              = f.submit "Save", class: 'btn btn-primary', role: 'button'
           = f.fields_for :bot_campaign do |b|
+            = b.hidden_field :campaign_id
+            = b.hidden_field :id
             .card.CampaignSettings
               .card-block
                 h5.card-title Campaign Settings
-                h6.card-subtitle.mb-2 Recruitbot
-                = b.select :bot_id, options_from_collection_for_select(current_organization.bots, :id, :name), {}, disabled: true, class: 'form-control'
+                h6.card-subtitle.mb-4.text-muted Connect a Survey to a team to have it pre-screen candidates automatically.
+                h6.card-subtitle.mb-2 Team
+                = b.collection_select :inbox_id, current_organization.inboxes, :id, :name, {}, class: 'form-control'
               .card-block
-                h6.card-subtitle.mb-2 Inbox
-                = b.select :inbox_id, options_from_collection_for_select(current_organization.inboxes, :id, :name), {}, disabled: true, class: 'form-control'
+                h6.card-subtitle.mb-2 Survey
+                = b.collection_select :bot_id, current_organization.bots, :id, :name, {}, class: 'form-control'

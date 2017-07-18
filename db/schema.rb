@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718183936) do
+ActiveRecord::Schema.define(version: 20170718205005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20170718183936) do
     t.index ["bot_id", "campaign_id"], name: "index_bot_campaigns_on_bot_id_and_campaign_id", unique: true
     t.index ["bot_id"], name: "index_bot_campaigns_on_bot_id"
     t.index ["campaign_id"], name: "index_bot_campaigns_on_campaign_id"
-    t.index ["inbox_id"], name: "index_bot_campaigns_on_inbox_id"
+    t.index ["inbox_id"], name: "index_bot_campaigns_on_inbox_id", unique: true
   end
 
   create_table "bots", force: :cascade do |t|

@@ -16,7 +16,7 @@ class Engage::BotsController < ApplicationController
   private
 
   def bot_notice
-    "#{@bot.name} Recruitbot saved!"
+    "#{@bot.name} saved!"
   end
 
   delegate :bots, to: :current_organization
