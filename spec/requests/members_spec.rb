@@ -20,7 +20,7 @@ RSpec.describe 'Team Members' do
     it 'removes the team member from the team' do
       expect {
         delete organization_team_member_path(organization, team, member)
-      }.to change { team.accounts.count }.by(-1)
+      }.to change { team.reload.accounts.count }.by(-1)
     end
   end
 
