@@ -11,9 +11,11 @@ $body-color: $gray-dark;
 $brand-primary: $green;
 $brand-success: darken(#428bca, 6.5%);
 $bg-body: $white;
+$modal-header-border-color: $table-border-color;
 
 a {
   &:focus {
     outline: none;
   }
 }
+

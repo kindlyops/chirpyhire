@@ -19,6 +19,7 @@
 //= require clipboard
 //= require ramda
 //= require cocoon
+//= require select2
 //= require_tree .
 
 

@@ -76,7 +76,7 @@ gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'
 # Impersonation
 gem 'ahoy_email', '~> 0.5.0'
 gem 'aws-sdk', '~> 2.8.5'
-gem 'cocoon', '~> 1.2.9'
+gem 'cocoon', '~> 1.2.10'
 gem 'counter_culture', '~> 1.5.1'
 gem 'csv_shaper', '~> 1.3.0'
 gem 'draper', '~> 3.0.0'
@@ -108,5 +108,6 @@ gem 'webpacker', '~> 1.2.0'
 source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.6.1'
   gem 'rails-assets-ramda', '~> 0.23.0'
+  gem 'rails-assets-select2', '~> 4.0.3'
   gem 'rails-assets-tether', '~> 1.4.0'
 end

@@ -3,17 +3,24 @@ FactoryGirl.define do
     bot
     body { Faker::Lorem.sentence }
 
-    before(:create) do |question|
-      break if question.rank.present?
-      question.rank = question.bot.next_question_rank
+    after(:create) do |question|
+      create(:follow_up, question: question)
     end
   end
 
   factory :choice_question, parent: :question, class: 'ChoiceQuestion' do
     type { 'ChoiceQuestion' }
+
+    after(:create) do |question|
+      create(:choice_follow_up, question: question)
+    end
   end
 
   factory :zipcode_question, parent: :question, class: 'ZipcodeQuestion' do
     type { 'ZipcodeQuestion' }
+
+    after(:create) do |question|
+      create(:zipcode_follow_up, question: question)
+    end
   end
 end

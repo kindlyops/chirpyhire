@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :follow_up do
     question
     body { Faker::Lorem.sentence }
+    response { Faker::Lorem.sentence }
   end
 
   factory :zipcode_follow_up, parent: :follow_up, class: 'ZipcodeFollowUp' do

@@ -6,7 +6,12 @@ class Question < ApplicationRecord
   validates :rank, presence: true
   validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
 
-  accepts_nested_attributes_for :follow_ups
+  accepts_nested_attributes_for :follow_ups,
+                                reject_if: :all_blank, allow_destroy: true
+
+  validates :follow_ups, presence: true, on: :update
+  validate :unformatted_body
+  before_validation :ensure_rank
 
   def self.ranked
     order(:rank)
@@ -41,5 +46,16 @@ class Question < ApplicationRecord
 
   def answers
     ''
+  end
+
+  private
+
+  def unformatted_body
+    errors.add(:body, "can't be blank") if body(formatted: false).blank?
+  end
+
+  def ensure_rank
+    return if rank.present?
+    self.rank = bot.next_question_rank
   end
 end

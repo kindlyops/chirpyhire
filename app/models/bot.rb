@@ -17,8 +17,9 @@ class Bot < ApplicationRecord
   accepts_nested_attributes_for :questions
   accepts_nested_attributes_for :goals
 
-  validates :goals, length: { minimum: 1 }, on: :update
-  validates :questions, length: { minimum: 1 }, on: :update
+  validates :goals, presence: true, on: :update
+  validates :questions, presence: true, on: :update
+  validates :name, presence: true
 
   def self.recent
     order(created_at: :desc)

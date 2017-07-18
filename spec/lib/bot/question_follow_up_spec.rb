@@ -11,21 +11,24 @@ RSpec.describe Bot::QuestionFollowUp do
 
   subject { Bot::QuestionFollowUp.new(question, message, campaign_contact) }
 
-  describe '#call' do
-    context 'question has no follow ups' do
-      it 'does not restate the question' do
-        expect(question).not_to receive(:restated)
+  describe '#follow_up' do
+    let(:rank) { question.next_follow_up_rank }
+    let(:message) { create(:message, body: Hash[(1..26).zip(:a..:z)][rank]) }
+    let(:response) { Faker::Lorem.word }
+    let!(:follow_up) { create(:follow_up, question: question, rank: rank) }
 
-        subject.call
+    context 'and the follow_up is deleted' do
+      before do
+        follow_up.destroy
       end
 
-      it 'does log the message' do
-        expect(ReadReceiptsCreator).to receive(:call)
-
-        subject.call
+      it 'still looks up the follow up' do
+        expect(subject.follow_up.id).to eq(follow_up.id)
       end
     end
+  end
 
+  describe '#call' do
     context 'question has follow ups' do
       let(:response) { Faker::Lorem.word }
       let!(:follow_up) { create(:follow_up, response: response, question: question, rank: question.next_follow_up_rank) }
