@@ -37,7 +37,7 @@ class FollowUp < ApplicationRecord
   private
 
   def ensure_rank
-    return if self.rank.present?
+    return if rank.present?
     self.rank = question.next_follow_up_rank
   end
 end
