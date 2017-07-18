@@ -11,6 +11,7 @@ class Question < ApplicationRecord
 
   validates :follow_ups, presence: true, on: :update
   validate :unformatted_body
+  before_validation :ensure_rank
 
   def self.ranked
     order(:rank)
@@ -51,5 +52,10 @@ class Question < ApplicationRecord
 
   def unformatted_body
     errors.add(:body, "can't be blank") if body(formatted: false).blank?
+  end
+
+  def ensure_rank
+    return if rank.present?
+    self.rank = bot.next_question_rank
   end
 end

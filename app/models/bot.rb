@@ -17,9 +17,6 @@ class Bot < ApplicationRecord
   accepts_nested_attributes_for :questions
   accepts_nested_attributes_for :goals
 
-  validates_associated :greeting
-  validates_associated :questions
-  validates_associated :goals
   validates :goals, presence: true, on: :update
   validates :questions, presence: true, on: :update
   validates :name, presence: true

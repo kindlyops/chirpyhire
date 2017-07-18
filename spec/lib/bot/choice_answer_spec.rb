@@ -7,11 +7,11 @@ RSpec.describe Bot::ChoiceAnswer do
   subject { Bot::ChoiceAnswer.new(follow_up) }
 
   describe 'activated?' do
-    context 'rank is 1' do
-      let(:rank) { 1 }
+    context 'rank is 3' do
+      let(:rank) { 3 }
 
-      ['A', "A\nJazz", '  A', 'A  ', "A\n",
-       "\nA", 'A OK'].each do |body|
+      ['C', "C\nJazz", '  C', 'C  ', "C\n",
+       "\nC", 'C OK'].each do |body|
         context body do
           let(:message) { create(:message, body: body) }
 
