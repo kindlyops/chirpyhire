@@ -5,6 +5,10 @@
     = render partial: "engage/navigation"
     .ch--sub-main
       .Bot
+        .d-flex.justify-content-end.mb-2
+          = button_to engage_bot_clone_path(@bot), class: 'btn btn-secondary', role: 'button' do
+              i.fa.fa-clone.mr-2
+              | Clone
         = form_for @bot, url: engage_bot_path(@bot) do |f|
           = content_for :validation_errors do
             = render partial: "common/validation_errors", locals: { model: @bot }
@@ -13,12 +17,12 @@
               = f.label :name, class: 'sr-only'
               = f.text_field :name, class: 'BotName mb-2', required: true
             .BotHeader--actions
-              = button_to engage_bot_clone_path(@bot), class: 'btn btn-secondary mr-2', role: 'button', data: { toggle: 'tooltip', placement: 'top' }, title: 'Clone Survey' do
-                  i.fa.fa-clone
-              = link_to engage_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button', data: { toggle: 'tooltip', placement: 'top' }, title: 'Cancel Changes' do
-                  i.fa.fa-refresh
-              = f.button type: 'submit', class: 'btn btn-primary', role: 'button', data: { toggle: 'tooltip', placement: 'top' }, title: 'Save Changes' do
-                  i.fa.fa-floppy-o
+              = link_to engage_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                  i.fa.fa-refresh.mr-2
+                  | Cancel
+              = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                  i.fa.fa-floppy-o.mr-2
+                  | Save
           = render partial: "engage/bots/greeting", locals: { f: f, greeting: @bot.greeting }
           div
             = f.fields_for :questions, @bot.ranked_questions do |q|
