@@ -6,7 +6,7 @@ li.list-group-item
       = form_for phone_number, url: organization_settings_phone_number_path(organization, phone_number), html: { class: 'form-inline' } do |f|
         = f.label :forwarding_phone_number, class: 'mr-2' do
           h5.card-title.mb-0 Forward to:
-        = f.phone_field :forwarding_phone_number, value: phone_number.forwarding_phone_number&.phony_formatted, required: true, class: 'form-control mr-2'
+        = f.phone_field :forwarding_phone_number, value: phone_number.forwarding_phone_number&.phony_formatted, class: 'form-control mr-2'
         = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
           i.fa.fa-check
 
