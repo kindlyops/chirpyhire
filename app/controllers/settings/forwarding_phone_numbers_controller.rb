@@ -24,7 +24,7 @@ class Settings::ForwardingPhoneNumbersController < ApplicationController
   end
 
   def success_notice
-    "Forwarding all calls to #{forwarding_phone_number}"
+    "Default forwarding to #{forwarding_phone_number}"
   end
 
   def forwarding_phone_number

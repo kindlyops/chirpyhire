@@ -87,6 +87,7 @@ class PhoneNumberProvisioner
   def phone_params
     {
       phone_number: new_twilio_number.phone_number,
+      forwarding_phone_number: organization.forwarding_phone_number,
       sid: new_twilio_number.sid
     }
   end
