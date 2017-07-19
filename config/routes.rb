@@ -39,6 +39,8 @@ Rails.application.routes.draw do
       resource :general
       resources :team_members
       resources :teams
+      resources :phone_numbers, only: :index
+      resource :forwarding_phone_number
     end
 
     namespace :billing do
