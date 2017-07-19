@@ -338,7 +338,7 @@ ActiveRecord::Schema.define(version: 20170719151740) do
     t.boolean "skin_test", default: true, null: false
     t.string "stripe_customer_id"
     t.string "size"
-    t.string "phone_number"
+    t.string "forwarding_phone_number"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 

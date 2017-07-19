@@ -15,7 +15,11 @@ class Settings::ForwardingPhoneNumbersController < ApplicationController
   end
 
   def notice
-    "Forwarding all calls to #{organization.phone_number.phony_formatted}"
+    "Forwarding all calls to #{forwarding_phone_number}"
+  end
+
+  def forwarding_phone_number
+    organization.forwarding_phone_number.phony_formatted
   end
 
   def organization

@@ -14,7 +14,7 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def basic_attributes
-    %i[name avatar email description url phone_number]
+    %i[name avatar email description url forwarding_phone_number]
   end
 
   def question_attributes

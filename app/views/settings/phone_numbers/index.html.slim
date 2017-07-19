@@ -20,11 +20,11 @@
           .card-text
             = form_for @organization, url: organization_settings_forwarding_phone_number_path(@organization) do |f|
               .form-group
-                = f.label :phone_number do
+                = f.label :forwarding_phone_number do
                   h5.card-title.mb-3 Default Forwarding Number:
                   h6.card-subtitle.mb-3.text-muted Sometimes candidates call your ChirpyHire phone numbers. 
                   h6.card-subtitle.mb-3.text-muted Enter a default forwarding number and we'll forward all calls to this number automatically.
-                = f.phone_field :phone_number, value: @organization.phone_number.phony_formatted, required: true, class: 'form-control'
+                = f.phone_field :forwarding_phone_number, value: @organization.forwarding_phone_number&.phony_formatted, required: true, class: 'form-control'
               .form-group.d-flex.justify-content-end
                 = f.submit "Save", role: 'button', class: 'btn btn-primary'
           .mb-2 
