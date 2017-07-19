@@ -22,7 +22,7 @@ class PhoneNumberProvisioner
   def phone_number_attributes
     {
       phone_number: available_local_phone_number.phone_number,
-      voice_url: nil,
+      voice_url: "#{ENV.fetch('TWILIO_WEBHOOK_BASE')}/twilio/voice",
       sms_url: "#{ENV.fetch('TWILIO_WEBHOOK_BASE')}/twilio/text",
       capabilities: {
         voice: true,
