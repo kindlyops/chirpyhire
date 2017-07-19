@@ -35,19 +35,19 @@ class TwilioController < ActionController::Base
 
   def sentence_one
     <<~response
-    Hello.
+      Hello.
     response
   end
 
   def sentence_two
     <<~response
-    This phone number is set up to only receive text messages.
+      This phone number is set up to only receive text messages.
     response
   end
 
   def sentence_three
     <<~response
-    To reach us, text us back at this number. Have a fantastic day!
+      To reach us, text us back at this number. Have a fantastic day!
     response
   end
 
