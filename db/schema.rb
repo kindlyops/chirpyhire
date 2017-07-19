@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718205005) do
+ActiveRecord::Schema.define(version: 20170719155002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -338,6 +338,7 @@ ActiveRecord::Schema.define(version: 20170718205005) do
     t.boolean "skin_test", default: true, null: false
     t.string "stripe_customer_id"
     t.string "size"
+    t.string "forwarding_phone_number"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 
@@ -376,6 +377,7 @@ ActiveRecord::Schema.define(version: 20170718205005) do
     t.string "phone_number", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "forwarding_phone_number"
     t.index ["organization_id"], name: "index_phone_numbers_on_organization_id"
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end

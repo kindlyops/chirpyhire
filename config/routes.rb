@@ -39,6 +39,8 @@ Rails.application.routes.draw do
       resource :general
       resources :team_members
       resources :teams
+      resources :phone_numbers
+      resource :forwarding_phone_number
     end
 
     namespace :billing do
@@ -58,9 +60,6 @@ Rails.application.routes.draw do
   resources :bots, only: %i[index show] do
     resources :questions, only: %i[update]
   end
-
-  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
-  post 'twilio/text' => 'organizations/messages#create'
 
   resource :current_account, only: :show, controller: 'current_account'
   resource :current_organization, only: :show, controller: 'current_organization'
@@ -84,6 +83,10 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
+
+  post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
+  post 'twilio/text' => 'organizations/messages#create'
+  post 'twilio/voice', defaults: { format: 'xml' }
 
   get '/caregivers', to: redirect('/candidates', status: 301)
   root to: redirect('/candidates')

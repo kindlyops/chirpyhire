@@ -1,0 +1,37 @@
+= title "Phone numbers · ChirpyHire"
+.ch--Page.settings.phone_numbers
+  = render partial: "settings/header"
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase App and Teams
+        .ch--vertical-navigation-links
+          = render partial: "settings/navigation", locals: { organization: @organization }
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Phone numbers for
+            '
+            = @organization.name
+      .card.ch--sub-main-content
+        .card-block
+          .card-text
+            = form_for @organization, url: organization_settings_forwarding_phone_number_path(@organization) do |f|
+              .form-group
+                = f.label :forwarding_phone_number do
+                  h5.card-title.mb-3 Default Forwarding Number:
+                  h6.card-subtitle.mb-3.text-muted Sometimes candidates call your ChirpyHire phone numbers. 
+                  h6.card-subtitle.mb-3.text-muted Enter a default forwarding number and we'll forward all calls to this number automatically.
+                = f.phone_field :forwarding_phone_number, value: @organization.forwarding_phone_number&.phony_formatted, required: true, class: 'form-control'
+              .form-group.d-flex.justify-content-end
+                = f.submit "Save", role: 'button', class: 'btn btn-primary'
+          .mb-3 
+            strong All your phone numbers
+          h6.card-subtitle.mb-3.text-muted Optionally set a forwarding number for each ChirpyHire phone number.
+          .card
+            ul.list-group.list-group-flush
+              = render partial: "phone_numbers/phone_number", collection: @phone_numbers, locals: { organization: @organization }
+
+

@@ -102,7 +102,7 @@ gem 'slack-notifier', '~> 2.1.0'
 gem 'slim-rails', '~> 3.1.0'
 gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch: 'rearchitect-gem'
 gem 'stripe', '~> 2.12.0'
-gem 'twilio-ruby', '~> 4.11.0'
+gem 'twilio-ruby', '~> 4.13.0'
 gem 'webpacker', '~> 1.2.0'
 
 source 'https://rails-assets.org' do
