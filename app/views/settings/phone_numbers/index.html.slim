@@ -1,5 +1,5 @@
 = title "Phone numbers · ChirpyHire"
-.ch--Page.settings.people
+.ch--Page.settings.phone_numbers
   = render partial: "settings/header"
   .ch--main
     .ch--vertical-navigation
@@ -27,8 +27,9 @@
                 = f.phone_field :forwarding_phone_number, value: @organization.forwarding_phone_number&.phony_formatted, required: true, class: 'form-control'
               .form-group.d-flex.justify-content-end
                 = f.submit "Save", role: 'button', class: 'btn btn-primary'
-          .mb-2 
+          .mb-3 
             strong All your phone numbers
+          h6.card-subtitle.mb-3.text-muted Optionally set a forwarding number for each ChirpyHire phone number.
           .card
             ul.list-group.list-group-flush
               = render partial: "phone_numbers/phone_number", collection: @phone_numbers, locals: { organization: @organization }

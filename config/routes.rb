@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       resource :general
       resources :team_members
       resources :teams
-      resources :phone_numbers, only: :index
+      resources :phone_numbers
       resource :forwarding_phone_number
     end
 
