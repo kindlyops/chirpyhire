@@ -17,8 +17,8 @@
             = @organization.name
       .card.ch--sub-main-content
         .card-block
-          .mb-3 
-            strong All your candidate stages
+          h5.card-title All your candidate stages
+          h6.card-subtitle.mb-3.text-muted Add, delete, or reorder your candidate stages.
           .card.mb-4
             ul.list-group.list-group-flush#contact-stages
               = render partial: 'settings/candidate/stages/stage', collection: @organization.contact_stages, locals: { organization: @organization }
