@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721142231) do
+ActiveRecord::Schema.define(version: 20170721155210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 20170721142231) do
     t.boolean "screened", default: false, null: false
     t.boolean "reached", default: false, null: false
     t.integer "outcome", default: 0, null: false
-    t.bigint "contact_stage_id"
+    t.bigint "contact_stage_id", null: false
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
@@ -231,8 +231,10 @@ ActiveRecord::Schema.define(version: 20170721142231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "outcome", default: 1, null: false
+    t.bigint "contact_stage_id"
     t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
     t.index ["bot_id"], name: "index_goals_on_bot_id"
+    t.index ["contact_stage_id"], name: "index_goals_on_contact_stage_id"
   end
 
   create_table "goals_tags", force: :cascade do |t|
@@ -522,6 +524,7 @@ ActiveRecord::Schema.define(version: 20170721142231) do
   add_foreign_key "follow_ups_tags", "follow_ups"
   add_foreign_key "follow_ups_tags", "tags"
   add_foreign_key "goals", "bots"
+  add_foreign_key "goals", "contact_stages"
   add_foreign_key "goals_tags", "goals"
   add_foreign_key "goals_tags", "tags"
   add_foreign_key "greetings", "bots"

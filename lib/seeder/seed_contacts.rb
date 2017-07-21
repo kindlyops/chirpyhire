@@ -34,7 +34,8 @@ class Seeder::SeedContacts
   def contact_params
     {
       subscribed: true,
-      organization: organization
+      organization: organization,
+      stage: organization.contact_stages.first
     }
   end
 

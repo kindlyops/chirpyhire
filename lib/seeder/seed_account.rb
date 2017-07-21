@@ -9,9 +9,7 @@ class Seeder::SeedAccount
 
   def call
     account.tap do
-      organization.update(recruiter: account)
-      organization.create_subscription
-      create_contact_stages
+      Seeder::SeedOrganization.call(account, organization)
       setup_team
       setup_zipcodes
     end
@@ -20,13 +18,6 @@ class Seeder::SeedAccount
   private
 
   attr_reader :account
-
-  def create_contact_stages
-    organization.contact_stages.create(name: 'New')
-    organization.contact_stages.create(name: 'Screened')
-    organization.contact_stages.create(name: 'Not Now')
-    organization.contact_stages.create(name: 'Scheduled')
-  end
 
   def setup_team
     assignment_rule
