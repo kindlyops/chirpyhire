@@ -1,4 +1,4 @@
-= title "Contact stages · ChirpyHire"
+= title "Candidate stages · ChirpyHire"
 .ch--Page.settings.contact_stages
   = render partial: "settings/header"
   .ch--main
@@ -12,13 +12,13 @@
       .ch--main-menu
         .ch--main-menu--left
           h2 
-            | Contact stages for
+            | Candidate stages for
             '
             = @organization.name
       .card.ch--sub-main-content
         .card-block
           .mb-3 
-            strong All your contact stages
+            strong All your candidate stages
           .card
             ul.list-group.list-group-flush
               = render partial: "contact_stages/contact_stage", collection: @contact_stages, locals: { organization: @organization }

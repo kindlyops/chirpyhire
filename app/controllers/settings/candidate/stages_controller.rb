@@ -1,4 +1,4 @@
-class Settings::ContactStagesController < ApplicationController
+class Settings::Candidate::StagesController < ApplicationController
   def index
     @contact_stages = policy_scope(organization.contact_stages)
   end
