@@ -41,7 +41,11 @@ Rails.application.routes.draw do
       resources :teams
       resources :phone_numbers
       namespace :candidate do
-        resources :stages
+        resources :stages do
+          collection do
+            post :reorder
+          end
+        end
       end
       resource :forwarding_phone_number
     end

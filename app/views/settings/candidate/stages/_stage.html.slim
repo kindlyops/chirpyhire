@@ -1,18 +1,19 @@
-li.list-group-item
-  .d-flex.justify-content-between.align-items-center
-    .name.mr-2
-      = form_for stage, url: organization_settings_candidate_stage_path(organization, stage), html: { class: 'form-inline' } do |f|
-        = f.label :name, class: 'sr-only'
-        = f.text_field :name, required: true, class: 'form-control mr-2'
-        = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
-          i.fa.fa-check
-    .actions
-      .dropdown
-        button#delete-contact-stage.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" type="button" 
-          i.fa.fa-trash-o.mr-1
-        .dropdown-menu aria-labelledby="delete-contact-stage"
-          - organization.contact_stages.where.not(id: stage.id).each do |other_stage|
-            = button_to organization_settings_candidate_stage_path(organization, stage), method: :delete, class: 'dropdown-item', role: 'button', params: { migrate_stage_id: other_stage.id } do
-              | and migrate candidates to
-              '
-              strong = other_stage.name
+li.list-group-item.contact-stage.justify-content-between.align-items-center id="ordered_contact_stages_#{stage.id}"
+  .left.mr-2.d-flex.justify-content-between.align-items-center
+    .contact-stage-handle.mr-4
+      i.fa.fa-bars.fa-2x
+    = form_for stage, url: organization_settings_candidate_stage_path(organization, stage), html: { class: 'form-inline' } do |f|
+      = f.label :name, class: 'sr-only'
+      = f.text_field :name, required: true, class: 'form-control mr-2'
+      = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
+        i.fa.fa-check
+  .actions
+    .dropdown
+      button#delete-contact-stage.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" type="button" 
+        i.fa.fa-trash-o.mr-1
+      .dropdown-menu aria-labelledby="delete-contact-stage"
+        - organization.contact_stages.where.not(id: stage.id).each do |other_stage|
+          = button_to organization_settings_candidate_stage_path(organization, stage), method: :delete, class: 'dropdown-item', role: 'button', params: { migrate_stage_id: other_stage.id } do
+            | and migrate candidates to
+            '
+            strong = other_stage.name

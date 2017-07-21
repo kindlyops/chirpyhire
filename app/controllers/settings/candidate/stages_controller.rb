@@ -1,4 +1,6 @@
 class Settings::Candidate::StagesController < ApplicationController
+  skip_after_action :verify_authorized, only: :reorder
+
   def index
     @contact_stages = policy_scope(organization.contact_stages)
   end
@@ -21,6 +23,15 @@ class Settings::Candidate::StagesController < ApplicationController
     end
   end
 
+  def reorder
+    if organization.update!(contact_stages_attributes: stages_attributes)
+      redirect_to contact_stage_settings
+    else
+      @contact_stages = policy_scope(organization.contact_stages)
+      render :index
+    end
+  end
+
   def destroy
     ContactStage.transaction do
       contact_stage.goals.find_each do |goal|
@@ -38,6 +49,12 @@ class Settings::Candidate::StagesController < ApplicationController
   end
 
   private
+
+  def stages_attributes
+    params[:ordered_contact_stages].map.with_index do |id, new_rank|
+      { id: id, rank: new_rank }
+    end
+  end
 
   def migrate_stage
     @migrate_stage ||= begin

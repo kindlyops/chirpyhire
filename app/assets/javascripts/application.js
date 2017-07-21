@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require jquery_ujs
 //= require jquery.textarea_autosize.js
+//= require jquery-ui/sortable
 //= require clipboard
 //= require ramda
 //= require cocoon

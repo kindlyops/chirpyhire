@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'jbuilder'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'oj'
 
 group :development, :test, :demo do

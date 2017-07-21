@@ -1,4 +1,9 @@
 .settings.contact-stages {
   .contact-stage {
+    width: 100%;
+
+    .contact-stage-handle {
+      cursor: move;
+    }
   }
 }
