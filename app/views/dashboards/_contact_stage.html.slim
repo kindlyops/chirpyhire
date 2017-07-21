@@ -1,0 +1,7 @@
+.metric
+  h4.card-title.d-flex.justify-content-between
+    = contact_stage.name
+  p.card-text = current_organization.contacts.where(stage: contact_stage).count
+- unless contact_stage.last_stage?
+  .d-flex.align-items-center.funnel-angle.justify-content-center
+    i.fa.fa-angle-right.fa-fw.fa-2x

@@ -9,32 +9,7 @@
     .card-header.d-flex.justify-content-between.align-items-center
       h4 Recruiting Performance
     .card-block.d-flex.justify-content-between
-      .metric
-        h4.card-title.d-flex.justify-content-between
-          | New
-          i.fa.fa-user
-        p.card-text = current_organization.contacts.where(outcome: 'New').count
-      .d-flex.align-items-center.funnel-angle.justify-content-center
-        i.fa.fa-angle-right.fa-fw.fa-2x
-      .metric
-        h4.card-title.d-flex.justify-content-between 
-          | Screened
-          i.fa.fa-tasks
-        p.card-text = current_organization.contacts.where(outcome: 'Screened').count
-      .d-flex.align-items-center.funnel-angle.justify-content-center
-        i.fa.fa-angle-right.fa-fw.fa-2x
-      .metric
-        h4.card-title.d-flex.justify-content-between 
-          | Not Now
-          i.fa.fa-thumbs-down
-        p.card-text = current_organization.contacts.where(outcome: 'Not Now').count
-      .d-flex.align-items-center.funnel-angle.justify-content-center
-        i.fa.fa-plus.fa-fw.fa-2x
-      .metric
-        h4.card-title.d-flex.justify-content-between 
-          | Scheduled
-          i.fa.fa-thumbs-up
-        p.card-text = current_organization.contacts.where(outcome: 'Scheduled').count
+      = render partial: "dashboards/contact_stage", collection: current_organization.contact_stages
   .card.mt-4
     .card-header.d-flex.justify-content-between.align-items-center
       h4 Open Conversations
