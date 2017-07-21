@@ -7,5 +7,12 @@ li.list-group-item
         = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
           i.fa.fa-check
     .actions
-      = button_to organization_settings_candidate_stage_path(organization, stage), method: :delete, class: 'btn btn-secondary', role: 'button' do
-          i.fa.fa-trash-o
+      .dropdown
+        button#delete-contact-stage.btn.btn-secondary.dropdown-toggle aria-expanded="false" aria-haspopup="true" role="button" data-toggle="dropdown" type="button" 
+          i.fa.fa-trash-o.mr-1
+        .dropdown-menu aria-labelledby="delete-contact-stage"
+          - organization.contact_stages.where.not(id: stage.id).each do |other_stage|
+            = button_to organization_settings_candidate_stage_path(organization, stage), method: :delete, class: 'dropdown-item', role: 'button', params: { migrate_stage_id: other_stage.id } do
+              | and migrate candidates to
+              '
+              strong = other_stage.name

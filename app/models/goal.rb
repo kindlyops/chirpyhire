@@ -1,6 +1,6 @@
 class Goal < ApplicationRecord
   belongs_to :bot
-  belongs_to :contact_stage
+  belongs_to :contact_stage, optional: true
 
   has_many :goals_tags
   has_many :tags, through: :goals_tags
@@ -22,6 +22,7 @@ class Goal < ApplicationRecord
 
   def tag(contact)
     contact.update(outcome: outcome)
+    contact.update(stage: contact_stage) if contact_stage.present?
     contact.tags << tags
   end
 

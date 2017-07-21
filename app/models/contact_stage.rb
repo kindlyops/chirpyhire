@@ -2,6 +2,8 @@ class ContactStage < ApplicationRecord
   belongs_to :organization, inverse_of: :contact_stages
 
   has_many :contacts
+  has_many :goals
+
   before_validation :ensure_rank
 
   def self.ranked

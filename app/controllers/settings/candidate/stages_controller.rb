@@ -22,14 +22,28 @@ class Settings::Candidate::StagesController < ApplicationController
   end
 
   def destroy
-    if contact_stage.destroy
-      redirect_to contact_stage_settings, notice: destroy_notice
-    else
-      render :index
+    ContactStage.transaction do
+      contact_stage.goals.find_each do |goal|
+        goal.update(contact_stage: nil)
+      end
+
+      contact_stage.contacts.find_each do |contact|
+        contact.update(stage: migrate_stage)
+      end
+
+      contact_stage.destroy
     end
+
+    redirect_to contact_stage_settings, notice: destroy_notice
   end
 
   private
+
+  def migrate_stage
+    @migrate_stage ||= begin
+      authorize(contact_stages.find(params[:migrate_stage_id]), :show?)
+    end
+  end
 
   def contact_stage_settings
     organization_settings_candidate_stages_path(organization)
