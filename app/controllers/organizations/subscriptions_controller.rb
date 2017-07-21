@@ -23,8 +23,10 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   def create_unsubscribed_contact
     person
       .contacts
-      .create(organization: organization)
-      .tap(&:create_contact_candidacy)
+      .create(
+        organization: organization,
+        stage: organization.contact_stages.first
+      ).tap(&:create_contact_candidacy)
   end
 
   def sync_message

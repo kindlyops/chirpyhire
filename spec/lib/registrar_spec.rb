@@ -44,6 +44,30 @@ RSpec.describe Registrar do
         }.to change { account.reload.owner? }.from(false).to(true)
       end
 
+      it 'creates a New contact stage' do
+        expect {
+          subject.register
+        }.to change { organization.reload.contact_stages.where(name: 'New').exists? }.from(false).to(true)
+      end
+
+      it 'creates a Screened contact stage' do
+        expect {
+          subject.register
+        }.to change { organization.reload.contact_stages.where(name: 'Screened').exists? }.from(false).to(true)
+      end
+
+      it 'creates a Not Now contact stage' do
+        expect {
+          subject.register
+        }.to change { organization.reload.contact_stages.where(name: 'Not Now').exists? }.from(false).to(true)
+      end
+
+      it 'creates a Scheduled contact stage' do
+        expect {
+          subject.register
+        }.to change { organization.reload.contact_stages.where(name: 'Scheduled').exists? }.from(false).to(true)
+      end
+
       it 'creates a subscription' do
         expect {
           subject.register

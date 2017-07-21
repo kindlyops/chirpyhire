@@ -31,6 +31,15 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           }.to change { person.contacts.unsubscribed.count }.by(1)
         end
 
+        context 'with contact stages' do
+          let!(:stage) { create(:contact_stage, organization: organization) }
+
+          it 'sets the stage of the contact as the first stage' do
+            delete :destroy, params: params
+            expect(person.contacts.last.stage).to eq(stage)
+          end
+        end
+
         it 'create a ContactCandidacy' do
           expect {
             delete :destroy, params: params
@@ -75,6 +84,15 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Contact.unsubscribed.count }.by(1)
+      end
+
+      context 'with contact stages' do
+        let!(:stage) { create(:contact_stage, organization: organization) }
+
+        it 'sets the stage of the contact as the first stage' do
+          delete :destroy, params: params
+          expect(Contact.last.stage).to eq(stage)
+        end
       end
 
       it 'adds the contact to the organization' do

@@ -33,6 +33,15 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         }.to change { Contact.subscribed.count }.by(1)
       end
 
+      context 'with contact stages' do
+        let!(:stage) { create(:contact_stage, organization: organization) }
+
+        it 'sets the stage of the contact as the first stage' do
+          post :create, params: params
+          expect(Contact.last.stage).to eq(stage)
+        end
+      end
+
       it 'adds the contact to the existing team' do
         post :create, params: params
         expect(organization.contacts).to include(Contact.last)
@@ -67,6 +76,15 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         expect {
           post :create, params: params
         }.to change { person.contacts.subscribed.count }.by(1)
+      end
+
+      context 'with contact stages' do
+        let!(:stage) { create(:contact_stage, organization: organization) }
+
+        it 'sets the stage of the contact as the first stage' do
+          post :create, params: params
+          expect(person.contacts.last.stage).to eq(stage)
+        end
       end
 
       it 'creates a contact candidacy' do
