@@ -27,7 +27,8 @@ RSpec.describe 'Conversations' do
   end
 
   describe 'update' do
-    let(:contact) { create(:contact, organization: organization) }
+    let(:contact) { create(:contact, :new, organization: organization) }
+    let(:screened_stage) { create(:contact_stage, :screened, organization: organization) }
     let!(:conversation) { create(:conversation, inbox: inbox, contact: contact) }
 
     let(:params) do
@@ -36,7 +37,7 @@ RSpec.describe 'Conversations' do
           state: 'Closed',
           contact_attributes: {
             id: contact.id,
-            outcome: 'Screened'
+            contact_stage_id: screened_stage.id
           }
         }
       }
@@ -52,7 +53,7 @@ RSpec.describe 'Conversations' do
       it 'changes the contact outcome to Screened' do
         expect {
           put inbox_conversation_path(inbox, conversation), params: params
-        }.to change { contact.reload.outcome }.from('New').to('Screened')
+        }.to change { contact.reload.stage.name }.from('New').to('Screened')
       end
     end
   end
