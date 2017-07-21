@@ -1,0 +1,26 @@
+= title "Contact stages · ChirpyHire"
+.ch--Page.settings.contact_stages
+  = render partial: "settings/header"
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase App and Teams
+        .ch--vertical-navigation-links
+          = render partial: "settings/navigation", locals: { organization: @organization }
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Contact stages for
+            '
+            = @organization.name
+      .card.ch--sub-main-content
+        .card-block
+          .mb-3 
+            strong All your contact stages
+          .card
+            ul.list-group.list-group-flush
+              = render partial: "contact_stages/contact_stage", collection: @contact_stages, locals: { organization: @organization }
+
+

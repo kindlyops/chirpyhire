@@ -1,0 +1,8 @@
+li.list-group-item
+  .d-flex.justify-content-between.align-items-center
+    = form_for contact_stage, url: organization_settings_contact_stage_path(organization, contact_stage), html: { class: 'form-inline' } do |f|
+      = f.label :name, class: 'sr-only'
+      = f.text_field :name, required: true, class: 'form-control mr-2'
+      = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
+        i.fa.fa-check
+
