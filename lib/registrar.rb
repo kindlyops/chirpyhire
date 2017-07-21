@@ -21,8 +21,8 @@ class Registrar
   def create_contact_stages
     organization.contact_stages.create(name: 'New')
     organization.contact_stages.create(name: 'Screened')
-    organization.contact_stages.create(name: 'Scheduled')
     organization.contact_stages.create(name: 'Not Now')
+    organization.contact_stages.create(name: 'Scheduled')
   end
 
   def trial_length

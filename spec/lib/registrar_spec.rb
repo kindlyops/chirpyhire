@@ -48,24 +48,28 @@ RSpec.describe Registrar do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'New').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'New').rank).to eq(1)
       end
 
       it 'creates a Screened contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'Screened').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Screened').rank).to eq(2)
       end
 
       it 'creates a Not Now contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'Not Now').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Not Now').rank).to eq(3)
       end
 
       it 'creates a Scheduled contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'Scheduled').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Scheduled').rank).to eq(4)
       end
 
       it 'creates a subscription' do
