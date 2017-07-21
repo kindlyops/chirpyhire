@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721155210) do
+ActiveRecord::Schema.define(version: 20170721162933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -231,7 +231,7 @@ ActiveRecord::Schema.define(version: 20170721155210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "outcome", default: 1, null: false
-    t.bigint "contact_stage_id"
+    t.bigint "contact_stage_id", null: false
     t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
     t.index ["bot_id"], name: "index_goals_on_bot_id"
     t.index ["contact_stage_id"], name: "index_goals_on_contact_stage_id"
