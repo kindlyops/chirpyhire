@@ -1,0 +1,9 @@
+li.list-group-item
+  .d-flex.justify-content-between.align-items-center
+    .name.mr-2
+      = form_for stage, url: organization_settings_candidate_stages_path(organization), html: { class: 'form-inline' } do |f|
+        = f.hidden_field :rank
+        = f.label :name, class: 'sr-only'
+        = f.text_field :name, placeholder: 'Add a new stage...', required: true, class: 'form-control mr-2'
+        = f.button type: 'submit', role: 'button', class: 'btn btn-primary' do
+          i.fa.fa-plus

@@ -1,17 +1,19 @@
 form {
-  .remove_fields {
+  .remove_fields, {
     float: right;
     padding: 0 0.5rem;
     color: $gray-light;
 
     position: relative;
     bottom: 3px;
-    font-size: 2rem;
+
+    font-size: 1.25rem;
+    transition: all .3s ease-in-out;
 
     &:focus, &:hover {
-      background: none;
-      color: $brand-primary;
+      background-color: #dddddd;
       outline: 0;
+      color: darken($gray-light, 25%);
       text-decoration: none;
     }
 

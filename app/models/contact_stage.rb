@@ -1,5 +1,5 @@
 class ContactStage < ApplicationRecord
-  belongs_to :organization
+  belongs_to :organization, inverse_of: :contact_stages
 
   has_many :contacts
   before_validation :ensure_rank

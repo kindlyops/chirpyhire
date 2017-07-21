@@ -3,6 +3,10 @@ class ContactStagePolicy < ApplicationPolicy
     show?
   end
 
+  def destroy?
+    show?
+  end
+
   def permitted_attributes
     %i[name]
   end

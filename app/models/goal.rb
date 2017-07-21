@@ -1,6 +1,6 @@
 class Goal < ApplicationRecord
   belongs_to :bot
-  belongs_to :contact_stage, optional: true
+  belongs_to :contact_stage
 
   has_many :goals_tags
   has_many :tags, through: :goals_tags
