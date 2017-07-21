@@ -1,7 +1,8 @@
 class ContactStage < ApplicationRecord
   belongs_to :organization
-
   has_many :contacts
+  has_many :goals
+
   before_validation :ensure_rank
 
   def self.ranked

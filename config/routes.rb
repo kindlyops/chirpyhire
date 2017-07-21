@@ -40,6 +40,13 @@ Rails.application.routes.draw do
       resources :team_members
       resources :teams
       resources :phone_numbers
+      namespace :candidate do
+        resources :stages do
+          collection do
+            post :reorder
+          end
+        end
+      end
       resource :forwarding_phone_number
     end
 

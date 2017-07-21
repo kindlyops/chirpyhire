@@ -22,6 +22,7 @@ class Goal < ApplicationRecord
 
   def tag(contact)
     contact.update(outcome: outcome)
+    contact.update(stage: contact_stage) if contact_stage.present?
     contact.tags << tags
   end
 

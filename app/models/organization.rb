@@ -77,9 +77,9 @@ class Organization < ApplicationRecord
   end
 
   def next_contact_stage_rank
-    return 1 if contact_stages.last.blank?
+    return 1 if contact_stages.where.not(id: nil).last.blank?
 
-    contact_stages.last.rank + 1
+    contact_stages.where.not(id: nil).last.rank + 1
   end
 
   private

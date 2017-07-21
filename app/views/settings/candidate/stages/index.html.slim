@@ -1,0 +1,27 @@
+= title "Candidate stages · ChirpyHire"
+.ch--Page.settings.contact-stages data-organization-id=@organization.id
+  = render partial: "settings/header"
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase App and Teams
+        .ch--vertical-navigation-links
+          = render partial: "settings/navigation", locals: { organization: @organization }
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Candidate stages for
+            '
+            = @organization.name
+      .card.ch--sub-main-content
+        .card-block
+          h5.card-title All your candidate stages
+          h6.card-subtitle.mb-3.text-muted Add, delete, or reorder your candidate stages.
+          .card.mb-4
+            ul.list-group.list-group-flush#contact-stages
+              .sortable
+                = render partial: 'settings/candidate/stages/stage', collection: @organization.contact_stages, locals: { organization: @organization }
+              = render partial: 'settings/candidate/stages/new_stage', locals: { stage: @organization.contact_stages.build(rank: @organization.next_contact_stage_rank), organization: @organization }
+
