@@ -5,10 +5,7 @@ class ConversationHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.closeAndNew = this.closeAndNew.bind(this);
-    this.closeAndScreened = this.closeAndScreened.bind(this);
-    this.closeAndNotNow = this.closeAndNotNow.bind(this);
-    this.closeAndScheduled = this.closeAndScheduled.bind(this);
+    this.closeOptions = this.closeOptions.bind(this);
   }
 
   conversationUrl() {
@@ -57,60 +54,20 @@ class ConversationHeader extends React.Component {
     )
   }
 
-  closeAndNew() {
-    return (
-      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="conversation[state]" value="Closed" />
-        <input type="hidden" name="conversation[contact_attributes][outcome]" value="New" />
-        <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
-        <button type="submit" className='dropdown-item' role="button">
-          Close + Mark New
-        </button>
-      </form>
-    )
-  }
-
-  closeAndScreened() {
-    return (
-      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="conversation[state]" value="Closed" />
-        <input type="hidden" name="conversation[contact_attributes][outcome]" value="Screened" />
-        <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
-        <button type="submit" className='dropdown-item' role="button">
-          Close + Mark Screened
-        </button>
-      </form>
-    )
-  }
-
-  closeAndNotNow() {
-    return (
-      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="conversation[state]" value="Closed" />
-        <input type="hidden" name="conversation[contact_attributes][outcome]" value="Not Now" />
-        <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
-        <button type="submit" className='dropdown-item' role="button">
-          Close + Mark Not Now
-        </button>
-      </form>
-    )
-  }
-
-  closeAndScheduled() {
-    return (
-      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="conversation[state]" value="Closed" />
-        <input type="hidden" name="conversation[contact_attributes][outcome]" value="Scheduled" />
-        <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
-        <button type="submit" className='dropdown-item' role="button">
-          Close + Mark Scheduled
-        </button>
-      </form>
-    )
+  closeOptions() {
+    return (<div className="dropdown-menu dropdown-menu-right" aria-labelledby="closeConversationButton">
+     {this.props.contact.contact_stages.map(stage =>
+        <form key={stage.id} className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
+          <input type="hidden" name="_method" value="put" />
+          <input type="hidden" name="conversation[state]" value="Closed" />
+          <input type="hidden" name="conversation[contact_attributes][contact_stage_id]" value={stage.id} />
+          <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
+          <button type="submit" className='dropdown-item' role="button">
+            Close + Mark {stage.name}
+          </button>
+        </form>
+      )}
+    </div>)
   }
 
   closeButton() {
@@ -120,12 +77,7 @@ class ConversationHeader extends React.Component {
           <i className='fa fa-check mr-2'></i>
           <span className='mr-1'>Close</span>
         </button>
-        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="closeConversationButton">
-          {this.closeAndNew()}
-          {this.closeAndScreened()}
-          {this.closeAndNotNow()}
-          {this.closeAndScheduled()}
-        </div>
+        {this.closeOptions()}
       </div>
     )
   }
@@ -183,7 +135,8 @@ class ConversationHeader extends React.Component {
 
 ConversationHeader.defaultProps = {
   contact: {
-    id: ''
+    id: '',
+    contact_stages: []
   }
 }
 
