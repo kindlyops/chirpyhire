@@ -17,11 +17,15 @@
   }
 
   .funnel-angle {
-    width: 40%;
+    width: 55px;
+  }
+
+  .metrics {
+    flex-wrap: wrap;
   }
 
   .metric {
     padding: 2rem 1rem 2rem .85rem;
-    width: 100%;
+    width: 220px;
   }
 }
