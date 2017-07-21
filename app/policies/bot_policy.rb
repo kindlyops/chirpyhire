@@ -43,7 +43,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def goals_attributes
-    %i[body outcome id]
+    %i[body contact_stage_id id]
   end
 
   class Scope < ApplicationPolicy::Scope
