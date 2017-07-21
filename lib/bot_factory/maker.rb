@@ -39,7 +39,7 @@ class BotFactory::Maker
   end
 
   def stage
-    organization.contact_stages.find_or_create_by(name: 'Screened')
+    @stage ||= organization.contact_stages.find_by(name: 'Screened')
   end
 
   def create_questions
