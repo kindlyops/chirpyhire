@@ -5,9 +5,9 @@
       span.bot-card--label Goal:
       span.bot-card--title = g.object.body
   .card-block
-    h5.card-title Outcome:
-    h6.card-subtitle.mb-3.text-muted Set the best outcome for candidates that reach this goal.
-    = g.collection_select :outcome, Goal.outcomes.keys, :itself, :itself, { include_blank: false }, class: 'form-control'
+    h5.card-title Candidate stage:
+    h6.card-subtitle.mb-3.text-muted Set the best stage for candidates that reach this goal.
+    = g.collection_select :contact_stage_id, current_organization.contact_stages, :id, :name, { include_blank: true }, class: 'form-control'
   .card-block
     h5.card-title Send Message:
     h6.card-subtitle.mb-3.text-muted Create a meaningful message to end the bot conversation for candidates who reach this goal.
