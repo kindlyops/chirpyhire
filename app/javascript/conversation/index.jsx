@@ -12,7 +12,7 @@ class Conversation extends React.Component {
       contact: {
         zipcode: {},
         tags: [],
-        outcomes: [],
+        contact_stages: [],
         id: ''
       },
       messages: []

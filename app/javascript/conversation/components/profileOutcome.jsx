@@ -13,7 +13,7 @@ class ProfileOutcome extends React.Component {
   onChange({ value, label }) {
     const form = $(`form#${this.id()}`);
     const data = { 
-      _method: 'put', contact: { outcome: value }
+      _method: 'put', contact: { contact_stage_id: value }
     }
     const config = {
       url: form.attr('action'),
@@ -26,7 +26,7 @@ class ProfileOutcome extends React.Component {
   }
 
   options() {
-    return this.props.contact.outcomes.map(outcome => ({ value: outcome, label: outcome }));
+    return this.props.contact.contact_stages.map(stage => ({ value: stage.id, label: stage.name }));
   }
 
   id() {
@@ -37,10 +37,10 @@ class ProfileOutcome extends React.Component {
     return (
         <form className='edit_contact' id={this.id()} method="post" action={`/contacts/${this.props.contact.id}`}>
           <Select
-            name="contact[outcome]"
+            name="contact[contact_stage_id]"
             className='mt-3'
             options={this.options()}
-            value={this.props.contact.outcome}
+            value={this.props.contact.contact_stage_id}
             onChange={this.onChange}
             clearable={false}
           />
@@ -51,8 +51,8 @@ class ProfileOutcome extends React.Component {
 
 ProfileOutcome.defaultProps = {
   contact: {
-    outcomes: [],
-    outcome: ''
+    contact_stages: [],
+    contact_stage_id: ''
   }
 }
 
