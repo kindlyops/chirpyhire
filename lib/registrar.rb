@@ -19,10 +19,10 @@ class Registrar
   delegate :location, to: :organization
 
   def create_contact_stages
-    organization.contact_stages.create(name: 'New')
-    organization.contact_stages.create(name: 'Screened')
-    organization.contact_stages.create(name: 'Not Now')
-    organization.contact_stages.create(name: 'Scheduled')
+    organization.contact_stages.create(name: 'New', rank: 1)
+    organization.contact_stages.create(name: 'Screened', rank: 2)
+    organization.contact_stages.create(name: 'Not Now', rank: 3)
+    organization.contact_stages.create(name: 'Scheduled', rank: 4)
   end
 
   def trial_length

@@ -1,7 +1,7 @@
 class Contact < ApplicationRecord
   belongs_to :person
   belongs_to :organization
-  belongs_to :stage, optional: true, class_name: 'ContactStage',
+  belongs_to :stage, class_name: 'ContactStage',
                      foreign_key: :contact_stage_id
 
   include RecruitingCounts

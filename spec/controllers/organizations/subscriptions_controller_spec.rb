@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Organizations::SubscriptionsController, type: :controller do
   let!(:team) { create(:team, :account, :phone_number) }
   let(:organization) { team.organization }
+  let!(:stage) { create(:contact_stage, organization: organization) }
   let(:phone_number) { '+15555555555' }
 
   describe '#destroy' do
@@ -31,13 +32,9 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           }.to change { person.contacts.unsubscribed.count }.by(1)
         end
 
-        context 'with contact stages' do
-          let!(:stage) { create(:contact_stage, organization: organization) }
-
-          it 'sets the stage of the contact as the first stage' do
-            delete :destroy, params: params
-            expect(person.contacts.last.stage).to eq(stage)
-          end
+        it 'sets the stage of the contact as the first stage' do
+          delete :destroy, params: params
+          expect(person.contacts.last.stage).to eq(stage)
         end
 
         it 'create a ContactCandidacy' do
@@ -86,13 +83,9 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         }.to change { Contact.unsubscribed.count }.by(1)
       end
 
-      context 'with contact stages' do
-        let!(:stage) { create(:contact_stage, organization: organization) }
-
-        it 'sets the stage of the contact as the first stage' do
-          delete :destroy, params: params
-          expect(Contact.last.stage).to eq(stage)
-        end
+      it 'sets the stage of the contact as the first stage' do
+        delete :destroy, params: params
+        expect(Contact.last.stage).to eq(stage)
       end
 
       it 'adds the contact to the organization' do

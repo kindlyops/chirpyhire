@@ -29,7 +29,17 @@ class BotFactory::Maker
   end
 
   def goal
-    @goal ||= bot.goals.create(body: goal_body, rank: bot.next_goal_rank)
+    @goal ||= begin
+      bot.goals.create(
+        body: goal_body,
+        rank: bot.next_goal_rank,
+        contact_stage: stage
+      )
+    end
+  end
+
+  def stage
+    organization.contact_stages.find_or_create_by(name: 'Screened')
   end
 
   def create_questions

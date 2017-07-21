@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :contact do
     association :person
     organization
+    association :stage, factory: :contact_stage
 
     transient do
       phone_number nil
@@ -17,8 +18,9 @@ FactoryGirl.define do
     trait :complete do
       after(:create) do |contact|
         organization = contact.organization
+        stage = organization.contact_stages.find_or_create_by(name: 'Screened')
         contact.update(subscribed: true, screened: true)
-        contact.update(outcome: 'Screened')
+        contact.update(outcome: 'Screened', stage: stage)
         %w[Availability Experience Transportation Certification
            SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
           question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
