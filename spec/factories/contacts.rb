@@ -8,6 +8,10 @@ FactoryGirl.define do
       phone_number nil
     end
 
+    trait :new do
+      association :stage, :new, factory: :contact_stage
+    end
+
     after(:create) do |contact, evaluator|
       if evaluator.phone_number.present?
         contact.person.update(phone_number: evaluator.phone_number)
