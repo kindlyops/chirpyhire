@@ -26,10 +26,18 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(organization: organization).tap do |contact|
+    person.contacts.create(contact_params).tap do |contact|
       contact.subscribe
       contact.create_contact_candidacy
     end
+  end
+
+  def contact_params
+    { stage: stage, organization: organization }
+  end
+
+  def stage
+    organization.contact_stages.first
   end
 
   def set_header

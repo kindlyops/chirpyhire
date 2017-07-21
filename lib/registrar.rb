@@ -5,6 +5,7 @@ class Registrar
 
   def register
     return unless account.persisted?
+    create_contact_stages
     setup_account
     organization.create_subscription(trial_ends_at: trial_length)
     TeamRegistrar.call(team, account, notify: false)
@@ -16,6 +17,13 @@ class Registrar
   attr_reader :account
 
   delegate :location, to: :organization
+
+  def create_contact_stages
+    organization.contact_stages.create(name: 'New')
+    organization.contact_stages.create(name: 'Screened')
+    organization.contact_stages.create(name: 'Not Now')
+    organization.contact_stages.create(name: 'Scheduled')
+  end
 
   def trial_length
     14.days.from_now
