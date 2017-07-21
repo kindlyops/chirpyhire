@@ -21,8 +21,8 @@ class Seeder::SeedOrganization
   attr_reader :organization, :account
 
   def create_contact_stages
-    ['New', 'Screened', 'Not Now', 'Scheduled'].each do |stage|
-      organization.contact_stages.create(name: stage)
+    ['New', 'Screened', 'Not Now', 'Scheduled'].each_with_index do |stage, i|
+      organization.contact_stages.create(name: stage, rank: i + 1)
     end
   end
 end
