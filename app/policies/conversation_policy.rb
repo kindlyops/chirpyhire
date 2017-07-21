@@ -8,7 +8,7 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def contact_attributes
-    %i[id outcome]
+    %i[id contact_stage_id]
   end
 
   class Scope < ApplicationPolicy::Scope

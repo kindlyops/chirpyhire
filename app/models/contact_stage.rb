@@ -8,6 +8,10 @@ class ContactStage < ApplicationRecord
     order(:rank)
   end
 
+  def last_stage?
+    organization.contact_stages.last == self
+  end
+
   private
 
   def ensure_rank
