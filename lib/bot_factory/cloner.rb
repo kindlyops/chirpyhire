@@ -34,7 +34,8 @@ class BotFactory::Cloner
     cloned_goal = clone.goals.create(
       body: goal.body,
       rank: goal.rank,
-      outcome: goal.outcome
+      outcome: goal.outcome,
+      contact_stage: goal.contact_stage
     )
 
     goal.tags.find_each { |tag| clone_tag(cloned_goal, tag) }
