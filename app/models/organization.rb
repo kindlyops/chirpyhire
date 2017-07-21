@@ -13,7 +13,7 @@ class Organization < ApplicationRecord
   has_many :assignment_rules
   has_many :bots
   has_many :campaigns
-  has_many :contact_stages, -> { ranked }, inverse_of: :organization
+  has_many :contact_stages, -> { ranked }
 
   has_many :locations, through: :teams
   has_many :recruiting_ads, through: :teams
@@ -23,8 +23,6 @@ class Organization < ApplicationRecord
   has_one :recruiting_ad
 
   accepts_nested_attributes_for :teams, reject_if: :all_blank
-  accepts_nested_attributes_for :contact_stages, reject_if: :all_blank,
-                                                 allow_destroy: true
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },

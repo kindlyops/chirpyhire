@@ -1,5 +1,5 @@
 class ContactStage < ApplicationRecord
-  belongs_to :organization, inverse_of: :contact_stages
+  belongs_to :organization
   has_many :contacts
   has_many :goals
 
