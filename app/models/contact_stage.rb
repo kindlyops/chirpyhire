@@ -9,6 +9,10 @@ class ContactStage < ApplicationRecord
     order(:rank)
   end
 
+  def self.defaults
+    ['New', 'Screened', 'Not Now', 'Scheduled']
+  end
+
   def last_stage?
     organization.contact_stages.last == self
   end
