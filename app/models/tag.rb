@@ -13,4 +13,8 @@ class Tag < ApplicationRecord
   def self.screened
     where(name: 'Screened')
   end
+
+  def self.without_stages
+    where.not(name: ContactStage.default_names)
+  end
 end
