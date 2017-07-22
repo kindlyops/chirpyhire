@@ -56,6 +56,12 @@ class Contact < ApplicationRecord
       .count.values.max
   end
 
+  def self.contact_stage_filter(stage_ids)
+    return current_scope if stage_ids.blank?
+
+    joins(:stage).where(contact_stages: { id: stage_ids.map(&:to_i) })
+  end
+
   def self.tag_filter(tag_ids)
     return current_scope if tag_ids.blank?
 

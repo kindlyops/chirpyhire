@@ -27,6 +27,7 @@ class CandidatesController < ApplicationController
     return scope if permitted_params.blank?
 
     scope
+      .contact_stage_filter(contact_stage_params)
       .tag_filter(tag_params)
       .zipcode_filter(zipcode_params)
       .starred_filter(star_params)
@@ -38,7 +39,7 @@ class CandidatesController < ApplicationController
 
   def permitted_params
     params.permit(
-      :city, :state, :county, :zipcode, :starred, tag: []
+      :city, :state, :county, :zipcode, :starred, tag: [], contact_stage: []
     )
   end
 
@@ -50,6 +51,10 @@ class CandidatesController < ApplicationController
 
   def tag_params
     permitted_params.to_h[:tag]
+  end
+
+  def contact_stage_params
+    permitted_params.to_h[:contact_stage]
   end
 
   def zipcode_params

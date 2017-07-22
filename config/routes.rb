@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resource :dashboard
   resources :segments
   resources :tags
+  resources :contact_stages
 
   resources :contacts, only: %i[show update] do
     resources :notes, only: %i[index create update destroy]

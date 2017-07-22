@@ -48,7 +48,7 @@ class CandidateFilter extends React.Component {
   }
 
   name() {
-    return this.props.attribute.toLowerCase();
+    return this.props.name || this.props.attribute.toLowerCase();
   }
 
   render() {
