@@ -15,6 +15,6 @@ class Tag < ApplicationRecord
   end
 
   def self.without_stages
-    where.not(name: ContactStage.defaults)
+    where.not(name: ContactStage.default_names)
   end
 end

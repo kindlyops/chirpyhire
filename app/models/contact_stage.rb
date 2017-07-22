@@ -9,7 +9,7 @@ class ContactStage < ApplicationRecord
     order(:rank)
   end
 
-  def self.defaults
+  def self.default_names
     ['New', 'Screened', 'Not Now', 'Scheduled']
   end
 
