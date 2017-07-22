@@ -16,6 +16,13 @@ class CandidateFilters extends React.Component {
         checked: false,
         icon: 'fa-tag',
         options: []
+      },
+      contact_stage: {
+        attribute: 'Stage',
+        name: 'contact_stage',
+        checked: false,
+        icon: 'fa-cube',
+        options: []
       }
     }
 
@@ -52,7 +59,12 @@ class CandidateFilters extends React.Component {
     $.get('/tags').then(tags => {
       let newState = update(this.state, { tag: { options: { $set: tags }}});
       this.setState(newState);
-    })
+    });
+
+    $.get('/contact_stages').then(stages => {
+      let newState = update(this.state, { contact_stage: { options: { $set: stages }}});
+      this.setState(newState);
+    });
   }
 
   render() {
@@ -72,6 +84,11 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.tag} />
+          <CandidateFilter
+            handleSelectChange={this.props.handleSelectChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.contact_stage} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 
