@@ -26,10 +26,6 @@
           div
             = f.fields_for :goals, @bot.ranked_goals do |g|
               = render partial: "engage/bots/goal", locals: { g: g }
-        .d-flex.justify-content-end.mb-4
-          = button_to engage_bot_clone_path(@bot), class: 'btn btn-secondary', role: 'button' do
-              i.fa.fa-clone.mr-2
-              | Clone
 #edit-follow-up-modal.modal.fade aria-hidden="true" aria-labelledby="edit-follow-up-label" role="dialog" tabindex="-1" 
   .modal-dialog.modal-lg role="document" 
     form#edit-follow-up-form
