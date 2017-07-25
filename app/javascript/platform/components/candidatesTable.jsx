@@ -9,7 +9,7 @@ class CandidatesTable extends React.Component {
     this.messageCellRenderer = this.messageCellRenderer.bind(this);
     this.headerRenderer = this.headerRenderer.bind(this);
     this.cellRenderer = this.cellRenderer.bind(this);
-    this.nicknameCellRenderer = this.nicknameCellRenderer.bind(this);
+    this.nameCellRenderer = this.nameCellRenderer.bind(this);
   }
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
@@ -26,7 +26,7 @@ class CandidatesTable extends React.Component {
     )
   }
 
-  nicknameCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
+  nameCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
     return (
       <div className='candidateCell'>
         <span className='candidateAvatar mr-2'>
@@ -45,8 +45,8 @@ class CandidatesTable extends React.Component {
     )
   }
 
-  initials(nickname) {
-    return nickname.split(' ').map(function (s) { return s.charAt(0); }).join('');
+  initials(name) {
+    return name.split(' ').map(function (s) { return s.charAt(0); }).join('');
   }
 
   render() {
@@ -64,11 +64,11 @@ class CandidatesTable extends React.Component {
                 rowGetter={({ index }) => this.props.candidates[index]}
               >
                 <Column
-                  label='Nickname (Internal)'
-                  dataKey='nickname'
+                  label='Name'
+                  dataKey='name'
                   width={260}
                   flexGrow={2}
-                  cellRenderer={this.nicknameCellRenderer}
+                  cellRenderer={this.nameCellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column

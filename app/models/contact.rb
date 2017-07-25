@@ -93,7 +93,7 @@ class Contact < ApplicationRecord
   end
 
   def handle
-    first_name&.downcase || nickname
+    name || nickname
   end
 
   def first_name
@@ -105,7 +105,7 @@ class Contact < ApplicationRecord
   private
 
   def add_nickname
-    return if persisted? || name.present? || nickname.present?
+    return if name.present? || nickname.present?
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
     Rollbar.debug(e)

@@ -4,7 +4,7 @@ json.total_pages candidates.object.total_pages
 
 json.candidates candidates do |candidate|
   json.id candidate.id
-  json.nickname candidate.handle
+  json.name candidate.handle
   json.last_seen_at candidate.last_active_at.to_s
   json.last_seen_at_ago candidate.last_active_at.time_ago_format
   json.first_seen_at candidate.joined_at.to_s
