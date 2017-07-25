@@ -26,10 +26,6 @@ class Contact < ApplicationRecord
     joins(conversations: :messages).merge(Message.active).distinct
   end
 
-  def self.screened
-    joins(taggings: :tag).merge(Tag.screened)
-  end
-
   def existing_open_conversation
     conversations.opened.first
   end
