@@ -17,7 +17,6 @@ FactoryGirl.define do
       after(:create) do |team|
         account = create(:account, organization: team.organization)
         team.accounts << account
-        team.update(recruiter: account)
       end
     end
 
@@ -25,7 +24,6 @@ FactoryGirl.define do
       after(:create) do |team|
         account = create(:account, :owner, organization: team.organization)
         team.accounts << account
-        team.update(recruiter: account)
       end
     end
 

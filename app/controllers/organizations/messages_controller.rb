@@ -26,10 +26,7 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(contact_params).tap do |contact|
-      contact.subscribe
-      contact.create_contact_candidacy
-    end
+    person.contacts.create(contact_params).tap(&:subscribe)
   end
 
   def contact_params

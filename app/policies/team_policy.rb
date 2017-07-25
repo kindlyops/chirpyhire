@@ -12,7 +12,7 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name avatar recruiter_id description]
+    %i[name avatar description]
       .push(location_attributes: location_attributes)
   end
 
