@@ -29,7 +29,6 @@ FactoryGirl.define do
           tag_name = question.responses_and_tags.map { |_, tag, _| tag }.sample
           contact.tags << organization.tags.find_or_create_by(name: tag_name)
         end
-        contact.tags << organization.tags.find_or_create_by(name: 'Screened')
 
         zipcodes = %i[30319 30324 30327 30328 30329
                       30338 30339 30340 30341 30342]
