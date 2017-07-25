@@ -1,10 +1,6 @@
 class Contact::ZipCode < Contact::Attribute
-  def humanize_attribute(*)
-    person.zipcode && person.zipcode.zipcode
-  end
-
-  def query
-    :zipcode
+  def label
+    person.zipcode&.zipcode
   end
 
   def icon_class

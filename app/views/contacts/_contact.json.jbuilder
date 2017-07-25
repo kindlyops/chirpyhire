@@ -15,9 +15,7 @@ json.existing_open_conversation_id(
 
 json.zipcode do
   json.label contact.candidacy_zipcode.label
-  json.tooltip_label contact.candidacy_zipcode.tooltip_label
   json.icon_class contact.candidacy_zipcode.icon_class
-  json.query contact.candidacy_zipcode.query
 end
 
 json.tags contact.tags.order(:name) do |tag|

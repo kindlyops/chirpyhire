@@ -18,10 +18,13 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :phone_number, :avatar, :nickname, :name, to: :person
+  delegate :handle, :phone_number, :avatar, to: :person
 
   before_create :set_last_reply_at
   before_validation :add_nickname
+
+  validates :name, presence: true, unless: :nickname_present?
+  validates :nickname, presence: true, unless: :name_present?
 
   def self.active
     joins(conversations: :messages).merge(Message.active).distinct
@@ -89,6 +92,16 @@ class Contact < ApplicationRecord
     update(subscribed: false)
   end
 
+  def handle
+    first_name&.downcase || nickname
+  end
+
+  def first_name
+    return if name.blank?
+
+    name.split(' ', 2).first
+  end
+
   private
 
   def add_nickname
@@ -101,5 +114,13 @@ class Contact < ApplicationRecord
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
+  end
+
+  def nickname_present?
+    nickname.present?
+  end
+
+  def name_present?
+    name.present?
   end
 end
