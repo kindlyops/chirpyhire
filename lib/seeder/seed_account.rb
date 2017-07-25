@@ -22,7 +22,6 @@ class Seeder::SeedAccount
   def setup_team
     assignment_rule
     team.accounts << account
-    team.update(recruiter: account)
     recruiting_ad
   end
 

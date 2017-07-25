@@ -37,12 +37,6 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
           expect(person.contacts.last.stage).to eq(stage)
         end
 
-        it 'create a ContactCandidacy' do
-          expect {
-            delete :destroy, params: params
-          }.to change { ContactCandidacy.count }.by(1)
-        end
-
         it 'adds the contact to the organization' do
           delete :destroy, params: params
           expect(organization.contacts).to include(Contact.last)
@@ -69,12 +63,6 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         expect {
           delete :destroy, params: params
         }.to change { Person.count }.by(1)
-      end
-
-      it 'creates a contact candidacy' do
-        expect {
-          delete :destroy, params: params
-        }.to change { ContactCandidacy.count }.by(1)
       end
 
       it 'creates an unsubscribed contact' do

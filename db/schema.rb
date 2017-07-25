@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721193305) do
+ActiveRecord::Schema.define(version: 20170725183456) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,24 +131,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
-  create_table "contact_candidacies", force: :cascade do |t|
-    t.integer "experience"
-    t.boolean "skin_test"
-    t.integer "availability"
-    t.integer "transportation"
-    t.string "zipcode"
-    t.boolean "cpr_first_aid"
-    t.integer "certification"
-    t.bigint "contact_id", null: false
-    t.integer "inquiry"
-    t.integer "state", default: 0, null: false
-    t.boolean "live_in"
-    t.boolean "drivers_license"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["contact_id"], name: "index_contact_candidacies_on_contact_id"
-  end
-
   create_table "contact_stages", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.integer "rank", null: false
@@ -166,11 +148,7 @@ ActiveRecord::Schema.define(version: 20170721193305) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "last_reply_at"
-    t.boolean "starred", default: false, null: false
     t.bigint "team_id"
-    t.boolean "screened", default: false, null: false
-    t.boolean "reached", default: false, null: false
-    t.integer "outcome", default: 0, null: false
     t.bigint "contact_stage_id", null: false
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
@@ -229,21 +207,10 @@ ActiveRecord::Schema.define(version: 20170721193305) do
     t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "outcome", default: 1, null: false
     t.bigint "contact_stage_id"
     t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
     t.index ["bot_id"], name: "index_goals_on_bot_id"
     t.index ["contact_stage_id"], name: "index_goals_on_contact_stage_id"
-  end
-
-  create_table "goals_tags", force: :cascade do |t|
-    t.bigint "goal_id", null: false
-    t.bigint "tag_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["goal_id", "tag_id"], name: "index_goals_tags_on_goal_id_and_tag_id", unique: true
-    t.index ["goal_id"], name: "index_goals_tags_on_goal_id"
-    t.index ["tag_id"], name: "index_goals_tags_on_tag_id"
   end
 
   create_table "greetings", force: :cascade do |t|
@@ -337,19 +304,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
     t.string "email"
     t.string "billing_email"
     t.string "description"
-    t.integer "contacts_count", default: 0, null: false
-    t.integer "screened_contacts_count", default: 0, null: false
-    t.integer "reached_contacts_count", default: 0, null: false
-    t.integer "starred_contacts_count", default: 0, null: false
-    t.boolean "certification", default: true, null: false
-    t.boolean "availability", default: true, null: false
-    t.boolean "live_in", default: true, null: false
-    t.boolean "experience", default: true, null: false
-    t.boolean "transportation", default: true, null: false
-    t.boolean "drivers_license", default: false, null: false
-    t.boolean "zipcode", default: true, null: false
-    t.boolean "cpr_first_aid", default: true, null: false
-    t.boolean "skin_test", default: true, null: false
     t.string "stripe_customer_id"
     t.string "size"
     t.string "forwarding_phone_number"
@@ -468,7 +422,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
   create_table "teams", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "name", null: false
-    t.integer "recruiter_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "avatar_file_name"
@@ -478,7 +431,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
     t.string "description"
     t.index ["name", "organization_id"], name: "index_teams_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_teams_on_organization_id"
-    t.index ["recruiter_id"], name: "index_teams_on_recruiter_id"
   end
 
   create_table "zipcodes", id: :serial, force: :cascade do |t|
@@ -509,7 +461,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
   add_foreign_key "campaign_contacts", "phone_numbers"
   add_foreign_key "campaign_contacts", "questions"
   add_foreign_key "campaigns", "organizations"
-  add_foreign_key "contact_candidacies", "contacts"
   add_foreign_key "contact_stages", "organizations"
   add_foreign_key "contacts", "contact_stages"
   add_foreign_key "contacts", "organizations"
@@ -524,8 +475,6 @@ ActiveRecord::Schema.define(version: 20170721193305) do
   add_foreign_key "follow_ups_tags", "tags"
   add_foreign_key "goals", "bots"
   add_foreign_key "goals", "contact_stages"
-  add_foreign_key "goals_tags", "goals"
-  add_foreign_key "goals_tags", "tags"
   add_foreign_key "greetings", "bots"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"

@@ -7,9 +7,6 @@ class Tag < ApplicationRecord
   has_many :follow_ups_tags
   has_many :follow_ups, through: :follow_ups_tags
 
-  has_many :goals_tags
-  has_many :goals, through: :goals_tags
-
   def self.screened
     where(name: 'Screened')
   end

@@ -17,25 +17,19 @@ class BotFactory::Maker
     return existing_bot if existing_bot.present?
 
     bot.create_greeting(body: greeting_body)
-    create_goal_tags
     create_questions
+    create_goal
     bot
   end
 
   attr_reader :organization, :notice, :name, :team_name
 
-  def create_goal_tags
-    goal.tags << organization.tags.find_or_create_by(name: 'Screened')
-  end
-
-  def goal
-    @goal ||= begin
-      bot.goals.create(
-        body: goal_body,
-        rank: bot.next_goal_rank,
-        contact_stage: stage
-      )
-    end
+  def create_goal
+    bot.goals.create(
+      body: goal_body,
+      rank: bot.next_goal_rank,
+      contact_stage: stage
+    )
   end
 
   def stage

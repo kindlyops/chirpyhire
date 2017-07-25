@@ -41,7 +41,6 @@ class TeamRegistrar
 
   def setup_account_on_team
     team.accounts << account
-    team.update(recruiter: account)
   end
 
   def create_recruiting_ad(phone_number)

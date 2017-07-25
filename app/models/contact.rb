@@ -4,9 +4,6 @@ class Contact < ApplicationRecord
   belongs_to :stage, class_name: 'ContactStage',
                      foreign_key: :contact_stage_id
 
-  include RecruitingCounts
-
-  has_one :contact_candidacy
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
   has_many :messages, through: :conversations
@@ -22,13 +19,8 @@ class Contact < ApplicationRecord
   has_many :notes
 
   delegate :handle, :phone_number, :avatar, :nickname, to: :person
-  delegate :complete?, :started?, :inquiry, to: :contact_candidacy
 
   before_create :set_last_reply_at
-
-  enum outcome: {
-    'New' => 0, 'Screened' => 1, 'Not Now' => 2, 'Scheduled' => 3
-  }
 
   def self.active
     joins(conversations: :messages).merge(Message.active).distinct

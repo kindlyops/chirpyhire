@@ -31,14 +31,12 @@ class BotFactory::Cloner
   end
 
   def clone_goal(clone, goal)
-    cloned_goal = clone.goals.create(
+    clone.goals.create(
       body: goal.body,
       rank: goal.rank,
       outcome: goal.outcome,
       contact_stage: goal.contact_stage
     )
-
-    goal.tags.find_each { |tag| clone_tag(cloned_goal, tag) }
   end
 
   def clone_question(clone, question)
