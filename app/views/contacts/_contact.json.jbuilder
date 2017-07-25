@@ -20,7 +20,7 @@ json.zipcode do
   json.query contact.candidacy_zipcode.query
 end
 
-json.tags contact.tags.where.not(name: 'Screened').order(:name) do |tag|
+json.tags contact.tags.order(:name) do |tag|
   json.id tag.id
   json.name tag.name
 end

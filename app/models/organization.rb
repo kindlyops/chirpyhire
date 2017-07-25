@@ -31,10 +31,6 @@ class Organization < ApplicationRecord
   delegate :person, to: :recruiter, prefix: true
   delegate :canceled?, :canceled_at, to: :subscription
 
-  def screened_contacts_count
-    contacts.screened.count
-  end
-
   def recent_bot
     bots.recent.first
   end
