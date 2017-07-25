@@ -18,9 +18,10 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :phone_number, :avatar, :nickname, to: :person
+  delegate :handle, :phone_number, :avatar, :nickname, :name, to: :person
 
   before_create :set_last_reply_at
+  before_validation :add_nickname
 
   def self.active
     joins(conversations: :messages).merge(Message.active).distinct
@@ -89,6 +90,14 @@ class Contact < ApplicationRecord
   end
 
   private
+
+  def add_nickname
+    return if persisted? || name.present? || nickname.present?
+    self.nickname = Nickname::Generator.new(self).generate
+  rescue Nickname::OutOfNicknames => e
+    Rollbar.debug(e)
+    self.nickname = 'Anonymous'
+  end
 
   def set_last_reply_at
     self.last_reply_at = DateTime.current
