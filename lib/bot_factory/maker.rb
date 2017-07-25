@@ -18,19 +18,18 @@ class BotFactory::Maker
 
     bot.create_greeting(body: greeting_body)
     create_questions
+    create_goal
     bot
   end
 
   attr_reader :organization, :notice, :name, :team_name
 
-  def goal
-    @goal ||= begin
-      bot.goals.create(
-        body: goal_body,
-        rank: bot.next_goal_rank,
-        contact_stage: stage
-      )
-    end
+  def create_goal
+    bot.goals.create(
+      body: goal_body,
+      rank: bot.next_goal_rank,
+      contact_stage: stage
+    )
   end
 
   def stage
