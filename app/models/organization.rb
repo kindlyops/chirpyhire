@@ -31,10 +31,6 @@ class Organization < ApplicationRecord
   delegate :person, to: :recruiter, prefix: true
   delegate :canceled?, :canceled_at, to: :subscription
 
-  def screened_contacts_count
-    contacts.screened.count
-  end
-
   def recent_bot
     bots.recent.first
   end
@@ -49,7 +45,6 @@ class Organization < ApplicationRecord
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    contact.update(reached: true) if sender.bot.blank?
     conversation.create_message(
       sent_message, sender, campaign
     ).tap { |message| Broadcaster::Message.broadcast(message) }

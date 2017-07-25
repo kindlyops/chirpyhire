@@ -81,10 +81,5 @@ RSpec.describe 'Team' do
       post organization_teams_path(organization), params: params
       expect(Team.last.accounts).to include(account)
     end
-
-    it 'sets the creator as the recruiter' do
-      post organization_teams_path(organization), params: params
-      expect(Team.last.recruiter).to eq(account)
-    end
   end
 end

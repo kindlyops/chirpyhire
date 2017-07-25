@@ -16,22 +16,19 @@ FactoryGirl.define do
       if evaluator.phone_number.present?
         contact.person.update(phone_number: evaluator.phone_number)
       end
-      create(:contact_candidacy, contact: contact)
     end
 
     trait :complete do
       after(:create) do |contact|
         organization = contact.organization
         stage = organization.contact_stages.find_or_create_by(name: 'Screened')
-        contact.update(subscribed: true, screened: true)
-        contact.update(outcome: 'Screened', stage: stage)
+        contact.update(subscribed: true, stage: stage)
         %w[Availability Experience Transportation Certification
            SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
           question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
           tag_name = question.responses_and_tags.map { |_, tag, _| tag }.sample
           contact.tags << organization.tags.find_or_create_by(name: tag_name)
         end
-        contact.tags << organization.tags.find_or_create_by(name: 'Screened')
 
         zipcodes = %i[30319 30324 30327 30328 30329
                       30338 30339 30340 30341 30342]

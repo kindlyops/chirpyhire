@@ -1,6 +1,5 @@
 class Team < ApplicationRecord
   belongs_to :organization
-  belongs_to :recruiter, class_name: 'Account'
 
   has_one :recruiting_ad
   has_one :location

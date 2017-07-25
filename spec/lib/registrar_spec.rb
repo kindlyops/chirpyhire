@@ -112,11 +112,6 @@ RSpec.describe Registrar do
         }.to change { organization.phone_numbers.count }.by(1)
       end
 
-      it 'sets the recruiter on the team' do
-        subject.register
-        expect(Team.last.recruiter).to eq(account)
-      end
-
       it 'creates a recruiting ad for the team' do
         subject.register
         expect(Team.last.recruiting_ad).to eq(organization.recruiting_ad)
