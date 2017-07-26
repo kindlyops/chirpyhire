@@ -1,6 +1,7 @@
 import React from 'react'
 
 import CandidateFilter from './candidateFilter'
+import TextCandidateFilter from './textCandidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
 import LocationCandidateFilter from './locationCandidateFilter'
 import configuration from '../configuration/segments'
@@ -16,6 +17,11 @@ class CandidateFilters extends React.Component {
         checked: false,
         icon: 'fa-tag',
         options: []
+      },
+      name: {
+        attribute: 'Name',
+        checked: false,
+        icon: 'fa-users'
       },
       contact_stage: {
         attribute: 'Stage',
@@ -74,6 +80,11 @@ class CandidateFilters extends React.Component {
           <div className='ch--vertical-navigation-header'>
             <h3 className='small-uppercase'>Candidate Attributes</h3>
           </div>
+          <TextCandidateFilter
+            handleTextChange={this.props.handleTextChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.name} />
           <LocationCandidateFilter 
             handleLocationChange={this.props.handleLocationChange}
             toggleLocation={this.toggleLocation}
