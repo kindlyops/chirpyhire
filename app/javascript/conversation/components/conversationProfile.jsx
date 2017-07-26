@@ -8,7 +8,7 @@ class ConversationProfile extends React.Component {
   render() {
     return ( 
       <div className="profile">
-        <ProfileHeader contact={this.props.contact} />
+        <ProfileHeader onNameChange={this.props.onNameChange} contact={this.props.contact} />
         <ProfileTags contact={this.props.contact} />
         <ProfileDetails contact={this.props.contact} />
         <ProfileNotes

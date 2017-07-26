@@ -1,7 +1,35 @@
 import React from 'react'
 import ProfileOutcome from './profileOutcome'
+import _ from 'lodash';
 
 class ProfileHeader extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      handle: props.contact.handle
+    }
+
+    this.onChange = this.onChange.bind(this);
+    this.handleOnChange = _.debounce(this.handleOnChange, 400);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.contact.handle !== this.props.contact.handle) {
+      this.setState({ handle: nextProps.contact.handle });
+    }
+  }
+
+  onChange(event) {
+    event.persist();
+    this.setState({ handle: event.target.value });
+    this.handleOnChange(event);
+  }
+
+  handleOnChange(event) {
+    this.props.onNameChange(event);
+  }
 
   profileImage() {
     if(this.props.contact.url) {
@@ -24,7 +52,9 @@ class ProfileHeader extends React.Component {
             {this.profileImage()}
           </div>
           <div className="profile-header-details">
-            <div className="profile-handle">{this.props.contact.handle}</div>
+            <div className="profile-handle">
+              <input type="text" name="name" value={this.state.handle} onChange={this.onChange} />
+            </div>
             <div className="profile-phone-number">{this.props.contact.phone_number}</div>
           </div>
         </div>

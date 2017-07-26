@@ -93,7 +93,9 @@ class Contact < ApplicationRecord
   end
 
   def handle
-    name || nickname
+    return name if name.present?
+
+    nickname
   end
 
   def first_name
