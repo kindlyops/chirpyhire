@@ -1,6 +1,9 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
+  belongs_to :organization, optional: true
   belongs_to :account, inverse_of: :person, optional: true
+  belongs_to :contact, inverse_of: :person, optional: true
+
   has_many :contacts
   has_one :bot
 

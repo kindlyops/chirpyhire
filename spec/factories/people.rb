@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :person do
+    organization
     phone_number { Faker::PhoneNumber.cell_phone }
 
     trait :with_name do

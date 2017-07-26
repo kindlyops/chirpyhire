@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725231648) do
+ActiveRecord::Schema.define(version: 20170726013258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -337,8 +337,12 @@ ActiveRecord::Schema.define(version: 20170725231648) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer "account_id"
+    t.bigint "organization_id"
+    t.bigint "contact_id"
     t.index ["account_id"], name: "index_people_on_account_id", unique: true
-    t.index ["phone_number"], name: "index_people_on_phone_number", unique: true
+    t.index ["contact_id"], name: "index_people_on_contact_id"
+    t.index ["organization_id"], name: "index_people_on_organization_id"
+    t.index ["phone_number", "organization_id"], name: "index_people_on_phone_number_and_organization_id", unique: true
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id"
   end
 
@@ -492,6 +496,8 @@ ActiveRecord::Schema.define(version: 20170725231648) do
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
   add_foreign_key "payment_cards", "organizations"
   add_foreign_key "people", "accounts"
+  add_foreign_key "people", "contacts"
+  add_foreign_key "people", "organizations"
   add_foreign_key "people", "zipcodes"
   add_foreign_key "phone_numbers", "organizations"
   add_foreign_key "questions", "bots"
