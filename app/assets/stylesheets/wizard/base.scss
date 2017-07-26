@@ -3,6 +3,16 @@
   height: 100vh;
   width: 100vw;
 
+  .custom-file-control {  
+    &::before {
+      background-color: #eceeef;
+    }
+  }
+
+  .custom-file-input {
+    cursor: pointer;
+  }
+
   .wizard__header {
     height: 4rem;
     display: flex;
@@ -67,7 +77,16 @@
   .wizard__main {
     .wizard__main__import__target {
       border: 1px dashed rgb(151, 153, 156);
-      // height: 20rem;
+
+      .wizard__main__import__target__label, .wizard__main__import__target__link, .wizard__main__import__target__notice {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .wizard__main__import__target__link {
+        flex-direction: column;
+      }
     }
   }
 }

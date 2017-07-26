@@ -112,4 +112,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-ramda', '~> 0.23.0'
   gem 'rails-assets-select2', '~> 4.0.3'
   gem 'rails-assets-tether', '~> 1.4.0'
+  gem 'rails-assets-lodash', '~> 4.17.4'
 end
