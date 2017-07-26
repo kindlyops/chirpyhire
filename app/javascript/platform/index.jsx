@@ -24,7 +24,7 @@ class Platform extends React.Component {
 
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleStarChange = this.handleStarChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
@@ -45,7 +45,7 @@ class Platform extends React.Component {
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
-          handleStarChange={this.handleStarChange}
+          handleTextChange={this.handleTextChange}
           handleLocationChange={this.handleLocationChange}
           exportCSV={this.exportCSV}
         />
@@ -96,17 +96,10 @@ class Platform extends React.Component {
     this.setState(newState);
   }
 
-  handleStarChange(event) {
+  handleTextChange(event) {
     const filter = event.target.name;
-    const isChecked = event.target.checked;
-    let newForm;
-    if(isChecked) {
-      newForm = update(this.state.form, { [filter]: {
-        $set: true
-      }});
-    } else {
-      newForm = update(this.state.form, { $unset: [`${filter}`]});
-    }
+    const value = event.target.value;
+    let newForm = update(this.state.form, { [filter]: { $set: value }});
     newForm.page = 1;
     const newState = R.mergeAll([{}, this.state, {
       form: newForm

@@ -28,9 +28,9 @@ class CandidatesController < ApplicationController
 
     scope
       .contact_stage_filter(contact_stage_params)
+      .name_filter(name_params)
       .tag_filter(tag_params)
       .zipcode_filter(zipcode_params)
-      .starred_filter(star_params)
   end
 
   def scope
@@ -39,14 +39,12 @@ class CandidatesController < ApplicationController
 
   def permitted_params
     params.permit(
-      :city, :state, :county, :zipcode, :starred, tag: [], contact_stage: []
+      :city, :state, :county, :zipcode, :name, tag: [], contact_stage: []
     )
   end
 
-  def star_params
-    return {} if params[:starred].blank?
-
-    { starred: true }
+  def name_params
+    permitted_params.to_h[:name]
   end
 
   def tag_params

@@ -1,4 +1,9 @@
 class Contact < ApplicationRecord
+  include PgSearch
+  pg_search_scope :search_by_name,
+                  against: { name: 'A', nickname: 'B' },
+                  using: { tsearch: { prefix: true } }
+
   belongs_to :person
   belongs_to :organization
   belongs_to :stage, class_name: 'ContactStage',
@@ -60,10 +65,10 @@ class Contact < ApplicationRecord
     joins(:tags).where('tags.id = ALL (array[?])', tag_ids.map(&:to_i))
   end
 
-  def self.starred_filter(filter_params)
-    return current_scope if filter_params.blank?
+  def self.name_filter(name)
+    return current_scope if name.blank?
 
-    where(filter_params)
+    search_by_name(name)
   end
 
   def self.zipcode_filter(filter_params)
