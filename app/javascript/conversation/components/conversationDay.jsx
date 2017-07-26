@@ -52,7 +52,7 @@ class ConversationDay extends React.Component {
         <div className="day_msgs">
         {this.thoughts().map((messages) =>
           this.orderedMessages(messages).map((message, index) =>
-              <Message thoughtId={index} key={message.id} message={message} />
+              <Message thoughtId={index} key={message.id} message={message} contact={this.props.contact} />
             )
           )
         }

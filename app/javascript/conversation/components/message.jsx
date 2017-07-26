@@ -27,6 +27,14 @@ class Message extends React.Component {
     }
   }
 
+  sender() {
+    if (this.props.message.direction === 'inbound') {
+      return this.props.contact.handle;
+    } else {
+      return this.props.message.sender_handle;
+    }
+  }
+
   render() {
     return (
       <div className={this.classes()}>
@@ -39,7 +47,7 @@ class Message extends React.Component {
         <div className="message_content">
           <div className="message_content_header">
             <div className="message_content_header_left">
-              <strong className="message-sender">{this.props.message.sender_handle}</strong>
+              <strong className="message-sender">{this.sender()}</strong>
               <a className="timestamp">{this.timestamp()}</a>
             </div>
           </div>
