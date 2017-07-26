@@ -19,6 +19,7 @@ FactoryGirl.define do
     end
 
     trait :complete do
+      name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
       after(:create) do |contact|
         organization = contact.organization
         stage = organization.contact_stages.find_or_create_by(name: 'Screened')

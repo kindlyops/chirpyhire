@@ -13,13 +13,31 @@ class Conversation extends React.Component {
         zipcode: {},
         tags: [],
         contact_stages: [],
-        id: ''
+        id: '',
+        handle: ''
       },
       messages: []
     };
-
+    this.onNameChange = this.onNameChange.bind(this);
     this._messageReceived = this._messageReceived.bind(this)
     this._contactReceived = this._contactReceived.bind(this)
+  }
+
+  onNameChange(event) {
+    const params = {
+      _method: 'put',
+      contact: { name: event.target.value }
+    };
+
+    const config = {
+      url: this.contactUrl(this.state.contact.id),
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(config);
   }
 
   render() {
@@ -29,7 +47,8 @@ class Conversation extends React.Component {
         contact={this.state.contact}
         messages={this.state.messages}
       />
-      <ConversationProfile 
+      <ConversationProfile
+        onNameChange={this.onNameChange}
         contact={this.state.contact}
         inbox={this.props.inbox}
         current_account={this.props.current_account}
