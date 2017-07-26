@@ -1,6 +1,6 @@
-class Import::CsvsController < ApplicationController
+class Import::CsvController < ApplicationController
   def new
-    @import = new_import
+    @import = authorize new_import
   end
 
   private
