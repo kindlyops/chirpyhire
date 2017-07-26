@@ -13,6 +13,7 @@ class Account < ApplicationRecord
   has_many :inboxes, through: :teams
   has_many :conversations, through: :inboxes
   has_many :segments
+  has_many :imports
 
   before_validation { build_person if person.blank? }
 

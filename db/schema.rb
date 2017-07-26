@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170725231648) do
+ActiveRecord::Schema.define(version: 20170726152542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,15 @@ ActiveRecord::Schema.define(version: 20170725231648) do
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
+  create_table "column_mappings", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.string "attribute", null: false
+    t.string "column"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_column_mappings_on_import_id"
+  end
+
   create_table "contact_stages", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.integer "rank", null: false
@@ -222,6 +231,28 @@ ActiveRecord::Schema.define(version: 20170725231648) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_greetings_on_bot_id"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "state", default: 0, null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_imports_on_account_id"
+  end
+
+  create_table "imports_tags", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id", "tag_id"], name: "index_imports_tags_on_import_id_and_tag_id", unique: true
+    t.index ["import_id"], name: "index_imports_tags_on_import_id"
+    t.index ["tag_id"], name: "index_imports_tags_on_tag_id"
   end
 
   create_table "inboxes", force: :cascade do |t|
@@ -337,8 +368,12 @@ ActiveRecord::Schema.define(version: 20170725231648) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.integer "account_id"
+    t.bigint "organization_id"
+    t.bigint "contact_id"
     t.index ["account_id"], name: "index_people_on_account_id", unique: true
-    t.index ["phone_number"], name: "index_people_on_phone_number", unique: true
+    t.index ["contact_id"], name: "index_people_on_contact_id"
+    t.index ["organization_id"], name: "index_people_on_organization_id"
+    t.index ["phone_number", "organization_id"], name: "index_people_on_phone_number_and_organization_id", unique: true
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id"
   end
 
@@ -464,6 +499,7 @@ ActiveRecord::Schema.define(version: 20170725231648) do
   add_foreign_key "campaign_contacts", "phone_numbers"
   add_foreign_key "campaign_contacts", "questions"
   add_foreign_key "campaigns", "organizations"
+  add_foreign_key "column_mappings", "imports"
   add_foreign_key "contact_stages", "organizations"
   add_foreign_key "contacts", "contact_stages"
   add_foreign_key "contacts", "organizations"
@@ -479,6 +515,9 @@ ActiveRecord::Schema.define(version: 20170725231648) do
   add_foreign_key "goals", "bots"
   add_foreign_key "goals", "contact_stages"
   add_foreign_key "greetings", "bots"
+  add_foreign_key "imports", "accounts"
+  add_foreign_key "imports_tags", "imports"
+  add_foreign_key "imports_tags", "tags"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
@@ -492,6 +531,8 @@ ActiveRecord::Schema.define(version: 20170725231648) do
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
   add_foreign_key "payment_cards", "organizations"
   add_foreign_key "people", "accounts"
+  add_foreign_key "people", "contacts"
+  add_foreign_key "people", "organizations"
   add_foreign_key "people", "zipcodes"
   add_foreign_key "phone_numbers", "organizations"
   add_foreign_key "questions", "bots"

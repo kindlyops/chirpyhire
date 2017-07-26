@@ -7,6 +7,7 @@ class Organization < ApplicationRecord
   has_many :teams
   has_many :contacts
   has_many :inboxes, through: :teams
+  has_many :imports, through: :accounts
   has_many :conversations, through: :contacts
   has_many :payment_cards
   has_many :phone_numbers
