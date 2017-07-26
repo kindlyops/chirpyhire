@@ -46,7 +46,10 @@ class CandidatesTable extends React.Component {
   }
 
   initials(name) {
-    return name.split(' ').map(function (s) { return s.charAt(0).toUpperCase(); }).join('');
+    let names = name.split(' ');
+    let last = names.length - 1;
+    names = [names[0], names[last]];
+    return names.map(function (s) { return s.charAt(0).toUpperCase(); }).join('');
   }
 
   render() {
