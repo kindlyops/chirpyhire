@@ -16,7 +16,7 @@ class CandidatesMenu extends React.Component {
 
   onClick(e) {
     e.preventDefault();
-    window.open('/import/csv/new', 'import_csv', "height=200,width=200");
+    window.open('/import/csv/new', 'import_csv', 'height=800,width=1280');
   }
 
   render() {

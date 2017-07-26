@@ -1,0 +1,34 @@
+.wizard
+  header.wizard__header
+    .wizard__label Import your candidates from a CSV
+    .wizard__steps
+      .wizard__step.active
+        .wizard__step__number 1
+        .wizard__step__label Upload CSV
+      .wizard__step
+        .wizard__step__number 2
+        .wizard__step__label Map Attributes
+      .wizard__step
+        .wizard__step__number 3
+        .wizard__step__label Tag
+      .wizard__step
+        .wizard__step__number 4
+        .wizard__step__label Import Summary
+  .wizard__main.container
+    .row.mt-5
+      .col-md-8.offset-md-2
+        .wizard__main__instructions.card.mt-5
+          .card-block Importing a CSV allows you to add and update people stored in ChirpyHire. If a candidate ID or phone number in your CSV matches an existing candidate in ChirpyHire, they will be updated with the mapped values. Otherwise, a new candidate will be created.
+    .row.mt-4
+      .col-md-8.offset-md-2
+        .wizard__main__import__target.card
+          .card-block.text-center
+            .wizard__main__import__target__label
+              h4 Drag and drop your CSV file here
+            .wizard__main__import__target__link.mt-4 
+              a href="#" role="button" Or select a file from your computer...
+            .wizard__main__import__target__notice.mt-5 Your CSV file should at least contain each person’s phone number. Other import attributes include candidate ids, email, full names, and sign up dates.
+    .row
+      .col-md-8.offset-md-2
+        .wizard__main__action.text-center.mt-4
+          button.btn.btn-primary.btn-lg role="button" Upload

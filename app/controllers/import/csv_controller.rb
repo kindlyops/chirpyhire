@@ -1,4 +1,6 @@
 class Import::CsvController < ApplicationController
+  layout 'wizard'
+
   def new
     @import = authorize new_import
   end

@@ -1,0 +1,73 @@
+.wizard {
+  background-color: #f0f4f7;
+  height: 100vh;
+  width: 100vw;
+
+  .wizard__header {
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darken($brand-primary, 25%);
+    padding: 0 3rem;
+
+    .wizard__label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: $white;
+    }
+
+    .wizard__steps {
+      display: flex;
+
+      .wizard__step {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.active {
+          .wizard__step__number {          
+            background-color: $brand-primary;
+            color: $white;
+          }
+
+          .wizard__step__label {
+            color: $white;
+          }
+        }
+
+        &:not(:last-child) {
+          margin-right: 1.25rem;
+        }
+
+        .wizard__step__number {
+          margin-right: .5rem;
+          color: rgb(151, 153, 156);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          border-radius: 50%;
+          font-size: 1rem;
+          font-weight: 600;
+          width: 25px;
+          height: 25px;
+          background-color: $white;
+        }
+
+        .wizard__step__label {
+          color: rgb(151, 153, 156);
+          font-size: 1rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .wizard__main {
+    .wizard__main__import__target {
+      border: 1px dashed rgb(151, 153, 156);
+      // height: 20rem;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    = render partial: "layouts/head"
+  body class==(content_for?(:body_class) ? content_for(:body_class) : '')
+    = render "layouts/google_tag_manager/no_script"
+    #app
+      .app-container
+        = render partial: "layouts/alerts"
+        .app
+          #app-container class==(content_for?(:app_container_class) ? content_for(:app_container_class) : 'app-content-container')
+            = yield
+    = render "layouts/script" unless Rails.env.test?
