@@ -1,4 +1,5 @@
 class Import < ApplicationRecord
+  include AASM
   belongs_to :account
   has_many :mappings, class_name: 'ColumnMapping'
   has_many :imports_tags
@@ -12,6 +13,15 @@ class Import < ApplicationRecord
   has_attached_file :document
 
   enum status: { pending: 0, in_progress: 1, complete: 2 }
+
+  aasm column: :status do
+    state :pending, initial: true
+    state :in_progress, :complete
+
+    event :run, after: :import do
+      transitions from: :pending, to: :in_progress, if: :valid_mappings?
+    end
+  end
 
   validates_attachment :document, presence: true,
                                   content_type: {
@@ -52,7 +62,19 @@ class Import < ApplicationRecord
     headers.map.with_index { |h, i| Import::Column.new(h, i, local_doc) }
   end
 
+  def load_mapping_errors
+    mappings.find_each { |mapping| mapping.load_error(self) }
+  end
+
   private
+
+  def import
+    ImportJob.perform_later(self)
+  end
+
+  def valid_mappings?
+    mappings.find_each(&:valid_for_import?)
+  end
 
   def headers
     @headers ||= CSV.foreach(local_doc.path).first

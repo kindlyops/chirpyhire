@@ -11,7 +11,11 @@ class Import::TagsController < ApplicationController
     @import = fetch_import
 
     @import.tags << tag
+    @import.run!
     redirect_to import_csv_summary_path(@import)
+  rescue AASM::InvalidTransition => e
+    @import.load_mapping_errors
+    render :new
   end
 
   private

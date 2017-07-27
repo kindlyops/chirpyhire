@@ -17,22 +17,23 @@
   .wizard__main.container
     .row
       .col
-       = form_for @tag, url: import_csv_tags_path do |f|
-        = f.hidden_field :name
-        .row.mt-5
-          .col-md-8.offset-md-2
-            .wizard__main__instructions.card.mt-5
-              .card-block 
-                .d-flex.flex-column.align-items-center.justify-content-center
-                  .card-text Tags in ChirpyHire let you groups of candidates together.
-                  .card-text Each import gets a new tag to help you find the candidates in the import.
-              .card-block
-                .d-flex.flex-column.align-items-center.justify-content-center
-                  h4 Import Tag
-                  .ch-tag 
-                    i.fa.fa-tag.mr-2
-                    = @tag.name
-        .row
-          .col-md-8.offset-md-2
-            .wizard__main__action.text-center.mt-4
-              = f.submit "Import candidates", class: 'btn btn-primary btn-lg', role: 'button'
+        = form_for @tag, url: import_csv_tags_path do |f|
+          = render partial: "common/validation_errors", locals: { model: @import }
+          = f.hidden_field :name
+          .row.mt-5
+            .col-md-8.offset-md-2
+              .wizard__main__instructions.card.mt-5
+                .card-block
+                  .d-flex.flex-column.align-items-center.justify-content-center
+                    .card-text Tags in ChirpyHire let you groups of candidates together.
+                    .card-text Each import gets a new tag to help you find the candidates in the import.
+                .card-block
+                  .d-flex.flex-column.align-items-center.justify-content-center
+                    h4 Import Tag
+                    .ch-tag
+                      i.fa.fa-tag.mr-2
+                      = @tag.name
+          .row
+            .col-md-8.offset-md-2
+              .wizard__main__action.text-center.mt-4
+                = f.submit "Import candidates", class: 'btn btn-primary btn-lg', role: 'button'
