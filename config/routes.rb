@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   end
 
   namespace :import do
-    resources :csv
+    resources :csv do
+      resources :mappings
+    end
   end
 
   resources :organizations, only: %i[show update] do

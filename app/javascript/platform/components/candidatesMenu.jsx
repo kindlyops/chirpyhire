@@ -14,18 +14,13 @@ class CandidatesMenu extends React.Component {
     return subscription.status === 'canceled';
   }
 
-  onClick(e) {
-    e.preventDefault();
-    window.open('/import/csv/new', 'import_csv', 'height=800,width=1280');
-  }
-
   render() {
     return (<div className='CandidatesMenu ch--main-menu'>
       <div className='ch--main-menu--left'>
         <h2 className='CandidatesCount'>{this.props.total_count} candidates</h2>
       </div>
       <div className='ch--main-menu--right'>
-        <a className='btn btn-sm btn-success mr-2' onClick={this.onClick} href='/import/csv/new' role="button">
+        <a className='btn btn-sm btn-success mr-2' href='/import/csv/new' role="button">
           Import
           <i className='fa fa-cloud-upload ml-2'></i>
         </a>

@@ -8,15 +8,11 @@ class Import::CsvController < ApplicationController
   def create
     @import = authorize build_import
 
-    if @import.save
-      redirect_to edit_import_csv_path(@import)
+    if Import::Create.call(@import)
+      redirect_to edit_import_csv_mapping_path(@import, @import.first_mapping)
     else
       render :new
     end
-  end
-
-  def edit
-    @import = authorize current_account.imports.find(params[:id])
   end
 
   private

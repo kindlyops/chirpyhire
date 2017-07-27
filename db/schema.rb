@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 20170726152542) do
     t.bigint "import_id", null: false
     t.string "attribute", null: false
     t.string "column"
+    t.boolean "optional", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["import_id"], name: "index_column_mappings_on_import_id"
