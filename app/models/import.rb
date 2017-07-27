@@ -14,7 +14,7 @@ class Import < ApplicationRecord
 
   enum status: { pending: 0, in_progress: 1, complete: 2 }
 
-  aasm column: :status do
+  aasm column: :status, enum: true do
     state :pending, initial: true
     state :in_progress, :complete
 
