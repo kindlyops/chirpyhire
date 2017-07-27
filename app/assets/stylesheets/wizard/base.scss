@@ -1,7 +1,5 @@
 .wizard {
   background-color: #f0f4f7;
-  height: 100vh;
-  width: 100vw;
 
   .custom-file-control {  
     &::before {
@@ -75,6 +73,31 @@
   }
 
   .wizard__main {
+    .column-card {
+      max-width: 255px;
+      .card-block {
+        max-height: 114px;
+      }
+
+      .value {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 180px;
+      }
+      
+      .card-footer {
+        height: 49px;
+      }
+    }
+    .wizard__main__mapping {
+      .wizard__main__mapping__label, .wizard__main__mapping__link, .wizard__main__mapping__notice {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
     .wizard__main__import__target {
       border: 1px dashed rgb(151, 153, 156);
 

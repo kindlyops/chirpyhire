@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   namespace :import do
     resources :csv do
       resources :mappings
+      resources :tags
+      resources :summaries
     end
   end
 

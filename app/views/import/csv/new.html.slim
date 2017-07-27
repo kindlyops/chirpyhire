@@ -30,7 +30,7 @@
                   h4 Select a file from your computer
                 .wizard__main__import__target__link.mt-4.df
                   label.custom-file.mt-3
-                    = f.file_field :file, id: 'file', class: 'custom-file-input', accept: '.csv', required: true, data: { toggle: 'custom-file', target: '#import-file' }
+                    = f.file_field :document, id: 'file', class: 'custom-file-input', accept: '.csv', required: true, data: { toggle: 'custom-file', target: '#import-file' }
                     span#import-file.custom-file-control data-content="Select file..."
                 .wizard__main__import__target__notice.mt-5.text-center Your CSV file should at least contain each person’s phone number. Other import attributes include candidate ids and full names.
         .row

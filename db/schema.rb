@@ -133,8 +133,8 @@ ActiveRecord::Schema.define(version: 20170726152542) do
 
   create_table "column_mappings", force: :cascade do |t|
     t.bigint "import_id", null: false
-    t.string "attribute", null: false
-    t.string "column"
+    t.string "contact_attribute", null: false
+    t.integer "column_number"
     t.boolean "optional", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -237,10 +237,10 @@ ActiveRecord::Schema.define(version: 20170726152542) do
   create_table "imports", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.integer "state", default: 0, null: false
-    t.string "file_file_name"
-    t.string "file_content_type"
-    t.integer "file_file_size"
-    t.datetime "file_updated_at"
+    t.string "document_file_name"
+    t.string "document_content_type"
+    t.integer "document_file_size"
+    t.datetime "document_updated_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_imports_on_account_id"

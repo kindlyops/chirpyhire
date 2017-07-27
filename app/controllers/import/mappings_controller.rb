@@ -1,7 +1,13 @@
 class Import::MappingsController < ApplicationController
   layout 'wizard'
 
-  def update; end
+  def update
+    if mapping.update(permitted_attributes(ColumnMapping))
+      redirect_to next_import_path
+    else
+      render :edit
+    end
+  end
 
   def edit
     mapping
@@ -9,13 +15,27 @@ class Import::MappingsController < ApplicationController
 
   private
 
+  def next_import_path
+    return edit_path if next_mapping.present?
+
+    new_import_csv_tag_path(import)
+  end
+
+  def edit_path
+    edit_import_csv_mapping_path(import, next_mapping)
+  end
+
+  def next_mapping
+    import.mapping_after(mapping)
+  end
+
   def mapping
     @mapping ||= authorize import.mappings.find(params[:id])
   end
 
   def import
     @import ||= begin
-      authorize current_account.imports.find(params[:csv_id], :show?)
+      authorize(current_account.imports.find(params[:csv_id]), :show?)
     end
   end
 

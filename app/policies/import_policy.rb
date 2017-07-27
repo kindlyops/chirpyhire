@@ -8,7 +8,7 @@ class ImportPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[file]
+    %i[document]
   end
 
   class Scope < ApplicationPolicy::Scope

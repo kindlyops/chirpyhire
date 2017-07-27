@@ -5,8 +5,8 @@ class Import::Create
 
   def self.mapping_attributes
     [
-      { attribute: 'contact_id', optional: true },
       { attribute: 'phone_number', optional: false },
+      { attribute: 'id', optional: true },
       { attribute: 'name', optional: true }
     ]
   end
@@ -28,7 +28,7 @@ class Import::Create
   end
 
   def create_mapping(attribute:, optional:)
-    mappings.find_or_create_by(attribute: attribute, optional: optional)
+    mappings.find_or_create_by(contact_attribute: attribute, optional: optional)
   end
 
   def mapping_attributes
