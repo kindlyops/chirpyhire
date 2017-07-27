@@ -173,6 +173,7 @@ ActiveRecord::Schema.define(version: 20170727211342) do
   create_table "contacts_imports", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.bigint "import_id", null: false
+    t.boolean "updated", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["contact_id"], name: "index_contacts_imports_on_contact_id"

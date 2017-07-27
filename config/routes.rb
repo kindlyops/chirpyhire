@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     namespace :settings do
       resource :general
       resources :team_members
+      resources :imports
       resources :teams
       resources :phone_numbers
       namespace :candidate do

@@ -22,6 +22,17 @@
             .card-text Your data has been imported and is currently being processed.
             .card-text Created and updated candidates will be available for you to chat soon. 
           .card-block
+            .card-text
+              | Candidates:
+              = @import.contacts_imports.created.count
+              ' created,
+              '
+              = @import.contacts_imports.updated.count
+              ' updated.
+              | Errors:
+              = @import.import_errors.count
+              = link_to "View", organization_settings_import_path(@import)
+          .card-block
             .card-text They are tagged with:
             .d-flex.align-items-center.justify-content-start
               - @import.tags.each do |tag|
@@ -31,4 +42,7 @@
     .row
       .col
         .justify-content-center.d-flex
-          = link_to "Finish", candidates_path, class: 'btn btn-primary btn-lg mt-4'
+          - if @import.complete?
+            = link_to "Finish", candidates_path, class: 'btn btn-primary btn-lg mt-4'
+          - else
+            = link_to "Refresh", import_csv_summary_path(@import), class: 'btn btn-default btn-lg mt-4'
