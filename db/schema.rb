@@ -256,7 +256,7 @@ ActiveRecord::Schema.define(version: 20170727211342) do
 
   create_table "imports", force: :cascade do |t|
     t.bigint "account_id", null: false
-    t.integer "state", default: 0, null: false
+    t.integer "status", default: 0, null: false
     t.string "document_file_name"
     t.string "document_content_type"
     t.integer "document_file_size"
