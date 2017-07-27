@@ -14,4 +14,10 @@
   text-align: center;
   position: relative;
   margin-bottom: 0;
+
+  &.fade-out {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+  }
 }

@@ -8,7 +8,7 @@ class Import < ApplicationRecord
   has_many :contacts_imports
   has_many :contacts, through: :contacts_imports
 
-  has_many :errors, class_name: 'ImportError'
+  has_many :import_errors
 
   has_attached_file :document
 

@@ -14,11 +14,11 @@
       .wizard__step
         .wizard__step__number 4
         .wizard__step__label Import Summary
+  = render partial: "common/validation_errors", locals: { model: @import }
   .wizard__main.container
     .row
       .col
         = form_for @tag, url: import_csv_tags_path do |f|
-          = render partial: "common/validation_errors", locals: { model: @import }
           = f.hidden_field :name
           .row.mt-5
             .col-md-8.offset-md-2

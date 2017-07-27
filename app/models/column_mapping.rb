@@ -20,7 +20,7 @@ class ColumnMapping < ApplicationRecord
   def load_error(import)
     return if valid_for_import?
 
-    import.errors.add(mapping: invalid_import_error_message)
+    import.errors.add(:mapping, invalid_import_error_message)
   end
 
   private
