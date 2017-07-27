@@ -10,7 +10,7 @@ class TagPolicy < ApplicationPolicy
   def permitted_attributes
     %i[name]
   end
-  
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where(organization: organization)
