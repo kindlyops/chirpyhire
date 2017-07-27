@@ -4,7 +4,14 @@ class Import < ApplicationRecord
   has_many :imports_tags
   has_many :tags, through: :imports_tags
 
+  has_many :contacts_imports
+  has_many :contacts, through: :contacts_imports
+
+  has_many :errors, class_name: 'ImportError'
+
   has_attached_file :document
+
+  enum status: { pending: 0, in_progress: 1, complete: 2 }
 
   validates_attachment :document, presence: true,
                                   content_type: {

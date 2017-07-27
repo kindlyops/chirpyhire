@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170726152542) do
+ActiveRecord::Schema.define(version: 20170727211342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,15 @@ ActiveRecord::Schema.define(version: 20170726152542) do
     t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
+  create_table "contacts_imports", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "import_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_contacts_imports_on_contact_id"
+    t.index ["import_id"], name: "index_contacts_imports_on_import_id"
+  end
+
   create_table "conversations", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.datetime "last_message_created_at"
@@ -232,6 +241,17 @@ ActiveRecord::Schema.define(version: 20170726152542) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_greetings_on_bot_id"
+  end
+
+  create_table "import_errors", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.integer "row_number", null: false
+    t.integer "column_number", null: false
+    t.integer "type", null: false
+    t.string "column_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_import_errors_on_import_id"
   end
 
   create_table "imports", force: :cascade do |t|
@@ -502,6 +522,8 @@ ActiveRecord::Schema.define(version: 20170726152542) do
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
+  add_foreign_key "contacts_imports", "contacts"
+  add_foreign_key "contacts_imports", "imports"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
   add_foreign_key "follow_ups", "goals"
@@ -512,6 +534,7 @@ ActiveRecord::Schema.define(version: 20170726152542) do
   add_foreign_key "goals", "bots"
   add_foreign_key "goals", "contact_stages"
   add_foreign_key "greetings", "bots"
+  add_foreign_key "import_errors", "imports"
   add_foreign_key "imports", "accounts"
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"

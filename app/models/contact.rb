@@ -15,6 +15,9 @@ class Contact < ApplicationRecord
   has_many :taggings
   has_many :tags, through: :taggings
 
+  has_many :contacts_imports
+  has_many :imports, through: :contacts_imports
+
   has_many :campaign_contacts
   has_many :campaigns, through: :campaign_contacts
 
