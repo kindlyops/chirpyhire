@@ -73,7 +73,7 @@ class Import < ApplicationRecord
   end
 
   def valid_mappings?
-    mappings.find_each(&:valid_for_import?)
+    mappings.find_each.all?(&:valid_for_import?)
   end
 
   def headers
