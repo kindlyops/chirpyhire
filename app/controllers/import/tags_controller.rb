@@ -10,11 +10,8 @@ class Import::TagsController < ApplicationController
   def create
     @import = fetch_import
 
-    if tag
-      redirect_to new_import_csv_summary_path(@import)
-    else
-      render :new
-    end
+    @import.tags << tag
+    redirect_to import_csv_summary_path(@import)
   end
 
   private

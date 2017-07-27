@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :csv do
       resources :mappings
       resources :tags
-      resources :summaries
+      resource :summary
     end
   end
 

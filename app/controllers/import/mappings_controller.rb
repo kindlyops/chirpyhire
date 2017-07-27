@@ -26,7 +26,7 @@ class Import::MappingsController < ApplicationController
   end
 
   def next_mapping
-    import.mapping_after(mapping)
+    mapping.next_mapping
   end
 
   def mapping

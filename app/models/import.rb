@@ -31,6 +31,12 @@ class Import < ApplicationRecord
     mappings.order(:id).to_a[mapping_number(mapping)]
   end
 
+  def mapping_before(mapping)
+    number = mapping_number(mapping)
+    return if number == 1
+    mappings.order(:id).to_a[number - 2]
+  end
+
   def select_columns
     headers.zip(0...headers.size)
   end

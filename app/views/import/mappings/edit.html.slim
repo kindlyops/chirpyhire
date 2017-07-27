@@ -21,32 +21,41 @@
           .col
             .card.mt-5
               .card-block
-                p.card-text
-                  = @import.mapping_number(@mapping)
-                  '
-                  ' of
-                  = @import.mappings.count
-                  ':
-                  '
-                  strong 
-                    | Which column contains the 
-                    = @mapping.contact_attribute.humanize.downcase
-                    '
-                    ' of your candidates?
-                p.card-text.text-muted 
-                  - if @mapping.optional?
-                    | Mapping candidate
-                    '
-                    = @mapping.contact_attribute.humanize.downcase
-                    '
-                    ' is optional. Feel free to 
-                    strong skip 
-                    '
-                    ' it.
-                  - else
-                    | Every candidate in ChirpyHire must have a 
-                    = @mapping.contact_attribute.humanize.downcase
-                    '.
+                .d-flex.justify-content-between
+                  .instructions
+                    p.card-text
+                      = @import.mapping_number(@mapping)
+                      '
+                      ' of
+                      = @import.mappings.count
+                      ':
+                      '
+                      strong 
+                        | Which column contains the 
+                        = @mapping.contact_attribute.humanize.downcase
+                        '
+                        ' of your candidates?
+                    p.card-text.text-muted 
+                      - if @mapping.optional?
+                        | Mapping candidate
+                        '
+                        = @mapping.contact_attribute.humanize.downcase
+                        '
+                        ' is optional. Feel free to 
+                        strong skip 
+                        '
+                        ' it.
+                      - else
+                        | Every candidate in ChirpyHire must have a 
+                        = @mapping.contact_attribute.humanize.downcase
+                        '.
+                  .actions.d-flex.align-items-center.justify-content-end
+                    - if @mapping.previous_mapping.present?
+                      = link_to "Previous step", edit_import_csv_mapping_path(@import, @mapping.previous_mapping), class: 'btn btn-default mr-2'
+                    - if @mapping.next_mapping.present? && @mapping.optional?
+                      = button_to "Skip step", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-default', role: 'button', params: { column_mapping: { column_number: nil } } }
+                    - if @mapping.next_mapping.blank?
+                      = button_to "Finish mapping", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-default', role: 'button', params: { column_mapping: { column_number: nil } } }
         - @import.document_columns.in_groups_of(4, false) do |group|
           .row.mt-4
             .col

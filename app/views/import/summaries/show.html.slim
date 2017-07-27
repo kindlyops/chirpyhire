@@ -1,0 +1,34 @@
+.wizard
+  header.wizard__header
+    .wizard__label Import your candidates from a CSV
+    .wizard__steps
+      .wizard__step
+        .wizard__step__number 1
+        .wizard__step__label Upload CSV
+      .wizard__step
+        .wizard__step__number 2
+        .wizard__step__label Map Attributes
+      .wizard__step
+        .wizard__step__number 3
+        .wizard__step__label Tag
+      .wizard__step.active
+        .wizard__step__number 4
+        .wizard__step__label Import Summary
+  .wizard__main.container
+    .row
+      .col
+        .card.mt-5
+          .card-block
+            .card-text Your data has been imported and is currently being processed.
+            .card-text Created and updated candidates will be available for you to chat soon. 
+          .card-block
+            .card-text They are tagged with:
+            .d-flex.align-items-center.justify-content-start
+              - @import.tags.each do |tag|
+                .ch-tag 
+                  i.fa.fa-tag.mr-2
+                  = tag.name
+    .row
+      .col
+        .justify-content-center.d-flex
+          = link_to "Finish", candidates_path, class: 'btn btn-primary btn-lg btn-block mt-4'

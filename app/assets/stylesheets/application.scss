@@ -25,6 +25,10 @@ body {
     background-color: $white;
   }
 
+  &.wizard {
+    background-color: #f0f4f7;
+  }
+
   &.chat {
     overflow: hidden;
     background-color: $white;

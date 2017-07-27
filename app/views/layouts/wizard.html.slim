@@ -2,7 +2,7 @@ doctype html
 html lang="en"
   head
     = render partial: "layouts/head"
-  body class==(content_for?(:body_class) ? content_for(:body_class) : '')
+  body class==(content_for?(:body_class) ? content_for(:body_class) : 'wizard')
     = render "layouts/google_tag_manager/no_script"
     #app
       .app-container
