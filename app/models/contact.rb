@@ -1,5 +1,6 @@
 class Contact < ApplicationRecord
   include PgSearch
+  phony_normalize :phone_number, default_country_code: 'US'
   pg_search_scope :search_by_name,
                   against: { name: 'A', nickname: 'B' },
                   using: { tsearch: { prefix: true } }
@@ -23,7 +24,7 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :phone_number, :avatar, to: :person
+  delegate :handle, :avatar, to: :person
 
   before_create :set_last_reply_at
   before_validation :add_nickname

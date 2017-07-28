@@ -44,7 +44,7 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
       end
 
       context 'with a subscribed contact' do
-        let!(:contact) { create(:contact, subscribed: true, person: person, organization: organization) }
+        let!(:contact) { create(:contact, subscribed: true, phone_number: phone_number, person: person, organization: organization) }
         it 'unsubscribes the contact' do
           expect {
             delete :destroy, params: params
