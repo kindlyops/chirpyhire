@@ -155,10 +155,10 @@ ActiveRecord::Schema.define(version: 20170728140347) do
     t.string "phone_number", null: false
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id", "nickname"], name: "index_contacts_on_organization_id_and_nickname", unique: true
+    t.index ["organization_id", "phone_number"], name: "index_contacts_on_organization_id_and_phone_number", unique: true
     t.index ["organization_id"], name: "index_contacts_on_organization_id"
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
-    t.index ["phone_number"], name: "index_contacts_on_phone_number", unique: true
     t.index ["team_id"], name: "index_contacts_on_team_id"
   end
 
