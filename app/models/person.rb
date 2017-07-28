@@ -1,7 +1,7 @@
 class Person < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :account, inverse_of: :person, optional: true
-  has_many :contacts
+  has_one :contact
   has_one :bot
 
   has_many :sent_messages,
@@ -20,18 +20,7 @@ class Person < ApplicationRecord
 
   validates :name, presence: true, unless: :nickname_present?
   validates :nickname, presence: true, unless: :name_present?
-
-  def subscribed_to?(organization)
-    contacts.where(organization: organization).exists?
-  end
-
-  def actively_subscribed_to?(organization)
-    contacts.subscribed.where(organization: organization).exists?
-  end
-
-  def subscribed_to(organization)
-    contacts.find_by(organization: organization)
-  end
+  delegate :subscribed?, to: :contact
 
   def handle
     first_name&.downcase || nickname

@@ -1,13 +1,10 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    !canceled? && actively_subscribed?
+    !canceled? && subscribed?
   end
 
   delegate :recipient, to: :record
-
-  def actively_subscribed?
-    recipient.actively_subscribed_to?(account.organization)
-  end
+  delegate :subscribed?, to: :recipient
 
   class Scope < ApplicationPolicy::Scope
     def resolve
