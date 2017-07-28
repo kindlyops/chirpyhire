@@ -12,7 +12,7 @@ RSpec.describe Importer do
           let(:import) { create(:import, :id_column_id_present) }
 
           context 'and the id exists for a contact on the organization team' do
-            let!(:contact) { create(:contact, id: 143132, organization: organization) }
+            let!(:contact) { create(:contact, id: 143_132, organization: organization) }
 
             it 'updates that contact' do
               expect {
@@ -120,7 +120,7 @@ RSpec.describe Importer do
             context 'tied to existing organization contact' do
               let(:person) { create(:person, phone_number: '+14041234567') }
               let!(:contact) { create(:contact, person: person, organization: organization) }
-              
+
               it 'updates the existing contact' do
                 expect {
                   subject.call

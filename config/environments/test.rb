@@ -42,7 +42,7 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
 
   config.paperclip_defaults = {
-    path: "#{Rails.root}/spec/test_files/:class/:id_partition/:style.:extension"
+    path: Rails.root.join('spec', 'test_files', ':class', ':id_partition', ':style.:extension').to_s
   }
 
   # Raises error for missing translations
