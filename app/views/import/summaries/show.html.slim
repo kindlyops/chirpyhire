@@ -23,6 +23,10 @@
             .card-text Created and updated candidates will be available for you to chat soon. 
           .card-block
             .card-text
+              strong Status:
+              '
+              = @import.status.titlecase
+            .card-text
               strong Candidates:
               '
               = @import.contacts_imports.created.count
