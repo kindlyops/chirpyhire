@@ -36,7 +36,25 @@
               '
               = @import.import_errors.count
               '
-              = link_to "View", organization_settings_import_path(current_organization, @import)
+              - if @import.import_errors.present?
+                a href="#errors" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="errors" View
+          - if @import.import_errors.present?
+            .card-block.collapse#errors
+              .d-flex.justify-content-center.align-items-center
+                table.table.table-striped
+                  thead
+                    tr
+                      th Row
+                      th Column Name
+                      th Column Number
+                      th Error Type
+                  tbody
+                    - @import.import_errors.each do |error|
+                      tr
+                        th = error.row_number
+                        th = error.column_name
+                        th = error.column_number
+                        th = error.humanized_type
           .card-block
             .card-text They are tagged with:
             .d-flex.align-items-center.justify-content-start

@@ -248,7 +248,7 @@ ActiveRecord::Schema.define(version: 20170727211342) do
     t.bigint "import_id", null: false
     t.integer "row_number", null: false
     t.integer "column_number", null: false
-    t.integer "type", null: false
+    t.integer "error_type", null: false
     t.string "column_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
