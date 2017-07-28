@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Import::Runner do
-  let(:organization) { create(:organization, :stages) }
+  let(:organization) { create(:organization, :stages, :team) }
   let(:account) { create(:account, organization: organization) }
 
   subject { Import::Runner.new(import) }
@@ -69,6 +69,12 @@ RSpec.describe Import::Runner do
                   }.to change { organization.reload.contacts.count }.by(1)
                 end
 
+                it 'creates a conversation' do
+                  expect {
+                    subject.call
+                  }.to change { organization.reload.conversations.count }.by(1)
+                end
+
                 it 'creates a created contacts import' do
                   expect {
                     subject.call
@@ -109,6 +115,12 @@ RSpec.describe Import::Runner do
                   expect {
                     subject.call
                   }.to change { organization.reload.contacts.count }.by(1)
+                end
+
+                it 'creates a conversation' do
+                  expect {
+                    subject.call
+                  }.to change { organization.reload.conversations.count }.by(1)
                 end
 
                 it 'creates a created contacts import' do
@@ -186,6 +198,12 @@ RSpec.describe Import::Runner do
                 }.to change { organization.reload.contacts.count }.by(1)
               end
 
+              it 'creates a conversation' do
+                expect {
+                  subject.call
+                }.to change { organization.reload.conversations.count }.by(1)
+              end
+
               it 'creates a created contacts import' do
                 expect {
                   subject.call
@@ -232,6 +250,12 @@ RSpec.describe Import::Runner do
             expect {
               subject.call
             }.to change { organization.reload.contacts.count }.by(2)
+          end
+
+          it 'creates two conversations' do
+            expect {
+              subject.call
+            }.to change { organization.reload.conversations.count }.by(2)
           end
 
           it 'creates two created contacts import' do

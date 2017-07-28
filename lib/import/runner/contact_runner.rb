@@ -19,6 +19,7 @@ class Import::Runner::ContactRunner
 
   def create_contact
     contacts.create(create_params).tap do |contact|
+      IceBreaker.call(contact, organization.phone_numbers.first)
       import.contacts_imports.create(contact: contact, updated: false)
     end
   end
