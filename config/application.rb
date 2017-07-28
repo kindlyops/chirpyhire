@@ -32,20 +32,6 @@ module Congaree
     config.assets.precompile += %w[email.css]
 
     config.cache_store = :memory_store
-
-    config.paperclip_defaults = {
-      storage: :s3,
-      s3_credentials: {
-        bucket: ENV.fetch('S3_BUCKET_NAME'),
-        access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
-        secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-        s3_region: ENV.fetch('AWS_REGION')
-      },
-      url: ':s3_domain_url',
-      s3_host_name: 's3.amazonaws.com',
-      path: "/#{Rails.env}/:class/:attachment/:id_partition/:style/:filename"
-    }
-
     config.after_initialize do
       Broadcaster::ClientVersion.broadcast(ENV.fetch('CLIENT_VERSION').to_i)
     end

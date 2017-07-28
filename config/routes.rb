@@ -29,6 +29,14 @@ Rails.application.routes.draw do
     resources :messages, only: %i[index create], controller: 'conversations/messages'
   end
 
+  namespace :import do
+    resources :csv do
+      resources :mappings
+      resources :tags
+      resource :summary
+    end
+  end
+
   resources :organizations, only: %i[show update] do
     resources :teams, only: %i[create], controller: 'organizations/teams' do
       resources :members, only: %i[create destroy]

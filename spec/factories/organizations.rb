@@ -2,6 +2,15 @@ FactoryGirl.define do
   factory :organization do
     name { Faker::Company.name }
 
+    trait :stages do
+      after(:create) do |organization|
+        organization.contact_stages.create(name: 'New', rank: 1)
+        organization.contact_stages.create(name: 'Screened', rank: 2)
+        organization.contact_stages.create(name: 'Not Now', rank: 3)
+        organization.contact_stages.create(name: 'Scheduled', rank: 4)
+      end
+    end
+
     trait :subscription do
       after(:create) do |organization|
         create(:subscription, organization: organization)

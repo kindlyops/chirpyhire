@@ -1,0 +1,84 @@
+.wizard
+  header.wizard__header
+    .wizard__label Import your candidates from a CSV
+    .wizard__steps
+      .wizard__step
+        .wizard__step__number 1
+        .wizard__step__label Upload CSV
+      .wizard__step.active
+        .wizard__step__number 2
+        .wizard__step__label Map Attributes
+      .wizard__step
+        .wizard__step__number 3
+        .wizard__step__label Tag
+      .wizard__step
+        .wizard__step__number 4
+        .wizard__step__label Import Summary
+  .wizard__main.container.pb-5
+    .row
+      .col
+        .row.mt-1
+          .col
+            .card.mt-5
+              .card-block
+                .d-flex.justify-content-between
+                  .instructions
+                    p.card-text
+                      = @import.mapping_number(@mapping)
+                      '
+                      ' of
+                      = @import.mappings.count
+                      ':
+                      '
+                      strong 
+                        | Which column contains the 
+                        = @mapping.contact_attribute.humanize.downcase
+                        '
+                        ' of your candidates?
+                    p.card-text.text-muted 
+                      - if @mapping.optional?
+                        | Mapping candidate
+                        '
+                        = @mapping.contact_attribute.humanize.downcase
+                        '
+                        ' is optional. Feel free to 
+                        strong skip 
+                        '
+                        ' it.
+                      - else
+                        | Every candidate in ChirpyHire must have a 
+                        = @mapping.contact_attribute.humanize.downcase
+                        '.
+                  .actions.d-flex.align-items-center.justify-content-end
+                    - if @mapping.previous_mapping.present?
+                      = link_to "Previous step", edit_import_csv_mapping_path(@import, @mapping.previous_mapping), class: 'btn btn-default mr-2'
+                    - if @mapping.next_mapping.present? && @mapping.optional?
+                      = button_to "Skip step", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-default', role: 'button', params: { column_mapping: { column_number: nil } } }
+                    - if @mapping.next_mapping.blank?
+                      = button_to "Finish mapping", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-default', role: 'button', params: { column_mapping: { column_number: nil } } }
+        - @import.document_columns.in_groups_of(4, false) do |group|
+          .row.mt-4
+            .col
+              .card-deck
+                - group.each do |column|
+                  .card.column-card
+                    .card-block
+                      .card-title 
+                        strong = "Column: #{column.formatted_number}"
+                      = button_to "Select this column", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-primary btn-block', role: 'button', params: { column_mapping: { column_number: column.number } } }
+                    .card-footer
+                      .card-text 
+                        strong = column.name
+                    ul.list-group.list-group-flush
+                      - column.preview_values.in_groups_of(2).each do |values|
+                        - values.each_with_index do |value, index|
+                          li.list-group-item 
+                            .value-number.mr-3 = index + 1
+                            .value = value
+                      li.list-group-item 
+                        .value-number.mr-3 ...
+                        .value
+                          | +
+                          = column.remaining_values_count
+                          '
+                          ' more.

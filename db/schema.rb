@@ -131,6 +131,16 @@ ActiveRecord::Schema.define(version: 20170728140347) do
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
   end
 
+  create_table "column_mappings", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.string "contact_attribute", null: false
+    t.integer "column_number"
+    t.boolean "optional", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_column_mappings_on_import_id"
+  end
+
   create_table "contact_stages", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.integer "rank", null: false
@@ -160,6 +170,16 @@ ActiveRecord::Schema.define(version: 20170728140347) do
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
     t.index ["team_id"], name: "index_contacts_on_team_id"
+  end
+
+  create_table "contacts_imports", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.bigint "import_id", null: false
+    t.boolean "updated", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contact_id"], name: "index_contacts_imports_on_contact_id"
+    t.index ["import_id"], name: "index_contacts_imports_on_import_id"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -224,6 +244,39 @@ ActiveRecord::Schema.define(version: 20170728140347) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_greetings_on_bot_id"
+  end
+
+  create_table "import_errors", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.integer "row_number", null: false
+    t.integer "column_number", null: false
+    t.integer "error_type", null: false
+    t.string "column_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id"], name: "index_import_errors_on_import_id"
+  end
+
+  create_table "imports", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "status", default: 0, null: false
+    t.string "document_file_name"
+    t.string "document_content_type"
+    t.integer "document_file_size"
+    t.datetime "document_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_imports_on_account_id"
+  end
+
+  create_table "imports_tags", force: :cascade do |t|
+    t.bigint "import_id", null: false
+    t.bigint "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["import_id", "tag_id"], name: "index_imports_tags_on_import_id_and_tag_id", unique: true
+    t.index ["import_id"], name: "index_imports_tags_on_import_id"
+    t.index ["tag_id"], name: "index_imports_tags_on_tag_id"
   end
 
   create_table "inboxes", force: :cascade do |t|
@@ -465,11 +518,14 @@ ActiveRecord::Schema.define(version: 20170728140347) do
   add_foreign_key "campaign_contacts", "phone_numbers"
   add_foreign_key "campaign_contacts", "questions"
   add_foreign_key "campaigns", "organizations"
+  add_foreign_key "column_mappings", "imports"
   add_foreign_key "contact_stages", "organizations"
   add_foreign_key "contacts", "contact_stages"
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
+  add_foreign_key "contacts_imports", "contacts"
+  add_foreign_key "contacts_imports", "imports"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
   add_foreign_key "follow_ups", "goals"
@@ -480,6 +536,10 @@ ActiveRecord::Schema.define(version: 20170728140347) do
   add_foreign_key "goals", "bots"
   add_foreign_key "goals", "contact_stages"
   add_foreign_key "greetings", "bots"
+  add_foreign_key "import_errors", "imports"
+  add_foreign_key "imports", "accounts"
+  add_foreign_key "imports_tags", "imports"
+  add_foreign_key "imports_tags", "tags"
   add_foreign_key "locations", "teams"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"

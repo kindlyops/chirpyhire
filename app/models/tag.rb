@@ -6,4 +6,7 @@ class Tag < ApplicationRecord
 
   has_many :follow_ups_tags
   has_many :follow_ups, through: :follow_ups_tags
+
+  has_many :imports_tags
+  has_many :imports, through: :imports_tags
 end

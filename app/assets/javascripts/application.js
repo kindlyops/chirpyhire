@@ -21,6 +21,7 @@
 //= require ramda
 //= require cocoon
 //= require select2
+//= require lodash
 //= require_tree .
 
 
