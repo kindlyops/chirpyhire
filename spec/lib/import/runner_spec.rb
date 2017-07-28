@@ -63,10 +63,10 @@ RSpec.describe Import::Runner do
               context 'and it is a valid phone number' do
                 let(:import) { create(:import, :id_column_id_present_valid_phone_number, account: account) }
 
-                it 'creates a new contact' do
+                it 'creates a new subscribed contact' do
                   expect {
                     subject.call
-                  }.to change { organization.reload.contacts.count }.by(1)
+                  }.to change { organization.reload.contacts.subscribed.count }.by(1)
                 end
 
                 it 'creates a conversation' do
@@ -111,10 +111,10 @@ RSpec.describe Import::Runner do
               let(:import) { create(:import, :id_column_id_missing_valid_phone_number, account: account) }
 
               context 'and the phone number is not tied to an organization contact' do
-                it 'creates a new contact' do
+                it 'creates a new subscribed contact' do
                   expect {
                     subject.call
-                  }.to change { organization.reload.contacts.count }.by(1)
+                  }.to change { organization.reload.contacts.subscribed.count }.by(1)
                 end
 
                 it 'creates a conversation' do
@@ -192,10 +192,10 @@ RSpec.describe Import::Runner do
             end
 
             context 'not tied to existing organization contact' do
-              it 'creates a new contact' do
+              it 'creates a new subscribed contact' do
                 expect {
                   subject.call
-                }.to change { organization.reload.contacts.count }.by(1)
+                }.to change { organization.reload.contacts.subscribed.count }.by(1)
               end
 
               it 'creates a conversation' do
@@ -249,7 +249,7 @@ RSpec.describe Import::Runner do
           it 'creates two contacts' do
             expect {
               subject.call
-            }.to change { organization.reload.contacts.count }.by(2)
+            }.to change { organization.reload.contacts.subscribed.count }.by(2)
           end
 
           it 'creates two conversations' do

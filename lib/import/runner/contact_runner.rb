@@ -50,6 +50,7 @@ class Import::Runner::ContactRunner
       person: person,
       phone_number: phone_number,
       name: name,
+      subscribed: true,
       stage: organization.contact_stages.first
     }
   end
