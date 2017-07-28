@@ -1,4 +1,5 @@
 class Contact < ApplicationRecord
+  phony_normalize :phone_number, default_country_code: 'US'
   include PgSearch
   pg_search_scope :search_by_name,
                   against: { name: 'A', nickname: 'B' },
