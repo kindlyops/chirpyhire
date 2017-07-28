@@ -15,18 +15,18 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   end
 
   def find_contact
-    person.contacts.find_by(organization: organization)
+    organization.contacts.find_by(phone_number: params['From'])
   end
 
   def create_unsubscribed_contact
-    person
+    organization
       .contacts
       .create(contact_params)
   end
 
   def contact_params
     {
-      organization: organization,
+      person: Person.create(phone_number: params['From']),
       phone_number: params['From'],
       stage: organization.contact_stages.first
     }

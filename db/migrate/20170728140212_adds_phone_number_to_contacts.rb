@@ -3,5 +3,7 @@ class AddsPhoneNumberToContacts < ActiveRecord::Migration[5.1]
     change_table :contacts do |t|
       t.string :phone_number
     end
+
+    add_index :contacts, :phone_number, unique: true
   end
 end

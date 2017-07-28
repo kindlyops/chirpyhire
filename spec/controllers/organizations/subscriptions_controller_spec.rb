@@ -29,12 +29,12 @@ RSpec.describe Organizations::SubscriptionsController, type: :controller do
         it 'create an unsubscribed contact' do
           expect {
             delete :destroy, params: params
-          }.to change { person.contacts.unsubscribed.count }.by(1)
+          }.to change { Contact.unsubscribed.count }.by(1)
         end
 
         it 'sets the stage of the contact as the first stage' do
           delete :destroy, params: params
-          expect(person.contacts.last.stage).to eq(stage)
+          expect(Contact.last.stage).to eq(stage)
         end
 
         it 'adds the contact to the organization' do
