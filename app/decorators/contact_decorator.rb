@@ -1,7 +1,7 @@
 class ContactDecorator < Draper::Decorator
   delegate_all
   decorates_association :person
-  delegate :hero_pattern_classes, :phone_number, to: :person
+  delegate :hero_pattern_classes, to: :person
 
   def joined_at
     Contact::JoinedAt.new(object)
@@ -9,6 +9,10 @@ class ContactDecorator < Draper::Decorator
 
   def last_active_at
     Contact::LastActiveAt.new(object)
+  end
+
+  def phone_number
+    Contact::PhoneNumberAttribute.new(object)
   end
 
   def candidacy_zipcode

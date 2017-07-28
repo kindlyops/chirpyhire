@@ -6,6 +6,9 @@ class ImportError < ApplicationRecord
   }
 
   def humanized_type
-    error_type
+    {
+      invalid_phone_number: 'Phone number invalid.',
+      blank_phone_number: 'Phone number is missing.'
+    }[error_type.to_sym]
   end
 end
