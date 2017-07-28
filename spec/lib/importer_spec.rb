@@ -39,7 +39,7 @@ RSpec.describe Importer do
                 it 'creates an invalid phone number import error' do
                   expect {
                     subject.call
-                  }.to change { import.reload.errors.invalid_phone_number.count }.by(1)
+                  }.to change { import.reload.import_errors.invalid_phone_number.count }.by(1)
                 end
               end
 
@@ -49,7 +49,7 @@ RSpec.describe Importer do
                 it 'creates an phone_number_blank import error' do
                   expect {
                     subject.call
-                  }.to change { import.reload.errors.phone_number_blank.count }.by(1)
+                  }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
                 end
               end
             end
@@ -58,7 +58,7 @@ RSpec.describe Importer do
               it 'creates an phone_number_blank import error' do
                 expect {
                   subject.call
-                }.to change { import.reload.errors.phone_number_blank.count }.by(1)
+                }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
               end
             end
           end
@@ -95,7 +95,7 @@ RSpec.describe Importer do
               it 'creates an invalid phone number import error' do
                 expect {
                   subject.call
-                }.to change { import.reload.errors.invalid_phone_number.count }.by(1)
+                }.to change { import.reload.import_errors.invalid_phone_number.count }.by(1)
               end
             end
 
@@ -105,7 +105,7 @@ RSpec.describe Importer do
               it 'creates a phone_number_blank import error' do
                 expect {
                   subject.call
-                }.to change { import.reload.errors.phone_number_blank.count }.by(1)
+                }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
               end
             end
           end
@@ -143,7 +143,7 @@ RSpec.describe Importer do
             it 'creates an invalid phone number import error' do
               expect {
                 subject.call
-              }.to change { import.reload.errors.invalid_phone_number.count }.by(1)
+              }.to change { import.reload.import_errors.invalid_phone_number.count }.by(1)
             end
           end
 
@@ -153,7 +153,7 @@ RSpec.describe Importer do
             it 'creates a phone_number_blank import error' do
               expect {
                 subject.call
-              }.to change { import.reload.errors.phone_number_blank.count }.by(1)
+              }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
             end
           end
         end

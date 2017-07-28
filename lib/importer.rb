@@ -3,6 +3,12 @@ class Importer
     new(import).call
   end
 
+  def initialize(import)
+    @import = import
+  end
+
+  attr_reader :import
+
   def call
     # For each row of CSV look for ID or Phone Number
       # ID is present in CSV
