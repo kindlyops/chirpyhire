@@ -12,13 +12,9 @@ class Organizations::MessagesController < ActionController::Base
 
   def contact
     @contact ||= begin
-      contact = person.contacts.find_by(organization: organization)
+      contact = organization.contacts.find_by(phone_number: params['From'])
       contact || create_subscribed_contact
     end
-  end
-
-  def person
-    @person ||= Person.find_or_create_by(phone_number: params['From'])
   end
 
   def phone_number
@@ -26,11 +22,15 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    person.contacts.create(contact_params).tap(&:subscribe)
+    organization.contacts.create(contact_params).tap(&:subscribe)
   end
 
   def contact_params
-    { stage: stage, organization: organization }
+    {
+      stage: stage,
+      person: Person.create(phone_number: params['From']),
+      phone_number: params['From']
+    }
   end
 
   def stage

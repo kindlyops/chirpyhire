@@ -28,13 +28,6 @@ RSpec.describe MessagePolicy do
         end
       end
     end
-
-    context 'contact on different team' do
-      let(:contact) { create(:contact, subscribed: true) }
-      let!(:message) { build(:message, recipient: contact.person) }
-
-      it { is_expected.to forbid_action(:create) }
-    end
   end
 
   describe 'scope' do

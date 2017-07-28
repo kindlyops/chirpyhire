@@ -61,21 +61,21 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         }.to have_enqueued_job(DeliveryAgentJob)
       end
 
-      it 'does not create a person' do
+      it 'does create a person' do
         expect {
           post :create, params: params
-        }.not_to change { Person.count }
+        }.to change { Person.count }.by(1)
       end
 
       it 'creates a subscribed contact' do
         expect {
           post :create, params: params
-        }.to change { person.contacts.subscribed.count }.by(1)
+        }.to change { Contact.subscribed.count }.by(1)
       end
 
       it 'sets the stage of the contact as the first stage' do
         post :create, params: params
-        expect(person.contacts.last.stage).to eq(stage)
+        expect(Contact.last.stage).to eq(stage)
       end
 
       it 'adds the contact to the existing team' do
