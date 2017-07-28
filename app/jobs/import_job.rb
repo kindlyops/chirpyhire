@@ -1,5 +1,5 @@
 class ImportJob < ApplicationJob
   def perform(import)
-    # TODO: Import Logic
+    Importer.call(import)
   end
 end
