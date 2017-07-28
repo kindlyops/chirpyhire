@@ -23,15 +23,20 @@
             .card-text Created and updated candidates will be available for you to chat soon. 
           .card-block
             .card-text
-              | Candidates:
+              strong Candidates:
+              '
               = @import.contacts_imports.created.count
+              '
               ' created,
               '
               = @import.contacts_imports.updated.count
+              '
               ' updated.
-              | Errors:
+              strong Errors:
+              '
               = @import.import_errors.count
-              = link_to "View", organization_settings_import_path(@import)
+              '
+              = link_to "View", organization_settings_import_path(current_organization, @import)
           .card-block
             .card-text They are tagged with:
             .d-flex.align-items-center.justify-content-start
