@@ -4,7 +4,6 @@ class Importer
   end
 
   def call
-    # Change status to in progress
     # For each row of CSV look for ID or Phone Number
       # ID is present in CSV
         # And ID exists in ChirpyHire then use that contact and update
