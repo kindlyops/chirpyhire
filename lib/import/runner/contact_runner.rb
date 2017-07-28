@@ -12,15 +12,20 @@ class Import::Runner::ContactRunner
   def call
     return import_error(:blank_phone_number) if phone_number.blank?
     return import_error(:invalid_phone_number) if implausible?
+    return update_contact if existing_contact.present?
 
-    if existing_contact.present?
-      existing_contact.update(update_params).tap do
-        import.contacts_imports.create(contact: existing_contact, updated: true)
-      end
-    else
-      contacts.create(create_params).tap do |contact|
-        import.contacts_imports.create(contact: contact, updated: false)
-      end
+    create_contact
+  end
+
+  def create_contact
+    contacts.create(create_params).tap do |contact|
+      import.contacts_imports.create(contact: contact, updated: false)
+    end
+  end
+
+  def update_contact
+    existing_contact.update(update_params).tap do
+      import.contacts_imports.create(contact: existing_contact, updated: true)
     end
   end
 
