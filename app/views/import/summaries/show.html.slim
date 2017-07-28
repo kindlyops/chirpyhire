@@ -49,15 +49,15 @@
                   thead
                     tr
                       th Row
+                      th Column
                       th Column Name
-                      th Column Number
                       th Error Type
                   tbody
                     - @import.import_errors.each do |error|
                       tr
                         th = error.row_number
-                        th = error.column_name
                         th = error.column_number
+                        th = error.column_name
                         th = error.humanized_type
           .card-block
             .card-text They are tagged with:
