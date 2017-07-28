@@ -22,6 +22,18 @@ RSpec.describe Import::Runner do
                     subject.call
                   }.to change { contact.reload.updated_at }
                 end
+
+                it 'changes the import to complete' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.status }.to('complete')
+                end
+
+                it 'creates an updated contacts import' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.contacts_imports.updated.count }.by(1)
+                end
               end
 
               context 'and invalid' do
@@ -55,6 +67,12 @@ RSpec.describe Import::Runner do
                   expect {
                     subject.call
                   }.to change { organization.reload.contacts.count }.by(1)
+                end
+
+                it 'creates a created contacts import' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.contacts_imports.created.count }.by(1)
                 end
               end
 
@@ -92,6 +110,12 @@ RSpec.describe Import::Runner do
                     subject.call
                   }.to change { organization.reload.contacts.count }.by(1)
                 end
+
+                it 'creates a created contacts import' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.contacts_imports.created.count }.by(1)
+                end
               end
 
               context 'and the phone number is tied to an organization contact' do
@@ -101,6 +125,12 @@ RSpec.describe Import::Runner do
                   expect {
                     subject.call
                   }.to change { contact.reload.updated_at }
+                end
+
+                it 'creates an updated contacts import' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.contacts_imports.updated.count }.by(1)
                 end
               end
             end
@@ -141,6 +171,12 @@ RSpec.describe Import::Runner do
                   subject.call
                 }.to change { contact.reload.updated_at }
               end
+
+              it 'creates an updated contacts import' do
+                expect {
+                  subject.call
+                }.to change { import.reload.contacts_imports.updated.count }.by(1)
+              end
             end
 
             context 'not tied to existing organization contact' do
@@ -148,6 +184,12 @@ RSpec.describe Import::Runner do
                 expect {
                   subject.call
                 }.to change { organization.reload.contacts.count }.by(1)
+              end
+
+              it 'creates a created contacts import' do
+                expect {
+                  subject.call
+                }.to change { import.reload.contacts_imports.created.count }.by(1)
               end
             end
           end
@@ -180,10 +222,22 @@ RSpec.describe Import::Runner do
         context 'and new' do
           let(:import) { create(:import, :multiple, account: account) }
 
+          it 'changes the import to complete' do
+            expect {
+              subject.call
+            }.to change { import.reload.status }.to('complete')
+          end
+
           it 'creates two contacts' do
             expect {
               subject.call
             }.to change { organization.reload.contacts.count }.by(2)
+          end
+
+          it 'creates two created contacts import' do
+            expect {
+              subject.call
+            }.to change { import.reload.contacts_imports.created.count }.by(2)
           end
         end
       end

@@ -13,6 +13,8 @@ class Import::Runner
     CSV
       .foreach(local_document.path, headers: true)
       .with_index(1, &method(:import_contact))
+
+    import.update(status: :complete)
   end
 
   def import_contact(row, row_number)
