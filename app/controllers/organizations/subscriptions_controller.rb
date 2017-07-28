@@ -27,7 +27,8 @@ class Organizations::SubscriptionsController < Organizations::MessagesController
   def contact_params
     {
       organization: organization,
-      stage: organization.contact_stages.first
+      stage: organization.contact_stages.first,
+      phone_number: params['From']
     }
   end
 

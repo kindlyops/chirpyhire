@@ -30,7 +30,7 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def contact_params
-    { stage: stage, organization: organization }
+    { stage: stage, organization: organization, phone_number: params['From'] }
   end
 
   def stage
