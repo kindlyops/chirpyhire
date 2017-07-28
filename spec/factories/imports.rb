@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :import do
     account
 
+    after(:create) do |import|
+      Import::Create.call(import)
+    end
+
     trait :id_column_id_present do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'id_column_id_present.csv')) }
     end

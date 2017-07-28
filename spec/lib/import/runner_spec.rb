@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe Importer do
+RSpec.describe Import::Runner do
   let(:organization) { import.account.organization }
 
-  subject { Importer.new(import) }
+  subject { Import::Runner.new(import) }
 
   describe '#call' do
     context 'single row' do
@@ -139,6 +139,11 @@ RSpec.describe Importer do
 
           context 'invalid phone number' do
             let(:import) { create(:import, :no_id_column_invalid_phone_number) }
+
+            before do
+              import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 0)
+              import.mappings.find_by(contact_attribute: 'name').update(column_number: 1)
+            end
 
             it 'creates an invalid phone number import error' do
               expect {

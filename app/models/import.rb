@@ -33,7 +33,9 @@ class Import < ApplicationRecord
                                     ]
                                   },
                                   file_name: { matches: /csv/ }
-
+  
+  delegate :organization, to: :account
+  
   def first_mapping
     first_attribute = Import::Create.mapping_attributes.first[:attribute]
 
@@ -59,11 +61,15 @@ class Import < ApplicationRecord
   end
 
   def document_columns
-    headers.map.with_index { |h, i| Import::Column.new(h, i, local_doc) }
+    headers.map.with_index { |h, i| Import::Column.new(h, i, local_document) }
   end
 
   def load_mapping_errors
     mappings.find_each { |mapping| mapping.load_error(self) }
+  end
+
+  def local_document
+    @local_document ||= Paperclip.io_adapters.for(document)
   end
 
   private
@@ -77,10 +83,6 @@ class Import < ApplicationRecord
   end
 
   def headers
-    @headers ||= CSV.foreach(local_doc.path).first
-  end
-
-  def local_doc
-    @local_doc ||= Paperclip.io_adapters.for(document)
+    @headers ||= CSV.foreach(local_document.path).first
   end
 end
