@@ -33,9 +33,9 @@ class Import < ApplicationRecord
                                     ]
                                   },
                                   file_name: { matches: /csv/ }
-  
+
   delegate :organization, to: :account
-  
+
   def first_mapping
     first_attribute = Import::Create.mapping_attributes.first[:attribute]
 

@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Import::Runner do
-  let(:organization) { import.account.organization }
+  let(:organization) { create(:organization, :stages) }
+  let(:account) { create(:account, organization: organization) }
 
   subject { Import::Runner.new(import) }
 
@@ -9,22 +10,46 @@ RSpec.describe Import::Runner do
     context 'single row' do
       context 'with ID column' do
         context 'and an id is present in the row' do
-          let(:import) { create(:import, :id_column_id_present) }
-
           context 'and the id exists for a contact on the organization team' do
-            let!(:contact) { create(:contact, id: 143_132, organization: organization) }
+            context 'and phone number is present' do
+              let!(:contact) { create(:contact, id: 143_132, phone_number: '+14041234567', organization: organization) }
 
-            it 'updates that contact' do
-              expect {
-                subject.call
-              }.to change { contact.reload.updated_at }
+              context 'and valid' do
+                let(:import) { create(:import, :id_column_id_present_valid_phone_number, account: account) }
+
+                it 'updates that contact' do
+                  expect {
+                    subject.call
+                  }.to change { contact.reload.updated_at }
+                end
+              end
+
+              context 'and invalid' do
+                let(:import) { create(:import, :id_column_id_present_invalid_phone_number, account: account) }
+
+                it 'creates an invalid phone number import error' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.import_errors.invalid_phone_number.count }.by(1)
+                end
+              end
+
+              context 'and missing' do
+                let(:import) { create(:import, :id_column_id_present_missing_phone_number, account: account) }
+
+                it 'creates an phone_number_blank import error' do
+                  expect {
+                    subject.call
+                  }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
+                end
+              end
             end
           end
 
           context 'and the id does not exist for a contact on the organization team' do
             context 'phone number column is present' do
               context 'and it is a valid phone number' do
-                let(:import) { create(:import, :id_column_id_present_valid_phone_number) }
+                let(:import) { create(:import, :id_column_id_present_valid_phone_number, account: account) }
 
                 it 'creates a new contact' do
                   expect {
@@ -34,7 +59,7 @@ RSpec.describe Import::Runner do
               end
 
               context 'and it is an invalid phone number' do
-                let(:import) { create(:import, :id_column_id_present_invalid_phone_number) }
+                let(:import) { create(:import, :id_column_id_present_invalid_phone_number, account: account) }
 
                 it 'creates an invalid phone number import error' do
                   expect {
@@ -44,7 +69,7 @@ RSpec.describe Import::Runner do
               end
 
               context 'and the phone number is missing' do
-                let(:import) { create(:import, :id_column_id_present_missing_phone_number) }
+                let(:import) { create(:import, :id_column_id_present_missing_phone_number, account: account) }
 
                 it 'creates an phone_number_blank import error' do
                   expect {
@@ -53,21 +78,13 @@ RSpec.describe Import::Runner do
                 end
               end
             end
-
-            context 'phone number column is not present' do
-              it 'creates an phone_number_blank import error' do
-                expect {
-                  subject.call
-                }.to change { import.reload.import_errors.blank_phone_number.count }.by(1)
-              end
-            end
           end
         end
 
         context 'and an id is not present in the row' do
           context 'with phone number column' do
             context 'and the phone number is valid' do
-              let(:import) { create(:import, :id_column_id_missing_valid_phone_number) }
+              let(:import) { create(:import, :id_column_id_missing_valid_phone_number, account: account) }
 
               context 'and the phone number is not tied to an organization contact' do
                 it 'creates a new contact' do
@@ -78,8 +95,7 @@ RSpec.describe Import::Runner do
               end
 
               context 'and the phone number is tied to an organization contact' do
-                let(:person) { create(:person, phone_number: '+14041234567') }
-                let!(:contact) { create(:contact, person: person, organization: organization) }
+                let!(:contact) { create(:contact, phone_number: '+14041234567', organization: organization) }
 
                 it 'updates the contact' do
                   expect {
@@ -90,7 +106,7 @@ RSpec.describe Import::Runner do
             end
 
             context 'and the phone number is invalid' do
-              let(:import) { create(:import, :id_column_id_missing_invalid_phone_number) }
+              let(:import) { create(:import, :id_column_id_missing_invalid_phone_number, account: account) }
 
               it 'creates an invalid phone number import error' do
                 expect {
@@ -100,7 +116,7 @@ RSpec.describe Import::Runner do
             end
 
             context 'and the phone number is missing' do
-              let(:import) { create(:import, :id_column_id_missing_phone_number_missing) }
+              let(:import) { create(:import, :id_column_id_missing_phone_number_missing, account: account) }
 
               it 'creates a phone_number_blank import error' do
                 expect {
@@ -115,11 +131,10 @@ RSpec.describe Import::Runner do
       context 'without ID column' do
         context 'with phone number column' do
           context 'valid phone number' do
-            let(:import) { create(:import, :no_id_column_valid_phone_number) }
+            let(:import) { create(:import, :no_id_column_valid_phone_number, account: account) }
 
             context 'tied to existing organization contact' do
-              let(:person) { create(:person, phone_number: '+14041234567') }
-              let!(:contact) { create(:contact, person: person, organization: organization) }
+              let!(:contact) { create(:contact, phone_number: '+14041234567', organization: organization) }
 
               it 'updates the existing contact' do
                 expect {
@@ -138,12 +153,7 @@ RSpec.describe Import::Runner do
           end
 
           context 'invalid phone number' do
-            let(:import) { create(:import, :no_id_column_invalid_phone_number) }
-
-            before do
-              import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 0)
-              import.mappings.find_by(contact_attribute: 'name').update(column_number: 1)
-            end
+            let(:import) { create(:import, :no_id_column_invalid_phone_number, account: account) }
 
             it 'creates an invalid phone number import error' do
               expect {
@@ -153,7 +163,7 @@ RSpec.describe Import::Runner do
           end
 
           context 'phone_number_blank' do
-            let(:import) { create(:import, :no_id_column_missing_phone_number) }
+            let(:import) { create(:import, :no_id_column_missing_phone_number, account: account) }
 
             it 'creates a phone_number_blank import error' do
               expect {
@@ -168,7 +178,7 @@ RSpec.describe Import::Runner do
     context 'two valid rows' do
       context 'that are both valid' do
         context 'and new' do
-          let(:import) { create(:import, :multiple) }
+          let(:import) { create(:import, :multiple, account: account) }
 
           it 'creates two contacts' do
             expect {

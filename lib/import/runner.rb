@@ -10,11 +10,13 @@ class Import::Runner
   attr_reader :import
 
   def call
-    CSV.foreach(local_document.path, headers: true, &method(:import_contact))
+    CSV
+      .foreach(local_document.path, headers: true)
+      .with_index(1, &method(:import_contact))
   end
 
-  def import_contact(row)
-    Import::Runner::Contact.call(self, row)
+  def import_contact(row, row_number)
+    Import::Runner::ContactRunner.call(self, row, row_number)
   end
 
   def id_mapping
