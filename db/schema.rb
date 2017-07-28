@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728140212) do
+ActiveRecord::Schema.define(version: 20170728140347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(version: 20170728140212) do
     t.bigint "contact_stage_id", null: false
     t.string "nickname"
     t.string "name"
-    t.string "phone_number"
+    t.string "phone_number", null: false
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id", "nickname"], name: "index_contacts_on_organization_id_and_nickname", unique: true
     t.index ["organization_id", "phone_number"], name: "index_contacts_on_organization_id_and_phone_number", unique: true
@@ -340,7 +340,6 @@ ActiveRecord::Schema.define(version: 20170728140212) do
     t.datetime "avatar_updated_at"
     t.integer "account_id"
     t.index ["account_id"], name: "index_people_on_account_id", unique: true
-    t.index ["phone_number"], name: "index_people_on_phone_number", unique: true
     t.index ["zipcode_id"], name: "index_people_on_zipcode_id"
   end
 

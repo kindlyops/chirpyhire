@@ -1,20 +1,17 @@
 FactoryGirl.define do
   factory :contact do
+    phone_number { Faker::PhoneNumber.cell_phone }
     association :person
     organization
     association :stage, factory: :contact_stage
-
-    transient do
-      phone_number nil
-    end
 
     trait :new do
       association :stage, :new, factory: :contact_stage
     end
 
-    after(:create) do |contact, evaluator|
-      if evaluator.phone_number.present?
-        contact.person.update(phone_number: evaluator.phone_number)
+    after(:create) do |contact|
+      if contact.phone_number.present?
+        contact.person.update(phone_number: contact.phone_number)
       end
     end
 
