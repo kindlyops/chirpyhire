@@ -18,7 +18,7 @@ class Message < ApplicationRecord
   delegate :organization, :contact, to: :conversation
 
   def self.active
-    where('messages.created_at >= ?', 90.days.ago)
+    where('messages.created_at >= ?', 30.days.ago)
   end
 
   def self.by_recency
