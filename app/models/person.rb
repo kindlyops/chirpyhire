@@ -22,6 +22,10 @@ class Person < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
   delegate :subscribed?, to: :contact
 
+  def phone_number
+    contact&.phone_number || self[:phone_number]
+  end
+
   def handle
     first_name&.downcase || nickname
   end
