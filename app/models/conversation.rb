@@ -42,21 +42,22 @@ class Conversation < ApplicationRecord
     contact.open_conversations.where(phone_number: phone_number).none?
   end
 
-  def create_message(message, sender, campaign)
+  def create_message(message, sender, campaign, manual_message)
     messages.create(
-      message_params(message, sender, campaign)
+      message_params(message, sender, campaign, manual_message)
     ).tap(&:touch_conversation)
   end
 
   private
 
-  def message_params(message, sender, campaign)
+  def message_params(message, sender, campaign, manual_message)
     base_message_params(message).merge(
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       sender: sender,
       recipient: person,
-      campaign: campaign
+      campaign: campaign,
+      manual_message: manual_message
     )
   end
 

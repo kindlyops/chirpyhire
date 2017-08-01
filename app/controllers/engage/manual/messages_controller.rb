@@ -84,16 +84,3 @@ class Engage::Manual::MessagesController < ApplicationController
     }
   end
 end
-
-# ContactsManualMessage
-# -> contact, message_id, manual_message_id
-
-# Create Manual Message
-# Lookup all the candidates in the audience
-# For each candidate in the audience
-# Send the message
-# Tie the message to the manual message
-# Lookup candidate through message
-
-# When the candidate replies, and the last message has a manual message
-# Tie the new message to the manual message as a reply

@@ -10,6 +10,39 @@ class ManualMessageParticipant::Runner
   attr_reader :participant
 
   def call
-    # send message to participant and log message
+    return if participant.message.present?
+
+    participant.update(message: message) if message.present?
   end
+
+  def message
+    @message ||= begin
+      return if manual_message.body.blank?
+
+      organization.message(
+        sender: sender,
+        conversation: conversation,
+        body: manual_message.body,
+        manual_message: manual_message
+      )
+    end
+  end
+
+  def sender
+    account.person
+  end
+
+  def conversation
+    contact.existing_open_conversation || IceBreaker.call(contact, phone_number)
+  end
+
+  def phone_number
+    organization.phone_numbers.first
+  end
+
+  delegate :contact, :manual_message, to: :participant
+  delegate :account, :organization, to: :manual_message
 end
+
+# When the candidate replies, and the last message has a manual message
+# Tie the new message to the manual message as a reply

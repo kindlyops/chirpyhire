@@ -7,4 +7,6 @@ class ManualMessage < ApplicationRecord
   has_many :messages, through: :participants
   has_many :contacts, through: :participants
   has_many :replies,  through: :participants
+
+  delegate :organization, to: :account
 end
