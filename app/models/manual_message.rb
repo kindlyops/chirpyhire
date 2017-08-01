@@ -1,8 +1,8 @@
 class ManualMessage < ApplicationRecord
   belongs_to :account
 
-  has_many :contacts_manual_messages
-  has_many :messages, through: :contacts_manual_messages
-  has_many :contacts, through: :contacts_manual_messages
-  has_many :replies,  through: :contacts_manual_messages
+  has_many :participants, class_name: 'ManualMessageParticipant'
+  has_many :messages, through: :participants
+  has_many :contacts, through: :participants
+  has_many :replies,  through: :participants
 end

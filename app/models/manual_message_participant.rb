@@ -1,4 +1,4 @@
-class ContactsManualMessage < ApplicationRecord
+class ManualMessageParticipant < ApplicationRecord
   belongs_to :contact
   belongs_to :manual_message
   belongs_to :message, optional: true

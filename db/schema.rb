@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801180734) do
+ActiveRecord::Schema.define(version: 20170801182425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,13 +302,17 @@ ActiveRecord::Schema.define(version: 20170801180734) do
     t.index ["team_id"], name: "index_locations_on_team_id"
   end
 
-  create_table "manual_message_replies", force: :cascade do |t|
+  create_table "manual_message_participants", force: :cascade do |t|
+    t.bigint "contact_id", null: false
     t.bigint "manual_message_id", null: false
-    t.bigint "message_id", null: false
+    t.bigint "message_id"
+    t.integer "reply_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["manual_message_id"], name: "index_manual_message_replies_on_manual_message_id"
-    t.index ["message_id"], name: "index_manual_message_replies_on_message_id"
+    t.index ["contact_id"], name: "index_manual_message_participants_on_contact_id"
+    t.index ["manual_message_id"], name: "index_manual_message_participants_on_manual_message_id"
+    t.index ["message_id"], name: "index_manual_message_participants_on_message_id"
+    t.index ["reply_id"], name: "index_manual_message_participants_on_reply_id"
   end
 
   create_table "manual_messages", force: :cascade do |t|
@@ -564,8 +568,10 @@ ActiveRecord::Schema.define(version: 20170801180734) do
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"
   add_foreign_key "locations", "teams"
-  add_foreign_key "manual_message_replies", "manual_messages"
-  add_foreign_key "manual_message_replies", "messages"
+  add_foreign_key "manual_message_participants", "contacts"
+  add_foreign_key "manual_message_participants", "manual_messages"
+  add_foreign_key "manual_message_participants", "messages"
+  add_foreign_key "manual_message_participants", "messages", column: "reply_id"
   add_foreign_key "manual_messages", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
