@@ -27,7 +27,9 @@ class CandidatesMenu extends React.Component {
   }
 
   isMessageDisabled() {
-    return this.props.total_count === 0;
+    let isNone = this.props.total_count === 0;
+    let isAll = this.props.total_count === this.props.contact_total_count;
+    return isNone || isAll;
   }
 
   render() {
