@@ -141,6 +141,7 @@ class CandidatesMenu extends React.Component {
 
     $.ajax(config);
     this.setState({ modal: false });
+    setTimeout(this.props.updateCandidates, 1500);
   }
 }
 

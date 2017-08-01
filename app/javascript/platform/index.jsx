@@ -30,6 +30,7 @@ class Platform extends React.Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
+    this.updateCandidates = this.updateCandidates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -44,6 +45,7 @@ class Platform extends React.Component {
         <Candidates 
           {...this.state}
           {...this.props}
+          updateCandidates={this.updateCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
