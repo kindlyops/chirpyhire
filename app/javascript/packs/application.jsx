@@ -145,7 +145,7 @@ class App extends React.Component {
   disconnect() {
     window.App.cable.subscriptions.remove(this.state.organizationSubscription);
     window.App.cable.subscriptions.remove(this.state.clientVersionSubscription); 
-    window.App.cable.subscriptions.remove(this.state.notificationSubscription)
+    window.App.cable.subscriptions.remove(this.state.notificationSubscription);
   }
 
   componentWillUnmount() {
