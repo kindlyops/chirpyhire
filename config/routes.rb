@@ -66,9 +66,15 @@ Rails.application.routes.draw do
   end
 
   namespace :engage do
-    resources :campaigns
-    resources :bots do
-      post :clone
+    namespace :auto do
+      resources :campaigns
+      resources :bots do
+        post :clone
+      end
+    end
+
+    namespace :manual do
+      resources :messages
     end
   end
 

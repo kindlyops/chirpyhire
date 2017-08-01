@@ -1,4 +1,4 @@
-class Engage::BotsController < ApplicationController
+class Engage::Auto::BotsController < ApplicationController
   def show
     @bot = authorize(bots.find(params[:id]))
   end
@@ -7,7 +7,7 @@ class Engage::BotsController < ApplicationController
     @bot = authorize(bots.find(params[:id]))
 
     if @bot.update(permitted_attributes(Bot))
-      redirect_to engage_bot_path(@bot), notice: bot_notice
+      redirect_to engage_auto_bot_path(@bot), notice: bot_notice
     else
       render :show
     end
@@ -18,7 +18,7 @@ class Engage::BotsController < ApplicationController
 
     @cloned_bot = BotFactory::Cloner.call(@bot)
     if @cloned_bot.valid?
-      redirect_to engage_bot_path(@cloned_bot), notice: clone_notice
+      redirect_to engage_auto_bot_path(@cloned_bot), notice: clone_notice
     else
       render :show
     end

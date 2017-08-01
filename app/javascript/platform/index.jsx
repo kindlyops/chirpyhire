@@ -12,6 +12,7 @@ class Platform extends React.Component {
     this.state = {
       candidates: [],
       total_count: 0,
+      contact_total_count: 0,
       current_page: 1,
       total_pages: 1,
       segments: [{
@@ -25,6 +26,7 @@ class Platform extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleNumberChange = this.handleTextChange;
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
@@ -46,6 +48,7 @@ class Platform extends React.Component {
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
           handleTextChange={this.handleTextChange}
+          handleNumberChange={this.handleNumberChange}
           handleLocationChange={this.handleLocationChange}
           exportCSV={this.exportCSV}
         />

@@ -1,6 +1,7 @@
 json.total_count candidates.object.total_count
 json.current_page candidates.object.current_page
 json.total_pages candidates.object.total_pages
+json.contact_total_count current_organization.contacts.count
 
 json.candidates candidates do |candidate|
   json.id candidate.id

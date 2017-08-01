@@ -9,6 +9,7 @@ class Account < ApplicationRecord
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
   has_many :memberships
+  has_many :manual_messages
   has_many :teams, through: :memberships
   has_many :inboxes, through: :teams
   has_many :conversations, through: :inboxes

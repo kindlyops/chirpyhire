@@ -6,6 +6,7 @@ class Message < ApplicationRecord
   belongs_to :campaign, optional: true
 
   has_many :read_receipts
+  has_one :manual_message_participant
 
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?

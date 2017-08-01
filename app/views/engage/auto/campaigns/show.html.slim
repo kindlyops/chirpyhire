@@ -1,10 +1,16 @@
 .ch--Page
   .ch--Header
-    h1 Engage
+    .ch--Header-title
+      h1 Engage
+    .ch--Header-links
+      = nav_link_to engage_auto_campaign_path(current_organization.recent_campaign), { class: 'HeaderLink' }, url_segment: 2 do
+        i.fa.fa-bolt
+        '
+        | Auto Messages
   .ch--main
     = render partial: "engage/navigation"
     .ch--sub-main
-      = form_for @campaign, url: engage_campaign_path(@campaign) do |f|
+      = form_for @campaign, url: engage_auto_campaign_path(@campaign) do |f|
         = content_for :validation_errors do
           = render partial: "common/validation_errors", locals: { model: @campaign }
         .Campaign
@@ -13,7 +19,7 @@
               = f.label :name, class: 'sr-only'
               = f.text_field :name, class: 'CampaignName mb-2', required: true
             .CampaignHeader--actions
-              = link_to "Cancel", engage_campaign_path(@campaign), class: 'btn btn-secondary mr-2'
+              = link_to "Cancel", engage_auto_campaign_path(@campaign), class: 'btn btn-secondary mr-2'
               = f.submit "Save", class: 'btn btn-primary', role: 'button'
           = f.fields_for :bot_campaign do |b|
             = b.hidden_field :campaign_id

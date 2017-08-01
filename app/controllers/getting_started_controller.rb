@@ -2,6 +2,6 @@ class GettingStartedController < ApplicationController
   skip_after_action :verify_authorized
 
   def show
-    redirect_to engage_bot_path(current_organization.recent_bot)
+    redirect_to engage_auto_bot_path(current_organization.recent_bot)
   end
 end

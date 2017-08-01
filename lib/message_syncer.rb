@@ -14,11 +14,20 @@ class MessageSyncer
 
     contact.update(last_reply_at: new_message.created_at)
     create_read_receipts if receipt_requested?
+    create_reply if manual_message_present?
     broadcast_message
     new_message
   end
 
   private
+
+  def create_reply
+    recent_message.manual_message_participant.update(reply: new_message)
+  end
+
+  def manual_message_present?
+    recent_message && recent_message.manual_message_participant.present?
+  end
 
   def broadcast_message
     Broadcaster::Message.new(new_message).broadcast
@@ -34,6 +43,7 @@ class MessageSyncer
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
+  delegate :recent_message, to: :open_conversation
 
   def new_message
     @new_message ||= begin
@@ -45,7 +55,7 @@ class MessageSyncer
   end
 
   def open_conversation
-    IceBreaker.call(contact, phone_number)
+    @open_conversation ||= IceBreaker.call(contact, phone_number)
   end
 
   def phone_number

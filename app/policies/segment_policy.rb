@@ -8,7 +8,8 @@ class SegmentPolicy < ApplicationPolicy
   end
 
   def form
-    [:city, :state, :county, :zipcode, tag: [], contact_stage: []]
+    %i[city state county zipcode name messages]
+      .concat([tag: [], contact_stage: []])
   end
 
   class Scope < ApplicationPolicy::Scope

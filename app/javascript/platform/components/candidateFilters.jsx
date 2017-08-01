@@ -2,6 +2,7 @@ import React from 'react'
 
 import CandidateFilter from './candidateFilter'
 import TextCandidateFilter from './textCandidateFilter'
+import NumberCandidateFilter from './numberCandidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
 import LocationCandidateFilter from './locationCandidateFilter'
 import configuration from '../configuration/segments'
@@ -22,6 +23,11 @@ class CandidateFilters extends React.Component {
         attribute: 'Name',
         checked: false,
         icon: 'fa-users'
+      },
+      messages: {
+        attribute: 'Messages',
+        checked: false,
+        icon: 'fa-comments-o'
       },
       contact_stage: {
         attribute: 'Stage',
@@ -100,6 +106,11 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.contact_stage} />
+          <NumberCandidateFilter
+            handleNumberChange={this.props.handleNumberChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.messages} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 

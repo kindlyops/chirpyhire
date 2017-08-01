@@ -21,7 +21,7 @@
     .card-text
       #follow-ups
         = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
-          = render partial: "engage/bots/follow_up_fields", locals: { f: u }
+          = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
       = link_to_add_association f, :follow_ups, 'data-association-insertion-method': 'after', 'data-association-insertion-node': "#follow-ups", class: 'btn btn-default', role: 'button' do
           i.fa.fa-plus.mr-2
           | New Follow Up

@@ -72,6 +72,21 @@ RSpec.describe MessageSyncer do
             subject.call
           }.to change { conversation.reload.messages.count }.by(1)
         end
+
+        context 'with an existing message' do
+          let(:message) { create(:message, conversation: conversation) }
+
+          context 'that has a manual message participant' do
+            let!(:participant) { create(:manual_message_participant, message: message) }
+
+            it 'sets the new message as the reply on the manual message participant' do
+              expect {
+                subject.call
+              }.to change { participant.reload.reply }.from(nil)
+              expect(participant.reply).to eq(Message.last)
+            end
+          end
+        end
       end
 
       context 'closed' do
