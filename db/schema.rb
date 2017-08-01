@@ -352,10 +352,8 @@ ActiveRecord::Schema.define(version: 20170801182425) do
     t.string "from", null: false
     t.string "to", null: false
     t.bigint "campaign_id"
-    t.bigint "manual_message_id"
     t.index ["campaign_id"], name: "index_messages_on_campaign_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
-    t.index ["manual_message_id"], name: "index_messages_on_manual_message_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
@@ -577,7 +575,6 @@ ActiveRecord::Schema.define(version: 20170801182425) do
   add_foreign_key "memberships", "teams"
   add_foreign_key "messages", "campaigns"
   add_foreign_key "messages", "conversations"
-  add_foreign_key "messages", "manual_messages"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
   add_foreign_key "messages", "people", column: "sender_id"

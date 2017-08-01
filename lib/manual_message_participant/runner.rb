@@ -22,8 +22,7 @@ class ManualMessageParticipant::Runner
       organization.message(
         sender: sender,
         conversation: conversation,
-        body: manual_message.body,
-        manual_message: manual_message
+        body: manual_message.body
       )
     end
   end

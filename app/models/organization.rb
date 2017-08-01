@@ -40,14 +40,14 @@ class Organization < ApplicationRecord
     campaigns.recent.first
   end
 
-  def message(conversation:, body:, sender:, campaign: nil, manual_message: nil)
+  def message(conversation:, body:, sender:, campaign: nil)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
     conversation.create_message(
-      sent_message, sender, campaign, manual_message
+      sent_message, sender, campaign
     ).tap { |message| Broadcaster::Message.broadcast(message) }
   end
 

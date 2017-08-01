@@ -38,12 +38,6 @@ RSpec.describe ManualMessageParticipant::Runner do
         }.to change { Message.count }.by(1)
       end
 
-      it 'passes the manual message to organization#message' do
-        expect(organization).to receive(:message).with(hash_including(manual_message: manual_message))
-
-        subject.call
-      end
-
       it 'updates the participant to be tied to the new message' do
         expect {
           subject.call
