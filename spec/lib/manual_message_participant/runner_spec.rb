@@ -42,6 +42,7 @@ RSpec.describe ManualMessageParticipant::Runner do
         expect {
           subject.call
         }.to change { participant.reload.message }.from(nil)
+        expect(participant.message).to eq(Message.last)
       end
     end
   end
