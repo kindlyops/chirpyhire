@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801132254) do
+ActiveRecord::Schema.define(version: 20170801180734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,6 +302,15 @@ ActiveRecord::Schema.define(version: 20170801132254) do
     t.index ["team_id"], name: "index_locations_on_team_id"
   end
 
+  create_table "manual_message_replies", force: :cascade do |t|
+    t.bigint "manual_message_id", null: false
+    t.bigint "message_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["manual_message_id"], name: "index_manual_message_replies_on_manual_message_id"
+    t.index ["message_id"], name: "index_manual_message_replies_on_message_id"
+  end
+
   create_table "manual_messages", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.integer "status", default: 0, null: false
@@ -339,8 +348,10 @@ ActiveRecord::Schema.define(version: 20170801132254) do
     t.string "from", null: false
     t.string "to", null: false
     t.bigint "campaign_id"
+    t.bigint "manual_message_id"
     t.index ["campaign_id"], name: "index_messages_on_campaign_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["manual_message_id"], name: "index_messages_on_manual_message_id"
     t.index ["organization_id"], name: "index_messages_on_organization_id"
     t.index ["recipient_id"], name: "index_messages_on_recipient_id"
     t.index ["sender_id"], name: "index_messages_on_sender_id"
@@ -553,11 +564,14 @@ ActiveRecord::Schema.define(version: 20170801132254) do
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"
   add_foreign_key "locations", "teams"
+  add_foreign_key "manual_message_replies", "manual_messages"
+  add_foreign_key "manual_message_replies", "messages"
   add_foreign_key "manual_messages", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
   add_foreign_key "messages", "campaigns"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "manual_messages"
   add_foreign_key "messages", "organizations"
   add_foreign_key "messages", "people", column: "recipient_id"
   add_foreign_key "messages", "people", column: "sender_id"

@@ -4,6 +4,7 @@ class Message < ApplicationRecord
   belongs_to :campaign, optional: true
   belongs_to :conversation
   belongs_to :campaign, optional: true
+  belongs_to :manual_message, optional: true
 
   has_many :read_receipts
 
