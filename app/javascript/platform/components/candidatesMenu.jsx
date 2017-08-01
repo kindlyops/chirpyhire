@@ -93,11 +93,12 @@ class CandidatesMenu extends React.Component {
               <div className="form-group">
                 <label htmlFor="manual_message[title]">Title</label>
                 <input type="text" required={true} ref={(title) => this._title = title} className="form-control" id="manual_message[title]" aria-describedby="manualMessageTitleHelp" placeholder="Enter a title..." />
+                <small id="manualMessageTitleHelp" className="form-text text-muted">Use a title to track engagement of your messages. Reports coming soon.</small>
               </div>
               <div className="form-group">
                 <label htmlFor="manual_message[body]">Message</label>
-                <textarea required={true} ref={(body) => this._body = body} rows={3} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="Write a message. Make it personal :)" />
-                <small id="segmentNameHelp" className="form-text text-muted">Each message will be sent separately. Recipients will not see each other.</small>
+                <textarea required={true} ref={(body) => this._body = body} rows={3} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="We're grateful for you and your work caring for caregivers. Make your message sincere and personal. :)" />
+                <small id="manualMessageBodyHelp" className="form-text text-muted">Each message will be sent separately. Recipients will not see each other.</small>
               </div>
           </ModalBody>
           <ModalFooter>
