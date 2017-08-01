@@ -39,9 +39,12 @@ class CandidatesController < ApplicationController
   end
 
   def permitted_params
-    params.permit(
-      :city, :state, :county, :zipcode, :name, :messages, tag: [], contact_stage: []
-    )
+    params.permit(*permitted_params_keys)
+  end
+
+  def permitted_params_keys
+    %i[city state county zipcode name messages]
+      .concat([tag: [], contact_stage: []])
   end
 
   def messages_params

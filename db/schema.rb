@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170728140347) do
+ActiveRecord::Schema.define(version: 20170801132254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,6 +302,18 @@ ActiveRecord::Schema.define(version: 20170728140347) do
     t.index ["team_id"], name: "index_locations_on_team_id"
   end
 
+  create_table "manual_messages", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.integer "status", default: 0, null: false
+    t.text "body", null: false
+    t.string "title", null: false
+    t.datetime "started_sending_at"
+    t.jsonb "audience", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_manual_messages_on_account_id"
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.bigint "team_id", null: false
@@ -541,6 +553,7 @@ ActiveRecord::Schema.define(version: 20170728140347) do
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"
   add_foreign_key "locations", "teams"
+  add_foreign_key "manual_messages", "accounts"
   add_foreign_key "memberships", "accounts"
   add_foreign_key "memberships", "teams"
   add_foreign_key "messages", "campaigns"

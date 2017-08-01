@@ -1,0 +1,2 @@
+class ManualMessage < ApplicationRecord
+end

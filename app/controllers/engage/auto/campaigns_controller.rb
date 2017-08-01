@@ -1,4 +1,4 @@
-class Engage::CampaignsController < ApplicationController
+class Engage::Auto::CampaignsController < ApplicationController
   def show
     @campaign = authorize(campaigns.find(params[:id]))
   end
@@ -7,7 +7,7 @@ class Engage::CampaignsController < ApplicationController
     @campaign = authorize(campaigns.find(params[:id]))
 
     if @campaign.update(permitted_attributes(Campaign))
-      redirect_to engage_campaign_path(@campaign), notice: campaign_notice
+      redirect_to engage_auto_campaign_path(@campaign), notice: campaign_notice
     else
       render :show
     end

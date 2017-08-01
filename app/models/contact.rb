@@ -1,5 +1,6 @@
 class Contact < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
+  include ContactFilters
   include PgSearch
   pg_search_scope :search_by_name,
                   against: { name: 'A', nickname: 'B' },
@@ -39,14 +40,6 @@ class Contact < ApplicationRecord
     joins(conversations: :messages).merge(Message.active).distinct
   end
 
-  def existing_open_conversation
-    conversations.opened.first
-  end
-
-  def current_conversation
-    existing_open_conversation || conversations.by_recent_message.first
-  end
-
   def self.recently_replied
     order('last_reply_at DESC NULLS LAST')
   end
@@ -57,48 +50,20 @@ class Contact < ApplicationRecord
       .count.values.max
   end
 
-  def self.contact_stage_filter(stage_ids)
-    return current_scope if stage_ids.blank?
-
-    joins(:stage).where(contact_stages: { id: stage_ids.map(&:to_i) })
-  end
-
-  def self.tag_filter(tag_ids)
-    return current_scope if tag_ids.blank?
-
-    joins(:tags).where('tags.id = ALL (array[?])', tag_ids.map(&:to_i))
-  end
-
-  def self.messages_filter(count)
-    return current_scope if count.blank?
-
-    joins(conversations: :messages)
-      .group('contacts.id')
-      .having("COUNT(messages.id) = ?", count)
-  end
-
-  def self.name_filter(name)
-    return current_scope if name.blank?
-
-    search_by_name(name)
-  end
-
-  def self.zipcode_filter(filter_params)
-    return current_scope if filter_params.blank?
-
-    filters = filter_params.map do |k, v|
-      sanitize_sql_array(["lower(\"zipcodes\".\"#{k}\") = ?", v.downcase])
-    end.join(' AND ')
-
-    joins(person: :zipcode).where(filters)
-  end
-
   def self.subscribed
     where(subscribed: true)
   end
 
   def self.unsubscribed
     where(subscribed: false)
+  end
+
+  def existing_open_conversation
+    conversations.opened.first
+  end
+
+  def current_conversation
+    existing_open_conversation || conversations.by_recent_message.first
   end
 
   def subscribe
