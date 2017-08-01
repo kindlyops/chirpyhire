@@ -86,7 +86,7 @@ class Engage::Manual::MessagesController < ApplicationController
 end
 
 # ContactsManualMessage
-  # -> contact, message_id, manual_message_id
+# -> contact, message_id, manual_message_id
 
 # Create Manual Message
 # Lookup all the candidates in the audience
