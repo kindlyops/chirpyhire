@@ -17,7 +17,10 @@ class CandidatesMenu extends React.Component {
   render() {
     return (<div className='CandidatesMenu ch--main-menu'>
       <div className='ch--main-menu--left'>
-        <h2 className='CandidatesCount'>{this.props.total_count} candidates</h2>
+        <h2 className='CandidatesCount'>
+        {this.props.total_count} candidates{' '}
+        <span className='small text-muted'>of {this.props.contact_total_count}</span>
+        </h2>
       </div>
       <div className='ch--main-menu--right'>
         <a className='btn btn-sm btn-success mr-2' href='/import/csv/new' role="button">

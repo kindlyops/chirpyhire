@@ -12,6 +12,7 @@ class Platform extends React.Component {
     this.state = {
       candidates: [],
       total_count: 0,
+      contact_total_count: 0,
       current_page: 1,
       total_pages: 1,
       segments: [{
