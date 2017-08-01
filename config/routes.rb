@@ -75,11 +75,6 @@ Rails.application.routes.draw do
 
     namespace :manual do
       resources :messages
-
-      namespace :messages do
-        resources :sent, only: :index
-        resources :drafts, only: :index
-      end
     end
   end
 

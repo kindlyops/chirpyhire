@@ -138,7 +138,8 @@ class CandidatesMenu extends React.Component {
       dataType: 'text'
     }
 
-    $.ajax(message);
+    $.ajax(config);
+    this.setState({ modal: false });
   }
 }
 
