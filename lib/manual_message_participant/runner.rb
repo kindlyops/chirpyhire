@@ -42,6 +42,3 @@ class ManualMessageParticipant::Runner
   delegate :contact, :manual_message, to: :participant
   delegate :account, :organization, to: :manual_message
 end
-
-# When the candidate replies, and the last message has a manual message
-# Tie the new message to the manual message as a reply
