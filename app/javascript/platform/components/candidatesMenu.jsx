@@ -6,14 +6,11 @@ class CandidatesMenu extends React.Component {
     super(props);
 
     this.state = {
-      modal: false,
-      manual_message: {
-        body: '',
-        title: ''
-      }
+      modal: false
     }
     this.toggle = this.toggle.bind(this);
     this.isDisabled = this.isDisabled.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle() {
@@ -70,42 +67,44 @@ class CandidatesMenu extends React.Component {
     return (
       <Modal className={'modal--manual-messages'} isOpen={this.state.modal} toggle={this.toggle} backdrop={true}
       >
-        <div className='modal-header'>
-          <div className='top-header'>
-            <h5 className="modal-title" id="messageModal">New Message</h5>
-            <button type="button" className="close" onClick={this.toggle} aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="manual-message-header">
-            {this.props.candidates.slice(0, 4).map(candidate => 
-              <span className="recipient" key={candidate.id}>
-                <span className='candidateAvatar mr-2'>
-                  <span className={`candidateAvatarImage ${candidate.hero_pattern_classes}`}>
-                    {this.initials(candidate)}
+        <form onSubmit={this.onSubmit}>
+          <div className='modal-header'>
+            <div className='top-header'>
+              <h5 className="modal-title" id="messageModal">New Message</h5>
+              <button type="button" className="close" onClick={this.toggle} aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="manual-message-header">
+              {this.props.candidates.slice(0, 4).map(candidate => 
+                <span className="recipient" key={candidate.id}>
+                  <span className='candidateAvatar mr-2'>
+                    <span className={`candidateAvatarImage ${candidate.hero_pattern_classes}`}>
+                      {this.initials(candidate)}
+                    </span>
                   </span>
-                </span>
-                {candidate.name}
-              </span> 
-            )}
-            {this.tail()}
+                  {candidate.name}
+                </span> 
+              )}
+              {this.tail()}
+            </div>
           </div>
-        </div>
-        <ModalBody>
-          <div className="form-group">
-            <label htmlFor="manual_message[title]">Title</label>
-            <input type="text" required={true} onChange={this.onTitleChange} value={this.state.manual_message.title} className="form-control" id="manual_message[title]" aria-describedby="manualMessageTitleHelp" placeholder="Enter a title..." />
-          </div>
-          <div className="form-group">
-            <label htmlFor="manual_message[body]">Message</label>
-            <textarea required={true} onChange={this.onBodyChange} rows={3} value={this.state.manual_message.body} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="Write a message. Make it personal :)" />
-            <small id="segmentNameHelp" className="form-text text-muted">Each message will be sent separately. Recipients will not see each other.</small>
-          </div>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" role="button" onClick={this.toggle}>Cancel</Button>{' '}
-          <Button color="primary" role="button" onClick={this.sendMessage}>Send</Button>
-        </ModalFooter>
+          <ModalBody>
+              <div className="form-group">
+                <label htmlFor="manual_message[title]">Title</label>
+                <input type="text" required={true} ref={(title) => this._title = title} className="form-control" id="manual_message[title]" aria-describedby="manualMessageTitleHelp" placeholder="Enter a title..." />
+              </div>
+              <div className="form-group">
+                <label htmlFor="manual_message[body]">Message</label>
+                <textarea required={true} ref={(body) => this._body = body} rows={3} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="Write a message. Make it personal :)" />
+                <small id="segmentNameHelp" className="form-text text-muted">Each message will be sent separately. Recipients will not see each other.</small>
+              </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" role="button" onClick={this.toggle}>Cancel</Button>{' '}
+            <Button color="primary" role="button" type="submit">Send</Button>
+          </ModalFooter>
+          </form>
       </Modal>
     )
   }
@@ -119,8 +118,27 @@ class CandidatesMenu extends React.Component {
     }
   }
 
-  sendMessage() {
+  onSubmit(e) {
+    e.preventDefault();
 
+    const params = {
+      _method: 'post',
+      manual_message: {
+        title: $(this._title).val(),
+        body: $(this._body).val(),
+        audience: this.props.form
+      }
+    };
+
+    const config = {
+      url: '/engage/manual/messages',
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(message);
   }
 }
 

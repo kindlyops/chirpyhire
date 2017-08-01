@@ -19,6 +19,7 @@ import {
 
 import Inbox from 'inbox'
 import Platform from 'platform'
+import Notifications from 'notifications'
 
 class App extends React.Component {
   constructor(props) {
@@ -27,9 +28,11 @@ class App extends React.Component {
     this.state = {
       organizationSubscription: {},
       clientVersionSubscription: {},
+      notificationSubscription: {},
       current_account: { teams: [] },
       current_organization: {},
-      client_version: null
+      client_version: null,
+      notifications: {}
     }
   }
 
@@ -46,6 +49,8 @@ class App extends React.Component {
     $.get(this.versionURL()).then(client_version => {
       this.setState({ client_version: client_version });
     });
+
+    this.setState({ notifications: this.refs.notifications })
   }
 
   currentAccountUrl() {
@@ -73,6 +78,7 @@ class App extends React.Component {
             <Route path="/inboxes/:inboxId/conversations/:id" render={props => <Inbox {...this.state} {...props} />} />
             <Route path="/inboxes/:inboxId/conversations" render={props => <Inbox {...this.state} {...props} />} />
           </Switch>
+          <Notifications ref="notifications" />
         </div>
       </Router>
     )
@@ -94,7 +100,16 @@ class App extends React.Component {
       clientVersionChannel, this._clientVersionChannelConfig()
     );
 
-    this.setState({ organizationSubscription: organizationSubscription });
+    let notificationChannel = { channel: 'NotificationsChannel' };
+    let notificationSubscription = window.App.cable.subscriptions.create(
+      notificationChannel, this._notificationChannelConfig()
+    );
+
+    this.setState({
+      organizationSubscription,
+      notificationSubscription,
+      clientVersionSubscription
+    });
   }
 
   _organizationChannelConfig() {
@@ -103,8 +118,18 @@ class App extends React.Component {
     }
   }
 
+  _notificationChannelConfig() {
+    return {
+      received: this._notificationReceived.bind(this)
+    }
+  }
+
   _organizationReceived(organization) {
     this.setState({ current_organization: organization });
+  }
+
+  _notificationReceived(notification) {
+    this.state.notifications.addNotification(notification);
   }
 
   _clientVersionChannelConfig() {
@@ -120,6 +145,7 @@ class App extends React.Component {
   disconnect() {
     window.App.cable.subscriptions.remove(this.state.organizationSubscription);
     window.App.cable.subscriptions.remove(this.state.clientVersionSubscription); 
+    window.App.cable.subscriptions.remove(this.state.notificationSubscription)
   }
 
   componentWillUnmount() {

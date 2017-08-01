@@ -3906,6 +3906,12 @@ react-js-pagination@^2.1.0:
     react "^15.0.0"
     react-dom "^15.0.0"
 
+react-notification@^6.7.1:
+  version "6.7.1"
+  resolved "https://registry.yarnpkg.com/react-notification/-/react-notification-6.7.1.tgz#fec45cc6d369f4bbf7b4072fe58ddb3bc262c898"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-portal@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/react-portal/-/react-portal-3.1.0.tgz#865c44fb72a1da106c649206936559ce891ee899"
