@@ -1,9 +1,8 @@
 class ManualMessage < ApplicationRecord
   belongs_to :account
 
-  has_many :messages
-  has_many :recipients, through: :messages
-  has_many :contacts, through: :recipients
-
-  has_many :replies, class_name: 'ManualMessageReply'
+  has_many :contacts_manual_messages
+  has_many :messages, through: :contacts_manual_messages
+  has_many :contacts, through: :contacts_manual_messages
+  has_many :replies,  through: :contacts_manual_messages
 end
