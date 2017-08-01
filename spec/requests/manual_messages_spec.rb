@@ -40,6 +40,16 @@ RSpec.describe 'Manual Messages' do
         expect(ManualMessageJob).to receive(:perform_later)
         post engage_manual_messages_path, params: params
       end
+
+      context 'with multiple contacts' do
+        let!(:other_contact) { create(:contact, name: contact.name, organization: organization) }
+
+        it 'creates the participants for the manual message' do
+          expect {
+            post engage_manual_messages_path, params: params
+          }.to change { ManualMessageParticipant.count }.from(0).to(2)
+        end
+      end
     end
   end
 end
