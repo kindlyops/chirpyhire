@@ -69,6 +69,14 @@ class Contact < ApplicationRecord
     joins(:tags).where('tags.id = ALL (array[?])', tag_ids.map(&:to_i))
   end
 
+  def self.messages_filter(count)
+    return current_scope if count.blank?
+
+    joins(conversations: :messages)
+      .group('contacts.id')
+      .having("COUNT(messages.id) = ?", count)
+  end
+
   def self.name_filter(name)
     return current_scope if name.blank?
 

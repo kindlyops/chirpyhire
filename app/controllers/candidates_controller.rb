@@ -31,6 +31,7 @@ class CandidatesController < ApplicationController
       .name_filter(name_params)
       .tag_filter(tag_params)
       .zipcode_filter(zipcode_params)
+      .messages_filter(messages_params)
   end
 
   def scope
@@ -39,8 +40,12 @@ class CandidatesController < ApplicationController
 
   def permitted_params
     params.permit(
-      :city, :state, :county, :zipcode, :name, tag: [], contact_stage: []
+      :city, :state, :county, :zipcode, :name, :messages, tag: [], contact_stage: []
     )
+  end
+
+  def messages_params
+    permitted_params.to_h[:messages]
   end
 
   def name_params
