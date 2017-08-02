@@ -26,7 +26,7 @@ class BotFactory::Question::Transportation < BotFactory::Question
   end
 
   def personal_follow_up_body
-    'Vroom! Vroom! Glad you have a set of wheels.'
+    'Nice! Glad you have a set of wheels.'
   end
 
   def public_follow_up_body
