@@ -19,9 +19,7 @@ module ContactFilters
     def messages_filter(count)
       return current_scope if count.blank?
 
-      left_joins(conversations: :messages)
-        .group('contacts.id')
-        .having('COUNT(messages.id) = ?', count)
+      where(messages_count: count)
     end
 
     def name_filter(name)
