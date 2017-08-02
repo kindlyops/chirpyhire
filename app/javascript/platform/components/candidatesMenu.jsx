@@ -106,7 +106,7 @@ class CandidatesMenu extends React.Component {
           <ModalBody>
               <div className="form-group">
                 <label htmlFor="manual_message[title]">Title</label>
-                <input type="text" required={true} ref={(title) => this._title = title} className="form-control" id="manual_message[title]" aria-describedby="manualMessageTitleHelp" placeholder="Enter a title..." />
+                <input type="text" required={true} ref={(title) => this._title = title} className="form-control" id="manual_message[title]" aria-describedby="manualMessageTitleHelp" placeholder="Add a title" />
                 <small id="manualMessageTitleHelp" className="form-text text-muted">Use a title to track engagement of your messages. Reports coming soon.</small>
               </div>
               <div className="form-group">
