@@ -1,14 +1,16 @@
 import React from 'react'
-import { Modal, Button, ModalFooter, ModalBody } from 'reactstrap'
+import { Modal, Button, ModalFooter, ModalBody, Tooltip } from 'reactstrap'
 
 class CandidatesMenu extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      modal: false
+      modal: false,
+      tooltipOpen: false
     }
     this.toggle = this.toggle.bind(this);
+    this.toolTipToggle = this.toolTipToggle.bind(this);
     this.isDisabled = this.isDisabled.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -16,6 +18,12 @@ class CandidatesMenu extends React.Component {
   toggle() {
     this.setState({
       modal: !this.state.modal
+    });
+  }
+
+  toolTipToggle() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
     });
   }
 
@@ -45,6 +53,10 @@ class CandidatesMenu extends React.Component {
           Message
           <i className='fa fa-paper-plane ml-2'></i>
         </button>
+        <i id="messageInfo" className='fa fa-question-circle mr-2'></i>
+        <Tooltip placement="bottom" target="messageInfo" isOpen={this.state.tooltipOpen} toggle={this.toolTipToggle}>
+          To send a targeted message to a group of candidates, make sure to filter your candidates first.
+        </Tooltip>
         <a className='btn btn-sm btn-success mr-2' href='/import/csv/new' role="button">
           Import
           <i className='fa fa-cloud-upload ml-2'></i>

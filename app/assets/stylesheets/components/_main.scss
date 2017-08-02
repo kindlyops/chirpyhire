@@ -12,6 +12,11 @@
     justify-content: space-between;
     align-items: center;
 
+    .ch--main-menu--right {
+      display: flex;
+      align-items: center;
+    }
+
     h2 {
       margin-bottom: 0;
       font-size: 18px;
