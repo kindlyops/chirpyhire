@@ -75,7 +75,7 @@ class Seeder::SeedContact
       to: phone_number.phone_number,
       from: person.phone_number,
       conversation: conversation
-    ).tap(&:touch_conversation)
+    ).tap(&method(:create_conversation_part))
   end
 
   def create_received_message(body)
@@ -88,6 +88,14 @@ class Seeder::SeedContact
       from: phone_number.phone_number,
       to: person.phone_number,
       conversation: conversation
+    ).tap(&method(:create_conversation_part))
+  end
+
+  def create_conversation_part(message)
+    conversation.conversation_parts.create(
+      message: message,
+      happened_at: message.external_created_at
     ).tap(&:touch_conversation)
+    message.touch_conversation
   end
 end
