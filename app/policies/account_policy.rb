@@ -4,9 +4,13 @@ class AccountPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attributes = %i[email bio].push(person_attributes: %i[id name avatar])
+    attributes = %i[email bio phone_number].push(person)
     attributes.push(:role) if account.owner?
     attributes
+  end
+
+  def person
+    { person_attributes: %i[id name avatar] }
   end
 
   private
