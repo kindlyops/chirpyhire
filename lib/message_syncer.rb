@@ -43,7 +43,11 @@ class MessageSyncer
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
-  delegate :recent_message, to: :open_conversation
+  delegate :recent_conversation_part, to: :open_conversation
+
+  def recent_message
+    recent_conversation_part && recent_conversation_part.message
+  end
 
   def new_message
     @new_message ||= begin
@@ -56,7 +60,7 @@ class MessageSyncer
   end
 
   def create_conversation_part(message)
-    open_conversation.conversation_parts.create(
+    open_conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
     ).tap(&:touch_conversation)

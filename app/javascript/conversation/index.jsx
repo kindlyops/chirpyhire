@@ -7,7 +7,7 @@ class Conversation extends React.Component {
     super(props);
 
     this.state = {
-      messageSubscription: {},
+      partsSubscription: {},
       contactSubscription: {},
       contact: {
         zipcode: {},
@@ -16,10 +16,10 @@ class Conversation extends React.Component {
         id: '',
         handle: ''
       },
-      messages: []
+      parts: []
     };
     this.onNameChange = this.onNameChange.bind(this);
-    this._messageReceived = this._messageReceived.bind(this)
+    this._partsReceived = this._partsReceived.bind(this)
     this._contactReceived = this._contactReceived.bind(this)
   }
 
@@ -45,7 +45,7 @@ class Conversation extends React.Component {
       <ConversationChat
         conversation={this.props.conversation}
         contact={this.state.contact}
-        messages={this.state.messages}
+        parts={this.state.parts}
       />
       <ConversationProfile
         onNameChange={this.onNameChange}
@@ -60,8 +60,8 @@ class Conversation extends React.Component {
     return `/contacts/${id}`;
   }
 
-  messagesUrl(id) {
-    return `/conversations/${id}/messages`;
+  partsUrl(id) {
+    return `/conversations/${id}/parts`;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,13 +81,13 @@ class Conversation extends React.Component {
       this.setState({ contact: contact });
     });    
 
-    $.get(this.messagesUrl(conversation.id)).then((messages) => {
-      this.setState({ messages: messages });
+    $.get(this.partsUrl(conversation.id)).then((parts) => {
+      this.setState({ parts: parts });
     });
   }
 
   connect(conversation) {
-    this._connectMessages(conversation);
+    this._connectParts(conversation);
     this._connectContact(conversation);
   }
 
@@ -101,17 +101,17 @@ class Conversation extends React.Component {
   }
 
   disconnect() {
-    App.cable.subscriptions.remove(this.state.messageSubscription);
+    App.cable.subscriptions.remove(this.state.partsSubscription);
     App.cable.subscriptions.remove(this.state.contactSubscription);
   }
 
-  _connectMessages(conversation) {
-    let channel = { channel: 'MessagesChannel', conversation_id: conversation.id };
+  _connectParts(conversation) {
+    let channel = { channel: 'PartsChannel', conversation_id: conversation.id };
     let subscription = App.cable.subscriptions.create(
-      channel, this._messageChannelConfig()
+      channel, this._partsChannelConfig()
     );
 
-    this.setState({ messageSubscription: subscription });
+    this.setState({ partsSubscription: subscription });
   }
 
   _connectContact(conversation) {
@@ -123,9 +123,9 @@ class Conversation extends React.Component {
     this.setState({ contactSubscription: subscription });
   }
 
-  _messageChannelConfig() {
+  _partsChannelConfig() {
     return {
-      received: this._messageReceived
+      received: this._partsReceived
     }
   }
 
@@ -135,9 +135,9 @@ class Conversation extends React.Component {
     }
   }
 
-  _messageReceived(receivedMessage) {
+  _partsReceived(receivedPart) {
     this.setState({
-      messages: this.state.messages.concat([receivedMessage])
+      parts: this.state.parts.concat([receivedPart])
     });
   }
 

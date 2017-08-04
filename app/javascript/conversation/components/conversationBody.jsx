@@ -40,7 +40,7 @@ class ConversationBody extends React.Component {
   }
 
   days() {
-    return R.groupWith(this._sameDay, this.props.messages);
+    return R.groupWith(this._sameDay, this.props.parts);
   }
 
   _sameDay(first, second) {

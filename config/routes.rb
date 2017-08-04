@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   resources :conversations, only: [] do
-    resources :messages, only: %i[index create], controller: 'conversations/messages'
+    resources :parts, only: %i[index create], controller: 'conversations/parts'
   end
 
   namespace :import do

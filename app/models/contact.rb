@@ -63,7 +63,8 @@ class Contact < ApplicationRecord
   end
 
   def current_conversation
-    existing_open_conversation || conversations.by_recent_message.first
+    existing_open_conversation ||
+      conversations.by_recent_conversation_part.first
   end
 
   def subscribe

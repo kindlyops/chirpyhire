@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Conversations::MessagesController do
+RSpec.describe Conversations::PartsController do
   let(:organization) { create(:organization, :subscription, :team, :account) }
   let(:phone_number) { organization.phone_numbers.first }
   let(:account) { organization.accounts.first }

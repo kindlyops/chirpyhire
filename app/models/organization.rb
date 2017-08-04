@@ -85,11 +85,11 @@ class Organization < ApplicationRecord
     messages.create(
       message_params(message, sender, conversation, campaign)
     ).tap do |created_message|
-      conversation.conversation_parts.create(
+      conversation.parts.create(
         message: created_message,
         happened_at: created_message.external_created_at
       ).tap(&:touch_conversation)
-    end.tap(&:touch_conversation)
+    end
   end
 
   def message_params(message, sender, conversation, campaign)

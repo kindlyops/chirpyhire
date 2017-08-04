@@ -92,10 +92,9 @@ class Seeder::SeedContact
   end
 
   def create_conversation_part(message)
-    conversation.conversation_parts.create(
+    conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
     ).tap(&:touch_conversation)
-    message.touch_conversation
   end
 end

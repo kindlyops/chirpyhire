@@ -4,7 +4,7 @@ class ConversationDecorator < Draper::Decorator
 
   delegate :hero_pattern_classes, to: :contact, prefix: true
 
-  def last_message_created_at
-    Conversation::LastMessageCreatedAt.new(object)
+  def last_conversation_part_created_at
+    Conversation::LastConversationPartCreatedAt.new(object)
   end
 end

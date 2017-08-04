@@ -66,12 +66,6 @@ class Message < ApplicationRecord
     body && body[0..30] || ''
   end
 
-  def touch_conversation
-    conversation.update(last_message_created_at: created_at)
-
-    Broadcaster::Conversation.broadcast(conversation)
-  end
-
   def organization_phone_number
     return organization.phone_numbers.find_by(phone_number: to) if inbound?
     organization.phone_numbers.find_by(phone_number: from)

@@ -1,4 +1,4 @@
-class MessagesChannel < ApplicationCable::Channel
+class PartsChannel < ApplicationCable::Channel
   def subscribed
     reject if conversation.blank?
     stream_for conversation
