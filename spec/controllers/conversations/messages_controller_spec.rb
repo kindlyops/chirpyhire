@@ -73,6 +73,12 @@ RSpec.describe Conversations::MessagesController do
         }.to change { contact.messages.count }.by(1)
       end
 
+      it 'creates a conversation part' do
+        expect {
+          post :create, params: params, xhr: true
+        }.to change { ConversationPart.count }.by(1)
+      end
+
       it 'is sent from the account' do
         post :create, params: params, xhr: true
         expect(contact.messages.last.sender).to eq(account.person)
@@ -98,6 +104,12 @@ RSpec.describe Conversations::MessagesController do
           expect {
             post :create, params: params, xhr: true
           }.not_to change { contact.messages.count }
+        end
+
+        it 'does not create a conversation part' do
+          expect {
+            post :create, params: params, xhr: true
+          }.not_to change { ConversationPart.count }
         end
 
         it 'does not send a message' do
