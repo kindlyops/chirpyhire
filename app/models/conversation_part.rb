@@ -2,7 +2,6 @@ class ConversationPart < ApplicationRecord
   belongs_to :message
   belongs_to :conversation
   validates :conversation, presence: true
-  validate :open_conversation, on: :create
 
   def self.by_recency
     order(happened_at: :desc).order(:id)
