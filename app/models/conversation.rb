@@ -5,6 +5,9 @@ class Conversation < ApplicationRecord
 
   has_many :messages
   has_many :read_receipts
+  has_many :conversation_parts
+  has_one :recent_conversation_part,
+          -> { by_recency.limit(1) }, class_name: 'ConversationPart'
 
   has_one :recent_message,
           -> { by_recency.limit(1) }, class_name: 'Message'
@@ -24,6 +27,10 @@ class Conversation < ApplicationRecord
 
   def self.opened
     where(state: 'Open')
+  end
+
+  def self.by_recent_conversation_part
+    order(last_conversation_part_created_at: :desc)
   end
 
   def self.by_recent_message

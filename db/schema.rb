@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20170804194030) do
   create_table "conversation_parts", force: :cascade do |t|
     t.bigint "conversation_id", null: false
     t.bigint "message_id", null: false
+    t.datetime "happened_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["conversation_id"], name: "index_conversation_parts_on_conversation_id"
@@ -201,6 +202,7 @@ ActiveRecord::Schema.define(version: 20170804194030) do
     t.bigint "inbox_id", null: false
     t.integer "unread_count", default: 0, null: false
     t.bigint "phone_number_id", null: false
+    t.datetime "last_conversation_part_created_at"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["phone_number_id"], name: "index_conversations_on_phone_number_id"
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"

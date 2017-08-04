@@ -4,8 +4,12 @@ class ConversationPart < ApplicationRecord
   validates :conversation, presence: true
   validate :open_conversation, on: :create
 
+  def self.by_recency
+    order(happened_at: :desc).order(:id)
+  end
+
   def touch_conversation
-    conversation.update(last_message_created_at: created_at)
+    conversation.update(last_conversation_part_created_at: created_at)
 
     Broadcaster::Conversation.broadcast(conversation)
   end
