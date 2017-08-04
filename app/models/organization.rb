@@ -14,6 +14,7 @@ class Organization < ApplicationRecord
   has_many :assignment_rules
   has_many :bots
   has_many :campaigns
+  has_many :messages
   has_many :contact_stages, -> { ranked }
 
   has_many :locations, through: :teams

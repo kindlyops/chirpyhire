@@ -1,8 +1,8 @@
 class Message < ApplicationRecord
+  belongs_to :conversation
+  belongs_to :organization, optional: true
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
-  belongs_to :campaign, optional: true
-  belongs_to :conversation
   belongs_to :campaign, optional: true
 
   counter_culture %i[conversation contact]
