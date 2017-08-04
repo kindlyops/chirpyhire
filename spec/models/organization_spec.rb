@@ -13,6 +13,12 @@ RSpec.describe Organization do
       allow(Broadcaster::Message).to receive(:broadcast)
     end
 
+    it 'creates a conversation part' do
+      expect {
+        subject.message(conversation: conversation, body: 'body', sender: account.person)
+      }.to change { conversation.reload.conversation_parts.count }.by(1)
+    end
+
     context 'campaign' do
       let(:campaign) { create(:campaign) }
       it 'assigns the message to the campaign' do
