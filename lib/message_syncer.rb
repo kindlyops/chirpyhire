@@ -50,8 +50,16 @@ class MessageSyncer
       open_conversation
         .messages
         .create!(message_params)
+        .tap(&method(:create_conversation_part))
         .tap(&:touch_conversation)
     end
+  end
+
+  def create_conversation_part(message)
+    open_conversation.conversation_parts.create(
+      message: message,
+      happened_at: message.external_created_at
+    ).tap(&:touch_conversation)
   end
 
   def open_conversation

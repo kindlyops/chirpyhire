@@ -22,6 +22,12 @@ RSpec.describe MessageSyncer do
 
       expect(Message.last.to).to be_present
     end
+
+    it 'creates a conversation part' do
+      expect {
+        subject.call
+      }.to change { ConversationPart.count }.by(1)
+    end
   end
 
   describe 'receipt' do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802180818) do
+ActiveRecord::Schema.define(version: 20170804194030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,16 @@ ActiveRecord::Schema.define(version: 20170802180818) do
     t.index ["import_id"], name: "index_contacts_imports_on_import_id"
   end
 
+  create_table "conversation_parts", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "message_id", null: false
+    t.datetime "happened_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_conversation_parts_on_conversation_id"
+    t.index ["message_id"], name: "index_conversation_parts_on_message_id"
+  end
+
   create_table "conversations", force: :cascade do |t|
     t.bigint "contact_id", null: false
     t.datetime "last_message_created_at"
@@ -192,6 +202,7 @@ ActiveRecord::Schema.define(version: 20170802180818) do
     t.bigint "inbox_id", null: false
     t.integer "unread_count", default: 0, null: false
     t.bigint "phone_number_id", null: false
+    t.datetime "last_conversation_part_created_at"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["phone_number_id"], name: "index_conversations_on_phone_number_id"
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"
@@ -552,6 +563,8 @@ ActiveRecord::Schema.define(version: 20170802180818) do
   add_foreign_key "contacts", "teams"
   add_foreign_key "contacts_imports", "contacts"
   add_foreign_key "contacts_imports", "imports"
+  add_foreign_key "conversation_parts", "conversations"
+  add_foreign_key "conversation_parts", "messages"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
   add_foreign_key "follow_ups", "goals"
