@@ -47,8 +47,8 @@ class Organization < ApplicationRecord
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    conversation.create_message(
-      sent_message, sender, campaign
+    create_message(
+      sent_message, sender, conversation, campaign
     ).tap { |message| Broadcaster::Message.broadcast(message) }
   end
 
@@ -80,6 +80,29 @@ class Organization < ApplicationRecord
   end
 
   private
+
+  def create_message(message, sender, conversation, campaign)
+    messages.create(
+      message_params(message, sender, conversation, campaign)
+    ).tap(&:touch_conversation)
+  end
+
+  def message_params(message, sender, conversation, campaign)
+    base_message_params(message).merge(
+      sent_at: message.date_sent,
+      external_created_at: message.date_created,
+      sender: sender,
+      recipient: conversation.person,
+      campaign: campaign,
+      conversation: conversation
+    )
+  end
+
+  def base_message_params(message)
+    %i[sid body direction to from].each_with_object({}) do |key, hash|
+      hash[key] = message.send(key)
+    end
+  end
 
   def recruiter_notice
     "This is #{recruiter.first_name} with #{name}."
