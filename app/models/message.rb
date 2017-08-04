@@ -5,7 +5,7 @@ class Message < ApplicationRecord
   belongs_to :conversation
   belongs_to :campaign, optional: true
 
-  counter_culture [:conversation, :contact]
+  counter_culture %i[conversation contact]
 
   has_many :read_receipts
   has_one :manual_message_participant
