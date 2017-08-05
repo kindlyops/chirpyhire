@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805195021) do
+ActiveRecord::Schema.define(version: 20170805223601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(version: 20170805195021) do
     t.boolean "optional", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "human_attribute"
     t.index ["import_id"], name: "index_column_mappings_on_import_id"
   end
 

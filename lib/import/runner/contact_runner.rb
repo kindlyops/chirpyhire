@@ -10,8 +10,9 @@ class Import::Runner::ContactRunner
   end
 
   def call
-    return import_error(:blank_phone_number) if phone_number.blank?
-    return import_error(:invalid_phone_number) if implausible?
+    return phone_import_error(:blank_phone_number) if phone_number.blank?
+    return phone_import_error(:invalid_phone_number) if implausible?
+    return stage_import_error(:invalid_stage) if invalid_stage?
     return update_contact if existing_contact.present?
 
     create_contact
@@ -51,13 +52,18 @@ class Import::Runner::ContactRunner
       phone_number: phone_number,
       name: name,
       subscribed: true,
-      stage: organization.contact_stages.first
+      stage: create_stage
     }
+  end
+
+  def create_stage
+    stage || organization.contact_stages.first
   end
 
   def update_params
     params = { phone_number: phone_number }
     params[:name] = name if name.present?
+    params[:stage] = stage if stage.present?
     params
   end
 
@@ -73,20 +79,44 @@ class Import::Runner::ContactRunner
     @name ||= row[name_mapping.column_number]
   end
 
+  def stage
+    @stage ||= begin
+      return unless stage_name.present?
+      organization.contact_stages.find_by(name: stage_name)
+    end
+  end
+
+  def stage_name
+    @stage_name ||= row[stage_mapping.column_number]
+  end
+
   attr_reader :row, :runner, :row_number
 
   delegate :organization, :phone_number_mapping, :name_mapping,
-           :id_mapping, :import, to: :runner
+           :id_mapping, :stage_mapping, :import, to: :runner
   delegate :import_errors, to: :import
   delegate :contacts, to: :organization
 
-  def import_error(error_type)
+  def phone_import_error(error_type)
     import_errors.create(
       error_type: error_type,
       row_number: row_number,
       column_number: phone_number_mapping.column_number,
       column_name: row.headers[phone_number_mapping.column_number]
     )
+  end
+
+  def stage_import_error(error_type)
+    import_errors.create(
+      error_type: error_type,
+      row_number: row_number,
+      column_number: stage_mapping.column_number,
+      column_name: row.headers[stage_mapping.column_number]
+    )
+  end
+
+  def invalid_stage?
+    stage_name && !organization.contact_stages.where(name: stage_name).exists?
   end
 
   def implausible?

@@ -1,6 +1,10 @@
 class ColumnMapping < ApplicationRecord
   belongs_to :import
 
+  def label
+    human_attribute || contact_attribute.humanize.downcase
+  end
+
   def required?
     !optional?
   end

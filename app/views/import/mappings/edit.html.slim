@@ -32,14 +32,14 @@
                       '
                       strong 
                         | Which column contains the 
-                        = @mapping.contact_attribute.humanize.downcase
+                        = @mapping.label
                         '
                         ' of your candidates?
                     p.card-text.text-muted 
                       - if @mapping.optional?
                         | Mapping candidate
                         '
-                        = @mapping.contact_attribute.humanize.downcase
+                        = @mapping.label
                         '
                         ' is optional. Feel free to 
                         strong skip 
@@ -47,7 +47,7 @@
                         ' it.
                       - else
                         | Every candidate in ChirpyHire must have a 
-                        = @mapping.contact_attribute.humanize.downcase
+                        = @mapping.label
                         '.
                   .actions.d-flex.align-items-center.justify-content-end
                     - if @mapping.previous_mapping.present?
