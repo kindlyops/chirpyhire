@@ -16,7 +16,6 @@ RSpec.describe InboxDeliveryAgent do
       context 'and the conversation is not in an active campaign for the bot' do
         context 'and the message would trigger the bot (START)' do
           let!(:message) { create(:message, body: 'start', organization: organization, conversation: conversation) }
-          let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
           it 'calls Bot::Receiver' do
             expect(Bot::Receiver).to receive(:call).with(bot, message)
@@ -27,7 +26,6 @@ RSpec.describe InboxDeliveryAgent do
 
         context 'and the message would not trigger the bot' do
           let!(:message) { create(:message, body: 'I am interested in work', organization: organization, conversation: conversation) }
-          let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
           it 'calls ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).to receive(:call)
@@ -71,7 +69,6 @@ RSpec.describe InboxDeliveryAgent do
 
           context 'and the message is anything' do
             let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
-            let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
             it 'calls Bot::Receiver' do
               expect(Bot::Receiver).to receive(:call).with(bot, message)
@@ -91,7 +88,6 @@ RSpec.describe InboxDeliveryAgent do
 
           context 'and the message is anything' do
             let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
-            let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
             it 'does not call Bot::Receiver' do
               expect(Bot::Receiver).not_to receive(:call)
