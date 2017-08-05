@@ -1,4 +1,4 @@
-class MessagePolicy < ApplicationPolicy
+class ConversationPartPolicy < ApplicationPolicy
   def create?
     !canceled? && subscribed?
   end
@@ -8,7 +8,7 @@ class MessagePolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.where(organization: organization)
+      scope.where(conversation: organization.conversations)
     end
   end
 end

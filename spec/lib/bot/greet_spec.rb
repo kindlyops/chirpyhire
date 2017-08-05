@@ -5,7 +5,7 @@ RSpec.describe Bot::Greet do
   let(:goal) { bot.goals.first }
   let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let(:campaign) { bot_campaign.campaign }
-  let(:message) { create(:message) }
+  let(:message) { create(:message, :conversation_part) }
   let(:contact) { message.contact }
   let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
 

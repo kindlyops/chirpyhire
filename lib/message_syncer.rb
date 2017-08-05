@@ -15,7 +15,7 @@ class MessageSyncer
     contact.update(last_reply_at: new_message.created_at)
     create_read_receipts if receipt_requested?
     create_reply if manual_message_present?
-    broadcast_message
+    broadcast_part
     new_message
   end
 
@@ -29,8 +29,8 @@ class MessageSyncer
     recent_message && recent_message.manual_message_participant.present?
   end
 
-  def broadcast_message
-    Broadcaster::Message.new(new_message).broadcast
+  def broadcast_part
+    Broadcaster::Part.new(new_message.conversation_part).broadcast
   end
 
   def existing_message
@@ -43,20 +43,23 @@ class MessageSyncer
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
-  delegate :recent_message, to: :open_conversation
+  delegate :recent_part, to: :open_conversation
+
+  def recent_message
+    recent_part && recent_part.message
+  end
 
   def new_message
     @new_message ||= begin
-      open_conversation
+      organization
         .messages
         .create!(message_params)
         .tap(&method(:create_conversation_part))
-        .tap(&:touch_conversation)
     end
   end
 
   def create_conversation_part(message)
-    open_conversation.conversation_parts.create(
+    open_conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
     ).tap(&:touch_conversation)

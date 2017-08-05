@@ -13,7 +13,8 @@ class Contact < ApplicationRecord
 
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
-  has_many :messages, through: :conversations
+  has_many :conversation_parts, through: :conversations, source: :parts
+  has_many :messages, through: :conversation_parts
   has_many :taggings
   has_many :tags, through: :taggings
 
@@ -37,7 +38,7 @@ class Contact < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
 
   def self.active
-    joins(conversations: :messages).merge(Message.active).distinct
+    joins(conversations: [parts: :message]).merge(Message.active).distinct
   end
 
   def self.recently_replied
@@ -63,7 +64,8 @@ class Contact < ApplicationRecord
   end
 
   def current_conversation
-    existing_open_conversation || conversations.by_recent_message.first
+    existing_open_conversation ||
+      conversations.by_recent_part.first
   end
 
   def subscribe

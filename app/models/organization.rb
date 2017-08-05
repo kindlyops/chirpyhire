@@ -47,9 +47,7 @@ class Organization < ApplicationRecord
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    create_message(
-      sent_message, sender, conversation, campaign
-    ).tap { |message| Broadcaster::Message.broadcast(message) }
+    create_message(sent_message, sender, conversation, campaign)
   end
 
   def get_message(sid)
@@ -82,14 +80,7 @@ class Organization < ApplicationRecord
   private
 
   def create_message(message, sender, conversation, campaign)
-    messages.create(
-      message_params(message, sender, conversation, campaign)
-    ).tap do |created_message|
-      conversation.conversation_parts.create(
-        message: created_message,
-        happened_at: created_message.external_created_at
-      ).tap(&:touch_conversation)
-    end.tap(&:touch_conversation)
+    messages.create(message_params(message, sender, conversation, campaign))
   end
 
   def message_params(message, sender, conversation, campaign)

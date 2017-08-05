@@ -12,7 +12,7 @@ class ConversationChat extends React.Component {
       <ConversationBody
         conversation={this.props.conversation}
         contact={this.props.contact}
-        messages={this.props.messages}
+        parts={this.props.parts}
       />
     </div>);
   }

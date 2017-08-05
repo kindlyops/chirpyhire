@@ -17,6 +17,7 @@ class Seeder::SeedContact
 
   delegate :organization, to: :account
   delegate :bots, to: :organization
+  delegate :person, to: :bot, prefix: true
 
   def seed_questions_and_answers
     questions.each do |question|
@@ -74,7 +75,7 @@ class Seeder::SeedContact
       sender: person,
       to: phone_number.phone_number,
       from: person.phone_number,
-      conversation: conversation
+      conversation: conversation, organization: organization
     ).tap(&method(:create_conversation_part))
   end
 
@@ -84,18 +85,17 @@ class Seeder::SeedContact
       sent_at: DateTime.current,
       external_created_at: DateTime.current,
       direction: 'outbound-api',
-      sender: bot.person,
+      sender: bot_person,
       from: phone_number.phone_number,
       to: person.phone_number,
-      conversation: conversation
+      conversation: conversation, organization: organization
     ).tap(&method(:create_conversation_part))
   end
 
   def create_conversation_part(message)
-    conversation.conversation_parts.create(
+    conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
     ).tap(&:touch_conversation)
-    message.touch_conversation
   end
 end

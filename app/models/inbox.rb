@@ -13,7 +13,7 @@ class Inbox < ApplicationRecord
   end
 
   def recent_conversations
-    conversations.by_recent_message
+    conversations.by_recent_part
   end
 
   def receive(message)

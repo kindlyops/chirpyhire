@@ -1,6 +1,6 @@
 class Message < ApplicationRecord
-  belongs_to :conversation
-  belongs_to :organization, optional: true
+  belongs_to :organization
+  belongs_to :conversation, optional: true
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
   belongs_to :campaign, optional: true
@@ -9,16 +9,19 @@ class Message < ApplicationRecord
 
   has_many :read_receipts
   has_one :manual_message_participant
+  has_one :conversation_part
 
   validates :sender, presence: true
   validates :recipient, presence: true, if: :outbound?
-  validates :conversation, presence: true
-  validate :open_conversation, on: :create
   phony_normalize :to, default_country_code: 'US'
   phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
-  delegate :organization, :contact, to: :conversation
+  delegate :contact, to: :conversation_part, allow_nil: true
+
+  def conversation
+    conversation_part&.conversation || super
+  end
 
   def self.active
     where('messages.created_at >= ?', 30.days.ago)
@@ -66,20 +69,8 @@ class Message < ApplicationRecord
     body && body[0..30] || ''
   end
 
-  def touch_conversation
-    conversation.update(last_message_created_at: created_at)
-
-    Broadcaster::Conversation.broadcast(conversation)
-  end
-
   def organization_phone_number
     return organization.phone_numbers.find_by(phone_number: to) if inbound?
     organization.phone_numbers.find_by(phone_number: from)
-  end
-
-  private
-
-  def open_conversation
-    errors.add(:conversation, 'must be open.') unless conversation.open?
   end
 end

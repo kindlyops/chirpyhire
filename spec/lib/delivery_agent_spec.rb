@@ -14,7 +14,7 @@ RSpec.describe DeliveryAgent do
       context 'assignment rule for phone number' do
         let!(:rule) { create(:assignment_rule, organization: organization, phone_number: phone_number, inbox: inbox) }
         let!(:conversation) { IceBreaker.call(contact, phone_number) }
-        let!(:message) { create(:message, to: phone_number.phone_number, conversation: conversation) }
+        let!(:message) { create(:message, to: phone_number.phone_number, organization: organization, conversation: conversation) }
 
         it 'calls InboxDeliveryAgent' do
           expect(InboxDeliveryAgent).to receive(:call).with(inbox, message)
@@ -37,7 +37,7 @@ RSpec.describe DeliveryAgent do
     end
 
     context 'without assignment rules' do
-      let!(:message) { create(:message, to: phone_number.phone_number) }
+      let!(:message) { create(:message, organization: organization, to: phone_number.phone_number) }
 
       it 'does not call InboxDeliveryAgent' do
         expect(InboxDeliveryAgent).not_to receive(:call)

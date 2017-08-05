@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Conversations::MessagesController do
+RSpec.describe Conversations::PartsController do
   let(:organization) { create(:organization, :subscription, :team, :account) }
   let(:phone_number) { organization.phone_numbers.first }
   let(:account) { organization.accounts.first }
@@ -70,7 +70,7 @@ RSpec.describe Conversations::MessagesController do
       it 'creates a message' do
         expect {
           post :create, params: params, xhr: true
-        }.to change { contact.messages.count }.by(1)
+        }.to change { contact.reload.messages.count }.by(1)
       end
 
       it 'creates a conversation part' do
@@ -103,7 +103,7 @@ RSpec.describe Conversations::MessagesController do
         it 'does not create a message' do
           expect {
             post :create, params: params, xhr: true
-          }.not_to change { contact.messages.count }
+          }.not_to change { contact.reload.messages.count }
         end
 
         it 'does not create a conversation part' do
@@ -124,7 +124,7 @@ RSpec.describe Conversations::MessagesController do
       it 'does not create a message' do
         expect {
           post :create, params: params, xhr: true
-        }.not_to change { contact.messages.count }
+        }.not_to change { contact.reload.messages.count }
       end
 
       it 'does not send a message' do

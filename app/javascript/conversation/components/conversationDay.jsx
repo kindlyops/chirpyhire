@@ -28,8 +28,8 @@ class ConversationDay extends React.Component {
   }
 
   isWithinFiveMinutes(first, second) {
-    let firstMoment = moment(first.external_created_at);
-    let secondMoment = moment(second.external_created_at);
+    let firstMoment = moment(first.happened_at);
+    let secondMoment = moment(second.happened_at);
     let difference = moment.range(firstMoment, secondMoment).diff('minutes');
 
     return Math.abs(difference) < 5;
@@ -37,7 +37,7 @@ class ConversationDay extends React.Component {
 
   orderedMessages(messages) {
     return messages.sort((first, second) => (
-      moment(first.external_created_at) - moment(second.external_created_at)
+      moment(first.happened_at) - moment(second.happened_at)
     ))
   }
 

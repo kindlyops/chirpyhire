@@ -45,18 +45,26 @@ class Bot::Receiver
   end
 
   def reply
-    return if response.body.blank?
+    return if response_body.blank?
 
     organization.message(
-      sender: response.sender,
-      conversation: response.conversation,
-      body: response.body,
-      campaign: response.campaign
-    )
+      sender: response_sender,
+      conversation: response_conversation,
+      body: response_body,
+      campaign: response_campaign
+    ).tap(&method(:create_part))
   end
 
-  delegate :contact, :organization_phone_number, :conversation, to: :message
+  def create_part(message)
+    response_conversation.parts.create(
+      message: message, happened_at: message.external_created_at
+    ).tap(&:touch_conversation)
+  end
+
+  delegate :contact, :organization_phone_number, :conversation,
+           to: :message
   delegate :bot_campaigns, to: :bot
   delegate :inbox, :organization, to: :conversation
   delegate :campaign_contacts, to: :contact
+  delegate :sender, :conversation, :body, :campaign, to: :response, prefix: true
 end

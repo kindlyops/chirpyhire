@@ -5,15 +5,18 @@ RSpec.describe InboxDeliveryAgent do
     subject { InboxDeliveryAgent.new(inbox, message) }
 
     context 'with a bot tied to the inbox' do
-      let(:bot) { create(:bot) }
+      let(:organization) { create(:organization) }
+      let(:bot) { create(:bot, organization: organization) }
       let(:bot_campaign) { create(:bot_campaign, bot: bot) }
       let(:campaign) { bot_campaign.campaign }
       let!(:inbox) { bot_campaign.inbox }
-      let(:conversation) { create(:conversation, inbox: inbox) }
+      let(:contact) { create(:contact, organization: organization) }
+      let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
 
       context 'and the conversation is not in an active campaign for the bot' do
         context 'and the message would trigger the bot (START)' do
-          let!(:message) { create(:message, body: 'start', conversation: conversation) }
+          let!(:message) { create(:message, body: 'start', organization: organization, conversation: conversation) }
+          let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
           it 'calls Bot::Receiver' do
             expect(Bot::Receiver).to receive(:call).with(bot, message)
@@ -23,7 +26,8 @@ RSpec.describe InboxDeliveryAgent do
         end
 
         context 'and the message would not trigger the bot' do
-          let!(:message) { create(:message, body: 'I am interested in work', conversation: conversation) }
+          let!(:message) { create(:message, body: 'I am interested in work', organization: organization, conversation: conversation) }
+          let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
           it 'calls ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).to receive(:call)
@@ -35,11 +39,11 @@ RSpec.describe InboxDeliveryAgent do
 
       context 'and the conversation is in an exited campaign for the bot' do
         before do
-          create(:campaign_contact, state: :exited, campaign: campaign, contact: conversation.contact)
+          create(:campaign_contact, state: :exited, campaign: campaign, contact: contact)
         end
 
         context 'and the message would trigger the bot' do
-          let!(:message) { create(:message, body: 'start', conversation: conversation) }
+          let!(:message) { create(:message, :conversation_part, body: 'start', organization: organization, conversation: conversation) }
 
           it 'calls ReadReceiptsCreator' do
             expect(ReadReceiptsCreator).to receive(:call)
@@ -62,11 +66,12 @@ RSpec.describe InboxDeliveryAgent do
                    state: :active,
                    phone_number: message.organization_phone_number,
                    campaign: campaign,
-                   contact: conversation.contact)
+                   contact: contact)
           end
 
           context 'and the message is anything' do
-            let!(:message) { create(:message, :to, conversation: conversation) }
+            let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
+            let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
             it 'calls Bot::Receiver' do
               expect(Bot::Receiver).to receive(:call).with(bot, message)
@@ -81,11 +86,12 @@ RSpec.describe InboxDeliveryAgent do
             create(:campaign_contact,
                    state: :active,
                    campaign: campaign,
-                   contact: conversation.contact)
+                   contact: contact)
           end
 
           context 'and the message is anything' do
-            let!(:message) { create(:message, :to, conversation: conversation) }
+            let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
+            let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
             it 'does not call Bot::Receiver' do
               expect(Bot::Receiver).not_to receive(:call)

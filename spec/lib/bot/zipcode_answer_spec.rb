@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Bot::ZipcodeAnswer do
   let(:follow_up) { create(:zipcode_follow_up) }
-  let(:message) { create(:message, body: body) }
+  let!(:message) { create(:message, :conversation_part, body: body) }
   let(:person) { message.contact.person }
 
   subject { Bot::ZipcodeAnswer.new(follow_up) }
@@ -10,7 +10,7 @@ RSpec.describe Bot::ZipcodeAnswer do
   describe 'activated?' do
     context '5 digits' do
       context 'valid zipcode' do
-        let(:message) { create(:message, body: '30342') }
+        let(:message) { create(:message, :conversation_part, body: '30342') }
         let!(:zipcode) { create(:zipcode, '30342'.to_sym) }
 
         it 'is true' do

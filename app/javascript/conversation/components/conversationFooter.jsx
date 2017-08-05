@@ -5,14 +5,14 @@ class ConversationFooter extends React.Component {
     return this.props.conversation.id;
   }
 
-  messagesUrl() {
-    return `/conversations/${this.conversationId()}/messages`;
+  partsUrl() {
+    return `/conversations/${this.conversationId()}/parts`;
   }
 
   activeFooter() {
     return (
       <div className="footer">
-        <form className="new_message" id="new_message" action={this.messagesUrl()} acceptCharset="UTF-8" data-remote="true" method="post">
+        <form className="new_message" id="new_message" action={this.partsUrl()} acceptCharset="UTF-8" data-remote="true" method="post">
           <input name="utf8" type="hidden" value="✓" />
           <textarea autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
           </textarea>

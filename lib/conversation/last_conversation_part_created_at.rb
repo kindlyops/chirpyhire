@@ -1,4 +1,4 @@
-class Conversation::LastMessageCreatedAt
+class Conversation::LastConversationPartCreatedAt
   include ActionView::Helpers::DateHelper
 
   def initialize(conversation)
@@ -56,8 +56,8 @@ class Conversation::LastMessageCreatedAt
   end
 
   def time
-    last_message_created_at
+    last_conversation_part_created_at
   end
 
-  delegate :last_message_created_at, to: :conversation
+  delegate :last_conversation_part_created_at, to: :conversation
 end

@@ -1,9 +1,9 @@
-class Conversations::MessagesController < ApplicationController
-  decorates_assigned :messages
+class Conversations::PartsController < ApplicationController
+  decorates_assigned :parts
 
   def index
-    @messages = policy_scope(conversation.messages.by_oldest.includes(:sender))
-    read_messages unless impersonating?
+    @parts = policy_scope(parts_scope)
+    read_receipts unless impersonating?
     Broadcaster::Conversation.broadcast(conversation)
 
     respond_to do |format|
@@ -13,15 +13,29 @@ class Conversations::MessagesController < ApplicationController
 
   def create
     @conversation = authorized_conversation
-    @message = scoped_messages.build
-    create_message if @message.valid? && authorize(@message)
+    return head :ok if @conversation.closed?
 
+    @message = scoped_messages.build
+    create_part if @message.valid? && authorize(@message)
     head :ok
   end
 
   private
 
-  def read_messages
+  def create_part
+    message = create_message
+
+    @conversation.parts.create(
+      message: message,
+      happened_at: message.external_created_at
+    ).tap(&:touch_conversation)
+  end
+
+  def parts_scope
+    conversation.parts.by_oldest.includes(message: :sender)
+  end
+
+  def read_receipts
     conversation.read_receipts.unread.each(&:read)
   end
 

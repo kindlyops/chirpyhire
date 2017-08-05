@@ -9,7 +9,8 @@ class ConversationsController < ApplicationController
   def index
     @conversations = policy_scope(
       inbox.recent_conversations.includes(
-        :recent_message, contact: %i[open_conversations person]
+        recent_part: :message,
+        contact: %i[open_conversations person]
       )
     )
 

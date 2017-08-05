@@ -11,7 +11,7 @@ class Message extends React.Component {
   }
 
   timestamp() {
-    return moment(this.props.message.external_created_at).format('h:mm a');
+    return moment(this.props.message.happened_at).format('h:mm a');
   }
 
   messageIcon() {
