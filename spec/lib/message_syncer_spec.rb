@@ -79,9 +79,9 @@ RSpec.describe MessageSyncer do
           }.to change { conversation.reload.messages.count }.by(1)
         end
 
-        context 'with an existing message' do
-          let(:message) { create(:message, conversation: conversation) }
-
+        context 'with an existing conversation_part' do
+          let(:message) { create(:message, organization: organization, conversation: conversation) }
+          let!(:conversation_part) { create(:conversation_part, conversation: conversation, message: message) }
           context 'that has a manual message participant' do
             let!(:participant) { create(:manual_message_participant, message: message) }
 

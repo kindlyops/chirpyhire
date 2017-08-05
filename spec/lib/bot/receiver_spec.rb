@@ -1,17 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe Bot::Receiver do
-  let(:bot_campaign) { create(:bot_campaign) }
+  let(:organization) { create(:organization) }
+  let(:bot) { create(:bot, organization: organization) }
+  let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let!(:inbox) { bot_campaign.inbox }
   let!(:campaign) { bot_campaign.campaign }
-  let!(:bot) { bot_campaign.bot }
 
   subject { Bot::Receiver.new(bot, message) }
 
   describe 'reply' do
-    let(:conversation) { create(:conversation, inbox: inbox) }
-    let(:organization) { conversation.organization }
-    let!(:message) { create(:message, :to, conversation: conversation) }
+    let(:contact) { create(:contact, organization: organization) }
+    let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
+    let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
     let!(:response) {
       OpenStruct.new(
         body: 'body',
@@ -32,9 +33,9 @@ RSpec.describe Bot::Receiver do
 
   describe 'call' do
     context 'conversation is not in the bot campaign' do
-      let(:conversation) { create(:conversation, inbox: inbox) }
-      let(:contact) { conversation.contact }
-      let!(:message) { create(:message, :to, conversation: conversation) }
+      let(:contact) { create(:contact, organization: organization) }
+      let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
+      let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
 
       it 'creates a pending campaign contact' do
         allow(subject).to receive(:reply)
@@ -65,10 +66,10 @@ RSpec.describe Bot::Receiver do
     end
 
     context 'conversation is in the bot campaign' do
-      let(:conversation) { create(:conversation, inbox: inbox) }
-      let(:contact) { conversation.contact }
+      let(:contact) { create(:contact, organization: organization) }
+      let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
       let!(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
-      let!(:message) { create(:message, :to, conversation: conversation) }
+      let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
 
       context 'exited' do
         before do

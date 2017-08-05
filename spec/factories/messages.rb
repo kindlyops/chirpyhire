@@ -12,7 +12,7 @@ FactoryGirl.define do
 
     trait :to do
       after(:create) do |message|
-        organization = message.conversation.organization
+        organization = message.organization
         phone_number = create(:phone_number, organization: organization)
         message.update(to: phone_number.phone_number)
       end

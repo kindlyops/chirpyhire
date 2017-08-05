@@ -49,7 +49,7 @@ class Organization < ApplicationRecord
     )
     create_message(
       sent_message, sender, conversation, campaign
-    ).tap { |message| Broadcaster::Message.broadcast(message) }
+    ).tap { |message| Broadcaster::Part.broadcast(message.conversation_part) }
   end
 
   def get_message(sid)

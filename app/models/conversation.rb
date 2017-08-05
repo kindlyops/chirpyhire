@@ -5,6 +5,7 @@ class Conversation < ApplicationRecord
 
   has_many :read_receipts
   has_many :parts, class_name: 'ConversationPart'
+  has_many :messages, through: :parts
   has_one :recent_conversation_part,
           -> { by_recency.limit(1) }, class_name: 'ConversationPart'
 

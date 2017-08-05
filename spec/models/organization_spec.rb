@@ -10,13 +10,13 @@ RSpec.describe Organization do
     let(:conversation) { create(:conversation, contact: contact, inbox: team.inbox) }
 
     before do
-      allow(Broadcaster::Message).to receive(:broadcast)
+      allow(Broadcaster::Part).to receive(:broadcast)
     end
 
     it 'creates a conversation part' do
       expect {
         subject.message(conversation: conversation, body: 'body', sender: account.person)
-      }.to change { conversation.reload.conversation_parts.count }.by(1)
+      }.to change { conversation.reload.parts.count }.by(1)
     end
 
     context 'campaign' do

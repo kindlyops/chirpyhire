@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170804204928) do
+ActiveRecord::Schema.define(version: 20170805011748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,7 +360,7 @@ ActiveRecord::Schema.define(version: 20170804204928) do
     t.datetime "updated_at", null: false
     t.integer "sender_id", null: false
     t.integer "recipient_id"
-    t.bigint "conversation_id", null: false
+    t.bigint "conversation_id"
     t.string "from", null: false
     t.string "to", null: false
     t.bigint "campaign_id"

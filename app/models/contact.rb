@@ -13,7 +13,8 @@ class Contact < ApplicationRecord
 
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
-  has_many :messages, through: :conversations
+  has_many :conversation_parts, through: :conversations
+  has_many :messages, through: :conversation_parts
   has_many :taggings
   has_many :tags, through: :taggings
 
@@ -37,7 +38,8 @@ class Contact < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
 
   def self.active
-    joins(conversations: :messages).merge(Message.active).distinct
+    joins(conversations: [conversation_parts: :messages])
+      .merge(Message.active).distinct
   end
 
   def self.recently_replied
