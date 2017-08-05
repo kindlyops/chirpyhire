@@ -1,6 +1,6 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    !canceled? && subscribed? && conversation.open?
+    !canceled? && subscribed?
   end
 
   delegate :recipient, :conversation, to: :record

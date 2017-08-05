@@ -13,9 +13,10 @@ class Conversations::PartsController < ApplicationController
 
   def create
     @conversation = authorized_conversation
-    @message = scoped_messages.build(conversation: @conversation)
-    create_part if @message.valid? && authorize(@message)
+    return head :ok if @conversation.closed?
 
+    @message = scoped_messages.build
+    create_part if @message.valid? && authorize(@message)
     head :ok
   end
 

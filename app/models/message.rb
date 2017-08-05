@@ -17,7 +17,7 @@ class Message < ApplicationRecord
   phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
-  delegate :contact, to: :conversation_part, allow_nil: true
+  delegate :contact, :conversation, to: :conversation_part, allow_nil: true
 
   def self.active
     where('messages.created_at >= ?', 30.days.ago)
