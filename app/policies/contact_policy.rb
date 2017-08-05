@@ -1,6 +1,6 @@
 class ContactPolicy < ApplicationPolicy
   def create?
-    show?
+    record.new_record?
   end
 
   def update?
@@ -8,7 +8,7 @@ class ContactPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[contact_stage_id name]
+    %i[contact_stage_id name phone_number]
   end
 
   class Scope < ApplicationPolicy::Scope

@@ -4,6 +4,24 @@ class CandidatesController < ApplicationController
   PAGE_LIMIT = 24
   decorates_assigned :candidates
 
+  def new
+    @candidate = authorize(scope.build)
+  end
+
+  def create
+    @candidate = authorize(scope.build(permitted_attributes(Contact)))
+
+    if @candidate.valid?
+      @candidate.person = Person.create
+      @candidate.subscribed = true
+      @candidate.save
+      IceBreaker.call(@candidate, current_organization.phone_numbers.first)
+      redirect_to candidates_path
+    else
+      render :new
+    end
+  end
+
   def index
     respond_to do |format|
       format.html { render html: '', layout: true }

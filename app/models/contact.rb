@@ -35,6 +35,8 @@ class Contact < ApplicationRecord
   before_validation :add_nickname
 
   validates :name, presence: true, unless: :nickname_present?
+  validates :phone_number, presence: true, uniqueness: { scope: :organization }
+  validates :stage, presence: true
   validates :nickname, presence: true, unless: :name_present?
 
   def self.active
