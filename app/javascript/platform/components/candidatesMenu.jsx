@@ -61,10 +61,14 @@ class CandidatesMenu extends React.Component {
           Import
           <i className='fa fa-cloud-upload ml-2'></i>
         </a>
-        <button disabled={this.isDisabled()} onClick={this.props.exportCSV} className='btn btn-sm btn-primary export-caregivers' role="button">
+        <button disabled={this.isDisabled()} onClick={this.props.exportCSV} className='btn btn-sm btn-primary export-caregivers mr-2' role="button">
           Export
           <i className='fa fa-cloud-download ml-2'></i>
         </button>
+        <a className='btn btn-sm btn-default' href='/candidates/new' role="button">
+          Add
+          <i className='fa fa-user-plus ml-2'></i>
+        </a>
       </div>
       {this.createMessageModal()}
     </div>)

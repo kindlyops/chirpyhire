@@ -1,0 +1,35 @@
+= title "New Candidate · ChirpyHire"
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 New Candidate
+  .ch--main
+    .ch--sub-main
+      .ch--sub-main-content
+        .card
+          .card-block
+            h4.card-title
+              | Quickly add a new candidate. 
+              small.text-muted 
+                | For faster imports of multiple candidates, consider
+                '
+                = link_to 'importing via a CSV.', new_import_csv_path
+            = form_for @candidate, url: candidates_path do |f|
+              = content_for :validation_errors do
+                = render partial: "common/validation_errors", locals: { model: @candidate }
+              .form-group
+                = f.label :name, class: 'col-form-label', 'aria-describedby' => 'nameHelp'
+                = f.text_field :name, class: 'form-control', required: true
+                small#nameHelp.form-text.text-muted Add your candidate's name so you can easily find them.
+              .form-group
+                = f.label :phone_number, 'Phone Number', class: 'col-form-label', 'aria-describedby' => 'phoneHelp'
+                = f.phone_field :phone_number, value: @candidate.phone_number&.phony_formatted, class: 'form-control', required: true
+                small#phoneHelp.form-text.text-muted Add a phone number so that you can reach each candidate via text.
+              .form-group
+                = f.label :stage, class: 'col-form-label', 'aria-describedby' => 'stageHelp'
+                = f.collection_select :contact_stage_id, current_organization.contact_stages, :id, :name, { include_blank: false }, class: 'form-control'
+                small#stageHelp.form-text.text-muted Set the appropriate candidate stage so that you can track where each candidate is in your hiring process.
+              .form-group
+                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                    i.fa.fa-check.mr-2
+                    | Create
