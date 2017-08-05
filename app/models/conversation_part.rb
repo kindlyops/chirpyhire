@@ -4,6 +4,7 @@ class ConversationPart < ApplicationRecord
   validates :conversation, presence: true
   delegate :sender, :recipient, :body, :sender_id,
            :sender_handle, :direction, to: :message
+  delegate :contact, to: :conversation
 
   def self.by_recency
     order(happened_at: :desc).order(:id)

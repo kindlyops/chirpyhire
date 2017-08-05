@@ -355,7 +355,7 @@ ActiveRecord::Schema.define(version: 20170805011748) do
     t.string "direction", null: false
     t.datetime "sent_at"
     t.datetime "external_created_at"
-    t.integer "organization_id"
+    t.integer "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sender_id", null: false
