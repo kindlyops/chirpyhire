@@ -14,12 +14,24 @@ class Conversations::PartsController < ApplicationController
   def create
     @conversation = authorized_conversation
     @message = scoped_messages.build(conversation: @conversation)
-    create_message if @message.valid? && authorize(@message)
+    create_part if @message.valid? && authorize(@message)
 
     head :ok
   end
 
   private
+
+  def create_part
+    message = create_message
+
+    @conversation.parts.create(
+      message: message,
+      happened_at: message.external_created_at
+    ).tap do |part|
+      part.touch_conversation
+      Broadcaster::Part.broadcast(part)
+    end
+  end
 
   def parts_scope
     conversation.parts.by_oldest.includes(message: :sender)
