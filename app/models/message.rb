@@ -7,7 +7,7 @@ class Message < ApplicationRecord
   has_one :manual_message_participant
   has_one :conversation_part
 
-  validates :sender, presence: true
+  validates :sender, presence: true, if: :inbound?
   validates :recipient, presence: true, if: :outbound?
   phony_normalize :to, default_country_code: 'US'
   phony_normalize :from, default_country_code: 'US'

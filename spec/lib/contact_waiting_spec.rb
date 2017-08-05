@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ContactWaiting do
-  let(:team) { create(:team, :inbox, :account) }
-  let(:conversation) { create(:conversation, inbox: team.inbox) }
+  let!(:team) { create(:team, :phone_number, :account) }
+  let(:contact) { create(:contact, organization: team.organization) }
+  let(:conversation) { create(:conversation, contact: contact, inbox: team.inbox) }
   let(:read_receipt) { create(:read_receipt, conversation: conversation) }
 
   subject { ContactWaiting.new(conversation, read_receipt) }

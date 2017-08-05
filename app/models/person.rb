@@ -23,7 +23,10 @@ class Person < ApplicationRecord
   delegate :subscribed?, to: :contact
 
   def phone_number
-    contact&.phone_number || self[:phone_number]
+    return account.phone_number if account.present?
+    return contact.phone_number if contact.present?
+
+    self[:phone_number]
   end
 
   def handle

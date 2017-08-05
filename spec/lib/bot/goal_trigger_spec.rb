@@ -32,7 +32,22 @@ RSpec.describe Bot::GoalTrigger do
 
     context 'with multiple accounts on the team' do
       before do
-        team.accounts << create_list(:account, rand(1..3))
+        team.accounts << create_list(:account, rand(1..3), organization: organization)
+      end
+
+      context 'and an account has a phone number' do
+        before do
+          Account.last.update(phone_number: Faker::PhoneNumber.cell_phone)
+        end
+
+        it 'creates a message to the account' do
+          expect {
+            subject.call
+          }.to change { organization.reload.messages.count }.by(1)
+
+          expect(Message.last.recipient).to eq(Account.last.person)
+          expect(Message.last.body).to include('A new caregiver is waiting')
+        end
       end
 
       it 'sends an email to the account on the same team only' do
