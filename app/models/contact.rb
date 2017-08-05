@@ -6,7 +6,7 @@ class Contact < ApplicationRecord
                   against: { name: 'A', nickname: 'B' },
                   using: { tsearch: { prefix: true } }
 
-  belongs_to :person, optional: true
+  belongs_to :person
   belongs_to :organization
   belongs_to :stage, class_name: 'ContactStage',
                      foreign_key: :contact_stage_id
