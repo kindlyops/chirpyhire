@@ -56,11 +56,11 @@ RSpec.describe Bot::Receiver do
         }.to change { contact.reload.campaign_contacts.pending.count }.by(1)
       end
 
-      it 'updates the message to be tied to the campaign' do
+      it 'updates the conversation part to be tied to the campaign' do
         allow(subject).to receive(:reply)
         expect {
           subject.call
-        }.to change { message.reload.campaign }.from(nil).to(campaign)
+        }.to change { conversation_part.reload.campaign }.from(nil).to(campaign)
       end
 
       it 'ties the new campaign contact to the bot campaign' do
@@ -95,10 +95,10 @@ RSpec.describe Bot::Receiver do
           }.not_to change { contact.reload.campaigns.count }
         end
 
-        it 'updates the message to be tied to the campaign' do
+        it 'updates the conversation_part to be tied to the campaign' do
           expect {
             subject.call
-          }.to change { message.reload.campaign }.from(nil).to(campaign)
+          }.to change { conversation_part.reload.campaign }.from(nil).to(campaign)
         end
 
         it 'does not reply' do
@@ -116,11 +116,11 @@ RSpec.describe Bot::Receiver do
           }.not_to change { contact.reload.campaigns.count }
         end
 
-        it 'updates the message to be tied to the campaign' do
+        it 'updates the conversation_part to be tied to the campaign' do
           allow(subject).to receive(:reply)
           expect {
             subject.call
-          }.to change { message.reload.campaign }.from(nil).to(campaign)
+          }.to change { conversation_part.reload.campaign }.from(nil).to(campaign)
         end
 
         it 'replies' do

@@ -11,7 +11,7 @@ class Bot::Receiver
   attr_reader :message, :bot
 
   def call
-    message.update!(campaign: campaign_contact.campaign)
+    conversation_part.update!(campaign: campaign_contact.campaign)
     return if campaign_contact.exited?
 
     reply
@@ -63,7 +63,7 @@ class Bot::Receiver
   end
 
   delegate :contact, :organization_phone_number, :conversation,
-           to: :message
+           :conversation_part, to: :message
   delegate :bot_campaigns, to: :bot
   delegate :inbox, :organization, to: :conversation
   delegate :campaign_contacts, to: :contact
