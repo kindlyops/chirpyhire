@@ -1,9 +1,9 @@
 class MessagePolicy < ApplicationPolicy
   def create?
-    !canceled? && subscribed?
+    !canceled? && subscribed? && conversation.open?
   end
 
-  delegate :recipient, to: :record
+  delegate :recipient, :conversation, to: :record
   delegate :subscribed?, to: :recipient
 
   class Scope < ApplicationPolicy::Scope

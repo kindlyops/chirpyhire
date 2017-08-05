@@ -43,10 +43,10 @@ class MessageSyncer
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
-  delegate :recent_conversation_part, to: :open_conversation
+  delegate :recent_part, to: :open_conversation
 
   def recent_message
-    recent_conversation_part && recent_conversation_part.message
+    recent_part && recent_part.message
   end
 
   def new_message

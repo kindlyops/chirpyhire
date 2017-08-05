@@ -1,5 +1,5 @@
 json.array! conversations do |conversation|
-  message = conversation.recent_conversation_part.message
+  message = conversation.recent_part.message
 
   json.id conversation.id
   json.inbox_id conversation.inbox_id

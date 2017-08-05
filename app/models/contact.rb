@@ -13,7 +13,7 @@ class Contact < ApplicationRecord
 
   has_many :conversations
   has_many :open_conversations, -> { opened }, class_name: 'Conversation'
-  has_many :conversation_parts, through: :conversations
+  has_many :conversation_parts, through: :conversations, source: :parts
   has_many :messages, through: :conversation_parts
   has_many :taggings
   has_many :tags, through: :taggings
@@ -66,7 +66,7 @@ class Contact < ApplicationRecord
 
   def current_conversation
     existing_open_conversation ||
-      conversations.by_recent_conversation_part.first
+      conversations.by_recent_part.first
   end
 
   def subscribe
