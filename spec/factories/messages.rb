@@ -10,13 +10,25 @@ FactoryGirl.define do
     body { Faker::Lorem.sentence }
     organization
 
-    trait :conversation_part do
-      conversation
+    transient do
+      conversation nil
+    end
 
-      after(:create) do |message|
+    after(:create) do |message, evaluator|
+      next if evaluator.conversation.blank?
+
+      create(:conversation_part,
+             message: message, conversation: evaluator.conversation)
+    end
+
+    trait :conversation_part do
+      after(:create) do |message, evaluator|
+        next if message.conversation_part.present?
+        conversation = evaluator.conversation || create(:conversation)
+
         create(:conversation_part,
                message: message,
-               conversation: message.conversation)
+               conversation: conversation)
       end
     end
 

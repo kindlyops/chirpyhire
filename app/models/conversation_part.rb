@@ -7,6 +7,8 @@ class ConversationPart < ApplicationRecord
            :sender_handle, :direction, to: :message
   delegate :contact, to: :conversation
 
+  counter_culture %i[conversation contact], column_name: 'messages_count'
+
   def self.by_recency
     order(happened_at: :desc).order(:id)
   end

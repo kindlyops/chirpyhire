@@ -88,8 +88,7 @@ class Organization < ApplicationRecord
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       sender: sender,
-      recipient: conversation.person,
-      conversation: conversation
+      recipient: conversation.person
     )
   end
 

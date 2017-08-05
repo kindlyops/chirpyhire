@@ -75,7 +75,7 @@ class Seeder::SeedContact
       sender: person,
       to: phone_number.phone_number,
       from: person.phone_number,
-      conversation: conversation, organization: organization
+      organization: organization
     ).tap(&method(:create_conversation_part))
   end
 
@@ -88,7 +88,7 @@ class Seeder::SeedContact
       sender: bot_person,
       from: phone_number.phone_number,
       to: person.phone_number,
-      conversation: conversation, organization: organization
+      organization: organization
     ).tap(&method(:create_conversation_part))
   end
 

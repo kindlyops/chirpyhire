@@ -1,10 +1,7 @@
 class Message < ApplicationRecord
   belongs_to :organization
-  belongs_to :conversation, optional: true
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
-
-  counter_culture %i[conversation contact]
 
   has_many :read_receipts
   has_one :manual_message_participant
@@ -16,11 +13,7 @@ class Message < ApplicationRecord
   phony_normalize :from, default_country_code: 'US'
 
   delegate :handle, to: :sender, prefix: true
-  delegate :contact, to: :conversation_part, allow_nil: true
-
-  def conversation
-    conversation_part&.conversation || super
-  end
+  delegate :contact, :conversation, to: :conversation_part, allow_nil: true
 
   def self.active
     where('messages.created_at >= ?', 30.days.ago)
