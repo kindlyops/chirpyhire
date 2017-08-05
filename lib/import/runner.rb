@@ -35,5 +35,11 @@ class Import::Runner
     @name_mapping ||= import.mappings.find_by(contact_attribute: 'name')
   end
 
+  def stage_mapping
+    @stage_mapping ||= begin
+      import.mappings.find_by(contact_attribute: 'stage')
+    end
+  end
+
   delegate :local_document, :organization, to: :import
 end
