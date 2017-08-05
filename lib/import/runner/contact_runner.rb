@@ -81,7 +81,7 @@ class Import::Runner::ContactRunner
 
   def stage
     @stage ||= begin
-      return unless stage_name.present?
+      return if stage_name.blank?
       organization.contact_stages.find_by(name: stage_name)
     end
   end
@@ -98,25 +98,25 @@ class Import::Runner::ContactRunner
   delegate :contacts, to: :organization
 
   def phone_import_error(error_type)
-    import_errors.create(
-      error_type: error_type,
-      row_number: row_number,
-      column_number: phone_number_mapping.column_number,
-      column_name: row.headers[phone_number_mapping.column_number]
-    )
+    import_error(error_type, phone_number_mapping)
   end
 
   def stage_import_error(error_type)
+    import_error(error_type, stage_mapping)
+  end
+
+  def import_error(error_type, mapping)
     import_errors.create(
       error_type: error_type,
       row_number: row_number,
-      column_number: stage_mapping.column_number,
-      column_name: row.headers[stage_mapping.column_number]
+      column_number: mapping.column_number,
+      column_name: row.headers[mapping.column_number]
     )
   end
 
   def invalid_stage?
-    stage_name && !organization.contact_stages.where(name: stage_name).exists?
+    stage_name.present? &&
+      !organization.contact_stages.where(name: stage_name).exists?
   end
 
   def implausible?
