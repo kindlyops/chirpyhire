@@ -29,6 +29,16 @@ RSpec.describe Bot::Receiver do
 
       subject.reply
     end
+
+    it 'creates a conversation part' do
+      allow(subject).to receive(:response) { response }
+      allow(subject).to receive(:organization) { organization }
+      allow(organization).to receive(:message).with(hash_including(campaign: campaign)) { create(:message) }
+
+      expect {
+        subject.reply
+      }.to change { ConversationPart.count }.by(1)
+    end
   end
 
   describe 'call' do
