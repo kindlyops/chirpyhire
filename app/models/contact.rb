@@ -38,8 +38,7 @@ class Contact < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
 
   def self.active
-    joins(conversations: [conversation_parts: :messages])
-      .merge(Message.active).distinct
+    joins(conversations: [parts: :message]).merge(Message.active).distinct
   end
 
   def self.recently_replied
