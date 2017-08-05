@@ -16,7 +16,7 @@ class ConversationPart < ApplicationRecord
 
   def touch_conversation
     conversation.update(last_conversation_part_created_at: created_at)
-
+    Broadcaster::Part.broadcast(self)
     Broadcaster::Conversation.broadcast(conversation)
   end
 

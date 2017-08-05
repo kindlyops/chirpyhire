@@ -28,10 +28,7 @@ class Conversations::PartsController < ApplicationController
     @conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
-    ).tap do |part|
-      part.touch_conversation
-      Broadcaster::Part.broadcast(part)
-    end
+    ).tap(&:touch_conversation)
   end
 
   def parts_scope
