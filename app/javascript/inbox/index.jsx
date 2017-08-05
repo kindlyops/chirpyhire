@@ -67,8 +67,8 @@ class Inbox extends React.Component {
 
   conversationsByRecency() {
     return this.state.conversations.sort((first, second) => {
-      let firstMoment = moment(first.last_message_created_at);
-      let secondMoment = moment(second.last_message_created_at);
+      let firstMoment = moment(first.last_conversation_part_created_at);
+      let secondMoment = moment(second.last_conversation_part_created_at);
       let difference = secondMoment - firstMoment;
 
       if(difference === 0) {

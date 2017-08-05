@@ -23,7 +23,7 @@ class ConversationBody extends React.Component {
                 <ConversationEndCap contact={this.props.contact} />
                 <div className="msgs_holder" id="msgs_div">
                   {this.days().map((day) =>
-                    <ConversationDay key={day[0].external_created_at} messages={day} day={day[0].external_created_at} contact={this.props.contact} />
+                    <ConversationDay key={day[0].happened_at} messages={day} day={day[0].happened_at} contact={this.props.contact} />
                   )}
                 </div>
               </div>
@@ -44,8 +44,8 @@ class ConversationBody extends React.Component {
   }
 
   _sameDay(first, second) {
-    let firstMoment = moment(first.external_created_at);
-    let secondMoment = moment(second.external_created_at);
+    let firstMoment = moment(first.happened_at);
+    let secondMoment = moment(second.happened_at);
 
     return firstMoment.isSame(secondMoment, 'day');
   }

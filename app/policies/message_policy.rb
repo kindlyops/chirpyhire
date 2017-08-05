@@ -3,7 +3,7 @@ class MessagePolicy < ApplicationPolicy
     !canceled? && subscribed?
   end
 
-  delegate :recipient, :conversation, to: :record
+  delegate :recipient, to: :record
   delegate :subscribed?, to: :recipient
 
   class Scope < ApplicationPolicy::Scope
