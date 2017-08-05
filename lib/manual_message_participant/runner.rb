@@ -21,7 +21,8 @@ class ManualMessageParticipant::Runner
 
       organization.message(
         sender: sender,
-        conversation: conversation,
+        recipient: conversation.contact.person,
+        phone_number: conversation.phone_number,
         body: manual_message.body
       )
     end

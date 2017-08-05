@@ -49,7 +49,8 @@ class Bot::Receiver
 
     organization.message(
       sender: response_sender,
-      conversation: response_conversation,
+      phone_number: response_conversation.phone_number,
+      recipient: response_conversation.contact.person,
       body: response_body
     ).tap(&method(:create_part))
   end

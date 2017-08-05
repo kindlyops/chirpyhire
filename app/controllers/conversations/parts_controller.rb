@@ -54,7 +54,8 @@ class Conversations::PartsController < ApplicationController
   def create_message
     current_organization.message(
       sender: current_account.person,
-      conversation: @conversation,
+      recipient: @conversation.contact.person,
+      phone_number: @conversation.phone_number,
       body: body
     )
   end
