@@ -37,7 +37,7 @@ class Import::Runner
 
   def stage_mapping
     @stage_mapping ||= begin
-      import.mappings.find_by(contact_attribute: 'contact_stage_id')
+      import.mappings.find_by(contact_attribute: 'stage')
     end
   end
 

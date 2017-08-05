@@ -8,11 +8,7 @@ class Import::Create
       { attribute: 'phone_number', optional: false },
       { attribute: 'id', optional: true },
       { attribute: 'name', optional: true },
-      { 
-        attribute: 'contact_stage_id', 
-        human_attribute: 'stage', 
-        optional: true
-      }
+      { attribute: 'stage', optional: true }
     ]
   end
 
@@ -32,12 +28,8 @@ class Import::Create
     mapping_attributes.each(&method(:create_mapping))
   end
 
-  def create_mapping(attribute:, optional:, human_attribute: nil)
-    mappings.find_or_create_by(
-      contact_attribute: attribute, 
-      human_attribute: human_attribute,
-      optional: optional
-    )
+  def create_mapping(attribute:, optional:)
+    mappings.find_or_create_by(contact_attribute: attribute, optional: optional)
   end
 
   def mapping_attributes
