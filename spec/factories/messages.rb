@@ -5,13 +5,14 @@ FactoryGirl.define do
     sid { Faker::Number.number(10) }
     sent_at { DateTime.current }
     external_created_at { DateTime.current }
-    conversation
     from { Faker::PhoneNumber.cell_phone }
     to { Faker::PhoneNumber.cell_phone }
     body { Faker::Lorem.sentence }
     organization
 
     trait :conversation_part do
+      conversation
+
       after(:create) do |message|
         create(:conversation_part,
                message: message,

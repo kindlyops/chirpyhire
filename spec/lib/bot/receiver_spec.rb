@@ -25,7 +25,7 @@ RSpec.describe Bot::Receiver do
     it 'passes the campaign to organization#message' do
       allow(subject).to receive(:response) { response }
       allow(subject).to receive(:organization) { organization }
-      expect(organization).to receive(:message).with(hash_including(campaign: campaign))
+      expect(organization).to receive(:message).with(hash_including(campaign: campaign)) { create(:message) }
 
       subject.reply
     end
