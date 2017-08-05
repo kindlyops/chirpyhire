@@ -32,8 +32,30 @@ class Bot::GoalTrigger
 
   def notify_contact_ready_for_review(accounts, conversation)
     accounts.find_each do |account|
+      sms_notify(account)
       ready_for_review_mailer(account, conversation).deliver_later
     end
+  end
+
+  def sms_notify(account)
+    return if account.phone_number.blank?
+
+    organization.message(
+      recipient: account.person,
+      phone_number: organization.phone_numbers.order(:id).first,
+      body: ready_for_review_sms(account, conversation)
+    )
+  end
+
+  def ready_for_review_sms(account, conversation)
+    url = inbox_conversation_url(conversation.inbox, conversation)
+    <<~body
+      Hi #{account.first_name},
+
+      A new caregiver is waiting for you to chat with them.
+
+      Chat with Caregiver: #{url}
+    body
   end
 
   def ready_for_review_mailer(account, conversation)

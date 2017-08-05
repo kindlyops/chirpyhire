@@ -41,7 +41,7 @@ class Organization < ApplicationRecord
     campaigns.recent.first
   end
 
-  def message(recipient:, phone_number:, body:, sender:)
+  def message(recipient:, phone_number:, body:, sender: nil)
     sent_message = messaging_client.send_message(
       to: recipient.phone_number, from: phone_number.phone_number, body: body
     )
