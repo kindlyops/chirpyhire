@@ -41,13 +41,13 @@ class Organization < ApplicationRecord
     campaigns.recent.first
   end
 
-  def message(conversation:, body:, sender:, campaign: nil)
+  def message(conversation:, body:, sender:)
     contact = conversation.contact
     phone_number = conversation.phone_number
     sent_message = messaging_client.send_message(
       to: contact.phone_number, from: phone_number.phone_number, body: body
     )
-    create_message(sent_message, sender, conversation, campaign)
+    create_message(sent_message, sender, conversation)
   end
 
   def get_message(sid)
@@ -79,17 +79,16 @@ class Organization < ApplicationRecord
 
   private
 
-  def create_message(message, sender, conversation, campaign)
-    messages.create(message_params(message, sender, conversation, campaign))
+  def create_message(message, sender, conversation)
+    messages.create(message_params(message, sender, conversation))
   end
 
-  def message_params(message, sender, conversation, campaign)
+  def message_params(message, sender, conversation)
     base_message_params(message).merge(
       sent_at: message.date_sent,
       external_created_at: message.date_created,
       sender: sender,
       recipient: conversation.person,
-      campaign: campaign,
       conversation: conversation
     )
   end

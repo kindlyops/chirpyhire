@@ -22,22 +22,23 @@ RSpec.describe Bot::Receiver do
       )
     }
 
-    it 'passes the campaign to organization#message' do
-      allow(subject).to receive(:response) { response }
-      allow(subject).to receive(:organization) { organization }
-      expect(organization).to receive(:message).with(hash_including(campaign: campaign)) { create(:message) }
-
-      subject.reply
-    end
-
     it 'creates a conversation part' do
       allow(subject).to receive(:response) { response }
       allow(subject).to receive(:organization) { organization }
-      allow(organization).to receive(:message).with(hash_including(campaign: campaign)) { create(:message) }
+      allow(organization).to receive(:message) { create(:message) }
 
       expect {
         subject.reply
       }.to change { ConversationPart.count }.by(1)
+    end
+
+    it 'sets the campaign on the conversation part' do
+      allow(subject).to receive(:response) { response }
+      allow(subject).to receive(:organization) { organization }
+      allow(organization).to receive(:message) { create(:message) }
+
+      subject.reply
+      expect(ConversationPart.last.campaign).to eq(campaign)
     end
   end
 

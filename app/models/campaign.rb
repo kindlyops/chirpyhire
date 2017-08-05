@@ -6,7 +6,8 @@ class Campaign < ApplicationRecord
   has_many :campaign_contacts
   has_many :contact, through: :campaign_contacts
 
-  has_many :messages
+  has_many :conversation_parts
+  has_many :messages, through: :conversation_parts
   accepts_nested_attributes_for :bot_campaign
 
   validates :name, uniqueness: { scope: :organization }
