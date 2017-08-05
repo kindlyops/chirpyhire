@@ -5,7 +5,7 @@ RSpec.describe Bot::QuestionFollowUp do
   let(:question) { bot.questions.first }
   let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let(:campaign) { bot_campaign.campaign }
-  let(:message) { create(:message) }
+  let(:message) { create(:message, :conversation_part) }
   let(:contact) { message.contact }
   let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
 
@@ -13,7 +13,7 @@ RSpec.describe Bot::QuestionFollowUp do
 
   describe '#follow_up' do
     let(:rank) { question.next_follow_up_rank }
-    let(:message) { create(:message, body: Hash[(1..26).zip(:a..:z)][rank]) }
+    let(:message) { create(:message, :conversation_part, body: Hash[(1..26).zip(:a..:z)][rank]) }
     let(:response) { Faker::Lorem.word }
     let!(:follow_up) { create(:follow_up, question: question, rank: rank) }
 

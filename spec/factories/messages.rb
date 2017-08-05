@@ -9,6 +9,15 @@ FactoryGirl.define do
     from { Faker::PhoneNumber.cell_phone }
     to { Faker::PhoneNumber.cell_phone }
     body { Faker::Lorem.sentence }
+    organization
+
+    trait :conversation_part do
+      after(:create) do |message|
+        create(:conversation_part,
+               message: message,
+               conversation: message.conversation)
+      end
+    end
 
     trait :to do
       after(:create) do |message|

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Bot::Keyword do
   let(:bot) { create(:bot) }
-  let(:message) { create(:message, body: body) }
+  let(:message) { create(:message, :conversation_part, body: body) }
   subject { Bot::Keyword.new(bot, message) }
 
   describe '#activated?' do

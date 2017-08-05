@@ -36,6 +36,7 @@ RSpec.describe Bot::Receiver do
       let(:contact) { create(:contact, organization: organization) }
       let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
       let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
+      let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
       it 'creates a pending campaign contact' do
         allow(subject).to receive(:reply)
@@ -70,6 +71,7 @@ RSpec.describe Bot::Receiver do
       let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
       let!(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
       let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
+      let!(:conversation_part) { create(:conversation_part, message: message, conversation: conversation) }
 
       context 'exited' do
         before do
