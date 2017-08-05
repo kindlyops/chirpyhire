@@ -50,21 +50,6 @@ RSpec.describe ContactWaiting do
         end
       end
 
-      context 'and an account has a phone number' do
-        before do
-          Account.last.update(phone_number: Faker::PhoneNumber.cell_phone)
-        end
-
-        it 'creates a message to the account' do
-          expect {
-            subject.call
-          }.to change { team.organization.reload.messages.count }.by(1)
-
-          expect(Message.last.recipient).to eq(Account.last.person)
-          expect(Message.last.body).to include('A caregiver is waiting')
-        end
-      end
-
       it 'sends an email to the conversation account' do
         expect {
           subject.call

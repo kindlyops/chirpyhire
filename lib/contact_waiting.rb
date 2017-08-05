@@ -14,7 +14,6 @@ class ContactWaiting
     return if read_or_more_recent_unread_receipts?
 
     accounts.find_each do |account|
-      Texter::Notification.new(account, conversation).contact_waiting
       NotificationMailer.contact_waiting(account, conversation).deliver_later
     end
   end
