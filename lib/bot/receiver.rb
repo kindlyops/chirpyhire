@@ -50,14 +50,15 @@ class Bot::Receiver
     organization.message(
       sender: response_sender,
       conversation: response_conversation,
-      body: response_body,
-      campaign: response_campaign
+      body: response_body
     ).tap(&method(:create_part))
   end
 
   def create_part(message)
     response_conversation.parts.create(
-      message: message, happened_at: message.external_created_at
+      message: message,
+      happened_at: message.external_created_at,
+      campaign: response_campaign
     ).tap(&:touch_conversation)
   end
 

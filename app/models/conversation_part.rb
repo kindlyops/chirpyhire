@@ -1,6 +1,7 @@
 class ConversationPart < ApplicationRecord
   belongs_to :message
   belongs_to :conversation
+  belongs_to :campaign, optional: true
   validates :conversation, presence: true
   delegate :sender, :recipient, :body, :sender_id,
            :sender_handle, :direction, to: :message
