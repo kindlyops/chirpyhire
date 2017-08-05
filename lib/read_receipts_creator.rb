@@ -9,7 +9,7 @@ class ReadReceiptsCreator
   end
 
   def self.wait_until
-    90.seconds.from_now
+    2.minutes.from_now
   end
 
   def wait_until
