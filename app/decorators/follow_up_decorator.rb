@@ -1,5 +1,7 @@
 class FollowUpDecorator < Draper::Decorator
   delegate_all
+  delegate :next_question?, :goal?, :question?, to: :action
+  delegate :goal, :question, to: :action, prefix: true
 
   def action_classes
     return 'FollowUp--action badge badge-next-question' if next_question?
