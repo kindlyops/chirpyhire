@@ -1,6 +1,10 @@
 class NextQuestionAction < BotAction
   delegate :first_goal, to: :bot
 
+  def next_question?
+    true
+  end
+
   def next_step
     return first_goal if next_question.blank?
   end
