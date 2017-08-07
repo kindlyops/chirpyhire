@@ -26,7 +26,7 @@
       div id="question-#{f.object.id}-follow-ups"
         = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
           = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
-      = link_to_add_association f, :follow_ups, 'data-association-insertion-method': 'after', 'data-association-insertion-node': "#question-#{f.object.id}-follow-ups", class: 'btn btn-default', role: 'button' do
+      = link_to_add_association f, :follow_ups, 'data-association-insertion-method': 'after', 'data-association-insertion-node': "#question-#{f.object.id}-follow-ups", class: 'btn btn-default', role: 'button', wrap_object: Proc.new { |f| f.decorate } do
           i.fa.fa-plus.mr-2
           | New Follow Up
 
