@@ -35,7 +35,7 @@ class BotFactory::Question
 
   def action
     return next_question_action unless rank == 9
-    bot.goals.first.action
+    bot.ranked_goals.first.action
   end
 
   def responses_and_tags
