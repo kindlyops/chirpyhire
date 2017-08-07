@@ -1,7 +1,7 @@
 class FollowUp < ApplicationRecord
   acts_as_paranoid
   belongs_to :question
-  belongs_to :action, class_name: 'BotAction'
+  belongs_to :action, class_name: 'BotAction', foreign_key: :bot_action_id
   belongs_to :next_question, optional: true, class_name: 'Question'
   belongs_to :goal, optional: true
 

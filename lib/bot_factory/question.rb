@@ -25,7 +25,7 @@ class BotFactory::Question
       body: body,
       response: response,
       rank: rank,
-      bot_action: bot_action
+      action: action
     )
   end
 
@@ -33,7 +33,7 @@ class BotFactory::Question
     follow_up.tags << organization.tags.find_or_create_by(name: tag)
   end
 
-  def bot_action
+  def action
     return next_question_action unless rank == 9
     bot.goals.first.action
   end
