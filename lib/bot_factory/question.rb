@@ -9,7 +9,7 @@ class BotFactory::Question
   end
 
   attr_reader :bot, :rank
-  delegate :organization, to: :bot
+  delegate :organization, :next_question_action, to: :bot
 
   def call
     question = bot.questions.create!(body: body, rank: rank)
@@ -36,10 +36,6 @@ class BotFactory::Question
   def action
     return next_question_action unless rank == 9
     bot.goals.first.action
-  end
-
-  def next_question_action
-    bot.actions.find_by(type: 'NextQuestionAction')
   end
 
   def responses_and_tags

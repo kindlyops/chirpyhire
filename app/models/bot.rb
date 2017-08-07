@@ -71,6 +71,6 @@ class Bot < ApplicationRecord
   end
 
   def next_question_action
-    actions.find_by(type: 'NextQuestionAction')
+    actions.find_or_create_by(type: 'NextQuestionAction')
   end
 end
