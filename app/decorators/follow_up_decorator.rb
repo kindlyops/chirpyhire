@@ -13,4 +13,8 @@ class FollowUpDecorator < Draper::Decorator
 
     action.label
   end
+
+  def action
+    super || bot.next_question_action
+  end
 end
