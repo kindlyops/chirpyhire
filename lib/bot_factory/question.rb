@@ -22,12 +22,24 @@ class BotFactory::Question
 
   def create_follow_up(question, body, response, rank)
     question.follow_ups.create!(
-      body: body, response: response, rank: rank
+      body: body,
+      response: response,
+      rank: rank,
+      bot_action: bot_action
     )
   end
 
   def tag(follow_up, tag)
     follow_up.tags << organization.tags.find_or_create_by(name: tag)
+  end
+
+  def bot_action
+    return next_question_action unless rank == 9
+    bot.goals.first.action
+  end
+
+  def next_question_action
+    bot.actions.find_by(type: 'NextQuestionAction')
   end
 
   def responses_and_tags

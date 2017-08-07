@@ -16,9 +16,9 @@ class BotFactory::Maker
     existing_bot = organization.bots.find_by(name: name)
     return existing_bot if existing_bot.present?
 
+    create_goal
     create_greeting
     create_questions
-    create_goal
     bot
   end
 
