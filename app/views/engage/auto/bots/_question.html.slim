@@ -19,10 +19,10 @@
     h5.card-title Follow ups based on the candidate's answer:
     h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
     .card-text
-      #follow-ups
+      div id="question-#{f.object.id}-follow-ups"
         = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
           = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
-      = link_to_add_association f, :follow_ups, 'data-association-insertion-method': 'after', 'data-association-insertion-node': "#follow-ups", class: 'btn btn-default', role: 'button' do
+      = link_to_add_association f, :follow_ups, 'data-association-insertion-method': 'after', 'data-association-insertion-node': "#question-#{f.object.id}-follow-ups", class: 'btn btn-default', role: 'button' do
           i.fa.fa-plus.mr-2
           | New Follow Up
 
