@@ -5,11 +5,6 @@ class BotAction < ApplicationRecord
     false
   end
 
-  def goal?
-    false
-  end
-
-  def question?
-    false
-  end
+  alias goal? next_question?
+  alias question? next_question?
 end
