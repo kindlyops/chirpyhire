@@ -2,7 +2,11 @@
   = g.hidden_field :id
   .card-header.goal--header
     .bot-card--label-title
-      span.bot-card--label Goal:
+      span.bot-card--label
+        | Goal
+        '
+        = g.object.rank
+        |:
       span.bot-card--title = g.object.body
   .card-block
     h5.card-title Candidate stage:

@@ -3,7 +3,11 @@
   = f.hidden_field :type
   .card-header.question--header
     .bot-card--label-title
-      span.bot-card--label Question:
+      span.bot-card--label
+        | Question
+        '
+        = f.object.rank
+        |:
       span.bot-card--title = f.object.body(formatted: false)
     .bot-card--actions
       .active-switch
