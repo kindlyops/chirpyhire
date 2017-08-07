@@ -16,7 +16,7 @@ class BotFactory::Maker
     existing_bot = organization.bots.find_by(name: name)
     return existing_bot if existing_bot.present?
 
-    bot.create_greeting(body: greeting_body)
+    create_greeting
     create_questions
     create_goal
     bot
@@ -24,12 +24,17 @@ class BotFactory::Maker
 
   attr_reader :organization, :notice, :name, :team_name
 
+  def create_greeting
+    bot.create_greeting(body: greeting_body)
+    bot.actions.create(type: 'NextQuestionAction')
+  end
+
   def create_goal
     bot.goals.create(
       body: goal_body,
       rank: bot.next_goal_rank,
       contact_stage: stage
-    )
+    ).tap { |g| bot.actions.create(type: 'GoalAction', goal_id: g.id) }
   end
 
   def stage

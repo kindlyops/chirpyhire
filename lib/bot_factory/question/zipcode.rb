@@ -11,6 +11,7 @@ class BotFactory::Question::Zipcode < BotFactory::Question
     question = bot.questions.create(
       body: body, type: 'ZipcodeQuestion', rank: rank
     )
+    bot.actions.create(type: 'QuestionAction', question_id: question.id)
     question.follow_ups.create(
       body: follow_up_body, type: question.follow_up_type, rank: 1
     )

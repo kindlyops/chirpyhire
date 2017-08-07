@@ -13,6 +13,7 @@ class BotFactory::Question
 
   def call
     question = bot.questions.create!(body: body, rank: rank)
+    bot.actions.create(type: 'QuestionAction', question_id: question.id)
     responses_and_tags.each_with_index do |(response, tag, body), rank|
       follow_up = create_follow_up(question, body, response, rank + 1)
       tag(follow_up, tag)
