@@ -13,20 +13,13 @@ class FollowUp < ApplicationRecord
                                 reject_if: :all_blank, allow_destroy: true
 
   delegate :bot, to: :question
+  delegate :next_question?, :goal?, :question?, to: :action
   delegate :goal, :question, to: :action, prefix: true
 
   before_validation :ensure_rank
 
-  def next_question?
-    action.type == 'NextQuestionAction'
-  end
-
-  def goal?
-    action.type == 'GoalAction'
-  end
-
-  def question?
-    action.type == 'QuestionAction'
+  def action
+    super.becomes(super.type.constantize)
   end
 
   def self.ranked
