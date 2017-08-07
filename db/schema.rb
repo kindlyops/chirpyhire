@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170805195021) do
+ActiveRecord::Schema.define(version: 20170807200833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,18 @@ ActiveRecord::Schema.define(version: 20170805195021) do
     t.index ["organization_id", "phone_number_id", "inbox_id"], name: "unique_assignment_rules", unique: true
     t.index ["organization_id"], name: "index_assignment_rules_on_organization_id"
     t.index ["phone_number_id"], name: "index_assignment_rules_on_phone_number_id"
+  end
+
+  create_table "bot_actions", force: :cascade do |t|
+    t.bigint "bot_id", null: false
+    t.string "type", null: false
+    t.bigint "goal_id"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bot_id"], name: "index_bot_actions_on_bot_id"
+    t.index ["goal_id"], name: "index_bot_actions_on_goal_id"
+    t.index ["question_id"], name: "index_bot_actions_on_question_id"
   end
 
   create_table "bot_campaigns", force: :cascade do |t|
@@ -223,6 +235,8 @@ ActiveRecord::Schema.define(version: 20170805195021) do
     t.datetime "updated_at", null: false
     t.boolean "location", default: true, null: false
     t.datetime "deleted_at"
+    t.bigint "bot_action_id"
+    t.index ["bot_action_id"], name: "index_follow_ups_on_bot_action_id"
     t.index ["deleted_at"], name: "index_follow_ups_on_deleted_at"
     t.index ["goal_id"], name: "index_follow_ups_on_goal_id"
     t.index ["next_question_id"], name: "index_follow_ups_on_next_question_id"
@@ -547,6 +561,9 @@ ActiveRecord::Schema.define(version: 20170805195021) do
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
+  add_foreign_key "bot_actions", "bots"
+  add_foreign_key "bot_actions", "goals"
+  add_foreign_key "bot_actions", "questions"
   add_foreign_key "bot_campaigns", "bots"
   add_foreign_key "bot_campaigns", "campaigns"
   add_foreign_key "bot_campaigns", "inboxes"
@@ -570,6 +587,7 @@ ActiveRecord::Schema.define(version: 20170805195021) do
   add_foreign_key "conversation_parts", "messages"
   add_foreign_key "conversations", "contacts"
   add_foreign_key "conversations", "phone_numbers"
+  add_foreign_key "follow_ups", "bot_actions"
   add_foreign_key "follow_ups", "goals"
   add_foreign_key "follow_ups", "questions"
   add_foreign_key "follow_ups", "questions", column: "next_question_id"

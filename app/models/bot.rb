@@ -12,6 +12,7 @@ class Bot < ApplicationRecord
   has_many :bot_campaigns
   has_many :inboxes, through: :bot_campaigns
   has_many :campaigns, through: :bot_campaigns
+  has_many :actions, class_name: 'BotAction'
 
   accepts_nested_attributes_for :greeting
   accepts_nested_attributes_for :questions
