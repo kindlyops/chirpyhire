@@ -4,4 +4,8 @@ class QuestionAction < BotAction
   def question?
     true
   end
+
+  def label
+    'Question'
+  end
 end

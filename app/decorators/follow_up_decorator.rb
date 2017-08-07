@@ -8,9 +8,9 @@ class FollowUpDecorator < Draper::Decorator
   end
 
   def humanized_action
-    return "#{action.titlecase} #{goal.rank}" if goal?
-    return "#{action.titlecase} #{next_question.rank}" if question?
+    return "#{action.label} #{action_goal.rank}" if goal?
+    return "#{action.label} #{action_question.rank}" if question?
 
-    action.titlecase
+    action.label
   end
 end

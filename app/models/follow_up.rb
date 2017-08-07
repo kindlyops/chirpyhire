@@ -19,6 +19,8 @@ class FollowUp < ApplicationRecord
   before_validation :ensure_rank
 
   def action
+    return bot.next_question_action if super.blank?
+
     super.becomes(super.type.constantize)
   end
 

@@ -4,4 +4,8 @@ class GoalAction < BotAction
   def goal?
     true
   end
+
+  def label
+    'Goal'
+  end
 end

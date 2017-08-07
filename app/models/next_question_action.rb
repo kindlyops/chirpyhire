@@ -4,4 +4,8 @@ class NextQuestionAction < BotAction
   def next_question?
     true
   end
+
+  def label
+    'Next Question'
+  end
 end
