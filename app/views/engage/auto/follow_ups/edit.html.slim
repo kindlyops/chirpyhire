@@ -1,0 +1,53 @@
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 Engage
+    .ch--Header-links
+      = nav_link_to engage_auto_campaign_path(current_organization.recent_campaign), { class: 'HeaderLink' }, url_segment: 2 do
+        i.fa.fa-bolt
+        '
+        | Auto Messages
+  .ch--main
+    = render partial: "engage/navigation"
+    .ch--sub-main
+      .ch--sub-main-content
+        .card
+          .card-block
+            h4.card-title
+              | Edit 
+              = @bot.name
+              '
+              ' Follow Up
+            hr
+            h5
+              | Question: 
+              '
+              small.text-muted = @follow_up.question.body(formatted: false)
+            hr
+            = form_for @follow_up, url: engage_auto_bot_follow_up_path(@bot, @follow_up) do |f|
+              = content_for :validation_errors do
+                = render partial: "common/validation_errors", locals: { model: @follow_up }
+              .form-group.mb-3
+                = f.label :response, class: 'col-form-label'
+                = f.text_field :response, required: true, class: 'form-control', id: 'response', placeholder: 'Enter a simple response'
+                small.form-text.text-muted Enter a multiple choice response. Candidates will be able to select this choice from their mobile phone.
+              .form-group.mb-3
+                = f.label :body, class: 'col-form-label'
+                = f.text_field :body, required: true, class: 'form-control', id: 'body', placeholder: 'Add a follow up...'
+                small.form-text.text-muted Enter what your bot will follow up the multiple choice response with.
+              .form-group.mb-3
+                = f.label :bot_action_id, 'Next Step', class: 'col-form-label'
+                = f.collection_select :bot_action_id, @bot.actions.order(:type, :id), :id, :select_label, { include_blank: false }, class: 'form-control'
+                small.form-text.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
+              .form-group.mb-3
+                #tags
+                  = f.fields_for :follow_ups_tags do |t|
+                    = render partial: 'engage/auto/follow_ups/follow_ups_tag_fields', locals: { f: t }
+                  = link_to_add_association 'add a tag', f, :follow_ups_tags
+              .form-group
+                = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                    i.fa.fa-arrow-left.mr-2
+                    | Cancel
+                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                    i.fa.fa-check.mr-2
+                    | Save

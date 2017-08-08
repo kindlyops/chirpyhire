@@ -1,0 +1,2 @@
+class ChoiceFollowUpPolicy < FollowUpPolicy
+end

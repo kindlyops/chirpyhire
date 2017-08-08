@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     namespace :auto do
       resources :campaigns
       resources :bots do
+        resources :follow_ups
         post :clone
       end
     end
