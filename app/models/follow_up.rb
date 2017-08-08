@@ -9,9 +9,6 @@ class FollowUp < ApplicationRecord
   validates :body, :action, presence: true
   validates :type, inclusion: { in: %w[ZipcodeFollowUp ChoiceFollowUp] }
 
-  accepts_nested_attributes_for :taggings
-  accepts_nested_attributes_for :tags
-
   delegate :bot, to: :question
   delegate :next_question?, :goal?, :question?, to: :action
   delegate :goal, :question, to: :action, prefix: true
