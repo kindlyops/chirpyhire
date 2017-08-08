@@ -16,23 +16,14 @@ $(function() {
     var target = $(e.relatedTarget);
     var followUp = target.closest('.FollowUp');
     var response = followUp.find('.response').val();
-    var action = followUp.find('.action').val();
+    var actionId = followUp.find('.action').val();
     var questionId = target.data('question-id');
     var index = target.data('index');
     var modal = $(this);
     modal.prop('question_id', questionId);
     modal.prop('follow_up_index', index);
     modal.find('#response').val(response);
-
-    if(action === 'question') {
-      var questionId = followUp.find('.next_question_id').val();
-      var nextStep = modal.find("#next-step option[data-question-id='" + questionId + "']");
-      modal.find('#next-step').val(nextStep.val());
-    } else if (action === 'goal') {
-      var goalId = followUp.find('.goal_id').val();
-      var nextStep = modal.find("#next-step option[data-goal-id='" + goalId + "']");
-      modal.find('#next-step').val(nextStep.val());
-    }
+    modal.find('#next-step').val(actionId);
     
     var tagSelect = modal.find('#tags');
     tagSelect.find('option').removeAttr('selected');
@@ -65,6 +56,21 @@ $(function() {
       var followUp = $('.FollowUp' + query);
       followUp.find('.response').val(response.val());
       followUp.find('.FollowUp--response').text(response.val());
+      var actionId = modal.find('#next-step').val();
+      var actionText = modal.find('#next-step option:selected').text();
+      var followUpAction = followUp.find('.FollowUp--action');
+      followUpAction.removeClass();
+      followUpAction.text(actionText);
+
+      if (actionText.match(/Goal/)) {
+        followUpAction.addClass('FollowUp--action badge badge-goal');
+      } else if (actionText.match(/Next Question/)) {
+        followUpAction.addClass('FollowUp--action badge badge-next-question');
+      } else {
+        followUpAction.addClass('FollowUp--action badge badge-question');
+      }
+
+      followUp.find('.action').val(actionId);
       modal.modal('hide');
     }
   });

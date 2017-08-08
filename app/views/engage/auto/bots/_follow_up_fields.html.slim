@@ -14,7 +14,7 @@
     .FollowUp--details
       span.FollowUp--response.badge.badge-default
         = f.object.response
-      span class==f.object.decorate.action_classes
+      span class=="FollowUp--action #{f.object.decorate.action_classes}"
         = f.object.decorate.humanized_action
       span.FollowUp--tags
         - f.object.tags.each do |tag|
