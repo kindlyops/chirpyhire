@@ -16,11 +16,11 @@ class BotFactory::Question::Zipcode < BotFactory::Question
       body: follow_up_body,
       type: question.follow_up_type,
       rank: 1,
-      bot_action: bot_action
+      action: action
     )
   end
 
-  def bot_action
+  def action
     next_question_action
   end
 

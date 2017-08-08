@@ -28,13 +28,13 @@ class Bot::FollowUpTrigger
   end
 
   def trigger_goal
-    return null_step if goal.blank?
-    goal.trigger(message, campaign_contact)
+    return null_step if action_goal.blank?
+    action_goal.trigger(message, campaign_contact)
   end
 
   def trigger_question
-    return null_step if follow_up.next_question.blank?
-    follow_up.next_question.trigger(message, campaign_contact)
+    return null_step if action_question.blank?
+    action_question.trigger(message, campaign_contact)
   end
 
   def trigger_next_question
@@ -51,7 +51,7 @@ class Bot::FollowUpTrigger
   end
 
   attr_reader :follow_up, :message, :campaign_contact
-  delegate :bot, :question, :goal, to: :follow_up
+  delegate :bot, :action_goal, :action_question, to: :follow_up
   delegate :first_goal, to: :bot
   delegate :contact, to: :campaign_contact
 

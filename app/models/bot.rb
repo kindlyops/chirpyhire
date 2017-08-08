@@ -69,4 +69,8 @@ class Bot < ApplicationRecord
 
     last_goal.rank + 1
   end
+
+  def next_question_action
+    actions.find_or_create_by(type: 'NextQuestionAction')
+  end
 end

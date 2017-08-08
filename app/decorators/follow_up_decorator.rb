@@ -1,5 +1,7 @@
 class FollowUpDecorator < Draper::Decorator
   delegate_all
+  delegate :next_question?, :goal?, :question?, to: :action
+  delegate :goal, :question, to: :action, prefix: true
 
   def action_classes
     return 'FollowUp--action badge badge-next-question' if next_question?
@@ -8,9 +10,13 @@ class FollowUpDecorator < Draper::Decorator
   end
 
   def humanized_action
-    return "#{action.titlecase} #{goal.rank}" if goal?
-    return "#{action.titlecase} #{next_question.rank}" if question?
+    return "#{action.label} #{action_goal.rank}" if goal?
+    return "#{action.label} #{action_question.rank}" if question?
 
-    action.titlecase
+    action.label
+  end
+
+  def action
+    super || bot.next_question_action
   end
 end

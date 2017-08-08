@@ -26,7 +26,6 @@ class BotFactory::Maker
 
   def create_greeting
     bot.create_greeting(body: greeting_body)
-    bot.actions.create(type: 'NextQuestionAction')
   end
 
   def create_goal

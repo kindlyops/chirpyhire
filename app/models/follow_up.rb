@@ -1,9 +1,7 @@
 class FollowUp < ApplicationRecord
   acts_as_paranoid
   belongs_to :question
-  belongs_to :bot_action, optional: true
-  belongs_to :next_question, optional: true, class_name: 'Question'
-  belongs_to :goal, optional: true
+  belongs_to :action, class_name: 'BotAction', foreign_key: :bot_action_id
 
   has_many :follow_ups_tags
   has_many :tags, through: :follow_ups_tags
@@ -11,16 +9,20 @@ class FollowUp < ApplicationRecord
   validates :body, :action, presence: true
   validates :type, inclusion: { in: %w[ZipcodeFollowUp ChoiceFollowUp] }
 
-  enum action: {
-    next_question: 0, question: 1, goal: 2
-  }
-
   accepts_nested_attributes_for :follow_ups_tags,
                                 reject_if: :all_blank, allow_destroy: true
 
   delegate :bot, to: :question
+  delegate :next_question?, :goal?, :question?, to: :action
+  delegate :goal, :question, to: :action, prefix: true
 
   before_validation :ensure_rank
+
+  def action
+    return if super.blank?
+
+    super.becomes(super.type.constantize)
+  end
 
   def self.ranked
     order(:rank)
