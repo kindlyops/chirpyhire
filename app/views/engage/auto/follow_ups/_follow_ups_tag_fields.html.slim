@@ -1,5 +1,0 @@
-.nested-fields.follow-ups-tag-fields
-  .tag_from_list
-    = f.collection_select :tag_id, Tag.order(:name), :id, :name, prompt: 'Choose an existing tag'
-  = link_to_add_association 'or create a new tag', f, :tag
-  = link_to_remove_association "remove tag", f
