@@ -50,7 +50,7 @@
             label for="next-step" 
               h5 Next Step
               p.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
-            = select_tag :next_step, options_for_select([['Next Question', 'next_question']].concat(@bot.questions.map { |q| ["Q#{q.rank}: #{q.body(formatted: false)[0..25]}...", 'question', { data: { 'question-id': q.id } }] }).concat(@bot.goals.map { |g| ["G#{g.rank}: #{g.body[0..25]}...", 'goal', { data: {'goal-id': g.id } }] })), class: 'form-control', id: 'next-step', disabled: true, required: true
+            = select_tag :next_step, options_from_collection_for_select(@bot.actions.order(:type, :id), :id, :select_label, @bot.next_question_action.id), class: 'form-control', id: 'next-step', required: true
           .form-group.mb-3
             label for="tags" 
               h5 Tags

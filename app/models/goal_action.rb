@@ -8,4 +8,8 @@ class GoalAction < BotAction
   def label
     'Goal'
   end
+
+  def select_label
+    "Goal #{goal.rank}"
+  end
 end
