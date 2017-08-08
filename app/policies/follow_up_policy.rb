@@ -10,7 +10,7 @@ class FollowUpPolicy < ApplicationPolicy
   def permitted_attributes
     %i[body response bot_action_id]
   end
-  
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope

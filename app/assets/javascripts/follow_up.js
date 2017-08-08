@@ -1,21 +1,15 @@
 $(function() {
-  $("#tags a.add_fields").
-    data("association-insertion-position", 'before').
-    data("association-insertion-node", 'this');
+  var formatTag = function(tag) {
+    var formattedTag = '<span><i class="fa fa-tag mr-2"></i>' + tag.text + '</span>';
+    return $(formattedTag);
+  };
 
-  $('.follow-ups-tag-fields').on('cocoon:after-insert', function()
-     $(this).children(".tag_from_list").remove();
-     $(this).children("a.add_fields").hide();
-   });
-
-  $('#tags').on('cocoon:after-insert', function() {
-     $(".follow-ups-tag-fields a.add_fields").
-        data("association-insertion-position", 'before').
-        data("association-insertion-node", 'this');
-
-     $('.follow-ups-tag-fields').on('cocoon:after-insert', function() {
-        $(this).children(".tag_from_list").remove();
-        $(this).children("a.add_fields").hide();
-      });
-   });
+  $('.edit_choice_follow_up #tags select').select2({
+    theme: 'bootstrap',
+    placeholder: "Add a tag",
+    allowClear: true,
+    tags: true,
+    tokenSeparators: [',', ' '],
+    templateSelection: formatTag
+  });
 });

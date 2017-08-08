@@ -39,11 +39,9 @@
                 = f.label :bot_action_id, 'Next Step', class: 'col-form-label'
                 = f.collection_select :bot_action_id, @bot.actions.order(:type, :id), :id, :select_label, { include_blank: false }, class: 'form-control'
                 small.form-text.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
-              .form-group.mb-3
-                #tags
-                  = f.fields_for :follow_ups_tags do |t|
-                    = render partial: 'engage/auto/follow_ups/follow_ups_tag_fields', locals: { f: t }
-                  = link_to_add_association 'add a tag', f, :follow_ups_tags
+              .form-group.mb-3#tags
+                = label_tag 'follow_up[tags][]', 'Tags', class: 'col-form-label'
+                = select_tag 'follow_up[tags][]', options_for_select(current_organization.tags.pluck(:name), @follow_up.tags.pluck(:name)), class: 'form-control', multiple: 'multiple', style: 'width: 100%'
               .form-group
                 = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
                     i.fa.fa-arrow-left.mr-2

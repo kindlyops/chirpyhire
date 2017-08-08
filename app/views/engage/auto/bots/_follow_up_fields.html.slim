@@ -4,7 +4,7 @@
   = f.hidden_field :type
   = f.hidden_field :response, class: 'response'
   = f.hidden_field :bot_action_id, value: f.object.decorate.action.id, class: 'action'
-  = f.fields_for :follow_ups_tags do |t|
+  = f.fields_for :taggings do |t|
     .tag
       = t.hidden_field :id
       = t.hidden_field :tag_id, class: 'tag_id'
