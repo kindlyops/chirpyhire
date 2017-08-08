@@ -8,4 +8,6 @@ class NextQuestionAction < BotAction
   def label
     'Next Question'
   end
+
+  alias select_label label
 end

@@ -8,4 +8,8 @@ class QuestionAction < BotAction
   def label
     'Question'
   end
+
+  def select_label
+    "Question #{question.rank}"
+  end
 end
