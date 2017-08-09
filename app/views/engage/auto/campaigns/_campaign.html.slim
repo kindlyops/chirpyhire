@@ -10,7 +10,10 @@
             '
             = campaign.bot.account.name
       .campaign-middle.d-flex.align-items-center title="#{campaign.decorate.created_at.timestamp}"
-        = campaign.decorate.created_at.label
+        span
+          | created
+          '
+          = campaign.decorate.created_at.label
       .campaign-middle.d-flex.align-items-center
         = campaign.status.humanize
         span class="status-icon #{campaign.status}"
