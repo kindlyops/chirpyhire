@@ -23,8 +23,8 @@ class Organizations::MessagesController < ActionController::Base
 
   def create_subscribed_contact
     organization.contacts
-      .create(contact_params)
-      .tap(&method(:subscribe_and_create_person))
+                .create(contact_params)
+                .tap(&method(:subscribe_and_create_person))
   end
 
   def subscribe_and_create_person(contact)

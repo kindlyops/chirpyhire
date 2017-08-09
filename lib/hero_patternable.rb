@@ -3,7 +3,7 @@ module HeroPatternable
 
   included do
     def hero_pattern_classes
-      "#{number_class[id % 9]}"
+      number_class[id % 9].to_s
     end
 
     def number_class

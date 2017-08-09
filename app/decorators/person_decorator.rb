@@ -5,8 +5,22 @@ class PersonDecorator < Draper::Decorator
   decorates_association :contact
 
   def hero_pattern_classes
-    return contact.hero_pattern_classes if object.contact.present?
-    return account.hero_pattern_classes if object.account.present?
-    return bot.hero_pattern_classes if object.bot.present?
+    return contact_hero_pattern_classes if object.contact.present?
+    return account_hero_pattern_classes if object.account.present?
+    return bot_hero_pattern_classes if object.bot.present?
+  end
+
+  private
+
+  def contact_hero_pattern_classes
+    contact.hero_pattern_classes
+  end
+
+  def account_hero_pattern_classes
+    account.hero_pattern_classes
+  end
+
+  def bot_hero_pattern_classes
+    bot.hero_pattern_classes
   end
 end

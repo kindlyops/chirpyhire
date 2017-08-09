@@ -134,7 +134,7 @@ RSpec.describe InvitationsController, type: :controller do
       { account: {
         email: email,
         invitation_token: account.raw_invitation_token,
-        name: Faker::Name.name
+        name: Faker::Name.name,
         password: 'password',
         password_confirmation: 'password',
         agreed_to_terms: true
