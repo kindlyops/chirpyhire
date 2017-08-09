@@ -23,11 +23,11 @@ class BotFactory::Maker
   end
 
   def team_name
-    @team_name || organization.name
+    @team_name ||= organization.name
   end
 
   def notice
-    @notice || organization.sender_notice
+    @notice ||= organization.sender_notice
   end
 
   attr_reader :account, :name
