@@ -1,7 +1,7 @@
 class Campaign < ApplicationRecord
   belongs_to :organization
   belongs_to :account, optional: true
-  belongs_to :last_edited_by, optional: true
+  belongs_to :last_edited_by, optional: true, class_name: 'Account'
 
   has_one :bot_campaign
   has_one :bot, through: :bot_campaign
