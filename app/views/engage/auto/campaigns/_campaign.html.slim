@@ -1,10 +1,22 @@
 .card
   .card-block
-    = inline_svg 'bot.svg'
-    = campaign.name
-    span Bot created by
-    '
-    = campaign.bot.account&.name
-    = campaign.created_at
-    = campaign.status
-    = campaign.campaign_contacts.count
+    .d-flex.justify-content-between
+      .campaign-left.d-flex.align-items-center
+        = inline_svg 'bot.svg'
+        .campaign-section.d-flex.flex-column.ml-4
+          = link_to campaign.name, engage_auto_campaign_path(campaign)
+          span 
+            | Bot created by
+            '
+            = campaign.bot.account.name
+      .campaign-middle.d-flex.align-items-center title="#{campaign.decorate.created_at.timestamp}"
+        = campaign.decorate.created_at.label
+      .campaign-middle.d-flex.align-items-center
+        = campaign.status.humanize
+        span class="status-icon #{campaign.status}"
+          i class="fa #{campaign.decorate.status_icon}"
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.count
+          '
+          small.text-muted candidates
