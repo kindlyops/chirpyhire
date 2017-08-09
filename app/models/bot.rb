@@ -3,7 +3,7 @@ class Bot < ApplicationRecord
   belongs_to :person
 
   belongs_to :account, optional: true
-  belongs_to :last_edited_by, optional: true
+  belongs_to :last_edited_by, optional: true, class_name: 'Account'
 
   has_one :greeting
   has_many :questions
