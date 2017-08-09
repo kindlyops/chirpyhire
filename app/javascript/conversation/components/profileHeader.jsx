@@ -31,25 +31,12 @@ class ProfileHeader extends React.Component {
     this.props.onNameChange(event);
   }
 
-  profileImage() {
-    if(this.props.contact.url) {
-      return (
-        <img className='author_image no-repeat thumb_64' src={this.props.contact.url}></img>
-      );
-    } else {
-      return (
-        <div className={`author_image thumb_64 ${this.props.contact.hero_pattern_classes}`}>
-        </div>
-      );
-    }
-  }
-
   render() {
     return (
       <div className="profile-header">
         <div className='profile-header--inner'>
           <div className="profile-image">
-            {this.profileImage()}
+            <div className={`author_image thumb_64 ${this.props.contact.hero_pattern_classes}`}></div>
           </div>
           <div className="profile-header-details">
             <div className="profile-handle">

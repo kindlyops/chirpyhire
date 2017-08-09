@@ -30,8 +30,6 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :avatar, :zipcode, to: :person
-
   before_create :set_last_reply_at
   before_validation :add_nickname
 

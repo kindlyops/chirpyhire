@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Bot::ZipcodeAnswer do
   let(:follow_up) { create(:zipcode_follow_up) }
   let!(:message) { create(:message, :conversation_part, body: body) }
-  let(:person) { message.contact.person }
+  let(:contact) { message.contact }
 
   subject { Bot::ZipcodeAnswer.new(follow_up) }
 
@@ -18,10 +18,10 @@ RSpec.describe Bot::ZipcodeAnswer do
         end
 
         context 'and follow up location flag is true' do
-          it 'sets the zipcode for the message person' do
+          it 'sets the zipcode for the message contact' do
             expect {
               subject.activated?(message)
-            }.to change { person.reload.zipcode.present? }.from(false).to(true)
+            }.to change { contact.reload.zipcode.present? }.from(false).to(true)
           end
         end
 
@@ -30,11 +30,11 @@ RSpec.describe Bot::ZipcodeAnswer do
             follow_up.update(location: false)
           end
 
-          it 'does not set the zipcode for the message person' do
+          it 'does not set the zipcode for the message contact' do
             expect {
               subject.activated?(message)
-            }.not_to change { person.reload.zipcode.present? }
-            expect(person.zipcode.present?).to eq(false)
+            }.not_to change { contact.reload.zipcode.present? }
+            expect(contact.zipcode.present?).to eq(false)
           end
         end
       end

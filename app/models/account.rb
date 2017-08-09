@@ -4,7 +4,7 @@ class Account < ApplicationRecord
 
   phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :organization, inverse_of: :accounts
-  has_one :person, inverse_of: :account
+  belongs_to :person
 
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
@@ -31,18 +31,6 @@ class Account < ApplicationRecord
   enum role: {
     member: 0, owner: 1, invited: 2
   }
-
-  def person
-    super || (person_id && Person.find(person_id))
-  end
-
-  def name
-    person&.name || super
-  end
-
-  def nickname
-    person&.nickname || super
-  end
 
   def self.not_on(team)
     where.not(id: team.memberships.pluck(:account_id))
