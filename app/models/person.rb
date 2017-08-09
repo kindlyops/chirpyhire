@@ -10,7 +10,10 @@ class Person < ApplicationRecord
                                inverse_of: :recipient
 
   delegate :subscribed?, to: :contact
-  delegate :avatar, to: :account, allow_nil: true
+  has_attached_file :avatar,
+                    styles: { medium: '300x300#', thumb: '100x100#' },
+                    default_url: ''
+  validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
   def handle
     return account.handle if account.present?
