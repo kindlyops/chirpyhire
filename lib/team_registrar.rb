@@ -28,7 +28,18 @@ class TeamRegistrar
   end
 
   def campaign
-    @campaign ||= organization.campaigns.find_or_create_by(name: name)
+    @campaign ||= begin
+      organization.campaigns.find_by(name: name) || create_campaign
+    end
+  end
+
+  def create_campaign
+    organization.campaigns.create(
+      name: name,
+      account: account,
+      last_edited_by: account,
+      last_edited_at: DateTime.current
+    )
   end
 
   def bot

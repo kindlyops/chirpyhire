@@ -31,7 +31,7 @@ class Registrar
 
   def setup_account
     account.update(role: :owner)
-    BotFactory::Maker.call(organization)
+    BotFactory::Maker.call(account)
   end
 
   def new_organization_notification_job
