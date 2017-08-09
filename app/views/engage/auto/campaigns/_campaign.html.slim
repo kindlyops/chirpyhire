@@ -1,0 +1,10 @@
+.card
+  .card-block
+    = inline_svg 'bot.svg'
+    = campaign.name
+    span Bot created by
+    '
+    = campaign.bot.account&.name
+    = campaign.created_at
+    = campaign.status
+    = campaign.campaign_contacts.count

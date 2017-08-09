@@ -1,14 +1,6 @@
 .ch--Page
-  .ch--Header
-    .ch--Header-title
-      h1 Engage
-    .ch--Header-links
-      = nav_link_to engage_auto_campaign_path(current_organization.recent_campaign), { class: 'HeaderLink' }, url_segment: 2 do
-        i.fa.fa-bolt
-        '
-        | Auto Messages
+  = render partial: "engage/header"
   .ch--main
-    = render partial: "engage/navigation"
     .ch--sub-main
       .Bot
         = form_for @bot, url: engage_auto_bot_path(@bot) do |f|

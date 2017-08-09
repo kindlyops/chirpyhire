@@ -1,0 +1,11 @@
+.ch--Header
+  .ch--Header-title
+    h1 Engage
+  .ch--Header-links
+    = nav_link_to engage_auto_campaigns_path, { class: 'HeaderLink' }, url_segment: 3 do
+      i.fa.fa-bolt
+      '
+      | Auto Messages
+.ch--SecondaryHeader
+  = nav_link_to 'Campaigns', engage_auto_campaigns_path, { role: 'button' }, url_segment: 3
+  = nav_link_to 'Recruitbots', engage_auto_bots_path, { role: 'button' }, url_segment: 3
