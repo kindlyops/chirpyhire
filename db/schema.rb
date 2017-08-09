@@ -47,11 +47,13 @@ ActiveRecord::Schema.define(version: 20170809202955) do
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string "name"
+    t.string "nickname"
     t.bigint "person_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id"
+    t.index ["organization_id", "nickname"], name: "index_accounts_on_organization_id_and_nickname", unique: true
     t.index ["organization_id"], name: "index_accounts_on_organization_id"
     t.index ["person_id"], name: "index_accounts_on_person_id"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true

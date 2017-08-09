@@ -34,6 +34,7 @@ class ZipcodeFetcher
   end
 
   def update_zipcode(zipcode)
+    contact.update!(zipcode: zipcode)
     contact.person.update!(zipcode: zipcode) if location
     true
   end
