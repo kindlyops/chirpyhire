@@ -26,6 +26,7 @@ class InvitationsController < Devise::InvitationsController
       return handle_create_errors if account.errors.present?
 
       account.update(role: :invited)
+      account.update(person: Person.create)
       account.teams << teams.first unless teams.empty?
     end
   end
@@ -51,14 +52,14 @@ class InvitationsController < Devise::InvitationsController
   def add_accept_params
     devise_parameter_sanitizer.permit(
       :accept_invitation,
-      keys: [:agreed_to_terms, person_attributes: %i[name]]
+      keys: %i[agreed_to_terms name]
     )
   end
 
   def add_invite_params
     devise_parameter_sanitizer.permit(
       :invite,
-      keys: [person_attributes: %i[name]]
+      keys: [:name]
     )
   end
 

@@ -1,5 +1,6 @@
 class BotDecorator < Draper::Decorator
   delegate_all
+  include HeroPatternable
 
   def created_at
     TimestampDecorator.new(object, :created_at)

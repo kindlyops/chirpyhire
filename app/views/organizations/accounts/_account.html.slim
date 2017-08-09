@@ -5,10 +5,10 @@ li.list-group-item
         - if account.avatar.url.present?
           = image_tag account.avatar.url(:medium), class: 'author_image mr-3 thumb_48 no-repeat'
         - else
-          span class=="author_image thumb_48 mr-3 #{account.person.decorate.hero_pattern_classes}"
+          span class=="author_image thumb_48 mr-3 #{account.decorate.hero_pattern_classes}"
       .account-subdetails
         .account-name
-          = account.name || account.nickname
+          = account.handle
         .account-handle
           span.text-muted = account.email
     .role

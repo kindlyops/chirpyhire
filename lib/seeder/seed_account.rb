@@ -9,6 +9,7 @@ class Seeder::SeedAccount
 
   def call
     account.tap do
+      account.update(person: Person.create)
       Seeder::SeedOrganization.call(account, organization)
       setup_team
       setup_zipcodes
@@ -76,7 +77,7 @@ class Seeder::SeedAccount
   def account_attributes
     {
       password: ENV.fetch('DEMO_PASSWORD'),
-      person_attributes: { name: ENV.fetch('DEMO_NAME') },
+      name: ENV.fetch('DEMO_NAME'),
       email: ENV.fetch('DEMO_EMAIL'),
       super_admin: true,
       organization_attributes: organization_attributes

@@ -22,13 +22,19 @@ class Organizations::MessagesController < ActionController::Base
   end
 
   def create_subscribed_contact
-    organization.contacts.create(contact_params).tap(&:subscribe)
+    organization.contacts
+                .create(contact_params)
+                .tap(&method(:subscribe_and_create_person))
+  end
+
+  def subscribe_and_create_person(contact)
+    contact.subscribe
+    contact.update(person: Person.create)
   end
 
   def contact_params
     {
       stage: stage,
-      person: Person.create(phone_number: params['From']),
       phone_number: params['From']
     }
   end

@@ -2,17 +2,16 @@ require 'rails_helper'
 
 RSpec.describe ZipcodeFetcher do
   let(:contact) { create(:contact) }
-  let(:person) { contact.person }
 
   describe '#call' do
     context 'with an existing zipcode' do
       let(:zipcode) { create(:zipcode, '30342'.to_sym) }
       subject { ZipcodeFetcher.new(contact, zipcode.zipcode) }
 
-      it 'sets the person zipcode as existing zipcode' do
+      it 'sets the contact zipcode as existing zipcode' do
         expect {
           subject.call
-        }.to change { person.reload.zipcode }.from(nil).to(zipcode)
+        }.to change { contact.reload.zipcode }.from(nil).to(zipcode)
       end
     end
 
@@ -25,10 +24,10 @@ RSpec.describe ZipcodeFetcher do
         }.to change { Zipcode.count }.by(1)
       end
 
-      it 'sets the person zipcode' do
+      it 'sets the contact zipcode' do
         expect {
           subject.call
-        }.to change { person.reload.zipcode }.from(nil)
+        }.to change { contact.reload.zipcode }.from(nil)
       end
     end
   end

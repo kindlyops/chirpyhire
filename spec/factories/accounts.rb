@@ -8,6 +8,12 @@ FactoryGirl.define do
       role :owner
     end
 
+    trait :person do
+      after(:create) do |account|
+        account.update(person: create(:person))
+      end
+    end
+
     trait :team do
       after(:create) do |account|
         team = create(:team, :inbox, organization: account.organization)

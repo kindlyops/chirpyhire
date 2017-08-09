@@ -4,7 +4,7 @@ class Account < ApplicationRecord
 
   phony_normalize :phone_number, default_country_code: 'US'
   belongs_to :organization, inverse_of: :accounts
-  has_one :person, inverse_of: :account
+  belongs_to :person
 
   has_many :notes
   has_many :ahoy_messages, class_name: 'Ahoy::Message', as: :user
@@ -20,17 +20,13 @@ class Account < ApplicationRecord
                     styles: { medium: '300x300#', thumb: '100x100#' },
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
-
-  before_validation { build_person if person.blank? }
-
   accepts_nested_attributes_for :organization, reject_if: :all_blank
-  accepts_nested_attributes_for :person, reject_if: :all_blank
 
   validates :email, uniqueness: true, company_email: true
   delegate :name, to: :organization, prefix: true
-  delegate :name, :avatar, :nickname, to: :person, allow_nil: true
-
-  before_validation { build_person if person.blank? }
+  before_validation :add_nickname
+  validates :name, presence: true, unless: :nickname_present?
+  validates :nickname, presence: true, unless: :name_present?
 
   enum role: {
     member: 0, owner: 1, invited: 2
@@ -66,6 +62,26 @@ class Account < ApplicationRecord
   end
 
   def handle
-    name || email
+    return name if name.present?
+
+    nickname
+  end
+
+  private
+
+  def add_nickname
+    return if name.present? || nickname.present?
+    self.nickname = Nickname::Generator.new(self).generate
+  rescue Nickname::OutOfNicknames => e
+    Rollbar.debug(e)
+    self.nickname = 'Anonymous'
+  end
+
+  def nickname_present?
+    nickname.present?
+  end
+
+  def name_present?
+    name.present?
   end
 end

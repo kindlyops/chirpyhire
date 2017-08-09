@@ -31,7 +31,7 @@ RSpec.describe Bot::GoalTrigger do
     end
 
     context 'with multiple accounts on the team' do
-      let(:accounts) { create_list(:account, rand(1..3), organization: organization) }
+      let(:accounts) { create_list(:account, rand(1..3), :person, organization: organization) }
       let!(:account) { accounts.last }
       before do
         team.accounts << accounts

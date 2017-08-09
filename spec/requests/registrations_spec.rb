@@ -26,9 +26,7 @@ RSpec.describe 'Registration' do
       let(:params) {
         {
           account: {
-            person_attributes: {
-              name: name
-            },
+            name: name,
             email: email,
             agreed_to_terms: true,
             password: password,

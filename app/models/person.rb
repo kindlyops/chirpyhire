@@ -1,8 +1,7 @@
 class Person < ApplicationRecord
-  phony_normalize :phone_number, default_country_code: 'US'
-  belongs_to :account, inverse_of: :person, optional: true
   has_one :contact
   has_one :bot
+  has_one :account
 
   has_many :sent_messages,
            class_name: 'Message', foreign_key: :sender_id, inverse_of: :sender
@@ -10,50 +9,17 @@ class Person < ApplicationRecord
                                foreign_key: :recipient_id,
                                inverse_of: :recipient
 
-  belongs_to :zipcode, optional: true
-
-  before_validation :add_nickname
-  has_attached_file :avatar,
-                    styles: { medium: '300x300#', thumb: '100x100#' },
-                    default_url: ''
-  validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
-
-  validates :name, presence: true, unless: :nickname_present?
-  validates :nickname, presence: true, unless: :name_present?
   delegate :subscribed?, to: :contact
+  delegate :avatar, to: :account, allow_nil: true
+
+  def handle
+    return account.handle if account.present?
+    return contact.handle if contact.present?
+    return bot.handle if bot.present?
+  end
 
   def phone_number
     return account.phone_number if account.present?
     return contact.phone_number if contact.present?
-
-    self[:phone_number]
-  end
-
-  def handle
-    first_name&.downcase || nickname
-  end
-
-  def first_name
-    return if name.blank?
-
-    name.split(' ', 2).first
-  end
-
-  private
-
-  def add_nickname
-    return if persisted? || name.present? || nickname.present?
-    self.nickname = Nickname::Generator.new(self).generate
-  rescue Nickname::OutOfNicknames => e
-    Rollbar.debug(e)
-    self.nickname = 'Anonymous'
-  end
-
-  def nickname_present?
-    nickname.present?
-  end
-
-  def name_present?
-    name.present?
   end
 end

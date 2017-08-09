@@ -24,6 +24,10 @@ class Bot < ApplicationRecord
   validates :questions, presence: true, on: :update
   validates :name, presence: true
 
+  def handle
+    name.downcase
+  end
+
   def self.recent
     order(created_at: :desc)
   end

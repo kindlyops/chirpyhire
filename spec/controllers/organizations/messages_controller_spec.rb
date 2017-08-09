@@ -42,46 +42,5 @@ RSpec.describe Organizations::MessagesController, type: :controller do
         expect(organization.contacts).to include(Contact.last)
       end
     end
-
-    context 'existing person' do
-      let!(:person) { create(:person) }
-
-      let(:params) do
-        {
-          'To' => phone_number,
-          'From' => person.phone_number,
-          'Body' => 'Answer',
-          'MessageSid' => 'MESSAGE_SID'
-        }
-      end
-
-      it 'creates a DeliveryAgentJob' do
-        expect {
-          post :create, params: params
-        }.to have_enqueued_job(DeliveryAgentJob)
-      end
-
-      it 'does create a person' do
-        expect {
-          post :create, params: params
-        }.to change { Person.count }.by(1)
-      end
-
-      it 'creates a subscribed contact' do
-        expect {
-          post :create, params: params
-        }.to change { Contact.subscribed.count }.by(1)
-      end
-
-      it 'sets the stage of the contact as the first stage' do
-        post :create, params: params
-        expect(Contact.last.stage).to eq(stage)
-      end
-
-      it 'adds the contact to the existing team' do
-        post :create, params: params
-        expect(organization.contacts).to include(Contact.last)
-      end
-    end
   end
 end

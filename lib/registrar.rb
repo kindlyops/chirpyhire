@@ -5,6 +5,7 @@ class Registrar
 
   def register
     return unless account.persisted?
+    account.update(person: Person.create)
     create_contact_stages
     setup_account
     organization.create_subscription(trial_ends_at: trial_length)

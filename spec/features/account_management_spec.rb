@@ -12,7 +12,7 @@ RSpec.feature 'Account Management', type: :feature, js: true do
   end
 
   feature 'sign out' do
-    let(:account) { create(:account, :team_with_phone_number_and_inbox) }
+    let(:account) { create(:account, :person, :team_with_phone_number_and_inbox) }
     let(:organization) { account.organization }
 
     background(:each) do

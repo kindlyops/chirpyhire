@@ -44,7 +44,7 @@ FactoryGirl.define do
     trait :account do
       after(:create) do |organization|
         team = create(:team, :inbox, :phone_number, organization: organization)
-        account = create(:account, organization: organization)
+        account = create(:account, :person, organization: organization)
         team.accounts << account
         organization.update(recruiter: account)
       end

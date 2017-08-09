@@ -35,7 +35,7 @@ module ContactFilters
         sanitize_sql_array(["lower(\"zipcodes\".\"#{k}\") = ?", v.downcase])
       end.join(' AND ')
 
-      joins(person: :zipcode).where(filters)
+      joins(:zipcode).where(filters)
     end
   end
 end

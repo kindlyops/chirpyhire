@@ -8,7 +8,6 @@ json.contact_stages contact.organization.contact_stages do |stage|
   json.name stage.name
 end
 
-json.url contact.avatar && contact.avatar.url(:medium)
 json.existing_open_conversation_id(
   contact.existing_open_conversation && contact.existing_open_conversation.id
 )
