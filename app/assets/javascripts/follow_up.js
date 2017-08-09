@@ -4,12 +4,19 @@ $(function() {
     return $(formattedTag);
   };
 
-  $('.edit_choice_follow_up #tags select').select2({
-    theme: 'bootstrap',
-    placeholder: "Add a tag",
-    allowClear: true,
-    tags: true,
-    tokenSeparators: [',', ' '],
-    templateSelection: formatTag
+  var selects = [
+    '.new_follow_up #tags select',
+    '.edit_follow_up #tags select'
+  ];
+
+  selects.forEach(function(select) {
+    $(select).select2({
+      theme: 'bootstrap',
+      placeholder: "Add a tag",
+      allowClear: true,
+      tags: true,
+      tokenSeparators: [',', ' '],
+      templateSelection: formatTag
+    });
   });
 });

@@ -16,12 +16,10 @@ RSpec.describe 'Follow Ups' do
     let!(:new_tags) { [Faker::Name.name, Faker::Name.name] }
     let(:params) do
       {
-        choice_follow_up: {
+        follow_up: {
           response: follow_up.response,
           body: follow_up.body,
-          bot_action_id: follow_up.action.id
-        },
-        follow_up: {
+          bot_action_id: follow_up.action.id,
           tags: new_tags
         }
       }
@@ -43,7 +41,7 @@ RSpec.describe 'Follow Ups' do
 
         context 'and they are deleted' do
           it 'deletes the tags' do
-            put engage_auto_bot_follow_up_path(bot, follow_up), params: params
+            put engage_auto_bot_question_follow_up_path(bot, question, follow_up), params: params
             expect(follow_up.reload.tags).not_to include(*existing_tags)
             expect(follow_up.reload.tags.pluck(:name)).to match_array(new_tags)
           end
@@ -53,7 +51,7 @@ RSpec.describe 'Follow Ups' do
       context 'without existing tags' do
         context 'multiple' do
           it 'adds the tags' do
-            put engage_auto_bot_follow_up_path(bot, follow_up), params: params
+            put engage_auto_bot_question_follow_up_path(bot, question, follow_up), params: params
             expect(follow_up.reload.tags.pluck(:name)).to match_array(new_tags)
           end
         end

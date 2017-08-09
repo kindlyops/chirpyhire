@@ -14,7 +14,7 @@
         .card
           .card-block
             h4.card-title
-              | Edit 
+              | New 
               = @bot.name
               '
               ' Follow Up
@@ -24,8 +24,8 @@
               '
               small.text-muted = @follow_up.question.body(formatted: false)
             hr
-            = form_for @follow_up, as: :follow_up, url: engage_auto_bot_question_follow_up_path(@bot, @question, @follow_up) do |f|
-              = f.hidden_field :type
+            = form_for @follow_up, as: :follow_up, url: engage_auto_bot_question_follow_ups_path(@bot, @question) do |f|
+              = f.hidden_field :type, value: 'ChoiceFollowUp'
               = content_for :validation_errors do
                 = render partial: "common/validation_errors", locals: { model: @follow_up }
               .form-group.mb-3

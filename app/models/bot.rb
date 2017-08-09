@@ -5,7 +5,6 @@ class Bot < ApplicationRecord
 
   has_one :greeting
   has_many :questions
-  has_many :follow_ups, through: :questions
   has_many :ranked_questions, -> { ranked }, class_name: 'Question'
   has_many :goals
   has_many :ranked_goals, -> { ranked }, class_name: 'Goal'
