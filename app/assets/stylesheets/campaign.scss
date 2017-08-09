@@ -1,4 +1,15 @@
 .campaigns {
+  .campaign {
+    .campaign-left {
+      width: 400px;
+    }
+
+    .campaign-middle {
+      width: 125px;
+    }
+    margin-bottom: 1rem;
+  }
+
   .status-icon {
     padding: .5rem .75rem;
     display: flex;
