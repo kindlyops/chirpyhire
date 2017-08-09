@@ -44,6 +44,12 @@ RSpec.describe Registrar do
         }.to change { account.reload.owner? }.from(false).to(true)
       end
 
+      it 'creates a person' do
+        expect {
+          subject.register
+        }.to change { Person.count }.by(1)
+      end
+
       it 'creates a New contact stage' do
         expect {
           subject.register

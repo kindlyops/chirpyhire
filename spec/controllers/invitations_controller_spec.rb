@@ -29,9 +29,20 @@ RSpec.describe InvitationsController, type: :controller do
       }.to change { organization.accounts.count }.by(1)
     end
 
+    it 'creates a person' do
+      expect {
+        post :create, params: invite_params
+      }.to change { Person.count }.by(1)
+    end
+
     it 'makes the account invited' do
       post :create, params: invite_params
       expect(Account.last.invited?).to eq(true)
+    end
+
+    it 'sets the name on the account' do
+      post :create, params: invite_params
+      expect(Account.last.name).to eq(invite_params[:account][:name])
     end
 
     it 'adds the account to the team' do
@@ -123,6 +134,7 @@ RSpec.describe InvitationsController, type: :controller do
       { account: {
         email: email,
         invitation_token: account.raw_invitation_token,
+        name: Faker::Name.name
         password: 'password',
         password_confirmation: 'password',
         agreed_to_terms: true
@@ -150,6 +162,11 @@ RSpec.describe InvitationsController, type: :controller do
     it 'agrees to the terms' do
       put :update, params: invite_params
       expect(Account.last.agreed_to_terms?).to eq(true)
+    end
+
+    it 'sets the name' do
+      put :update, params: invite_params
+      expect(Account.last.name).to eq(invite_params[:account][:name])
     end
   end
 
