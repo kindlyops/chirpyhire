@@ -1,5 +1,4 @@
 class Engage::Auto::CampaignsController < ApplicationController
-
   def index
     @campaigns = policy_scope(Campaign)
   end
