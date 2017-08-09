@@ -1,4 +1,8 @@
 class Engage::Auto::BotsController < ApplicationController
+  def index
+    @bots = policy_scope(Bot)
+  end
+
   def show
     @bot = authorize(bots.find(params[:id]))
   end

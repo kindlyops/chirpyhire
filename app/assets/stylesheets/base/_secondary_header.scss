@@ -4,9 +4,14 @@
   align-items: center;
   flex: 0 0 45px;
   background-color: #2B8360;
+  padding-left: 1rem;
 
   a {
     color: $white;
+
+    &.active {
+      text-decoration: underline;
+    }
 
     &:hover {
       color: $white;

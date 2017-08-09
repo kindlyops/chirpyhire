@@ -6,7 +6,7 @@ import update from 'immutability-helper'
 class CandidateSegments extends React.Component {
   render() {
     return (
-      <div className='pl-3 ch--SecondaryHeader'>
+      <div className='ch--SecondaryHeader'>
         {
           this.props.segments.map((segment) =>
             <CandidateSegment 

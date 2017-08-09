@@ -1,4 +1,9 @@
 class Engage::Auto::CampaignsController < ApplicationController
+
+  def index
+    @campaigns = policy_scope(Campaign)
+  end
+
   def show
     @campaign = authorize(campaigns.find(params[:id]))
   end

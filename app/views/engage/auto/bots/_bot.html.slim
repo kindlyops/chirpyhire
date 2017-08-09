@@ -1,0 +1,32 @@
+.card
+  .card-block
+    .d-flex.justify-content-between
+      .bot-left.d-flex.flex-column
+        h4 
+          = link_to bot.name, engage_auto_bot_path(bot)
+        h6.text-muted.mb-0 title="#{bot.decorate.created_at.timestamp}" 
+          | created
+          '
+          = bot.decorate.created_at.label
+      .bot-middle.d-flex.align-items-center
+        .last-edited-by-picture.text-center.d-flex.mr-2
+          - if bot.last_edited_by.avatar.url.present?
+            = image_tag bot.last_edited_by.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
+          - else
+            div class=="d-flex profile-image thumb_48 default #{bot.last_edited_by.decorate.hero_pattern_classes}"
+        .last-edited-by-details.d-flex.flex-column
+          strong = bot.last_edited_by.name
+          span title="#{bot.decorate.last_edited_at.timestamp}"
+            | last edited
+            '
+            = bot.decorate.last_edited_at.label
+      .bot-middle.d-flex.flex-column
+        - if bot.campaigns.empty?
+          span -
+        - else
+          = render partial: "engage/auto/bots/campaign", collection: bot.campaigns 
+        span campaigns
+      .bot-right.d-flex.flex-column.align-items-end
+        h5 Trigger
+        h6.text-muted.mb-0 Start
+

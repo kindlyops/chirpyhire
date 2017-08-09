@@ -1,3 +1,18 @@
+.campaigns {
+  .status-icon {
+    padding: .5rem .75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $brand-primary;
+    margin-left: .5rem;
+
+    i {
+      color: $white;
+    }
+  }
+}
+
 .Campaign {
   width: 80%;
   margin: auto;
