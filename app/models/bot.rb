@@ -1,9 +1,9 @@
 class Bot < ApplicationRecord
   belongs_to :organization
-  belongs_to :person
+  belongs_to :person, optional: true
 
-  belongs_to :account, optional: true
-  belongs_to :last_edited_by, optional: true, class_name: 'Account'
+  belongs_to :account
+  belongs_to :last_edited_by, class_name: 'Account'
 
   has_one :greeting
   has_many :questions

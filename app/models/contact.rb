@@ -6,7 +6,8 @@ class Contact < ApplicationRecord
                   against: { name: 'A', nickname: 'B' },
                   using: { tsearch: { prefix: true } }
 
-  belongs_to :person
+  belongs_to :person, optional: true
+  belongs_to :zipcode, optional: true
   belongs_to :organization
   belongs_to :stage, class_name: 'ContactStage',
                      foreign_key: :contact_stage_id
@@ -29,7 +30,7 @@ class Contact < ApplicationRecord
 
   has_many :notes
 
-  delegate :handle, :avatar, to: :person
+  delegate :handle, :avatar, :zipcode, to: :person
 
   before_create :set_last_reply_at
   before_validation :add_nickname
