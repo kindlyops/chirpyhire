@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :bot do
     organization
     person
+    account
+    association :last_edited_by, factory: :account
+    last_edited_at { DateTime.current }
+
     name { Faker::Name.name }
 
     after(:create) do |bot|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170807205825) do
+ActiveRecord::Schema.define(version: 20170809185132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,10 @@ ActiveRecord::Schema.define(version: 20170807205825) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.integer "last_edited_by_id", null: false
+    t.datetime "last_edited_at", null: false
+    t.index ["account_id"], name: "index_bots_on_account_id"
     t.index ["name", "organization_id"], name: "index_bots_on_name_and_organization_id", unique: true
     t.index ["organization_id"], name: "index_bots_on_organization_id"
     t.index ["person_id"], name: "index_bots_on_person_id"
@@ -138,6 +142,11 @@ ActiveRecord::Schema.define(version: 20170807205825) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "account_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "last_edited_at", null: false
+    t.integer "last_edited_by_id", null: false
+    t.index ["account_id"], name: "index_campaigns_on_account_id"
     t.index ["name"], name: "index_campaigns_on_name"
     t.index ["organization_id", "name"], name: "index_campaigns_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
@@ -567,12 +576,16 @@ ActiveRecord::Schema.define(version: 20170807205825) do
   add_foreign_key "bot_campaigns", "bots"
   add_foreign_key "bot_campaigns", "campaigns"
   add_foreign_key "bot_campaigns", "inboxes"
+  add_foreign_key "bots", "accounts"
+  add_foreign_key "bots", "accounts", column: "last_edited_by_id"
   add_foreign_key "bots", "organizations"
   add_foreign_key "bots", "people"
   add_foreign_key "campaign_contacts", "campaigns"
   add_foreign_key "campaign_contacts", "contacts"
   add_foreign_key "campaign_contacts", "phone_numbers"
   add_foreign_key "campaign_contacts", "questions"
+  add_foreign_key "campaigns", "accounts"
+  add_foreign_key "campaigns", "accounts", column: "last_edited_by_id"
   add_foreign_key "campaigns", "organizations"
   add_foreign_key "column_mappings", "imports"
   add_foreign_key "contact_stages", "organizations"
