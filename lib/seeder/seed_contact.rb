@@ -59,7 +59,7 @@ class Seeder::SeedContact
   end
 
   def zipcode
-    contact.person.zipcode.zipcode
+    contact.zipcode.zipcode
   end
 
   def thank_you
