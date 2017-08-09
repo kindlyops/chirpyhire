@@ -96,9 +96,7 @@ RSpec.describe 'Account' do
         {
           account: {
             email: email,
-            person_attributes: {
-              name: name
-            }
+            name: name
           }
         }
       }

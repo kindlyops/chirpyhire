@@ -9,9 +9,7 @@ RSpec.describe InvitationsController, type: :controller do
     {
       account: {
         email: 'bob@example.com',
-        person_attributes: {
-          name: Faker::Name.name
-        }
+        name: Faker::Name.name
       }
     }
   end
@@ -85,9 +83,7 @@ RSpec.describe InvitationsController, type: :controller do
         {
           account: {
             email: inviter.email,
-            person_attributes: {
-              name: Faker::Name.name
-            }
+            name: Faker::Name.name
           }
         }
       end
@@ -116,9 +112,7 @@ RSpec.describe InvitationsController, type: :controller do
     let(:email) { 'bob@chirpyhire.com' }
 
     let(:account_attributes) do
-      { email: email, organization: organization, person_attributes: {
-        name: Faker::Name.name
-      } }
+      { email: email, organization: organization, name: Faker::Name.name }
     end
 
     let!(:account) do

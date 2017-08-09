@@ -18,10 +18,9 @@
             = form_for @account, url: account_path(@account) do |f|
               = content_for :validation_errors do
                 = render partial: "common/validation_errors", locals: { model: @account }
-              = f.fields_for :person do |p|
-                .form-group
-                  strong = p.label :name, class: "col-form-label small-uppercase"
-                  = p.text_field :name, required: true, class: "form-control"
+              .form-group
+                strong = f.label :name, class: "col-form-label small-uppercase"
+                = f.text_field :name, required: true, class: "form-control"
               .form-group
                 strong = f.label :email, class: "col-form-label small-uppercase"
                 = f.email_field :email, class: "form-control"
@@ -37,13 +36,12 @@
           hr
           .photo
             = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
-              = f.fields_for :person do |p|
-                .form-group
-                  h6 = p.label :avatar, "Photo", class: "col-form-label small-uppercase"
-                  .profile-picture.text-center.d-flex
-                    - if @account.avatar.url.present?
-                      = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
-                    - else
-                      div class=="d-flex profile-image thumb_48 default #{@account.decorate.hero_pattern_classes}"
-                  a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new photo
-                  = p.file_field :avatar, class: "form-control", id: "avatar", hidden: true
+              .form-group
+                h6 = f.label :avatar, "Photo", class: "col-form-label small-uppercase"
+                .profile-picture.text-center.d-flex
+                  - if @account.avatar.url.present?
+                    = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
+                  - else
+                    div class=="d-flex profile-image thumb_48 default #{@account.decorate.hero_pattern_classes}"
+                a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new photo
+                = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true

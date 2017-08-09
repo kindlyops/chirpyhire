@@ -26,8 +26,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def account_attributes
-    %i[email password agreed_to_terms phone_number]
-      .push(person_attributes: %i[name])
+    %i[email password agreed_to_terms phone_number name]
   end
 
   def organization_attributes_keys
