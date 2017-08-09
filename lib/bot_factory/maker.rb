@@ -1,12 +1,12 @@
 class BotFactory::Maker
   NAME = 'Chirpy'.freeze
 
-  def self.call(o, name: NAME, team_name: o.name, notice: o.sender_notice)
-    new(o, name: name, team_name: team_name, notice: notice).call
+  def self.call(a, name: NAME, team_name: nil, notice: nil)
+    new(a, name: name, team_name: team_name, notice: notice).call
   end
 
-  def initialize(organization, name:, team_name:, notice:)
-    @organization = organization
+  def initialize(account, name:, team_name:, notice:)
+    @account = account
     @name = name
     @team_name = team_name
     @notice = notice
@@ -22,7 +22,16 @@ class BotFactory::Maker
     bot
   end
 
-  attr_reader :organization, :notice, :name, :team_name
+  def team_name
+    @team_name || organization.name
+  end
+
+  def notice
+    @notice || organization.sender_notice
+  end
+
+  attr_reader :account, :name
+  delegate :organization, to: :account
 
   def create_greeting
     bot.create_greeting(body: greeting_body)
@@ -52,7 +61,15 @@ class BotFactory::Maker
   end
 
   def bot
-    @bot ||= organization.bots.create(name: name, person: bot_person)
+    @bot ||= begin
+      organization.bots.create(
+        name: name,
+        person: bot_person,
+        account: account,
+        last_edited_by: account,
+        last_edited_at: DateTime.current
+      )
+    end
   end
 
   def bot_person
