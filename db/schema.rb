@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809185132) do
+ActiveRecord::Schema.define(version: 20170809202955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,11 +42,18 @@ ActiveRecord::Schema.define(version: 20170809185132) do
     t.integer "role", default: 0, null: false
     t.text "bio"
     t.string "phone_number"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string "name"
+    t.bigint "person_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
     t.index ["invited_by_id"], name: "index_accounts_on_invited_by_id"
     t.index ["organization_id"], name: "index_accounts_on_organization_id"
+    t.index ["person_id"], name: "index_accounts_on_person_id"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
   end
 
@@ -107,7 +114,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
   end
 
   create_table "bots", force: :cascade do |t|
-    t.bigint "person_id", null: false
+    t.bigint "person_id"
     t.bigint "organization_id", null: false
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -173,7 +180,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
   end
 
   create_table "contacts", id: :serial, force: :cascade do |t|
-    t.integer "person_id", null: false
+    t.integer "person_id"
     t.integer "organization_id", null: false
     t.boolean "subscribed", default: false, null: false
     t.datetime "created_at", null: false
@@ -185,6 +192,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
     t.string "name"
     t.string "phone_number", null: false
     t.integer "messages_count", default: 0, null: false
+    t.bigint "zipcode_id"
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id", "nickname"], name: "index_contacts_on_organization_id_and_nickname", unique: true
     t.index ["organization_id", "phone_number"], name: "index_contacts_on_organization_id_and_phone_number", unique: true
@@ -192,6 +200,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
     t.index ["person_id", "organization_id"], name: "index_contacts_on_person_id_and_organization_id", unique: true
     t.index ["person_id"], name: "index_contacts_on_person_id"
     t.index ["team_id"], name: "index_contacts_on_team_id"
+    t.index ["zipcode_id"], name: "index_contacts_on_zipcode_id"
   end
 
   create_table "contacts_imports", force: :cascade do |t|
@@ -567,6 +576,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
   end
 
   add_foreign_key "accounts", "organizations"
+  add_foreign_key "accounts", "people"
   add_foreign_key "assignment_rules", "inboxes"
   add_foreign_key "assignment_rules", "organizations"
   add_foreign_key "assignment_rules", "phone_numbers"
@@ -593,6 +603,7 @@ ActiveRecord::Schema.define(version: 20170809185132) do
   add_foreign_key "contacts", "organizations"
   add_foreign_key "contacts", "people"
   add_foreign_key "contacts", "teams"
+  add_foreign_key "contacts", "zipcodes"
   add_foreign_key "contacts_imports", "contacts"
   add_foreign_key "contacts_imports", "imports"
   add_foreign_key "conversation_parts", "campaigns"

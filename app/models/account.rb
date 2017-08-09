@@ -16,6 +16,11 @@ class Account < ApplicationRecord
   has_many :segments
   has_many :imports
 
+  has_attached_file :avatar,
+                    styles: { medium: '300x300#', thumb: '100x100#' },
+                    default_url: ''
+  validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
+
   before_validation { build_person if person.blank? }
 
   accepts_nested_attributes_for :organization, reject_if: :all_blank
