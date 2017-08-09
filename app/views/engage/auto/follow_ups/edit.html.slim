@@ -28,10 +28,11 @@
               = f.hidden_field :type
               = content_for :validation_errors do
                 = render partial: "common/validation_errors", locals: { model: @follow_up }
-              .form-group.mb-3
-                = f.label :response, class: 'col-form-label'
-                = f.text_field :response, required: true, class: 'form-control', id: 'response', placeholder: 'Enter a simple response'
-                small.form-text.text-muted Enter a multiple choice response. Candidates will be able to select this choice from their mobile phone.
+              - if @follow_up.type != 'ZipcodeFollowUp'
+                .form-group.mb-3
+                  = f.label :response, class: 'col-form-label'
+                  = f.text_field :response, required: true, class: 'form-control', id: 'response', placeholder: 'Enter a simple response'
+                  small.form-text.text-muted Enter a multiple choice response. Candidates will be able to select this choice from their mobile phone.
               .form-group.mb-3
                 = f.label :body, class: 'col-form-label'
                 = f.text_field :body, required: true, class: 'form-control', id: 'body', placeholder: 'Add a follow up...'

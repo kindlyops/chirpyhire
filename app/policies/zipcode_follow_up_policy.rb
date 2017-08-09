@@ -1,0 +1,2 @@
+class ZipcodeFollowUpPolicy < FollowUpPolicy
+end
