@@ -25,7 +25,7 @@ class Bot < ApplicationRecord
   validates :name, presence: true
 
   def handle
-    name
+    name.downcase
   end
 
   def self.recent

@@ -26,6 +26,7 @@ class InvitationsController < Devise::InvitationsController
       return handle_create_errors if account.errors.present?
 
       account.update(role: :invited)
+      account.update(person: Person.create)
       account.teams << teams.first unless teams.empty?
     end
   end
