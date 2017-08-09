@@ -10,4 +10,4 @@
       h3.small-uppercase Surveys
       .ch--vertical-navigation-links
         - current_organization.bots.each do |bot|
-          = nav_link_to bot.name, engage_auto_bot_path(bot), class: 'ch--vertical-navigation-link'
+          = nav_link_to bot.name, engage_auto_bot_path(bot), { class: 'ch--vertical-navigation-link' }, { url_segment: 4 }
