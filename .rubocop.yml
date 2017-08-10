@@ -12,6 +12,7 @@ AllCops:
     - 'bin/**/*'
     - 'lib/middleware/sabayon.rb'
     - 'node_modules/**/*'
+    - 'lib/subscription/price.rb'
 
 Lint/AmbiguousBlockAssociation:
   Exclude:

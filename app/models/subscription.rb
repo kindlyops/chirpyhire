@@ -8,4 +8,8 @@ class Subscription < ApplicationRecord
   def cancel
     update(status: :canceled, canceled_at: DateTime.current)
   end
+
+  def price
+    Subscription::Price.call(self)
+  end
 end
