@@ -46,7 +46,11 @@
           hr
           p.card-text.d-flex.justify-content-between
             span Price
-            strong.candidates--price $125 / mo
+            strong.candidates--price
+              |$
+              = @organization.subscription.price
+              '
+              |/ mo
           p.card-text.d-flex.justify-content-between
             span.spacer
             span.badge.badge-success.small-uppercase Free For 14 Days
