@@ -17,7 +17,7 @@ class Campaign < ApplicationRecord
   validates :name, presence: true
 
   enum status: {
-    active: 0
+    active: 0, paused: 1
   }
 
   def self.recent
