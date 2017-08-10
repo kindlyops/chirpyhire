@@ -5,6 +5,10 @@ class CampaignContact < ApplicationRecord
   belongs_to :question, optional: true
 
   enum state: {
-    pending: 0, active: 1, exited: 2
+    pending: 0, active: 1, paused: 3, exited: 2
   }
+
+  def pause
+    update(state: :paused)
+  end
 end

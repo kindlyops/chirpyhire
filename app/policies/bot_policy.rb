@@ -1,6 +1,6 @@
 class BotPolicy < ApplicationPolicy
   def update?
-    show?
+    show? && no_active_campaigns?
   end
 
   def clone?
@@ -44,6 +44,10 @@ class BotPolicy < ApplicationPolicy
 
   def goals_attributes
     %i[body contact_stage_id id]
+  end
+
+  def no_active_campaigns?
+    record.campaigns.none?(&:active?)
   end
 
   class Scope < ApplicationPolicy::Scope

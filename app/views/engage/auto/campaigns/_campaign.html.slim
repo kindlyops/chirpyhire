@@ -16,10 +16,29 @@
           = campaign.decorate.created_at.label
       .campaign-middle.d-flex.align-items-center
         = campaign.status.humanize
-        span class="status-icon #{campaign.status}"
-          i class="fa #{campaign.decorate.status_icon}"
+        - if campaign.active?
+          = button_to engage_auto_campaign_path(campaign), { method: :put, class: 'btn btn-danger ml-2', role: 'button', title: 'Pause this campaign.', data: { toggle: 'tooltip', placement: 'top' },params: { campaign: { status: :paused } } } do
+              i class="fa fa-pause"
+        - else
+          = button_to engage_auto_campaign_path(campaign), { method: :put, class: 'btn btn-primary ml-2', role: 'button', title: 'Activate this campaign.', data: { toggle: 'tooltip', placement: 'top' },params: { campaign: { status: :active } } } do
+              i class="fa fa-play"
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.active.count
+          '
+          small.text-muted active
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.paused.count
+          '
+          small.text-muted paused
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.exited.count
+          '
+          small.text-muted completed
       .campaign-right.d-flex.align-items-center
         h4.mb-0
           = campaign.campaign_contacts.count
           '
-          small.text-muted candidates
+          small.text-muted total

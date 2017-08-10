@@ -48,31 +48,58 @@ RSpec.describe Bot::Receiver do
       let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
       let!(:message) { create(:message, :to, organization: organization, conversation: conversation) }
 
-      it 'creates a pending campaign contact' do
-        allow(subject).to receive(:reply)
-        expect {
+      context 'and the campaign is active' do
+        it 'creates a pending campaign contact' do
+          allow(subject).to receive(:reply)
+          expect {
+            subject.call
+          }.to change { contact.reload.campaign_contacts.pending.count }.by(1)
+        end
+
+        it 'updates the conversation part to be tied to the campaign' do
+          allow(subject).to receive(:reply)
+          expect {
+            subject.call
+          }.to change { message.conversation_part.reload.campaign }.from(nil).to(campaign)
+        end
+
+        it 'ties the new campaign contact to the bot campaign' do
+          allow(subject).to receive(:reply)
           subject.call
-        }.to change { contact.reload.campaign_contacts.pending.count }.by(1)
-      end
 
-      it 'updates the conversation part to be tied to the campaign' do
-        allow(subject).to receive(:reply)
-        expect {
+          expect(CampaignContact.last.campaign).to eq(campaign)
+        end
+
+        it 'replies' do
+          expect(subject).to receive(:reply)
+
           subject.call
-        }.to change { message.conversation_part.reload.campaign }.from(nil).to(campaign)
+        end
       end
 
-      it 'ties the new campaign contact to the bot campaign' do
-        allow(subject).to receive(:reply)
-        subject.call
+      context 'and the campaign is paused' do
+        before do
+          campaign.update(status: :paused)
+        end
 
-        expect(CampaignContact.last.campaign).to eq(campaign)
-      end
+        it 'does not create a pending campaign contact' do
+          expect {
+            subject.call
+          }.not_to change { contact.reload.campaign_contacts.pending.count }
+        end
 
-      it 'replies' do
-        expect(subject).to receive(:reply)
+        it 'does not update the conversation part to be tied to the campaign' do
+          expect {
+            subject.call
+          }.not_to change { message.conversation_part.reload.campaign }
+          expect(message.conversation_part.campaign).to eq(nil)
+        end
 
-        subject.call
+        it 'does not reply' do
+          expect(subject).not_to receive(:reply)
+
+          subject.call
+        end
       end
     end
 
@@ -106,25 +133,52 @@ RSpec.describe Bot::Receiver do
         end
       end
 
-      context 'active' do
-        it 'does not create a campaign contact' do
-          allow(subject).to receive(:reply)
-          expect {
+      context 'active campaign contact' do
+        context 'active campaign' do
+          it 'does not create a campaign contact' do
+            allow(subject).to receive(:reply)
+            expect {
+              subject.call
+            }.not_to change { contact.reload.campaigns.count }
+          end
+
+          it 'updates the conversation_part to be tied to the campaign' do
+            allow(subject).to receive(:reply)
+            expect {
+              subject.call
+            }.to change { message.conversation_part.reload.campaign }.from(nil).to(campaign)
+          end
+
+          it 'replies' do
+            expect(subject).to receive(:reply)
+
             subject.call
-          }.not_to change { contact.reload.campaigns.count }
+          end
         end
 
-        it 'updates the conversation_part to be tied to the campaign' do
-          allow(subject).to receive(:reply)
-          expect {
+        context 'paused campaign' do
+          before do
+            campaign.update(status: :paused)
+          end
+
+          it 'does not create a campaign contact' do
+            expect {
+              subject.call
+            }.not_to change { contact.reload.campaigns.count }
+          end
+
+          it 'does not update the conversation_part to be tied to the campaign' do
+            expect {
+              subject.call
+            }.not_to change { message.conversation_part.reload.campaign }
+            expect(message.conversation_part.campaign).to eq(nil)
+          end
+
+          it 'does not reply' do
+            expect(subject).not_to receive(:reply)
+
             subject.call
-          }.to change { message.conversation_part.reload.campaign }.from(nil).to(campaign)
-        end
-
-        it 'replies' do
-          expect(subject).to receive(:reply)
-
-          subject.call
+          end
         end
       end
     end

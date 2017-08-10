@@ -8,7 +8,7 @@ class CampaignPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name]
+    %i[name status]
       .push(bot_campaign)
   end
 

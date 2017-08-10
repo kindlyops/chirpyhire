@@ -24,6 +24,8 @@
 en:
   pundit:
     default: 'You cannot perform this action.'
+    bot_policy:
+      update?: "Pause the bot's active campaigns first before editing."
 en_abbrev:
   datetime:
     distance_in_words:

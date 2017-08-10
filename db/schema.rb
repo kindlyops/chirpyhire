@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809202955) do
+ActiveRecord::Schema.define(version: 20170810010352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(version: 20170809202955) do
     t.integer "status", default: 0, null: false
     t.datetime "last_edited_at", null: false
     t.integer "last_edited_by_id", null: false
+    t.datetime "last_paused_at"
     t.index ["account_id"], name: "index_campaigns_on_account_id"
     t.index ["name"], name: "index_campaigns_on_name"
     t.index ["organization_id", "name"], name: "index_campaigns_on_organization_id_and_name", unique: true
