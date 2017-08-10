@@ -15,7 +15,7 @@ $(function() {
       placeholder: "Add a tag",
       allowClear: true,
       tags: true,
-      tokenSeparators: [',', ' '],
+      tokenSeparators: [','],
       templateSelection: formatTag
     });
   });

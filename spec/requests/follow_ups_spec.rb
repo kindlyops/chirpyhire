@@ -48,6 +48,21 @@ RSpec.describe 'Follow Ups' do
         end
       end
 
+      context 'tags is nil' do
+        let!(:new_tags) { nil }
+
+        it 'does not raise an error' do
+          expect {
+            put engage_auto_bot_question_follow_up_path(bot, question, follow_up), params: params
+          }.not_to raise_error
+        end
+
+        it 'deletes the tags' do
+          put engage_auto_bot_question_follow_up_path(bot, question, follow_up), params: params
+          expect(follow_up.reload.tags).to eq([])
+        end
+      end
+
       context 'without existing tags' do
         context 'multiple' do
           it 'adds the tags' do
