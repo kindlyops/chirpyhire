@@ -27,11 +27,16 @@ class InvitationsController < Devise::InvitationsController
 
       account.update(role: :invited)
       account.update(person: Person.create)
-      account.teams << teams.first unless teams.empty?
+
+      account.memberships.find_or_create_by(team: team) unless teams.empty?
     end
   end
 
   private
+
+  def team
+    @team ||= teams.order(:id).first
+  end
 
   delegate :organization, to: :current_inviter
   delegate :teams, to: :organization
