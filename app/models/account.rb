@@ -22,7 +22,7 @@ class Account < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   accepts_nested_attributes_for :organization, reject_if: :all_blank
 
-  validates :email, uniqueness: true, company_email: true
+  validates :email, uniqueness: true
   delegate :name, to: :organization, prefix: true
   before_validation :add_nickname
   validates :name, presence: true, unless: :nickname_present?
