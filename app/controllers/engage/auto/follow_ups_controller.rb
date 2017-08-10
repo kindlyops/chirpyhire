@@ -44,10 +44,14 @@ class Engage::Auto::FollowUpsController < ApplicationController
 
   def updated_tags
     @updated_tags ||= begin
-      params[:follow_up][:tags].map do |tag|
+      param_tags.map do |tag|
         current_organization.tags.find_or_create_by(name: tag)
       end
     end
+  end
+
+  def param_tags
+    params[:follow_up][:tags] || []
   end
 
   def bot
