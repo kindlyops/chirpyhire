@@ -8,7 +8,7 @@ class CampaignContact::Activator
   end
 
   def call
-    DeliveryAgent.call(recent_message) if recent_part_missing_campaign?
+    # DeliveryAgent.call(recent_message) if recent_part_missing_campaign?
   end
 
   def recent_part_missing_campaign?

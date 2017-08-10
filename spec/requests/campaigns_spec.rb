@@ -44,8 +44,8 @@ RSpec.describe 'Campaigns' do
           }
         end
 
-        it 'calls the Campaign::Activator' do
-          expect(Campaign::Activator).to receive(:call)
+        it 'calls the CampaignActivatorJob' do
+          expect(CampaignActivatorJob).to receive(:perform_later)
 
           put engage_auto_campaign_path(campaign), params: params
         end

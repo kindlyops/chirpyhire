@@ -27,7 +27,7 @@ class Engage::Auto::CampaignsController < ApplicationController
 
   def handle_activated_campaign
     @campaign.update(last_active_at: DateTime.current)
-    Campaign::Activator.call(@campaign)
+    CampaignActivatorJob.perform_later(@campaign)
   end
 
   def activated_bot_campaign?
