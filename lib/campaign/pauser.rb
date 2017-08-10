@@ -1,4 +1,4 @@
-class Campaign::Activator
+class Campaign::Pauser
   def self.call(campaign)
     new(campaign).call
   end
@@ -8,9 +8,7 @@ class Campaign::Activator
   end
 
   def call
-    campaign.campaign_contacts.paused.find_each do |campaign_contact|
-      CampaignContact::Activator.call(campaign_contact)
-    end
+    campaign.campaign_contacts.active.find_each(&:pause)
   end
 
   attr_reader :campaign

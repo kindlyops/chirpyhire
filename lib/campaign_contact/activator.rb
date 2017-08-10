@@ -8,7 +8,10 @@ class CampaignContact::Activator
   end
 
   def call
-    # DeliveryAgent.call(recent_message) if recent_part_missing_campaign?
+    return if campaign.paused?
+    campaign_contact.update(state: :active)
+
+    DeliveryAgent.call(recent_message) if recent_part_missing_campaign?
   end
 
   def recent_part_missing_campaign?
@@ -23,7 +26,7 @@ class CampaignContact::Activator
     @recent_message ||= begin
       messages
         .where(to: phone_number.phone_number)
-        .where('created_at >= ?', campaign.last_paused_at)
+        .where('messages.created_at >= ?', campaign.last_paused_at)
         .by_recency.first
     end
   end

@@ -22,11 +22,15 @@ class Engage::Auto::CampaignsController < ApplicationController
 
   def handle_campaign_status_change
     handle_activated_campaign if activated_bot_campaign?
-    @campaign.update(last_paused_at: DateTime.current) if paused_campaign?
+    handle_paused_campaign if paused_campaign?
+  end
+
+  def handle_paused_campaign
+    @campaign.update(last_paused_at: DateTime.current)
+    CampaignPauserJob.perform_later(@campaign)
   end
 
   def handle_activated_campaign
-    @campaign.update(last_active_at: DateTime.current)
     CampaignActivatorJob.perform_later(@campaign)
   end
 

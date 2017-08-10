@@ -22,6 +22,12 @@ RSpec.describe 'Campaigns' do
           }
         end
 
+        it 'calls the CampaignPauserJob' do
+          expect(CampaignPauserJob).to receive(:perform_later)
+
+          put engage_auto_campaign_path(campaign), params: params
+        end
+
         it 'sets last_paused_at' do
           expect {
             put engage_auto_campaign_path(campaign), params: params
@@ -48,12 +54,6 @@ RSpec.describe 'Campaigns' do
           expect(CampaignActivatorJob).to receive(:perform_later)
 
           put engage_auto_campaign_path(campaign), params: params
-        end
-
-        it 'sets last_active_at' do
-          expect {
-            put engage_auto_campaign_path(campaign), params: params
-          }.to change { campaign.reload.last_active_at }.from(nil)
         end
       end
     end
