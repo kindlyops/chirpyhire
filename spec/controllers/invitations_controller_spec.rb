@@ -51,6 +51,18 @@ RSpec.describe InvitationsController, type: :controller do
       }.to change { team.accounts.count }.by(1)
     end
 
+    context 'reinviting' do
+      before do
+        post :create, params: invite_params
+      end
+
+      it 'does not raise an error' do
+        expect {
+          post :create, params: invite_params
+        }.not_to raise_error
+      end
+    end
+
     context 'impersonating' do
       let(:impersonator) { inviter }
       let(:impersonatee) { create(:account, :team) }
