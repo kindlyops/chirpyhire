@@ -15,7 +15,5 @@ class BotsController < ApplicationController
     end
   end
 
-  private
-
   delegate :bots, to: :current_organization
 end
