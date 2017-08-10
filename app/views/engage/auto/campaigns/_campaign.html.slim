@@ -24,6 +24,21 @@
               i class="fa fa-play"
       .campaign-right.d-flex.align-items-center
         h4.mb-0
+          = campaign.campaign_contacts.active.count
+          '
+          small.text-muted active
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.paused.count
+          '
+          small.text-muted paused
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = campaign.campaign_contacts.exited.count
+          '
+          small.text-muted completed
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
           = campaign.campaign_contacts.count
           '
-          small.text-muted candidates
+          small.text-muted total
