@@ -1,5 +1,4 @@
 class BotsController < ApplicationController
-
   def index
     @bots = policy_scope(Bot)
 
@@ -19,7 +18,6 @@ class BotsController < ApplicationController
   private
 
   def user_not_authorized(*)
-    binding.pry
     redirect_to engage_auto_campaigns_path, alert: active_campaign_alert
   end
 

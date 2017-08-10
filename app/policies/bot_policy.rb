@@ -1,6 +1,6 @@
 class BotPolicy < ApplicationPolicy
   def update?
-    show? && has_no_active_campaigns?
+    show? && no_active_campaigns?
   end
 
   def clone?
@@ -46,7 +46,7 @@ class BotPolicy < ApplicationPolicy
     %i[body contact_stage_id id]
   end
 
-  def has_no_active_campaigns?
+  def no_active_campaigns?
     record.campaigns.none?(&:active?)
   end
 
