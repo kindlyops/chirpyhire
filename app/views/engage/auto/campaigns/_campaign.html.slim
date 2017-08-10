@@ -16,8 +16,12 @@
           = campaign.decorate.created_at.label
       .campaign-middle.d-flex.align-items-center
         = campaign.status.humanize
-        span class="status-icon #{campaign.status}"
-          i class="fa #{campaign.decorate.status_icon}"
+        - if campaign.live?
+          = button_to engage_auto_campaign_path(campaign), { method: :put, class: 'btn btn-danger ml-2', role: 'button', title: 'Pause this campaign.', data: { toggle: 'tooltip', placement: 'top' },params: { campaign: { status: :paused } } } do
+              i class="fa fa-pause"
+        - else
+          = button_to engage_auto_campaign_path(campaign), { method: :put, class: 'btn btn-primary ml-2', role: 'button', title: 'Go live with this campaign.', data: { toggle: 'tooltip', placement: 'top' },params: { campaign: { status: :live } } } do
+              i class="fa fa-play"
       .campaign-right.d-flex.align-items-center
         h4.mb-0
           = campaign.campaign_contacts.count

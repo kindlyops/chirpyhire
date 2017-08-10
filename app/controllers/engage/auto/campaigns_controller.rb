@@ -11,7 +11,7 @@ class Engage::Auto::CampaignsController < ApplicationController
     @campaign = authorize(campaigns.find(params[:id]))
 
     if @campaign.update(permitted_attributes(Campaign))
-      redirect_to engage_auto_campaign_path(@campaign), notice: campaign_notice
+      redirect_to engage_auto_campaigns_path, notice: campaign_notice
     else
       render :show
     end
