@@ -6,8 +6,10 @@ RSpec.describe Bot::FollowUpTrigger do
   let(:question) { bot.questions.first }
   let(:bot_campaign) { create(:bot_campaign, bot: bot) }
   let(:campaign) { bot_campaign.campaign }
-  let(:message) { create(:message, :conversation_part) }
-  let(:contact) { message.contact }
+  let(:contact) { create(:contact, organization: bot.organization) }
+  let(:conversation) { create(:conversation, contact: contact) }
+  let(:conversation_part) { create(:conversation_part, conversation: conversation) }
+  let(:message) { create(:message, conversation_part: conversation_part) }
   let(:campaign_contact) { create(:campaign_contact, contact: contact, campaign: campaign) }
   let(:follow_up) { create(:choice_follow_up, question: question) }
 
@@ -125,14 +127,27 @@ RSpec.describe Bot::FollowUpTrigger do
       end
 
       context 'with tags' do
+        let(:tags) { create_list(:tag, rand(2..4), organization: bot.organization) }
+
         before do
-          follow_up.tags << create_list(:tag, rand(2..4))
+          follow_up.tags << tags
+          allow(bot).to receive(:question_after) { another_question }
+          allow(another_question).to receive(:trigger) { another_question.body }
+        end
+
+        context 'and the tags are already on the contact' do
+          before do
+            contact.tags << tags
+          end
+
+          it 'does not raise error' do
+            expect {
+              subject.call
+            }.not_to raise_error
+          end
         end
 
         it 'adds the tags to the contact' do
-          allow(bot).to receive(:question_after) { another_question }
-          allow(another_question).to receive(:trigger) { another_question.body }
-
           expect {
             subject.call
           }.to change { contact.reload.tags.count }.by(follow_up.tags.count)

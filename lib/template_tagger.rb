@@ -19,7 +19,7 @@ class TemplateTagger
   def apply_tag(tag)
     template = Liquid::Template.parse(tag.name)
     templated_tag = org_tags.find_or_create_by(name: parsed_name(template))
-    contact.tags << templated_tag
+    contact.taggings.find_or_create_by(tag: templated_tag)
   end
 
   def parsed_name(template)
