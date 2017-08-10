@@ -11,6 +11,8 @@ class Bot::Receiver
   attr_reader :message, :bot
 
   def call
+    return if campaign.paused?
+
     conversation_part.update!(campaign: campaign_contact.campaign)
     return if campaign_contact.exited?
 
@@ -24,12 +26,12 @@ class Bot::Receiver
   end
 
   def existing_campaign_contact
-    campaign_contacts.find_by(campaign: bot_campaign.campaign)
+    campaign_contacts.find_by(campaign: campaign)
   end
 
   def pending_campaign_contact
     campaign_contacts.create!(
-      campaign: bot_campaign.campaign,
+      campaign: campaign,
       phone_number: organization_phone_number
     )
   end
@@ -68,5 +70,6 @@ class Bot::Receiver
   delegate :bot_campaigns, to: :bot
   delegate :inbox, :organization, to: :conversation
   delegate :campaign_contacts, to: :contact
+  delegate :campaign, to: :bot_campaign
   delegate :sender, :conversation, :body, :campaign, to: :response, prefix: true
 end
