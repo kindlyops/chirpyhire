@@ -11,4 +11,12 @@ class ManualMessagePolicy < ApplicationPolicy
     %i[city state county zipcode name messages]
       .concat([tag: [], contact_stage: []])
   end
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      scope
+        .joins(account: :organization)
+        .where(accounts: { organization: organization })
+    end
+  end
 end

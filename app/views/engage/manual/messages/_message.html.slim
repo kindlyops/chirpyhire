@@ -1,0 +1,36 @@
+.card.campaign
+  .card-block
+    .d-flex.justify-content-between
+      .campaign-left.d-flex.align-items-center
+        i.fa.fa-paper-plane-o.fa-2x
+        .campaign-section.d-flex.flex-column.ml-4
+          h3 = message.title
+          span 
+            | created by
+            '
+            = message.account.name
+      .campaign-middle.d-flex.align-items-center title="#{message.decorate.created_at.timestamp}"
+        span
+          | created
+          '
+          = message.decorate.created_at.label
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = message.messages.count
+          '
+          small.text-muted sent
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = message.unreached_participants.count
+          '
+          small.text-muted to send
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = message.replies.count
+          '
+          small.text-muted replies
+      .campaign-right.d-flex.align-items-center
+        h4.mb-0
+          = number_to_percentage(message.replies.count.fdiv(message.messages.count) * 100, precision: 0)
+          '
+          small.text-muted response rate

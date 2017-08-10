@@ -1,5 +1,6 @@
 .ch--Page
   = render partial: "engage/header"
+  = render partial: "engage/secondary_header"
   .ch--main
     .ch--sub-main
       = form_for @campaign, url: engage_auto_campaign_path(@campaign) do |f|

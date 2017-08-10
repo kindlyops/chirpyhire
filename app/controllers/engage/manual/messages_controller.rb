@@ -1,4 +1,8 @@
 class Engage::Manual::MessagesController < ApplicationController
+  def index
+    @campaigns = policy_scope(ManualMessage)
+  end
+
   def create
     @new_manual_message = authorize new_manual_message
 
