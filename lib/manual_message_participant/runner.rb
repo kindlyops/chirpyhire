@@ -19,13 +19,24 @@ class ManualMessageParticipant::Runner
     @message ||= begin
       return if manual_message.body.blank?
 
-      organization.message(
-        sender: sender,
-        recipient: conversation.contact.person,
-        phone_number: conversation.phone_number,
-        body: manual_message.body
-      )
+      create_message.tap(&method(:create_conversation_part))
     end
+  end
+
+  def create_message
+    organization.message(
+      sender: sender,
+      recipient: conversation.contact.person,
+      phone_number: conversation.phone_number,
+      body: manual_message.body
+    )
+  end
+
+  def create_conversation_part(message)
+    conversation.parts.create(
+      message: message,
+      happened_at: message.external_created_at
+    ).tap(&:touch_conversation)
   end
 
   def sender
@@ -33,7 +44,13 @@ class ManualMessageParticipant::Runner
   end
 
   def conversation
-    contact.existing_open_conversation || IceBreaker.call(contact, phone_number)
+    @conversation ||= begin
+      contact.existing_open_conversation || new_open_conversation
+    end
+  end
+
+  def new_open_conversation
+    IceBreaker.call(contact, phone_number)
   end
 
   def phone_number

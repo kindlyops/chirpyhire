@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ManualMessageParticipant::Runner do
   let!(:organization) { create(:organization, :team_with_phone_number_and_recruiting_ad_and_inbox) }
-  let(:account) { create(:account, organization: organization) }
+  let(:account) { create(:account, :person, organization: organization) }
   let(:manual_message) { create(:manual_message, account: account) }
   let(:contact) { create(:contact, organization: organization) }
   let(:participant) { create(:manual_message_participant, contact: contact, manual_message: manual_message) }
@@ -36,6 +36,12 @@ RSpec.describe ManualMessageParticipant::Runner do
         expect {
           subject.call
         }.to change { Message.count }.by(1)
+      end
+
+      it 'creates a conversation part' do
+        expect {
+          subject.call
+        }.to change { ConversationPart.count }.by(1)
       end
 
       it 'updates the participant to be tied to the new message' do

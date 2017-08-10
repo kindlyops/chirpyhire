@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Manual Messages' do
-  let(:account) { create(:account, :team_with_phone_number_and_inbox) }
+  let(:account) { create(:account, :person, :team_with_phone_number_and_inbox) }
   let(:organization) { account.organization }
 
   before do
