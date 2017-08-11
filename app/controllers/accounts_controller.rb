@@ -32,9 +32,7 @@ class AccountsController < ApplicationController
 
   def stop_impersonating_account
     session.delete(:impersonated_account_id)
-    impersonated_account = warden.user(:account)
     warden.logout(:account)
-    impersonated_account
   end
 
   def restore_real_account
@@ -42,6 +40,7 @@ class AccountsController < ApplicationController
     return if real_account_id.blank?
     real_account = Account.find(real_account_id)
     warden.set_user(real_account, scope: :account)
+    @current_account = nil
   end
 
   def update_notice
