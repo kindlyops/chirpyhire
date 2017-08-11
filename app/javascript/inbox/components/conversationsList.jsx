@@ -2,18 +2,20 @@ import React from 'react'
 import InboxItem from './inboxItem'
 import { AutoSizer, List } from 'react-virtualized'
 import { withRouter } from 'react-router-dom'
+import LoadMoreConversations from './loadMoreConversations'
 
 class ConversationsList extends React.Component {
   constructor(props) {
     super(props);
     this._rowRenderer = this._rowRenderer.bind(this);
     this._byState = this._byState.bind(this);
+    this.conversations = this.conversations.bind(this);
   }
 
   render() {    
     return (
       <div className='autosizer-wrapper'>
-        <AutoSizer location={this.props.location} disableWidth conversations={this.props.conversations}>
+        <AutoSizer location={this.props.location} disableWidth conversations={this.conversations()}>
           {({ height }) => (
             <List 
               location={this.props.location}
@@ -23,7 +25,7 @@ class ConversationsList extends React.Component {
               rowCount={this.rowCount()}
               rowHeight={70.59}
               rowRenderer={this._rowRenderer}
-              conversations={this.props.conversations}
+              conversations={this.conversations()}
             />
           )}
         </AutoSizer>
@@ -33,25 +35,39 @@ class ConversationsList extends React.Component {
 
   _rowRenderer({ key, index, style }) {
     let conversations = this.filteredConversations();
+    let content;
 
-    return (
-      <div key={key} style={style}>
-        <InboxItem 
+    if (conversations[index]) {
+      content = (<InboxItem 
           location={this.props.location}
           match={this.props.match}
           inboxId={this.props.inboxId}
-          {...conversations[index]} />
+          {...conversations[index]} />);
+    } else {
+      content = (<LoadMoreConversations onClick={this.props.loadMoreConversations} />);
+    }
+
+    return (
+      <div key={key} style={style}>
+        {content}
       </div>
     )
   }
 
   rowCount() {
-    return this.filteredConversations().length;
+    if (this.props.nextPage) {
+      return this.filteredConversations().length + 1;
+    } else {
+      return this.filteredConversations().length;
+    }
+  }
+
+  _byState(conversation) {
+    return this.props.filter === conversation.state;
   }
 
   filteredConversations() {
     let filter;
-
     if (this.props.filter === 'All') {
       return this.props.conversations;
     } else {
@@ -59,8 +75,8 @@ class ConversationsList extends React.Component {
     }
   }
 
-  _byState(conversation) {
-    return this.props.filter === conversation.state;
+  conversations() {
+    return this.props.conversations;
   }
 }
 

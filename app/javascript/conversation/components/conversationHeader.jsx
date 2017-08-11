@@ -6,6 +6,8 @@ class ConversationHeader extends React.Component {
     super(props);
 
     this.closeOptions = this.closeOptions.bind(this);
+    this.reopen = this.reopen.bind(this);
+    this.close = this.close.bind(this);
   }
 
   conversationUrl() {
@@ -57,17 +59,36 @@ class ConversationHeader extends React.Component {
   closeOptions() {
     return (<div className="dropdown-menu dropdown-menu-right" aria-labelledby="closeConversationButton">
      {this.props.contact.contact_stages.map(stage =>
-        <form key={stage.id} className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-          <input type="hidden" name="_method" value="put" />
-          <input type="hidden" name="conversation[state]" value="Closed" />
-          <input type="hidden" name="conversation[contact_attributes][contact_stage_id]" value={stage.id} />
-          <input type="hidden" name="conversation[contact_attributes][id]" value={this.props.contact.id} />
-          <button type="submit" className='dropdown-item' role="button">
-            Close + Mark {stage.name}
-          </button>
-        </form>
+        <button key={stage.id} type="button" className='dropdown-item' role="button" onClick={this.close(stage)}>
+          Close + Mark {stage.name}
+        </button>
       )}
     </div>)
+  }
+
+  close(stage) {
+    return () => {
+      const params = {
+        _method: 'put',
+        conversation: {
+          state: 'Closed',
+          contact_attributes: {
+            contact_stage_id: stage.id,
+            id: this.props.contact.id
+          }
+        }
+      };
+
+      const config = {
+        url: this.conversationUrl(),
+        data: params,
+        type: 'POST',
+        method: 'POST',
+        dataType: 'text'
+      }
+
+      $.ajax(config).then(() => this.props.handleFilterChange('Closed'));
+    }
   }
 
   closeButton() {
@@ -84,15 +105,30 @@ class ConversationHeader extends React.Component {
 
   reopenButton() {
     return (
-      <form className='edit_conversation' id={`edit_conversation_${this.conversationId()}`} action={this.conversationUrl()} method="post" data-remote={true}>
-        <input type="hidden" name="_method" value="put" />
-        <input type="hidden" name="conversation[state]" value="Open" />
-        <button type="submit" className='btn btn-default'>
-          <i className='fa fa-inbox mr-2'></i>
-          Reopen
-        </button>
-      </form>
+      <button type="button" role="button" className='btn btn-default' onClick={this.reopen}>
+        <i className='fa fa-inbox mr-2'></i>
+        Reopen
+      </button>
     )
+  }
+
+  reopen() {
+    const params = {
+      _method: 'put',
+      conversation: {
+        state: 'Open'
+      }
+    };
+
+    const config = {
+      url: this.conversationUrl(),
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(config).then(() => this.props.handleFilterChange('Open'));
   }
 
   disabledClosedButton() {

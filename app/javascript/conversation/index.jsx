@@ -43,6 +43,7 @@ class Conversation extends React.Component {
   render() {
     return (<div className='Conversation'>
       <ConversationChat
+        handleFilterChange={this.props.handleFilterChange}
         conversation={this.props.conversation}
         contact={this.state.contact}
         parts={this.state.parts}

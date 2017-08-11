@@ -11,6 +11,10 @@ class ConversationsMenu extends React.Component {
     this.arrowRenderer = this.arrowRenderer.bind(this);
   }
 
+  inboxId() {
+    return this.props.inboxId;
+  }
+
   valueRenderer(option) {
     return (
       <div className="view-title">
@@ -41,24 +45,10 @@ class ConversationsMenu extends React.Component {
 
   options() {
     return [
-      { value: 'Closed', label: 'Closed', count: this.closedConversationsCount(), countClassName: 'badge badge-default' },
-      { value: 'Open', label: 'Open', count: this.openConversationsCount(), countClassName: 'badge badge-primary' },
-      { value: 'All', label: 'All', count: this.conversationsCount(), countClassName: 'badge badge-success' }
+      { value: 'Closed', label: 'Closed', count: this.props.closed, countClassName: 'badge badge-default' },
+      { value: 'Open', label: 'Open', count: this.props.open, countClassName: 'badge badge-primary' },
+      { value: 'All', label: 'All', count: this.props.all, countClassName: 'badge badge-success' }
     ]
-  }
-
-  closedConversationsCount() {
-    let isClosed = ((conversation) => conversation.state === 'Closed');
-    return this.props.conversations.filter(isClosed).length;
-  }
-
-  openConversationsCount() {
-    let isOpen = ((conversation) => conversation.state === 'Open');
-    return this.props.conversations.filter(isOpen).length;
-  }
-  
-  conversationsCount() {
-    return this.props.conversations.length;
   }
 
   filterConversations(option) {

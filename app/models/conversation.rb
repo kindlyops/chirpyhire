@@ -1,4 +1,5 @@
 class Conversation < ApplicationRecord
+  paginates_per 25
   belongs_to :contact
   belongs_to :inbox
   belongs_to :phone_number
