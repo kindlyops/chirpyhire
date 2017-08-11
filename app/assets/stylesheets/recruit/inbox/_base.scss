@@ -28,6 +28,14 @@
         background-color: #f2f6f8;
         overflow-y: auto;
 
+        .load-more-conversations {
+          display: flex;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+          background-color: $white;
+        }
+
         .InboxItem {
           border-bottom: 1px solid #eeeeef;
           padding: 10px 10px 10px 15px;

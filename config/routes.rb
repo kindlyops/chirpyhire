@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :inboxes, only: %i[index] do
     resources :conversations, only: %i[index show update]
+    resource :conversations_count, only: %i[show]
   end
 
   resources :conversations, only: [] do

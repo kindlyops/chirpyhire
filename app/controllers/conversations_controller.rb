@@ -1,4 +1,5 @@
 class ConversationsController < ApplicationController
+  PAGE_LIMIT = 25
   layout 'conversations', only: %i[show index]
   decorates_assigned :conversation
   decorates_assigned :conversations
@@ -8,10 +9,10 @@ class ConversationsController < ApplicationController
 
   def index
     @conversations = policy_scope(
-      inbox.recent_conversations.includes(
+      paginated(state_filter(inbox.recent_conversations.includes(
         recent_part: :message,
         contact: %i[open_conversations person]
-      )
+      )))
     )
 
     respond_to do |format|
@@ -38,6 +39,20 @@ class ConversationsController < ApplicationController
   end
 
   private
+
+  def state_filter(scope)
+    return scope if params[:state].blank?
+
+    scope.where(state: params[:state])
+  end
+
+  def paginated(scope)
+    scope.page(page).per(PAGE_LIMIT)
+  end
+
+  def page
+    params[:page].to_i || 1
+  end
 
   def ensure_not_canceled
     redirect_to billing_path, alert: billing_notice if canceled?

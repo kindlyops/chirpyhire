@@ -15,21 +15,13 @@ class Inbox extends React.Component {
     this.state = { 
       subscription: {},
       conversations: [],
+      nextPage: 1,
       inboxes: [],
       filter: 'Open'
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
-  }
-
-  currentFilter() {
-    let conversation = this.conversation();
-
-    if(conversation) {
-      return conversation.state;
-    } else {
-      return 'Open';
-    }
+    this.loadMoreConversations = this.loadMoreConversations.bind(this);
   }
 
   inboxId() {
@@ -45,6 +37,15 @@ class Inbox extends React.Component {
       this.load(nextProps.match.params.inboxId);
       this.reconnect(nextProps.match.params.inboxId);
     }
+  }
+
+  loadMoreConversations(e) {
+    e.preventDefault();
+
+    $.get(this.conversationsURL(this.inboxId(), this.state.nextPage)).then((response) => {
+      let new_conversations = update(this.state.conversations, { $push: response.conversations });
+      this.setState({ conversations: new_conversations, nextPage: response.next_page });
+    });
   }
 
   conversationComponent() {
@@ -99,13 +100,14 @@ class Inbox extends React.Component {
             <div className="Inbox">
               <div className='Conversations'>
                 <ConversationsMenu 
+                  inboxId={this.inboxId()}
                   filter={this.state.filter}
                   conversations={this.state.conversations}
                   handleFilterChange={this.handleFilterChange}
                 />        
                 <ConversationsList
                   inboxId={this.inboxId()}
-                  filter={this.state.filter}
+                  loadMoreConversations={this.loadMoreConversations}
                   conversations={this.conversationsByRecency()}
                  />
               </div>
@@ -114,8 +116,14 @@ class Inbox extends React.Component {
           </div>
   }
 
-  conversationsURL(inboxId) {
-    return `/inboxes/${inboxId}/conversations.json`;
+  conversationsURL(inboxId, page = 1, filter = 'Open') {
+    let baseUrl = `/inboxes/${inboxId}/conversations.json?page=${page}`;
+
+    if (filter !== 'All') {
+      return `${baseUrl}&state=${filter}`;
+    } else {
+      return baseUrl;
+    }
   }
 
   inboxesURL() {
@@ -140,9 +148,8 @@ class Inbox extends React.Component {
       this.setState({ inboxes: inboxes });
     });
     
-    $.get(this.conversationsURL(inboxId)).then((conversations) => {
-      this.setState({ conversations: conversations });
-      this.setState({ filter: this.currentFilter() });
+    $.get(this.conversationsURL(inboxId, 1, this.state.filter)).then((response) => {
+      this.setState({ conversations: response.conversations, nextPage: response.next_page });
     });
   }
 
@@ -188,7 +195,11 @@ class Inbox extends React.Component {
   }
 
   handleFilterChange(filter) {
-    this.setState({ filter: filter });
+    this.setState({ filter: filter }, () => {
+      $.get(this.conversationsURL(this.inboxId(), 1, this.state.filter)).then((response) => {
+        this.setState({ conversations: response.conversations, nextPage: response.next_page });
+      });
+    });
   }
 } 
 

@@ -1,4 +1,5 @@
-json.array! conversations do |conversation|
+json.next_page @conversations.next_page
+json.conversations conversations do |conversation|
   message = conversation.recent_part&.message
 
   json.id conversation.id

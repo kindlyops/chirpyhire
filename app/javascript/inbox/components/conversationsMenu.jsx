@@ -5,10 +5,34 @@ class ConversationsMenu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      all: 0,
+      open: 0,
+      closed:0
+    }
+
     this.filterConversations = this.filterConversations.bind(this);
     this.optionRenderer = this.optionRenderer.bind(this);
     this.valueRenderer = this.valueRenderer.bind(this);
     this.arrowRenderer = this.arrowRenderer.bind(this);
+  }
+
+  inboxId() {
+    return this.props.inboxId;
+  }
+
+  componentDidMount() {
+    $.get(`/inboxes/${this.inboxId()}/conversations_count`).then((all) => {
+      this.setState({ all: all });
+    });
+
+    $.get(`/inboxes/${this.inboxId()}/conversations_count?state=Open`).then((open) => {
+      this.setState({ open: open });
+    });
+
+    $.get(`/inboxes/${this.inboxId()}/conversations_count?state=Closed`).then((closed) => {
+      this.setState({ closed: closed });
+    });
   }
 
   valueRenderer(option) {
@@ -41,24 +65,10 @@ class ConversationsMenu extends React.Component {
 
   options() {
     return [
-      { value: 'Closed', label: 'Closed', count: this.closedConversationsCount(), countClassName: 'badge badge-default' },
-      { value: 'Open', label: 'Open', count: this.openConversationsCount(), countClassName: 'badge badge-primary' },
-      { value: 'All', label: 'All', count: this.conversationsCount(), countClassName: 'badge badge-success' }
+      { value: 'Closed', label: 'Closed', count: this.state.closed, countClassName: 'badge badge-default' },
+      { value: 'Open', label: 'Open', count: this.state.open, countClassName: 'badge badge-primary' },
+      { value: 'All', label: 'All', count: this.state.all, countClassName: 'badge badge-success' }
     ]
-  }
-
-  closedConversationsCount() {
-    let isClosed = ((conversation) => conversation.state === 'Closed');
-    return this.props.conversations.filter(isClosed).length;
-  }
-
-  openConversationsCount() {
-    let isOpen = ((conversation) => conversation.state === 'Open');
-    return this.props.conversations.filter(isOpen).length;
-  }
-  
-  conversationsCount() {
-    return this.props.conversations.length;
   }
 
   filterConversations(option) {
