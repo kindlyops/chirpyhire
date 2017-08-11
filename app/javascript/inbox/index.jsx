@@ -26,6 +26,7 @@ class Inbox extends React.Component {
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.loadMoreConversations = this.loadMoreConversations.bind(this);
+    this.upsertConversations = this.upsertConversations.bind(this);
   }
 
   inboxId() {
@@ -43,18 +44,27 @@ class Inbox extends React.Component {
     }
   }
 
+  upsertConversations(oldConversations, newConversations) {
+    let newState = oldConversations;
+
+    R.forEach((newConvo) => {
+      let index = R.findIndex((oldConvo) => (newConvo.id === oldConvo.id), newState);
+
+      if (index === -1) {
+        newState = update(newState, { $push: [newConvo] });
+      } else {
+        newState = update(newState, { $splice: [[index, 1, newConvo]] })
+      }
+    }, newConversations);
+
+    this.setState({ conversations: newState });
+  }
+
   loadMoreConversations(e) {
     e.preventDefault();
 
     $.get(this.conversationsURL(this.inboxId(), this.state.nextPage)).then((response) => {
-      R.forEach((responseConvo) => {
-        let index = R.findIndex((stateConvo) => (responseConvo.id === stateConvo.id), this.state.conversations);
-        if (index === -1) {
-          let new_conversations = update(this.state.conversations, { $push: [responseConvo] });
-          this.setState({ conversations: new_conversations });
-        }
-      }, response.conversations);
-
+      this.upsertConversations(this.state.conversations, response.conversations);
       this.setState({ nextPage: response.next_page });
     });
   }
@@ -173,16 +183,8 @@ class Inbox extends React.Component {
     $.get(this.conversationURL(inboxId, this.id()) + '.json').then((conversation) => {
       this.setState({ conversations: [conversation], filter: conversation.state }, () => {
         $.get(this.conversationsURL(inboxId, 1, conversation.state)).then((response) => {
+          this.upsertConversations(this.state.conversations, response.conversations);
           this.setState({ nextPage: response.next_page });
-
-          let index = R.findIndex((responseConvo) => {
-            return conversation.id === responseConvo.id;
-          }, response.conversations);
-          if(index !== -1) {
-            this.setState({ conversations: response.conversations });
-          } else {
-            this.setState({ conversations: this.state.conversations.concat(response.conversations) });
-          }
         });
       });
     });
@@ -223,24 +225,7 @@ class Inbox extends React.Component {
   }
 
   _received(receivedConversation) {
-    let index = R.findIndex((conversation) => (
-      receivedConversation.id === conversation.id
-    ), this.state.conversations)
-
-    if(index !== -1) {
-      let new_conversations = update(
-        this.state.conversations,
-        { $splice: [[index, 1, receivedConversation]] }
-      )
-
-      this.setState({
-        conversations: new_conversations
-      })
-    } else {
-      this.setState({
-        conversations: this.state.conversations.concat([receivedConversation])
-      })
-    }
+    this.upsertConversations(this.state.conversations, [receivedConversation]);
   }
 
   handleFilterChange(filter) {
@@ -252,14 +237,8 @@ class Inbox extends React.Component {
       $.get(this.conversationsURL(this.inboxId(), 1, this.state.filter)).then((response) => {
         if (conversation.state !== filter) {
           history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
-          this.setState({ conversations: response.conversations });
         } else {
-          let index = R.findIndex((responseConvo) => (conversation.id === responseConvo.id), response.conversations);
-          if(index !== -1) {
-            this.setState({ conversations: response.conversations });
-          } else {
-            this.setState({ conversations: response.conversations.concat([conversation]) });
-          }
+          this.upsertConversations(this.state.conversations, response.conversations);
         }
 
         this.setState({ nextPage: response.next_page });
