@@ -55,7 +55,11 @@ class ConversationsList extends React.Component {
   }
 
   rowCount() {
-    return this.filteredConversations().length + 1;
+    if (this.props.nextPage) {
+      return this.filteredConversations().length + 1;
+    } else {
+      return this.filteredConversations().length;
+    }
   }
 
   _byState(conversation) {

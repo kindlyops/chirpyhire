@@ -124,6 +124,7 @@ class Inbox extends React.Component {
                   inboxId={this.inboxId()}
                   filter={this.state.filter}
                   loadMoreConversations={this.loadMoreConversations}
+                  nextPage={this.state.nextPage}
                   conversations={this.conversationsByRecency()}
                  />
               </div>
