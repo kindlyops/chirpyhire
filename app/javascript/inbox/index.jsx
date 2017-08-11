@@ -47,8 +47,15 @@ class Inbox extends React.Component {
     e.preventDefault();
 
     $.get(this.conversationsURL(this.inboxId(), this.state.nextPage)).then((response) => {
-      let new_conversations = update(this.state.conversations, { $push: response.conversations });
-      this.setState({ conversations: new_conversations, nextPage: response.next_page });
+      R.forEach((responseConvo) => {
+        let index = R.findIndex((stateConvo) => (responseConvo.id === stateConvo.id), this.state.conversations);
+        if (index === -1) {
+          let new_conversations = update(this.state.conversations, { $push: [responseConvo] });
+          this.setState({ conversations: new_conversations });
+        }
+      }, response.conversations);
+
+      this.setState({ nextPage: response.next_page });
     });
   }
 
@@ -57,6 +64,7 @@ class Inbox extends React.Component {
 
     if (conversation) {
       return <Conversation
+                handleFilterChange={this.handleFilterChange}
                 current_account={this.props.current_account}
                 conversation={conversation} />
     } else {
@@ -165,7 +173,10 @@ class Inbox extends React.Component {
       this.setState({ conversations: [conversation], filter: conversation.state }, () => {
         $.get(this.conversationsURL(inboxId, 1, conversation.state)).then((response) => {
           this.setState({ nextPage: response.next_page });
-          let index = R.findIndex((responseConvo) => (conversation.id === responseConvo.id), response.conversations);
+
+          let index = R.findIndex((responseConvo) => {
+            return conversation.id === responseConvo.id;
+          }, response.conversations);
           if(index !== -1) {
             this.setState({ conversations: response.conversations });
           } else {
@@ -233,12 +244,24 @@ class Inbox extends React.Component {
 
   handleFilterChange(filter) {
     const { history } = this.props;
+    let conversation = this.conversation();
 
     this.loadCounts();
     this.setState({ filter: filter }, () => {
       $.get(this.conversationsURL(this.inboxId(), 1, this.state.filter)).then((response) => {
-        history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
-        this.setState({ conversations: response.conversations, nextPage: response.next_page });
+        if (conversation.state !== filter) {
+          history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
+          this.setState({ conversations: response.conversations });
+        } else {
+          let index = R.findIndex((responseConvo) => (conversation.id === responseConvo.id), response.conversations);
+          if(index !== -1) {
+            this.setState({ conversations: response.conversations });
+          } else {
+            this.setState({ conversations: response.conversations.concat([conversation]) });
+          }
+        }
+
+        this.setState({ nextPage: response.next_page });
       });
     });
   }
