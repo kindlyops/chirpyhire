@@ -7,6 +7,7 @@ import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
 import Inboxes from './components/inboxes'
 import RestartNotificationBar from '../restart_notification_bar'
+import { withRouter } from 'react-router-dom'
 
 class Inbox extends React.Component {
   constructor(props) {
@@ -17,7 +18,10 @@ class Inbox extends React.Component {
       conversations: [],
       nextPage: 1,
       inboxes: [],
-      filter: 'Open'
+      filter: 'Open',
+      all: 0,
+      open: 0,
+      closed: 0
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -101,12 +105,16 @@ class Inbox extends React.Component {
               <div className='Conversations'>
                 <ConversationsMenu 
                   inboxId={this.inboxId()}
+                  all={this.state.all}
+                  closed={this.state.closed}
+                  open={this.state.open}
                   filter={this.state.filter}
                   conversations={this.state.conversations}
                   handleFilterChange={this.handleFilterChange}
                 />        
                 <ConversationsList
                   inboxId={this.inboxId()}
+                  filter={this.state.filter}
                   loadMoreConversations={this.loadMoreConversations}
                   conversations={this.conversationsByRecency()}
                  />
@@ -114,6 +122,10 @@ class Inbox extends React.Component {
               {this.conversationComponent()}
             </div>
           </div>
+  }
+
+  conversationURL(inboxId, id) {
+    return `/inboxes/${inboxId}/conversations/${id}`;
   }
 
   conversationsURL(inboxId, page = 1, filter = 'Open') {
@@ -144,12 +156,37 @@ class Inbox extends React.Component {
   }
 
   load(inboxId) {
+    this.loadCounts();
     $.get(this.inboxesURL()).then((inboxes) => {
       this.setState({ inboxes: inboxes });
     });
-    
-    $.get(this.conversationsURL(inboxId, 1, this.state.filter)).then((response) => {
-      this.setState({ conversations: response.conversations, nextPage: response.next_page });
+
+    $.get(this.conversationURL(inboxId, this.id()) + '.json').then((conversation) => {
+      this.setState({ conversations: [conversation], filter: conversation.state }, () => {
+        $.get(this.conversationsURL(inboxId, 1, conversation.state)).then((response) => {
+          this.setState({ nextPage: response.next_page });
+          let index = R.findIndex((responseConvo) => (conversation.id === responseConvo.id), response.conversations);
+          if(index !== -1) {
+            this.setState({ conversations: response.conversations });
+          } else {
+            this.setState({ conversations: this.state.conversations.concat(response.conversations) });
+          }
+        });
+      });
+    });
+  }
+
+  loadCounts() {
+    $.get(`/inboxes/${this.inboxId()}/conversations_count`).then((all) => {
+      this.setState({ all: all });
+    });
+
+    $.get(`/inboxes/${this.inboxId()}/conversations_count?state=Open`).then((open) => {
+      this.setState({ open: open });
+    });
+
+    $.get(`/inboxes/${this.inboxId()}/conversations_count?state=Closed`).then((closed) => {
+      this.setState({ closed: closed });
     });
   }
 
@@ -195,12 +232,16 @@ class Inbox extends React.Component {
   }
 
   handleFilterChange(filter) {
+    const { history } = this.props;
+
+    this.loadCounts();
     this.setState({ filter: filter }, () => {
       $.get(this.conversationsURL(this.inboxId(), 1, this.state.filter)).then((response) => {
+        history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
         this.setState({ conversations: response.conversations, nextPage: response.next_page });
       });
     });
   }
 } 
 
-export default Inbox
+export default withRouter(Inbox)

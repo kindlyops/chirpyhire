@@ -8,6 +8,7 @@ class ConversationsList extends React.Component {
   constructor(props) {
     super(props);
     this._rowRenderer = this._rowRenderer.bind(this);
+    this._byState = this._byState.bind(this);
     this.conversations = this.conversations.bind(this);
   }
 
@@ -33,7 +34,7 @@ class ConversationsList extends React.Component {
   }
 
   _rowRenderer({ key, index, style }) {
-    let conversations = this.conversations();
+    let conversations = this.filteredConversations();
     let content;
 
     if (conversations[index]) {
@@ -54,7 +55,20 @@ class ConversationsList extends React.Component {
   }
 
   rowCount() {
-    return this.conversations().length + 1;
+    return this.filteredConversations().length + 1;
+  }
+
+  _byState(conversation) {
+    return this.props.filter === conversation.state;
+  }
+
+  filteredConversations() {
+    let filter;
+    if (this.props.filter === 'All') {
+      return this.props.conversations;
+    } else {
+      return this.props.conversations.filter(this._byState);
+    }
   }
 
   conversations() {
