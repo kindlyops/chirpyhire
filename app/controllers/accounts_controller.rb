@@ -5,9 +5,7 @@ class AccountsController < ApplicationController
 
   def stop_impersonating
     stop_impersonating_account
-
     restore_real_account
-
     redirect_to rails_admin.index_path('account')
   end
 
@@ -34,18 +32,15 @@ class AccountsController < ApplicationController
 
   def stop_impersonating_account
     session.delete(:impersonated_account_id)
-    impersonated_account = warden.user(:account)
     warden.logout(:account)
-    impersonated_account
   end
 
   def restore_real_account
     real_account_id = session.delete(:real_account_id)
-
     return if real_account_id.blank?
-
     real_account = Account.find(real_account_id)
     warden.set_user(real_account, scope: :account)
+    @current_account = nil
   end
 
   def update_notice
