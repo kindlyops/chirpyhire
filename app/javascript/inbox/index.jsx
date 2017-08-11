@@ -27,6 +27,7 @@ class Inbox extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.loadMoreConversations = this.loadMoreConversations.bind(this);
     this.upsertConversations = this.upsertConversations.bind(this);
+    this.conversation = this.conversation.bind(this);
   }
 
   inboxId() {
@@ -63,7 +64,7 @@ class Inbox extends React.Component {
   loadMoreConversations(e) {
     e.preventDefault();
 
-    $.get(this.conversationsURL(this.inboxId(), this.state.nextPage)).then((response) => {
+    $.get(this.conversationsURL(this.inboxId(), this.state.nextPage, this.state.filter)).then((response) => {
       this.upsertConversations(this.state.conversations, response.conversations);
       this.setState({ nextPage: response.next_page });
     });
@@ -94,7 +95,7 @@ class Inbox extends React.Component {
       let secondMoment = moment(second.last_conversation_part_created_at);
       let difference = secondMoment - firstMoment;
 
-      if(difference === 0) {
+      if(isNaN(difference) || difference === 0) {
         return first.id - second.id;
       } else {
         return difference;
@@ -180,14 +181,24 @@ class Inbox extends React.Component {
       this.setState({ inboxes: inboxes });
     });
 
-    $.get(this.conversationURL(inboxId, this.id()) + '.json').then((conversation) => {
-      this.setState({ conversations: [conversation], filter: conversation.state }, () => {
-        $.get(this.conversationsURL(inboxId, 1, conversation.state)).then((response) => {
-          this.upsertConversations(this.state.conversations, response.conversations);
-          this.setState({ nextPage: response.next_page });
+    if (this.id()) {
+      $.get(this.conversationURL(inboxId, this.id()) + '.json').then((conversation) => {
+        this.setState({ conversations: [conversation], filter: conversation.state }, () => {
+          $.get(this.conversationsURL(inboxId, 1, conversation.state)).then((response) => {
+            this.upsertConversations(this.state.conversations, response.conversations);
+            this.setState({ nextPage: response.next_page });
+          });
         });
       });
-    });
+    } else {
+      const { history } = this.props;
+
+      $.get(this.conversationsURL(inboxId, 1, 'Open')).then((response) => {
+        history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
+        this.upsertConversations(this.state.conversations, response.conversations);
+        this.setState({ filter: 'Open', nextPage: response.next_page });
+      });
+    }
   }
 
   loadCounts() {
@@ -235,10 +246,13 @@ class Inbox extends React.Component {
     this.loadCounts();
     this.setState({ filter: filter }, () => {
       $.get(this.conversationsURL(this.inboxId(), 1, this.state.filter)).then((response) => {
-        if (conversation.state !== filter) {
-          history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
-        } else {
+        if (conversation && conversation.state === filter) {
           this.upsertConversations(this.state.conversations, response.conversations);
+        } else {
+          if (response.conversations.length) {
+            history.push(this.conversationURL(this.inboxId(), response.conversations[0].id));
+          }
+          this.setState({ conversations: response.conversations });
         }
 
         this.setState({ nextPage: response.next_page });
