@@ -10,8 +10,8 @@ class ConversationsController < ApplicationController
   def index
     @conversations = policy_scope(
       paginated(state_filter(inbox.recent_conversations.includes(
-        recent_part: :message,
-        contact: %i[open_conversations person]
+                               recent_part: :message,
+                               contact: %i[open_conversations person]
       )))
     )
 
