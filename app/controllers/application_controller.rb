@@ -8,19 +8,12 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_account!
 
-  extend Pretender
-  impersonates :account
-
   def current_organization
     @current_organization ||= current_account.organization
   end
 
   def current_inbox
     @current_inbox ||= current_account.inboxes.first
-  end
-
-  def impersonated
-    true_account != current_account
   end
 
   include Pundit
@@ -37,6 +30,16 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def true_account
+    if session[:impersonated_account_id].present?
+      real_account_present = session[:real_account_id].present?
+      Account.find(session[:real_account_id]) if real_account_present
+    else
+      current_account
+    end
+  end
+  helper_method :true_account
 
   def user_not_authorized(exception)
     policy_name = exception.policy.class.to_s.underscore
