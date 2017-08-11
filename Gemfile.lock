@@ -299,8 +299,6 @@ GEM
     premailer-rails (1.9.6)
       actionmailer (>= 3, < 6)
       premailer (~> 1.7, >= 1.7.9)
-    pretender (0.2.1)
-      actionpack
     pry (0.10.4)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -531,7 +529,6 @@ DEPENDENCIES
   phony_rails (~> 0.14.0)
   poltergeist (~> 1.15.0)
   premailer-rails (~> 1.9.6)
-  pretender (~> 0.2.1)
   pry-byebug
   pry-rails
   puma (~> 3.4.0)
