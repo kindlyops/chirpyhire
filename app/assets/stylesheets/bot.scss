@@ -46,7 +46,7 @@
 
   .bot-card--actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     min-width: 45px;
     color: $white;
@@ -142,10 +142,6 @@
 
   .card {
     margin-bottom: 2rem;
-
-    &:last-child {
-      margin-bottom: 1rem;
-    }
 
     .card-text {
       white-space: pre-wrap;
