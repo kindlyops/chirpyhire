@@ -9,13 +9,6 @@
         |:
       span.bot-card--title = g.object.body
     .bot-card--actions
-      .dropdown.mr-3
-        a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
-          |⋯
-        .dropdown-menu.dropdown-menu-right aria-labelledby="actions" 
-          a.dropdown-item role="button"
-            i.fa.fa-times.mr-2 
-            | Remove Goal
       a.bot-card--toggle-body aria-controls="collapseGoal-#{g.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseGoal-#{g.object.object_id}" 
         i.fa.fa-angle-down
   .collapse.bot-action id="collapseGoal-#{g.object.object_id}"
