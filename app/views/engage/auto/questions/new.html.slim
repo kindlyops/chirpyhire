@@ -3,7 +3,7 @@
   = render partial: "engage/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content
+      .Bot
         = render partial: "bots/active_alert", locals: { bot: @bot }
         .card
           = form_for @question, as: :question, url: engage_auto_bot_questions_path(@bot) do |f|
