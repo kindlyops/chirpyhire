@@ -16,10 +16,13 @@ class Bot < ApplicationRecord
   has_many :campaigns, through: :bot_campaigns
   has_many :actions, class_name: 'BotAction'
 
-  accepts_nested_attributes_for :greeting
-  accepts_nested_attributes_for :questions
-  accepts_nested_attributes_for :goals
+  accepts_nested_attributes_for :greeting, reject_if: :all_blank
+  accepts_nested_attributes_for :questions, 
+                                allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :goals, 
+                                allow_destroy: true, reject_if: :all_blank
 
+  validates :greeting, presence: true, on: :update
   validates :goals, presence: true, on: :update
   validates :questions, presence: true, on: :update
   validates :name, presence: true
