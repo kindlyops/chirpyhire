@@ -8,9 +8,6 @@ class Engage::Auto::QuestionsController < ApplicationController
     @question = new_question
 
     if @question.save
-      follow_ups.each do |param|
-      end
-
       redirect_to engage_auto_bot_path(bot), notice: 'Question created!'
     else
       render :new

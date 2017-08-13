@@ -3,24 +3,16 @@ FactoryGirl.define do
     bot
     body { Faker::Lorem.sentence }
 
-    after(:create) do |question|
-      create(:follow_up, question: question)
-    end
+    follow_ups_attributes { [attributes_for(:follow_up)] }
   end
 
   factory :choice_question, parent: :question, class: 'ChoiceQuestion' do
     type { 'ChoiceQuestion' }
-
-    after(:create) do |question|
-      create(:choice_follow_up, question: question)
-    end
+    follow_ups_attributes { [attributes_for(:choice_follow_up)] }
   end
 
   factory :zipcode_question, parent: :question, class: 'ZipcodeQuestion' do
     type { 'ZipcodeQuestion' }
-
-    after(:create) do |question|
-      create(:zipcode_follow_up, question: question)
-    end
+    follow_ups_attributes { [attributes_for(:zipcode_follow_up)] }
   end
 end

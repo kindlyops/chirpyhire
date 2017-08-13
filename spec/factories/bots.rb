@@ -9,6 +9,7 @@ FactoryGirl.define do
     name { Faker::Name.name }
 
     after(:create) do |bot|
+      create(:bot_action, bot: bot, type: 'NextQuestionAction')
       create(:greeting, bot: bot)
       create(:goal, bot: bot)
     end
