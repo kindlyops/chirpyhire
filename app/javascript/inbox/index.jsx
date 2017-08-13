@@ -77,6 +77,7 @@ class Inbox extends React.Component {
       return <Conversation
                 handleFilterChange={this.handleFilterChange}
                 current_account={this.props.current_account}
+                filter={this.state.filter}
                 conversation={conversation} />
     } else {
       return this.emptyInbox();
