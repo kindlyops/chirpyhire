@@ -4,6 +4,13 @@
   .ch--main
     .ch--sub-main
       .Bot
+        - if @bot.active?
+          .alert.alert-info.mb-3 role="alert"
+            strong Your Recruitbot is currently working.
+            '
+            | Before editing,
+            '
+            = link_to "pause #{@bot.name}'s active campaigns.", engage_auto_campaigns_path, class: 'alert-link'
         = form_for @bot, url: engage_auto_bot_path(@bot) do |f|
           = content_for :validation_errors do
             = render partial: "common/validation_errors", locals: { model: @bot }

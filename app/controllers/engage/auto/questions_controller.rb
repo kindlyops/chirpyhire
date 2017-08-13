@@ -36,7 +36,8 @@ class Engage::Auto::QuestionsController < ApplicationController
   def prepare_follow_up(i, follow_up)
     initialize_taggings(i)
 
-    follow_up[:tags].each { |tag| prepare_tag(i, tag) }
+    tags = follow_up[:tags] || []
+    tags.each { |tag| prepare_tag(i, tag) }
   end
 
   def fetch_tag(name)
