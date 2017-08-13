@@ -20,11 +20,15 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def taggings
-    { follow_ups_taggings_attributes: follow_ups_taggings }
+    { taggings_attributes: taggings_attributes }
   end
 
-  def follow_ups_taggings
-    %i[tag_id]
+  def taggings_attributes
+    %i[tag_id].push(tag)
+  end
+
+  def tag
+    { tag_attributes: %i[name] }
   end
 
   class Scope < ApplicationPolicy::Scope

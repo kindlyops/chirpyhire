@@ -8,16 +8,20 @@ class BotFactory::Question::Zipcode < BotFactory::Question
   end
 
   def call
-    question = bot.questions.create(
-      body: body, type: 'ZipcodeQuestion', rank: rank
+    question = bot.questions.create!(
+      body: body, type: 'ZipcodeQuestion', rank: rank,
+      follow_ups_attributes: follow_ups_attributes
     )
     bot.actions.create(type: 'QuestionAction', question_id: question.id)
-    question.follow_ups.create(
+  end
+
+  def follow_ups_attributes
+    [{
       body: follow_up_body,
-      type: question.follow_up_type,
+      type: 'ZipcodeFollowUp',
       rank: 1,
       action: action
-    )
+    }]
   end
 
   def action

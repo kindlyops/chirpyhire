@@ -12,25 +12,22 @@ class BotFactory::Question
   delegate :organization, :next_question_action, to: :bot
 
   def call
-    question = bot.questions.create!(body: body, rank: rank)
-    bot.actions.create(type: 'QuestionAction', question_id: question.id)
-    responses_and_tags.each_with_index do |(response, tag, body), rank|
-      follow_up = create_follow_up(question, body, response, rank + 1)
-      tag(follow_up, tag)
-    end
-  end
-
-  def create_follow_up(question, body, response, rank)
-    question.follow_ups.create!(
-      body: body,
-      response: response,
-      rank: rank,
-      action: action
+    question = bot.questions.create!(
+      body: body, rank: rank, follow_ups_attributes: follow_ups_attributes
     )
+
+    bot.actions.create(type: 'QuestionAction', question_id: question.id)
   end
 
-  def tag(follow_up, tag)
-    follow_up.tags << organization.tags.find_or_create_by(name: tag)
+  def follow_ups_attributes
+    responses_and_tags.map.with_index do |(response, tag, body), rank|
+      {
+        body: body, response: response, rank: rank + 1, action: action,
+        taggings_attributes: [
+          { tag_attributes: { name: tag, organization: organization } }
+        ]
+      }
+    end
   end
 
   def action
