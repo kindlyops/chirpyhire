@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ZipcodeFollowUp do
   let(:question) { create(:zipcode_question) }
   subject { question.follow_ups.first }
-  
+
   describe '#tag' do
     let!(:contact) { create(:contact) }
     let!(:message) { create(:message, body: '30342') }

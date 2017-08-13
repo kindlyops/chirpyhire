@@ -8,6 +8,7 @@ class Engage::Auto::QuestionsController < ApplicationController
     @question = new_question
 
     if @question.save
+      create_action
       redirect_to engage_auto_bot_path(bot), notice: 'Question created!'
     else
       render :new
@@ -15,6 +16,10 @@ class Engage::Auto::QuestionsController < ApplicationController
   end
 
   private
+
+  def create_action
+    bot.actions.create(type: 'QuestionAction', question_id: @question.id)
+  end
 
   def prepare_tags
     follow_ups.each(&method(:prepare_follow_up))
