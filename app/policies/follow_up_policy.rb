@@ -4,11 +4,15 @@ class FollowUpPolicy < ApplicationPolicy
   end
 
   def update?
-    show?
+    show? && !record.bot.active?
+  end
+
+  def new?
+    record.new_record?
   end
 
   def create?
-    record.new_record?
+    record.new_record? && !record.bot.active?
   end
 
   def permitted_attributes

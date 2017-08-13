@@ -20,7 +20,7 @@ class Engage::Auto::QuestionsController < ApplicationController
     follow_ups.each(&method(:prepare_follow_up))
   end
 
-  def prepare_tag(name)
+  def prepare_tag(i, name)
     tag = fetch_tag(name)
     taggings(i) << if tag.present?
                      { tag_id: tag.id }
@@ -30,13 +30,13 @@ class Engage::Auto::QuestionsController < ApplicationController
   end
 
   def tag_hash(name)
-    { name: name, organization: current_organization }
+    { name: name, organization_id: current_organization.id }
   end
 
   def prepare_follow_up(i, follow_up)
     initialize_taggings(i)
 
-    follow_up.tags.each(&method(:prepare_tag))
+    follow_up[:tags].each { |tag| prepare_tag(i, tag) }
   end
 
   def fetch_tag(name)

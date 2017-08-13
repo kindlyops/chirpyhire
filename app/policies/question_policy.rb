@@ -28,7 +28,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def tag
-    { tag_attributes: %i[name] }
+    { tag_attributes: %i[name organization_id] }
   end
 
   class Scope < ApplicationPolicy::Scope

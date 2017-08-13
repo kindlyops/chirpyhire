@@ -28,6 +28,16 @@ en:
       update?: "Pause the bot's active campaigns first before editing."
     choice_question_policy:
       create?: "Pause the bot's active campaigns before adding a question."
+      update?: "Pause the bot's active campaigns before editing a question."
+    zipcode_question_policy:
+      create?: "Pause the bot's active campaigns before adding a question."
+      update?: "Pause the bot's active campaigns before editing a question."
+    choice_follow_up_policy:
+      create?: "Pause the bot's active campaigns before editing a question."
+      update?: "Pause the bot's active campaigns before editing a question."
+    zipcode_follow_up_policy:
+      create?: "Pause the bot's active campaigns before editing a question."
+      update?: "Pause the bot's active campaigns before editing a question."
 en_abbrev:
   datetime:
     distance_in_words:
