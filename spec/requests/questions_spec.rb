@@ -68,6 +68,12 @@ RSpec.describe 'Questions' do
           post engage_auto_bot_questions_path(bot), params: params
           expect(FollowUp.last.tags.first).to eq(tag)
         end
+
+        it 'does not create a new tag' do
+          expect {
+            post engage_auto_bot_questions_path(bot), params: params
+          }.not_to change { Tag.count }
+        end
       end
 
       context 'with new tag' do

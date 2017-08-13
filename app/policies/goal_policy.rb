@@ -1,10 +1,10 @@
 class GoalPolicy < ApplicationPolicy
   def update?
-    show? && !record.bot.active?
+    show? && record.bot.inactive?
   end
 
   def create?
-    record.new_record? && !record.bot.active?
+    record.new_record? && record.bot.inactive?
   end
 
   def permitted_attributes

@@ -28,6 +28,10 @@ class Bot < ApplicationRecord
     name.downcase
   end
 
+  def inactive?
+    !active?
+  end
+
   def active?
     campaigns.any?(&:active?)
   end
