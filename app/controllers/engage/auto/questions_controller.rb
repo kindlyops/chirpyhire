@@ -58,7 +58,7 @@ class Engage::Auto::QuestionsController < ApplicationController
   end
 
   def follow_ups
-    params[:question][:follow_ups_attributes]
+    params[:question][:follow_ups_attributes] || {}
   end
 
   def new_question
