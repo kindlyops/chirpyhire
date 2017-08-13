@@ -4,13 +4,7 @@
   .ch--main
     .ch--sub-main
       .ch--sub-main-content
-        - if @bot.active?
-          .alert.alert-info.mb-3 role="alert"
-            strong Your Recruitbot is currently working.
-            '
-            | Before editing a question,
-            '
-            = link_to "pause #{@bot.name}'s active campaigns.", engage_auto_campaigns_path, class: 'alert-link'
+        = render partial: "bots/active_alert", locals: { bot: @bot }
         .card
           .card-block
             h4.card-title

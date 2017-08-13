@@ -25,7 +25,7 @@ RSpec.describe 'Questions' do
         }
       }
     end
-    
+
     context 'bot not active' do
       it 'does create a question' do
         expect {
@@ -96,7 +96,7 @@ RSpec.describe 'Questions' do
         it 'creates a new tag' do
           expect {
             post engage_auto_bot_questions_path(bot), params: params
-            }.to change { organization.reload.tags.count }.by(1)
+          }.to change { organization.reload.tags.count }.by(1)
         end
       end
 

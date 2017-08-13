@@ -13,7 +13,7 @@ RSpec.describe 'Goals' do
     let(:params) do
       {
         goal: {
-          body: Faker::Lorem.sentence 
+          body: Faker::Lorem.sentence
         }
       }
     end
