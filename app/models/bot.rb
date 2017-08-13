@@ -28,6 +28,10 @@ class Bot < ApplicationRecord
     name.downcase
   end
 
+  def active?
+    campaigns.any?(&:active?)
+  end
+
   def self.recent
     order(created_at: :desc)
   end

@@ -2,10 +2,10 @@
   - if content_for?(:validation_errors)
     = content_for(:validation_errors)
   - if notice.present?
-    .alert.alert-info
+    .alert.alert-info.flash
       span = notice
   - if alert.present?
-    .alert.alert-warning
+    .alert.alert-warning.flash
       span
         = alert
   = devise_error_messages! if devise_controller?

@@ -1,5 +1,5 @@
 $(document).on("ready", function() {
   setTimeout(function() {
-    $('.alert').addClass('fade-out');
+    $('.alert.flash').addClass('fade-out');
   }, 5000);
 });

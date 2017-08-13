@@ -1,10 +1,10 @@
 class QuestionPolicy < ApplicationPolicy
   def update?
-    show?
+    show? && !record.bot.active?
   end
 
   def create?
-    record.new_record?
+    record.new_record? && !record.bot.active?
   end
 
   def permitted_attributes

@@ -26,6 +26,8 @@ en:
     default: 'You cannot perform this action.'
     bot_policy:
       update?: "Pause the bot's active campaigns first before editing."
+    choice_question_policy:
+      create?: "Pause the bot's active campaigns before adding a question."
 en_abbrev:
   datetime:
     distance_in_words:
