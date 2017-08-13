@@ -46,6 +46,7 @@ class Conversation extends React.Component {
         handleFilterChange={this.props.handleFilterChange}
         conversation={this.props.conversation}
         contact={this.state.contact}
+        filter={this.props.filter}
         parts={this.state.parts}
       />
       <ConversationProfile

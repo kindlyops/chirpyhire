@@ -87,7 +87,7 @@ class ConversationHeader extends React.Component {
         dataType: 'text'
       }
 
-      $.ajax(config).then(() => this.props.handleFilterChange('Closed'));
+      $.ajax(config).then(() => this.props.handleFilterChange(this.props.filter));
     }
   }
 
