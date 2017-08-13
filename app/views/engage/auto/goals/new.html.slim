@@ -1,0 +1,36 @@
+.ch--Page
+  = render partial: "engage/header"
+  = render partial: "engage/secondary_header"
+  .ch--main
+    .ch--sub-main
+      .Bot
+        = render partial: "bots/active_alert", locals: { bot: @bot }
+        .card
+          = form_for @goal, url: engage_auto_bot_goals_path(@bot) do |f|
+            = content_for :validation_errors do
+              = render partial: "common/validation_errors", locals: { model: @goal }
+            = f.hidden_field :id
+            .card-header.goal--header
+              .bot-card--label-title
+                span.bot-card--label
+                  | New Goal:
+                span.bot-card--title = f.object.body
+              .bot-card--actions
+            .card-block
+              h5.card-title Candidate stage:
+              h6.card-subtitle.mb-3.text-muted Set the best stage for candidates that reach this goal.
+              = f.collection_select :contact_stage_id, current_organization.contact_stages, :id, :name, { include_blank: true }, class: 'form-control'
+            .card-block
+              h5.card-title Send Message:
+              h6.card-subtitle.mb-3.text-muted Create a meaningful message to end the bot conversation for candidates who reach this goal.
+              .card-text
+                = f.text_area :body, required: true, class: 'form-control', placeholder: 'Write a meaningful message...', data: { autoresize: true }
+            .card-block
+              .form-group
+                = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                    i.fa.fa-arrow-left.mr-2
+                    | Cancel
+                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                    i.fa.fa-check.mr-2
+                    | Create
+

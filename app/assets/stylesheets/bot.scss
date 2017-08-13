@@ -12,6 +12,72 @@
   }
 }
 
+.bot-card--label {
+  color: #dddddd;
+  margin-right: .5rem;
+}
+
+.bot-card--actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 45px;
+  color: $white;
+  font-size: 1.25rem;
+}
+
+.bot-card--title {
+  color: $white;
+  width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bot-card--label-title {
+  display: flex;
+  align-items: center;
+}
+
+.bot-card--toggle-body {
+  font-size: 1.25rem;
+  i {
+    color: $white;
+  }
+}
+
+
+.badge-next-question {
+  background-color: $brand-success;
+}
+
+.badge-question {
+  background-color: mix($brand-success, $brand-primary)
+}
+
+.badge-goal {
+  background-color: $brand-primary;
+}
+
+.greeting--header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $brand-success;
+}
+
+.question--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: mix($brand-success, $brand-primary);
+}
+
+.goal--header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $brand-primary;
+}
+
 .Bot {
   width: 80%;
   margin: auto;
@@ -36,40 +102,6 @@
       &:focus {
         outline: none
       }
-    }
-  }
-
-  .bot-card--label {
-    color: #dddddd;
-    margin-right: .5rem;
-  }
-
-  .bot-card--actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    min-width: 45px;
-    color: $white;
-    font-size: 1.25rem;
-  }
-
-  .bot-card--title {
-    color: $white;
-    width: 350px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bot-card--label-title {
-    display: flex;
-    align-items: center;
-  }
-
-  .bot-card--toggle-body {
-    font-size: 1.25rem;
-    i {
-      color: $white;
     }
   }
 
@@ -106,38 +138,6 @@
         font-size: 1rem;
       }
     }
-  }
-
-
-  .badge-next-question {
-    background-color: $brand-success;
-  }
-
-  .badge-question {
-    background-color: mix($brand-success, $brand-primary)
-  }
-
-  .badge-goal {
-    background-color: $brand-primary;
-  }
-
-  .greeting--header {
-    display: flex;
-    justify-content: space-between;
-    background-color: $brand-success;
-  }
-
-  .question--header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: mix($brand-success, $brand-primary);
-  }
-
-  .goal--header {
-    display: flex;
-    justify-content: space-between;
-    background-color: $brand-primary;
   }
 
   .card {

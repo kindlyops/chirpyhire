@@ -1,0 +1,7 @@
+- if bot.active?
+  .alert.alert-info.mb-3 role="alert"
+    strong Your Recruitbot is active.
+    '
+    | Before editing,
+    '
+    = link_to "pause #{bot.name}'s active campaigns.", engage_auto_campaigns_path, class: 'alert-link'

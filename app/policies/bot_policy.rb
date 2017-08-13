@@ -47,7 +47,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def no_active_campaigns?
-    record.campaigns.none?(&:active?)
+    !record.active?
   end
 
   class Scope < ApplicationPolicy::Scope

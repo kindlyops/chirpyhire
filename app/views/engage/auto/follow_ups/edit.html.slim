@@ -3,7 +3,8 @@
   = render partial: "engage/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content
+      .Bot
+        = render partial: "bots/active_alert", locals: { bot: @bot }
         .card
           .card-block
             h4.card-title

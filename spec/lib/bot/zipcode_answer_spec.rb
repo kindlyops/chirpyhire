@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Bot::ZipcodeAnswer do
-  let(:follow_up) { create(:zipcode_follow_up) }
+  let(:follow_up) { create(:zipcode_question).follow_ups.first }
   let!(:message) { create(:message, :conversation_part, body: body) }
   let(:contact) { message.contact }
 

@@ -15,6 +15,8 @@ class FollowUp < ApplicationRecord
 
   before_validation :ensure_rank
 
+  accepts_nested_attributes_for :taggings, reject_if: :all_blank
+
   def action
     return if super.blank?
 

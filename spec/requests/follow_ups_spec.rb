@@ -10,7 +10,7 @@ RSpec.describe 'Follow Ups' do
 
   let(:bot) { create(:bot, organization: organization) }
   let(:question) { create(:question, bot: bot) }
-  let!(:follow_up) { create(:follow_up, question: question) }
+  let!(:follow_up) { question.follow_ups.first }
 
   describe 'updating' do
     let!(:new_tags) { [Faker::Name.name, Faker::Name.name] }
