@@ -1,0 +1,22 @@
+.nested-fields.card.mb-2
+  .card-block
+    = f.hidden_field :rank, class: 'follow-up-rank'
+    .d-flex.justify-content-between.align-items-center
+      h4.card-title New Follow Up
+      = link_to_remove_association f do
+          i.fa.fa-trash-o
+    .form-group.mb-3
+      = f.label :response, class: 'col-form-label'
+      = f.text_field :response, required: true, class: 'form-control', id: 'response', placeholder: 'Enter a simple response'
+      small.form-text.text-muted Enter a multiple choice response. Candidates will be able to select this choice from their mobile phone.
+    .form-group.mb-3
+      = f.label :body, class: 'col-form-label'
+      = f.text_field :body, required: true, class: 'form-control', id: 'body', placeholder: 'Add a follow up...'
+      small.form-text.text-muted Enter what your bot will follow up the multiple choice response with.
+    .form-group.mb-3
+      = f.label :bot_action_id, 'Next Step', class: 'col-form-label'
+      = f.collection_select :bot_action_id, @bot.actions.order(:type, :id), :id, :select_label, { include_blank: false }, class: 'form-control'
+      small.form-text.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
+    .form-group.mb-3#tags
+      = label_tag 'question[follow_ups_attributes][tags][]', 'Tags', class: 'col-form-label', id: 'tags-label'
+      = select_tag 'question[follow_ups_attributes][tags][]', options_for_select(current_organization.tags.pluck(:name), []), class: 'form-control', multiple: 'multiple', style: 'width: 100%', id: 'tags-select'

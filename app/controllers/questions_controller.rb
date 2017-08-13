@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+
   def update
     question.update(permitted_attributes(Question))
 
