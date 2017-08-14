@@ -46,6 +46,7 @@ class CandidatesController < ApplicationController
 
     scope
       .contact_stage_filter(contact_stage_params)
+      .campaigns_filter(campaigns_params)
       .name_filter(name_params)
       .tag_filter(tag_params)
       .zipcode_filter(zipcode_params)
@@ -62,7 +63,11 @@ class CandidatesController < ApplicationController
 
   def permitted_params_keys
     %i[city state county zipcode name messages]
-      .concat([tag: [], contact_stage: []])
+      .concat([tag: [], contact_stage: [], campaigns: []])
+  end
+
+  def campaigns_params
+    permitted_params.to_h[:campaigns]
   end
 
   def messages_params

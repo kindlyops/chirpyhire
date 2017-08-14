@@ -4,6 +4,14 @@ module ContactFilters
   extend ActiveSupport::Concern
 
   class_methods do
+
+    def campaigns_filter(campaign_ids)
+      return current_scope if campaign_ids.blank?
+
+      joins(:manual_message_participants)
+        .where(manual_message_participants: { manual_message_id: campaign_ids })
+    end
+
     def contact_stage_filter(stage_ids)
       return current_scope if stage_ids.blank?
 
