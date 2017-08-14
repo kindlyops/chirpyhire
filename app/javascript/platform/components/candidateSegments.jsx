@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CandidateSegment from './candidateSegment'
-import update from 'immutability-helper'
 
 class CandidateSegments extends React.Component {
   render() {
