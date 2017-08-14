@@ -1,6 +1,11 @@
 class Engage::Manual::MessagesController < ApplicationController
   def index
     @campaigns = policy_scope(ManualMessage)
+
+    respond_to do |format|
+      format.json
+      format.html
+    end
   end
 
   def create
@@ -31,12 +36,11 @@ class Engage::Manual::MessagesController < ApplicationController
   def filtered_contacts
     return scope if audience_params.blank?
 
-    scope
-      .contact_stage_filter(contact_stage_params)
-      .name_filter(name_params)
-      .tag_filter(tag_params)
-      .zipcode_filter(zipcode_params)
-      .messages_filter(messages_params)
+    fs = scope
+    %i[contact_stage campaigns name tag zipcode messages].each do |chain|
+      fs = fs.send("#{chain}_filter", send("#{chain}_params"))
+    end
+    fs
   end
 
   def scope
@@ -49,11 +53,15 @@ class Engage::Manual::MessagesController < ApplicationController
 
   def audience_params_keys
     %i[city state county zipcode name messages]
-      .concat([tag: [], contact_stage: []])
+      .concat([tag: [], contact_stage: [], campaigns: []])
   end
 
   def audience_params
     permitted_params.to_h[:manual_message][:audience]
+  end
+
+  def campaigns_params
+    audience_params[:campaigns]
   end
 
   def messages_params

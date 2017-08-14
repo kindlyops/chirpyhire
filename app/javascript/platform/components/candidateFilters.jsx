@@ -35,6 +35,13 @@ class CandidateFilters extends React.Component {
         checked: false,
         icon: 'fa-cube',
         options: []
+      },
+      campaigns: {
+        attribute: 'Campaigns',
+        name: 'campaigns',
+        checked: false,
+        icon: 'fa-paper-plane-o',
+        options: []
       }
     }
 
@@ -77,6 +84,11 @@ class CandidateFilters extends React.Component {
       let newState = update(this.state, { contact_stage: { options: { $set: stages }}});
       this.setState(newState);
     });
+
+    $.get('/engage/manual/campaigns').then(campaigns => {
+      let newState = update(this.state, { campaigns: { options: { $set: campaigns }}});
+      this.setState(newState);
+    });
   }
 
   render() {
@@ -111,6 +123,11 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.messages} />
+          <CandidateFilter
+            handleSelectChange={this.props.handleSelectChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.campaigns} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 

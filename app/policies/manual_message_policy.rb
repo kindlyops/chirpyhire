@@ -9,7 +9,7 @@ class ManualMessagePolicy < ApplicationPolicy
 
   def audience
     %i[city state county zipcode name messages]
-      .concat([tag: [], contact_stage: []])
+      .concat([tag: [], contact_stage: [], campaigns: []])
   end
 
   class Scope < ApplicationPolicy::Scope

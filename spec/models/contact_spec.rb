@@ -19,6 +19,78 @@ RSpec.describe Contact do
     end
   end
 
+  describe '.tag_filter' do
+    context 'two tags' do
+      let!(:contact) { create(:contact) }
+      let(:organization) { contact.organization }
+      let(:tag) { create(:tag) }
+      let(:tag2) { create(:tag) }
+
+      context 'contact has the two tags' do
+        before do
+          contact.tags << tag
+          contact.tags << tag2
+        end
+
+        it 'has the contact with two tags' do
+          expect(organization.contacts.tag_filter([tag.id, tag2.id])).to include(contact)
+        end
+      end
+
+      context 'has only one tag' do
+        before do
+          contact.tags << tag
+        end
+
+        it 'does not include the contact' do
+          expect(organization.contacts.tag_filter([tag.id, tag2.id])).not_to include(contact)
+        end
+      end
+
+      context 'has only no tags' do
+        it 'does not include the contact' do
+          expect(organization.contacts.tag_filter([tag.id, tag2.id])).not_to include(contact)
+        end
+      end
+    end
+  end
+
+  describe '.campaigns_filter' do
+    context 'two campaigns' do
+      let!(:contact) { create(:contact) }
+      let(:organization) { contact.organization }
+      let(:campaign) { create(:manual_message) }
+      let(:campaign2) { create(:manual_message) }
+
+      context 'contact has the two campaigns' do
+        before do
+          contact.manual_message_participants.create(manual_message: campaign)
+          contact.manual_message_participants.create(manual_message: campaign2)
+        end
+
+        it 'has the contact with two campaigns' do
+          expect(organization.contacts.campaigns_filter([campaign.id, campaign2.id])).to include(contact)
+        end
+      end
+
+      context 'has only one campaign' do
+        before do
+          contact.manual_message_participants.create(manual_message: campaign)
+        end
+
+        it 'does not include the contact' do
+          expect(organization.contacts.campaigns_filter([campaign.id, campaign2.id])).not_to include(contact)
+        end
+      end
+
+      context 'has only no campaigns' do
+        it 'does not include the contact' do
+          expect(organization.contacts.campaigns_filter([campaign.id, campaign2.id])).not_to include(contact)
+        end
+      end
+    end
+  end
+
   describe '.messages_filter' do
     context 'contacts' do
       let!(:contact_1) { create(:contact) }

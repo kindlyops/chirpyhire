@@ -1,3 +1,12 @@
+.CandidateFilter {
+  .Select-value-label {
+    width: 124px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 .Recruit {
   .Inbox {
     .Conversations {

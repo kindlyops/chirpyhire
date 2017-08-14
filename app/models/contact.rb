@@ -18,6 +18,7 @@ class Contact < ApplicationRecord
   has_many :messages, through: :conversation_parts
   has_many :taggings
   has_many :tags, through: :taggings
+  has_many :manual_message_participants
 
   has_many :contacts_imports
   has_many :imports, through: :contacts_imports
