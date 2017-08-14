@@ -83,8 +83,8 @@ class CandidatesTable extends React.Component {
                 />
                 <Column
                   width={100}
-                  label='Zipcode'
-                  dataKey='zipcode'
+                  label='Stage'
+                  dataKey='stage'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />

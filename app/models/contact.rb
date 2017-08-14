@@ -39,6 +39,8 @@ class Contact < ApplicationRecord
   validates :stage, presence: true
   validates :nickname, presence: true, unless: :name_present?
 
+  delegate :name, to: :stage, prefix: true, allow_nil: true
+
   def self.active
     joins(conversations: [parts: :message]).merge(Message.active).distinct
   end
