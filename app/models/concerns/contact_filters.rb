@@ -8,10 +8,7 @@ module ContactFilters
     def campaigns_filter(campaign_ids)
       return current_scope if campaign_ids.blank?
 
-      joins(:manual_message_participants)
-        .where(manual_message_participants: { 
-          manual_message_id: campaign_ids.map(&:to_i) 
-        }).group(:id).having('count(*) = ?', campaign_ids.count)
+      joins(:manual_message_participants).where(campaigns_query, campaign_ids.map(&:to_i))
     end
 
     def campaigns_query
