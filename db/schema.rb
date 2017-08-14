@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170814005317) do
+ActiveRecord::Schema.define(version: 20170814014236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,9 @@ ActiveRecord::Schema.define(version: 20170814005317) do
     t.bigint "question_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["bot_id"], name: "index_bot_actions_on_bot_id"
+    t.index ["deleted_at"], name: "index_bot_actions_on_deleted_at"
     t.index ["goal_id"], name: "index_bot_actions_on_goal_id"
     t.index ["question_id"], name: "index_bot_actions_on_question_id"
   end
@@ -282,9 +284,11 @@ ActiveRecord::Schema.define(version: 20170814005317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "contact_stage_id"
-    t.index ["bot_id", "rank"], name: "index_goals_on_bot_id_and_rank", unique: true
+    t.datetime "deleted_at"
     t.index ["bot_id"], name: "index_goals_on_bot_id"
     t.index ["contact_stage_id"], name: "index_goals_on_contact_stage_id"
+    t.index ["deleted_at"], name: "index_goals_on_deleted_at"
+    t.index ["rank", "bot_id"], name: "index_goals_on_rank_and_bot_id", unique: true, where: "(deleted_at IS NULL)"
   end
 
   create_table "greetings", force: :cascade do |t|

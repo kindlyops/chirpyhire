@@ -1,4 +1,5 @@
 class BotAction < ApplicationRecord
+  acts_as_paranoid
   belongs_to :bot
   has_many :follow_ups
 

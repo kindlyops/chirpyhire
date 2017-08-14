@@ -188,6 +188,12 @@ RSpec.describe 'Questions' do
         }.to change { bot.questions.count }.by(-1)
       end
 
+      it 'destroys the question action' do
+        expect {
+          delete engage_auto_bot_question_path(bot, question)
+        }.to change { bot.reload.actions.count }.by(-1)
+      end
+
       it 'changes the other question ranks' do
         expect {
           delete engage_auto_bot_question_path(bot, question)

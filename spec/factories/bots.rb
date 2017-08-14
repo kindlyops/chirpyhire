@@ -18,7 +18,10 @@ FactoryGirl.define do
 
     trait :question do
       after(:create) do |bot|
-        create(:choice_question, bot: bot)
+        bot.actions.create(
+          type: 'QuestionAction',
+          question_id: create(:choice_question, bot: bot).id
+        )
       end
     end
   end
