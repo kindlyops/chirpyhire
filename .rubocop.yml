@@ -48,6 +48,7 @@ Metrics/BlockLength:
   Exclude:
     - 'config/**/*'
     - 'spec/**/*'
+    - 'app/models/concerns/contact_filters.rb'
 
 Style/BlockDelimiters:
   Exclude:

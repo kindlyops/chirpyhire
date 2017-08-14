@@ -44,13 +44,11 @@ class CandidatesController < ApplicationController
   def filtered_candidates
     return scope if permitted_params.blank?
 
-    scope
-      .contact_stage_filter(contact_stage_params)
-      .campaigns_filter(campaigns_params)
-      .name_filter(name_params)
-      .tag_filter(tag_params)
-      .zipcode_filter(zipcode_params)
-      .messages_filter(messages_params)
+    fs = scope
+    %i[contact_stage campaigns name tag zipcode messages].each do |chain|
+      fs = fs.send("#{chain}_filter", send("#{chain}_params"))
+    end
+    fs
   end
 
   def scope
