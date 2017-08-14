@@ -1,4 +1,5 @@
 class Question < ApplicationRecord
+  acts_as_paranoid
   belongs_to :bot
   has_many :campaign_contacts
   has_many :follow_ups
@@ -14,6 +15,8 @@ class Question < ApplicationRecord
   validates :follow_ups, presence: true
   validate :unformatted_body
   before_validation :ensure_rank
+
+  delegate :follow_ups, to: :action, prefix: true
 
   def self.ranked
     order(:rank)

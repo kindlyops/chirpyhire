@@ -74,8 +74,12 @@ Rails.application.routes.draw do
     namespace :auto do
       resources :campaigns
       resources :bots do
-        resources :goals
+        resources :goals do
+          resource :remove, controller: 'goals/removes'
+        end
+
         resources :questions do
+          resource :remove, controller: 'questions/removes'
           resources :follow_ups
         end
 

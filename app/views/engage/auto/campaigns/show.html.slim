@@ -19,10 +19,11 @@
             = b.hidden_field :id
             .card.CampaignSettings
               .card-block
-                h5.card-title Campaign Settings
-                h6.card-subtitle.mb-4.text-muted Connect a Survey to a team to have it pre-screen candidates automatically.
-                h6.card-subtitle.mb-2 Team
-                = b.collection_select :inbox_id, current_organization.inboxes, :id, :name, {}, class: 'form-control'
-              .card-block
-                h6.card-subtitle.mb-2 Survey
-                = b.collection_select :bot_id, current_organization.bots, :id, :name, {}, class: 'form-control'
+                .form-group
+                  h5.card-title Campaign Settings
+                  h6.card-subtitle.mb-4.text-muted Connect a Survey to a team to have it pre-screen candidates automatically.
+                  h6.card-subtitle.mb-2 Team
+                  = b.collection_select :inbox_id, current_organization.inboxes, :id, :name, {}, class: 'form-control'
+                .form-group.mt-4
+                  h6.card-subtitle.mb-2 Survey
+                  = b.collection_select :bot_id, current_organization.bots, :id, :name, {}, class: 'form-control'

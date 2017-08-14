@@ -31,7 +31,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def questions_attributes
-    %i[body id active].push(follow_ups)
+    %i[body id active _destroy rank].push(follow_ups)
   end
 
   def follow_ups
@@ -43,7 +43,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def goals_attributes
-    %i[body contact_stage_id id]
+    %i[body contact_stage_id id _destroy rank]
   end
 
   def no_active_campaigns?

@@ -1,4 +1,4 @@
-.card
+.card.nested-fields
   = f.hidden_field :id
   = f.hidden_field :type
   div class="card-header question--header"
@@ -10,29 +10,36 @@
         |:
       span.bot-card--title = f.object.body(formatted: false)
     .bot-card--actions
-      .active-switch.mr-3
-        = f.check_box :active, class: 'ch-toggle ch-toggle-round', id: "question-#{f.object.id}-active"
-        label.ch-toggle-label for="question-#{f.object.id}-active"
+      - if f.object.bot.questions.count > 1
+        .dropdown.mr-3
+          a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
+            |⋯
+          .dropdown-menu.dropdown-menu-right aria-labelledby="actions"
+            = link_to engage_auto_bot_question_remove_path(f.object.bot, f.object), class: 'dropdown-item', role: 'button' do
+              i.fa.fa-times.mr-2
+              | Remove Question
       a.bot-card--toggle-body aria-controls="collapseQuestion-#{f.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseQuestion-#{f.object.object_id}" 
         i.fa.fa-angle-down
   .collapse.bot-action id="collapseQuestion-#{f.object.object_id}"
     .card-block
-      h5.card-title What the bot asks:
-      h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
-      .card-text
-        = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autoresize: true }
+      .form-group
+        h5.card-title What the bot asks:
+        h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
+        .card-text
+          = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autoresize: true }
       - if f.object.type == 'ZipcodeQuestion'
-        h5.card-title.mt-3 Response:
-        h6.card-subtitle.text-muted Candidates text a valid 5 digit zipcode to continue.
-    .card-block
-      h5.card-title Follow ups based on the candidate's answer:
-      h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
-      .card-text
-        div id="question-#{f.object.id}-follow-ups"
-          = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
-            = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
-        - if f.object.type != 'ZipcodeQuestion'
-          = link_to new_engage_auto_bot_question_follow_up_path(f.object.bot, f.object), class: 'btn btn-default', role: 'button' do
-              i.fa.fa-plus.mr-2
-              | New Follow Up
+        .form-group
+          h5.card-title.mt-3 Response:
+          h6.card-subtitle.text-muted Candidates text a valid 5 digit zipcode to continue.
+      .form-group
+        h5.card-title Follow ups based on the candidate's answer:
+        h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
+        .card-text
+          div id="question-#{f.object.id}-follow-ups"
+            = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
+              = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
+          - if f.object.type != 'ZipcodeQuestion'
+            = link_to new_engage_auto_bot_question_follow_up_path(f.object.bot, f.object), class: 'btn btn-default', role: 'button' do
+                i.fa.fa-plus.mr-2
+                | New Follow Up
 

@@ -1,0 +1,2 @@
+class NextQuestionActionPolicy < BotActionPolicy
+end

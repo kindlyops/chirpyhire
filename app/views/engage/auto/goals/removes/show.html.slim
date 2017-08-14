@@ -1,0 +1,49 @@
+.ch--Page
+  = render partial: "engage/header"
+  = render partial: "engage/secondary_header"
+  .ch--main
+    .ch--sub-main
+      .Bot
+        = render partial: "bots/active_alert", locals: { bot: @bot }
+        h3 Remove this goal?
+        h5.mb-3.text-muted Are you sure you want to remove this goal?
+        .card
+          = form_for @goal, url: engage_auto_bot_goal_path(@bot, @goal), method: :delete do |f|
+            = content_for :validation_errors do
+              = render partial: "common/validation_errors", locals: { model: @goal }
+            = f.hidden_field :id
+            .card-header.goal--header
+              .bot-card--label-title
+                span.bot-card--label
+                  | Goal
+                  '
+                  = f.object.rank
+                  |:
+                span.bot-card--title = f.object.body
+              .bot-card--actions
+            .card-block
+              .form-group
+                h5.card-title Candidate stage:
+                h6.card-subtitle.mb-3.text-muted = f.object.decorate.contact_stage_name
+              .form-group
+                h5.card-title Message:
+                .card
+                  .card-block
+                    .card-text = f.object.body
+              - if @goal.follow_ups.count.positive?
+                .form-group
+                  h5.card-title Migrate Follow Ups:
+                  h6.card-subtitle.mb-3.text-muted
+                    = pluralize(@goal.follow_ups.count, 'follow up')
+                    '
+                    ' lead to this goal. To remove this goal, update these follow ups' next steps.
+                  = select_tag "bot_action_id", options_from_collection_for_select(@bot.actions.where.not(id: @goal.action.id).order(:type, :id), :id, :select_label), { include_blank: false, class: 'form-control' }
+                  small.form-text.text-muted Migrate to another goal, the 'next question', or a specific question.
+              .form-group
+                = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                    i.fa.fa-arrow-left.mr-2
+                    | Cancel
+                = f.button type: 'submit', class: 'btn btn-danger', role: 'button' do
+                    i.fa.fa-trash-o.mr-2
+                    | Remove
+
