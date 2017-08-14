@@ -1,7 +1,7 @@
 class Goal < ApplicationRecord
   belongs_to :bot
   belongs_to :contact_stage, optional: true
-  has_one :action, class_name: 'GoalAction', dependent: :destroy
+  has_one :action, class_name: 'GoalAction'
 
   validates :rank, :body, presence: true
   before_validation :ensure_rank

@@ -25,6 +25,7 @@ class Engage::Auto::GoalsController < ApplicationController
   def destroy_goal
     Goal.transaction do
       migrate_follow_ups if params[:bot_action_id].present?
+      @goal.action.destroy
       @goal.destroy
       rerank_goals
     end

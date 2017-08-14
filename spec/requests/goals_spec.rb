@@ -61,6 +61,12 @@ RSpec.describe 'Goals' do
         }.to change { bot.goals.count }.by(-1)
       end
 
+      it 'destroys the goal action' do
+        expect {
+          delete engage_auto_bot_goal_path(bot, goal)
+        }.to change { bot.reload.actions.count }.by(-1)
+      end
+
       it 'changes the other goal ranks' do
         expect {
           delete engage_auto_bot_goal_path(bot, goal)
