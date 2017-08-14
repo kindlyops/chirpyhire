@@ -60,6 +60,25 @@ RSpec.describe Bot::Response do
         subject.body
       end
 
+      context 'and the question is deleted' do
+        before do
+          question.destroy
+        end
+
+        it 'does not greet the candidate' do
+          allow(question).to receive(:follow_up)
+          expect(bot).not_to receive(:greet)
+
+          subject.body
+        end
+
+        it 'follows up on the question' do
+          expect(question).to receive(:follow_up)
+
+          subject.body
+        end
+      end
+
       context 'calling body twice' do
         it 'follows up with the candidate once' do
           expect(question).to receive(:follow_up).exactly(:once) { 'follow up' }

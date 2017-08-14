@@ -10,8 +10,10 @@ FactoryGirl.define do
 
     after(:create) do |bot|
       create(:bot_action, bot: bot, type: 'NextQuestionAction')
+      bot.actions.create(
+        type: 'GoalAction', goal_id: create(:goal, bot: bot).id
+      )
       create(:greeting, bot: bot)
-      create(:goal, bot: bot)
     end
 
     trait :question do
