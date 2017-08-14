@@ -9,7 +9,13 @@ module ContactFilters
       return current_scope if campaign_ids.blank?
 
       joins(:manual_message_participants)
-        .where(manual_message_participants: { manual_message_id: campaign_ids })
+        .where(manual_message_participants: { 
+          manual_message_id: campaign_ids.map(&:to_i) 
+        }).group(:id).having('count(*) = ?', campaign_ids.count)
+    end
+
+    def campaigns_query
+      'manual_message_participants.manual_message_id = ALL (array[?])'
     end
 
     def contact_stage_filter(stage_ids)
