@@ -8,6 +8,7 @@ FactoryGirl.define do
         organization.contact_stages.create(name: 'Screened', rank: 2)
         organization.contact_stages.create(name: 'Not Now', rank: 3)
         organization.contact_stages.create(name: 'Scheduled', rank: 4)
+        organization.contact_stages.create(name: 'No Show', rank: 5)
       end
     end
 
