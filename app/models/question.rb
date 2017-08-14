@@ -4,7 +4,7 @@ class Question < ApplicationRecord
   has_many :campaign_contacts
   has_many :follow_ups
   has_many :ranked_follow_ups, -> { ranked }, class_name: 'FollowUp'
-  has_one :action, class_name: 'QuestionAction', dependent: :destroy
+  has_one :action, class_name: 'QuestionAction'
 
   validates :rank, presence: true
   validates :type, inclusion: { in: %w[ZipcodeQuestion ChoiceQuestion] }
