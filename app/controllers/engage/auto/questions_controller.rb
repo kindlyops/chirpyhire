@@ -24,9 +24,11 @@ class Engage::Auto::QuestionsController < ApplicationController
   private
 
   def destroy_question
-    migrate_action_follow_ups if params[:bot_action_id].present?
-    @question.destroy
-    rerank_questions
+    Question.transaction do
+      migrate_action_follow_ups if params[:bot_action_id].present?
+      @question.destroy
+      rerank_questions
+    end
   end
 
   def rerank_questions
