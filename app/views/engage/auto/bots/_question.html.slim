@@ -10,13 +10,14 @@
         |:
       span.bot-card--title = f.object.body(formatted: false)
     .bot-card--actions
-      .dropdown.mr-3
-        a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
-          |⋯
-        .dropdown-menu.dropdown-menu-right aria-labelledby="actions"
-          = link_to engage_auto_bot_question_remove_path(f.object.bot, f.object), class: 'dropdown-item', role: 'button' do
-            i.fa.fa-times.mr-2
-            | Remove Question
+      - if f.object.bot.questions.count > 1
+        .dropdown.mr-3
+          a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
+            |⋯
+          .dropdown-menu.dropdown-menu-right aria-labelledby="actions"
+            = link_to engage_auto_bot_question_remove_path(f.object.bot, f.object), class: 'dropdown-item', role: 'button' do
+              i.fa.fa-times.mr-2
+              | Remove Question
       a.bot-card--toggle-body aria-controls="collapseQuestion-#{f.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseQuestion-#{f.object.object_id}" 
         i.fa.fa-angle-down
   .collapse.bot-action id="collapseQuestion-#{f.object.object_id}"

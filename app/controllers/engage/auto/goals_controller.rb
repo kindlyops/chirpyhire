@@ -14,7 +14,31 @@ class Engage::Auto::GoalsController < ApplicationController
     end
   end
 
+  def destroy
+    @goal = authorize(bot.goals.find(params[:id]))
+    migrate_follow_ups if params[:bot_action_id].present?
+    @goal.destroy
+    rerank_goals
+    redirect_to engage_auto_bot_path(bot), notice: 'Goal removed!'
+  end
+
   private
+
+  def rerank_goals
+    bot.reload.ranked_goals.each_with_index do |goal, i|
+      goal.update(rank: i + 1)
+    end
+  end
+
+  def migrate_follow_ups
+    @goal.follow_ups.find_each do |follow_up|
+      follow_up.update(action: new_action)
+    end
+  end
+
+  def new_action
+    @new_action ||= authorize(bot.actions.find(params[:bot_action_id]), :show?)
+  end
 
   def create_action
     bot.actions.create(type: 'GoalAction', goal_id: @goal.id)

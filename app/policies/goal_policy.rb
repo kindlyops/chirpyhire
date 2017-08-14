@@ -7,6 +7,10 @@ class GoalPolicy < ApplicationPolicy
     record.new_record? && record.bot.inactive?
   end
 
+  def destroy?
+    update? && record.bot.goals.count > 1
+  end
+
   def permitted_attributes
     %i[body contact_stage_id id]
   end

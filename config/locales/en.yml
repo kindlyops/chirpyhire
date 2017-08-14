@@ -24,6 +24,14 @@
 en:
   pundit:
     default: 'You cannot perform this action.'
+    goal_policy:
+      destroy?: 'Each bot must have at least one goal.'
+    question_policy:
+      destroy?: 'Each bot must have at least one question.'
+    choice_question_policy:
+      destroy?: 'Each bot must have at least one question.'
+    zipcode_question_policy:
+      destroy?: 'Each bot must have at least one question.'
     bot_policy:
       update?: "Pause the bot's active campaigns first before editing."
     choice_question_policy:

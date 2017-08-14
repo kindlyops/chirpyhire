@@ -7,6 +7,10 @@ class QuestionPolicy < ApplicationPolicy
     record.new_record? && record.bot.inactive?
   end
 
+  def destroy?
+    update? && record.bot.questions.count > 1
+  end
+
   def permitted_attributes
     %i[body id active].push(follow_ups)
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170810010352) do
+ActiveRecord::Schema.define(version: 20170814005317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -489,8 +489,10 @@ ActiveRecord::Schema.define(version: 20170810010352) do
     t.integer "rank", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["bot_id"], name: "index_questions_on_bot_id"
-    t.index ["rank", "bot_id"], name: "index_questions_on_rank_and_bot_id", unique: true
+    t.index ["deleted_at"], name: "index_questions_on_deleted_at"
+    t.index ["rank", "bot_id"], name: "index_questions_on_rank_and_bot_id", unique: true, where: "(deleted_at IS NULL)"
   end
 
   create_table "read_receipts", id: :serial, force: :cascade do |t|

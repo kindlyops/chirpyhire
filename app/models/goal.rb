@@ -4,8 +4,9 @@ class Goal < ApplicationRecord
   has_one :action, class_name: 'GoalAction', dependent: :destroy
 
   validates :rank, :body, presence: true
-
   before_validation :ensure_rank
+
+  delegate :follow_ups, to: :action
 
   def self.ranked
     order(:rank)

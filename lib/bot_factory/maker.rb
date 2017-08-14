@@ -38,7 +38,7 @@ class BotFactory::Maker
   end
 
   def create_goal
-    bot.goals.create(
+    bot.goals.create!(
       body: goal_body,
       rank: bot.next_goal_rank,
       contact_stage: stage
