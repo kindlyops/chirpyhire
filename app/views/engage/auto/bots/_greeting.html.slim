@@ -8,7 +8,7 @@
       .bot-card--actions
         a.bot-card--toggle-body aria-controls="collapseGreeting-#{g.object.object_id}" aria-expanded="true" data-toggle="collapse" href="#collapseGreeting-#{g.object.object_id}" 
           i.fa.fa-angle-down
-    .collapse.show.bot-action id="collapseGreeting-#{g.object.object_id}"
+    div class="collapse bot-action #{open ? 'show' : '' }" id="collapseGreeting-#{g.object.object_id}"
       .card-body
         .card-text
           h5.card-title Create a friendly greeting:

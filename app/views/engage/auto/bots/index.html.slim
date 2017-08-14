@@ -3,6 +3,9 @@
   = render partial: "engage/auto/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content
-        .bots
-          = render partial: "engage/auto/bots/bot", collection: @bots
+      .ch--sub-main-content.bots
+        .d-flex.justify-content-end.align-items-center.mb-3
+          = link_to new_engage_auto_bot_path, class: 'btn btn-primary d-flex justify-content-end align-items-center' do
+            = inline_svg 'inverse_bot.svg', class: 'new-bot-icon mr-2'
+            | New Bot
+        = render partial: "engage/auto/bots/bot", collection: @bots

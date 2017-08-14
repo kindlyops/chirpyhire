@@ -1,11 +1,11 @@
 .ch--Page
   = render partial: "engage/header"
-  = render partial: "engage/auto/secondary_header"
+  = render partial: "engage/secondary_header"
   .ch--main
     .ch--sub-main
       .Bot
         = render partial: "bots/active_alert", locals: { bot: @bot }
-        = form_for @bot, url: engage_auto_bot_path(@bot) do |f|
+        = form_for @bot, url: engage_auto_bots_path do |f|
           = content_for :validation_errors do
             = render partial: "common/validation_errors", locals: { model: @bot }
           .BotHeader
@@ -13,19 +13,13 @@
               = f.label :name, class: 'sr-only'
               = f.text_field :name, class: 'BotName mb-2', required: true
             .BotHeader--actions
-              = link_to new_engage_auto_bot_goal_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
-                  i.fa.fa-dot-circle-o.mr-2
-                  | Add Goal
-              = link_to new_engage_auto_bot_question_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
-                  i.fa.fa-question-circle-o.mr-2
-                  | Add Question
               = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
                   i.fa.fa-check.mr-2
                   | Save
-          = render partial: "engage/auto/bots/greeting", locals: { f: f, greeting: @bot.greeting, open: false }
-          #questions.sortable
-            = f.fields_for :questions, @bot.ranked_questions do |q|
+          = render partial: "engage/auto/bots/greeting", locals: { f: f, greeting: @bot.greeting, open: true }
+          #questions
+            = f.fields_for :questions, @bot.questions do |q|
               = render partial: "engage/auto/bots/question", locals: { f: q }
           #goals
-            = f.fields_for :goals, @bot.ranked_goals do |g|
+            = f.fields_for :goals, @bot.goals do |g|
               = render partial: "engage/auto/bots/goal", locals: { g: g }
