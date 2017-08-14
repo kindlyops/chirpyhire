@@ -1,7 +1,8 @@
 class Goal < ApplicationRecord
+  acts_as_paranoid
   belongs_to :bot
   belongs_to :contact_stage, optional: true
-  has_one :action, class_name: 'GoalAction'
+  has_one :action, class_name: 'GoalAction', dependent: :destroy
 
   validates :rank, :body, presence: true
   before_validation :ensure_rank
