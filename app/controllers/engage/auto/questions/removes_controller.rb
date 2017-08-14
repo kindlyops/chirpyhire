@@ -1,5 +1,4 @@
 class Engage::Auto::Questions::RemovesController < ApplicationController
-
   def show
     @question = authorize(bot.questions.find(params[:question_id]))
   end

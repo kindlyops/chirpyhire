@@ -77,7 +77,7 @@ Rails.application.routes.draw do
         resources :goals do
           resource :remove, controller: 'goals/removes'
         end
-        
+
         resources :questions do
           resource :remove, controller: 'questions/removes'
           resources :follow_ups

@@ -16,13 +16,17 @@ class Engage::Auto::GoalsController < ApplicationController
 
   def destroy
     @goal = authorize(bot.goals.find(params[:id]))
-    migrate_follow_ups if params[:bot_action_id].present?
-    @goal.destroy
-    rerank_goals
+    destroy_goal
     redirect_to engage_auto_bot_path(bot), notice: 'Goal removed!'
   end
 
   private
+
+  def destroy_goal
+    migrate_follow_ups if params[:bot_action_id].present?
+    @goal.destroy
+    rerank_goals
+  end
 
   def rerank_goals
     bot.reload.ranked_goals.each_with_index do |goal, i|

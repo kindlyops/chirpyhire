@@ -17,13 +17,17 @@ class Engage::Auto::QuestionsController < ApplicationController
 
   def destroy
     @question = authorize(bot.questions.find(params[:id]))
-    migrate_action_follow_ups if params[:bot_action_id].present?
-    @question.destroy
-    rerank_questions
+    destroy_question
     redirect_to engage_auto_bot_path(bot), notice: 'Question removed!'
   end
 
   private
+
+  def destroy_question
+    migrate_action_follow_ups if params[:bot_action_id].present?
+    @question.destroy
+    rerank_questions
+  end
 
   def rerank_questions
     bot.reload.ranked_questions.each_with_index do |question, i|

@@ -1,5 +1,4 @@
 class Engage::Auto::Goals::RemovesController < ApplicationController
-
   def show
     @goal = authorize(bot.goals.find(params[:goal_id]))
   end
