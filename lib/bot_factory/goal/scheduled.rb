@@ -1,7 +1,7 @@
 class BotFactory::Goal::Scheduled < BotFactory::Goal
   def body
     <<~GOAL.strip
-      Ok. Great! We're all set. Here's a link with directions to our office: #{directions}
+      Ok. Great! We're all set for your interview!
 
       Please make sure to bring your:
       Driver’s License
@@ -17,9 +17,5 @@ class BotFactory::Goal::Scheduled < BotFactory::Goal
 
   def stage
     @stage ||= organization.contact_stages.find_by(name: 'Scheduled')
-  end
-
-  def directions
-    'TODO ADD DIRECTIONS'
   end
 end
