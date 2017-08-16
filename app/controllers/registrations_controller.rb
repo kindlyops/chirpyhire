@@ -46,8 +46,7 @@ class RegistrationsController < Devise::RegistrationsController
        state_code
        postal_code
        country
-       country_code
-       url]
+       country_code]
   end
 
   def organization_attributes
