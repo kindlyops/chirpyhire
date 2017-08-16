@@ -25,7 +25,8 @@ class TeamPolicy < ApplicationPolicy
        state_code
        postal_code
        country
-       country_code]
+       country_code
+       url]
   end
 
   class Scope < ApplicationPolicy::Scope

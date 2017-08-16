@@ -21,8 +21,10 @@ function initAccountSearch() {
       var $postal_code = $form.find("input[name*='[location_attributes][postal_code]']");
       var $country = $form.find("input[name*='[location_attributes][country]']");
       var $country_code = $form.find("input[name*='[location_attributes][country_code]']");
+      var $url = $form.find("input[name*='[location_attributes][url]']");
       var $address = $form.find('#address');
 
+      $url.val(place.url);
       $latitude.val(place.geometry.location.lat());
       $longitude.val(place.geometry.location.lng());
       $full_street_address.val(place.formatted_address);
@@ -105,8 +107,10 @@ function initTeamSearch() {
       var $postal_code = $form.find("input[name*='[location_attributes][postal_code]']");
       var $country = $form.find("input[name*='[location_attributes][country]']");
       var $country_code = $form.find("input[name*='[location_attributes][country_code]']");
+      var $url = $form.find("input[name*='[location_attributes][url]']");
       var $address = $form.find('#address');
 
+      $url.val(place.url);
       $latitude.val(place.geometry.location.lat());
       $longitude.val(place.geometry.location.lng());
       $full_street_address.val(place.formatted_address);

@@ -27,4 +27,3 @@ class BotFactory::Goal
     end
   end
 end
-
