@@ -16,7 +16,7 @@ class BotFactory::Maker
     existing_bot = organization.bots.find_by(name: name)
     return existing_bot if existing_bot.present?
 
-    create_goal
+    create_goals
     create_greeting
     create_questions
     bot
@@ -37,16 +37,18 @@ class BotFactory::Maker
     bot.create_greeting(body: greeting_body)
   end
 
-  def create_goal
-    bot.goals.create!(
-      body: goal_body,
-      rank: bot.next_goal_rank,
-      contact_stage: stage
-    ).tap { |g| bot.actions.create(type: 'GoalAction', goal_id: g.id) }
+  def self.goals
+    %w[Scheduled NotNow]
   end
 
-  def stage
-    @stage ||= organization.contact_stages.find_by(name: 'Screened')
+  def goals
+    self.class.goals
+  end
+
+  def create_goals
+    goals.each_with_index do |klass, index|
+      "BotFactory::Goal::#{klass}".constantize.call(bot, rank: index + 1)
+    end
   end
 
   def create_questions
@@ -55,9 +57,13 @@ class BotFactory::Maker
     end
   end
 
-  def questions
+  def self.questions
     %w[Certification Availability LiveIn Experience Transportation
-       DriversLicense Zipcode CprFirstAid SkinTest]
+       DriversLicense Zipcode CprFirstAid SkinTest WeekDay TimeOfDay]
+  end
+
+  def questions
+    self.class.questions
   end
 
   def bot
@@ -82,16 +88,6 @@ class BotFactory::Maker
       Want to join the #{team_name} team?
       Well, let's get started.
       Please tell us more about yourself.
-    BODY
-  end
-
-  def goal_body
-    <<~BODY
-      Ok. Great! We're all set. Now, let us get you the right opportunity!
-
-      If you don't hear back in a day or two, please text us back.
-
-      Oh... one more thing. I forgot to ask, what's your name? :)
     BODY
   end
 end
