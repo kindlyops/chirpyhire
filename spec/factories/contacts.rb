@@ -21,8 +21,7 @@ FactoryGirl.define do
         organization = contact.organization
         stage = organization.contact_stages.find_or_create_by(name: 'Screened')
         contact.update(subscribed: true, stage: stage)
-        %w[Availability Experience Transportation Certification
-           SkinTest LiveIn CprFirstAid DriversLicense].each do |klass|
+        BotFactory::Maker.questions.without('Zipcode').each do |klass|
           question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
           tag_name = question.responses_and_tags.map { |_, tag, _| tag }.sample
           contact.tags << organization.tags.find_or_create_by(name: tag_name)
