@@ -30,6 +30,18 @@ RSpec.describe Bot::GoalTrigger do
       }.to change { campaign_contact.state }.from('active').to('exited')
     end
 
+    it 'closes the conversation' do
+      expect {
+        subject.call
+      }.to change { conversation.reload.closed? }.from(false).to(true)
+    end
+
+    it 'broadcasts the conversation' do
+      expect(Broadcaster::Conversation).to receive(:broadcast)
+
+      subject.call
+    end
+
     context 'with multiple accounts on the team' do
       let(:accounts) { create_list(:account, rand(1..3), :person, organization: organization) }
       let!(:account) { accounts.last }
