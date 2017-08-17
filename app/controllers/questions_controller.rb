@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
   def update
     question.update(permitted_attributes(Question))
-    rerank_follow_ups
 
     Broadcaster::Bot.broadcast(bot)
     head :ok
