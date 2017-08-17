@@ -16,7 +16,7 @@ class ConversationEndCap extends React.Component {
                   </span>
                 </p>
               </div>
-              <p className="dm_explanation mx-auto text-left clearfix">This is the very beginning of your relationship with <strong>{this.props.contact.handle}.</strong></p>
+              <p className="dm_explanation mx-auto text-left clearfix">This is the very beginning of your conversation with <strong>{this.props.contact.handle}.</strong></p>
             </div>
           </div>
         </div>

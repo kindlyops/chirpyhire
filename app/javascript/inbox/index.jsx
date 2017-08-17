@@ -43,6 +43,13 @@ class Inbox extends React.Component {
       this.handleInboxChange(nextProps.match.params.inboxId);
       this.reconnect(nextProps.match.params.inboxId);
     }
+
+    if(nextProps.match.params.id) {
+      let newConversation = this.conversation(nextProps.match.params.id);
+      if (!newConversation) {
+        this.load(this.inboxId(), nextProps.match.params.id);
+      }
+    }
   }
 
   upsertConversations(oldConversations, newConversations) {
@@ -71,7 +78,7 @@ class Inbox extends React.Component {
   }
 
   conversationComponent() {
-    let conversation = this.conversation();
+    let conversation = this.conversation(this.id());
 
     if (conversation) {
       return <Conversation
@@ -84,9 +91,9 @@ class Inbox extends React.Component {
     }
   }
 
-  conversation() {
+  conversation(id) {
     return R.find((conversation) => (
-      parseInt(this.id()) === conversation.id
+      parseInt(id) === conversation.id
     ), this.state.conversations);
   }
 
@@ -256,7 +263,7 @@ class Inbox extends React.Component {
 
   handleFilterChange(filter) {
     const { history } = this.props;
-    let conversation = this.conversation();
+    let conversation = this.conversation(this.id());
 
     this.loadCounts(this.inboxId());
     this.setState({ filter: filter }, () => {
