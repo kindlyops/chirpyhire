@@ -19,7 +19,7 @@
           = link_to new_organization_settings_team_path(@organization), class: 'btn btn-primary' do
             span Create team
       .card.ch--sub-main-content
-        .card-block
+        .card-body
           .card
             ul.list-group.list-group-flush
               = render partial: "organizations/teams/team", collection: @teams, locals: { organization: @organization }

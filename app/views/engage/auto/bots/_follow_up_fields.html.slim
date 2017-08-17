@@ -3,7 +3,7 @@
   = f.text_field :body, class: 'body form-control', required: true, placeholder: 'Add a follow up...'
   .FollowUp--footer
     .FollowUp--details
-      span.FollowUp--response.badge.badge-default
+      span.FollowUp--response.badge.badge-secondary
         = f.object.response
       span class=="FollowUp--action #{f.object.decorate.action_classes}"
         = f.object.decorate.humanized_action

@@ -55,12 +55,12 @@
             background-color: #f9fcfa;
 
             .handle {
-              color: darken($brand-primary, 10%);
+              color: darken(theme-color('primary'), 10%);
               font-weight: 600;
             }
 
             .summary {
-              color: darken($brand-primary, 10%);
+              color: darken(theme-color('primary'), 10%);
               font-weight: 600;
             }
           }
@@ -70,7 +70,7 @@
             background-color: lighten(#eeeeef, 5%);
 
             .handle {
-              color: darken($brand-primary, 10%);
+              color: darken(theme-color('primary'), 10%);
             }
           }
 

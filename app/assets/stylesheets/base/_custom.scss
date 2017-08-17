@@ -1,4 +1,54 @@
-$green: #37AA7C;
+$white:  #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:  #000 !default;
+
+$grays: (
+  100: $gray-100,
+  200: $gray-200,
+  300: $gray-300,
+  400: $gray-400,
+  500: $gray-500,
+  600: $gray-600,
+  700: $gray-700,
+  800: $gray-800,
+  900: $gray-900
+) !default;
+
+$blue:    darken(#428bca, 6.5%) !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #e83e8c !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ffc107 !default;
+$green:   #37AA7C !default;
+$teal:    #20c997 !default;
+$cyan:    #17a2b8 !default;
+
+$colors: (
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
+  pink: $pink,
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
+  green: $green,
+  teal: $teal,
+  cyan: $cyan,
+  white: $white,
+  gray: $gray-600,
+  gray-dark: $gray-800
+) !default;
+
 $white: #fff;
 $gray-base: #232225;
 $gray-darker:   lighten($gray-base, 13.5%) !default;
@@ -8,8 +58,18 @@ $gray-light:    lighten($gray-base, 46.7%) !default;
 $gray-lighter:  lighten($gray-base, 93.5%) !default;
 $table-border-color: #dddddd;
 $body-color: $gray-dark;
-$brand-primary: $green;
-$brand-success: darken(#428bca, 6.5%);
+  
+$theme-colors: (
+  primary: $green,
+  secondary: $gray-600,
+  success: $blue,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800
+) !default;
+
 $bg-body: $white;
 $modal-header-border-color: $table-border-color;
 
@@ -25,4 +85,8 @@ textarea {
   max-height: 94px; /* optional, but recommended */
   min-height: 98px;
   overflow-x: hidden; /* for Firefox (issue #5) */
+}
+
+.btn {
+  cursor: pointer;
 }

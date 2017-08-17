@@ -20,7 +20,7 @@
         .row.mt-1
           .col
             .card.mt-5
-              .card-block
+              .card-body
                 .d-flex.justify-content-between
                   .instructions
                     p.card-text
@@ -62,7 +62,7 @@
               .card-deck
                 - group.each do |column|
                   .card.column-card
-                    .card-block
+                    .card-body
                       .card-title 
                         strong = "Column: #{column.formatted_number}"
                       = button_to "Select this column", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-primary btn-block', role: 'button', params: { column_mapping: { column_number: column.number } } }

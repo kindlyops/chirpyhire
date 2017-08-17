@@ -1,7 +1,7 @@
 .card.mt-3
   h3.card-header
     | Change your password
-  .card-block
+  .card-body
     = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
       = f.hidden_field :reset_password_token
       .form-group

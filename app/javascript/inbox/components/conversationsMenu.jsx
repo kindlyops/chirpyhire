@@ -45,7 +45,7 @@ class ConversationsMenu extends React.Component {
 
   options() {
     return [
-      { value: 'Closed', label: 'Closed', count: this.props.closed, countClassName: 'badge badge-default' },
+      { value: 'Closed', label: 'Closed', count: this.props.closed, countClassName: 'badge badge-secondary' },
       { value: 'Open', label: 'Open', count: this.props.open, countClassName: 'badge badge-primary' },
       { value: 'All', label: 'All', count: this.props.all, countClassName: 'badge badge-success' }
     ]

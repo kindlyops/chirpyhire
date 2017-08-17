@@ -15,19 +15,19 @@
 .email {
   background-color: rgb(255,255,255);
   a {
-    color: $brand-primary;
+    color: theme-color('primary');
   }
 
   .btn {
-    background-color: $brand-primary;
+    background-color: theme-color('primary');
     color: #FFF !important;
   }
 
   .chirpyhire-icon {
     padding: 0.2rem 1.35rem;
     display: inline-block;
-    border: 2px solid $brand-primary;
-    color: $brand-primary;
+    border: 2px solid theme-color('primary');
+    color: theme-color('primary');
     border-radius: 4px;
     box-shadow: -2px 2px 7px -4px rgba(0,0,0,0.75);
     font-weight: 800;

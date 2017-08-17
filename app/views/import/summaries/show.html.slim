@@ -18,10 +18,10 @@
     .row
       .col
         .card.mt-5
-          .card-block
+          .card-body
             .card-text Your data has been imported and is currently being processed.
             .card-text Created and updated candidates will be available for you to chat soon. 
-          .card-block
+          .card-body
             .card-text
               strong Status:
               '
@@ -43,7 +43,7 @@
               - if @import.import_errors.present?
                 a href="#errors" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="errors" View
           - if @import.import_errors.present?
-            .card-block.collapse#errors
+            .card-body.collapse#errors
               .d-flex.justify-content-center.align-items-center
                 table.table.table-striped
                   thead
@@ -59,7 +59,7 @@
                         th = error.column_number
                         th = error.column_name
                         th = error.humanized_type
-          .card-block
+          .card-body
             .card-text They are tagged with:
             .d-flex.align-items-center.justify-content-start
               - @import.tags.each do |tag|

@@ -67,7 +67,7 @@ input.ch-toggle-round + label:after {
   transition: margin 0.4s;
 }
 input.ch-toggle-round:checked + label:before {
-  background-color: $brand-primary;
+  background-color: theme-color('primary');
 }
 input.ch-toggle-round:checked + label:after {
   margin-left: 23px;

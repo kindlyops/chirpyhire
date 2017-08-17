@@ -11,7 +11,7 @@
     min-width: 53px;
   }
 
-  background-color: darken($brand-primary, 25%);
+  background-color: darken(theme-color('primary'), 25%);
   
   display: flex;
   overflow-y: auto;
@@ -100,7 +100,7 @@
 
     &.active {
       .fa {
-        color: darken($brand-primary, 25%);
+        color: darken(theme-color('primary'), 25%);
       }
       background-color: #f2f6f8;
     }

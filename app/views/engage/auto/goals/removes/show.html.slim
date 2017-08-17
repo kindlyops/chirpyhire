@@ -21,14 +21,14 @@
                   |:
                 span.bot-card--title = f.object.body
               .bot-card--actions
-            .card-block
+            .card-body
               .form-group
                 h5.card-title Candidate stage:
                 h6.card-subtitle.mb-3.text-muted = f.object.decorate.contact_stage_name
               .form-group
                 h5.card-title Message:
                 .card
-                  .card-block
+                  .card-body
                     .card-text = f.object.body
               - if @goal.follow_ups.count.positive?
                 .form-group

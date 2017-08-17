@@ -13,6 +13,7 @@
 
 //= require jquery
 //= require tether
+//= require popper.js
 //= require bootstrap
 //= require jquery_ujs
 //= require jquery.textarea_autosize.js
