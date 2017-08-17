@@ -6,7 +6,7 @@ class BotFactory::Goal::Scheduled < BotFactory::Goal
       Please make sure to bring your:
       Driver’s License
       Social Security
-      Any Certifications: HHA CNA, MA or LPN
+      Any Certifications: HHA, CNA, MA or LPN
       2 Step TB
       Copy of Background Check
       Any work references you might have

@@ -1,7 +1,7 @@
 class BotFactory::Question::WeekDay < BotFactory::Question
   def body
     <<~QUESTION.strip
-      We'd love to invite you to interview! What day would you like to come in?
+      I'd love to invite you to interview! What day would you like to come in?
     QUESTION
   end
 
