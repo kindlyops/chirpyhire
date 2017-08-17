@@ -39,6 +39,10 @@ class Conversation < ApplicationRecord
     state == 'Closed'
   end
 
+  def close
+    update(state: 'Closed', closed_at: DateTime.current)
+  end
+
   def reopenable?
     contact.open_conversations.where(phone_number: phone_number).none?
   end

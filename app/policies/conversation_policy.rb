@@ -4,7 +4,7 @@ class ConversationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[state].push(contact_attributes: contact_attributes)
+    %i[state closed_at].push(contact_attributes: contact_attributes)
   end
 
   def contact_attributes

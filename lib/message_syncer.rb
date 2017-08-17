@@ -43,7 +43,7 @@ class MessageSyncer
 
   attr_reader :contact, :message_sid, :receipt
   delegate :person, :organization, to: :contact
-  delegate :recent_part, to: :open_conversation
+  delegate :recent_part, to: :current_conversation
 
   def recent_message
     recent_part && recent_part.message
@@ -59,14 +59,14 @@ class MessageSyncer
   end
 
   def create_conversation_part(message)
-    open_conversation.parts.create(
+    current_conversation.parts.create(
       message: message,
       happened_at: message.external_created_at
     ).tap(&:touch_conversation)
   end
 
-  def open_conversation
-    @open_conversation ||= IceBreaker.call(contact, phone_number)
+  def current_conversation
+    @current_conversation ||= IceBreaker.call(contact, phone_number)
   end
 
   def phone_number

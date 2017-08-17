@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MessageSyncer do
+  include ActiveSupport::Testing::TimeHelpers
   let(:organization) { create(:organization, :account) }
   let(:phone_number) { create(:phone_number, organization: organization, phone_number: ENV.fetch('DEMO_ORGANIZATION_PHONE')) }
   let(:team) { create(:team, organization: organization) }
@@ -97,7 +98,9 @@ RSpec.describe MessageSyncer do
 
       context 'closed' do
         before do
-          contact.conversations.each { |c| c.update(state: 'Closed') }
+          travel_to 3.hours.ago do
+            contact.conversations.each(&:close)
+          end
         end
 
         it 'creates a new open conversation' do

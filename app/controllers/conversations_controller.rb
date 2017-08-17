@@ -31,6 +31,7 @@ class ConversationsController < ApplicationController
   end
 
   def update
+    handle_closed_at
     @conversation = authorize(inbox.conversations.find(params[:id]))
     @conversation.update(permitted_attributes(Conversation))
     Broadcaster::Conversation.broadcast(@conversation)
@@ -40,6 +41,16 @@ class ConversationsController < ApplicationController
   end
 
   private
+
+  def handle_closed_at
+    transform_closed_at if params[:conversation][:closed_at].present?
+  end
+
+  def transform_closed_at
+    float_time = params[:conversation][:closed_at].to_i / 1000.0
+    datetime = Time.zone.at(float_time).to_datetime
+    params[:conversation][:closed_at] = datetime
+  end
 
   def state_filter(scope)
     return scope if params[:state].blank?
