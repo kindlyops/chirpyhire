@@ -36,8 +36,9 @@ class Engage::Auto::BotsController < ApplicationController
   end
 
   def rerank_follow_ups(question)
-    question.ranked_follow_ups.each_with_index do |follow_up, i|
-      follow_up.update(rank: i + 1)
+    question.ranked_follow_ups.each.with_index(1) do |follow_up, i|
+      next if follow_up.rank == i
+      follow_up.update(rank: i)
     end
   end
 
