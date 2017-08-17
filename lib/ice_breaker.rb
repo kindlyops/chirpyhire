@@ -11,19 +11,29 @@ class IceBreaker
   attr_reader :contact, :phone_number
 
   def call
-    open_conversation.tap do |conversation|
+    current_conversation.tap do |conversation|
       Broadcaster::Conversation.broadcast(conversation)
     end
   end
 
-  def open_conversation
-    @open_conversation ||= begin
-      existing_open_conversation || create_conversation
+  def current_conversation
+    @current_conversation ||= begin
+      existing_conversation || create_conversation
     end
   end
 
-  def existing_open_conversation
+  def existing_conversation
+    open_conversation || recently_closed_conversation
+  end
+
+  def open_conversation
     open_conversations.find_by(phone_number: phone_number)
+  end
+
+  def recently_closed_conversation
+    conversations
+      .where(phone_number: phone_number)
+      .find_by('conversations.closed_at > ?', 1.hour.ago)
   end
 
   def assignment_rule

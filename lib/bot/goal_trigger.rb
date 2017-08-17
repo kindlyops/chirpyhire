@@ -48,7 +48,7 @@ class Bot::GoalTrigger
   end
 
   def close_conversation
-    message.conversation.update(state: 'Closed')
+    message.conversation.close
     Broadcaster::Conversation.broadcast(message.conversation)
   end
 end

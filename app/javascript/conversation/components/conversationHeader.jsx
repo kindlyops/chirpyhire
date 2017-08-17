@@ -68,10 +68,13 @@ class ConversationHeader extends React.Component {
 
   close(stage) {
     return () => {
+      let closed_at = Date.now();
+
       const params = {
         _method: 'put',
         conversation: {
           state: 'Closed',
+          closed_at: closed_at,
           contact_attributes: {
             contact_stage_id: stage.id,
             id: this.props.contact.id

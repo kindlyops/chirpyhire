@@ -13,7 +13,31 @@ RSpec.describe IceBreaker do
       it 'creates a conversation and ties it to the contact team inbox' do
         expect {
           subject.call
-        }.to change { team.conversations.count }.by(1)
+        }.to change { team.reload.conversations.count }.by(1)
+      end
+    end
+
+    context 'closed existing conversation' do
+      let!(:conversation) { create(:conversation, :closed, contact: contact, inbox: team.inbox, phone_number: phone_number) }
+
+      context 'that was closed in the last hour' do
+        it 'returns the existing closed conversation' do
+          expect {
+            subject.call
+          }.not_to change { team.reload.conversations.count }
+        end
+      end
+
+      context 'that was closed more than an hour ago' do
+        before do
+          conversation.update(closed_at: 70.minutes.ago)
+        end
+
+        it 'creates a new conversation' do
+          expect {
+            subject.call
+          }.to change { team.reload.conversations.count }.by(1)
+        end
       end
     end
   end

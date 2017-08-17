@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170817011503) do
+ActiveRecord::Schema.define(version: 20170817151745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 20170817011503) do
     t.integer "unread_count", default: 0, null: false
     t.bigint "phone_number_id", null: false
     t.datetime "last_conversation_part_created_at"
+    t.datetime "closed_at"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
     t.index ["phone_number_id"], name: "index_conversations_on_phone_number_id"
     t.index ["state", "contact_id", "phone_number_id"], name: "index_conversations_on_state_and_contact_id_and_phone_number_id", unique: true, where: "(state = 0)"

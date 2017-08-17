@@ -97,7 +97,7 @@ RSpec.describe Conversations::PartsController do
 
       context 'and the conversation is closed' do
         before do
-          contact.conversations.each { |c| c.update(state: 'Closed') }
+          contact.conversations.each(&:close)
         end
 
         it 'does not create a message' do
