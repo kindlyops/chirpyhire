@@ -8,8 +8,15 @@ class ManualMessagePolicy < ApplicationPolicy
   end
 
   def audience
-    %i[city state county zipcode name messages]
-      .concat([tag: [], contact_stage: [], campaigns: []])
+    %i[zipcode_default_city_eq zipcode_state_abbreviation_eq
+       zipcode_county_name_eq zipcode_zipcode_eq
+       name_cont messages_count_eq].concat(
+         [
+           matches_all_tags: [],
+           matches_all_manual_messages: [],
+           contact_stage_id_in: []
+         ]
+       )
   end
 
   class Scope < ApplicationPolicy::Scope

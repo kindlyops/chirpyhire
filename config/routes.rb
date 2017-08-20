@@ -10,7 +10,11 @@ Rails.application.routes.draw do
 
   resource :client_version, only: :show
   resource :health, only: :show
-  resources :candidates, only: %i[index new create], concerns: :paginatable
+  resources :candidates, only: %i[index new create], concerns: :paginatable do
+    collection do
+      post 'search(/page/:page)' => 'candidates#search', as: :search
+    end
+  end
   resources :recruiting_ads, only: %i[index update]
   resource :dashboard
   resources :segments

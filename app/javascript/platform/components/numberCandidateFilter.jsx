@@ -24,11 +24,15 @@ class NumberCandidateFilter extends React.Component {
   }
 
   value() {
-    return this.props.form[this.name()] || '';
+    if (!this.props.form.q) return '';
+
+    return this.props.form.q[`${this.name()}_count_eq`] || '';
   }
 
   isChecked() {
-    return this.props.form[this.name()] || this.props.checked;
+    let query = this.props.form.q;
+
+    return query && query[`${this.name()}_count_eq`] || this.props.checked;
   }
 
   name() {

@@ -33,16 +33,18 @@ class CandidateFilter extends React.Component {
   }
 
   value() {
-    let value = this.props.form[this.name()];
+    if(this.props.form.q) {
+      let value = this.props.form.q[this.props.filter];
 
-    if (value) {
-      return value.join(',');
+      if (value) {
+        return value.join(',');
+      }
     }
   }
 
   handleSelectChange(options) {
     const value = options && options.map(o => o.id);
-    const filter = this.name();
+    const filter = this.props.filter;
 
     this.props.handleSelectChange({ value: value, filter: filter });
   }

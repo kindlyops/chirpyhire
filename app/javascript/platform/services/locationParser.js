@@ -16,17 +16,17 @@ export default function locationParser(suggest) {
       };
     } else if (isState) {
       return {
-        state: stateComponent.short_name
+        state_abbreviation: stateComponent.short_name
       }
     } else if (isCounty) {
       return {
-        county: countyComponent.long_name.replace(/ County/, ""),
-        state: stateComponent.short_name
+        county_name: countyComponent.long_name.replace(/ County/, ""),
+        state_abbreviation: stateComponent.short_name
       }
     } else if (isCity) {
       return {
-        city: cityComponent.long_name,
-        state: stateComponent.short_name
+        default_city: cityComponent.long_name,
+        state_abbreviation: stateComponent.short_name
       }
     } else {
       return {};

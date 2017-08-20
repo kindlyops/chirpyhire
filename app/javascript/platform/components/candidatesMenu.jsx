@@ -139,13 +139,14 @@ class CandidatesMenu extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    let audience = this.props.form.q || {};
 
     const params = {
       _method: 'post',
       manual_message: {
         title: $(this._title).val(),
         body: $(this._body).val(),
-        audience: this.props.form
+        audience: audience
       }
     };
 
@@ -159,7 +160,7 @@ class CandidatesMenu extends React.Component {
 
     $.ajax(config);
     this.setState({ modal: false });
-    setTimeout(this.props.updateCandidates, 1500);
+    setTimeout(this.props.searchCandidates, 1500);
   }
 }
 

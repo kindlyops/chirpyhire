@@ -26,11 +26,11 @@ class Platform extends React.Component {
     this.handlePageChange = this.handlePageChange.bind(this);
     this.handleSelectChange = this.handleSelectChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleNumberChange = this.handleTextChange;
+    this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
-    this.updateCandidates = this.updateCandidates.bind(this);
+    this.searchCandidates = this.searchCandidates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -45,7 +45,7 @@ class Platform extends React.Component {
         <Candidates 
           {...this.state}
           {...this.props}
-          updateCandidates={this.updateCandidates}
+          searchCandidates={this.searchCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
@@ -77,8 +77,27 @@ class Platform extends React.Component {
   }
 
   handleLocationChange(location) {
-    let newForm = update(this.state.form, { $unset: ['zipcode', 'city', 'state', 'county'] });
-    newForm = update(newForm, { $merge: location });
+    let newForm = this.state.form;
+    if(newForm.q) {
+      _.forEach(['zipcode', 'default_city', 'state_abbreviation', 'county_name'], (key) => {
+        newForm = update(newForm, {
+          q: {
+            $unset: [`zipcode_${key}_lower_eq`]
+          }
+        });
+      });
+    }
+
+    _.forOwn(location, (value, key) => {
+      newForm = update(newForm, {
+        q: {$apply: q =>
+          update(q || {}, {
+            [`zipcode_${key}_lower_eq`]: { $set: value }
+          })
+        }
+      });
+    });
+
     newForm.page = 1;
     const newState = update(this.state, { form: { $set: newForm } });
     this.setState(newState);
@@ -86,54 +105,100 @@ class Platform extends React.Component {
 
   handleSelectChange(selectedOption) {
     const filter = selectedOption.filter;
+
     let newForm;
     if(selectedOption.value && selectedOption.value.length) {
-      newForm = update(this.state.form, { [filter]: {
-        $set: selectedOption.value
-      }});
+
+      newForm = update(this.state.form, {
+        q: {$apply: q =>
+          update(q || {}, {
+            [filter]: { $set: selectedOption.value }
+          })
+        }
+      });
     } else {
-      newForm = update(this.state.form, { $unset: [`${filter}`]});
+      newForm = update(this.state.form, 
+        { q: 
+          { $apply: q => {
+              update(q || {}, {
+                $unset: [filter]
+              })
+            }
+          }
+      });
     }
+
     newForm.page = 1;
     const newState = R.mergeAll([{}, this.state, {
       form: newForm
     }]);
+    this.setState(newState);
+  }
+
+  handleNumberChange(event) {
+    const filter = event.target.name;
+    const value = event.target.value;
+
+    let newForm = update(this.state.form, {
+      q: {$apply: q =>
+        update(q || {}, {
+          [`${filter}_count_eq`]: { $set: value }
+        })
+      }
+    });
+
+    newForm.page = 1;
+    const newState = R.mergeAll([{}, this.state, {
+      form: newForm
+    }]);
+
     this.setState(newState);
   }
 
   handleTextChange(event) {
     const filter = event.target.name;
     const value = event.target.value;
-    let newForm = update(this.state.form, { [filter]: { $set: value }});
+
+    let newForm = update(this.state.form, {
+      q: {$apply: q =>
+        update(q || {}, {
+          [`${filter}_cont`]: { $set: value }
+        })
+      }
+    });
+
     newForm.page = 1;
     const newState = R.mergeAll([{}, this.state, {
       form: newForm
     }]);
+
     this.setState(newState);
   }
 
   exportCSV() {
-    window.location.href = '/candidates.csv' + this.props.location.search;
+    $.post('/candidates/search.csv', this.state.form).then(data => {
+      let filename = `caregivers-${Date.now()}.csv`;
+      let csv = new Blob([data], { type: 'text/csv;charset=utf-8' });
+
+      if (navigator.msSaveBlob) {
+          navigator.msSaveBlob(csv, filename);
+      } else {
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(csv);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
     let prevForm = prevState.form;
     let currentForm = this.state.form;
     if(!R.equals(prevForm, currentForm)) {
-      this.updateCandidates();
+      this.searchCandidates();
     }
-  }
-
-  updateCandidates() {
-    let stringifyForm = queryString.stringify(
-                          this.state.form, { arrayFormat: 'bracket' }
-                        );
-
-    let search = `?${stringifyForm}`;
-    let path = `${this.props.location.pathname}${search}`;
-
-    this.props.history.push(path);
-    this.fetchCandidates(search);
   }
 
   handlePageChange(page) {
@@ -141,12 +206,12 @@ class Platform extends React.Component {
     this.setState(newState);
   }
 
-  candidatesUrl(search) {
-    return `/candidates.json${search}`;
+  searchUrl() {
+    return `/candidates/search.json`;
   }
 
-  fetchCandidates(search) {
-    return $.get(this.candidatesUrl(search)).then(data => {
+  searchCandidates() {
+    return $.post(this.searchUrl(), this.state.form).then(data => {
       let newState = R.mergeAll([{}, this.state, data]);
       this.setState(newState);
     });
@@ -161,7 +226,7 @@ class Platform extends React.Component {
 
   componentDidMount() {
     this.fetchSegments();
-    this.fetchCandidates(this.props.location.search);
+    this.searchCandidates();
   }
 }
 
