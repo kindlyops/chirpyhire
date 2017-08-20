@@ -4,6 +4,33 @@ module ContactRansack
   extend ActiveSupport::Concern
 
   class_methods do
+    def matches_all_manual_messages(*manual_message_ids)
+      where(matches_all_manual_messages_arel(manual_message_ids))
+    end
+
+    def matches_all_manual_messages_arel(manual_message_ids)
+      enumerator = manual_message_ids.each_with_index
+
+      manual_messages = enumerator.reduce(select_id) do |node, (id, index)|
+        match_manual_message(node, id, index)
+      end
+
+      arel_table[:id].in(manual_messages)
+    end
+
+    def match_manual_message(node, id, index)
+      join_table = arel_manual_message_participants_table(index)
+
+      node
+        .join(join_table)
+        .on(arel_table[:id].eq(join_table[:contact_id]))
+        .where(join_table[:manual_message_id].eq(id))
+    end
+
+    def arel_manual_message_participants_table(index)
+      Arel::Table.new(:manual_message_participants).alias("mmp#{index}")
+    end
+
     def matches_all_tags(*tag_ids)
       where(matches_all_tags_arel(tag_ids))
     end
@@ -19,10 +46,12 @@ module ContactRansack
     end
 
     def match_tag(node, id, index)
+      join_table = arel_taggings_table(index)
+
       node
-        .join(arel_taggings_table(index))
-        .on(arel_table[:id].eq(arel_taggings_table(index)[:contact_id]))
-        .where(arel_taggings_table(index)[:tag_id].eq(id))
+        .join(join_table)
+        .on(arel_table[:id].eq(join_table[:contact_id]))
+        .where(join_table[:tag_id].eq(id))
     end
 
     def arel_taggings_table(index)
@@ -38,7 +67,7 @@ module ContactRansack
     end
 
     def ransackable_scopes(auth_object = nil)
-      super + %w[matches_all_tags]
+      super + %w[matches_all_tags matches_all_manual_messages]
     end
   end
 end

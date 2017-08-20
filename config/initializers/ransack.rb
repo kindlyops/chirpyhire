@@ -4,4 +4,5 @@ Ransack.configure do |config|
                        formatter: proc { |v| v.downcase },
                        validator: proc { |v| v.present? },
                        type: :string
+  config.sanitize_custom_scope_booleans = false
 end
