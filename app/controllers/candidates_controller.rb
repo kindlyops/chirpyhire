@@ -45,62 +45,6 @@ class CandidatesController < ApplicationController
     @q.result(distinct: true).recently_replied
   end
 
-  def paginated_candidates
-    paginated(filtered_candidates.recently_replied)
-  end
-
-  def filtered_candidates
-    return scope if permitted_params.blank?
-
-    fs = scope
-    %i[contact_stage campaigns name tag zipcode messages].each do |chain|
-      fs = fs.send("#{chain}_filter", send("#{chain}_params"))
-    end
-    fs
-  end
-
-  def scope
-    policy_scope(Contact)
-  end
-
-  def permitted_params
-    params.permit(*permitted_params_keys)
-  end
-
-  def permitted_params_keys
-    %i[city state county zipcode name messages]
-      .concat([tag: [], contact_stage: [], campaigns: []])
-  end
-
-  def campaigns_params
-    permitted_params.to_h[:campaigns]
-  end
-
-  def messages_params
-    permitted_params.to_h[:messages]
-  end
-
-  def name_params
-    permitted_params.to_h[:name]
-  end
-
-  def tag_params
-    permitted_params.to_h[:tag]
-  end
-
-  def contact_stage_params
-    permitted_params.to_h[:contact_stage]
-  end
-
-  def zipcode_params
-    result = permitted_params.to_h.slice(:state, :city, :county, :zipcode)
-    result[:county_name]        = result.delete(:county) if result[:county]
-    result[:default_city]       = result.delete(:city)   if result[:city]
-    result[:state_abbreviation] = result.delete(:state)  if result[:state]
-
-    result
-  end
-
   def paginated(scope)
     scope.page(page).per(PAGE_LIMIT)
   end
