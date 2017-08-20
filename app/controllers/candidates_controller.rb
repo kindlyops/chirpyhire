@@ -29,17 +29,13 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       format.json { @candidates = paginated(searched_candidates) }
-      format.csv { candidates_csv }
+      format.csv { @candidates = searched_candidates }
     end
   end
 
   def index
-    @q = policy_scope(Contact).ransack(params[:q])
-
     respond_to do |format|
       format.html { render html: '', layout: true }
-      format.json { @candidates = paginated(searched_candidates) }
-      format.csv { candidates_csv }
     end
   end
 
@@ -51,10 +47,6 @@ class CandidatesController < ApplicationController
 
   def paginated_candidates
     paginated(filtered_candidates.recently_replied)
-  end
-
-  def candidates_csv
-    @candidates = searched_candidates
   end
 
   def filtered_candidates
