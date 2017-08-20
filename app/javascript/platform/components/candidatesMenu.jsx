@@ -159,7 +159,7 @@ class CandidatesMenu extends React.Component {
 
     $.ajax(config);
     this.setState({ modal: false });
-    setTimeout(this.props.updateCandidates, 1500);
+    setTimeout(this.props.searchCandidates, 1500);
   }
 }
 

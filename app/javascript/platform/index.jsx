@@ -30,7 +30,7 @@ class Platform extends React.Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
-    this.updateCandidates = this.updateCandidates.bind(this);
+    this.searchCandidates = this.searchCandidates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -45,7 +45,7 @@ class Platform extends React.Component {
         <Candidates 
           {...this.state}
           {...this.props}
-          updateCandidates={this.updateCandidates}
+          searchCandidates={this.searchCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
           handleSelectChange={this.handleSelectChange}
@@ -104,11 +104,20 @@ class Platform extends React.Component {
   handleTextChange(event) {
     const filter = event.target.name;
     const value = event.target.value;
-    let newForm = update(this.state.form, { [filter]: { $set: value }});
+
+    let newForm = update(this.state.form, {
+      q: {$apply: q =>
+        update(q || {}, {
+          [`${filter}_cont`]: { $set: value }
+        })
+      }
+    });
+
     newForm.page = 1;
     const newState = R.mergeAll([{}, this.state, {
       form: newForm
     }]);
+
     this.setState(newState);
   }
 
@@ -120,20 +129,8 @@ class Platform extends React.Component {
     let prevForm = prevState.form;
     let currentForm = this.state.form;
     if(!R.equals(prevForm, currentForm)) {
-      this.updateCandidates();
+      this.searchCandidates();
     }
-  }
-
-  updateCandidates() {
-    let stringifyForm = queryString.stringify(
-                          this.state.form, { arrayFormat: 'bracket' }
-                        );
-
-    let search = `?${stringifyForm}`;
-    let path = `${this.props.location.pathname}${search}`;
-
-    this.props.history.push(path);
-    this.fetchCandidates(search);
   }
 
   handlePageChange(page) {
@@ -141,12 +138,12 @@ class Platform extends React.Component {
     this.setState(newState);
   }
 
-  candidatesUrl(search) {
-    return `/candidates.json${search}`;
+  searchUrl() {
+    return `/candidates/search.json`;
   }
 
-  fetchCandidates(search) {
-    return $.get(this.candidatesUrl(search)).then(data => {
+  searchCandidates() {
+    return $.post(this.searchUrl(), this.state.form).then(data => {
       let newState = R.mergeAll([{}, this.state, data]);
       this.setState(newState);
     });
@@ -161,7 +158,7 @@ class Platform extends React.Component {
 
   componentDidMount() {
     this.fetchSegments();
-    this.fetchCandidates(this.props.location.search);
+    this.searchCandidates();
   }
 }
 

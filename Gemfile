@@ -93,7 +93,6 @@ gem 'nav_lynx', '~> 1.1.1'
 gem 'nokogiri', '~> 1.7.1'
 gem 'paperclip', '~> 5.1.0'
 gem 'paranoia', '~> 2.3'
-gem 'pg_search', '~> 2.0.1'
 gem 'phony_rails', '~> 0.14.0'
 gem 'premailer-rails', '~> 1.9.6'
 gem 'puma', '~> 3.4.0'
@@ -106,6 +105,7 @@ gem 'smartystreets_ruby_sdk', github: 'hwhelchel/smartystreets-ruby-sdk', branch
 gem 'stripe', '~> 2.12.0'
 gem 'twilio-ruby', '~> 4.13.0'
 gem 'webpacker', '~> 1.2.0'
+gem 'ransack', '~> 1.8.3'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.6.1'

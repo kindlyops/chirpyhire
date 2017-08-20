@@ -24,7 +24,9 @@ class TextCandidateFilter extends React.Component {
   }
 
   value() {
-    return this.props.form[this.name()] || '';
+    if(!this.props.form.q) return '';
+
+    return this.props.form.q[`${this.name()}_cont`] || '';
   }
 
   isChecked() {

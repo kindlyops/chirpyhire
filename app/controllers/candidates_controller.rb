@@ -1,5 +1,7 @@
 class CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
+  skip_after_action :verify_authorized, only: %i[search]
+
   layout 'react', only: %i[index]
   PAGE_LIMIT = 24
   decorates_assigned :candidates
@@ -22,21 +24,34 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def search
+    @q = policy_scope(Contact).ransack(params[:q])
+
+    respond_to do |format|
+      format.json { @candidates = paginated(searched_candidates) }
+      format.csv { candidates_csv }
+    end
+  end
+
   def index
     respond_to do |format|
       format.html { render html: '', layout: true }
       format.json { @candidates = paginated_candidates }
-      format.csv { index_csv }
+      format.csv { candidates_csv }
     end
   end
 
   private
 
+  def searched_candidates
+    @q.result(distinct: true).recently_replied
+  end
+
   def paginated_candidates
     paginated(filtered_candidates.recently_replied)
   end
 
-  def index_csv
+  def candidates_csv
     @candidates = filtered_candidates.recently_replied
     @filename = "caregivers-#{DateTime.current.to_i}.csv"
   end

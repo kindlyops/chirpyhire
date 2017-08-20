@@ -1,11 +1,6 @@
 class Contact < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   include ContactFilters
-  include PgSearch
-  pg_search_scope :search_by_name,
-                  against: { name: 'A', nickname: 'B' },
-                  using: { tsearch: { prefix: true } }
-
   belongs_to :person, optional: true
   belongs_to :zipcode, optional: true
   belongs_to :organization
