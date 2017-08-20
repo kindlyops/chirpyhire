@@ -24,7 +24,7 @@ class CandidateFilters extends React.Component {
       name: {
         attribute: 'Name',
         checked: false,
-        icon: 'fa-users',
+        icon: 'fa-users'
       },
       messages: {
         attribute: 'Messages',
