@@ -139,14 +139,13 @@ class CandidatesMenu extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    let audience = this.props.form.q || {};
 
     const params = {
       _method: 'post',
       manual_message: {
         title: $(this._title).val(),
         body: $(this._body).val(),
-        audience: audience
+        audience: this.props.form
       }
     };
 
