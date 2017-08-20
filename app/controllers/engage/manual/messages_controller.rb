@@ -9,7 +9,7 @@ class Engage::Manual::MessagesController < ApplicationController
   end
 
   def create
-    @q = policy_scope(Contact).ransack(params[:manual_message][:audience])
+    @q = policy_scope(Contact).ransack(params[:manual_message][:audience][:q])
     @contacts = @q.result(distinct: true)
     @new_manual_message = authorize new_manual_message
 

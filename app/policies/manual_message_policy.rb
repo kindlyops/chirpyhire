@@ -8,6 +8,10 @@ class ManualMessagePolicy < ApplicationPolicy
   end
 
   def audience
+    [q: search_params]
+  end
+
+  def search_params
     %i[zipcode_default_city_eq zipcode_state_abbreviation_eq
        zipcode_county_name_eq zipcode_zipcode_eq
        name_cont messages_count_eq].concat(
