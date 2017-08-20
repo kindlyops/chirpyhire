@@ -3,7 +3,7 @@ require 'active_support/concern'
 module ContactFilters
   extend ActiveSupport::Concern
 
-class_methods do
+  class_methods do
     def campaigns_filter(campaign_ids)
       return current_scope if campaign_ids.blank?
 

@@ -13,16 +13,18 @@ class CandidateFilters extends React.Component {
     super(props);
     this.state = {
       location: configuration.location,
-      tag: {
+      tags: {
         attribute: 'Tag',
         checked: false,
         icon: 'fa-tag',
-        options: []
+        options: [],
+        name: 'tags',
+        filter: 'matches_all_tags'
       },
       name: {
         attribute: 'Name',
         checked: false,
-        icon: 'fa-users'
+        icon: 'fa-users',
       },
       messages: {
         attribute: 'Messages',
@@ -34,14 +36,16 @@ class CandidateFilters extends React.Component {
         name: 'contact_stage',
         checked: false,
         icon: 'fa-cube',
-        options: []
+        options: [],
+        filter: 'contact_stage_id_in'
       },
       campaigns: {
         attribute: 'Campaigns',
         name: 'campaigns',
         checked: false,
         icon: 'fa-paper-plane-o',
-        options: []
+        options: [],
+        filter: 'matches_all_manual_messages'
       }
     }
 
@@ -76,7 +80,7 @@ class CandidateFilters extends React.Component {
 
   componentDidMount() {
     $.get('/tags').then(tags => {
-      let newState = update(this.state, { tag: { options: { $set: tags }}});
+      let newState = update(this.state, { tags: { options: { $set: tags }}});
       this.setState(newState);
     });
 
@@ -112,7 +116,7 @@ class CandidateFilters extends React.Component {
             handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}
             form={this.props.form}
-            {...this.state.tag} />
+            {...this.state.tags} />
           <CandidateFilter
             handleSelectChange={this.props.handleSelectChange}
             toggle={this.toggle}

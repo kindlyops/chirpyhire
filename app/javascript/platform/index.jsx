@@ -105,14 +105,29 @@ class Platform extends React.Component {
 
   handleSelectChange(selectedOption) {
     const filter = selectedOption.filter;
+
     let newForm;
     if(selectedOption.value && selectedOption.value.length) {
-      newForm = update(this.state.form, { [filter]: {
-        $set: selectedOption.value
-      }});
+
+      newForm = update(this.state.form, {
+        q: {$apply: q =>
+          update(q || {}, {
+            [filter]: { $set: selectedOption.value }
+          })
+        }
+      });
     } else {
-      newForm = update(this.state.form, { $unset: [`${filter}`]});
+      newForm = update(this.state.form, 
+        { q: 
+          { $apply: q => {
+              update(q || {}, {
+                $unset: [filter]
+              })
+            }
+          }
+      });
     }
+
     newForm.page = 1;
     const newState = R.mergeAll([{}, this.state, {
       form: newForm

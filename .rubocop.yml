@@ -49,6 +49,7 @@ Metrics/BlockLength:
     - 'config/**/*'
     - 'spec/**/*'
     - 'app/models/concerns/contact_filters.rb'
+    - 'app/models/concerns/contact_ransack.rb'
 
 Style/BlockDelimiters:
   Exclude:
