@@ -176,7 +176,21 @@ class Platform extends React.Component {
   }
 
   exportCSV() {
-    window.location.href = '/candidates.csv' + this.props.location.search;
+    $.post('/candidates/search.csv', this.state.form).then(data => {
+      let filename = `caregivers-${Date.now()}.csv`;
+      let csv = new Blob([data], { type: 'text/csv;charset=utf-8' });
+
+      if (navigator.msSaveBlob) {
+          navigator.msSaveBlob(csv, filename);
+      } else {
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(csv);
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
