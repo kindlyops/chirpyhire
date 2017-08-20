@@ -43,16 +43,16 @@ class LocationCandidateFilter extends React.Component {
 
   value(form) {
     if(this.locationPresent(form)) {
-      const { city, state, county, zipcode } = form;
-      return R.reject(R.isNil, [city, county, state, zipcode]).join(', ');
+      const { zipcode_default_city_eq, zipcode_state_abbreviation_eq, zipcode_county_name_eq, zipcode_zipcode_eq } = form.q;
+      return R.reject(R.isNil, [zipcode_default_city_eq, zipcode_county_name_eq, zipcode_state_abbreviation_eq, zipcode_zipcode_eq]).join(', ');
     } else {
-      return ''
+      return '';
     }
   }
 
   locationPresent(form) {
-    let isPresent = key => !!form[key];
-    return R.any(isPresent, ['city', 'zipcode', 'county', 'state']);
+    let isPresent = key => form.q && !!form.q[`zipcode_${key}_eq`];
+    return R.any(isPresent, ['default_city', 'zipcode', 'county_name', 'state_abbreviation']);
   }
 
   isChecked() {

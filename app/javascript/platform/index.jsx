@@ -77,8 +77,27 @@ class Platform extends React.Component {
   }
 
   handleLocationChange(location) {
-    let newForm = update(this.state.form, { $unset: ['zipcode', 'city', 'state', 'county'] });
-    newForm = update(newForm, { $merge: location });
+    let newForm = this.state.form;
+    if(newForm.q) {
+      _.forEach(['zipcode', 'default_city', 'state_abbreviation', 'county_name'], (key) => {
+        newForm = update(newForm, {
+          q: {
+            $unset: [`zipcode_${key}_lower_eq`]
+          }
+        });
+      });
+    }
+
+    _.forOwn(location, (value, key) => {
+      newForm = update(newForm, {
+        q: {$apply: q =>
+          update(q || {}, {
+            [`zipcode_${key}_lower_eq`]: { $set: value }
+          })
+        }
+      });
+    });
+
     newForm.page = 1;
     const newState = update(this.state, { form: { $set: newForm } });
     this.setState(newState);
