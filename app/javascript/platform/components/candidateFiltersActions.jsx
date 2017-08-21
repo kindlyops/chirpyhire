@@ -44,7 +44,7 @@ class CandidateFiltersActions extends React.Component {
   }
 
   hasActiveForm() {
-    return !R.equals(["page"], Object.keys(this.props.form));
+    return this.props.form.q;
   }
 
   createSegmentModal() {
