@@ -29,6 +29,10 @@ class DateCandidateFilter extends React.Component {
               </span>
               <span className='radio-content filter-text'>less than</span>
             </label>
+            <div className='filter-build-field'>
+              <input className='radio-field-input' type="number" value="" name="" />
+              <span className='radio-field-label filter-text'>days ago</span>
+            </div>
           </div>
         </div>
       )
