@@ -5,6 +5,8 @@ import TextCandidateFilter from './textCandidateFilter'
 import NumberCandidateFilter from './numberCandidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
 import LocationCandidateFilter from './locationCandidateFilter'
+import DateCandidateFilter from './dateCandidateFilter'
+
 import configuration from '../configuration/segments'
 import update from 'immutability-helper'
 
@@ -46,6 +48,12 @@ class CandidateFilters extends React.Component {
         icon: 'fa-paper-plane-o',
         options: [],
         filter: 'matches_all_manual_messages'
+      },
+      created_at: {
+        attribute: 'First Seen',
+        name: 'created_at',
+        checked: false,
+        icon: 'fa-calendar'
       }
     }
 
@@ -132,6 +140,11 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.campaigns} />
+          <DateCandidateFilter
+            handleDateChange={this.props.handleDateChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.created_at} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 
