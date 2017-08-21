@@ -3,6 +3,12 @@ require 'active_support/concern'
 module ContactRansack
   extend ActiveSupport::Concern
 
+  included do
+    ransacker :created_at, type: :date do
+      Arel::Nodes::SqlLiteral.new('date(contacts.created_at)')
+    end
+  end
+
   class_methods do
     def matches_all_manual_messages(*manual_message_ids)
       where(matches_all_manual_messages_arel(manual_message_ids))
