@@ -28,6 +28,7 @@ class Platform extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
     this.searchCandidates = this.searchCandidates.bind(this);
@@ -52,6 +53,7 @@ class Platform extends React.Component {
           handleTextChange={this.handleTextChange}
           handleNumberChange={this.handleNumberChange}
           handleLocationChange={this.handleLocationChange}
+          handleDateChange={this.handleDateChange}
           exportCSV={this.exportCSV}
         />
       </div>
@@ -143,6 +145,37 @@ class Platform extends React.Component {
       q: {$apply: q =>
         update(q || {}, {
           [`${filter}_count_eq`]: { $set: value }
+        })
+      }
+    });
+
+    newForm.page = 1;
+    const newState = R.mergeAll([{}, this.state, {
+      form: newForm
+    }]);
+
+    this.setState(newState);
+  }
+
+  handleDateChange(event) {
+    const filter = event.target.name;
+    const value = event.target.value;
+    const name = event.target.dataset.field;
+
+    let newForm = this.state.form;
+    let nameKeys = _.filter(_.keys(newForm.q), (key) => key.match(name));
+    _.forEach(nameKeys, (key) => {
+      newForm = update(newForm, {
+        q: {
+          $unset: [key]
+        }
+      });
+    });
+
+    newForm = update(newForm, {
+      q: {$apply: q =>
+        update(q || {}, {
+          [filter]: { $set: value }
         })
       }
     });

@@ -3,6 +3,13 @@ import React from 'react'
 class DateCandidateFilter extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      value: props.value || ''
+    }
+    this.onChange = this.onChange.bind(this);
+    this.isRadioChecked = this.isRadioChecked.bind(this);
+    this.fieldBuilder = this.fieldBuilder.bind(this);
   }
 
   predicate() {
@@ -13,42 +20,65 @@ class DateCandidateFilter extends React.Component {
             <div className='small-uppercase'>Relative</div>
             <label className='radio-label'>
               <span className='radio-wrapper'>
-                <input type="radio" value="" name=""/>
+                <input type="radio" value="_gt_days_ago" name={this.name()} checked={this.isRadioChecked('_gt_days_ago')} onChange={this.onChange}/>
               </span>
               <span className='radio-content filter-text'>more than</span>
             </label>
+            {this.fieldBuilder('_gt_days_ago')}
             <label className='radio-label'>
               <span className='radio-wrapper'>
-                <input type="radio" value="" name=""/>
+                <input type="radio" value="_eq_days_ago" name={this.name()} checked={this.isRadioChecked('_eq_days_ago')} onChange={this.onChange}/>
               </span>
               <span className='radio-content filter-text'>exactly</span>
             </label>
+            {this.fieldBuilder('_eq_days_ago')}
             <label className='radio-label'>
               <span className='radio-wrapper'>
-                <input type="radio" value="" name=""/>
+                <input type="radio" value="_lt_days_ago" name={this.name()} checked={this.isRadioChecked('_lt_days_ago')} onChange={this.onChange}/>
               </span>
               <span className='radio-content filter-text'>less than</span>
             </label>
-            <div className='filter-build-field'>
-              <input className='radio-field-input' type="number" value="" name="" />
-              <span className='radio-field-label filter-text'>days ago</span>
-            </div>
+            {this.fieldBuilder('_lt_days_ago')}
           </div>
         </div>
       )
     }
   }
 
-  value() {
+  isRadioChecked(value) {
+    return this.state.value === value;
+  }
+
+  onChange(event) {
+    this.setState({ value: event.target.value });
+  }
+
+  fieldBuilder(value) {
+    if (this.isRadioChecked(value)) {
+      return(
+        <div className='filter-build-field'>
+          <input 
+            className='radio-field-input' 
+            type="number" 
+            value={this.inputValue()} 
+            name={`${this.name()}${value}`} 
+            data-field={this.name()}
+            onChange={this.props.handleDateChange} />
+          <span className='radio-field-label filter-text'>days ago</span>
+        </div>
+      )
+    }
+  }
+
+  inputValue() {
     if (!this.props.form.q) return '';
 
-    return this.props.form.q[`${this.name()}_count_eq`] || '';
+    let key = `${this.name()}${this.state.value}`;
+    return this.props.form.q[key] || '';
   }
 
   isChecked() {
-    let query = this.props.form.q;
-
-    return query && query[`${this.name()}_count_eq`] || this.props.checked;
+    return this.props.checked;
   }
 
   name() {
