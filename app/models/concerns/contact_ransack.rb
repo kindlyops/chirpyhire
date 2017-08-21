@@ -7,6 +7,10 @@ module ContactRansack
     ransacker :created_at, type: :date do
       Arel::Nodes::SqlLiteral.new('date(contacts.created_at)')
     end
+
+    ransacker :last_reply_at, type: :date do
+      Arel::Nodes::SqlLiteral.new('date(contacts.last_reply_at)')
+    end
   end
 
   class_methods do

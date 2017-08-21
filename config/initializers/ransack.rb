@@ -5,12 +5,12 @@ Ransack.configure do |config|
                        validator: proc { |v| v.present? },
                        type: :string
   config.add_predicate 'gt_days_ago',
-                       arel_predicate: 'gt',
+                       arel_predicate: 'lt',
                        formatter: proc { |v| v.to_i.days.ago.to_date },
                        validator: proc { |v| v.present? },
                        type: :number
   config.add_predicate 'lt_days_ago',
-                       arel_predicate: 'lt',
+                       arel_predicate: 'gt',
                        formatter: proc { |v| v.to_i.days.ago.to_date },
                        validator: proc { |v| v.present? },
                        type: :number

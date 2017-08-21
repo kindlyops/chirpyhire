@@ -46,7 +46,10 @@ class DateCandidateFilter extends React.Component {
   }
 
   isRadioChecked(value) {
-    return this.state.value === value;
+    let key = `${this.name()}${value}`;
+    let query = this.props.form.q;
+
+    return query && query[key] || this.state.value === value;
   }
 
   onChange(event) {
@@ -60,7 +63,7 @@ class DateCandidateFilter extends React.Component {
           <input 
             className='radio-field-input' 
             type="number" 
-            value={this.inputValue()} 
+            value={this.inputValue(value)} 
             name={`${this.name()}${value}`} 
             data-field={this.name()}
             onChange={this.props.handleDateChange} />
@@ -70,15 +73,22 @@ class DateCandidateFilter extends React.Component {
     }
   }
 
-  inputValue() {
+  inputValue(value) {
     if (!this.props.form.q) return '';
 
-    let key = `${this.name()}${this.state.value}`;
+    let key = `${this.name()}${value}`;
     return this.props.form.q[key] || '';
   }
 
   isChecked() {
-    return this.props.checked;
+    let query = this.props.form.q;
+    let nameKeys = [];
+
+    if (query) {
+      nameKeys = _.filter(_.keys(query), (key) => key.match(this.name()));
+    }
+
+    return nameKeys.length > 0 || this.props.checked;
   }
 
   name() {

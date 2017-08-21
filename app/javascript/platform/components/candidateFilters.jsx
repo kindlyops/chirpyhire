@@ -54,6 +54,12 @@ class CandidateFilters extends React.Component {
         name: 'created_at',
         checked: false,
         icon: 'fa-calendar'
+      },
+      last_reply_at: {
+        attribute: 'Last Seen',
+        name: 'last_reply_at',
+        checked: false,
+        icon: 'fa-calendar'
       }
     }
 
@@ -145,6 +151,11 @@ class CandidateFilters extends React.Component {
             toggle={this.toggle}
             form={this.props.form}
             {...this.state.created_at} />
+          <DateCandidateFilter
+            handleDateChange={this.props.handleDateChange}
+            toggle={this.toggle}
+            form={this.props.form}
+            {...this.state.last_reply_at} />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 
