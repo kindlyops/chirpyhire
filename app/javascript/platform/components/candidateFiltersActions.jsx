@@ -44,7 +44,7 @@ class CandidateFiltersActions extends React.Component {
   }
 
   hasActiveForm() {
-    return this.props.form.q;
+    return this.props.form.predicates && this.props.form.predicates.length > 0;
   }
 
   createSegmentModal() {
