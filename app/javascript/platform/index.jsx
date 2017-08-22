@@ -8,7 +8,9 @@ import RestartNotificationBar from '../restart_notification_bar'
 class Platform extends React.Component {
   constructor(props) {
     let mock = [{type: "date", attribute: "last_reply_at", comparison: "lt", value: "30"},
+                {type: "select", attribute: "taggings.tag_id", comparison: "eq", value: "1"},
                 {type: "date", attribute: "last_reply_at", comparison: "gt", value: "60"},
+                {type: "string", attribute: "name", comparison: "cont", value: "c"},
                 {type: "integer", attribute: "messages_count", comparison: "gt", value: "5"}]
 
     super(props);

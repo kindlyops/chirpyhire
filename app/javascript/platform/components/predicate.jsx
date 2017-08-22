@@ -1,25 +1,17 @@
 import React from 'react'
 import DatePredicate from './datePredicate'
-import TagPredicate from './tagPredicate'
-import ManualMessagePredicate from './manualMessagePredicate'
+import SelectPredicate from './selectPredicate'
 import IntegerPredicate from './integerPredicate'
 import StringPredicate from './stringPredicate'
 
 class Predicate extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   typePredicate() {
     switch(this.props.type) {
       case 'date':
         return <DatePredicate {...this.props} />;
         break;
-      case 'tag':
-        return <TagPredicate {...this.props} />;
-        break;
-      case 'manual_message':
-        return <ManualMessagePredicate {...this.props} />;
+      case 'select':
+        return <SelectPredicate {...this.props} />;
         break;
       case 'integer':
         return <IntegerPredicate {...this.props} />;

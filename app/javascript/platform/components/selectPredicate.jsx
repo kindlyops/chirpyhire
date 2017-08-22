@@ -1,6 +1,7 @@
 import React from 'react'
+import Select from 'react-select'
 
-class IntegerPredicate extends React.Component {
+class SelectPredicate extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +13,7 @@ class IntegerPredicate extends React.Component {
       type: this.props.type,
       attribute: this.props.attribute,
       comparison: this.props.comparison,
-      value: event.target.value
+      value: event.id
     }, this.props.index);
   }
 
@@ -23,15 +24,17 @@ class IntegerPredicate extends React.Component {
   render() {
     return (
       <div>
-        <input 
-          className='Text-input' 
-          type="number" 
-          name={this.name()} 
-          value={this.props.value} 
+        <Select
+          labelKey={'name'}
+          valueKey={'id'}
+          name={this.name()}
+          options={this.props.options.map(o => { return { id: o.id.toString(), name: o.name }})}
+          className="predicate-select"
+          value={this.props.value}
           onChange={this.onValueChange} />
       </div>
     )
   }
 }
 
-export default IntegerPredicate
+export default SelectPredicate
