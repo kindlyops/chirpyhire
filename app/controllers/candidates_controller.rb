@@ -26,7 +26,7 @@ class CandidatesController < ApplicationController
   end
 
   def search
-    @q = policy_scope(Contact).ransack(@predicates)
+    @q = scope.ransack(@predicates)
 
     respond_to do |format|
       format.json { @candidates = paginated(searched_candidates) }
@@ -41,6 +41,10 @@ class CandidatesController < ApplicationController
   end
 
   private
+
+  def scope
+    policy_scope(Contact)
+  end
 
   def permitted_params
     params.permit(predicates: %i[type attribute value comparison])
