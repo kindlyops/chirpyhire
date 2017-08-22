@@ -9,12 +9,16 @@ class SelectPredicate extends React.Component {
   }
 
   onValueChange(event) {
-    this.props.onPredicateChange({
-      type: this.props.type,
-      attribute: this.props.attribute,
-      comparison: this.props.comparison,
-      value: event.id
-    }, this.props.index);
+    if (event === null) {
+      this.props.removePredicate(this.props.index);
+    } else {
+      this.props.onPredicateChange({
+        type: this.props.type,
+        attribute: this.props.attribute,
+        comparison: this.props.comparison,
+        value: event.id
+      }, this.props.index);
+    }
   }
 
   name() {

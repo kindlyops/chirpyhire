@@ -9,6 +9,7 @@ class CandidateFilter extends React.Component {
     this.state = { value: false, predicates: [] };
     this.onChange = this.onChange.bind(this);
     this.onPredicateChange = this.onPredicateChange.bind(this);
+    this.removePredicate = this.removePredicate.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,6 +27,14 @@ class CandidateFilter extends React.Component {
 
   hasPredicates() {
     return this.props.predicates.length > 0;
+  }
+
+  removePredicate(key) {
+    let newPredicates = update(this.state.predicates, {
+      $splice: [[key, 1]]
+    });
+
+    this.props.updatePredicates(this.props.attribute, newPredicates);
   }
 
   onPredicateChange(predicate, key) {
@@ -47,7 +56,8 @@ class CandidateFilter extends React.Component {
                 index={index}
                 {...predicate} 
                 options={this.props.options} 
-                onPredicateChange={this.onPredicateChange} />
+                onPredicateChange={this.onPredicateChange}
+                removePredicate={this.removePredicate} />
             )}
           </div>
         )
@@ -60,7 +70,8 @@ class CandidateFilter extends React.Component {
               type={this.props.type}
               attribute={this.props.attribute}
               options={this.props.options}
-              onPredicateChange={this.onPredicateChange} />
+              onPredicateChange={this.onPredicateChange}
+              removePredicate={this.removePredicate} />
           </div>
         ) 
       }
