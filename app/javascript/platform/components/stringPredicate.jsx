@@ -17,7 +17,7 @@ class StringPredicate extends React.Component {
   }
 
   name() {
-    return `${this.props.attribute}-${this.index}`;
+    return `${this.props.attribute}-${this.props.index}`;
   }
 
   render() {
