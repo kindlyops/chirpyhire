@@ -15,11 +15,15 @@ class CandidateSegment extends React.Component {
   render() {
     return (
       <a role="button" tabIndex={0} onClick={this.handleSegmentChange}>
-        <i className='fa fa-pie-chart mr-2'></i>
+        <i className={`fa mr-2 ${this.props.icon}`}></i>
         {this.props.name}
       </a>
     )
   }
+}
+
+CandidateSegment.defaultProps = {
+  icon: 'fa-pie-chart'
 }
 
 export default CandidateSegment

@@ -50,11 +50,11 @@ RSpec.describe Registrar do
         }.to change { Person.count }.by(2)
       end
 
-      it 'creates a New contact stage' do
+      it 'creates a Potential contact stage' do
         expect {
           subject.register
-        }.to change { organization.reload.contact_stages.where(name: 'New').exists? }.from(false).to(true)
-        expect(organization.reload.contact_stages.find_by(name: 'New').rank).to eq(1)
+        }.to change { organization.reload.contact_stages.where(name: 'Potential').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Potential').rank).to eq(1)
       end
 
       it 'creates a Screened contact stage' do

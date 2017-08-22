@@ -3,6 +3,7 @@ import React from 'react'
 import Candidates from './components/candidates'
 import CandidateSegments from './components/candidateSegments'
 import update from 'immutability-helper'
+import segments from './configuration/segments'
 import RestartNotificationBar from '../restart_notification_bar'
 
 class Platform extends React.Component {
@@ -14,11 +15,7 @@ class Platform extends React.Component {
       contact_total_count: 0,
       current_page: 1,
       total_pages: 1,
-      segments: [{
-        id: 'all',
-        name: 'All',
-        form: {}
-      }],
+      segments: segments,
       form: { page: 1 }
     }
 
