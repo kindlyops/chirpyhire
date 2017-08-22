@@ -1,6 +1,6 @@
 class Search::Predicate
   def initialize(predicate)
-    @predicate = predicate.with_indifferent_access
+    @predicate = predicate.to_h.with_indifferent_access
   end
 
   attr_reader :predicate

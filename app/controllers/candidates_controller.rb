@@ -42,8 +42,15 @@ class CandidatesController < ApplicationController
 
   private
 
+  def permitted_params
+    params.require(:form).permit(predicates:
+      %i[type attribute value comparison])
+  end
+
   def prepare_predicates
-    @predicates = Search::Predicates.call(params[:predicates])
+    @predicates = Search::Predicates.call(
+      permitted_params[:predicates]
+    )
   end
 
   def searched_candidates

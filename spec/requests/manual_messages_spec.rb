@@ -9,7 +9,7 @@ RSpec.describe 'Manual Messages' do
   end
 
   describe 'create' do
-    let(:contact) { create(:contact, organization: organization) }
+    let(:contact) { create(:contact, :name, organization: organization) }
 
     let(:params) do
       {
@@ -17,7 +17,9 @@ RSpec.describe 'Manual Messages' do
           title: 'Title',
           body: 'body',
           audience: {
-            name: contact.name
+            predicates: [{
+              type: 'string', attribute: 'name', value: contact.name, comparison: 'cont'
+            }]
           }
         }
       }
