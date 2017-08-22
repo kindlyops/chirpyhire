@@ -30,7 +30,7 @@ class Platform extends React.Component {
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
     this.searchCandidates = this.searchCandidates.bind(this);
-    this.removePredicates = this.removePredicates.bind(this);
+    this.updatePredicates = this.updatePredicates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -48,25 +48,24 @@ class Platform extends React.Component {
           searchCandidates={this.searchCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
-          removePredicates={this.removePredicates}
+          updatePredicates={this.updatePredicates}
           exportCSV={this.exportCSV}
         />
       </div>
     )
   }
 
-  removePredicates(predicates) {
+  updatePredicates(attribute, predicates) {
     if(!this.state.form.predicates) return;
 
-    let newForm = this.state.form;
-    _.each(predicates, (predicate) => {
-      let index = _.findIndex(this.state.form.predicates, (fp) => {
-        return fp.id === predicate.id;
-      });
+    let newPredicates = this.state.form.predicates;
+    newPredicates = _.filter(newPredicates, (predicate) => {
+      return predicate.attribute !== attribute
+    });
 
-      newForm = update(this.state.form, {
-        predicates: { $splice: [[index]] }
-      });
+    newPredicates = newPredicates.concat(predicates);
+    let newForm = update(this.state.form, {
+      predicates: { $set: newPredicates }
     });
 
     this.setState({ form: newForm });

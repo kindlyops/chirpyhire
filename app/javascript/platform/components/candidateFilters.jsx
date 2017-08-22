@@ -52,35 +52,41 @@ class CandidateFilters extends React.Component {
           <CandidateFilter
             name="Name"
             icon="fa-users"
+            attribute="name"
             predicates={this.predicates('name')}
             {...this.props}
            />
           <CandidateFilter
             name="Zipcode"
             icon="fa-map-marker"
+            attribute="zipcode.zipcode"
             predicates={this.predicates('zipcode.zipcode')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
+            attribute="zipcode.default_city"
             name="City"
             predicates={this.predicates('zipcode.default_city')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
+            attribute="zipcode.county_name"
             name="County"
             predicates={this.predicates('zipcode.county_name')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
+            attribute="zipcode.state_abbreviation"
             name="State"
             predicates={this.predicates('zipcode.state_abbreviation')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-tag"
+            attribute="taggings.tag_id"
             name="Tag"
             options={this.state.tag.options}
             predicates={this.predicates('taggings.tag_id')}
@@ -88,6 +94,7 @@ class CandidateFilters extends React.Component {
            />
            <CandidateFilter
              icon="fa-cube"
+             attribute="contact_stage_id"
              name="Stage"
              options={this.state.contact_stage.options}
              predicates={this.predicates('contact_stage_id')}
@@ -95,12 +102,14 @@ class CandidateFilters extends React.Component {
             />
           <CandidateFilter
             icon="fa-comments-o"
+            attribute="messages_count"
             name="Message"
             predicates={this.predicates('messages_count')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-paper-plane-o"
+            attribute="manual_message_participants.manual_message_id"
             name="Campaign"
             options={this.state.campaign.options}
             predicates={this.predicates('manual_message_participants.manual_message_id')}
@@ -108,12 +117,14 @@ class CandidateFilters extends React.Component {
            />
           <CandidateFilter
             icon="fa-calendar"
+            attribute="created_at"
             name="First Seen"
             predicates={this.predicates('created_at')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-calendar"
+            attribute="last_reply_at"
             name="Last Seen"
             predicates={this.predicates('last_reply_at')}
             {...this.props}

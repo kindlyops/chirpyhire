@@ -16,8 +16,12 @@ class CandidateFilter extends React.Component {
   }
 
   onChange() {
-    this.props.removePredicates(this.props.predicates);
+    this.props.updatePredicates(this.props.attribute, []);
     this.setState({ value: !this.state.value });
+  }
+
+  hasPredicates() {
+    return this.props.predicates.length > 0;
   }
 
   predicates() {
@@ -37,7 +41,7 @@ class CandidateFilter extends React.Component {
   }
 
   isChecked() {
-    return this.props.predicates.length > 0 || this.state.value;
+    return this.hasPredicates() || this.state.value;
   }
 
   render() {
