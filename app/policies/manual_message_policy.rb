@@ -8,19 +8,11 @@ class ManualMessagePolicy < ApplicationPolicy
   end
 
   def audience
-    [q: search_params]
+    [predicates: predicates]
   end
 
-  def search_params
-    %i[zipcode_default_city_eq zipcode_state_abbreviation_eq
-       zipcode_county_name_eq zipcode_zipcode_eq
-       name_cont messages_count_eq].concat(
-         [
-           matches_all_tags: [],
-           matches_all_manual_messages: [],
-           contact_stage_id_in: []
-         ]
-       )
+  def predicates
+    %i[type attribute value comparison]
   end
 
   class Scope < ApplicationPolicy::Scope

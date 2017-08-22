@@ -2,7 +2,6 @@ import React from 'react'
 
 import Candidates from './components/candidates'
 import CandidateSegments from './components/candidateSegments'
-import queryString from 'query-string'
 import update from 'immutability-helper'
 import RestartNotificationBar from '../restart_notification_bar'
 
@@ -20,17 +19,14 @@ class Platform extends React.Component {
         name: 'All',
         form: {}
       }],
-      form: R.merge({ page: 1 }, queryString.parse(this.props.location.search, { arrayFormat: 'bracket' }))
+      form: { page: 1 }
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleNumberChange = this.handleNumberChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
     this.searchCandidates = this.searchCandidates.bind(this);
+    this.updatePredicates = this.updatePredicates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -48,14 +44,26 @@ class Platform extends React.Component {
           searchCandidates={this.searchCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
-          handleSelectChange={this.handleSelectChange}
-          handleTextChange={this.handleTextChange}
-          handleNumberChange={this.handleNumberChange}
-          handleLocationChange={this.handleLocationChange}
+          updatePredicates={this.updatePredicates}
           exportCSV={this.exportCSV}
         />
       </div>
     )
+  }
+
+  updatePredicates(attribute, predicates) {
+    let newPredicates = this.state.form.predicates || [];
+    
+    newPredicates = _.filter(newPredicates, (predicate) => {
+      return predicate.attribute !== attribute
+    });
+
+    newPredicates = newPredicates.concat(predicates);
+    let newForm = update(this.state.form, {
+      predicates: { $set: newPredicates }
+    });
+
+    this.setState({ form: newForm });
   }
 
   handleSegmentChange(form) {
@@ -74,105 +82,6 @@ class Platform extends React.Component {
     }
 
     this.setState(newState); 
-  }
-
-  handleLocationChange(location) {
-    let newForm = this.state.form;
-    if(newForm.q) {
-      _.forEach(['zipcode', 'default_city', 'state_abbreviation', 'county_name'], (key) => {
-        newForm = update(newForm, {
-          q: {
-            $unset: [`zipcode_${key}_lower_eq`]
-          }
-        });
-      });
-    }
-
-    _.forOwn(location, (value, key) => {
-      newForm = update(newForm, {
-        q: {$apply: q =>
-          update(q || {}, {
-            [`zipcode_${key}_lower_eq`]: { $set: value }
-          })
-        }
-      });
-    });
-
-    newForm.page = 1;
-    const newState = update(this.state, { form: { $set: newForm } });
-    this.setState(newState);
-  }
-
-  handleSelectChange(selectedOption) {
-    const filter = selectedOption.filter;
-
-    let newForm;
-    if(selectedOption.value && selectedOption.value.length) {
-
-      newForm = update(this.state.form, {
-        q: {$apply: q =>
-          update(q || {}, {
-            [filter]: { $set: selectedOption.value }
-          })
-        }
-      });
-    } else {
-      newForm = update(this.state.form, 
-        { q: 
-          { $apply: q => {
-              update(q || {}, {
-                $unset: [filter]
-              })
-            }
-          }
-      });
-    }
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-    this.setState(newState);
-  }
-
-  handleNumberChange(event) {
-    const filter = event.target.name;
-    const value = event.target.value;
-
-    let newForm = update(this.state.form, {
-      q: {$apply: q =>
-        update(q || {}, {
-          [`${filter}_count_eq`]: { $set: value }
-        })
-      }
-    });
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-
-    this.setState(newState);
-  }
-
-  handleTextChange(event) {
-    const filter = event.target.name;
-    const value = event.target.value;
-
-    let newForm = update(this.state.form, {
-      q: {$apply: q =>
-        update(q || {}, {
-          [`${filter}_cont`]: { $set: value }
-        })
-      }
-    });
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-
-    this.setState(newState);
   }
 
   exportCSV() {
@@ -211,7 +120,16 @@ class Platform extends React.Component {
   }
 
   searchCandidates() {
-    return $.post(this.searchUrl(), this.state.form).then(data => {
+    const config = {
+      url: this.searchUrl(),
+      data: JSON.stringify(this.state.form),
+      type: 'POST',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json'
+    }
+
+    return $.ajax(config).then(data => {
       let newState = R.mergeAll([{}, this.state, data]);
       this.setState(newState);
     });

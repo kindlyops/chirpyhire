@@ -151,10 +151,11 @@ class CandidatesMenu extends React.Component {
 
     const config = {
       url: '/engage/manual/messages',
-      data: params,
+      data: JSON.stringify(params),
       type: 'POST',
       method: 'POST',
-      dataType: 'text'
+      dataType: 'json',
+      contentType: 'application/json'
     }
 
     $.ajax(config);
