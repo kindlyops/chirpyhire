@@ -36,7 +36,16 @@ class CandidateFiltersActions extends React.Component {
   }
 
   createSegment() {
-    $.post('/segments', this.params()).then(segment => {
+    const config = {
+      url: '/segments',
+      data: JSON.stringify(this.params()),
+      type: 'POST',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json'
+    }
+
+    return $.ajax(config).then(segment => {
       this.props.handleSegment(segment);
       this.setState({ name: '' });
       this.toggle();
