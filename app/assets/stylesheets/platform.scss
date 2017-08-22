@@ -124,12 +124,24 @@
           }
         }
 
+        .predicate-joiner-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: -5px 0 -8px;
+
+          .predicate-joiner {
+            padding: 0 8px 1px;
+            border-radius: 3px;
+            background-color: #fff;
+          }
+        }
+
         .predicate {
           display: flex;
           flex-direction: column;
           background-color: #ecfef3;
           padding-bottom: 2px;
-          margin-bottom: 12px;
           margin-top: 2px;
           padding-left: 20px;
 

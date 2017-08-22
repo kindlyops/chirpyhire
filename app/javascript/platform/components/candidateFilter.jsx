@@ -41,20 +41,34 @@ class CandidateFilter extends React.Component {
     this.props.updatePredicates(this.props.attribute, newPredicates);
   }
 
+  isLastPredicate(index) {
+    return this.state.predicates.length === index + 1;
+  }
+
+  predicateJoiner(index) {
+    if(!this.isLastPredicate(index)) {
+      return (<div className='predicate-joiner-wrapper'>
+                <span className='predicate-joiner small-uppercase'>and</span>
+              </div>);
+    }
+  }
+
   predicates() {
     if(this.isChecked()) {
       if(this.hasPredicates()) {
         return (
           <div>
-            {this.state.predicates.map((predicate, index) =>
-              <Predicate 
-                key={index} 
-                index={index}
-                {...predicate} 
-                options={this.props.options} 
-                onPredicateChange={this.onPredicateChange}
-                removePredicate={this.removePredicate} />
-            )}
+            {this.state.predicates.map((predicate, index) => {
+              return (<div key={index}>
+                <Predicate
+                  index={index}
+                  {...predicate} 
+                  options={this.props.options} 
+                  onPredicateChange={this.onPredicateChange}
+                  removePredicate={this.removePredicate} />
+                {this.predicateJoiner(index)}
+              </div>)
+            })}
           </div>
         )
       } else {
