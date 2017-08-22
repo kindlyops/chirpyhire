@@ -116,46 +116,90 @@ class CandidateFilters extends React.Component {
           <div className='ch--vertical-navigation-header'>
             <h3 className='small-uppercase'>Candidate Attributes</h3>
           </div>
-          <TextCandidateFilter
-            handleTextChange={this.props.handleTextChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.name} />
-          <LocationCandidateFilter 
-            handleLocationChange={this.props.handleLocationChange}
-            toggleLocation={this.toggleLocation}
-            form={this.props.form}
-            {...this.state.location} />
-          <CandidateFilter 
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.tags} />
-          <CandidateFilter
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.contact_stage} />
-          <NumberCandidateFilter
-            handleNumberChange={this.props.handleNumberChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.messages} />
-          <CandidateFilter
-            handleSelectChange={this.props.handleSelectChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.campaigns} />
-          <DateCandidateFilter
-            handleDateChange={this.props.handleDateChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.created_at} />
-          <DateCandidateFilter
-            handleDateChange={this.props.handleDateChange}
-            toggle={this.toggle}
-            form={this.props.form}
-            {...this.state.last_reply_at} />
+          <PredicateBuilder
+            type="string"
+            attribute="name"
+            comparison="contains"
+            value={this.predicateValue('name')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="string"
+            attribute="zipcode.zipcode"
+            comparison="eq"
+            value={this.predicateValue('zipcode.zipcode')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="string"
+            attribute="zipcode.default_city"
+            comparison="eq"
+            value={this.predicateValue('zipcode.default_city')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="string"
+            attribute="zipcode.county_name"
+            comparison="eq"
+            value={this.predicateValue('zipcode.county_name')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="string"
+            attribute="zipcode.state_abbreviation"
+            comparison="eq"
+            value={this.predicateValue('zipcode.state_abbreviation')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="string"
+            attribute="zipcode.state_abbreviation"
+            comparison="eq"
+            value={this.predicateValue('zipcode.state_abbreviation')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="tag"
+            attribute="taggings.tag_id"
+            comparison="eq"
+            value={this.predicateValue('taggings.tag_id')}
+            onChange={this.props.onChange}
+           />
+           <PredicateBuilder
+             type="integer"
+             attribute="contact_stage_id"
+             comparison="eq"
+             value={this.predicateValue('contact_stage_id')}
+             onChange={this.props.onChange}
+            />
+          <PredicateBuilder
+            type="integer"
+            attribute="messages_count"
+            comparison="eq"
+            value={this.predicateValue('messages_count')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="manual_message"
+            attribute="manual_message_participants.manual_message_id"
+            comparison="eq"
+            value={this.predicateValue('manual_message_participants.manual_message_id')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="date"
+            attribute="created_at"
+            comparison="eq"
+            value={this.predicateValue('created_at')}
+            onChange={this.props.onChange}
+           />
+          <PredicateBuilder
+            type="date"
+            attribute="last_reply_at"
+            comparison="eq"
+            value={this.predicateValue('last_reply_at')}
+            onChange={this.props.onChange}
+           />
         </form>
         <CandidateFiltersActions 
           handleSegment={this.props.handleSegment} 
