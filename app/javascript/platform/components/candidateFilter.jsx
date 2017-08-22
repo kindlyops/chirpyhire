@@ -1,18 +1,22 @@
 import React from 'react'
 import Predicate from './predicate'
+import update from 'immutability-helper'
 
 class CandidateFilter extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { value: false };
+    this.state = { value: false, predicates: [] };
     this.onChange = this.onChange.bind(this);
+    this.onPredicateChange = this.onPredicateChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.predicates.length > 0) {
       this.setState({ value: true });
     }
+
+    this.setState({ predicates: nextProps.predicates });
   }
 
   onChange() {
@@ -24,16 +28,24 @@ class CandidateFilter extends React.Component {
     return this.props.predicates.length > 0;
   }
 
+  onPredicateChange(predicate, key) {
+    let newPredicates = update(this.state.predicates, {
+      $splice: [[key, 1, predicate]]
+    });
+
+    this.props.updatePredicates(this.props.attribute, newPredicates);
+  }
+
   predicates() {
     if(this.isChecked()) {
       return (
         <div>
-          {this.props.predicates.map((predicate, index) =>
+          {this.state.predicates.map((predicate, index) =>
             <Predicate 
               key={index} 
               {...predicate} 
               options={this.props.options} 
-              onChange={this.props.onPredicateChange} /> 
+              onChange={this.onPredicateChange} /> 
           )}
         </div>
       )
