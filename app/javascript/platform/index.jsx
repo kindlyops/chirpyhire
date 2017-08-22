@@ -120,7 +120,16 @@ class Platform extends React.Component {
   }
 
   searchCandidates() {
-    return $.post(this.searchUrl(), { form: this.state.form }).then(data => {
+    const config = {
+      url: this.searchUrl(),
+      data: JSON.stringify(this.state.form),
+      type: 'POST',
+      method: 'POST',
+      dataType: 'json',
+      contentType: 'application/json'
+    }
+
+    return $.ajax(config).then(data => {
       let newState = R.mergeAll([{}, this.state, data]);
       this.setState(newState);
     });

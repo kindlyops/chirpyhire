@@ -22,14 +22,16 @@ class Engage::Manual::MessagesController < ApplicationController
   private
 
   def permitted_params
-    params.require(:manual_message).permit(audience: [predicates:
+    params.require(:manual_message).permit(:title, :body, audience: [predicates:
       %i[type attribute value comparison]])
   end
 
   def prepare_predicates
-    @predicates = Search::Predicates.call(
-      permitted_params[:audience][:predicates]
-    )
+    @predicates = Search::Predicates.call(fetch_predicates)
+  end
+
+  def fetch_predicates
+    permitted_params[:audience][:predicates] || []
   end
 
   def run_and_send_notification
