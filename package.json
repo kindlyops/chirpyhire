@@ -31,7 +31,6 @@
     "rails-erb-loader": "^5.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-geosuggest": "^2.3.4",
     "react-js-pagination": "^2.1.0",
     "react-notification": "^6.7.1",
     "react-router-dom": "next",
