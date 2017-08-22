@@ -37,4 +37,9 @@ class SelectPredicate extends React.Component {
   }
 }
 
+SelectPredicate.defaultProps = {
+  comparison: 'eq',
+  value: ''
+}
+
 export default SelectPredicate

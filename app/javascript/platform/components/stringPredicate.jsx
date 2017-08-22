@@ -34,4 +34,9 @@ class StringPredicate extends React.Component {
   }
 }
 
+StringPredicate.defaultProps = {
+  comparison: 'cont',
+  value: ''
+}
+
 export default StringPredicate

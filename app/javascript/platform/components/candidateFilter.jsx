@@ -38,18 +38,32 @@ class CandidateFilter extends React.Component {
 
   predicates() {
     if(this.isChecked()) {
-      return (
-        <div>
-          {this.state.predicates.map((predicate, index) =>
+      if(this.hasPredicates()) {
+        return (
+          <div>
+            {this.state.predicates.map((predicate, index) =>
+              <Predicate 
+                key={index} 
+                index={index}
+                {...predicate} 
+                options={this.props.options} 
+                onPredicateChange={this.onPredicateChange} />
+            )}
+          </div>
+        )
+      } else {
+        return (
+          <div>
             <Predicate 
-              key={index} 
-              index={index}
-              {...predicate} 
-              options={this.props.options} 
+              key={0} 
+              index={0}
+              type={this.props.type}
+              attribute={this.props.attribute}
+              options={this.props.options}
               onPredicateChange={this.onPredicateChange} />
-          )}
-        </div>
-      )
+          </div>
+        ) 
+      }
     }
   }
 

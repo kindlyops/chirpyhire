@@ -77,4 +77,9 @@ class DatePredicate extends React.Component {
   }
 }
 
+DatePredicate.defaultProps = {
+  comparison: 'gt',
+  value: ''
+}
+
 export default DatePredicate

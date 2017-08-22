@@ -7,12 +7,6 @@ import RestartNotificationBar from '../restart_notification_bar'
 
 class Platform extends React.Component {
   constructor(props) {
-    let mock = [{type: "date", attribute: "last_reply_at", comparison: "lt", value: "30"},
-                {type: "select", attribute: "taggings.tag_id", comparison: "eq", value: "1"},
-                {type: "date", attribute: "last_reply_at", comparison: "gt", value: "60"},
-                {type: "string", attribute: "name", comparison: "cont", value: "c"},
-                {type: "integer", attribute: "messages_count", comparison: "gt", value: "5"}]
-
     super(props);
     this.state = {
       candidates: [],
@@ -25,7 +19,7 @@ class Platform extends React.Component {
         name: 'All',
         form: {}
       }],
-      form: { page: 1, predicates: mock }
+      form: { page: 1 }
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -58,9 +52,8 @@ class Platform extends React.Component {
   }
 
   updatePredicates(attribute, predicates) {
-    if(!this.state.form.predicates) return;
-
-    let newPredicates = this.state.form.predicates;
+    let newPredicates = this.state.form.predicates || [];
+    
     newPredicates = _.filter(newPredicates, (predicate) => {
       return predicate.attribute !== attribute
     });

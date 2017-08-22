@@ -34,4 +34,9 @@ class IntegerPredicate extends React.Component {
   }
 }
 
+IntegerPredicate.defaultProps = {
+  comparison: 'eq',
+  value: ''
+}
+
 export default IntegerPredicate
