@@ -1,56 +1,33 @@
 import React from 'react'
-import Select from 'react-select'
+import Predicate from './predicate'
 
 class CandidateFilter extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
+
+    this.state = { value: false };
+    this.onChange = this.onChange.bind(this);
   }
 
-  predicate() {
+  onChange(event) {
+    // this.props.removePredicates(this.props.predicates);
+    this.setState({ value: event.target.value });
+  }
+
+  predicates() {
     if(this.isChecked()) {
       return (
-        <div className='predicate'>
-          <div className='predicate-inner'>
-            <Select
-              labelKey={'name'}
-              valueKey={'id'}
-              multi={true}
-              name={this.name()}
-              options={this.props.options.map(o => { return { id: o.id.toString(), name: o.name }})}
-              className="predicate-select"
-              value={this.value()}
-              onChange={this.handleSelectChange}
-            />
-          </div>
+        <div>
+          {this.props.predicates.map((predicate, index) =>
+            <Predicate key={index} {...predicate} /> 
+          )}
         </div>
       )
     }
   }
 
   isChecked() {
-    return this.props.form[this.name()] || this.props.checked;
-  }
-
-  value() {
-    if(this.props.form.q) {
-      let value = this.props.form.q[this.props.filter];
-
-      if (value) {
-        return value.join(',');
-      }
-    }
-  }
-
-  handleSelectChange(options) {
-    const value = options && options.map(o => o.id);
-    const filter = this.props.filter;
-
-    this.props.handleSelectChange({ value: value, filter: filter });
-  }
-
-  name() {
-    return this.props.name || this.props.attribute.toLowerCase();
+    return this.props.predicates.length > 0 || this.state.value;
   }
 
   render() {
@@ -58,12 +35,12 @@ class CandidateFilter extends React.Component {
       <div className='CandidateFilter'>
         <div className='form-check small-uppercase'>
           <label className='form-check-label'>
-            <input className='form-check-input' name={this.name()} type="checkbox" onChange={this.props.toggle} checked={this.isChecked()} value="" />
+            <input className='form-check-input' type="checkbox" checked={this.isChecked()} onChange={this.onChange} />
             <i className={`fa fa-fw mr-1 ml-1 ${this.props.icon}`}></i>
-            {` ${this.props.attribute}`}
+            {` ${this.props.name}`}
           </label>
         </div>
-        {this.predicate()}
+        {this.predicates()}
       </div>
     )
   }

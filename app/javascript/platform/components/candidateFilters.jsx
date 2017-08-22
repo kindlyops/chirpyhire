@@ -1,67 +1,14 @@
 import React from 'react'
 
 import CandidateFilter from './candidateFilter'
-import TextCandidateFilter from './textCandidateFilter'
-import NumberCandidateFilter from './numberCandidateFilter'
 import CandidateFiltersActions from './candidateFiltersActions'
-import LocationCandidateFilter from './locationCandidateFilter'
-import DateCandidateFilter from './dateCandidateFilter'
-
 import configuration from '../configuration/segments'
 import update from 'immutability-helper'
 
 class CandidateFilters extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      location: configuration.location,
-      tags: {
-        attribute: 'Tag',
-        checked: false,
-        icon: 'fa-tag',
-        options: [],
-        name: 'tags',
-        filter: 'matches_all_tags'
-      },
-      name: {
-        attribute: 'Name',
-        checked: false,
-        icon: 'fa-users'
-      },
-      messages: {
-        attribute: 'Messages',
-        checked: false,
-        icon: 'fa-comments-o'
-      },
-      contact_stage: {
-        attribute: 'Stage',
-        name: 'contact_stage',
-        checked: false,
-        icon: 'fa-cube',
-        options: [],
-        filter: 'contact_stage_id_in'
-      },
-      campaigns: {
-        attribute: 'Campaigns',
-        name: 'campaigns',
-        checked: false,
-        icon: 'fa-paper-plane-o',
-        options: [],
-        filter: 'matches_all_manual_messages'
-      },
-      created_at: {
-        attribute: 'First Seen',
-        name: 'created_at',
-        checked: false,
-        icon: 'fa-calendar'
-      },
-      last_reply_at: {
-        attribute: 'Last Seen',
-        name: 'last_reply_at',
-        checked: false,
-        icon: 'fa-calendar'
-      }
-    }
+    this.state = configuration;
 
     this.toggle = this.toggle.bind(this);
     this.toggleLocation = this.toggleLocation.bind(this);
@@ -109,6 +56,14 @@ class CandidateFilters extends React.Component {
     });
   }
 
+  predicates(attribute) {
+    let mock = [{type: "date", attribute: "last_reply_at", comparison: "lt", value: "30"},
+                {type: "date", attribute: "last_reply_at", comparison: "gt", value: "60"},
+                {type: "integer", attribute: "messages_count", comparison: "gt", value: "5"}]
+
+    return _.filter(mock, { attribute: attribute });
+  }
+
   render() {
     return (
       <div className='CandidateFilters ch--vertical-navigation'>
@@ -116,81 +71,70 @@ class CandidateFilters extends React.Component {
           <div className='ch--vertical-navigation-header'>
             <h3 className='small-uppercase'>Candidate Attributes</h3>
           </div>
-          <PredicateBuilder
-            type="string"
-            attribute="name"
-            comparison="contains"
-            value={this.predicateValue('name')}
+          <CandidateFilter
+            name="Name"
+            icon="fa-users"
+            predicates={this.predicates('name')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="string"
-            attribute="zipcode.zipcode"
-            comparison="eq"
-            value={this.predicateValue('zipcode.zipcode')}
+          <CandidateFilter
+            name="Zipcode"
+            icon="fa-map-marker"
+            predicates={this.predicates('zipcode.zipcode')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="string"
-            attribute="zipcode.default_city"
-            comparison="eq"
-            value={this.predicateValue('zipcode.default_city')}
+          <CandidateFilter
+            icon="fa-map-marker"
+            name="City"
+            predicates={this.predicates('zipcode.default_city')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="string"
-            attribute="zipcode.county_name"
-            comparison="eq"
-            value={this.predicateValue('zipcode.county_name')}
+          <CandidateFilter
+            icon="fa-map-marker"
+            name="County"
+            predicates={this.predicates('zipcode.county_name')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="string"
-            attribute="zipcode.state_abbreviation"
-            comparison="eq"
-            value={this.predicateValue('zipcode.state_abbreviation')}
+          <CandidateFilter
+            icon="fa-map-marker"
+            name="State"
+            predicates={this.predicates('zipcode.state_abbreviation')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="tag"
-            attribute="taggings.tag_id"
-            comparison="eq"
-            value={this.predicateValue('taggings.tag_id')}
+          <CandidateFilter
+            icon="fa-tag"
+            name="Tag"
+            predicates={this.predicates('taggings.tag_id')}
             onChange={this.props.onChange}
            />
-           <PredicateBuilder
-             type="integer"
-             attribute="contact_stage_id"
-             comparison="eq"
-             value={this.predicateValue('contact_stage_id')}
+           <CandidateFilter
+             icon="fa-cube"
+             name="Stage"
+             predicates={this.predicates('contact_stage_id')}
              onChange={this.props.onChange}
             />
-          <PredicateBuilder
-            type="integer"
-            attribute="messages_count"
-            comparison="eq"
-            value={this.predicateValue('messages_count')}
+          <CandidateFilter
+            icon="fa-comments-o"
+            name="Message"
+            predicates={this.predicates('messages_count')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="manual_message"
-            attribute="manual_message_participants.manual_message_id"
-            comparison="eq"
-            value={this.predicateValue('manual_message_participants.manual_message_id')}
+          <CandidateFilter
+            icon="fa-paper-plane-o"
+            name="Campaign"
+            predicates={this.predicates('manual_message_participants.manual_message_id')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="date"
-            attribute="created_at"
-            comparison="eq"
-            value={this.predicateValue('created_at')}
+          <CandidateFilter
+            icon="fa-calendar"
+            name="First Seen"
+            predicates={this.predicates('created_at')}
             onChange={this.props.onChange}
            />
-          <PredicateBuilder
-            type="date"
-            attribute="last_reply_at"
-            comparison="eq"
-            value={this.predicateValue('last_reply_at')}
+          <CandidateFilter
+            icon="fa-calendar"
+            name="Last Seen"
+            predicates={this.predicates('last_reply_at')}
             onChange={this.props.onChange}
            />
         </form>
