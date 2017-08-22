@@ -1,6 +1,7 @@
 class CandidatesController < ApplicationController
   skip_after_action :verify_policy_scoped, only: %i[index], if: :format_html?
   skip_after_action :verify_authorized, only: %i[search]
+  before_action :prepare_predicates, only: %i[search]
 
   layout 'react', only: %i[index]
   PAGE_LIMIT = 24
@@ -25,7 +26,7 @@ class CandidatesController < ApplicationController
   end
 
   def search
-    @q = policy_scope(Contact).ransack(params[:q])
+    @q = policy_scope(Contact).ransack(@predicates)
 
     respond_to do |format|
       format.json { @candidates = paginated(searched_candidates) }
@@ -40,6 +41,10 @@ class CandidatesController < ApplicationController
   end
 
   private
+
+  def prepare_predicates
+    @predicates = Search::Predicates.call(params[:predicates])
+  end
 
   def searched_candidates
     @q.result(distinct: true).recently_replied

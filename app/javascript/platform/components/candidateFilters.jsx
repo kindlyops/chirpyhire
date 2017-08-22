@@ -60,42 +60,42 @@ class CandidateFilters extends React.Component {
           <CandidateFilter
             name="Zipcode"
             icon="fa-map-marker"
-            attribute="zipcode.zipcode"
+            attribute="zipcode_zipcode"
             type="string"
-            predicates={this.predicates('zipcode.zipcode')}
+            predicates={this.predicates('zipcode_zipcode')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
-            attribute="zipcode.default_city"
+            attribute="zipcode_default_city"
             type="string"
             name="City"
-            predicates={this.predicates('zipcode.default_city')}
+            predicates={this.predicates('zipcode_default_city')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
-            attribute="zipcode.county_name"
+            attribute="zipcode_county_name"
             type="string"
             name="County"
-            predicates={this.predicates('zipcode.county_name')}
+            predicates={this.predicates('zipcode_county_name')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-map-marker"
-            attribute="zipcode.state_abbreviation"
+            attribute="zipcode_state_abbreviation"
             type="string"
             name="State"
-            predicates={this.predicates('zipcode.state_abbreviation')}
+            predicates={this.predicates('zipcode_state_abbreviation')}
             {...this.props}
            />
           <CandidateFilter
             icon="fa-tag"
-            attribute="taggings.tag_id"
+            attribute="taggings_tag_id"
             name="Tag"
             type="select"
             options={this.state.tag.options}
-            predicates={this.predicates('taggings.tag_id')}
+            predicates={this.predicates('taggings_tag_id')}
             {...this.props}
            />
            <CandidateFilter
@@ -117,11 +117,11 @@ class CandidateFilters extends React.Component {
            />
           <CandidateFilter
             icon="fa-paper-plane-o"
-            attribute="manual_message_participants.manual_message_id"
+            attribute="manual_message_participants_manual_message_id"
             name="Campaign"
             type="select"
             options={this.state.campaign.options}
-            predicates={this.predicates('manual_message_participants.manual_message_id')}
+            predicates={this.predicates('manual_message_participants_manual_message_id')}
             {...this.props}
            />
           <CandidateFilter

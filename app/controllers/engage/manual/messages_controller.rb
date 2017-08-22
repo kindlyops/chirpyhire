@@ -1,4 +1,6 @@
 class Engage::Manual::MessagesController < ApplicationController
+  before_action :prepare_predicates, only: %i[create]
+
   def index
     @campaigns = policy_scope(ManualMessage)
 
@@ -9,7 +11,7 @@ class Engage::Manual::MessagesController < ApplicationController
   end
 
   def create
-    @q = policy_scope(Contact).ransack(params[:manual_message][:audience][:q])
+    @q = policy_scope(Contact).ransack(@predicates)
     @contacts = @q.result(distinct: true)
     @new_manual_message = authorize new_manual_message
 
@@ -18,6 +20,12 @@ class Engage::Manual::MessagesController < ApplicationController
   end
 
   private
+
+  def prepare_predicates
+    @predicates = Search::Predicates.call(
+      params[:manual_message][:audience][:predicates]
+    )
+  end
 
   def run_and_send_notification
     Broadcaster::Notification.broadcast(current_account, notification)
