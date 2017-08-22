@@ -152,13 +152,6 @@ class CandidateFilters extends React.Component {
             onChange={this.props.onChange}
            />
           <PredicateBuilder
-            type="string"
-            attribute="zipcode.state_abbreviation"
-            comparison="eq"
-            value={this.predicateValue('zipcode.state_abbreviation')}
-            onChange={this.props.onChange}
-           />
-          <PredicateBuilder
             type="tag"
             attribute="taggings.tag_id"
             comparison="eq"
