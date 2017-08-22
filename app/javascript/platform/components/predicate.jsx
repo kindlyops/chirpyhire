@@ -13,19 +13,19 @@ class Predicate extends React.Component {
   typePredicate() {
     switch(this.props.type) {
       case 'date':
-        return <DatePredicate />;
+        return <DatePredicate {...this.props} />;
         break;
       case 'tag':
-        return <TagPredicate />;
+        return <TagPredicate {...this.props} />;
         break;
       case 'manual_message':
-        return <ManualMessagePredicate />;
+        return <ManualMessagePredicate {...this.props} />;
         break;
       case 'integer':
-        return <IntegerPredicate />;
+        return <IntegerPredicate {...this.props} />;
         break;
       case 'string':
-        return <StringPredicate />;
+        return <StringPredicate {...this.props} />;
         break;
     }
   }

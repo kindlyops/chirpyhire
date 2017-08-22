@@ -43,9 +43,10 @@ class CandidateFilter extends React.Component {
           {this.state.predicates.map((predicate, index) =>
             <Predicate 
               key={index} 
+              index={index}
               {...predicate} 
               options={this.props.options} 
-              onChange={this.onPredicateChange} /> 
+              onPredicateChange={this.onPredicateChange} />
           )}
         </div>
       )
