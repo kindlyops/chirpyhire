@@ -13,16 +13,12 @@ class CandidateFilter extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.predicates.length > 0) {
-      this.setState({ value: true });
-    }
-
     this.setState({ predicates: nextProps.predicates });
   }
 
-  onChange() {
+  onChange(event) {
     this.props.updatePredicates(this.props.attribute, []);
-    this.setState({ value: !this.state.value });
+    this.setState({ value: event.target.checked });
   }
 
   hasPredicates() {
