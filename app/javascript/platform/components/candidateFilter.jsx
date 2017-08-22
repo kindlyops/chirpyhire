@@ -9,9 +9,15 @@ class CandidateFilter extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange(event) {
-    // this.props.removePredicates(this.props.predicates);
-    this.setState({ value: event.target.value });
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.predicates.length > 0) {
+      this.setState({ value: true });
+    }
+  }
+
+  onChange() {
+    this.props.removePredicates(this.props.predicates);
+    this.setState({ value: !this.state.value });
   }
 
   predicates() {
@@ -19,7 +25,11 @@ class CandidateFilter extends React.Component {
       return (
         <div>
           {this.props.predicates.map((predicate, index) =>
-            <Predicate key={index} {...predicate} /> 
+            <Predicate 
+              key={index} 
+              {...predicate} 
+              options={this.props.options} 
+              onChange={this.props.onPredicateChange} /> 
           )}
         </div>
       )
@@ -44,6 +54,10 @@ class CandidateFilter extends React.Component {
       </div>
     )
   }
+}
+
+CandidateFilter.defaultProps = {
+  options: []
 }
 
 export default CandidateFilter

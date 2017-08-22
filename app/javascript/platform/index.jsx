@@ -2,12 +2,15 @@ import React from 'react'
 
 import Candidates from './components/candidates'
 import CandidateSegments from './components/candidateSegments'
-import queryString from 'query-string'
 import update from 'immutability-helper'
 import RestartNotificationBar from '../restart_notification_bar'
 
 class Platform extends React.Component {
   constructor(props) {
+    let mock = [{type: "date", attribute: "last_reply_at", comparison: "lt", value: "30"},
+                {type: "date", attribute: "last_reply_at", comparison: "gt", value: "60"},
+                {type: "integer", attribute: "messages_count", comparison: "gt", value: "5"}]
+
     super(props);
     this.state = {
       candidates: [],
@@ -20,18 +23,14 @@ class Platform extends React.Component {
         name: 'All',
         form: {}
       }],
-      form: R.merge({ page: 1 }, queryString.parse(this.props.location.search, { arrayFormat: 'bracket' }))
+      form: { page: 1, predicates: mock }
     }
 
     this.handlePageChange = this.handlePageChange.bind(this);
-    this.handleSelectChange = this.handleSelectChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
-    this.handleNumberChange = this.handleNumberChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSegmentChange = this.handleSegmentChange.bind(this);
     this.handleSegment = this.handleSegment.bind(this);
     this.searchCandidates = this.searchCandidates.bind(this);
+    this.removePredicates = this.removePredicates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
   }
 
@@ -49,15 +48,28 @@ class Platform extends React.Component {
           searchCandidates={this.searchCandidates}
           handleSegment={this.handleSegment}
           handlePageChange={this.handlePageChange}
-          handleSelectChange={this.handleSelectChange}
-          handleTextChange={this.handleTextChange}
-          handleNumberChange={this.handleNumberChange}
-          handleLocationChange={this.handleLocationChange}
-          handleDateChange={this.handleDateChange}
+          removePredicates={this.removePredicates}
           exportCSV={this.exportCSV}
         />
       </div>
     )
+  }
+
+  removePredicates(predicates) {
+    if(!this.state.form.predicates) return;
+
+    let newForm = this.state.form;
+    _.each(predicates, (predicate) => {
+      let index = _.findIndex(this.state.form.predicates, (fp) => {
+        return fp.id === predicate.id;
+      });
+
+      newForm = update(this.state.form, {
+        predicates: { $splice: [[index]] }
+      });
+    });
+
+    this.setState({ form: newForm });
   }
 
   handleSegmentChange(form) {
@@ -76,136 +88,6 @@ class Platform extends React.Component {
     }
 
     this.setState(newState); 
-  }
-
-  handleLocationChange(location) {
-    let newForm = this.state.form;
-    if(newForm.q) {
-      _.forEach(['zipcode', 'default_city', 'state_abbreviation', 'county_name'], (key) => {
-        newForm = update(newForm, {
-          q: {
-            $unset: [`zipcode_${key}_lower_eq`]
-          }
-        });
-      });
-    }
-
-    _.forOwn(location, (value, key) => {
-      newForm = update(newForm, {
-        q: {$apply: q =>
-          update(q || {}, {
-            [`zipcode_${key}_lower_eq`]: { $set: value }
-          })
-        }
-      });
-    });
-
-    newForm.page = 1;
-    const newState = update(this.state, { form: { $set: newForm } });
-    this.setState(newState);
-  }
-
-  handleSelectChange(selectedOption) {
-    const filter = selectedOption.filter;
-
-    let newForm;
-    if(selectedOption.value && selectedOption.value.length) {
-
-      newForm = update(this.state.form, {
-        q: {$apply: q =>
-          update(q || {}, {
-            [filter]: { $set: selectedOption.value }
-          })
-        }
-      });
-    } else {
-      newForm = update(this.state.form, 
-        { q: 
-          { $apply: q => {
-              update(q || {}, {
-                $unset: [filter]
-              })
-            }
-          }
-      });
-    }
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-    this.setState(newState);
-  }
-
-  handleNumberChange(event) {
-    const filter = event.target.name;
-    const value = event.target.value;
-
-    let newForm = update(this.state.form, {
-      q: {$apply: q =>
-        update(q || {}, {
-          [`${filter}_count_eq`]: { $set: value }
-        })
-      }
-    });
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-
-    this.setState(newState);
-  }
-
-  handleDateChange(event) {
-    const filter = event.target.name;
-    const value = event.target.value;
-    const name = event.target.dataset.field;
-
-    let newForm = this.state.form;
-    let nameKeys = _.filter(_.keys(newForm.q), (key) => key.match(name));
-    _.forEach(nameKeys, (key) => {
-      newForm = update(newForm, {
-        q: {
-          $unset: [key]
-        }
-      });
-    });
-
-    newForm = update(newForm, {
-      q: {$apply: q =>
-        update(q || {}, {
-          [filter]: { $set: value }
-        })
-      }
-    });
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-
-    this.setState(newState);
-  }
-
-  handleTextChange(event) {
-    const filter = event.target.name;
-    const value = event.target.value;
-
-    let newForm = update(this.state.form, {
-      q: {$apply: q =>
-        update(q || {}, {
-          [`${filter}_cont`]: { $set: value }
-        })
-      }
-    });
-
-    newForm.page = 1;
-    const newState = R.mergeAll([{}, this.state, {
-      form: newForm
-    }]);
-
-    this.setState(newState);
   }
 
   exportCSV() {
