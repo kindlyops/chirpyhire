@@ -20,7 +20,7 @@ class Registrar
   delegate :location, to: :organization
 
   def create_contact_stages
-    organization.contact_stages.create(name: 'New', rank: 1)
+    organization.contact_stages.create(name: 'Potential', rank: 1)
     organization.contact_stages.create(name: 'Screened', rank: 2)
     organization.contact_stages.create(name: 'Not Now', rank: 3)
     organization.contact_stages.create(name: 'Scheduled', rank: 4)
