@@ -15,6 +15,12 @@
       position: relative;
       margin: 0 1.25rem;
 
+      .character-count {
+        width: 25px;
+        display: flex;
+        justify-content: center;
+      }
+
       .message-input {
         overflow: scroll;
         margin: 0;
