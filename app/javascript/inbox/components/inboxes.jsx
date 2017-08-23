@@ -11,7 +11,6 @@ class Inboxes extends React.Component {
           this.props.inboxes.map(inbox =>
             <InboxLink 
               {...inbox} 
-              current_account={this.props.current_account} 
               key={`${inbox.id}`} />
           )
         }

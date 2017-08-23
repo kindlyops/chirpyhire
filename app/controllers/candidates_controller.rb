@@ -19,7 +19,7 @@ class CandidatesController < ApplicationController
       @candidate.subscribed = true
       @candidate.save
       IceBreaker.call(@candidate, current_organization.phone_numbers.first)
-      redirect_to candidates_path
+      redirect_to candidates_segment_path(id: 'all')
     else
       render :new
     end
@@ -35,9 +35,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    respond_to do |format|
-      format.html { render html: '', layout: true }
-    end
+    redirect_to candidates_segment_path(id: 'all')
   end
 
   private

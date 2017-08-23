@@ -35,7 +35,7 @@ class CandidatesListContainer extends React.Component {
         prevPageText={'‹ Prev'}
         firstPageText={'« First'}
         hideDisabled={true}
-        onChange={this.props.handlePageChange}
+        onChange={this.props.onPageChange}
         />
       </nav>
     </div>)

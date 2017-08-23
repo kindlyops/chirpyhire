@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal, Button, ModalFooter, ModalBody, Tooltip } from 'reactstrap'
+import PropTypes from 'prop-types'
 
 class CandidatesMenu extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class CandidatesMenu extends React.Component {
   }
 
   isDisabled() {
-    const organization = this.props.current_organization || {};
+    const organization = this.context.current_organization || {};
     const subscription = organization.subscription || {};
 
     return subscription.status === 'canceled';
@@ -165,12 +166,8 @@ class CandidatesMenu extends React.Component {
 }
 
 
-CandidatesMenu.defaultProps = {
-  current_organization: {
-    subscription: {
-      status: ''
-    }
-  }
+CandidatesMenu.contextTypes = {
+  current_organization: PropTypes.object
 }
 
 export default CandidatesMenu

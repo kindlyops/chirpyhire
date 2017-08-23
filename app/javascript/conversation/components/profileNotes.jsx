@@ -1,6 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import update from 'immutability-helper'
+import PropTypes from 'prop-types'
 
 import NoteDay from './noteDay'
 
@@ -15,20 +16,20 @@ class ProfileNotes extends React.Component {
   }
 
   senderIcon() {
-    if(this.props.current_account.url) {
+    if(this.context.current_account.url) {
       return (
-        <img className='author_image no-repeat thumb_36' src={this.props.current_account.url}></img>
+        <img className='author_image no-repeat thumb_36' src={this.context.current_account.url}></img>
       );
     } else {
       return (
-        <span className={`author_image thumb_36 ${this.props.current_account.hero_pattern_classes}`}>
+        <span className={`author_image thumb_36 ${this.context.current_account.hero_pattern_classes}`}>
         </span>
       );
     }
   }
 
   inputContainerClasses() {
-    if (this.props.current_account.url) {
+    if (this.context.current_account.url) {
       return 'inline_message_input_container less-negative-margin-top';
     } else {
       return 'inline_message_input_container';
@@ -45,7 +46,7 @@ class ProfileNotes extends React.Component {
             <div>
               <div className="notes">
                 {this.days().map((day) =>
-                  <NoteDay key={day[0].created_at} current_account={this.props.current_account} notes={day} day={day[0].created_at} />
+                  <NoteDay key={day[0].created_at} current_account={this.context.current_account} notes={day} day={day[0].created_at} />
                 )}
               </div>
             </div>
@@ -217,6 +218,10 @@ class ProfileNotes extends React.Component {
       }
     });
   }
+}
+
+ProfileNotes.contextTypes = {
+  current_account: PropTypes.object
 }
 
 export default ProfileNotes

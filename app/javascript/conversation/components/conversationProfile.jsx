@@ -12,7 +12,6 @@ class ConversationProfile extends React.Component {
         <ProfileTags contact={this.props.contact} />
         <ProfileDetails contact={this.props.contact} />
         <ProfileNotes
-          current_account={this.props.current_account}
           inbox={this.props.inbox}
           contact={this.props.contact} />
     </div>
