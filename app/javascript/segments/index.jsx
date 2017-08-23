@@ -1,6 +1,6 @@
 import React from 'react'
 
-import configuration from './configuration'
+import Configuration from './configuration'
 import SegmentLink from './segmentLink'
 import Segment from '../segment'
 import update from 'immutability-helper'
@@ -11,15 +11,16 @@ class Segments extends React.Component {
     super(props);
     this.state = {
       loaded: false,
-      segments: configuration
+      segments: []
     }
 
     this.add = this.add.bind(this);
     this.fetch = this.fetch.bind(this);
+    this.fetchSegments = this.fetchSegments.bind(this);
   }
 
   componentDidMount() {
-    this.fetchSegments();
+    this.configure().then(this.fetchSegments);
   }
 
   fetchSegments() {
@@ -76,6 +77,12 @@ class Segments extends React.Component {
   add(segment) {
     let newState = upsertSegment(segment, this.state);
     this.setState(newState); 
+  }
+
+  configure() {
+    return new Configuration().segments().then(segments => {
+      this.setState({ segments: segments });
+    });
   }
 }
 
