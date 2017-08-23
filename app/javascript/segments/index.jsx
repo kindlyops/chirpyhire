@@ -10,6 +10,7 @@ class Segments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       segments: configuration
     }
 
@@ -18,9 +19,18 @@ class Segments extends React.Component {
   }
 
   componentDidMount() {
-    $.get('/segments').then(segments => {
-      let newState = update(this.state, { segments: { $push: segments }});
-      this.setState(newState);  
+    this.fetchSegments();
+  }
+
+  fetchSegments() {
+    return $.get('/segments').then(segments => {
+
+      let newState = _.reduce(segments, (state, segment) => {
+        return this.upsertSegment(segment, state);
+      }, this.state);
+
+      newState = update(newState, { loaded: { $set: true }});
+      this.setState(newState);
     });
   }
 
@@ -34,26 +44,37 @@ class Segments extends React.Component {
             )
           }
         </div>
-        <Route path={this.props.match.url + '/:id'} render={props => (
-          <Segment fetchSegment={this.fetchSegment} addSegment={this.addSegment} {...props} />
-        )} />
+        {this.segment()}
       </div>
     )
   }
 
+  segment() {
+    if(this.state.loaded) {
+      return (<Route path={this.props.match.url + '/:id'} render={props => (
+        <Segment fetchSegment={this.fetchSegment} addSegment={this.addSegment} {...props} />
+      )} />)
+    }
+  }
+
   fetchSegment(id) {
-    return _.find(this.state.segments, { id });
+    let castedId = parseInt(id);
+    let segmentId = castedId ? castedId : id;
+
+    return _.find(this.state.segments, { id: segmentId });
+  }
+
+  upsertSegment(segment, state) {
+    const index = R.findIndex((s) => (s.id === segment.id), state.segments);
+    if (index !== -1) {
+      return update(state, { segments: { $splice: [[index, 1, segment]] }});
+    } else {
+      return update(state, { segments: { $push: [segment] }});
+    }
   }
 
   addSegment(segment) {
-    const index = R.findIndex((s) => (s.id === segment.id), this.state.segments);
-    let newState;
-    if (index !== -1) {
-      newState = update(this.state, { segments: { $splice: [[index, 1, segment]] }});
-    } else {
-      newState = update(this.state, { segments: { $push: [segment] }});
-    }
-
+    let newState = upsertSegment(segment, this.state);
     this.setState(newState); 
   }
 }
