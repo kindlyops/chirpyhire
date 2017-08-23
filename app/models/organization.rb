@@ -25,6 +25,7 @@ class Organization < ApplicationRecord
   has_one :recruiting_ad
 
   accepts_nested_attributes_for :teams, reject_if: :all_blank
+  accepts_nested_attributes_for :contact_stages, reject_if: :all_blank
 
   has_attached_file :avatar,
                     styles: { medium: '300x300#', thumb: '100x100#' },

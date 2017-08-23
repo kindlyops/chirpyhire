@@ -23,7 +23,7 @@ FactoryGirl.define do
       name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
       after(:create) do |contact|
         organization = contact.organization
-        stage = organization.contact_stages.find_or_create_by(name: 'Screened')
+        stage = organization.contact_stages.find_or_create_by(name: 'Scheduled')
         contact.update(subscribed: true, stage: stage)
         BotFactory::Maker.questions.without('Zipcode').each do |klass|
           question = "BotFactory::Question::#{klass}".constantize.new(nil, rank: nil)
