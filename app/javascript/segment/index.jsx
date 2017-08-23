@@ -65,16 +65,7 @@ class Segment extends React.Component {
   }
 
   searchCandidates() {
-    const config = {
-      url: this.searchUrl(),
-      data: JSON.stringify(this.state.form),
-      type: 'POST',
-      method: 'POST',
-      dataType: 'json',
-      contentType: 'application/json'
-    }
-
-    return $.ajax(config).then(search => {
+    return $.ajax(this.ajaxConfig(this.searchUrl(), 'json')).then(search => {
       let newState = R.mergeAll([{}, this.state, search]);
       this.setState(newState);
     });
@@ -104,20 +95,32 @@ class Segment extends React.Component {
     this.setState(newState);
   }
 
+  ajaxConfig(url, dataType) {
+    return {
+      url: url,
+      data: JSON.stringify(this.state.form),
+      type: 'POST',
+      method: 'POST',
+      dataType: dataType,
+      contentType: 'application/json'
+    }
+  }
+
   exportCSV() {
-    $.post('/candidates/search.csv', this.state.form).then(data => {
+    $.ajax(this.ajaxConfig('/candidates/search.csv', 'text')).then(data => {
+      debugger;
       let filename = `caregivers-${Date.now()}.csv`;
       let csv = new Blob([data], { type: 'text/csv;charset=utf-8' });
 
       if (navigator.msSaveBlob) {
-          navigator.msSaveBlob(csv, filename);
+        navigator.msSaveBlob(csv, filename);
       } else {
-          var link = document.createElement('a');
-          link.href = window.URL.createObjectURL(csv);
-          link.setAttribute('download', filename);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(csv);
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     });
   }
