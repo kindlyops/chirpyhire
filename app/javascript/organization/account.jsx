@@ -1,9 +1,9 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import Candidates from '../candidates'
-import Inboxes from '../inboxes'
+import Inbox from '../inbox'
 
 class Account extends React.Component {
   constructor(props) {
@@ -24,16 +24,14 @@ class Account extends React.Component {
   render() {
     return (
       <div>
-        <Route path="/candidates" component={Candidates} />
-        <Route path="/inboxes" component={Inboxes} />
+        <Switch>
+          <Route path="/candidates" component={Candidates} />
+          <Route path="/inboxes/:inboxId/conversations/:id" component={Inbox} />
+          <Route path="/inboxes/:inboxId/conversations" component={Inbox} />
+        </Switch>
       </div>
     )
   }
-
-  // <Route path="/inboxes" component={Inboxes} />
-  // <Route path="/inboxes/:inboxId" component={Inbox} />
-  // <Route path="/inboxes/:inboxId/conversations" component={Conversations} />
-  // <Route path="/inboxes/:inboxId/conversations/:id" component={Conversation} />
 
   url() {
     return `/current_account`;

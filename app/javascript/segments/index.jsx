@@ -14,8 +14,8 @@ class Segments extends React.Component {
       segments: configuration
     }
 
-    this.addSegment = this.addSegment.bind(this);
-    this.fetchSegment = this.fetchSegment.bind(this);
+    this.add = this.add.bind(this);
+    this.fetch = this.fetch.bind(this);
   }
 
   componentDidMount() {
@@ -52,12 +52,12 @@ class Segments extends React.Component {
   segment() {
     if(this.state.loaded) {
       return (<Route path={this.props.match.url + '/:id'} render={props => (
-        <Segment fetchSegment={this.fetchSegment} addSegment={this.addSegment} {...props} />
+        <Segment fetch={this.fetch} add={this.add} {...props} />
       )} />)
     }
   }
 
-  fetchSegment(id) {
+  fetch(id) {
     let castedId = parseInt(id);
     let segmentId = castedId ? castedId : id;
 
@@ -73,7 +73,7 @@ class Segments extends React.Component {
     }
   }
 
-  addSegment(segment) {
+  add(segment) {
     let newState = upsertSegment(segment, this.state);
     this.setState(newState); 
   }

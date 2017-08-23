@@ -41,7 +41,7 @@ class Segment extends React.Component {
   }
 
   componentDidMount() {
-    let segment = this.props.fetchSegment(this.id());
+    let segment = this.props.fetch(this.id());
     let newState = R.mergeAll([{}, this.state, segment]);
     this.setState(newState, this.searchCandidates);
   }
@@ -58,7 +58,7 @@ class Segment extends React.Component {
         this.searchCandidates();
       }
     } else {
-      let segment = this.props.fetchSegment(currentId);
+      let segment = this.props.fetch(currentId);
       let newState = R.mergeAll([{}, this.state, segment]);
       this.setState(newState);
     }

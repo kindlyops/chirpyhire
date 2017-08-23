@@ -46,7 +46,7 @@ class CandidateFiltersActions extends React.Component {
     }
 
     return $.ajax(config).then(segment => {
-      this.props.addSegment(segment);
+      this.props.add(segment);
       this.setState({ name: '' });
       this.toggle();
     })

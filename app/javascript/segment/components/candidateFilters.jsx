@@ -142,7 +142,7 @@ class CandidateFilters extends React.Component {
            />
         </form>
         <CandidateFiltersActions 
-          addSegment={this.props.addSegment} 
+          add={this.props.add} 
           form={this.props.form} 
         />
       </div>

@@ -53,7 +53,6 @@ class Conversation extends React.Component {
         onNameChange={this.onNameChange}
         contact={this.state.contact}
         inbox={this.props.inbox}
-        current_account={this.props.current_account}
       />
     </div>);
   }

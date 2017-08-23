@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-class inboxLink extends React.Component {
+class InboxLink extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,7 +18,7 @@ class inboxLink extends React.Component {
   }
 
   isOnTeam() {
-    return !!R.find(this.onTeam, this.props.current_account.teams);
+    return !!R.find(this.onTeam, this.context.current_account.teams);
   }
 
   onTeam(team) {
@@ -56,4 +57,8 @@ class inboxLink extends React.Component {
   }
 }
 
-export default inboxLink
+InboxLink.contextTypes = {
+  current_account: PropTypes.object
+}
+
+export default InboxLink
