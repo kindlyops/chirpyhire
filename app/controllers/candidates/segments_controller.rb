@@ -9,7 +9,7 @@ class Candidates::SegmentsController < ApplicationController
   end
 
   private
-  
+
   def format_html?
     request.format == 'html'
   end
