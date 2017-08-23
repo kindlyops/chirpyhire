@@ -28,7 +28,7 @@ const activeSegment = {
       };
 
 const slippingAwaySegment = {
-        id: 'slipping_away',
+        id: 'slipping-away',
         name: 'Slipping Away',
         icon: 'fa-exclamation-triangle',
         form: {

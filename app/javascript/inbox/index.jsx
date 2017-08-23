@@ -6,7 +6,6 @@ import ConversationsList from './components/conversationsList'
 import ConversationsMenu from './components/conversationsMenu'
 import Conversation from 'conversation'
 import Inboxes from './components/inboxes'
-import RestartNotificationBar from '../restart_notification_bar'
 import { withRouter } from 'react-router-dom'
 
 class Inbox extends React.Component {
@@ -126,7 +125,6 @@ class Inbox extends React.Component {
 
   render() {
     return <div className='ch--Page Recruit'>
-            <RestartNotificationBar {...this.props} />
             <Inboxes current_account={this.props.current_account} inboxes={this.state.inboxes} />
             <div className="Inbox">
               <div className='Conversations'>

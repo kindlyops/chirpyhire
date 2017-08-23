@@ -4,10 +4,12 @@ import { NotificationStack } from 'react-notification'
 import { OrderedSet } from 'immutable'
 
 class Notifications extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      notifications: OrderedSet()
+      notifications: OrderedSet(),
+      subscription: {}
     };
   }
 
@@ -40,6 +42,29 @@ class Notifications extends React.Component {
         })}
       />
     );
+  }
+
+  componentDidMount() {
+    let channel = { channel: 'NotificationsChannel' };
+    let subscription = window.App.cable.subscriptions.create(
+      channel, this.config()
+    );
+
+    this.setState({ subscription: subscription });
+  }
+
+  config() {
+    return {
+      received: this.received.bind(this)
+    }
+  }
+
+  received(notification) {
+    this.addNotification(notification);
+  }
+
+  componentWillUnmount() {
+    window.App.cable.subscriptions.remove(this.state.subscription);
   }
 }
 

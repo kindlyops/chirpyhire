@@ -15,6 +15,11 @@ Rails.application.routes.draw do
       post 'search(/page/:page)' => 'candidates#search', as: :search
     end
   end
+
+  namespace :candidates do
+    resources :segments
+  end
+  
   resources :recruiting_ads, only: %i[index update]
   resource :dashboard
   resources :segments
@@ -127,6 +132,6 @@ Rails.application.routes.draw do
   post 'twilio/text' => 'organizations/messages#create'
   post 'twilio/voice', defaults: { format: 'xml' }
 
-  get '/caregivers', to: redirect('/candidates', status: 301)
-  root to: redirect('/candidates')
+  get '/caregivers', to: redirect('/candidates/segments/all', status: 301)
+  root to: redirect('/candidates/segments/all')
 end

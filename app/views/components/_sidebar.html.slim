@@ -10,7 +10,7 @@
       i.fa.fa-dashboard.fa-fw
     = nav_link_to recruiting_ads_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Recruiting Ads' }, url_segment: 1 do
       i.fa.fa-magnet.fa-fw
-    = nav_link_to candidates_path, { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, { url_segment: 1, ignore_params: true } do
+    = nav_link_to candidates_segment_path(id: 'all'), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Caregivers' }, { url_segment: 1, ignore_params: true } do
       i.fa.fa-users.fa-fw
     - if current_inbox.present?
       = nav_link_to inbox_conversations_path(current_inbox), { class: 'section', data: { toggle: 'tooltip', placement: 'right' }, title: 'Conversations' }, url_segment: 1 do
