@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
   namespace :candidates do
-    resources :segments
+    resources :segments, only: :show
   end
   
   resources :recruiting_ads, only: %i[index update]
