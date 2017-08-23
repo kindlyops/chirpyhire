@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Candidates from './components/candidates'
+import update from 'immutability-helper'
 
 class Segment extends React.Component {
   constructor(props) {

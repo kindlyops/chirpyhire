@@ -10,7 +10,7 @@ class Candidates extends React.Component {
         <div className='ch--Header'>
           <h1>Caregivers</h1>
         </div>
-        <Route path={this.props.match.url + '/segments'} components={Segments} />
+        <Route path={this.props.match.url + '/segments'} component={Segments} />
       </div>
     )
   }

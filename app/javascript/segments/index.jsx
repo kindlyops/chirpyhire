@@ -23,7 +23,7 @@ class Segments extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='ch--Section'>
         <div className='ch--SecondaryHeader'>
           {
             this.state.segments.map((segment) =>
@@ -31,7 +31,7 @@ class Segments extends React.Component {
             )
           }
         </div>
-        <Route path={this.props.match.url + '/segments/:id'} components={Segment} />
+        <Route path={this.props.match.url + '/:id'} component={Segment} />
       </div>
     )
   }
