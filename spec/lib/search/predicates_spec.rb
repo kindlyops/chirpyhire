@@ -69,6 +69,32 @@ RSpec.describe Search::Predicates do
           expect(subject.call[:taggings_tag_id_eq]).to be_present
         end
       end
+
+      context 'multiple predicates' do
+        context 'both eq' do
+          let(:predicates) do
+            [{ type: 'select', attribute: 'taggings_tag_id', value: '1', comparison: 'eq' },
+              { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'eq' }]
+          end
+
+          it 'switches to in' do
+            expect(subject.call[:taggings_tag_id_in]).to be_present
+            expect(subject.call[:taggings_tag_id_eq]).not_to be_present
+          end
+        end
+
+        context 'one eq and one not eq' do
+          let(:predicates) do
+            [{ type: 'select', attribute: 'taggings_tag_id', value: '1', comparison: 'eq' },
+              { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'not_eq' }]
+          end
+
+          it 'stays with eq and not eq' do
+            expect(subject.call[:taggings_tag_id_not_eq]).to be_present
+            expect(subject.call[:taggings_tag_id_eq]).to be_present
+          end
+        end
+      end
     end
 
     context 'integer predicate' do
