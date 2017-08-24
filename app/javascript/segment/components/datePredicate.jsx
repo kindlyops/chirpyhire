@@ -47,27 +47,31 @@ class DatePredicate extends React.Component {
     }
   }
 
+  name() {
+    return `${this.props.attribute}-comparison-${this.props.index}`;
+  }
+
   render() {
     return (
       <div>
         <div className='small-uppercase'>Relative</div>
         <label className='radio-label'>
           <span className='radio-wrapper'>
-            <input type="radio" value="gt" name={`comparison-${this.props.index}`} checked={this.isChecked('gt')} onChange={this.onComparisonChange}/>
+            <input type="radio" value="gt" name={this.name()} checked={this.isChecked('gt')} onChange={this.onComparisonChange}/>
           </span>
           <span className='radio-content filter-text'>more than</span>
         </label>
         {this.fieldBuilder('gt')}
         <label className='radio-label'>
           <span className='radio-wrapper'>
-            <input type="radio" value="eq" name={`comparison-${this.props.index}`} checked={this.isChecked('eq')} onChange={this.onComparisonChange}/>
+            <input type="radio" value="eq" name={this.name()} checked={this.isChecked('eq')} onChange={this.onComparisonChange}/>
           </span>
           <span className='radio-content filter-text'>exactly</span>
         </label>
         {this.fieldBuilder('eq')}
         <label className='radio-label'>
           <span className='radio-wrapper'>
-            <input type="radio" value="lt" name={`comparison-${this.props.index}`} checked={this.isChecked('lt')} onChange={this.onComparisonChange}/>
+            <input type="radio" value="lt" name={this.name()} checked={this.isChecked('lt')} onChange={this.onComparisonChange}/>
           </span>
           <span className='radio-content filter-text'>less than</span>
         </label>

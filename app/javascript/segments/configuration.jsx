@@ -65,17 +65,20 @@ class Configuration {
       return new Promise();
     } else {
       return $.get('/contact_stages').then(stages => {
-        let stage = _.find(stages, { name: 'Potential' });
-        this.slippingAway.form.predicates.push(this.potentialPredicate(stage.id));
+        let hired = _.find(stages, { name: 'Hired' });
+        let not_now = _.find(stages, { name: 'Not Now' });
+
+        this.slippingAway.form.predicates.push(this.potentialPredicate(hired));
+        this.slippingAway.form.predicates.push(this.potentialPredicate(not_now));
         this.loaded = true;
       });
     }
   }
 
-  potentialPredicate(id) {
+  potentialPredicate(stage) {
     return {
       type: 'select', attribute: 'contact_stage_id', 
-      value: id.toString(), comparison: 'eq'
+      value: stage.id, comparison: 'not_eq'
     }
   }
 

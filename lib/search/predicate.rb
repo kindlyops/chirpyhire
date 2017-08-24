@@ -17,6 +17,14 @@ class Search::Predicate
     predicate[:value]
   end
 
+  def attribute
+    predicate[:attribute]
+  end
+
+  def comparison
+    predicate[:comparison]
+  end
+
   private
 
   def string?
@@ -33,13 +41,5 @@ class Search::Predicate
 
   def select?
     predicate[:type] == 'select'
-  end
-
-  def attribute
-    predicate[:attribute]
-  end
-
-  def comparison
-    predicate[:comparison]
   end
 end
