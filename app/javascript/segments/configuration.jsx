@@ -68,8 +68,18 @@ class Configuration {
         let hired = _.find(stages, { name: 'Hired' });
         let not_now = _.find(stages, { name: 'Not Now' });
 
-        this.slippingAway.form.predicates.push(this.potentialPredicate(hired));
-        this.slippingAway.form.predicates.push(this.potentialPredicate(not_now));
+        if (hired) {
+          this.slippingAway.form.predicates.push(
+            this.potentialPredicate(hired)
+          );
+        }
+
+        if (not_now) {
+          this.slippingAway.form.predicates.push(
+            this.potentialPredicate(not_now)
+          );
+        }
+
         this.loaded = true;
       });
     }
