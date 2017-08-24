@@ -17,14 +17,14 @@ class Registrar
 
   attr_reader :account
 
-  delegate :location, to: :organization
+  delegate :location, :contact_stages, to: :organization
 
   def create_contact_stages
-    organization.contact_stages.create(name: 'Potential', rank: 1)
-    organization.contact_stages.create(name: 'Screened', rank: 2)
-    organization.contact_stages.create(name: 'Not Now', rank: 3)
-    organization.contact_stages.create(name: 'Scheduled', rank: 4)
-    organization.contact_stages.create(name: 'No Show', rank: 5)
+    contact_stages.create(name: 'Potential', rank: 1, editable: false)
+    contact_stages.create(name: 'Scheduled', rank: 2, editable: false)
+    contact_stages.create(name: 'No Show', rank: 3, editable: false)
+    contact_stages.create(name: 'Not Now', rank: 4, editable: false)
+    contact_stages.create(name: 'Hired', rank: 5, editable: false)
   end
 
   def trial_length

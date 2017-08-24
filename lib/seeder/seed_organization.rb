@@ -21,11 +21,13 @@ class Seeder::SeedOrganization
 
   def create_contact_stages
     stages.each_with_index do |stage, i|
-      organization.contact_stages.create(name: stage, rank: i + 1)
+      organization.contact_stages.create(
+        name: stage, rank: i + 1, editable: false
+      )
     end
   end
 
   def stages
-    ['New', 'Screened', 'Not Now', 'Scheduled', 'No Show']
+    ['Potential', 'Scheduled', 'No Show', 'Not Now', 'Hired']
   end
 end

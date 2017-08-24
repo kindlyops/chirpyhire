@@ -57,32 +57,32 @@ RSpec.describe Registrar do
         expect(organization.reload.contact_stages.find_by(name: 'Potential').rank).to eq(1)
       end
 
-      it 'creates a Screened contact stage' do
+      it 'creates a Hired contact stage' do
         expect {
           subject.register
-        }.to change { organization.reload.contact_stages.where(name: 'Screened').exists? }.from(false).to(true)
-        expect(organization.reload.contact_stages.find_by(name: 'Screened').rank).to eq(2)
+        }.to change { organization.reload.contact_stages.where(name: 'Hired').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Hired').rank).to eq(5)
       end
 
       it 'creates a Not Now contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'Not Now').exists? }.from(false).to(true)
-        expect(organization.reload.contact_stages.find_by(name: 'Not Now').rank).to eq(3)
+        expect(organization.reload.contact_stages.find_by(name: 'Not Now').rank).to eq(4)
       end
 
       it 'creates a No Show contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'No Show').exists? }.from(false).to(true)
-        expect(organization.reload.contact_stages.find_by(name: 'No Show').rank).to eq(5)
+        expect(organization.reload.contact_stages.find_by(name: 'No Show').rank).to eq(3)
       end
 
       it 'creates a Scheduled contact stage' do
         expect {
           subject.register
         }.to change { organization.reload.contact_stages.where(name: 'Scheduled').exists? }.from(false).to(true)
-        expect(organization.reload.contact_stages.find_by(name: 'Scheduled').rank).to eq(4)
+        expect(organization.reload.contact_stages.find_by(name: 'Scheduled').rank).to eq(2)
       end
 
       it 'creates a subscription' do

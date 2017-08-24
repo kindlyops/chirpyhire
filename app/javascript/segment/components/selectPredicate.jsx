@@ -5,7 +5,18 @@ class SelectPredicate extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onComparisonChange = this.onComparisonChange.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
+    this.isChecked = this.isChecked.bind(this);
+  }
+
+  onComparisonChange(event) {
+    this.props.onPredicateChange({
+      type: this.props.type,
+      attribute: this.props.attribute,
+      comparison: event.target.value,
+      value: this.props.value
+    }, this.props.index);
   }
 
   onValueChange(event) {
@@ -21,21 +32,52 @@ class SelectPredicate extends React.Component {
     }
   }
 
+  isChecked(comparison) {
+    return this.props.comparison === comparison;
+  }
+
   name() {
-    return `${this.props.attribute}-${this.props.index}`;
+    return `${this.props.attribute}-comparison-${this.props.index}`;
+  }
+
+  valueName() {
+    return `${this.props.attribute}-value-${this.props.index}`;
+  }
+ 
+  fieldBuilder(comparison) {
+    if (this.isChecked(comparison)) {
+      return(
+        <div className='filter-build-field'>
+          <Select
+            labelKey={'name'}
+            valueKey={'id'}
+            name={this.valueName()}
+            options={this.props.options}
+            className="predicate-select"
+            value={this.props.value}
+            onChange={this.onValueChange} />
+        </div>
+      )
+    }
   }
 
   render() {
     return (
       <div>
-        <Select
-          labelKey={'name'}
-          valueKey={'id'}
-          name={this.name()}
-          options={this.props.options.map(o => { return { id: o.id.toString(), name: o.name }})}
-          className="predicate-select"
-          value={this.props.value}
-          onChange={this.onValueChange} />
+        <label className='radio-label'>
+          <span className='radio-wrapper'>
+            <input type="radio" value="eq" name={this.name()} checked={this.isChecked('eq')} onChange={this.onComparisonChange}/>
+          </span>
+          <span className='radio-content filter-text'>is</span>
+        </label>
+        {this.fieldBuilder('eq')}
+        <label className='radio-label'>
+          <span className='radio-wrapper'>
+            <input type="radio" value="not_eq" name={this.name()} checked={this.isChecked('not_eq')} onChange={this.onComparisonChange}/>
+          </span>
+          <span className='radio-content filter-text'>is not</span>
+        </label>
+        {this.fieldBuilder('not_eq')}
       </div>
     )
   }

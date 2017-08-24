@@ -4,11 +4,11 @@ FactoryGirl.define do
 
     trait :stages do
       after(:create) do |organization|
-        organization.contact_stages.create(name: 'New', rank: 1)
-        organization.contact_stages.create(name: 'Screened', rank: 2)
+        organization.contact_stages.create(name: 'Potential', rank: 1)
+        organization.contact_stages.create(name: 'Scheduled', rank: 2)
         organization.contact_stages.create(name: 'Not Now', rank: 3)
-        organization.contact_stages.create(name: 'Scheduled', rank: 4)
-        organization.contact_stages.create(name: 'No Show', rank: 5)
+        organization.contact_stages.create(name: 'No Show', rank: 4)
+        organization.contact_stages.create(name: 'Hired', rank: 5)
       end
     end
 

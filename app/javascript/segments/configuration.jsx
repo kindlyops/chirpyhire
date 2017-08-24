@@ -50,4 +50,53 @@ const passiveSegment = {
         }
       };
 
-export default [allSegment, newSegment, activeSegment, slippingAwaySegment, passiveSegment];
+class Configuration {
+  constructor() {
+    this.all = allSegment;
+    this.new = newSegment;
+    this.active = activeSegment;
+    this.slippingAway = slippingAwaySegment;
+    this.passive = passiveSegment;
+    this.loaded = false;
+  }
+
+  load() {
+    if (this.loaded) {
+      return new Promise();
+    } else {
+      return $.get('/contact_stages').then(stages => {
+        let hired = _.find(stages, { name: 'Hired' });
+        let not_now = _.find(stages, { name: 'Not Now' });
+
+        if (hired) {
+          this.slippingAway.form.predicates.push(
+            this.potentialPredicate(hired)
+          );
+        }
+
+        if (not_now) {
+          this.slippingAway.form.predicates.push(
+            this.potentialPredicate(not_now)
+          );
+        }
+
+        this.loaded = true;
+      });
+    }
+  }
+
+  potentialPredicate(stage) {
+    return {
+      type: 'select', attribute: 'contact_stage_id', 
+      value: stage.id, comparison: 'not_eq'
+    }
+  }
+
+  segments() {
+    return this.load().then(() =>
+      [this.all, this.new, this.active, this.slippingAway, this.passive]
+    );
+  }
+}
+
+export default Configuration;
