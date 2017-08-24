@@ -10,21 +10,17 @@ class Search::Predicates
   attr_reader :predicates
 
   def call
-    chunked_predicates.each_with_object(base) do |(attribute, chunk), hash|
+    predicates.chunk(&:key).each_with_object(base) do |(key, chunk), hash|
       paragon = chunk.first
 
       if chunk.count > 1 && %w[eq not_eq].include?(paragon.comparison)
-        hash[multiple_key(attribute, paragon)] = multiple_value(chunk)
+        hash[multiple_key(paragon)] = multiple_value(chunk)
       else
         chunk.each do |predicate|
           hash[predicate.key] = predicate.value
         end
       end
     end
-  end
-
-  def chunked_predicates
-    predicates.chunk(&:attribute)
   end
 
   def multiple?(predicates)
@@ -35,11 +31,11 @@ class Search::Predicates
     predicates.select { |p| p.attribute == attribute }
   end
 
-  def multiple_key(attribute, paragon)
+  def multiple_key(paragon)
     multiple_comparison = 'not_in' if paragon.comparison == 'not_eq'
     multiple_comparison ||= 'in' if paragon.comparison == 'eq'
 
-    "#{attribute}_#{multiple_comparison}"
+    "#{paragon.attribute}_#{multiple_comparison}"
   end
 
   def multiple_value(chunk)
