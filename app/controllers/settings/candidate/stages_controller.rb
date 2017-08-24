@@ -34,7 +34,7 @@ class Settings::Candidate::StagesController < ApplicationController
 
   def destroy
     ContactStage.transaction do
-      contact_stage.goals.find_each do |goal|
+      contact_stage.goals.with_deleted.find_each do |goal|
         goal.update(contact_stage: nil)
       end
 
