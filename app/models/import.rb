@@ -100,6 +100,6 @@ class Import < ApplicationRecord
   end
 
   def contents
-    File.read(document.path)
+    File.read(local_document.path)
   end
 end

@@ -1,8 +1,8 @@
 class Import::Column
-  def initialize(name, number, document)
+  def initialize(name, number, local_document)
     @name = name
     @number = number
-    @document = document
+    @local_document = local_document
   end
 
   def formatted_number
@@ -21,11 +21,11 @@ class Import::Column
 
   def rows
     @rows ||= begin
-      CSV.foreach(document.path, csv_configuration)
+      CSV.foreach(local_document.path, csv_configuration)
     end
   end
 
-  attr_reader :name, :number, :document
+  attr_reader :name, :number, :local_document
 
   private
 
@@ -50,6 +50,6 @@ class Import::Column
   end
 
   def contents
-    File.read(document.path)
+    File.read(local_document.path)
   end
 end
