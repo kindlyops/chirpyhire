@@ -67,7 +67,7 @@
                         strong = "Column: #{column.formatted_number}"
                       = button_to "Select this column", import_csv_mapping_path(@import, @mapping), { method: :put, class: 'btn btn-primary btn-block', role: 'button', params: { column_mapping: { column_number: column.number } } }
                     .card-footer
-                      .card-text 
+                      .card-text.column-header
                         strong = column.name
                     ul.list-group.list-group-flush
                       - column.preview_values.in_groups_of(2).each do |values|

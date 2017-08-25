@@ -83,6 +83,23 @@ class Import < ApplicationRecord
   end
 
   def headers
-    @headers ||= CSV.foreach(local_document.path).first
+    @headers ||= begin
+      CSV.foreach(local_document.path, encoding).first
+    end
+  end
+
+  def encoding
+    return {} if encoding_detector.blank?
+    { encoding: encoding_detector[:encoding] }
+  end
+
+  def encoding_detector
+    @encoding_detector ||= begin
+      CharlockHolmes::EncodingDetector.detect(contents)
+    end
+  end
+
+  def contents
+    File.read(document.path)
   end
 end
