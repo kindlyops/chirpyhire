@@ -7,6 +7,16 @@ RSpec.describe Import::Runner do
   subject { Import::Runner.new(import) }
 
   describe '#call' do
+    context 'iso-8859-1' do
+      let(:import) { create(:import, :iso_8859_1, account: account) }
+
+      it 'does not raise an error' do
+        expect {
+          subject.call
+        }.not_to raise_error
+      end
+    end
+
     context 'single row' do
       context 'with ID column' do
         context 'and an id is present in the row' do

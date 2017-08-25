@@ -8,6 +8,11 @@ FactoryGirl.define do
 
     trait :iso_8859_1 do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'iso_8859_1.csv')) }
+
+      after(:create) do |import|
+        import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 6)
+        import.mappings.find_by(contact_attribute: 'name').update(column_number: 4)
+      end
     end
 
     trait :utf_8 do

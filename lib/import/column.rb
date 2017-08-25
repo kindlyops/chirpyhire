@@ -29,18 +29,18 @@ class Import::Column
 
   private
 
-  def csv_configuration
-    return { headers: true } if encoding_detector.blank?
-
-    { headers: true, encoding: "#{encoding_detector[:encoding]}:UTF-8" }
-  end
-
   def preview_count
     2
   end
 
   def column
     rows.map { |row| row[number] }
+  end
+
+  def csv_configuration
+    return { headers: true } if encoding_detector.blank?
+
+    { headers: true, encoding: "#{encoding_detector[:encoding]}:UTF-8" }
   end
 
   def encoding_detector

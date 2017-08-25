@@ -11,7 +11,7 @@ class Import::Runner
 
   def call
     CSV
-      .foreach(local_document.path, headers: true)
+      .foreach(local_document.path, csv_configuration)
       .with_index(1, &method(:import_contact))
 
     import.update(status: :complete)
@@ -42,4 +42,22 @@ class Import::Runner
   end
 
   delegate :local_document, :organization, to: :import
+
+  private
+
+  def csv_configuration
+    return { headers: true } if encoding_detector.blank?
+
+    { headers: true, encoding: "#{encoding_detector[:encoding]}:UTF-8" }
+  end
+
+  def encoding_detector
+    @encoding_detector ||= begin
+      CharlockHolmes::EncodingDetector.detect(contents)
+    end
+  end
+
+  def contents
+    File.read(local_document.path)
+  end
 end

@@ -77,6 +77,13 @@
         max-height: 114px;
       }
 
+      .column-header {
+        width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
       .value {
         text-overflow: ellipsis;
         white-space: nowrap;
