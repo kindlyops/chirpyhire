@@ -84,12 +84,13 @@ class Import < ApplicationRecord
 
   def headers
     @headers ||= begin
-      CSV.foreach(local_document.path, encoding: "#{encoding}:UTF-8").first
+      CSV.foreach(local_document.path, encoding).first
     end
   end
 
   def encoding
-    encoding_detector && encoding_detector[:encoding]
+    return {} if encoding_detector.blank?
+    { encoding: encoding_detector[:encoding] }
   end
 
   def encoding_detector
