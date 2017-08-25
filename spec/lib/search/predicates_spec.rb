@@ -74,7 +74,7 @@ RSpec.describe Search::Predicates do
         context 'both eq' do
           let(:predicates) do
             [{ type: 'select', attribute: 'taggings_tag_id', value: '1', comparison: 'eq' },
-              { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'eq' }]
+             { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'eq' }]
           end
 
           it 'switches to in' do
@@ -86,7 +86,7 @@ RSpec.describe Search::Predicates do
         context 'one eq and one not eq' do
           let(:predicates) do
             [{ type: 'select', attribute: 'taggings_tag_id', value: '1', comparison: 'eq' },
-              { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'not_eq' }]
+             { type: 'select', attribute: 'taggings_tag_id', value: '2', comparison: 'not_eq' }]
           end
 
           it 'stays with eq and not eq' do

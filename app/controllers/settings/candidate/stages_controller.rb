@@ -34,13 +34,8 @@ class Settings::Candidate::StagesController < ApplicationController
 
   def destroy
     ContactStage.transaction do
-      contact_stage.goals.with_deleted.find_each do |goal|
-        goal.update(contact_stage: nil)
-      end
-
-      contact_stage.contacts.find_each do |contact|
-        contact.update(stage: migrate_stage)
-      end
+      migrate_goals
+      migrate_contacts
 
       contact_stage.destroy
     end
@@ -49,6 +44,18 @@ class Settings::Candidate::StagesController < ApplicationController
   end
 
   private
+
+  def migrate_goals
+    contact_stage.goals.with_deleted.find_each do |goal|
+      goal.update(contact_stage: migrate_stage)
+    end
+  end
+
+  def migrate_contacts
+    contact_stage.contacts.find_each do |contact|
+      contact.update(stage: migrate_stage)
+    end
+  end
 
   def stages_attributes
     params[:ordered_contact_stages].map.with_index do |id, new_rank|

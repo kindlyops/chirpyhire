@@ -20,7 +20,9 @@ class Import::Column
   end
 
   def rows
-    @rows ||= CSV.foreach(document.path, headers: true)
+    @rows ||= begin
+      CSV.foreach(document.path, headers: true, encoding: "#{encoding}:UTF-8")
+    end
   end
 
   attr_reader :name, :number, :document
@@ -33,5 +35,19 @@ class Import::Column
 
   def column
     rows.map { |row| row[number] }
+  end
+
+  def encoding
+    encoding_detector && encoding_detector[:encoding]
+  end
+
+  def encoding_detector
+    @encoding_detector ||= begin
+      CharlockHolmes::EncodingDetector.detect(contents)
+    end
+  end
+
+  def contents
+    File.read(document.path)
   end
 end

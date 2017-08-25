@@ -10,7 +10,7 @@ class Search::Predicates
   attr_reader :predicates
 
   def call
-    predicates.chunk(&:key).each_with_object(base) do |(key, chunk), hash|
+    predicates.chunk(&:key).each_with_object(base) do |(_key, chunk), hash|
       paragon = chunk.first
 
       if chunk.count > 1 && %w[eq not_eq].include?(paragon.comparison)

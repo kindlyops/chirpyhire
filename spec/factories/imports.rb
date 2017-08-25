@@ -6,6 +6,14 @@ FactoryGirl.define do
       Import::Create.call(import)
     end
 
+    trait :iso_8859_1 do
+      document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'iso_8859_1.csv')) }
+    end
+
+    trait :utf_8 do
+      document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'id_column_id_present_valid_phone_number.csv')) }
+    end
+
     trait :id_column_id_present_valid_phone_number do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'id_column_id_present_valid_phone_number.csv')) }
 
