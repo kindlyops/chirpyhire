@@ -23,15 +23,9 @@
     color: #FFF !important;
   }
 
-  .chirpyhire-icon {
-    padding: 0.2rem 1.35rem;
-    display: inline-block;
-    border: 2px solid $brand-primary;
-    color: $brand-primary;
-    border-radius: 4px;
-    box-shadow: -2px 2px 7px -4px rgba(0,0,0,0.75);
-    font-weight: 800;
-    font-size: 3rem;
+  .chirpyhire-logo {
+    max-height: 90px;
+    margin-right: 5px;
   }
 
   .main-wrapper {
