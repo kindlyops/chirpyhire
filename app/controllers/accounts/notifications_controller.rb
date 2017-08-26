@@ -1,7 +1,7 @@
 class Accounts::NotificationsController < ApplicationController
 
   def show
-    @account = authorize(Account.find(params[:account_id]))
+    @account = authorize Account.find(params[:account_id])
   end
 
   def update
