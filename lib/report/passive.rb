@@ -7,6 +7,10 @@ class Report::Passive < Report::Base
     '👋'
   end
 
+  def icon_keyword
+    ':wave:'
+  end
+
   def count
     contacts.passive.count
   end

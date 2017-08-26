@@ -4,4 +4,5 @@ class ApplicationMailer < ActionMailer::Base
 
   layout 'mailer'
   helper MailerHelper
+  helper EmojiHelper
 end

@@ -7,6 +7,10 @@ class Report::None < Report::Base
     '🏃'
   end
 
+  def icon_keyword
+    ':runner:'
+  end
+
   def count
     0
   end

@@ -7,6 +7,10 @@ class Report::SlippingAway < Report::Base
     '🎣'
   end
 
+  def icon_keyword
+    ':fishing_pole_and_fish:'
+  end
+
   def count
     contacts.slipping_away.count
   end
