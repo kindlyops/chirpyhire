@@ -9,71 +9,11 @@ html lang="en"
     body
       table width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
         tbody
-          tr align="center"
-            td style="height: 30px; width: 100%;" 
-              | &nbsp;
+          = render partial: "mailers/report_header"
           tr align="center"
             td valign="top" style="width: 100%;"
-              table cellspacing="0" cellpadding="0" border="0" summary=""
-                tbody
-                  tr align="center"
-                    td valign="middle" style="width: 100%;"
-                      a href="https://refind.com" target="_blank"
-                        img width="55" height="71" style="border:0;width:55px;height:71px;" src="https://d2qsqwbsghr38c.cloudfront.net/img/logotype_email.png?c6fab8419ff43df15351ea309adad3cd6fad52a4f14d21bc97cf822c13669066" alt="Refind"
-          tr align="center"
-            td style="height: 50px; width: 100%;" 
-              | &nbsp;
-          tr align="center"
-            td valign="top" style="width: 100%;"
-              table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
-                tbody
-                  tr align="center"
-                    td align="center" style="text-align: center; width: 100%;"
-                      a href="https://refind.com/login/subscribers" target="_blank"
-                        img width="48" height="48" style="border: 0; width: 48px; height: 48px; object-fit: cover; -webkit-border-radius: 50%; -moz-border-radius: 50%; border-radius: 50%;" src="https://pbs.twimg.com/profile_images/696472986556239872/XEaLqHNa.png" alt="Avatar"
-                  tr align="center"
-                    td style="height: 10px; width: 100%;" 
-                      | &nbsp;
-                  tr align="center"
-                    td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 16pt; font-weight: bold; color: #333333;"
-                      p style="margin: 0; padding: 0;" You have a new subscriber
-                  tr align="center" style="margin: 0px 10px;"
-                    td style="width: 100%; line-height: 24px; font-size: 13pt;"
-                      p You have a new subscriber for your newsletter on Refind.
-                  tr align="center"
-                    td style="height: 30px; width: 100%;" 
-                      | &nbsp;
-                  tr align="center"
-                    td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 11pt;"
-                      a style="padding: 10px 20px; border: 1px solid #1492ef; -webkit-border-radius: 999em; -moz-border-radius: 999em; border-radius: 999em; line-height: 24px; font-size: 11pt; background-color: #1492ef; color: white; text-decoration: none; text-align: center;" href="https://refind.com/login/subscribers" target="_blank" View subscribers
-                  tr
-                    td style="height: 40px; width: 100%;" 
-                      | &nbsp;
-                  tr align="center" style="margin: 0px 10px;"
-                    td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
-                      p style="line-height: 16px; max-width: 400px;"
-                        b 
-                          | What does that mean?
-                          br 
-                        | Your subscribers would like to get a digest of your best links. All you need to do is saving great links as you discover them – we take care of the rest. You can use our browser button to save links, or you can auto-import your best links from Twitter or Pocket. 
-                        a href="https://refind.com/login" style="color: #1492ef; text-decoration: none;" target="_blank" Learn more
-              table style="border-collapse:collapse; max-width: 520px; text-align: center;" cellpadding="0" cellspacing="0" border="0" summary=""
-                tbody
-                  tr
-                    td style="height: 80px; width: 100%;" 
-                      | &nbsp;
-                  tr
-                    td align="center" style="width: 100%;"
-                      p style="line-height: 20px; font-size: 9pt; color: #b3b3b3;"
-                        a href="https://refind.com" style="color: #b3b3b3; text-decoration: underline;" target="_blank" Refind
-                        br
-                        | The home for the best links on the web
-                        br
-                        a href="#" style="color: #b3b3b3; text-decoration: underline;" target="_blank" Unsubscribe
-                        | &nbsp;·&nbsp;
-                        a href="https://refind.com/help" style="color: #b3b3b3; text-decoration: underline;" target="_blank" Help
-                        | &nbsp;·&nbsp;
-                        a href="https://twitter.com/refindcom" style="color: #b3b3b3; text-decoration: underline;" target="_blank" Twitter
+              = yield
+              = render partial: "mailers/report_footer"
           tr align="center"
             td style="height: 55px; width: 100%;" 
               | &nbsp;
