@@ -1,0 +1,46 @@
+table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
+  tbody
+    tr align="center"
+      td align="center" style="text-align: center; width: 100%;"
+        = link_to candidates_segment_url(id: 'passive'), target: '_blank', class: 'emoji-link' do
+          = @report.icon
+    tr align="center"
+      td style="height: 10px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 16pt; font-weight: bold; color: #333333;"
+        p style="margin: 0; padding: 0;" Say hello!
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; line-height: 24px; font-size: 13pt;"
+        p You have #{@report.count} passive candidates.
+    tr align="center"
+      td style="height: 30px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 11pt;"
+        = link_to 'View passive candidates', candidates_segment_url(id: 'passive'), target: '_blank', class: 'cta'
+    tr
+      td style="height: 40px; width: 100%;" 
+        | &nbsp;
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What does this mean?
+            br 
+          | Passive candidates haven't reached out to you in over 30 days.
+          br
+          | They may or may not be looking for work.
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What should I do?
+            br 
+          | Each month, there are passive candidates becoming active.
+          br
+          | To find them, we need to be creative. 
+          br
+          | Don't send out a mass text--you'll have a low response rate.
+          br
+          | Segment your passive candidates first and send targeted campaigns.

@@ -1,0 +1,44 @@
+table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
+  tbody
+    tr align="center"
+      td align="center" style="text-align: center; width: 100%;"
+        = link_to candidates_segment_url(id: 'slipping-away'), target: '_blank', class: 'emoji-link' do
+          = @report.icon
+    tr align="center"
+      td style="height: 10px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 16pt; font-weight: bold; color: #333333;"
+        p style="margin: 0; padding: 0;" Let's reel them in!
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; line-height: 24px; font-size: 13pt;"
+        p You have #{@report.count} candidates slipping away.
+    tr align="center"
+      td style="height: 30px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 11pt;"
+        = link_to 'View candidates slipping away', candidates_segment_url(id: 'slipping-away'), target: '_blank', class: 'cta'
+    tr
+      td style="height: 40px; width: 100%;" 
+        | &nbsp;
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What does this mean?
+            br 
+          | Candidates slipping away haven't messaged you in over a week.
+          br
+          | They haven't been marked "Hired" or "Not Now".
+          br
+          | You've hooked these potential hires--it's time to reel them in!
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What should I do?
+            br 
+          | Follow up with them and schedule next steps.
+          br
+          | Mark them as "Not Now" if they are unresponsive or not a good fit.

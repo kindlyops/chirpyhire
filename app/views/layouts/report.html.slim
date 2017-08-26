@@ -1,0 +1,20 @@
+doctype html
+html lang="en"
+  head
+    - unless Rails.env.test?
+      link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet"
+    meta content=("text/html; charset=utf-8") http-equiv="Content-Type" /
+    meta content="width=device-width, initial-scale=1.0" name="viewport" /
+    = stylesheet_link_tag 'report', media: 'all'
+    body.report
+      .preview-text = preview_text(yield)
+      table width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
+        tbody
+          = render partial: "mailers/report_header"
+          tr align="center"
+            td valign="top" style="width: 100%;"
+              = yield
+              = render partial: "mailers/report_footer"
+          tr align="center"
+            td style="height: 55px; width: 100%;" 
+              | &nbsp;

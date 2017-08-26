@@ -15,7 +15,7 @@ class Message < ApplicationRecord
   delegate :handle, to: :sender, prefix: true
   delegate :contact, :conversation, to: :conversation_part, allow_nil: true
 
-  def self.active
+  def self.engaged
     where('messages.created_at >= ?', 30.days.ago)
   end
 

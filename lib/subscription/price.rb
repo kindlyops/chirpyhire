@@ -10,7 +10,7 @@ class Subscription::Price
   attr_reader :subscription
 
   def call
-    case active_contact_count
+    case engaged_contact_count
     when 0..50
       125
     when 51..100
@@ -30,8 +30,8 @@ class Subscription::Price
     end
   end
 
-  def active_contact_count
-    @active_contact_count ||= organization.contacts.active.count
+  def engaged_contact_count
+    @engaged_contact_count ||= organization.contacts.engaged.count
   end
 
   delegate :organization, to: :subscription

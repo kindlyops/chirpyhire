@@ -1,0 +1,46 @@
+table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
+  tbody
+    tr align="center"
+      td align="center" style="text-align: center; width: 100%;"
+        = link_to candidates_segment_url(id: 'new'), target: '_blank', class: 'emoji-link' do
+          = @report.icon
+    tr align="center"
+      td style="height: 10px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 16pt; font-weight: bold; color: #333333;"
+        p style="margin: 0; padding: 0;" You did it!
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; line-height: 24px; font-size: 13pt;"
+        p You have #{@report.count} new candidates.
+    tr align="center"
+      td style="height: 30px; width: 100%;" 
+        | &nbsp;
+    tr align="center"
+      td style="width: 100%; margin: 0px 10px; line-height: 24px; font-size: 11pt;"
+        = link_to 'View new candidates', candidates_segment_url(id: 'new'), target: '_blank', class: 'cta'
+    tr
+      td style="height: 40px; width: 100%;" 
+        | &nbsp;
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What does this mean?
+            br 
+          | New candidates have signed up in the past day.
+          br
+          | These candidates are bright-eyed, fresh, and looking to be hired!
+          br
+          | Well done for sourcing new potential hires!
+    tr align="center" style="margin: 0px 10px;"
+      td style="width: 100%; font-size: 9pt; color: #b3b3b3;"
+        p style="line-height: 16px; max-width: 400px;"
+          b 
+            | What should I do?
+            br 
+          | Keep up the momentum!
+          br
+          | Ask them to text "Start", if they haven't been screened. 
+          br
+          | Schedule next steps if they have already been screened.
