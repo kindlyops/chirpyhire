@@ -12,7 +12,7 @@ table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" wid
         p style="margin: 0; padding: 0;" Say hello!
     tr align="center" style="margin: 0px 10px;"
       td style="width: 100%; line-height: 24px; font-size: 13pt;"
-        p You have #{@report.count} passive candidates.
+        p You have #{@report.count} passive #{'candidate'.pluralize(@report.count)}.
     tr align="center"
       td style="height: 30px; width: 100%;" 
         | &nbsp;
@@ -37,7 +37,7 @@ table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" wid
           b 
             | What should I do?
             br 
-          | Each month, there are passive candidates becoming active.
+          | Each month, passive candidates are becoming active.
           br
           | To find them, we need to be creative. 
           br
