@@ -116,6 +116,8 @@ Rails.application.routes.draw do
   resources :accounts, only: %i[show update] do
     post :stop_impersonating, on: :collection
 
+    resource :notifications, controller: 'accounts/notifications'
+
     namespace :settings do
       resource :password, only: %i[show update]
     end
