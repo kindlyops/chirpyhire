@@ -17,7 +17,7 @@ class Reporter::Daily
 
   def call
     return if mailer.blank?
-    
+
     mailer.deliver_later
   end
 
