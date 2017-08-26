@@ -12,7 +12,7 @@ table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" wid
         p style="margin: 0; padding: 0;" You did it!
     tr align="center" style="margin: 0px 10px;"
       td style="width: 100%; line-height: 24px; font-size: 13pt;"
-        p You have #{@report.count} new candidates.
+        p You have #{@report.count} new #{pluralize(@report.count, 'candidate')}.
     tr align="center"
       td style="height: 30px; width: 100%;" 
         | &nbsp;
