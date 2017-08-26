@@ -16,16 +16,20 @@ class Reporter::Daily
   attr_reader :account
 
   def call
+    return if mailer.blank?
+    
     mailer.deliver_later
   end
 
   def mailer
+    @mailer ||= fetch_mailer
+  end
+
+  def fetch_mailer
     return DailyMailer.slipping_away(account) if slipping_away?
     return DailyMailer.newly_added(account) if newly_added?
     return DailyMailer.active(account) if active?
-    return DailyMailer.passive(account) if passive?
-
-    DailyMailer.none(account)
+    DailyMailer.passive(account) if passive?
   end
 
   def passive?
