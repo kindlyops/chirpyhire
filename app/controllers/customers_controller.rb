@@ -3,6 +3,7 @@ class CustomersController < ApplicationController
     organization.update(stripe_customer_id: customer.id)
     create_payment_card
     Internal::Notification::Customer.call(organization)
+    organization.subscription.activate
   rescue Stripe::CardError => e
     flash[:error] = e.message
   ensure

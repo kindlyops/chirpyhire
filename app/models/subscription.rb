@@ -5,6 +5,10 @@ class Subscription < ApplicationRecord
     trialing: 0, active: 1, past_due: 2, canceled: 3, unpaid: 4
   }
 
+  def activate
+    update(status: :active)
+  end
+
   def cancel
     update(status: :canceled, canceled_at: DateTime.current)
   end
