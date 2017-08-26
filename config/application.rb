@@ -32,8 +32,5 @@ module Congaree
     config.assets.precompile += %w[email.css]
 
     config.cache_store = :memory_store
-    config.after_initialize do
-      Broadcaster::ClientVersion.broadcast(ENV.fetch('CLIENT_VERSION').to_i)
-    end
   end
 end
