@@ -8,6 +8,7 @@
           h3.small-uppercase General
         .ch--vertical-navigation-links
           = nav_link_to 'Your account', account_path(@account), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Notification preferences', account_notifications_path(@account), class: 'ch--vertical-navigation-link'
     .ch--sub-main
       .ch--main-menu
         .ch--main-menu--left

@@ -1,0 +1,28 @@
+= title "Notification preferences · ChirpyHire"
+.ch--Page.settings.account
+  = render partial: "settings/header"
+  .ch--main
+    .ch--vertical-navigation
+      .ch--vertical-navigation--inner
+        .ch--vertical-navigation-header
+          h3.small-uppercase General
+        .ch--vertical-navigation-links
+          = nav_link_to 'Your account', account_path(@account), class: 'ch--vertical-navigation-link'
+          = nav_link_to 'Notification preferences', account_notifications_path(@account), class: 'ch--vertical-navigation-link'
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 Notification prefernces
+      .card.ch--sub-main-content
+        .card-block
+          .basic-details
+            = form_for @account, url: account_notifications_path(@account), method: :put do |f|
+              = content_for :validation_errors do
+                = render partial: "common/validation_errors", locals: { model: @account }
+              .form-group
+                strong = f.label :daily_email, class: "form-check-label small-uppercase" do
+                  = f.check_box :daily_email, class: "form-check-input"
+                  | Daily email
+                small.form-text.text-muted Get a daily email of candidate activity.
+              .form-group
+                = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
