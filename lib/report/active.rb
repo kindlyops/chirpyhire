@@ -7,10 +7,6 @@ class Report::Active < Report::Base
     '👏'
   end
 
-  def icon_keyword
-    ':clap:'
-  end
-
   def count
     contacts.active.count
   end

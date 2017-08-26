@@ -7,10 +7,6 @@ class Report::NewlyAdded < Report::Base
     '✨'
   end
 
-  def icon_keyword
-    ':sparkles:'
-  end
-
   def count
     contacts.newly_added.count
   end
