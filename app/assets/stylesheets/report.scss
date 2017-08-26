@@ -1,2 +1,51 @@
 @import "base/custom";
 @import "report/base";
+
+.report {
+  .preview-text {
+    display: none;
+    font-size: 1px;
+    color: #fff;
+    line-height: 1px;
+    max-height: 0px;
+    max-width: 0px;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  .chirpyhire-icon {
+    padding: 0.2rem 1.35rem;
+    display: inline-block;
+    border: 2px solid $brand-primary;
+    color: $brand-primary;
+    border-radius: 4px;
+    box-shadow: -2px 2px 7px -4px rgba(0,0,0,0.75);
+    font-weight: 800;
+    font-size: 3rem;
+  }
+
+  .emoji-link {
+    font-size: 3.5rem;
+    text-decoration: none;
+
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+
+  .cta {
+    padding: 10px 20px; 
+    border: 1px solid $brand-primary; 
+    -webkit-border-radius: 999em; 
+    -moz-border-radius: 999em; 
+    border-radius: 999em; 
+    line-height: 24px; 
+    font-size: 11pt; 
+    background-color: $brand-primary; 
+    color: white; 
+    text-decoration: none; 
+    text-align: center;
+  }
+  
+}
+

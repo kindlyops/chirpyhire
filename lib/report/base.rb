@@ -26,4 +26,8 @@ class Report::Base
   end
 
   def count; end
+
+  def contacts
+    @contacts ||= Pundit.policy_scope(account, Contact)
+  end
 end

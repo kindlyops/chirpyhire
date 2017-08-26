@@ -6,7 +6,8 @@ html lang="en"
     meta content=("text/html; charset=utf-8") http-equiv="Content-Type" /
     meta content="width=device-width, initial-scale=1.0" name="viewport" /
     = stylesheet_link_tag 'report', media: 'all'
-    body
+    body.report
+      .preview-text = preview_text(yield)
       table width="100%" cellpadding="0" cellspacing="0" border="0" summary=""
         tbody
           = render partial: "mailers/report_header"

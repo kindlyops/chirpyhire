@@ -48,6 +48,10 @@ class Contact < ApplicationRecord
     where('created_at > ?', 1.day.ago)
   end
 
+  def self.passive
+    where('last_reply_at < ?', 30.day.ago)
+  end
+
   def self.engaged
     joins(conversations: [parts: :message]).merge(Message.engaged).distinct
   end
