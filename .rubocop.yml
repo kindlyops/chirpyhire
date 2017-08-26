@@ -57,6 +57,10 @@ Style/BlockDelimiters:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/emoji_helper.rb'
+
 Rails/DynamicFindBy:
   Whitelist:
     - find_by_sql
