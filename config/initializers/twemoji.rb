@@ -1,5 +1,5 @@
-require "twemoji/png"
+require 'twemoji/png'
 
 Twemoji.configure do |config|
-  config.file_ext = "png"
+  config.file_ext = 'png'
 end
