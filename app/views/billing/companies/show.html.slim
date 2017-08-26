@@ -20,17 +20,17 @@
           h4.card-title Estimate your audience size
           p.card-text.text-muted 
             | Pricing is based on your audience size: the number of 
-            strong active candidates 
+            strong engaged candidates
             ' who have sent or received a message in the 
             strong past 30 days
             '
             ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
           h4.card-text.mb-3
             ' Start with
-            strong.candidates--number = @organization.contacts.active.count
+            strong.candidates--number = @organization.contacts.engaged.count
             '
-            strong active candidates
-          input.active-candidates-slider role="button" type="range" min="50" max="4000" value==@organization.contacts.active.count step="10"
+            strong engaged candidates
+          input.active-candidates-slider role="button" type="range" min="50" max="4000" value==@organization.contacts.engaged.count step="10"
           hr
           p.card-text.d-flex.justify-content-between
             span Team members
@@ -42,7 +42,7 @@
           hr
           p.card-text.d-flex.justify-content-between
             span Candidates
-            strong.candidates--number = @organization.contacts.active.count
+            strong.candidates--number = @organization.contacts.engaged.count
           hr
           p.card-text.d-flex.justify-content-between
             span Price

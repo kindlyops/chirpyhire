@@ -36,8 +36,20 @@ class Contact < ApplicationRecord
 
   delegate :name, to: :stage, prefix: true, allow_nil: true
 
+  def self.slipping_away
+    where('last_reply_at > ? AND last_reply_at < ?', 30.days.ago, 7.days.ago)
+  end
+
   def self.active
-    joins(conversations: [parts: :message]).merge(Message.active).distinct
+    where('last_reply_at > ?', 7.days.ago)
+  end
+
+  def self.newly_added
+    where('created_at > ?', 1.day.ago)
+  end
+
+  def self.engaged
+    joins(conversations: [parts: :message]).merge(Message.engaged).distinct
   end
 
   def self.recently_replied

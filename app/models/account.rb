@@ -32,6 +32,10 @@ class Account < ApplicationRecord
     member: 0, owner: 1, invited: 2
   }
 
+  def self.daily_email
+    where(daily_email: true)
+  end
+
   def self.not_on(team)
     where.not(id: team.memberships.pluck(:account_id))
   end
