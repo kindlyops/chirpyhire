@@ -49,7 +49,7 @@ class Contact < ApplicationRecord
   end
 
   def self.passive
-    where('last_reply_at < ?', 30.day.ago)
+    where('last_reply_at < ?', 30.days.ago)
   end
 
   def self.engaged
