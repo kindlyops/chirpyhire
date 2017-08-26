@@ -2,7 +2,8 @@ table style="padding: 0px; border: 0; max-width: 520px; text-align: center;" wid
   tbody
     tr align="center"
       td align="center" style="text-align: center; width: 100%;"
-        a.emoji-link href="https://app.chirpyhire.com" target="_blank" = @report.icon
+        = link_to candidates_segment_url(id: 'new'), target: '_blank', class: 'emoji-link' do
+          = @report.icon
     tr align="center"
       td style="height: 10px; width: 100%;" 
         | &nbsp;
