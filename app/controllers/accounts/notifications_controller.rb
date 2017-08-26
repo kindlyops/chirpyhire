@@ -1,5 +1,4 @@
 class Accounts::NotificationsController < ApplicationController
-
   def show
     @account = authorize Account.find(params[:account_id])
   end
@@ -19,5 +18,4 @@ class Accounts::NotificationsController < ApplicationController
   def update_notice
     'Notification preferences saved!'
   end
-
 end
