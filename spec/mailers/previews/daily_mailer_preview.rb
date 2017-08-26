@@ -14,4 +14,8 @@ class DailyMailerPreview < ActionMailer::Preview
   def passive
     DailyMailer.passive(Account.first)
   end
+
+  def none
+    DailyMailer.none(Account.first)
+  end
 end

@@ -23,8 +23,13 @@ class Reporter::Daily
     return DailyMailer.slipping_away(account) if slipping_away?
     return DailyMailer.newly_added(account) if newly_added?
     return DailyMailer.active(account) if active?
+    return DailyMailer.passive(account) if passive?
 
-    DailyMailer.passive(account)
+    DailyMailer.none(account)
+  end
+
+  def passive?
+    contacts.passive.exists?
   end
 
   def slipping_away?
