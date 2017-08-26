@@ -7,8 +7,6 @@ Rails.application.routes.draw do
   end
 
   resource :getting_started, only: :show, controller: 'getting_started'
-
-  resource :client_version, only: :show
   resource :health, only: :show
   resources :candidates, only: %i[index new create], concerns: :paginatable do
     collection do
