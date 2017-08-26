@@ -1,4 +1,6 @@
 class DailyMailer < ApplicationMailer
+  layout 'report'
+  
   def slipping_away(account)
     @report = Report::SlippingAway.new(account)
 
