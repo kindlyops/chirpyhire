@@ -1,9 +1,6 @@
 class CustomersController < ApplicationController
   def create
-    organization.update(stripe_customer_id: customer.id)
-    create_payment_card
-    Internal::Notification::Customer.call(organization)
-    organization.subscription.activate
+    create_customer
   rescue Stripe::CardError => e
     flash[:error] = e.message
   ensure
@@ -11,6 +8,13 @@ class CustomersController < ApplicationController
   end
 
   private
+
+  def create_customer
+    organization.update(stripe_customer_id: customer.id)
+    create_payment_card
+    Internal::Notification::Customer.call(organization)
+    organization.subscription.activate
+  end
 
   def customer
     @customer ||= begin
