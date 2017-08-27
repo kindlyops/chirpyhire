@@ -1,5 +1,5 @@
 class LogSetContactStageJob < ApplicationJob
-  def perform(account, contact)
-    Internal::Logger::SetContactStage.call(account, contact)
+  def perform(account, stage, timestamp)
+    Internal::Logger::SetContactStage.call(account, stage, timestamp)
   end
 end

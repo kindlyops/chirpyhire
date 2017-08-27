@@ -1,16 +1,16 @@
 class Internal::Logger::SetContactStage
-  def self.call(account, contact)
-    new(account, contact).call
+  def self.call(account, stage, timestamp)
+    new(account, stage, timestamp).call
   end
 
-  def initialize(account, contact)
+  def initialize(account, stage, timestamp)
     @account = account
-    @contact = contact
+    @stage = stage
+    @timestamp = timestamp
   end
 
-  attr_reader :account, :contact
+  attr_reader :account, :stage, :timestamp
   delegate :organization, to: :account
-  delegate :stage, to: :contact
 
   def call
     setup_user_properties
@@ -22,7 +22,7 @@ class Internal::Logger::SetContactStage
       'Set Candidate Stage',
       account.id.to_s,
       { name: stage.name, id: stage.id },
-      contact.updated_at.iso8601
+      timestamp
     )
   end
 

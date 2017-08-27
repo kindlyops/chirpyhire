@@ -31,6 +31,10 @@ class Goal < ApplicationRecord
 
   def update_contact_stage(contact)
     contact.update(stage: contact_stage)
-    LogSetContactStageJob.perform_later(last_edited_by, contact)
+    LogSetContactStageJob.perform_later(
+      last_edited_by,
+      contact_stage,
+      contact.updated_at.iso8601
+    )
   end
 end
