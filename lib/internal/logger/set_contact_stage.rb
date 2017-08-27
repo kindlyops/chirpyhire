@@ -1,15 +1,16 @@
 class Internal::Logger::SetContactStage
-  def self.call(account, stage, timestamp)
-    new(account, stage, timestamp).call
+  def self.call(account, stage, contact, timestamp)
+    new(account, stage, contact, timestamp).call
   end
 
-  def initialize(account, stage, timestamp)
+  def initialize(account, stage, contact, timestamp)
     @account = account
     @stage = stage
+    @contact = contact
     @timestamp = timestamp
   end
 
-  attr_reader :account, :stage, :timestamp
+  attr_reader :account, :stage, :contact, :timestamp
   delegate :organization, to: :account
 
   def call
@@ -21,13 +22,17 @@ class Internal::Logger::SetContactStage
     Heap.track(
       'Set Candidate Stage',
       account.id.to_s,
-      { name: stage.name, id: stage.id },
+      properties,
       timestamp
     )
   end
 
   def setup_user_properties
     Heap.add_user_properties account.id.to_s, user_properties
+  end
+
+  def properties
+    { name: stage.name, id: stage.id, contact_id: contact.id }
   end
 
   def user_properties

@@ -34,6 +34,7 @@ class Goal < ApplicationRecord
     LogSetContactStageJob.perform_later(
       last_edited_by,
       contact_stage,
+      contact,
       contact.updated_at.iso8601
     )
   end
