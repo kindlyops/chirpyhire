@@ -7,6 +7,15 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: https://github.com/hwhelchel/heap-ruby.git
+  revision: 3b8d1b2255c3e61d64b4a4b462ac958830688c2b
+  branch: add-timestamp-to-track
+  specs:
+    heap (1.0.2)
+      faraday (>= 0.8.11)
+      faraday_middleware (>= 0.8.0)
+
+GIT
   remote: https://github.com/hwhelchel/sass.git
   revision: bdee5ad4da1b0109e7f4ab1ffe31b8c98434b5ca
   branch: dynamic_includes
@@ -204,6 +213,8 @@ GEM
       i18n (~> 0.5)
     faraday (0.12.1)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.12.2)
+      faraday (>= 0.7.4, < 1.0)
     ffi (1.9.18)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
@@ -516,6 +527,7 @@ DEPENDENCIES
   faker (~> 1.6.0)
   font-awesome-rails (~> 4.7.0)
   haml (~> 5.0.1)
+  heap!
   inline_svg (~> 0.11.1)
   intercom-rails (~> 0.3.4)
   jbuilder
