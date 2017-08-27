@@ -1,16 +1,16 @@
 class Internal::Logger::SetContactStage
-  def self.call(account, contact, stage)
-    new(account, contact, stage).call
+  def self.call(account, contact)
+    new(account, contact).call
   end
 
-  def initialize(account, contact, stage)
+  def initialize(account, contact)
     @account = account
     @contact = contact
-    @stage = stage
   end
 
-  attr_reader :account, :contact, :stage
+  attr_reader :account, :contact
   delegate :organization, to: :account
+  delegate :stage, to: :contact
 
   def call
     setup_user_properties

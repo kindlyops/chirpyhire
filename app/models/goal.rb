@@ -31,14 +31,6 @@ class Goal < ApplicationRecord
 
   def update_contact_stage(contact)
     contact.update(stage: contact_stage)
-    log_stage_change(contact)
-  end
-
-  def log_stage_change(contact)
-    Internal::Logger::SetContactStage.call(
-      last_edited_by,
-      contact,
-      contact_stage
-    )
+    LogSetContactStageJob.perform_later(last_edited_by, contact)
   end
 end
