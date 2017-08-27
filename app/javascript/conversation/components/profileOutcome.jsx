@@ -22,7 +22,9 @@ class ProfileOutcome extends React.Component {
       method: 'POST',
       dataType: 'text'
     }
-    $.ajax(config);
+    $.ajax(config).then(() => {
+      heap.track('Change Candidate Stage', { name: label, id: value });
+    });
   }
 
   options() {
