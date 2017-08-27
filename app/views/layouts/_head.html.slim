@@ -8,7 +8,7 @@
 - else
   javascript:
     dataLayer = [{}];
-= render "layouts/rollbar/script" if Rails.env.production?
+= render "layouts/rollbar/script"
 = render "layouts/google_tag_manager/script"
 meta content="IE=edge" http-equiv="X-UA-Compatible"
 meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"
@@ -21,4 +21,4 @@ link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="style
 = javascript_include_tag 'application'
 script async==!Rails.env.test? defer=true type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_PLACES_KEY')}&libraries=places&callback=initAutocompletes"
 = favicon_link_tag 'favicon.ico'
-= render "layouts/heap/script" if Rails.env.production?
+= render "layouts/heap/script"
