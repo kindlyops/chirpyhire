@@ -4,9 +4,14 @@
 
     <% if current_account.present? %>
       heap.identify("<%= current_account.id %>");
-      heap.addUserProperties({ 
+      heap.addUserProperties({
+        name: "<%= current_account.name %>",
+        email: "<%= current_account.email %>",
         organization_id: "<%= current_organization.id %>",
+        organization_name: "<%= current_organization.name %>",
         subscription_status: "<%= current_organization.subscription_status %>"
       });
+    <% else %>
+      heap.clearEventProperties();
     <% end %>
 </script>
