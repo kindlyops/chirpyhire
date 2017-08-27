@@ -58,8 +58,7 @@ class BotFactory::Maker
   end
 
   def self.questions
-    %w[Certification Availability LiveIn Experience Transportation
-       DriversLicense Zipcode CprFirstAid SkinTest WeekDay TimeOfDay]
+    %w[Certification WeekDay TimeOfDay]
   end
 
   def questions

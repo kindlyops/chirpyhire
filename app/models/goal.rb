@@ -8,6 +8,7 @@ class Goal < ApplicationRecord
   before_validation :ensure_rank
 
   delegate :follow_ups, to: :action
+  delegate :organization, :last_edited_by, to: :bot
 
   def self.ranked
     order(:rank)
@@ -18,7 +19,7 @@ class Goal < ApplicationRecord
   end
 
   def tag(contact)
-    contact.update(stage: contact_stage) if contact_stage.present?
+    update_contact_stage(contact) if contact_stage.present?
   end
 
   private
@@ -26,5 +27,15 @@ class Goal < ApplicationRecord
   def ensure_rank
     return if rank.present?
     self.rank = bot.next_goal_rank
+  end
+
+  def update_contact_stage(contact)
+    contact.update(stage: contact_stage)
+    LogSetContactStageJob.perform_later(
+      last_edited_by,
+      contact_stage,
+      contact,
+      contact.updated_at.iso8601
+    )
   end
 end
