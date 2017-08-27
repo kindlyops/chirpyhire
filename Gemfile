@@ -108,6 +108,7 @@ gem 'stripe', '~> 2.12.0'
 gem 'twemoji', '~> 3.1.4'
 gem 'twilio-ruby', '~> 4.13.0'
 gem 'webpacker', '~> 1.2.0'
+gem 'heap', github: 'hwhelchel/heap-ruby', branch: 'add-timestamp-to-track'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.6.1'
