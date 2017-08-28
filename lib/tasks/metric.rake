@@ -10,6 +10,6 @@ namespace :metric do
   end
 
   task health: [:environment] do
-    Internal::Report::Health.call
+    InternalMailer.health.deliver_later
   end
 end
