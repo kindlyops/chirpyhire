@@ -32,7 +32,7 @@ class Internal::Logger::SetContactStage
   end
 
   def properties
-    { name: stage.name, id: stage.id, contact_id: contact.id, bot: true }
+    { name: stage.name, id: stage.id, contact_id: contact.id, bot: 'true' }
   end
 
   def user_properties
