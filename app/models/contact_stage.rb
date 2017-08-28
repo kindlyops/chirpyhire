@@ -9,6 +9,26 @@ class ContactStage < ApplicationRecord
     order(:rank)
   end
 
+  def self.potential
+    where(name: 'Potential')
+  end
+
+  def self.screened
+    where(name: 'Screened')
+  end
+
+  def self.scheduled
+    where(name: 'Scheduled')
+  end
+
+  def self.not_now
+    where(name: 'Not Now')
+  end
+
+  def self.hired
+    where(name: 'Hired')
+  end
+
   def last_stage?
     organization.contact_stages.last == self
   end

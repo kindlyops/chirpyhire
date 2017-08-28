@@ -36,6 +36,26 @@ class Contact < ApplicationRecord
 
   delegate :name, to: :stage, prefix: true, allow_nil: true
 
+  def self.potential
+    joins(:stage).merge(ContactStage.potential)
+  end
+
+  def self.screened
+    joins(:stage).merge(ContactStage.screened)
+  end
+
+  def self.scheduled
+    joins(:stage).merge(ContactStage.scheduled)
+  end
+
+  def self.not_now
+    joins(:stage).merge(ContactStage.not_now)
+  end
+
+  def self.hired
+    joins(:stage).merge(ContactStage.hired)
+  end
+
   def self.slipping_away
     where('last_reply_at > ? AND last_reply_at < ?', 30.days.ago, 7.days.ago)
   end

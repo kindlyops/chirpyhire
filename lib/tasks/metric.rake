@@ -8,4 +8,8 @@ namespace :metric do
   task wau: [:environment] do
     Internal::Metric::Wau.call
   end
+
+  task health: [:environment] do
+    Internal::Report::Health.call
+  end
 end
