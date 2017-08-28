@@ -16,7 +16,7 @@ class Reporter::Daily
   attr_reader :account
 
   def call
-    return if mailer.blank?
+    return unless contacts.exists?
 
     mailer.deliver_later
   end
