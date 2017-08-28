@@ -1,5 +1,4 @@
 class Internal::Report::Health
-
   def self.call
     new.call
   end
@@ -21,7 +20,7 @@ class Internal::Report::Health
   end
 
   def headers
-    weeks.each_with_object(['Stage', 'Metric']) do |week, acc|
+    weeks.each_with_object(%w[Stage Metric]) do |week, acc|
       acc << "Week: #{week}"
     end
   end
@@ -37,5 +36,4 @@ class Internal::Report::Health
   def weeks
     @weeks ||= (1..Date.current.cweek).to_a.reverse
   end
-
 end

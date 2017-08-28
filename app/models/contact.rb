@@ -1,6 +1,7 @@
 class Contact < ApplicationRecord
   phony_normalize :phone_number, default_country_code: 'US'
   include ContactRansack
+  include StageScopes
   belongs_to :person, optional: true
   belongs_to :zipcode, optional: true
   belongs_to :organization
@@ -35,26 +36,6 @@ class Contact < ApplicationRecord
   validates :nickname, presence: true, unless: :name_present?
 
   delegate :name, to: :stage, prefix: true, allow_nil: true
-
-  def self.potential
-    joins(:stage).merge(ContactStage.potential)
-  end
-
-  def self.screened
-    joins(:stage).merge(ContactStage.screened)
-  end
-
-  def self.scheduled
-    joins(:stage).merge(ContactStage.scheduled)
-  end
-
-  def self.not_now
-    joins(:stage).merge(ContactStage.not_now)
-  end
-
-  def self.hired
-    joins(:stage).merge(ContactStage.hired)
-  end
 
   def self.slipping_away
     where('last_reply_at > ? AND last_reply_at < ?', 30.days.ago, 7.days.ago)
