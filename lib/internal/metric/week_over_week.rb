@@ -9,7 +9,7 @@ class Internal::Metric::WeekOverWeek < Internal::Metric::Base
         0
       else
         current = scope.where('contacts.created_at <= ?', date).count
-        (current - past).fdiv(past)
+        "#{((current - past).fdiv(past) * 100).round(2)}%"
       end
     end.unshift("W-o-W").unshift(stage_title)
   end
