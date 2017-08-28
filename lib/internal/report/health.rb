@@ -21,7 +21,7 @@ class Internal::Report::Health
   end
 
   def headers
-    weeks.each_with_object(['Growth']) do |week, acc|
+    weeks.each_with_object(['Stage', 'Metric']) do |week, acc|
       acc << "Week: #{week}"
     end
   end

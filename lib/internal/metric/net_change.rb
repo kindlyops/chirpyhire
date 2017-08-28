@@ -6,6 +6,6 @@ class Internal::Metric::NetChange < Internal::Metric::Base
       past_date = date.advance(weeks: -1)
       past = scope.where('contacts.created_at <= ?', past_date).count
       current - past
-    end.unshift("#{stage}: Net Change")
+    end.unshift("Net Change").unshift(stage_title)
   end
 end

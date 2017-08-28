@@ -6,4 +6,8 @@ class Internal::Metric::Base
   end
 
   attr_reader :weeks, :stage, :scope
+
+  def stage_title
+    stage.to_s.titlecase
+  end
 end

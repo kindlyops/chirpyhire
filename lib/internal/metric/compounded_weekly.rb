@@ -1,6 +1,6 @@
 class Internal::Metric::CompoundedWeekly < Internal::Metric::Base
   def call
-    [compounded_weekly].unshift("#{stage}: CWGR")
+    [compounded_weekly].unshift("CWGR").unshift(stage_title)
   end
 
   def compounded_weekly
