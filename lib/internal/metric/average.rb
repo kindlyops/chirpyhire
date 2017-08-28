@@ -4,7 +4,8 @@ class Internal::Metric::Average < Internal::Metric::Base
   end
 
   def average
-    weekly_growth_rates.reduce(:+).fdiv(weekly_growth_rates.count)
+    (weekly_growth_rates
+      .reduce(:+).fdiv(weekly_growth_rates.count) * 100).round(2)
   end
 
   def weekly_growth_rates

@@ -6,7 +6,7 @@ class Internal::Metric::CompoundedWeekly < Internal::Metric::Base
   def compounded_weekly
     return 0 if beginning.zero? || weeks.zero?
 
-    ((ending.fdiv(beginning))**(1.fdiv(weeks.count))) - 1
+    ((((ending.fdiv(beginning))**(1.fdiv(weeks.count))) - 1) * 100).round(2)
   end
 
   def ending
