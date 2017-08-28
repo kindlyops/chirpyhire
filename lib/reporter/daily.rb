@@ -5,7 +5,7 @@ class Reporter::Daily
     return if WEEKEND.include?(Date.current.wday)
 
     Account.daily_email.find_each do |account|
-      new(account).call
+      ReporterDailyJob.perform_later(account)
     end
   end
 
