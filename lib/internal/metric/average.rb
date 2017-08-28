@@ -1,6 +1,6 @@
 class Internal::Metric::Average < Internal::Metric::Base
   def call
-    [average].unshift("Average").unshift(stage_title)
+    ["#{average}%"].unshift("Average").unshift(stage_title)
   end
 
   def average
