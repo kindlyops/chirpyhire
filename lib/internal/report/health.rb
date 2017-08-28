@@ -5,17 +5,12 @@ class Internal::Report::Health
   end
 
   def call
-    generate_report
-    InternalMailer.health(tempfile).deliver_later
-  end
-
-  def generate_report
-    CSV.open(tempfile, 'wb') do |csv|
+    CSV.generate do |csv|
       csv << headers
-      scopes.each do |scope|
+      stages.each do |stage|
         metrics.each do |metric|
-          klass = "Internal::Metric::#{metric}".constantize.new(weeks)
-          csv << klass.call(scope)
+          klass = "Internal::Metric::#{metric}".constantize
+          csv << klass.new(stage, weeks).call
         end
       end
     end
@@ -31,10 +26,8 @@ class Internal::Report::Health
     end
   end
 
-  def scopes
-    %i[potential screened scheduled not_now hired].map do |scope| 
-      Contact.send(scope)
-    end
+  def stages
+    %i[potential screened scheduled not_now hired]
   end
 
   def tempfile

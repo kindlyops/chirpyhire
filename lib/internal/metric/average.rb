@@ -1,7 +1,15 @@
 class Internal::Metric::Average < Internal::Metric::Base
-  def call(scope)
-    weekly_growth_rates = Internal::Metric::WeekOverWeek.new(weeks).call(scope)
+  def call
+    [average].unshift("#{stage}: Average")
+  end
 
-    [weekly_growth_rates.reduce(:+).fdiv(weekly_growth_rates.count)]
+  def average
+    weekly_growth_rates.reduce(:+).fdiv(weekly_growth_rates.count)
+  end
+
+  def weekly_growth_rates
+    @weekly_growth_rates ||= begin
+      Internal::Metric::WeekOverWeek.new(stage, weeks).call[1..-1]
+    end
   end
 end
