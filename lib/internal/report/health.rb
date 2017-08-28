@@ -26,7 +26,7 @@ class Internal::Report::Health
   end
 
   def stages
-    %i[potential screened scheduled not_now hired]
+    %i[all potential screened scheduled not_now hired]
   end
 
   def tempfile
