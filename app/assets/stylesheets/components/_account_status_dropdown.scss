@@ -20,6 +20,13 @@
     }
   }
 
+  .location {
+    text-overflow: ellipsis;
+    width: 150px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   .phone-number {
     width: 100%;
   }
