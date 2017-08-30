@@ -26,10 +26,12 @@ class Reporter::Daily
   end
 
   def fetch_mailer
-    return DailyMailer.slipping_away(account) if slipping_away?
-    return DailyMailer.newly_added(account) if newly_added?
-    return DailyMailer.active(account) if active?
-    DailyMailer.passive(account) if passive?
+    segment = segments.select { |segment| send("#{segment}?") }.sample
+    DailyMailer.send(segment, account) if segment.present?
+  end
+
+  def segments
+    %i[slipping_away newly_added active passive]
   end
 
   def passive?
