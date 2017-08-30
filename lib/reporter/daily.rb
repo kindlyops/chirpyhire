@@ -26,7 +26,7 @@ class Reporter::Daily
   end
 
   def fetch_mailer
-    segment = segments.select { |segment| send("#{segment}?") }.sample
+    segment = segments.select { |s| send("#{s}?") }.sample
     DailyMailer.send(segment, account) if segment.present?
   end
 
