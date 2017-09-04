@@ -1,4 +1,5 @@
 import React from 'react'
+import Textarea from 'react-textarea-autosize'
 
 class ConversationFooter extends React.Component {
   constructor(props) {
@@ -29,8 +30,8 @@ class ConversationFooter extends React.Component {
         <form className="new_message" id="new_message" action={this.partsUrl()} acceptCharset="UTF-8" data-remote="true" method="post">
           <input name="utf8" type="hidden" value="✓" />
           <div className='d-flex align-items-center'>
-            <textarea onChange={this.onChange} value={this.state.value} autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
-            </textarea>
+            <Textarea onChange={this.onChange} value={this.state.value} autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
+            </Textarea>
             <span className='ml-2 character-count'>
               {this.state.value.length}
             </span>
