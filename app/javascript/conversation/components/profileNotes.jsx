@@ -234,13 +234,13 @@ class ProfileNotes extends React.Component {
       $('#note-show-container[data-note-id="'+ noteId + '"').removeProp('hidden');
     });
 
-    $(document).on('keydown', '#note-edit-container #note_body', (e) => {
+    $(document).on('keydown', '#note-edit-container #note_body', function(e) {
       var body = $('#note-edit-container #note_body').val().trim();
       var combo = e.metaKey || e.ctrlKey || e.shiftKey;
 
       if(e.keyCode === 13 && !combo && body.length) {
         e.preventDefault();
-        this.editNote();
+        $(this).closest('form').submit();
       }
     });
 
