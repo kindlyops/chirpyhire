@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import update from 'immutability-helper'
 import PropTypes from 'prop-types'
-
+import Textarea from 'react-textarea-autosize'
 import NoteDay from './noteDay'
 
 class ProfileNotes extends React.Component {
@@ -11,8 +11,13 @@ class ProfileNotes extends React.Component {
 
     this.state = {
       notes: [],
-      subscription: {}
+      subscription: {},
+      value: ''
     };
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.createNote = this.createNote.bind(this);
   }
 
   senderIcon() {
@@ -36,6 +41,38 @@ class ProfileNotes extends React.Component {
     }
   }
 
+  newNoteUrl() {
+    return `/contacts/${this.props.contact.id}/notes`;
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.createNote();
+  }
+
+  createNote() {
+    const params = {
+      _method: 'post',
+      note: { body: this.state.value }
+    };
+
+    const config = {
+      url: this.newNoteUrl(),
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(config).then(() => {
+      this.setState({ value: '' });
+    });
+  }
+
+  onChange(event) {
+    this.setState({ value: event.target.value })
+  }
+
   render() {
     return (
         <div className="profile-notes">
@@ -53,10 +90,9 @@ class ProfileNotes extends React.Component {
             <div id="reply_container">
               {this.senderIcon()}
               <div className={this.inputContainerClasses()}>
-                <form className="new_note" id="new_note" action={`/contacts/${this.props.contact.id}/notes`} acceptCharset="UTF-8" method="post" data-remote="true">
-                  <input name="utf8" type="hidden" value="✓" />
+                <form onSubmit={this.onSubmit} className="new_note" id="new_note">
                   <div className="message_input">
-                    <textarea rows="1" placeholder="Share a note with your team..." required="required" className="form-control" name="note[body]" id="note_body"></textarea>
+                    <Textarea onChange={this.onChange} rows="1" value={this.state.value} placeholder="Share a note with your team..." required="required" className="form-control" name="note[body]" id="note_body"></Textarea>
                   </div>
                   <div className="reply_container_info">
                     <div className="reply_broadcast_buttons_container justify-content-end">
@@ -198,23 +234,23 @@ class ProfileNotes extends React.Component {
       $('#note-show-container[data-note-id="'+ noteId + '"').removeProp('hidden');
     });
 
-    $(document).on('keydown', '#note-edit-container #note_body', function(e) {
+    $(document).on('keydown', '#note-edit-container #note_body', (e) => {
       var body = $('#note-edit-container #note_body').val().trim();
       var combo = e.metaKey || e.ctrlKey || e.shiftKey;
 
       if(e.keyCode === 13 && !combo && body.length) {
         e.preventDefault();
-        $(this).closest('form').submit();
+        this.editNote();
       }
     });
 
-    $(document).on('keydown', '#new_note #note_body', function(e) {
+    $(document).on('keydown', '#new_note #note_body', (e) => {
       var body = $('#new_note #note_body').val().trim();
       var combo = e.metaKey || e.ctrlKey || e.shiftKey;
 
       if(e.keyCode === 13 && !combo && body.length) {
         e.preventDefault();
-        $(this).closest('form').submit();
+        this.createNote();
       }
     });
   }
