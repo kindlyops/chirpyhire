@@ -37,6 +37,7 @@
     "react-notification": "^6.7.1",
     "react-router-dom": "next",
     "react-select": "1.0.0-rc.5",
+    "react-textarea-autosize": "^5.1.0",
     "react-toggle": "^4.0.1",
     "react-transition-group": "^1.2.0",
     "react-virtualized": "^9.8.0",
