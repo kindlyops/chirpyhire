@@ -1,9 +1,14 @@
 import React from 'react'
 import moment from 'moment'
+import Textarea from 'react-textarea-autosize'
 
 class Note extends React.Component {
   timestamp() {
     return moment(this.props.note.created_at).format('h:mm a');
+  }
+
+  noteUrl() {
+    return `/contacts/${this.props.note.contact_id}/notes/${this.props.note.id}`;
   }
 
   editableNote() {
@@ -15,18 +20,18 @@ class Note extends React.Component {
               <div className={`author_image thumb_36 second ${this.props.note.sender_hero_pattern_classes}`}></div>
             </div>
           </div>
-          <form className="edit_note" id={`edit_note_${this.props.note.id}`} action={`/contacts/${this.props.note.contact_id}/notes/${this.props.note.id}`} acceptCharset="UTF-8" method="post" data-remote="true">
+          <form className="edit_note" id={`edit_note_${this.props.note.id}`} action={this.noteUrl()} acceptCharset="UTF-8" method="post" data-remote="true">
             <input name="utf8" type="hidden" value="✓" />
             <input type="hidden" name="_method" value="put" />
             <div className="message_input">
-              <textarea rows="1" placeholder="Share a note with your team..." required="required" className="form-control" name="note[body]" id="note_body" style={{height: '2px'}} defaultValue={this.props.note.body}></textarea>
+              <Textarea rows="1" placeholder="Share a note with your team..." required="required" className="form-control" name="note[body]" id="note_body" style={{height: '2px'}} defaultValue={this.props.note.body}></Textarea>
             </div>
             <a className="btn btn-small btn-outline" id="cancel_edit" role="button">Cancel</a>
             <button className="btn btn-small btn-primary" id="commit_edit" role="button" type="submit">↵ Save Changes</button>
           </form>
         </div>
         <div className='message first' id='note-show-container' data-note-id={this.props.note.id}>
-          <form className="destroy-note" hidden={true} id={`edit_note_${this.props.note.id}`} action={`/contacts/${this.props.note.contact_id}/notes/${this.props.note.id}`} acceptCharset="UTF-8" method="post" data-remote="true">
+          <form className="destroy-note" hidden={true} id={`edit_note_${this.props.note.id}`} action={this.noteUrl()} acceptCharset="UTF-8" method="post" data-remote="true">
             <input name="utf8" type="hidden" value="✓" />
             <input type="hidden" name="_method" value="delete" />
           </form>

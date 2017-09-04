@@ -9,7 +9,9 @@ class ConversationFooter extends React.Component {
       value: ''
     }
 
+    this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   onChange(event) {
@@ -24,14 +26,40 @@ class ConversationFooter extends React.Component {
     return `/conversations/${this.conversationId()}/parts`;
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    this.sendMessage();
+  }
+
+  sendMessage() {
+    const params = {
+      _method: 'post',
+      message: { body: this.state.value }
+    };
+
+    const config = {
+      url: this.partsUrl(),
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(config).then(() => {
+      this.setState({ value: '' });
+    });
+  }
+
   activeFooter() {
     return (
       <div className="footer">
-        <form className="new_message" id="new_message" action={this.partsUrl()} acceptCharset="UTF-8" data-remote="true" method="post">
-          <input name="utf8" type="hidden" value="✓" />
+        <form onSubmit={this.onSubmit} className="new_message" id="new_message">
           <div className='d-flex align-items-center'>
             <Textarea onChange={this.onChange} value={this.state.value} autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
             </Textarea>
+            <button type="submit" role="button" className='btn btn-primary send-message'>
+              Send
+            </button>
             <span className='ml-2 character-count'>
               {this.state.value.length}
             </span>
@@ -51,8 +79,7 @@ class ConversationFooter extends React.Component {
         let messageBody = $form.find('.message-input');
         e.preventDefault();
         if(messageBody.val().length) {
-          $('form.new_message').submit();
-          this.setState({ value: '' });
+          this.sendMessage();
         }
       }
     });
