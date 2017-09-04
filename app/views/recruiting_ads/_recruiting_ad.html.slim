@@ -2,7 +2,7 @@ h4.card-subtitle.mt-4 = "Team #{recruiting_ad.team_name}:"
 = form_for recruiting_ad do |f|
   .form-group.mt-3
     = f.label :body, class: "sr-only col-form-label"
-    = f.text_area :body, rows: 10, required: true, class: "form-control"
+    = f.text_area :body, required: true, class: "form-control", data: { autosize: true }
   = f.submit "Save recruiting ad", class: "btn btn-primary mr-2", role: "button"
   button.btn.btn-secondary.clipboard role="button" type="button" data-clipboard-target="#edit_recruiting_ad_#{recruiting_ad.id} #recruiting_ad_body"
     i.fa.fa-clipboard.mr-2

@@ -15,7 +15,7 @@
 //= require tether
 //= require bootstrap
 //= require jquery_ujs
-//= require jquery.textarea_autosize.js
+//= require autosize.min.js
 //= require jquery-ui/sortable
 //= require clipboard
 //= require ramda
