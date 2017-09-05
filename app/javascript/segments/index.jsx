@@ -75,7 +75,7 @@ class Segments extends React.Component {
   }
 
   add(segment) {
-    let newState = upsertSegment(segment, this.state);
+    let newState = this.upsertSegment(segment, this.state);
     this.setState(newState); 
   }
 
