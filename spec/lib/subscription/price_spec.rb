@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Subscription::Price do
-
   let!(:subscription) { create(:subscription) }
   subject { Subscription::Price.new(subscription) }
 
