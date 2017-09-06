@@ -5,6 +5,12 @@ FactoryGirl.define do
     organization
     association :stage, factory: :contact_stage
 
+    trait :engaged do
+      after(:create) do |contact|
+        create(:conversation, :message, contact: contact)
+      end
+    end
+
     trait :name do
       name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
     end

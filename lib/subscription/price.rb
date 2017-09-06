@@ -33,12 +33,16 @@ class Subscription::Price
     elsif engaged_contact_count.between?(901, 1000)
       450
     elsif engaged_contact_count.between?(1001, 2000)
-      (price_count * 0.43).round
+      dynamic_price(0.43)
     elsif engaged_contact_count.between?(2001, 3000)
-      (price_count * 0.42).round
+      dynamic_price(0.42)
     else
-      (price_count * 0.41).round
+      dynamic_price(0.41)
     end
+  end
+
+  def dynamic_price(slope)
+    (price_count * slope).round
   end
 
   def price_count
