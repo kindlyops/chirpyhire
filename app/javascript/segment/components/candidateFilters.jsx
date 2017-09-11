@@ -140,6 +140,14 @@ class CandidateFilters extends React.Component {
             predicates={this.predicates('last_reply_at')}
             {...this.props}
            />
+           <CandidateFilter
+             icon="fa-compass"
+             attribute="source"
+             type="string"
+             name="Source"
+             predicates={this.predicates('source')}
+             {...this.props}
+            />
         </form>
         <CandidateFiltersActions 
           add={this.props.add} 

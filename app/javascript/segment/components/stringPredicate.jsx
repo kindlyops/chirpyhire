@@ -20,14 +20,22 @@ class StringPredicate extends React.Component {
     return `${this.props.attribute}-${this.props.index}`;
   }
 
+  moveToEnd(event) {
+    var temp_value = event.target.value;
+    event.target.value = '';
+    event.target.value = temp_value;
+  }
+
   render() {
     return (
       <div>
-        <input 
+        <input
+          autoFocus
           className='Text-input' 
           type="text" 
           name={this.name()} 
-          value={this.props.value} 
+          value={this.props.value}
+          onFocus={this.moveToEnd}
           onChange={this.onValueChange} />
       </div>
     )
