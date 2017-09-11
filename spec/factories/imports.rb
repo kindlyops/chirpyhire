@@ -88,6 +88,16 @@ FactoryGirl.define do
       end
     end
 
+    trait :no_id_column_valid_phone_number_source do
+      document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'no_id_column_valid_phone_number_source.csv')) }
+
+      after(:create) do |import|
+        import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 0)
+        import.mappings.find_by(contact_attribute: 'name').update(column_number: 1)
+        import.mappings.find_by(contact_attribute: 'source').update(column_number: 2)
+      end
+    end
+
     trait :no_id_column_valid_phone_number do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'no_id_column_valid_phone_number.csv')) }
 

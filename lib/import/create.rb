@@ -8,7 +8,8 @@ class Import::Create
       { attribute: 'phone_number', optional: false },
       { attribute: 'id', optional: true },
       { attribute: 'name', optional: true },
-      { attribute: 'stage', optional: true }
+      { attribute: 'stage', optional: true },
+      { attribute: 'source', optional: true }
     ]
   end
 

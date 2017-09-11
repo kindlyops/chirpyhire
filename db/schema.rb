@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170826154040) do
+ActiveRecord::Schema.define(version: 20170911191004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -200,6 +200,7 @@ ActiveRecord::Schema.define(version: 20170826154040) do
     t.string "phone_number", null: false
     t.integer "messages_count", default: 0, null: false
     t.bigint "zipcode_id"
+    t.string "source"
     t.index ["contact_stage_id"], name: "index_contacts_on_contact_stage_id"
     t.index ["organization_id", "nickname"], name: "index_contacts_on_organization_id_and_nickname", unique: true
     t.index ["organization_id", "phone_number"], name: "index_contacts_on_organization_id_and_phone_number", unique: true
