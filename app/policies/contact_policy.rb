@@ -8,7 +8,7 @@ class ContactPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[contact_stage_id name phone_number]
+    %i[contact_stage_id name phone_number source]
   end
 
   class Scope < ApplicationPolicy::Scope

@@ -228,6 +228,15 @@ RSpec.describe Import::Runner do
                 }.to change { organization.reload.contacts.subscribed.count }.by(1)
               end
 
+              context 'with source' do
+                let(:import) { create(:import, :no_id_column_valid_phone_number_source, account: account) }
+
+                it 'sets the source on the new contact' do
+                  subject.call
+                  expect(organization.reload.contacts.last.source).to eq('LTCaregiverJobs.com')
+                end
+              end
+
               it 'creates a conversation' do
                 expect {
                   subject.call

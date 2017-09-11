@@ -4,7 +4,7 @@ notes = note_count.times.each_with_object([]) do |i, result|
   result << "note_#{i + 1}".to_sym
 end
 
-headers = %i(id name phone_number location last_seen first_seen tags stage)
+headers = %i(id name phone_number location last_seen first_seen tags stage source)
 
 csv.headers *headers.concat(notes)
 
@@ -17,6 +17,7 @@ csv.rows candidates do |csv, candidate|
   csv.cell :first_seen, candidate.created_at
   csv.cell :tags, candidate.tags.order(:name).pluck(:name).join("|")
   csv.cell :stage, candidate.stage.name
+  csv.cell :source, candidate.source
   candidate.notes.each_with_index do |note, i|
     csv.cell "note_#{i + 1}".to_sym, note.body
   end

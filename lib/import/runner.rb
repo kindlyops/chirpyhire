@@ -35,6 +35,10 @@ class Import::Runner
     @name_mapping ||= import.mappings.find_by(contact_attribute: 'name')
   end
 
+  def source_mapping
+    @source_mapping ||= import.mappings.find_by(contact_attribute: 'source')
+  end
+
   def stage_mapping
     @stage_mapping ||= begin
       import.mappings.find_by(contact_attribute: 'stage')
