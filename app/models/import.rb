@@ -88,9 +88,15 @@ class Import < ApplicationRecord
     end
   end
 
+  def internal_encoding
+    encoding = encoding_detector[:encoding]
+    return encoding if encoding != 'UTF-8'
+    "BOM|#{encoding}"
+  end
+
   def encoding
     return {} if encoding_detector.blank?
-    { encoding: encoding_detector[:encoding] }
+    { encoding: internal_encoding }
   end
 
   def encoding_detector
