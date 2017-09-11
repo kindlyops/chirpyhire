@@ -48,7 +48,8 @@ class Import::Runner
   def csv_configuration
     return { headers: true } if encoding_detector.blank?
 
-    { headers: true, encoding: "#{encoding_detector[:encoding]}:UTF-8" }
+    { headers: true, liberal_parsing: true,
+      encoding: "#{encoding_detector[:encoding]}:UTF-8" }
   end
 
   def encoding_detector
