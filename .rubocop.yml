@@ -32,6 +32,7 @@ Style/FrozenStringLiteralComment:
 Metrics/ClassLength:
   Exclude:
     - 'app/controllers/candidates_controller.rb'
+    - 'lib/import/runner/contact_runner.rb'
 
 Metrics/MethodLength:
   Exclude:
