@@ -18,7 +18,17 @@ RSpec.describe Import::Runner do
     end
 
     context 'illegal quoting' do
-      let(:import) { create(:import, :illegal_quoting) }
+      let(:import) { create(:import, :illegal_quoting, account: account) }
+
+      it 'does not raise an error' do
+        expect {
+          subject.call
+        }.not_to raise_error
+      end
+    end
+
+    context 'nil header' do
+      let(:import) { create(:import, :nil_header, account: account) }
 
       it 'does not raise an error' do
         expect {

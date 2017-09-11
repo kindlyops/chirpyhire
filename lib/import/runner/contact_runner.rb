@@ -48,11 +48,8 @@ class Import::Runner::ContactRunner
 
   def create_params
     {
-      person: person,
-      phone_number: phone_number,
-      name: name,
-      subscribed: true,
-      stage: create_stage
+      person: person, phone_number: phone_number, name: name,
+      subscribed: true, stage: create_stage
     }
   end
 
@@ -62,21 +59,21 @@ class Import::Runner::ContactRunner
 
   def update_params
     params = { phone_number: phone_number }
-    params[:name] = name if name.present?
-    params[:stage] = stage if stage.present?
-    params
+    %i[name stage].each_with_object(params) do |param, hash|
+      hash[param] = send(param) if send(param).present?
+    end
   end
 
   def id
-    @id ||= row[id_mapping.column_number]
+    @id ||= fetch_attribute(id_mapping)
   end
 
   def phone_number
-    @phone_number ||= row[phone_number_mapping.column_number]
+    @phone_number ||= fetch_attribute(phone_number_mapping)
   end
 
   def name
-    @name ||= row[name_mapping.column_number]
+    @name ||= fetch_attribute(name_mapping)
   end
 
   def stage
@@ -87,7 +84,12 @@ class Import::Runner::ContactRunner
   end
 
   def stage_name
-    @stage_name ||= row[stage_mapping.column_number]
+    @stage_name ||= fetch_attribute(stage_mapping)
+  end
+
+  def fetch_attribute(mapping)
+    return if mapping.column_number.blank?
+    row[mapping.column_number]
   end
 
   attr_reader :row, :runner, :row_number
@@ -107,8 +109,7 @@ class Import::Runner::ContactRunner
 
   def import_error(error_type, mapping)
     import_errors.create(
-      error_type: error_type,
-      row_number: row_number,
+      error_type: error_type, row_number: row_number,
       column_number: mapping.column_number,
       column_name: row.headers[mapping.column_number]
     )
