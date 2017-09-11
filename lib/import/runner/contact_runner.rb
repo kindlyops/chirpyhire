@@ -65,15 +65,15 @@ class Import::Runner::ContactRunner
   end
 
   def id
-    @id ||= row[id_mapping.column_number]
+    @id ||= fetch_attribute(id_mapping)
   end
 
   def phone_number
-    @phone_number ||= row[phone_number_mapping.column_number]
+    @phone_number ||= fetch_attribute(phone_number_mapping)
   end
 
   def name
-    @name ||= row[name_mapping.column_number]
+    @name ||= fetch_attribute(name_mapping)
   end
 
   def source
@@ -88,7 +88,12 @@ class Import::Runner::ContactRunner
   end
 
   def stage_name
-    @stage_name ||= row[stage_mapping.column_number]
+    @stage_name ||= fetch_attribute(stage_mapping)
+  end
+
+  def fetch_attribute(mapping)
+    return if mapping.column_number.blank?
+    row[mapping.column_number]
   end
 
   attr_reader :row, :runner, :row_number
