@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfileOutcome from './profileOutcome'
+import ProfileSource from './profileSource'
 import _ from 'lodash';
 
 class ProfileHeader extends React.Component {
@@ -46,6 +47,7 @@ class ProfileHeader extends React.Component {
           </div>
         </div>
         <ProfileOutcome contact={this.props.contact} />
+        <ProfileSource contact={this.props.contact} />
       </div>
     )
   }

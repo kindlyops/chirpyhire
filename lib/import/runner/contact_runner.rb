@@ -48,12 +48,8 @@ class Import::Runner::ContactRunner
 
   def create_params
     {
-      person: person,
-      phone_number: phone_number,
-      name: name,
-      source: source,
-      subscribed: true,
-      stage: create_stage
+      person: person, phone_number: phone_number, name: name, source: source,
+      subscribed: true, stage: create_stage
     }
   end
 
@@ -112,10 +108,8 @@ class Import::Runner::ContactRunner
 
   def import_error(error_type, mapping)
     import_errors.create(
-      error_type: error_type,
-      row_number: row_number,
-      column_number: mapping.column_number,
-      column_name: row.headers[mapping.column_number]
+      error_type: error_type, column_number: mapping.column_number,
+      column_name: row.headers[mapping.column_number], row_number: row_number
     )
   end
 

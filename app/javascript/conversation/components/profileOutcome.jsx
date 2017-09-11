@@ -7,7 +7,6 @@ class ProfileOutcome extends React.Component {
 
     this.options = this.options.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.id = this.id.bind(this);
   }
 
   onChange({ value, label }) {
@@ -35,22 +34,18 @@ class ProfileOutcome extends React.Component {
     return this.props.contact.contact_stages.map(stage => ({ value: stage.id, label: stage.name }));
   }
 
-  id() {
-    return `edit_contact_${this.props.contact.id}`;
-  }
-
   render() {
     return (
-        <form className='edit_contact' id={this.id()} method="post" action={`/contacts/${this.props.contact.id}`}>
-          <Select
-            name="contact[contact_stage_id]"
-            className='mt-3'
-            options={this.options()}
-            value={this.props.contact.contact_stage_id}
-            onChange={this.onChange}
-            clearable={false}
-          />
-        </form>
+      <div className='form-group'>
+        <Select
+          name="contact[contact_stage_id]"
+          className='mt-3'
+          options={this.options()}
+          value={this.props.contact.contact_stage_id}
+          onChange={this.onChange}
+          clearable={false}
+        />
+      </div>
     )
   }
 }
