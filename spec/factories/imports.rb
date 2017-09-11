@@ -24,6 +24,15 @@ FactoryGirl.define do
       end
     end
 
+    trait :nil_header do
+      document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'nil_header.csv')) }
+
+      after(:create) do |import|
+        import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 2)
+        import.mappings.find_by(contact_attribute: 'name').update(column_number: 0)
+      end
+    end
+
     trait :utf_8 do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'id_column_id_present_valid_phone_number.csv')) }
     end
