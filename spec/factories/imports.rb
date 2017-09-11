@@ -15,6 +15,15 @@ FactoryGirl.define do
       end
     end
 
+    trait :illegal_quoting do
+      document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'illegal_quoting.csv')) }
+
+      after(:create) do |import|
+        import.mappings.find_by(contact_attribute: 'phone_number').update(column_number: 3)
+        import.mappings.find_by(contact_attribute: 'name').update(column_number: 1)
+      end
+    end
+
     trait :utf_8 do
       document { File.new(Rails.root.join('spec', 'support', 'fixtures', 'id_column_id_present_valid_phone_number.csv')) }
     end

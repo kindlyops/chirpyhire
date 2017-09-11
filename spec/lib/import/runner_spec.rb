@@ -17,6 +17,16 @@ RSpec.describe Import::Runner do
       end
     end
 
+    context 'illegal quoting' do
+      let(:import) { create(:import, :illegal_quoting) }
+
+      it 'does not raise an error' do
+        expect {
+          subject.call
+        }.not_to raise_error
+      end
+    end
+
     context 'single row' do
       context 'with ID column' do
         context 'and an id is present in the row' do
