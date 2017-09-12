@@ -1,7 +1,7 @@
 import React from 'react'
 import Select from 'react-select'
 
-class ProfileOutcome extends React.Component {
+class ProfileStage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -36,10 +36,11 @@ class ProfileOutcome extends React.Component {
 
   render() {
     return (
-      <div className='form-group'>
+      <div className='form-group mt-3'>
+        <label id='stage' className='col-form-label'><strong>Stage:</strong></label>
         <Select
+          id='stage'
           name="contact[contact_stage_id]"
-          className='mt-3'
           options={this.options()}
           value={this.props.contact.contact_stage_id}
           onChange={this.onChange}
@@ -50,11 +51,11 @@ class ProfileOutcome extends React.Component {
   }
 }
 
-ProfileOutcome.defaultProps = {
+ProfileStage.defaultProps = {
   contact: {
     contact_stages: [],
     contact_stage_id: ''
   }
 }
 
-export default ProfileOutcome
+export default ProfileStage
