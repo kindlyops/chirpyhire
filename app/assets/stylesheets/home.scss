@@ -3,16 +3,56 @@
     font-weight: 900;
   }
 
+  .callout {
+    img {
+      max-width: 520px;
+    }
+  }
+
   .jumbotron {
-    background-color: $white;
+
+    &.cost {
+      background-color: darken(theme-color('gray'), 10%);
+    }
+
+    &.use-cases {
+      h2 {
+        font-size: 3.25rem;
+      }
+
+      .lead {
+        font-weight: 500;
+        font-size: 2rem;
+      }
+    }
+
+    &.pitch {
+      .lead {
+        max-width: 700px;
+        font-weight: 500;
+      }
+    }
+
+    &.how-it-works, &.organization {
+      h2 {
+        font-weight: 700;
+      }
+      h3 {
+        font-weight: 600;
+      }
+
+      .highlighted {
+
+      }
+      p, a {
+        font-size: 1.25rem;
+      }
+    }
+
 
     h1 {
       font-size: 3.75rem;
       font-weight: 700;
-    }
-    .lead {
-      max-width: 700px;
-      font-weight: 500;
     }
   }
 }
