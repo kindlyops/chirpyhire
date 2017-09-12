@@ -113,7 +113,7 @@ gem 'webpacker', '~> 1.2.0'
 source 'https://rails-assets.org' do
   gem 'rails-assets-clipboard', '~> 1.6.1'
   gem 'rails-assets-lodash', '~> 4.17.4'
+  gem 'rails-assets-popper.js', '~> 1.12.5'
   gem 'rails-assets-ramda', '~> 0.23.0'
   gem 'rails-assets-select2', '~> 4.0.3'
-  gem 'rails-assets-popper.js', '~> 1.12.5'
 end
