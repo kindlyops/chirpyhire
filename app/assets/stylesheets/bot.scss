@@ -48,34 +48,34 @@
 
 
 .badge-next-question {
-  background-color: $brand-success;
+  background-color: theme-color('success');
 }
 
 .badge-question {
-  background-color: mix($brand-success, $brand-primary)
+  background-color: mix(theme-color('success'), theme-color('primary'))
 }
 
 .badge-goal {
-  background-color: $brand-primary;
+  background-color: theme-color('primary');
 }
 
 .greeting--header {
   display: flex;
   justify-content: space-between;
-  background-color: $brand-success;
+  background-color: theme-color('success');
 }
 
 .question--header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: mix($brand-success, $brand-primary);
+  background-color: mix(theme-color('success'), theme-color('primary'));
 }
 
 .goal--header {
   display: flex;
   justify-content: space-between;
-  background-color: $brand-primary;
+  background-color: theme-color('primary');
 }
 
 .Bot {

@@ -36,7 +36,7 @@
 
     &.active {
       font-weight: 700;
-      color: $brand-primary;
+      color: theme-color('primary');
     }
   }
 
