@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileOutcome from './profileOutcome'
+import ProfileStage from './profileStage'
 import ProfileSource from './profileSource'
 import _ from 'lodash';
 
@@ -46,7 +46,7 @@ class ProfileHeader extends React.Component {
             <div className="profile-phone-number">{this.props.contact.phone_number}</div>
           </div>
         </div>
-        <ProfileOutcome contact={this.props.contact} />
+        <ProfileStage contact={this.props.contact} />
         <ProfileSource contact={this.props.contact} />
       </div>
     )
