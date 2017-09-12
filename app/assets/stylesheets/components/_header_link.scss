@@ -18,7 +18,7 @@
   }
 
   &.active {
-    background-color: darken($brand-primary, 15%);
+    background-color: darken(theme-color('primary'), 15%);
   }
 
   .fa {

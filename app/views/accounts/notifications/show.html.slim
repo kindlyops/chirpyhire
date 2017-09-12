@@ -14,7 +14,7 @@
         .ch--main-menu--left
           h2 Notification prefernces
       .card.ch--sub-main-content
-        .card-block
+        .card-body
           .basic-details
             = form_for @account, url: account_notifications_path(@account), method: :put do |f|
               = content_for :validation_errors do

@@ -1,7 +1,7 @@
 = title "Welcome! · ChirpyHire"
 
 .card.mt-3.registrations
-  .card-block
+  .card-body
     h3.text-center.card-title Join ChirpyHire
     p.text-center.card-subtitle The best way to text-interview caregivers.
     = form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put, role: "form" } do |f|

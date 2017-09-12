@@ -1,6 +1,6 @@
 .ch--notification {
   padding: 8px 15px 8px 15px;
-  background-color: $brand-success;
+  background-color: theme-color('success');
   color: $white;
 
   a {

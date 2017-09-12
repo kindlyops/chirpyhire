@@ -44,7 +44,7 @@
   .account-status-description {
     padding: .5rem 0;
     color: $white;
-    background-color: $brand-primary;
+    background-color: theme-color('primary');
     margin-bottom: .5rem;
 
     .ch-dropup-item {

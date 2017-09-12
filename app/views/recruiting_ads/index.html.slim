@@ -1,5 +1,5 @@
 = title "Recruiting Ads · ChirpyHire"
-= content_for(:app_container_class) { 'container app-content-container mt-4 mr-4 ml-4' }
+= content_for(:app_container_class) { 'app-content-container mt-4 mr-4 ml-4' }
 .recruiting-ad.mb-3
   h1 
     i.fa.fa-magnet.fa-fw.mr-2
@@ -8,32 +8,32 @@
   .row
     .col
       .card
-        .card-block
+        .card-body
           p.card-subtitle Keep copies of your recruiting ads here for easy posting in the future.
           = render partial: "recruiting_ads/recruiting_ad", collection: @recruiting_ads
       .card.mt-3.channels
-        .card-block
+        .card-body
           h2.card-title
             i.fa.fa-globe.mr-2
             span Recruiting Channels
           p.card-subtitle Use these popular recruiting channels to promote your organization and find your next caregiver.
           .card-deck.mt-3
             .card
-              .card-block
+              .card-body
                 h4.card-title Craigslist
                 p.card-text.taller One of the best sources for free and low-cost job postings. Posting a "job" requires a small fee while posting a "gig" is free.
                 a.btn.btn-block.craigslist role="button" target="_blank" href="https://post.craigslist.org/"
                   span Post on Craigslist
                   i.fa.fa-external-link.ml-2
             .card
-              .card-block
+              .card-body
                 h4.card-title Facebook
                 p.card-text.taller Has over 200 million US users, precision audience targeting, and new ad types specifically designed for recruiting. There is a huge opportunity in this nascent recruiting channel.
                 a.btn.btn-block.facebook role="button" target="_blank" href="https://www.facebook.com/jobs/"
                   span Post on Facebook
                   i.fa.fa-external-link.ml-2
             .card
-              .card-block
+              .card-body
                 h4.card-title Indeed
                 p.card-text.taller Helps people all over the world hire and get hired. Advertised as the world's #1 job site, with over 200 million unique visitors every month.
                 a.btn.btn-block.indeed role="button" target="_blank" href="https://www.indeed.com/hire"

@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darken($brand-primary, 25%);
+    background-color: darken(theme-color('primary'), 25%);
     padding: 0 3rem;
 
     .wizard__label {
@@ -33,7 +33,7 @@
 
         &.active {
           .wizard__step__number {          
-            background-color: $brand-primary;
+            background-color: theme-color('primary');
             color: $white;
           }
 
@@ -73,7 +73,7 @@
   .wizard__main {
     .column-card {
       max-width: 255px;
-      .card-block {
+      .card-body {
         max-height: 114px;
       }
 
