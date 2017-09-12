@@ -7,9 +7,9 @@ end
 
 ruby '2.4.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.1'
+gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 0.15'
+gem 'pg', '~> 0.18'
 # Use SCSS for stylesheets
 gem 'bootstrap', '~> 4.0.0.alpha6'
 gem 'sass', github: 'hwhelchel/sass', branch: 'dynamic_includes'
@@ -97,7 +97,7 @@ gem 'paperclip', '~> 5.1.0'
 gem 'paranoia', '~> 2.3'
 gem 'phony_rails', '~> 0.14.0'
 gem 'premailer-rails', '~> 1.9.6'
-gem 'puma', '~> 3.4.0'
+gem 'puma', '~> 3.7'
 gem 'rails_admin', github: 'sferik/rails_admin', branch: 'master'
 gem 'ransack', '~> 1.8.3'
 gem 'sidekiq', '~> 4.0.0'
