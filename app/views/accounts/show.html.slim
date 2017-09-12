@@ -14,7 +14,7 @@
         .ch--main-menu--left
           h2 Your account
       .card.ch--sub-main-content
-        .card-block
+        .card-body
           .basic-details
             = form_for @account, url: account_path(@account) do |f|
               = content_for :validation_errors do

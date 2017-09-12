@@ -16,7 +16,7 @@ li.list-group-item
           - if team.phone_number.present?
               span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{team.name}'s phone number." = team.phone_number.phony_formatted
           - else
-              span.badge.badge-default.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
+              span.badge.badge-dark.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
                 | Your phone number
                 i.fa.fa-mobile.ml-2.white
     .collapse id="team_collapse_#{team.id}"

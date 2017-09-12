@@ -11,7 +11,7 @@ gem 'rails', '~> 5.1.4'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use SCSS for stylesheets
-gem 'bootstrap', '~> 4.0.0.alpha6'
+gem 'bootstrap', '~> 4.0.0.beta'
 gem 'sass', github: 'hwhelchel/sass', branch: 'dynamic_includes'
 gem 'sass-rails', '~> 5.0.5'
 # Use Uglifier as compressor for JavaScript assets
@@ -115,5 +115,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-lodash', '~> 4.17.4'
   gem 'rails-assets-ramda', '~> 0.23.0'
   gem 'rails-assets-select2', '~> 4.0.3'
-  gem 'rails-assets-tether', '~> 1.4.0'
+  gem 'rails-assets-popper.js', '~> 1.12.5'
 end

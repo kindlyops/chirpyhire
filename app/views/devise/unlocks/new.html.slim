@@ -1,7 +1,7 @@
 .card.mt-3
   h3.card-header
     | Resend unlock instructions
-  .card-block
+  .card-body
     = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
       .form-group
         = f.label :email, class: "col-form-label"

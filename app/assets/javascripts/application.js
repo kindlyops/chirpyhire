@@ -12,7 +12,7 @@
 //
 
 //= require jquery
-//= require tether
+//= require popper
 //= require bootstrap
 //= require jquery_ujs
 //= require autosize.min.js

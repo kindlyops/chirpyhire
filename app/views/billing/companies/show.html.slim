@@ -16,7 +16,7 @@
             '
             = @organization.name
       .card.ch--sub-main-content
-        .card-block
+        .card-body
           h4.card-title Estimate your audience size
           p.card-text.text-muted 
             | Pricing is based on your audience size: the number of 
@@ -56,7 +56,7 @@
             span.badge.badge-success.small-uppercase Free For 14 Days
 
       .card.ch--sub-main-content
-        .card-block
+        .card-body
           - if @organization.trialing?
             = form_tag organization_customer_path(@organization) do
               article
