@@ -128,10 +128,14 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
+  authenticated :account do
+    root to: redirect('/candidates/segments/all')
+  end
+
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text' => 'organizations/messages#create'
   post 'twilio/voice', defaults: { format: 'xml' }
 
   get '/caregivers', to: redirect('/candidates/segments/all', status: 301)
-  root to: redirect('/candidates/segments/all')
+  root to: 'home#show'
 end

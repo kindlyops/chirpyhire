@@ -41,7 +41,9 @@ nav.navbar.top {
   }
 
   .navbar-brand {
-    margin-top: 0.75rem;
+    color: theme-color('primary');
+    font-size: 3rem;
+    font-weight: 700;
   }
 
   border-bottom: 1px solid #c5d6de;

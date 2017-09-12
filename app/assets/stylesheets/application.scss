@@ -5,7 +5,7 @@
 @import "react-toggle";
 @import "select2-bootstrap-theme";
 
-body {
+body {  
   &.devise {
     #app {
       margin-top: 82px;
@@ -73,4 +73,5 @@ body {
 @import "recruit";
 @import "bot";
 @import "campaign";
+@import "home";
 

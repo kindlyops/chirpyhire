@@ -1,0 +1,18 @@
+.home {
+  .nav-item a {
+    font-weight: 900;
+  }
+
+  .jumbotron {
+    background-color: $white;
+
+    h1 {
+      font-size: 3.75rem;
+      font-weight: 700;
+    }
+    .lead {
+      max-width: 700px;
+      font-weight: 500;
+    }
+  }
+}

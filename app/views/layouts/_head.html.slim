@@ -22,3 +22,16 @@ link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="style
 script async==!Rails.env.test? defer=true type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_PLACES_KEY')}&libraries=places&callback=initAutocompletes"
 = favicon_link_tag 'favicon.ico'
 = render "layouts/heap/script"
+javascript:
+  WebFontConfig = {
+     google: {
+       families: ['Open Sans:300,400,500,800']
+     }
+  };
+
+  (function(d) {
+     var wf = d.createElement('script'), s = d.scripts[0];
+     wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+     wf.async = true;
+     s.parentNode.insertBefore(wf, s);
+  })(document);
