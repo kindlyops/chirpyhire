@@ -1,4 +1,4 @@
-class Settings::PasswordsController < RegistrationsController
+class Settings::PasswordsController < Accounts::RegistrationsController
   prepend_before_action :set_minimum_password_length, only: :show
 
   def show

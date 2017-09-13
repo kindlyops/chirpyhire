@@ -19,12 +19,12 @@ RSpec.feature 'Account Management', type: :feature, js: true do
       login_as(account, scope: :account)
     end
 
-    scenario 'it progresses to the sign in page' do
+    scenario 'it progresses to the root page' do
       visit '/'
 
       find('#account-status-container').trigger('click')
       find('#sign-out').trigger('click')
-      expect(page).to have_text('sign in or sign up before continuing.')
+      expect(page).to have_text('Signed out successfully')
     end
   end
 end
