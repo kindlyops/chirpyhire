@@ -41,7 +41,7 @@ class ProfileSource extends React.Component {
     return (
       <div className='form-group'>
         <label id='source' className='col-form-label'><strong>Source:</strong></label>
-        <input id='source' className='form-control' placeholder='CraigsList, Facebook, Referral...' type="text" name="contact[source]" value={this.props.contact.source} onChange={this.onChange} />
+        <input id='source' className='form-control' placeholder='CraigsList, Facebook, Referral...' type="text" name="contact[source]" value={this.props.contact.source || ''} onChange={this.onChange} />
       </div>
     )
   }
