@@ -1,17 +1,28 @@
-= form_for JobSeeker.new do |f|
-  = f.hidden_field :agreed_to_terms, value: true
-  .form-group
-    = f.label :email, class: 'col-form-label'
-    = f.email_field :email, class: 'form-control', placeholder: 'Email', 'aria-describedby' => 'emailHelp'
-    small#emailHelp.form-text.text-muted We'll never share your email with an employer without your approval.
-  .form-group
-    = f.label :password, class: 'col-form-label'
-    = f.password_field :password, class: 'form-control', placeholder: 'Password', 'aria-describedby' => 'passwordHelp'
-    small#passwordHelp.form-text.text-muted Make sure your password is at least 8 characters!
-  .form-group.mt-3
-    small.form-text.text-muted.mb-2
-      ' By submitting an application, you agree to our
-      a target="_blank" href="https://www.chirpyhire.com/terms" Terms
-      '  and accept our
-      a target="_blank" href="https://www.chirpyhire.com/terms" Privacy Policy.
-    = button_tag "Submit application", class: "btn-lg btn-block btn btn-primary", role: "button", type: "submit"
+.container.jobs
+  .row
+    .col-md-3
+    .col-12.col-md-8.col-lg-6
+      .card.job-seeker-apply.mb-5
+        .card-body
+          - if current_job_seeker.blank?
+            h3.text-center.card-title Submit an application
+            p.text-center.card-subtitle The best way to find caregiving jobs.
+            = form_for JobSeeker.new, url: registration_path(:job_seeker) do |f|
+              = f.hidden_field :agreed_to_terms, value: true
+              .form-group
+                = f.label :email, class: 'col-form-label'
+                = f.email_field :email, class: 'form-control', placeholder: 'Email', 'aria-describedby' => 'emailHelp'
+                small#emailHelp.form-text.text-muted We'll never share your email with an employer without your approval.
+              .form-group.mt-4
+                small.form-text.text-muted.mb-2
+                  ' By submitting an application, you agree to our
+                  a target="_blank" href="https://www.chirpyhire.com/terms" Terms
+                  '  and accept our
+                  a target="_blank" href="https://www.chirpyhire.com/terms" Privacy Policy.
+                = button_tag "Submit application", class: "btn-lg btn-block btn btn-primary", role: "button", type: "submit"
+          - else
+            .text-center
+              h3.card-title Application received!
+              i.fa.fa-check-circle.green.mb-3
+              p.card-subtitle We're currently operating in cities all across the U.S. We'll reach out as soon as we have jobs in your area!
+
