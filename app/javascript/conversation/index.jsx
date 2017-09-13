@@ -20,8 +20,26 @@ class Conversation extends React.Component {
       parts: []
     };
     this.onNameChange = this.onNameChange.bind(this);
+    this.onSourceChange = this.onSourceChange.bind(this);
     this._partsReceived = this._partsReceived.bind(this)
     this._contactReceived = this._contactReceived.bind(this)
+  }
+
+  onSourceChange(event) {
+    const params = {
+      _method: 'put',
+      contact: { source: event.target.value }
+    };
+
+    const config = {
+      url: this.contactUrl(this.state.contact.id),
+      data: params,
+      type: 'POST',
+      method: 'POST',
+      dataType: 'text'
+    }
+
+    $.ajax(config);
   }
 
   onNameChange(event) {
@@ -51,6 +69,7 @@ class Conversation extends React.Component {
         parts={this.state.parts}
       />
       <ConversationProfile
+        onSourceChange={this.onSourceChange}
         onNameChange={this.onNameChange}
         contact={this.state.contact}
         inbox={this.props.inbox}
