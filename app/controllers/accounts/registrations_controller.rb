@@ -1,6 +1,4 @@
 class Accounts::RegistrationsController < Devise::RegistrationsController
-  include Accessible
-
   def new
     super do |account|
       account.build_organization

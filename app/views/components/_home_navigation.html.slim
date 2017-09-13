@@ -6,7 +6,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-white.top.border-0
     #navbar-links.collapse.navbar-collapse
       ul.navbar-nav.mt-2.mt-lg-0.ml-auto
         li.nav-item.mr-4
-          = link_to 'Find a Job', jobs_path, class: 'nav-link'
+          = link_to 'Find a Job', '#', class: 'nav-link', 'data-toggle' => "tooltip", 'data-placement' => "bottom", title: "Coming Soon!"
         li.nav-item.mr-4
           = link_to 'Our Story', page_path('story'), class: 'nav-link'
         li.nav-item

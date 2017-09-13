@@ -1,6 +1,4 @@
 class Accounts::SessionsController < Devise::SessionsController
-  include Accessible
-  skip_before_action :check_user, only: :destroy
   after_action :prepare_intercom_shutdown, only: [:destroy]
   after_action :intercom_shutdown, only: [:index]
 

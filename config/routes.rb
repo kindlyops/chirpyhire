@@ -116,14 +116,6 @@ Rails.application.routes.draw do
     invitations: 'invitations'
   }
 
-  devise_for :job_seekers, path: 'job_seekers', controllers: {
-    confirmations: 'job_seekers/confirmations',
-    passwords: 'job_seekers/passwords',
-    registrations: 'job_seekers/registrations',
-    sessions: 'job_seekers/sessions',
-    unlocks: 'job_seekers/unlocks'
-  }
-
   resources :accounts, only: %i[show update] do
     post :stop_impersonating, on: :collection
 
@@ -141,10 +133,6 @@ Rails.application.routes.draw do
 
   authenticated :account do
     root to: redirect('/candidates/segments/all'), as: :authenticated_account_root
-  end
-
-  authenticated :job_seeker do
-    root to: 'jobs#index', as: :authenticated_job_seeker_root
   end
 
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
