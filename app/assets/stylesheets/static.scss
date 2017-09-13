@@ -2,7 +2,11 @@
   h2.small {
     font-size: 1.5rem;
   }
-  
+
+  .well {
+    background-color: $gray-300;
+  }
+
   .static-nav-spacer {
     margin-bottom: 9rem;
   }
