@@ -69,7 +69,7 @@ class CandidatesTable extends React.Component {
                 <Column
                   label='Name'
                   dataKey='name'
-                  width={260}
+                  width={200}
                   flexGrow={2}
                   cellRenderer={this.nameCellRenderer}
                   headerRenderer={this.headerRenderer}
@@ -82,21 +82,28 @@ class CandidatesTable extends React.Component {
                   dataKey='current_conversation_id'
                 />
                 <Column
-                  width={100}
+                  width={110}
                   label='Stage'
                   dataKey='stage'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
-                  width={240}
+                  width={110}
+                  label='Source'
+                  dataKey='source'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
+                <Column
+                  width={200}
                   label='Last Seen'
                   dataKey='last_seen_at_ago'
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
                 <Column
-                  width={240}
+                  width={200}
                   label='First Seen'
                   dataKey='first_seen_at_ago'
                   cellRenderer={this.cellRenderer}
