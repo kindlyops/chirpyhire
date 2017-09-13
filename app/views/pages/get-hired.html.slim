@@ -1,0 +1,29 @@
+= title "Get Hired · ChirpyHire"
+.container.get-hired
+  .row
+    .col-sm-1.col-lg-1
+    .col-sm-10.col-lg-10.text-center
+      h1 Get Hired
+      h2.small Get the hours you want and the pay you deserve--fast.
+  .row
+    .col-md-2.col-lg-3
+    .col-12.col-md-8.col-lg-6.mt-5.mb-5
+      .card.apply
+        .card-body
+          h3.text-center.card-title You + Top Employers = 😍
+          p.text-center.card-subtitle Get matched with the best local employers. Apply to learn more.
+          = form_for JobSeeker.new do |f|
+            = f.hidden_field :agreed_to_terms, value: true
+            .form-group
+              = f.label :email, class: 'col-form-label'
+              = f.email_field :email, class: 'form-control'
+            .form-group
+              = f.label :phone_number, 'Phone', class: 'col-form-label'
+              = f.phone_field :phone_number, class: 'form-control'
+            .form-group.mt-3
+              small.form-text.text-muted.mb-2
+                ' By applying, you agree to our
+                a target="_blank" href="https://www.chirpyhire.com/terms" Terms
+                '  and accept our
+                a target="_blank" href="https://www.chirpyhire.com/terms" Privacy Policy.
+              = button_tag "Apply now", class: "btn-lg btn-block btn btn-primary", role: "button", type: "submit"
