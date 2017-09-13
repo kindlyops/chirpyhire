@@ -4,6 +4,21 @@
   }
 
   .callout {
+    &.right {
+      margin-top: 2rem;
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 0;
+      }
+    }
+
+    &.left {
+      margin-bottom: 2rem;
+
+      @include media-breakpoint-up(lg) {
+        margin-bottom: 0;
+      }
+    }
     img {
       max-width: 520px;
       max-height: 520px;
