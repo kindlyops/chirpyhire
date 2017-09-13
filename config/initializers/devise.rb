@@ -317,6 +317,8 @@ Devise.setup do |config|
 end
 
 Rails.application.config.to_prepare do
+
+  
   Devise::SessionsController.layout 'devise'
   Devise::RegistrationsController.layout proc { |_controller| account_signed_in? ? 'application' : 'devise' }
   Devise::InvitationsController.layout proc { |_controller| account_signed_in? ? 'application' : 'devise' }
