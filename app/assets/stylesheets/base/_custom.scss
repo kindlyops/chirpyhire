@@ -80,7 +80,7 @@ a {
   }
 }
 
-.btn {
+.btn, [role='button'] {
   cursor: pointer;
 }
 

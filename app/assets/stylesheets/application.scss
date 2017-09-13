@@ -5,6 +5,16 @@
 @import "react-toggle";
 @import "select2-bootstrap-theme";
 
+.ch-logo {
+  color: theme-color('primary') !important;
+  font-size: 3rem !important;
+  font-weight: 700 !important;
+
+  &:focus, &:hover {
+    text-decoration: none;
+  }
+}
+
 body {  
   &.devise {
     #app {

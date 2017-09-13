@@ -6,13 +6,16 @@
   .callout {
     img {
       max-width: 520px;
+      max-height: 520px;
     }
   }
 
   .jumbotron {
+    padding-bottom: 5rem;
+    padding-top: 5rem;
 
     &.cost {
-      background-color: darken(theme-color('gray'), 10%);
+      background-color: $gray-400;
     }
 
     &.use-cases {
@@ -26,23 +29,19 @@
       }
     }
 
-    &.pitch {
+    &.pitch, &.cost {
       .lead {
-        max-width: 700px;
+        max-width: 760px;
         font-weight: 500;
       }
     }
 
-    &.how-it-works, &.organization {
+    &.how-it-works, &.organization, &.chat {
       h2 {
         font-weight: 700;
       }
       h3 {
         font-weight: 600;
-      }
-
-      .highlighted {
-
       }
       p, a {
         font-size: 1.25rem;
@@ -53,6 +52,17 @@
     h1 {
       font-size: 3.75rem;
       font-weight: 700;
+    }
+  }
+
+  footer {
+    background-color: rgba(249, 252, 250, 1);
+    padding-top: 5rem;
+
+    .main-links {
+      li {
+        margin-bottom: .5rem;
+      }
     }
   }
 }
