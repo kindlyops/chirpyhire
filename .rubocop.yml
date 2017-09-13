@@ -44,6 +44,8 @@ Metrics/LineLength:
     - 'config/**/*'
     - 'lib/migrator/**/*'
     - 'Gemfile'
+    - 'app/controllers/accounts/omniauth_callbacks_controller.rb'
+    - 'app/controllers/job_seekers/omniauth_callbacks_controller.rb'
 
 Metrics/BlockLength:
   Exclude:

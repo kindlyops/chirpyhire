@@ -1,0 +1,18 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-white.top.fixed-top
+  .container
+    = link_to 'ChirpyHire', root_path, class: 'ch-logo navbar-brand'
+    button.navbar-toggler aria-controls="navbar-links" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbar-links" data-toggle="collapse" type="button"
+      span.navbar-toggler-icon
+    #navbar-links.collapse.navbar-collapse
+      ul.navbar-nav.mt-2.mt-lg-0.ml-auto
+        li.nav-item.mr-4
+          = link_to 'Pricing', page_path('pricing'), class: 'nav-link'
+        li.nav-item.mr-4
+          = link_to 'Features', page_path('features'), class: 'nav-link'
+        li.nav-item.mr-4
+          = link_to 'Jobs', jobs_path, class: 'nav-link'
+        li.nav-item.mr-4
+          = link_to 'Sign in', new_account_session_path, class: 'nav-link'
+        li.nav-item
+          = link_to 'Post a Job', page_path('post_a_job'), class: 'btn btn-primary'
+.static-nav-spacer

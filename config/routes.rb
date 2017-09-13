@@ -107,11 +107,23 @@ Rails.application.routes.draw do
   resource :current_account, only: :show, controller: 'current_account'
   resource :current_organization, only: :show, controller: 'current_organization'
 
-  devise_for :accounts, controllers: {
-    passwords: 'passwords',
-    sessions: 'sessions',
-    registrations: 'registrations',
-    invitations: 'invitations'
+  devise_for :accounts, path: 'accounts', controllers: {
+    confirmations: 'accounts/confirmations',
+    passwords: 'accounts/passwords',
+    registrations: 'accounts/registrations',
+    sessions: 'accounts/sessions',
+    unlocks: 'accounts/unlocks',
+    omniauth_callbacks: 'accounts/omniauth_callbacks',
+    invitations: 'accounts/invitations'
+  }
+
+  devise_for :job_seekers, path: 'job_seekers', controllers: {
+    confirmations: 'job_seekers/confirmations',
+    passwords: 'job_seekers/passwords',
+    registrations: 'job_seekers/registrations',
+    sessions: 'job_seekers/sessions',
+    unlocks: 'job_seekers/unlocks',
+    omniauth_callbacks: 'job_seekers/omniauth_callbacks'
   }
 
   resources :accounts, only: %i[show update] do
@@ -138,6 +150,6 @@ Rails.application.routes.draw do
   post 'twilio/voice', defaults: { format: 'xml' }
 
   get '/caregivers', to: redirect('/candidates/segments/all', status: 301)
-  get "/pages/*id" => 'pages#show', as: :page, format: false
+  get '/pages/*id' => 'pages#show', as: :page, format: false
   root to: 'pages#show', id: 'home'
 end
