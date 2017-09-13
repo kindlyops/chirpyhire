@@ -1,8 +1,4 @@
 .home {
-  .nav-item a {
-    font-weight: 900;
-  }
-
   .callout {
     &.right {
       margin-top: 2rem;
@@ -60,23 +56,6 @@
       }
       p, a {
         font-size: 1.25rem;
-      }
-    }
-
-
-    h1 {
-      font-size: 3.75rem;
-      font-weight: 700;
-    }
-  }
-
-  footer {
-    background-color: rgba(249, 252, 250, 1);
-    padding-top: 5rem;
-
-    .main-links {
-      li {
-        margin-bottom: .5rem;
       }
     }
   }

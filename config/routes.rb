@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :segments
   resources :tags
   resources :contact_stages
+  resources :jobs
 
   resources :contacts, only: %i[show update] do
     resources :notes, only: %i[index create update destroy]
@@ -137,5 +138,6 @@ Rails.application.routes.draw do
   post 'twilio/voice', defaults: { format: 'xml' }
 
   get '/caregivers', to: redirect('/candidates/segments/all', status: 301)
-  root to: 'home#show'
+  get "/pages/*id" => 'pages#show', as: :page, format: false
+  root to: 'pages#show', id: 'home'
 end
