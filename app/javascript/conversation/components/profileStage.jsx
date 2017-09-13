@@ -10,12 +10,11 @@ class ProfileStage extends React.Component {
   }
 
   onChange({ value, label }) {
-    const form = $(`form#${this.id()}`);
     const data = { 
       _method: 'put', contact: { contact_stage_id: value }
     }
     const config = {
-      url: form.attr('action'),
+      url: `/contacts/${this.props.contact.id}`,
       data: data,
       type: 'POST',
       method: 'POST',
