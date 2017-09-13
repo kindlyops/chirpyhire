@@ -1,5 +1,21 @@
 .job-boards {
 
+  .board-container {
+    @include media-breakpoint-up(md) {
+
+    }
+  }
+
+  .job-boards-card {
+    .job-board:last-child {
+      border: 0;
+    }
+    .job-board {
+      padding: 10px;
+      background: #fff;
+    }
+  }
+
   .job-partner-cta {
     font-size: 1.25rem;
   }
