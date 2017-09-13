@@ -4,7 +4,11 @@ import Textarea from 'react-textarea-autosize'
 
 class Note extends React.Component {
   timestamp() {
-    return moment(this.props.note.created_at).format('h:mm a');
+    return moment(this.props.note.created_at).format('MMM Do, h:mm a');
+  }
+
+  fullTimestamp() {
+    return moment(this.props.note.created_at).format('dddd, MMMM Do YYYY, h:mm:ss a');
   }
 
   noteUrl() {
@@ -13,7 +17,7 @@ class Note extends React.Component {
 
   editableNote() {
     return (
-      <div>
+      <div title={this.fullTimestamp()}>
         <div className="message first highlight" id='note-edit-container' data-note-id={this.props.note.id} hidden={true}>
           <div className="message_gutter">
             <div className="message-icon">
@@ -65,7 +69,7 @@ class Note extends React.Component {
 
   nonEditableNote() {
     return (
-      <div>
+      <div title={this.fullTimestamp()}>
         <div className='message first' id='note-show-container' data-note-id={this.props.note.id}>
           <div className="message_gutter">
             <div className="message-icon">
