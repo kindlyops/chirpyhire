@@ -1,6 +1,6 @@
 @import "base/custom";
 @import "report/base";
-
+$green:   #37AA7C;
 .report {
   .preview-text {
     display: none;
@@ -32,13 +32,13 @@
 
   .cta {
     padding: 10px 20px; 
-    border: 1px solid theme-color('primary'); 
+    border: 1px solid $green;
     -webkit-border-radius: 999em; 
     -moz-border-radius: 999em; 
     border-radius: 999em; 
     line-height: 24px; 
     font-size: 11pt; 
-    background-color: theme-color('primary'); 
+    background-color: $green;
     color: white; 
     text-decoration: none; 
     text-align: center;
