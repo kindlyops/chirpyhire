@@ -1,0 +1,8 @@
+.ch--vertical-navigation
+  .ch--vertical-navigation--inner
+    .ch--vertical-navigation-header
+      h3.small-uppercase Billing
+    .ch--vertical-navigation-links
+      = nav_link_to 'Subscription', organization_billing_summary_path(@organization), class: 'ch--vertical-navigation-link'
+      = nav_link_to 'Invoice history', organization_billing_invoices_path(@organization), class: 'ch--vertical-navigation-link'
+      = nav_link_to 'Payment preferences', organization_billing_company_path(@organization), class: 'ch--vertical-navigation-link'
