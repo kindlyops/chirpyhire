@@ -10,34 +10,30 @@ class Subscription::Price
   attr_reader :subscription
 
   def call
-    if engaged_contact_count.between?(0, 50)
+    if engaged_contact_count.between?(0, 200)
       125
-    elsif engaged_contact_count.between?(51, 100)
-      150
-    elsif engaged_contact_count.between?(101, 200)
-      175
-    elsif engaged_contact_count.between?(201, 300)
-      225
-    elsif engaged_contact_count.between?(301, 400)
-      250
-    elsif engaged_contact_count.between?(401, 500)
+    elsif engaged_contact_count.between?(201, 400)
+      200
+    elsif engaged_contact_count.between?(401, 600)
       275
-    elsif engaged_contact_count.between?(501, 600)
-      315
-    elsif engaged_contact_count.between?(601, 700)
+    elsif engaged_contact_count.between?(601, 800)
       350
-    elsif engaged_contact_count.between?(701, 800)
-      380
-    elsif engaged_contact_count.between?(801, 900)
-      400
-    elsif engaged_contact_count.between?(901, 1000)
-      450
-    elsif engaged_contact_count.between?(1001, 2000)
-      dynamic_price(0.43)
-    elsif engaged_contact_count.between?(2001, 3000)
-      dynamic_price(0.42)
+    elsif engaged_contact_count.between?(801, 1000)
+      425
+    elsif engaged_contact_count.between?(1001, 1200)
+      500
+    elsif engaged_contact_count.between?(1201, 1400)
+      575
+    elsif engaged_contact_count.between?(1401, 1600)
+      650
+    elsif engaged_contact_count.between?(1601, 1800)
+      725
+    elsif engaged_contact_count.between?(1801, 2000)
+      800
+    elsif engaged_contact_count.between?(2001, 2200)
+      875
     else
-      dynamic_price(0.41)
+      dynamic_price(0.375)
     end
   end
 
@@ -46,7 +42,7 @@ class Subscription::Price
   end
 
   def price_count
-    ((engaged_contact_count / 100) * 100).floor
+    ((engaged_contact_count / 200) * 200).floor
   end
 
   def engaged_contact_count
