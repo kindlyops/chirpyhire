@@ -15,11 +15,11 @@
 .email {
   background-color: rgb(255,255,255);
   a {
-    color: theme-color('primary');
+    color: $green;
   }
 
   .btn {
-    background-color: theme-color('primary');
+    background-color: $green;
     color: #FFF !important;
   }
 
