@@ -39,5 +39,7 @@ class CreateInvoices < ActiveRecord::Migration[5.1]
       t.integer :webhooks_delivered_at
       t.timestamps
     end
+
+    add_index :invoices, :stripe_id, unique: true
   end
 end

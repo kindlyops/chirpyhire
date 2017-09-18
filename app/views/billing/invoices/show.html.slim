@@ -1,0 +1,74 @@
+= title "Invoice ##{@invoice.id} · ChirpyHire"
+.ch--Page.settings.invoices
+  = render partial: "settings/header"
+  .ch--main
+    = render partial: "billing/navigation"
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Invoice history for
+            '
+            = @organization.name
+            '
+            ' /
+            | Invoice #
+            = @invoice.id
+      .ch--sub-main-content
+        .invoice-box
+          table cellpadding="0" cellspacing="0" 
+            tr.top
+              td colspan="2" 
+                table
+                  tr
+                    td.title
+                      = inline_svg 'inverse_logo.svg', style: "width:100%; max-width:300px;"
+                    td
+                      | Invoice #:
+                      '
+                      = @invoice.id
+                      br/
+                      | Created: 
+                      '
+                      = @invoice.decorate.date
+                      br/
+                      | Due: 
+                      '
+                      = @invoice.decorate.period_end
+            tr.information
+              td colspan="2" 
+                table
+                  tr
+                    td
+                      | Chirpy, LLC
+                      br/
+                      | 4700 Chamblee Dunwoody Rd. #510
+                      br/
+                      | Atlanta, GA 30338
+                    td
+                      = @organization.name
+                      br/
+                      = @organization.billing_email
+            tr.heading
+              td
+                | Payment Method
+              td
+            tr.details
+              td
+                | Credit Card
+              td
+            tr.heading
+              td
+                | Subscription
+              td
+                | Price
+            tr.item.last
+              td = "ChirpyHire (#{pluralize(@organization.subscription.tier, 'candidate')})"
+              td = number_to_currency(@organization.subscription.price)
+            tr.total
+              td
+              td
+                | Total: 
+                '
+                = number_to_currency(@organization.subscription.price)
+

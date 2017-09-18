@@ -5,6 +5,10 @@ class InvoiceDecorator < Draper::Decorator
     Time.at(object.date).strftime('%b %d, %Y')
   end
 
+  def period_end
+    Time.at(object.period_end).strftime('%b %d, %Y')
+  end
+
   def icon
     return 'fa-check' if paid?
     return 'fa-gift' if forgiven?

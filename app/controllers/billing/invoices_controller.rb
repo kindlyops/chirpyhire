@@ -4,6 +4,11 @@ class Billing::InvoicesController < ApplicationController
     @invoices = policy_scope(Invoice)
   end
 
+  def show
+    organization
+    @invoice = authorize(Invoice.find(params[:id]))
+  end
+
   private
 
   def organization
