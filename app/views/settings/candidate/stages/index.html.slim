@@ -15,13 +15,14 @@
             | Candidate stages for
             '
             = @organization.name
-      .card.ch--sub-main-content
-        .card-body
-          h5.card-title All your candidate stages
-          h6.card-subtitle.mb-3.text-muted Add, delete, or reorder your candidate stages.
-          .card.mb-4
-            ul.list-group.list-group-flush#contact-stages
-              .sortable
-                = render partial: 'settings/candidate/stages/stage', collection: @organization.contact_stages, locals: { organization: @organization }
-              = render partial: 'settings/candidate/stages/new_stage', locals: { stage: @organization.contact_stages.build(rank: @organization.next_contact_stage_rank), organization: @organization }
+      .ch--sub-main-content
+        .card
+          .card-body
+            h5.card-title All your candidate stages
+            h6.card-subtitle.mb-3.text-muted Add, delete, or reorder your candidate stages.
+            .card.mb-4
+              ul.list-group.list-group-flush#contact-stages
+                .sortable
+                  = render partial: 'settings/candidate/stages/stage', collection: @organization.contact_stages, locals: { organization: @organization }
+                = render partial: 'settings/candidate/stages/new_stage', locals: { stage: @organization.contact_stages.build(rank: @organization.next_contact_stage_rank), organization: @organization }
 

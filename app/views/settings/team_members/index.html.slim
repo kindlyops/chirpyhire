@@ -15,17 +15,18 @@
             | Team members for
             '
             = @organization.name
-      .card.ch--sub-main-content
-        .card-body
-          .mb-2 
-            strong All your team members
-          .invite-team-member.mb-4
-            = form_for current_organization.accounts.build, as: :account, url: invitation_path(:account), :html => {:method => :post, role: "form", class: 'form-inline' } do |f|
-                = f.label :email, class: "sr-only"
-                = f.email_field :email, required: true, placeholder: "To invite a new team member, enter their email address", class: "form-control mr-3"
-                = f.submit 'Invite', type: "submit", role: "button", class: "btn btn-primary"
-          .card
-            ul.list-group.list-group-flush
-              = render partial: "organizations/accounts/account", collection: @accounts, locals: { organization: @organization }
+      .ch--sub-main-content
+        .card
+          .card-body
+            .mb-2 
+              strong All your team members
+            .invite-team-member.mb-4
+              = form_for current_organization.accounts.build, as: :account, url: invitation_path(:account), :html => {:method => :post, role: "form", class: 'form-inline' } do |f|
+                  = f.label :email, class: "sr-only"
+                  = f.email_field :email, required: true, placeholder: "To invite a new team member, enter their email address", class: "form-control mr-3"
+                  = f.submit 'Invite', type: "submit", role: "button", class: "btn btn-primary"
+            .card
+              ul.list-group.list-group-flush
+                = render partial: "organizations/accounts/account", collection: @accounts, locals: { organization: @organization }
 
 

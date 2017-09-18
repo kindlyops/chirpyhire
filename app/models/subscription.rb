@@ -16,4 +16,12 @@ class Subscription < ApplicationRecord
   def price
     Subscription::Price.call(self)
   end
+
+  def tier
+    (engaged_contact_count / 200.0).ceil * 200
+  end
+
+  def engaged_contact_count
+    @engaged_contact_count ||= organization.contacts.engaged.count
+  end
 end
