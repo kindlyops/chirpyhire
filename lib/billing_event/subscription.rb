@@ -20,7 +20,7 @@ class BillingEvent::Subscription
       value = event.data.object.send(attribute)
       subscription.send(:write_attribute, attribute, value)
     end
-    
+
     subscription.save
   end
 

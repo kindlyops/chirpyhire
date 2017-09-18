@@ -360,7 +360,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.integer "date"
     t.string "description"
     t.jsonb "discount", default: {}
-    t.integer "due_date"
     t.integer "ending_balance"
     t.boolean "forgiven"
     t.jsonb "lines", default: {}
@@ -375,7 +374,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.integer "starting_balance"
     t.string "statement_descriptor"
     t.string "subscription"
-    t.integer "subscription_proration_date"
     t.integer "subtotal"
     t.integer "tax"
     t.float "tax_percent"
@@ -534,24 +532,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end
 
-  create_table "plans", force: :cascade do |t|
-    t.string "stripe_id"
-    t.string "object"
-    t.integer "amount"
-    t.integer "created"
-    t.string "currency"
-    t.string "interval"
-    t.integer "interval_count"
-    t.boolean "livemode"
-    t.jsonb "metadata", default: {}
-    t.string "name"
-    t.string "statement_descriptor"
-    t.integer "trial_period_days"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true
-  end
-
   create_table "questions", force: :cascade do |t|
     t.bigint "bot_id", null: false
     t.text "body", null: false
@@ -601,7 +581,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.datetime "updated_at", null: false
     t.datetime "internal_canceled_at"
     t.datetime "trial_ends_at"
-    t.bigint "plan_id"
     t.string "stripe_id"
     t.string "object"
     t.float "application_fee_percent"
@@ -612,7 +591,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.integer "current_period_end"
     t.integer "current_period_start"
     t.string "customer"
-    t.integer "days_until_due"
     t.jsonb "discount", default: {}
     t.integer "ended_at"
     t.jsonb "items", default: {}
@@ -626,7 +604,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.integer "trial_end"
     t.integer "trial_start"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
-    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true
   end
 
@@ -754,7 +731,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
   add_foreign_key "recruiting_ads", "teams"
   add_foreign_key "segments", "accounts"
   add_foreign_key "subscriptions", "organizations"
-  add_foreign_key "subscriptions", "plans"
   add_foreign_key "taggings", "contacts"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "organizations"

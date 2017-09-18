@@ -5,7 +5,6 @@ class AddsStripeToSubscriptions < ActiveRecord::Migration[5.1]
     rename_column :subscriptions, :status, :internal_status
 
     change_table :subscriptions do |t|
-      t.belongs_to :plan, index: true, foreign_key: true
       t.string :stripe_id
       t.string :object
       t.float :application_fee_percent

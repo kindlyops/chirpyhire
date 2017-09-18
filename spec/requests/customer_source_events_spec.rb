@@ -6,9 +6,9 @@ RSpec.describe 'Customer Source Events' do
       .to_return(status: status, body: body)
   end
 
-  %w(customer.source.created
+  %w[customer.source.created
      customer.source.updated
-     customer.source.deleted).each do |event|
+     customer.source.deleted].each do |event|
     describe event do
       let(:body) { File.read("spec/support/fixtures/#{event}.json") }
       let(:event_source) { JSON.parse(body)['data']['object'] }

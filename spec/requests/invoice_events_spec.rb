@@ -6,7 +6,7 @@ RSpec.describe 'Invoice Events' do
       .to_return(status: status, body: body)
   end
 
-  %w(invoice.upcoming).each do |event|
+  %w[invoice.upcoming].each do |event|
     describe event do
       let(:body) { File.read("spec/support/fixtures/#{event}.json") }
       let(:event_invoice) { JSON.parse(body)['data']['object'] }
@@ -32,11 +32,11 @@ RSpec.describe 'Invoice Events' do
     end
   end
 
-  %w(invoice.payment_failed
+  %w[invoice.payment_failed
      invoice.payment_succeeded
      invoice.sent
      invoice.updated
-     invoice.created).each do |event|
+     invoice.created].each do |event|
     describe event do
       let(:body) { File.read("spec/support/fixtures/#{event}.json") }
       let(:event_invoice) { JSON.parse(body)['data']['object'] }
