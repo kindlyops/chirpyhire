@@ -6,8 +6,15 @@
   box-shadow:0 0 10px rgba(0, 0, 0, .15);
   font-size:16px;
   line-height:24px;
-  background-color: $white;
+  background-color: #fff;
   color:#555;
+
+  .title {
+    img {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
 }
 
 .invoice-box table{
