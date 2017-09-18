@@ -7,6 +7,14 @@ class CustomersController < ApplicationController
     redirect_to organization_billing_company_path(organization)
   end
 
+  def update
+    update_customer
+  rescue Stripe::CardError => e
+    flash[:error] = e.message
+  ensure
+    redirect_to organization_billing_company_path(organization)
+  end
+
   private
 
   def create_customer
@@ -14,6 +22,33 @@ class CustomersController < ApplicationController
     create_payment_card
     Internal::Notification::Customer.call(organization)
     organization.subscription.activate
+  end
+
+  def update_customer
+    add_payment_card
+    Internal::Notification::Customer.call(organization)
+  end
+
+  def add_payment_card
+    organization.payment_cards.create(
+      stripe_id: new_payment_card.id,
+      brand: new_payment_card.brand,
+      exp_month: new_payment_card.exp_month,
+      exp_year: new_payment_card.exp_year,
+      last4: new_payment_card.last4
+    )
+  end
+
+  def new_payment_card
+    @new_payment_card ||= begin
+      stripe_customer.sources.create(source: params[:stripeToken])
+    end
+  end
+
+  def stripe_customer
+    @stripe_customer ||= begin
+      Stripe::Customer.retrieve(organization.stripe_customer_id)
+    end
   end
 
   def customer

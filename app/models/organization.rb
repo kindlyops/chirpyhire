@@ -68,7 +68,7 @@ class Organization < ApplicationRecord
   end
 
   def payment_card
-    payment_cards.first
+    payment_cards.order(:id).last
   end
 
   def next_contact_stage_rank
