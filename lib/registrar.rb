@@ -8,8 +8,7 @@ class Registrar
     account.update(person: Person.create)
     create_contact_stages
     setup_account
-    organization.update(billing_email: account.email)
-    organization.create_subscription(trial_ends_at: trial_length)
+    setup_organization
     TeamRegistrar.call(team, account, notify: false)
     new_organization_notification_job
   end
@@ -35,6 +34,11 @@ class Registrar
   def setup_account
     account.update(role: :owner)
     BotFactory::Maker.call(account)
+  end
+
+  def setup_organization
+    organization.update(billing_email: account.email)
+    organization.create_subscription(trial_ends_at: trial_length)
   end
 
   def new_organization_notification_job

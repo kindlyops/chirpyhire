@@ -2,11 +2,11 @@ class InvoiceDecorator < Draper::Decorator
   delegate_all
 
   def date
-    Time.at(object.date).strftime('%b %d, %Y')
+    Time.zone.at(object.date).strftime('%b %d, %Y')
   end
 
   def period_end
-    Time.at(object.period_end).strftime('%b %d, %Y')
+    Time.zone.at(object.period_end).strftime('%b %d, %Y')
   end
 
   def icon

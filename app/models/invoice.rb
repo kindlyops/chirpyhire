@@ -3,6 +3,6 @@ class Invoice < ApplicationRecord
   delegate :organization, to: :subscription
 
   def lines
-    (self[:lines]["data"] || []).map { |item| InvoiceItem.new(item) }
+    (self[:lines]['data'] || []).map { |item| InvoiceItem.new(item) }
   end
 end

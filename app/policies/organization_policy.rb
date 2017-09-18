@@ -12,8 +12,8 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def basic_attributes
-    %i[name avatar email description url forwarding_phone_number 
-      billing_email invoice_notification]
+    %i[name avatar email description url forwarding_phone_number
+       billing_email invoice_notification]
   end
 
   def question_attributes
