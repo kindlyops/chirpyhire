@@ -1,5 +1,6 @@
 class Subscription < ApplicationRecord
   belongs_to :organization
+  has_many :invoices
 
   enum status: {
     trialing: 0, active: 1, past_due: 2, canceled: 3, unpaid: 4

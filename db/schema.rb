@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911191004) do
+ActiveRecord::Schema.define(version: 20170918152712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,6 +343,48 @@ ActiveRecord::Schema.define(version: 20170911191004) do
     t.bigint "team_id", null: false
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "subscription_id", null: false
+    t.string "stripe_id", null: false
+    t.string "object"
+    t.integer "amount_due"
+    t.integer "application_fee"
+    t.integer "attempt_count"
+    t.boolean "attempted"
+    t.string "billing"
+    t.string "charge"
+    t.boolean "closed"
+    t.string "currency"
+    t.string "customer"
+    t.integer "date"
+    t.string "description"
+    t.jsonb "discount"
+    t.integer "due_date"
+    t.integer "ending_balance"
+    t.boolean "forgiven"
+    t.text "lines", default: [], array: true
+    t.boolean "livemode"
+    t.jsonb "metadata"
+    t.integer "next_payment_attempt"
+    t.string "number"
+    t.boolean "paid"
+    t.integer "period_end"
+    t.integer "period_start"
+    t.string "receipt_number"
+    t.integer "starting_balance"
+    t.string "statement_descriptor"
+    t.string "subscription"
+    t.integer "subscription_proration_date"
+    t.integer "subtotal"
+    t.integer "tax"
+    t.float "tax_percent"
+    t.integer "total"
+    t.integer "webhooks_delivered_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscription_id"], name: "index_invoices_on_subscription_id"
+  end
+
   create_table "locations", id: :serial, force: :cascade do |t|
     t.float "latitude", null: false
     t.float "longitude", null: false
@@ -637,6 +679,7 @@ ActiveRecord::Schema.define(version: 20170911191004) do
   add_foreign_key "imports", "accounts"
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"
+  add_foreign_key "invoices", "subscriptions"
   add_foreign_key "locations", "teams"
   add_foreign_key "manual_message_participants", "contacts"
   add_foreign_key "manual_message_participants", "manual_messages"

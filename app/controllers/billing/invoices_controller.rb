@@ -1,8 +1,7 @@
 class Billing::InvoicesController < ApplicationController
-  skip_after_action :verify_policy_scoped, only: :index
-
   def index
-    @organization = organization
+    organization
+    @invoices = policy_scope(Invoice)
   end
 
   private

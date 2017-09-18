@@ -1,5 +1,5 @@
-= title "Payment preferences · ChirpyHire"
-.ch--Page.settings.pricing
+= title "Invoice history · ChirpyHire"
+.ch--Page.settings.invoices
   = render partial: "settings/header"
   .ch--main
     = render partial: "billing/navigation"
@@ -7,73 +7,27 @@
       .ch--main-menu
         .ch--main-menu--left
           h2 
-            | Payment preferences for
+            | Invoice history for
             '
             = @organization.name
       .ch--sub-main-content
         .card
           .card-body
-            h4.card-title Estimate your audience size
-            p.card-text.text-muted 
-              | Pricing is based on your audience size: the number of 
-              strong engaged candidates 
-              ' who have sent or received a message in the 
-              strong past 30 days
-              '
-              ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
-            h4.card-text.mb-3
-              ' Start with
-              strong.candidates--number = @organization.contacts.engaged.count
-              '
-              strong engaged candidates
-            input.active-candidates-slider role="button" type="range" min="100" max="4000" value==@organization.contacts.engaged.count step="10"
-            hr
-            p.card-text.d-flex.justify-content-between
-              span Team members
-              strong Unlimited
-            hr
-            p.card-text.d-flex.justify-content-between
-              span Messaging
-              strong Unlimited
-            hr
-            p.card-text.d-flex.justify-content-between
-              span Candidates
-              strong.candidates--number = @organization.contacts.engaged.count
-            hr
-            p.card-text.d-flex.justify-content-between
-              span Price
-              strong.candidates--price
-                |$
-                = @organization.subscription.price
-                '
-                |/ mo
-            p.card-text.d-flex.justify-content-between
-              span.spacer
-              span.badge.badge-success.small-uppercase Free For 14 Days
-      .ch--sub-main-content
-        .card
-          .card-body
-            - if @organization.trialing?
-              = form_tag organization_customer_path(@organization) do
-                article
-                  - if flash[:error].present?
-                    #error_explanation
-                      p= flash[:error]
-                script.stripe-button data-key="#{Rails.configuration.stripe[:publishable_key]}" data-locale="auto" src="https://checkout.stripe.com/checkout.js" data-description="Let's hire caregivers!" data-name="ChirpyHire" data-panel-label="Add Payment Details" data-label="Add Payment Details" data-allow-remember-me="false" data-image="https://app.chirpyhire.com/images/favicon-512.png"
-            - else
-              table.table.table-bordered.table-responsive
-                thead
+            h6.card-title Invoices
+            table.table.invoices-table.mt-4
+              thead.thead-default
+                tr
+                  th ID
+                  th Date
+                  th Amount
+                  th
+              tbody
+                - @invoices.each do |invoice|
                   tr
-                    th Card
-                    th Expires
-                tbody
-                  tr
+                    td = invoice.id
+                    td = invoice.decorate.date
                     td
-                      i.fa.fa-credit-card.mr-2
-                      = @organization.payment_card.brand
-                      '
-                      ' ending in
-                      = @organization.payment_card.last4
+                      i class="fa mr-1 #{invoice.decorate.icon}" data-toggle="tooltip" data-placement="left" title==invoice.decorate.status
+                      strong = invoice.decorate.total
                     td
-                      = "#{@organization.payment_card.humanized_exp_month} #{@organization.payment_card.exp_year}"
-
+                      = link_to 'View invoice', organization_billing_invoice_path(@organization, invoice)
