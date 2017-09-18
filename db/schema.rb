@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918152712) do
+ActiveRecord::Schema.define(version: 20170918190035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -490,6 +490,7 @@ ActiveRecord::Schema.define(version: 20170918152712) do
     t.string "stripe_customer_id"
     t.string "size"
     t.string "forwarding_phone_number"
+    t.boolean "invoice_notification", default: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 

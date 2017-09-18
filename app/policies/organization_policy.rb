@@ -8,13 +8,12 @@ class OrganizationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    attributes = basic_attributes.concat(question_attributes)
-    attributes.push(:billing_email) if account.owner?
-    attributes
+    basic_attributes.concat(question_attributes)
   end
 
   def basic_attributes
-    %i[name avatar email description url forwarding_phone_number]
+    %i[name avatar email description url forwarding_phone_number 
+      billing_email invoice_notification]
   end
 
   def question_attributes

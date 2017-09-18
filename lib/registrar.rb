@@ -8,6 +8,7 @@ class Registrar
     account.update(person: Person.create)
     create_contact_stages
     setup_account
+    organization.update(billing_email: account.email)
     organization.create_subscription(trial_ends_at: trial_length)
     TeamRegistrar.call(team, account, notify: false)
     new_organization_notification_job
