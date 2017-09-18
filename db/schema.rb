@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918170440) do
+ActiveRecord::Schema.define(version: 20170918152712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,51 +163,6 @@ ActiveRecord::Schema.define(version: 20170918170440) do
     t.index ["name"], name: "index_campaigns_on_name"
     t.index ["organization_id", "name"], name: "index_campaigns_on_organization_id_and_name", unique: true
     t.index ["organization_id"], name: "index_campaigns_on_organization_id"
-  end
-
-  create_table "charges", force: :cascade do |t|
-    t.bigint "invoice_id", null: false
-    t.string "stripe_id", null: false
-    t.string "object"
-    t.integer "amount"
-    t.integer "amount_refunded"
-    t.string "application"
-    t.string "application_fee"
-    t.string "balance_transaction"
-    t.boolean "captured"
-    t.integer "created"
-    t.string "currency"
-    t.string "customer"
-    t.string "description"
-    t.string "destination"
-    t.string "dispute"
-    t.string "failure_code"
-    t.string "failure_message"
-    t.jsonb "fraud_details", default: {}
-    t.string "invoice"
-    t.boolean "livemode"
-    t.jsonb "metadata", default: {}
-    t.string "on_behalf_of"
-    t.string "order"
-    t.jsonb "outcome", default: {}
-    t.boolean "paid"
-    t.string "receipt_email"
-    t.string "receipt_number"
-    t.boolean "refunded"
-    t.jsonb "refunds", default: {}
-    t.string "review"
-    t.jsonb "shipping", default: {}
-    t.jsonb "source", default: {}
-    t.string "source_transfer"
-    t.string "statement_descriptor"
-    t.string "status"
-    t.string "transfer"
-    t.string "transfer_group"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["invoice"], name: "index_charges_on_invoice"
-    t.index ["invoice_id"], name: "index_charges_on_invoice_id"
-    t.index ["stripe_id"], name: "index_charges_on_stripe_id", unique: true
   end
 
   create_table "column_mappings", force: :cascade do |t|
@@ -698,7 +653,6 @@ ActiveRecord::Schema.define(version: 20170918170440) do
   add_foreign_key "campaigns", "accounts"
   add_foreign_key "campaigns", "accounts", column: "last_edited_by_id"
   add_foreign_key "campaigns", "organizations"
-  add_foreign_key "charges", "invoices"
   add_foreign_key "column_mappings", "imports"
   add_foreign_key "contact_stages", "organizations"
   add_foreign_key "contacts", "contact_stages"
