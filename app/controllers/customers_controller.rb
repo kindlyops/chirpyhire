@@ -10,7 +10,7 @@ class CustomersController < ApplicationController
   private
 
   def create_customer
-    organization.update(stripe_customer_id: customer.id)
+    organization.update(stripe_id: customer.id)
     create_payment_card
     Internal::Notification::Customer.call(organization)
     organization.subscription.activate
