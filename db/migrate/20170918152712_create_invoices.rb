@@ -15,13 +15,13 @@ class CreateInvoices < ActiveRecord::Migration[5.1]
       t.string :customer
       t.integer :date
       t.string :description
-      t.jsonb :discount
+      t.jsonb :discount, default: {}
       t.integer :due_date
       t.integer :ending_balance
       t.boolean :forgiven
-      t.text :lines, array: true, default: []
+      t.jsonb :lines, default: {}
       t.boolean :livemode
-      t.jsonb :metadata
+      t.jsonb :metadata, default: {}
       t.integer :next_payment_attempt
       t.string :number
       t.boolean :paid
@@ -39,7 +39,6 @@ class CreateInvoices < ActiveRecord::Migration[5.1]
       t.integer :webhooks_delivered_at
       t.timestamps
     end
-
     add_index :invoices, :stripe_id, unique: true
   end
 end

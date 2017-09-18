@@ -55,20 +55,20 @@
               td
             tr.details
               td
-                | Credit Card
               td
             tr.heading
               td
-                | Subscription
+                | Item
               td
-                | Price
-            tr.item.last
-              td = "ChirpyHire (#{pluralize(@organization.subscription.tier, 'candidate')})"
-              td = number_to_currency(@organization.subscription.price)
+                | Amount
+            - @invoice.lines.each do |item|
+              tr.item
+                td = item.description
+                td = item.amount
             tr.total
               td
               td
                 | Total: 
                 '
-                = number_to_currency(@organization.subscription.price)
+                = @invoice.decorate.total
 
