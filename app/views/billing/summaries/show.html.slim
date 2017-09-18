@@ -13,44 +13,43 @@
       .ch--sub-main-content
         .card
           .card-body
-            p.card-text
-              h4.card-title Current subscription
-              table.table.subscription-table.mt-4
-                thead.thead-default
-                  tr
-                    th Product
-                    th Plan
-                tbody
-                  tr
-                    td
-                      .d-flex
-                        span.fa-stack.fa-lg.mr-3
-                          i.fa.fa-circle.fa-stack-2x
-                          i.fa.fa-rocket.fa-stack-1x.fa-inverse
-                        .d-flex.flex-column
-                          h4.strong Chirpy Engage
-                          p.text-muted for recruiting automation
-                    td
-                      h5
-                        span.badge.badge-secondary Standard 
-                  tr
-                    td
-                      .d-flex
-                        span.fa-stack.fa-lg.mr-3
-                          i.fa.fa-circle.fa-stack-2x
-                          i.fa.fa-comments-o.fa-stack-1x.fa-inverse
-                        .d-flex.flex-column
-                          h4.strong Chirpy Chat
-                          p.text-muted for candidate development
-                    td
-                      h5
-                        span.badge.badge-secondary Standard  
-            p.card-text
+            h6.card-title Current subscription
+            table.table.subscription-table.mt-4
+              thead.thead-default
+                tr
+                  th Product
+                  th Plan
+              tbody
+                tr
+                  td
+                    .d-flex
+                      span.fa-stack.fa-lg.mr-3
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-rocket.fa-stack-1x.fa-inverse
+                      .d-flex.flex-column
+                        h4.strong Chirpy Engage
+                        p.text-muted for recruiting automation
+                  td
+                    h5
+                      span.badge.badge-secondary Standard
+                tr
+                  td
+                    .d-flex
+                      span.fa-stack.fa-lg.mr-3
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-comments-o.fa-stack-1x.fa-inverse
+                      .d-flex.flex-column
+                        h4.strong Chirpy Chat
+                        p.text-muted for candidate development
+                  td
+                    h5
+                      span.badge.badge-secondary Standard
+            .mb-2
               h3.small-uppercase Number of Engaged Candidates
               strong
                 i.fa.fa-users.mr-2
                 span = pluralize(@organization.subscription.tier, 'candidate')
-            p.card-text
+            .mb-2
               h3.small-uppercase Total Price
               strong
                 i.fa.fa-credit-card-alt.mr-2
@@ -58,7 +57,7 @@
                   = number_to_currency(@organization.subscription.price)
                   '
                   ' / mo
-            p.card-text
+            .mb-2
               span
                 i.fa.fa-calculator.mr-2
                 a aria-controls="price-calculator" aria-expanded="false" data-toggle="collapse" href="#price-calculator" 
