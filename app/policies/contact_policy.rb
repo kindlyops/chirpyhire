@@ -15,10 +15,14 @@ class ContactPolicy < ApplicationPolicy
     def resolve
       if canceled?
         scope.where(organization: organization)
-             .where('contacts.created_at < ?', organization.canceled_at)
+             .where('contacts.created_at < ?', canceled_at)
       else
         scope.where(organization: organization)
       end
+    end
+
+    def canceled_at
+      organization.internal_canceled_at
     end
   end
 end

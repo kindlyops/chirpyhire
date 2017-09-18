@@ -48,7 +48,19 @@ class CustomersController < ApplicationController
   def stripe_customer
     @stripe_customer ||= begin
       Stripe::Customer.retrieve(organization.stripe_customer_id)
+    rescue Stripe::InvalidRequestError
+      create_stripe_customer
     end
+  end
+
+  def create_stripe_customer
+    customer = Stripe::Customer.create(
+      email: params[:stripeEmail],
+      source: params[:stripeToken],
+      description: organization.name
+    )
+    organization.update(stripe_customer_id: customer.id)
+    customer
   end
 
   def customer

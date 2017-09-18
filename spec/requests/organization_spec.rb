@@ -55,12 +55,6 @@ RSpec.describe 'Organization' do
           put organization_path(organization), params: params
         }.to change { organization.reload.url }.to(url)
       end
-
-      it 'does not let the user edit the billing_email' do
-        expect {
-          put organization_path(organization), params: params
-        }.not_to change { organization.reload.billing_email }
-      end
     end
 
     context 'owner' do

@@ -14,7 +14,7 @@ RSpec.describe SubscriptionSweeper do
         it 'cancels the subscription' do
           expect {
             subject.call
-          }.to change { subscription.reload.status }.from('trialing').to('canceled')
+          }.to change { subscription.reload.internal_status }.from('trialing').to('canceled')
         end
       end
     end

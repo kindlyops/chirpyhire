@@ -22,7 +22,7 @@ RSpec.describe MessagePolicy do
 
         context 'and the subscription is canceled' do
           before do
-            organization.subscription.update(status: :canceled)
+            organization.subscription.update(internal_status: :canceled)
           end
           it { is_expected.to forbid_action(:create) }
         end

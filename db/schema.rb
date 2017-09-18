@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918190035) do
+ActiveRecord::Schema.define(version: 20170918195559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -533,6 +533,23 @@ ActiveRecord::Schema.define(version: 20170918190035) do
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
   end
 
+  create_table "plans", force: :cascade do |t|
+    t.string "stripe_id"
+    t.string "object"
+    t.integer "amount"
+    t.integer "created"
+    t.string "currency"
+    t.string "interval"
+    t.integer "interval_count"
+    t.boolean "livemode"
+    t.jsonb "metadata", default: {}
+    t.string "name"
+    t.string "statement_descriptor"
+    t.integer "trial_period_days"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "questions", force: :cascade do |t|
     t.bigint "bot_id", null: false
     t.text "body", null: false
@@ -577,12 +594,37 @@ ActiveRecord::Schema.define(version: 20170918190035) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "internal_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "canceled_at"
+    t.datetime "internal_canceled_at"
     t.datetime "trial_ends_at"
+    t.bigint "plan_id"
+    t.string "stripe_id"
+    t.string "object"
+    t.float "application_fee_percent"
+    t.string "billing"
+    t.boolean "cancel_at_period_end"
+    t.integer "canceled_at"
+    t.integer "created"
+    t.integer "current_period_end"
+    t.integer "current_period_start"
+    t.string "customer"
+    t.integer "days_until_due"
+    t.jsonb "discount", default: {}
+    t.integer "ended_at"
+    t.jsonb "items", default: {}
+    t.boolean "livemode"
+    t.jsonb "metadata", default: {}
+    t.jsonb "plan", default: {}
+    t.integer "quantity"
+    t.integer "start"
+    t.string "status"
+    t.float "tax_percent"
+    t.integer "trial_end"
+    t.integer "trial_start"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
+    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -708,6 +750,7 @@ ActiveRecord::Schema.define(version: 20170918190035) do
   add_foreign_key "recruiting_ads", "teams"
   add_foreign_key "segments", "accounts"
   add_foreign_key "subscriptions", "organizations"
+  add_foreign_key "subscriptions", "plans"
   add_foreign_key "taggings", "contacts"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tags", "organizations"

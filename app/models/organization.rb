@@ -32,7 +32,7 @@ class Organization < ApplicationRecord
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
-  delegate :canceled?, :canceled_at, to: :subscription
+  delegate :canceled?, :internal_canceled_at, to: :subscription
   delegate :status, to: :subscription, prefix: true, allow_nil: true
 
   def recent_bot
