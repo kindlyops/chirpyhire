@@ -108,10 +108,37 @@ class Segment extends React.Component {
     this.setState(newState);
   }
 
+  isSelected() {
+    return _.some(this.state.candidates, { 'selected': true });
+  }
+
+  selected() {
+    if (this.isSelected()) {
+      return _.filter(this.state.candidates, { 'selected': true });
+    } else {
+      return this.state.candidates;
+    }
+  }
+
   ajaxConfig(url, dataType) {
+    var form = this.state.form;
+
+    if (this.isSelected()) {
+      if(!form.predicates) {
+        form.predicates = [];
+      }
+      form.predicates.push({
+        type: 'integer', attribute: 'id',
+        value: _.map(this.selected(), 'id'), comparison: 'in'
+      })
+    } else {
+      let predicates = _.filter(form.predicates, p => (p.comparison !== 'in' && p.attribute !== 'id'));
+      form.predicates = predicates;
+    }
+
     return {
       url: url,
-      data: JSON.stringify(this.state.form),
+      data: JSON.stringify(form),
       type: 'POST',
       method: 'POST',
       dataType: dataType,
@@ -121,7 +148,6 @@ class Segment extends React.Component {
 
   exportCSV() {
     $.ajax(this.ajaxConfig('/candidates/search.csv', 'text')).then(data => {
-      debugger;
       let filename = `caregivers-${Date.now()}.csv`;
       let csv = new Blob([data], { type: 'text/csv;charset=utf-8' });
 
