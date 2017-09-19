@@ -64,11 +64,11 @@
                       '
                       ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
                     h4.card-text.mb-3
-                      ' Start with
-                      strong.candidates--number = @organization.contacts.engaged.count
+                      ' Start with up to
+                      strong.candidates--number = @organization.subscription.tier
                       '
                       strong engaged candidates
-                    input.active-candidates-slider role="button" type="range" min="100" max="4000" value==@organization.contacts.engaged.count step="10"
+                    input.active-candidates-slider role="button" type="range" min="200" max="4000" value==@organization.contacts.engaged.count step="200"
                     hr
                     p.card-text.d-flex.justify-content-between
                       span Team members
@@ -80,7 +80,7 @@
                     hr
                     p.card-text.d-flex.justify-content-between
                       span Candidates
-                      strong.candidates--number = @organization.contacts.engaged.count
+                      strong.candidates--number = @organization.subscription.tier
                     hr
                     p.card-text.d-flex.justify-content-between
                       span Price
