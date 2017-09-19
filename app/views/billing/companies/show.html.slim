@@ -14,7 +14,7 @@
         .card
           .card-body
             h6.card-title Payment
-            - if @organization.trialing?
+            - if @organization.payment_card.blank?
               = form_tag organization_customer_path(@organization) do
                 article
                   - if flash[:error].present?

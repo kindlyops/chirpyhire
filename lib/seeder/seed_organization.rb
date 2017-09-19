@@ -10,6 +10,7 @@ class Seeder::SeedOrganization
 
   def call
     organization.tap do |organization|
+      organization.update(billing_email: account.email)
       organization.create_subscription
       create_contact_stages
     end
