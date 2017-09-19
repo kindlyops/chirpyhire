@@ -2,6 +2,7 @@ import React from 'react'
 
 import Candidates from './components/candidates'
 import update from 'immutability-helper'
+import _ from 'lodash'
 
 class Segment extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class Segment extends React.Component {
     this.updatePredicates = this.updatePredicates.bind(this);
     this.exportCSV = this.exportCSV.bind(this);
     this.searchCandidates = this.searchCandidates.bind(this);
+    this.updateCandidate = this.updateCandidate.bind(this);
   }
 
   render() {
@@ -35,6 +37,7 @@ class Segment extends React.Component {
         searchCandidates={this.searchCandidates}
         onPageChange={this.onPageChange}
         updatePredicates={this.updatePredicates}
+        updateCandidate={this.updateCandidate}
         exportCSV={this.exportCSV}
       />
     )
@@ -62,6 +65,16 @@ class Segment extends React.Component {
       let newState = R.mergeAll([{}, this.state, segment]);
       this.setState(newState);
     }
+  }
+
+  updateCandidate(candidate) {
+    let candidates = this.state.candidates;
+    let candidateIndex = _.findIndex(candidates, { 'id': candidate.id });
+
+    let newCandidates = update(candidates, {
+      $splice: [[candidateIndex, 1, candidate]]
+    });
+    this.setState({ candidates: newCandidates });
   }
 
   searchCandidates() {

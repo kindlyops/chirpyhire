@@ -45,7 +45,11 @@ class CandidatesController < ApplicationController
   end
 
   def permitted_params
-    params.permit(predicates: %i[type attribute value comparison])
+    params.permit(predicates: predicate_params)
+  end
+
+  def predicate_params
+    [:type, :attribute, :value, :comparison, value: []]
   end
 
   def fetch_predicates

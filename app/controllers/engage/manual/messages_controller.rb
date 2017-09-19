@@ -22,8 +22,12 @@ class Engage::Manual::MessagesController < ApplicationController
   private
 
   def permitted_params
-    params.require(:manual_message).permit(:title, :body, audience: [predicates:
-      %i[type attribute value comparison]])
+    params.require(:manual_message).permit(:title, :body,
+                                           audience: audience_params)
+  end
+
+  def audience_params
+    [predicates: [:type, :attribute, :value, :comparison, value: []]]
   end
 
   def prepare_predicates

@@ -2,6 +2,25 @@ import React from 'react'
 
 import { Column, Table, AutoSizer } from 'react-virtualized'
 
+const createCheckboxColumn = props => (
+  <Column
+    width={56}
+    minWidth={56}
+    label={props.label}
+    dataKey={props.dataKey}
+    disableSort={true}
+    style={{ minWidth: `${56}px` }}
+    cellDataGetter={row => row.rowData}
+    cellRenderer={row => (
+      <input className='mx-auto'
+        type='checkbox'
+        checked={props.rowSelected(row)}
+        onChange={selected => props.onRowSelect(selected, row)}
+      />
+    )}
+  />
+);
+
 class CandidatesTable extends React.Component {
   constructor(props) {
     super(props);
@@ -10,6 +29,21 @@ class CandidatesTable extends React.Component {
     this.headerRenderer = this.headerRenderer.bind(this);
     this.cellRenderer = this.cellRenderer.bind(this);
     this.nameCellRenderer = this.nameCellRenderer.bind(this);
+    this.checkboxProps = this.checkboxProps.bind(this);
+  }
+  
+  checkboxProps() {
+    return {
+      rowSelected: function(row) {
+        return row.cellData.selected || false;
+      }.bind(this),
+
+      onRowSelect: function(selected, row) {
+        row.cellData.selected = selected.target.checked;
+        this.props.updateCandidate(row.cellData);
+      }.bind(this),
+      dataKey: 'selected'
+    }
   }
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
@@ -66,6 +100,7 @@ class CandidatesTable extends React.Component {
                 rowCount={this.props.candidates.length}
                 rowGetter={({ index }) => this.props.candidates[index]}
               >
+                {createCheckboxColumn(this.checkboxProps())}
                 <Column
                   label='Name'
                   dataKey='name'
