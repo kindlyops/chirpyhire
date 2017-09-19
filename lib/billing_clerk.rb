@@ -28,7 +28,7 @@ class BillingClerk
 
   def plan
     @plan ||= begin
-      Plan.find_by(amount: price) || create_plan
+      Plan.find_by(name: name) || create_plan
     end
   end
 
@@ -36,20 +36,24 @@ class BillingClerk
     Stripe::Plan.create(
       amount: price,
       interval: 'month',
-      name: "Candidates - #{subscription.tier}",
+      name: name,
       currency: 'usd',
       id: next_plan_id
     )
   end
 
   def next_plan_id
-    Plan.order(:id).last.id + 1
+    Plan.order(:stripe_id).last.stripe_id + 1
   end
 
   def stripe_subscription
     @stripe_subscription ||= begin
       Stripe::Subscription.retrieve(subscription.stripe_id)
     end
+  end
+
+  def name
+    "Candidates - #{subscription.tier}"
   end
 
   def price

@@ -546,6 +546,8 @@ ActiveRecord::Schema.define(version: 20170919135900) do
     t.integer "trial_period_days"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_plans_on_name", unique: true
+    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true
   end
 
   create_table "questions", force: :cascade do |t|

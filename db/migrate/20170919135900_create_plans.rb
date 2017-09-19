@@ -15,5 +15,8 @@ class CreatePlans < ActiveRecord::Migration[5.1]
       t.integer :trial_period_days
       t.timestamps
     end
+
+    add_index :plans, :stripe_id, unique: true
+    add_index :plans, :name, unique: true
   end
 end
