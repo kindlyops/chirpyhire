@@ -34,7 +34,7 @@ class Organization < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
   delegate :canceled?, :internal_canceled_at, to: :subscription
-  delegate :status, to: :subscription, prefix: true, allow_nil: true
+  delegate :internal_status, to: :subscription, prefix: true, allow_nil: true
 
   def recent_bot
     bots.recent.first
