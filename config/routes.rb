@@ -130,6 +130,8 @@ Rails.application.routes.draw do
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   end
 
+  mount StripeEvent::Engine, at: '/stripe/events'
+
   post 'twilio/text', to: 'organizations/subscriptions#destroy', constraints: Constraint::OptOut.new
   post 'twilio/text' => 'organizations/messages#create'
   post 'twilio/voice', defaults: { format: 'xml' }

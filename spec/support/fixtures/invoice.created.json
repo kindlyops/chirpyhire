@@ -1,0 +1,89 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "invoice.created",
+  "object": "event",
+  "request": null,
+  "pending_webhooks": 1,
+  "api_version": "2017-08-15",
+  "data": {
+    "object": {
+      "id": "invoice.created",
+      "object": "invoice",
+      "amount_due": 0,
+      "application_fee": null,
+      "attempt_count": 0,
+      "attempted": false,
+      "billing": "charge_automatically",
+      "charge": null,
+      "closed": false,
+      "currency": "usd",
+      "customer": "cus_00000000000000",
+      "date": 1505770948,
+      "description": null,
+      "discount": null,
+      "ending_balance": null,
+      "forgiven": false,
+      "lines": {
+        "data": [
+          {
+            "id": "sub_BQNmPAABSZQZlM",
+            "object": "line_item",
+            "amount": 999,
+            "currency": "usd",
+            "description": null,
+            "discountable": true,
+            "livemode": true,
+            "metadata": {
+            },
+            "period": {
+              "start": 1508362949,
+              "end": 1511041349
+            },
+            "plan": {
+              "id": "vwv3ww",
+              "object": "plan",
+              "amount": 19900,
+              "created": 1407112740,
+              "currency": "usd",
+              "interval": "month",
+              "interval_count": 1,
+              "livemode": false,
+              "metadata": {
+              },
+              "name": "Analytics",
+              "statement_descriptor": null,
+              "trial_period_days": null
+            },
+            "proration": false,
+            "quantity": 1,
+            "subscription": null,
+            "subscription_item": "si_1B3X0b2eZvKYlo2CxY86WAJl",
+            "type": "subscription"
+          }
+        ],
+        "total_count": 1,
+        "object": "list",
+        "url": "/v1/invoices/in_BQNmpFfqzaXqXX/lines"
+      },
+      "livemode": false,
+      "metadata": {
+      },
+      "next_payment_attempt": 1505774548,
+      "number": "036b0f305a-0001",
+      "paid": true,
+      "period_end": 1505770948,
+      "period_start": 1505770948,
+      "receipt_number": null,
+      "starting_balance": 0,
+      "statement_descriptor": null,
+      "subscription": null,
+      "subtotal": 0,
+      "tax": null,
+      "tax_percent": null,
+      "total": 0,
+      "webhooks_delivered_at": null
+    }
+  }
+}

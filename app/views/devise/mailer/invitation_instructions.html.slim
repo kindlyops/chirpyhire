@@ -8,7 +8,7 @@ table.body-wrap
           ',
           |
         p
-          = @resource.invited_by.first_name || "A member of #{@resource.organization.name}"
+          = @resource.invited_by&.first_name || "A member of #{@resource.organization.name}"
           '
           | has invited you to join them on ChirpyHire.
         p ChirpyHire is the best way to prescreen caregivers.

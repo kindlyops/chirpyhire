@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918195559) do
+ActiveRecord::Schema.define(version: 20170918211102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -344,7 +344,6 @@ ActiveRecord::Schema.define(version: 20170918195559) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.bigint "subscription_id", null: false
     t.string "stripe_id", null: false
     t.string "object"
     t.integer "amount_due"
@@ -359,7 +358,6 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.integer "date"
     t.string "description"
     t.jsonb "discount", default: {}
-    t.integer "due_date"
     t.integer "ending_balance"
     t.boolean "forgiven"
     t.jsonb "lines", default: {}
@@ -374,7 +372,6 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.integer "starting_balance"
     t.string "statement_descriptor"
     t.string "subscription"
-    t.integer "subscription_proration_date"
     t.integer "subtotal"
     t.integer "tax"
     t.float "tax_percent"
@@ -382,8 +379,9 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.integer "webhooks_delivered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["customer"], name: "index_invoices_on_customer"
     t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true
-    t.index ["subscription_id"], name: "index_invoices_on_subscription_id"
+    t.index ["subscription"], name: "index_invoices_on_subscription"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -487,7 +485,7 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.string "email"
     t.string "billing_email"
     t.string "description"
-    t.string "stripe_customer_id"
+    t.string "stripe_id"
     t.string "size"
     t.string "forwarding_phone_number"
     t.boolean "invoice_notification", default: true
@@ -599,7 +597,6 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.datetime "updated_at", null: false
     t.datetime "internal_canceled_at"
     t.datetime "trial_ends_at"
-    t.bigint "plan_id"
     t.string "stripe_id"
     t.string "object"
     t.float "application_fee_percent"
@@ -610,7 +607,6 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.integer "current_period_end"
     t.integer "current_period_start"
     t.string "customer"
-    t.integer "days_until_due"
     t.jsonb "discount", default: {}
     t.integer "ended_at"
     t.jsonb "items", default: {}
@@ -623,8 +619,9 @@ ActiveRecord::Schema.define(version: 20170918195559) do
     t.float "tax_percent"
     t.integer "trial_end"
     t.integer "trial_start"
+    t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
-    t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
+    t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
