@@ -30,6 +30,6 @@
                 = f.phone_field :phone_number, value: @candidate.phone_number&.phony_formatted, class: 'form-control', required: true
                 small#phoneHelp.form-text.text-muted Add a phone number so that we can reach you via text!
               .form-group
-                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                = f.button type: 'submit', class: 'btn btn-primary btn-lg btn-block', role: 'button' do
                     i.fa.fa-paper-plane-o.mr-2
                     | Apply

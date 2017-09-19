@@ -19,8 +19,6 @@ Rails.application.routes.draw do
     resources :segments, only: :show
   end
 
-
-
   resources :recruiting_ads, only: %i[index update]
   resource :dashboard
   resources :segments
