@@ -12,7 +12,7 @@ class ManualMessagePolicy < ApplicationPolicy
   end
 
   def predicates
-    %i[type attribute value comparison]
+    [:type, :attribute, :value, :comparison, value: []]
   end
 
   class Scope < ApplicationPolicy::Scope

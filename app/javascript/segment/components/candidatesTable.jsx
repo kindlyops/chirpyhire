@@ -12,9 +12,9 @@ const createCheckboxColumn = props => (
     style={{ minWidth: `${56}px` }}
     cellDataGetter={row => row.rowData}
     cellRenderer={row => (
-      <input
+      <input className='mx-auto'
         type='checkbox'
-        value={props.rowSelected(row)}
+        checked={props.rowSelected(row)}
         onChange={selected => props.onRowSelect(selected, row)}
       />
     )}
@@ -39,7 +39,8 @@ class CandidatesTable extends React.Component {
       }.bind(this),
 
       onRowSelect: function(selected, row) {
-        this.props.selectCandidate(selected, row);
+        row.cellData.selected = selected.target.checked;
+        this.props.updateCandidate(row.cellData);
       }.bind(this),
       dataKey: 'selected'
     }

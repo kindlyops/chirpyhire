@@ -38,16 +38,49 @@ class CandidatesMenu extends React.Component {
   isMessageDisabled() {
     let isNone = this.props.total_count === 0;
     let isAll = this.props.total_count === this.props.contact_total_count;
-    return isNone || isAll;
+    return isNone || (isAll && !this.isSelected());
   }
 
+  inflect(count, word) {
+    if (count === 1) {
+      return word;
+    } else {
+      return `${word}s`;
+    }
+  }
+
+  selected() {
+    if (this.isSelected()) {
+      return _.filter(this.props.candidates, { 'selected': true });
+    } else {
+      return this.props.candidates;
+    }
+  }
+
+  count() {
+    if(this.isSelected()) {
+      return (
+        <h2 className='CandidatesCount'>
+          {this.selected().length}{' '}
+          {this.inflect(this.selected().length, 'candidate')}
+          {' '}selected{' '}<span className='small text-muted'>of{' '}
+          {this.props.contact_total_count}</span>
+        </h2>
+      )
+    } else {
+      return (
+        <h2 className='CandidatesCount'>
+          {this.props.total_count}{' '}{this.inflect(this.props.total_count, 'candidate')}{' '}
+          <span className='small text-muted'>of {this.props.contact_total_count}</span>
+        </h2>
+      )
+    }
+  }
+ 
   render() {
     return (<div className='CandidatesMenu ch--main-menu'>
       <div className='ch--main-menu--left'>
-        <h2 className='CandidatesCount'>
-        {this.props.total_count} candidates{' '}
-        <span className='small text-muted'>of {this.props.contact_total_count}</span>
-        </h2>
+        {this.count()}
       </div>
       <div className='ch--main-menu--right'>
         <button className='btn btn-sm btn-default mr-2' disabled={this.isMessageDisabled()} onClick={this.toggle} role='button'>
@@ -95,7 +128,7 @@ class CandidatesMenu extends React.Component {
               </button>
             </div>
             <div className="manual-message-header">
-              {this.props.candidates.slice(0, 4).map(candidate => 
+              {this.selected().slice(0, 4).map(candidate => 
                 <span className="recipient" key={candidate.id}>
                   <span className='candidateAvatar mr-2'>
                     <span className={`candidateAvatarImage ${candidate.hero_pattern_classes}`}>
@@ -130,23 +163,43 @@ class CandidatesMenu extends React.Component {
   }
 
   tail() {
-    if(this.props.total_count <= 4) {
+    if(this.props.total_count <= 4 || this.selected().length <= 4) {
       return '';
     } else {
-      let difference = this.props.total_count - 4;
-      return <span className='recipient'>{` and ${difference} others`}</span>;
+      if (this.isSelected()) {
+        let difference = this.selected().length - 4;
+        return <span className='recipient'>{` and ${difference} others`}</span>;
+      } else {
+        let difference = this.props.total_count - 4;
+        return <span className='recipient'>{` and ${difference} others`}</span>;
+      }
     }
+  }
+
+  isSelected() {
+    return _.some(this.props.candidates, { 'selected': true });
   }
 
   onSubmit(e) {
     e.preventDefault();
+    var form = this.props.form;
+
+    if (this.isSelected()) {
+      if(!form.predicates) {
+        form.predicates = [];
+      }
+      form.predicates.push({
+        type: 'integer', attribute: 'id',
+        value: _.map(this.selected(), 'id'), comparison: 'in'
+      })
+    }
 
     const params = {
       _method: 'post',
       manual_message: {
         title: $(this._title).val(),
         body: $(this._body).val(),
-        audience: this.props.form
+        audience: form
       }
     };
 
@@ -161,7 +214,9 @@ class CandidatesMenu extends React.Component {
 
     $.ajax(config);
     this.setState({ modal: false });
-    setTimeout(this.props.searchCandidates, 1500);
+    if (!this.isSelected()) {
+      setTimeout(this.props.searchCandidates, 1500);
+    }
   }
 }
 

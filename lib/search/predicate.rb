@@ -12,7 +12,7 @@ class Search::Predicate
   end
 
   def value
-    return predicate[:value].to_i unless string?
+    return predicate[:value].to_i if integerable?
 
     predicate[:value]
   end
@@ -26,6 +26,10 @@ class Search::Predicate
   end
 
   private
+
+  def integerable?
+    predicate[:value].respond_to?(:to_i) && !string?
+  end
 
   def string?
     predicate[:type] == 'string'
