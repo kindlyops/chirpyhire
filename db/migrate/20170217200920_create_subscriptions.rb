@@ -16,7 +16,6 @@ class CreateSubscriptions < ActiveRecord::Migration[5.0]
       t.float      :tax_percent
       t.timestamp  :trial_end
       t.timestamp  :trial_start
-      t.references :plan, index: true, foreign_key: true, null: false
       t.references :organization, index: true, foreign_key: true, null: false
       t.integer    :state, null: false, default: 0
       t.integer    :trial_message_limit, null: false, default: 0

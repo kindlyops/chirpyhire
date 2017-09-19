@@ -15,7 +15,7 @@ RSpec.describe 'Conversations' do
 
     describe 'canceled subscription' do
       before do
-        organization.subscription.update(status: :canceled)
+        organization.subscription.update(internal_status: :canceled)
       end
 
       it 'redirects to billing' do

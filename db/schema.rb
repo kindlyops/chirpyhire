@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170911191004) do
+ActiveRecord::Schema.define(version: 20170918211102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,6 +343,47 @@ ActiveRecord::Schema.define(version: 20170911191004) do
     t.bigint "team_id", null: false
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "object"
+    t.integer "amount_due"
+    t.integer "application_fee"
+    t.integer "attempt_count"
+    t.boolean "attempted"
+    t.string "billing"
+    t.string "charge"
+    t.boolean "closed"
+    t.string "currency"
+    t.string "customer"
+    t.integer "date"
+    t.string "description"
+    t.jsonb "discount", default: {}
+    t.integer "ending_balance"
+    t.boolean "forgiven"
+    t.jsonb "lines", default: {}
+    t.boolean "livemode"
+    t.jsonb "metadata", default: {}
+    t.integer "next_payment_attempt"
+    t.string "number"
+    t.boolean "paid"
+    t.integer "period_end"
+    t.integer "period_start"
+    t.string "receipt_number"
+    t.integer "starting_balance"
+    t.string "statement_descriptor"
+    t.string "subscription"
+    t.integer "subtotal"
+    t.integer "tax"
+    t.float "tax_percent"
+    t.integer "total"
+    t.integer "webhooks_delivered_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer"], name: "index_invoices_on_customer"
+    t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true
+    t.index ["subscription"], name: "index_invoices_on_subscription"
+  end
+
   create_table "locations", id: :serial, force: :cascade do |t|
     t.float "latitude", null: false
     t.float "longitude", null: false
@@ -444,7 +485,7 @@ ActiveRecord::Schema.define(version: 20170911191004) do
     t.string "email"
     t.string "billing_email"
     t.string "description"
-    t.string "stripe_customer_id"
+    t.string "stripe_id"
     t.string "size"
     t.string "forwarding_phone_number"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
@@ -533,12 +574,36 @@ ActiveRecord::Schema.define(version: 20170911191004) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "organization_id", null: false
-    t.integer "status", default: 0, null: false
+    t.integer "internal_status", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "canceled_at"
+    t.datetime "internal_canceled_at"
     t.datetime "trial_ends_at"
+    t.string "stripe_id"
+    t.string "object"
+    t.float "application_fee_percent"
+    t.string "billing"
+    t.boolean "cancel_at_period_end"
+    t.integer "canceled_at"
+    t.integer "created"
+    t.integer "current_period_end"
+    t.integer "current_period_start"
+    t.string "customer"
+    t.jsonb "discount", default: {}
+    t.integer "ended_at"
+    t.jsonb "items", default: {}
+    t.boolean "livemode"
+    t.jsonb "metadata", default: {}
+    t.jsonb "plan", default: {}
+    t.integer "quantity"
+    t.integer "start"
+    t.string "status"
+    t.float "tax_percent"
+    t.integer "trial_end"
+    t.integer "trial_start"
+    t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
+    t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true
   end
 
   create_table "taggings", force: :cascade do |t|
