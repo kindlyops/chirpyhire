@@ -19,5 +19,6 @@ class BillingEvent::PlanEvents
     end
 
     plan.save
+    plan
   end
 end

@@ -33,13 +33,19 @@ class BillingClerk
   end
 
   def create_plan
-    Stripe::Plan.create(
-      amount: price,
-      interval: 'month',
-      name: name,
-      currency: 'usd',
-      id: next_plan_id
-    )
+    BillingEvent::PlanEvents.new.create(stripe_plan)
+  end
+
+  def stripe_plan
+    @stripe_plan ||= begin
+      Stripe::Plan.create(
+        amount: price,
+        interval: 'month',
+        name: name,
+        currency: 'usd',
+        id: next_plan_id
+      )
+    end
   end
 
   def next_plan_id
