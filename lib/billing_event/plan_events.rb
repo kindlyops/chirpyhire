@@ -12,7 +12,7 @@ class BillingEvent::PlanEvents
   end
 
   def update(plan, stripe_object)
-    %i[object amount created currency interval interval_count livemode metadata 
+    %i[object amount created currency interval interval_count livemode metadata
        name statement_descriptor trial_period_days].each do |attribute|
       value = stripe_object.send(attribute)
       plan.send(:write_attribute, attribute, value)
