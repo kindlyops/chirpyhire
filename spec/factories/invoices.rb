@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :invoice do
-    subscription
     stripe_id { "id_#{Faker::Lorem.characters(26)}" }
     date { Faker::Date.backward(14).to_time.to_i }
     period_end { Faker::Date.backward(14).to_time.to_i }

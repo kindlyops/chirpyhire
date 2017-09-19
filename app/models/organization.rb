@@ -8,7 +8,7 @@ class Organization < ApplicationRecord
   has_many :contacts
   has_many :inboxes, through: :teams
   has_many :imports, through: :accounts
-  has_many :invoices
+  has_many :invoices, primary_key: :stripe_id, foreign_key: :customer
   has_many :conversations, through: :contacts
   has_many :payment_cards
   has_many :phone_numbers
@@ -33,7 +33,7 @@ class Organization < ApplicationRecord
                     default_url: ''
   validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
   delegate :person, to: :recruiter, prefix: true
-  delegate :canceled?, :canceled_at, to: :subscription
+  delegate :canceled?, :internal_canceled_at, to: :subscription
   delegate :status, to: :subscription, prefix: true, allow_nil: true
 
   def recent_bot

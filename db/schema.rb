@@ -344,8 +344,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.bigint "organization_id", null: false
-    t.bigint "subscription_id"
     t.string "stripe_id", null: false
     t.string "object"
     t.integer "amount_due"
@@ -381,9 +379,9 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.integer "webhooks_delivered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_invoices_on_organization_id"
+    t.index ["customer"], name: "index_invoices_on_customer"
     t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true
-    t.index ["subscription_id"], name: "index_invoices_on_subscription_id"
+    t.index ["subscription"], name: "index_invoices_on_subscription"
   end
 
   create_table "locations", id: :serial, force: :cascade do |t|
@@ -603,6 +601,7 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.float "tax_percent"
     t.integer "trial_end"
     t.integer "trial_start"
+    t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true
   end
@@ -703,8 +702,6 @@ ActiveRecord::Schema.define(version: 20170918211102) do
   add_foreign_key "imports", "accounts"
   add_foreign_key "imports_tags", "imports"
   add_foreign_key "imports_tags", "tags"
-  add_foreign_key "invoices", "organizations"
-  add_foreign_key "invoices", "subscriptions"
   add_foreign_key "locations", "teams"
   add_foreign_key "manual_message_participants", "contacts"
   add_foreign_key "manual_message_participants", "manual_messages"

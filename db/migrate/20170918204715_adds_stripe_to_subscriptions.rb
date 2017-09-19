@@ -30,5 +30,6 @@ class AddsStripeToSubscriptions < ActiveRecord::Migration[5.1]
     end
 
     add_index :subscriptions, :stripe_id, unique: true
+    add_index :subscriptions, :customer
   end
 end

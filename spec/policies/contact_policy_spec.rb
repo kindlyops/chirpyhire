@@ -28,7 +28,7 @@ RSpec.describe ContactPolicy do
         context 'organization is canceled' do
           before do
             organization.subscription.update(
-              status: :canceled, canceled_at: 1.year.ago
+              internal_status: :canceled, internal_canceled_at: 1.year.ago
             )
           end
 

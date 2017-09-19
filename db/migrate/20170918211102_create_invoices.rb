@@ -1,8 +1,6 @@
 class CreateInvoices < ActiveRecord::Migration[5.1]
   def change
     create_table :invoices do |t|
-      t.belongs_to :organization, null: false, index: true, foreign_key: true
-      t.belongs_to :subscription, index: true, foreign_key: true
       t.string :stripe_id, null: false
       t.string :object
       t.integer :amount_due
@@ -39,5 +37,7 @@ class CreateInvoices < ActiveRecord::Migration[5.1]
       t.timestamps
     end
     add_index :invoices, :stripe_id, unique: true
+    add_index :invoices, :customer
+    add_index :invoices, :subscription
   end
 end
