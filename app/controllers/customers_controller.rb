@@ -30,6 +30,13 @@ class CustomersController < ApplicationController
   end
 
   def add_payment_card
+    create_new_payment_card
+    update_subscription_payment_source
+  rescue Stripe::InvalidRequestError
+    Rails.logger.info('Unable to find subscription')
+  end
+
+  def create_new_payment_card
     organization.payment_cards.create(
       stripe_id: new_payment_card.id,
       brand: new_payment_card.brand,
@@ -37,6 +44,17 @@ class CustomersController < ApplicationController
       exp_year: new_payment_card.exp_year,
       last4: new_payment_card.last4
     )
+  end
+
+  def update_subscription_payment_source
+    stripe_id = organization.subscription.stripe_id
+    update_payment_source(stripe_id) if stripe_id.present?
+  end
+
+  def update_payment_source(stripe_id)
+    subscription = Stripe::Subscription.retrieve(stripe_id)
+    subscription.source = params[:stripeToken]
+    subscription.save
   end
 
   def new_payment_card
@@ -47,7 +65,7 @@ class CustomersController < ApplicationController
 
   def stripe_customer
     @stripe_customer ||= begin
-      Stripe::Customer.retrieve(organization.stripe_customer_id)
+      Stripe::Customer.retrieve(organization.stripe_id)
     rescue Stripe::InvalidRequestError
       create_stripe_customer
     end
@@ -59,7 +77,7 @@ class CustomersController < ApplicationController
       source: params[:stripeToken],
       description: organization.name
     )
-    organization.update(stripe_customer_id: customer.id)
+    organization.update(stripe_id: customer.id)
     customer
   end
 
