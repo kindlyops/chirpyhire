@@ -1,0 +1,35 @@
+= title "#{@organization.name} Jobs · ChirpyHire"
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 
+        | Get a Job at
+        '
+        = @organization.name
+  .ch--main
+    .ch--sub-main
+      .ch--sub-main-content
+        .card
+          .card-body
+            h4.card-title
+              | Great hours and great pay.
+              small.text-muted 
+                '
+                | We care about our employees and can't wait to get to know you.
+            p.card-text Interested? Let us know your name and number. We'll reach out to you personally via text for next steps!
+            = form_for @candidate, url: organization_jobs_path(@organization) do |f|
+              = f.hidden_field :referrer, value: request.referrer
+              = content_for :validation_errors do
+                = render partial: "common/validation_errors", locals: { model: @candidate }
+              .form-group
+                strong = f.label :name, class: 'col-form-label', 'aria-describedby' => 'nameHelp'
+                = f.text_field :name, class: 'form-control', required: true
+                small#nameHelp.form-text.text-muted Add your name so we can address you personally.
+              .form-group
+                strong = f.label :phone_number, 'Phone Number', class: 'col-form-label', 'aria-describedby' => 'phoneHelp'
+                = f.phone_field :phone_number, value: @candidate.phone_number&.phony_formatted, class: 'form-control', required: true
+                small#phoneHelp.form-text.text-muted Add a phone number so that we can reach you via text!
+              .form-group
+                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                    i.fa.fa-paper-plane-o.mr-2
+                    | Apply

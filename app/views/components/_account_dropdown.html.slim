@@ -15,6 +15,10 @@
     .account-status-menu-divider
     .ch-dropup-item
       = link_to "Settings", account_path(current_account)
+    .ch-dropup-item
+      = link_to organization_jobs_path(current_organization), target: '_blank' do
+        | Jobs Page
+        i.fa.ml-2.fa-external-link
     - if impersonating?
       .ch-dropup-item
         = link_to "Stop Impersonating", stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}"
