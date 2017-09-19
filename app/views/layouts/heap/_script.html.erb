@@ -9,7 +9,7 @@
         email: "<%= current_account.email %>",
         organization_id: "<%= current_organization.id %>",
         organization_name: "<%= current_organization.name %>",
-        subscription_status: "<%= current_organization.subscription_status %>"
+        subscription_status: "<%= current_organization.subscription_internal_status %>"
       });
     <% else %>
       heap.clearEventProperties();
