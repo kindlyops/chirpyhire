@@ -14,8 +14,4 @@ class NotificationMailerPreview < ActionMailer::Preview
   def added_to_team
     NotificationMailer.added_to_team(Membership.last)
   end
-
-  def invoice
-    NotificationMailer.invoice(Invoice.first)
-  end
 end
