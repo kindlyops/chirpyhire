@@ -18,6 +18,10 @@
               | Due: 
               '
               = invoice.decorate.period_end
+              br/
+              | Status:
+              '
+              strong = invoice.decorate.status
     tr.information
       td colspan="2" 
         table
@@ -29,9 +33,9 @@
               br/
               | Atlanta, GA 30338
             td
-              = organization.name
+              = invoice.organization.name
               br/
-              = organization.billing_email
+              = invoice.organization.billing_email
     tr.heading
       td
         | Payment Method
@@ -47,10 +51,10 @@
     - invoice.lines.each do |item|
       tr.item
         td = item.description
-        td = item.amount
+        td = number_to_currency(item.amount)
     tr.total
-      td
+      td 
       td
         | Total: 
         '
-        = invoice.decorate.total
+        = number_to_currency(invoice.decorate.total)

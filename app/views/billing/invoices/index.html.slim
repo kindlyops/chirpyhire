@@ -28,6 +28,6 @@
                     td = invoice.decorate.date
                     td
                       i class="fa mr-1 #{invoice.decorate.icon}" data-toggle="tooltip" data-placement="left" title==invoice.decorate.status
-                      strong = invoice.decorate.total
+                      strong = number_to_currency(invoice.decorate.total)
                     td
                       = link_to 'View invoice', organization_billing_invoice_path(@organization, invoice)

@@ -9,6 +9,14 @@ class InvoiceDecorator < Draper::Decorator
     Time.zone.at(object.period_end).strftime('%b %d, %Y')
   end
 
+  def period_start
+    Time.zone.at(object.period_start).strftime('%b %d, %Y')
+  end
+
+  def subject
+    "Invoice ##{object.id}: #{period_start} - #{period_end}"
+  end
+
   def icon
     return 'fa-check' if paid?
     return 'fa-gift' if forgiven?
@@ -24,6 +32,6 @@ class InvoiceDecorator < Draper::Decorator
   end
 
   def total
-    "$#{object.total.fdiv(100).round(2)}"
+    object.total.fdiv(100).round(2)
   end
 end

@@ -1,14 +1,14 @@
-class BillingEvent::Invoice
+class BillingEvent::InvoiceEvents
   def call(event)
     return if event.type == 'invoice.upcoming'
-    invoice = ::Invoice.find_by(stripe_id: event.data.object.id)
+    invoice = Invoice.find_by(stripe_id: event.data.object.id)
 
     return update(invoice, event.data.object) if invoice.present?
     create(event.data.object)
   end
 
   def create(stripe_object)
-    update(::Invoice.new(stripe_id: stripe_object.id), stripe_object)
+    update(Invoice.new(stripe_id: stripe_object.id), stripe_object)
   end
 
   def update(invoice, stripe_object)
