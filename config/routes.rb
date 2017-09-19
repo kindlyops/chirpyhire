@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resource :getting_started, only: :show, controller: 'getting_started'
   resource :health, only: :show
   resources :candidates, only: %i[index new create], concerns: :paginatable do
+    resource :thanks
     collection do
       post 'search(/page/:page)' => 'candidates#search', as: :search
     end
@@ -17,6 +18,8 @@ Rails.application.routes.draw do
   namespace :candidates do
     resources :segments, only: :show
   end
+
+
 
   resources :recruiting_ads, only: %i[index update]
   resource :dashboard
@@ -46,6 +49,7 @@ Rails.application.routes.draw do
   end
 
   resources :organizations, only: %i[show update] do
+    resource :jobs
     resources :teams, only: %i[create], controller: 'organizations/teams' do
       resources :members, only: %i[create destroy]
     end
