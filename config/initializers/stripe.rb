@@ -17,4 +17,5 @@ StripeEvent.configure do |events|
   events.subscribe 'invoice.sent', BillingEvent::InvoiceEvents.new
   events.subscribe 'invoice.updated', BillingEvent::InvoiceEvents.new
   events.subscribe 'customer.subscription.', BillingEvent::SubscriptionEvents.new
+  events.subscribe 'plan.', BillingEvent::PlanEvents.new
 end
