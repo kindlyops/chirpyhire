@@ -36,6 +36,10 @@ class Organization < ApplicationRecord
   delegate :canceled?, :internal_canceled_at, to: :subscription
   delegate :status, to: :subscription, prefix: true, allow_nil: true
 
+  def silenced_invoices?
+    !invoice_notification?
+  end
+
   def recent_bot
     bots.recent.first
   end
