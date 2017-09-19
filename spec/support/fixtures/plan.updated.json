@@ -1,0 +1,30 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "plan.updated",
+  "object": "event",
+  "request": null,
+  "pending_webhooks": 1,
+  "api_version": "2017-08-15",
+  "data": {
+    "object": {
+      "id": "plan.updated",
+      "object": "plan",
+      "amount": 19900,
+      "created": 1407112740,
+      "currency": "usd",
+      "interval": "month",
+      "interval_count": 1,
+      "livemode": false,
+      "metadata": {
+      },
+      "name": "Analytics",
+      "statement_descriptor": null,
+      "trial_period_days": null
+    },
+    "previous_attributes": {
+      "name": "Old name"
+    }
+  }
+}

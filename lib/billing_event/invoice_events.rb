@@ -1,6 +1,5 @@
 class BillingEvent::InvoiceEvents
   def call(event)
-    return if event.type == 'invoice.upcoming'
     invoice = Invoice.find_by(stripe_id: event.data.object.id)
 
     return update(invoice, event.data.object) if invoice.present?
@@ -12,6 +11,12 @@ class BillingEvent::InvoiceEvents
   end
 
   def update(invoice, stripe_object)
+    invoice = write_attributes(invoice, stripe_object)
+    invoice.save
+    invoice
+  end
+
+  def write_attributes(invoice, stripe_object)
     %i[object amount_due application_fee attempt_count attempted billing charge
        closed currency customer date description discount
        ending_balance forgiven lines livemode metadata next_payment_attempt
@@ -21,6 +26,6 @@ class BillingEvent::InvoiceEvents
       value = stripe_object.send(attribute)
       invoice.send(:write_attribute, attribute, value)
     end
-    invoice.save
+    invoice
   end
 end

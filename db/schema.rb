@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170918211102) do
+ActiveRecord::Schema.define(version: 20170919135900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -529,6 +529,25 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.string "forwarding_phone_number"
     t.index ["organization_id"], name: "index_phone_numbers_on_organization_id"
     t.index ["phone_number"], name: "index_phone_numbers_on_phone_number", unique: true
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "stripe_id"
+    t.string "object"
+    t.integer "amount"
+    t.integer "created"
+    t.string "currency"
+    t.string "interval"
+    t.integer "interval_count"
+    t.boolean "livemode"
+    t.jsonb "metadata", default: {}
+    t.string "name"
+    t.string "statement_descriptor"
+    t.integer "trial_period_days"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_plans_on_name", unique: true
+    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true
   end
 
   create_table "questions", force: :cascade do |t|
