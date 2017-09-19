@@ -40,6 +40,6 @@ class Internal::Logger::SetContactStage
       email: account.email,
       organization_id: organization.id,
       organization_name: organization.name,
-      subscription_status: organization.subscription_status }
+      subscription_status: organization.subscription_internal_status }
   end
 end
