@@ -3,5 +3,6 @@
   = render partial: "engage/auto/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content.bots
-        = render partial: "engage/auto/bots/bot", collection: @bots
+      .ch--sub-main-content
+        .bots
+          = render partial: "engage/auto/bots/bot", collection: @bots

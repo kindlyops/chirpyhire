@@ -1,4 +1,4 @@
-class BillingEvent::Invoice
+class BillingEvent::InvoiceEvents
   def call(event)
     return if event.type == 'invoice.upcoming'
     invoice = Invoice.find_by(stripe_id: event.data.object.id)

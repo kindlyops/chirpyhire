@@ -1,0 +1,33 @@
+= title "Invoice history · ChirpyHire"
+.ch--Page.settings.invoices
+  = render partial: "settings/header"
+  .ch--main
+    = render partial: "billing/navigation"
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Invoice history for
+            '
+            = @organization.name
+      .ch--sub-main-content
+        .card
+          .card-body
+            h6.card-title Invoices
+            table.table.invoices-table.mt-4
+              thead.thead-default
+                tr
+                  th ID
+                  th Date
+                  th Amount
+                  th
+              tbody
+                - @invoices.each do |invoice|
+                  tr
+                    td = invoice.id
+                    td = invoice.decorate.date
+                    td
+                      i class="fa mr-1 #{invoice.decorate.icon}" data-toggle="tooltip" data-placement="left" title==invoice.decorate.status
+                      strong = number_to_currency(invoice.decorate.total)
+                    td
+                      = link_to 'View invoice', organization_billing_invoice_path(@organization, invoice)

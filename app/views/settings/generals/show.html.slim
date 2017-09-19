@@ -15,40 +15,41 @@
             | General settings for
             '
             = @organization.name
-      .card.ch--sub-main-content
-        .card-body
-          .basic-details
-            = form_for @organization, url: organization_path(@organization) do |f|
-              = content_for :validation_errors do
-                = render partial: "common/validation_errors", locals: { model: @organization }
-              .form-group
-                strong = f.label :name, class: "col-form-label small-uppercase"
-                = f.text_field :name, required: true, class: "form-control"
-                small.form-text.text-muted We'll use your organization's name when screening caregivers to give the screening process a personal touch.
-              .form-group
-                strong = f.label :email, class: "col-form-label small-uppercase"
-                = f.email_field :email, class: "form-control"
-              .form-group
-                strong = f.label :description, class: "col-form-label small-uppercase"
-                = f.text_field :description, class: "form-control"
-              .form-group
-                strong = f.label :url, "URL", class: "col-form-label small-uppercase"
-                = f.url_field :url, class: "form-control"
-              - if current_account.owner?
+      .ch--sub-main-content
+        .card
+          .card-body
+            .basic-details
+              = form_for @organization, url: organization_path(@organization) do |f|
+                = content_for :validation_errors do
+                  = render partial: "common/validation_errors", locals: { model: @organization }
                 .form-group
-                  strong = f.label :billing_email, "Billing email (Private)", class: "col-form-label small-uppercase"
-                  = f.email_field :billing_email, class: "form-control"
-              .form-group
-                = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
-          hr
-          .photo
-            = form_for @organization, url: organization_path(@organization), html: { multipart: true, class: 'edit_profile_picture' } do |f|
-              .form-group
-                h6 = f.label :avatar, "Logo", class: 'col-form-label small-uppercase'
-                .profile-picture.text-center.d-flex
-                  - if @organization.avatar.url.present?
-                    = image_tag @organization.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
-                  - else
-                    div class=="d-flex profile-image thumb_48 default #{@organization.decorate.hero_pattern_classes}"
-                a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new logo
-                = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
+                  strong = f.label :name, class: "col-form-label small-uppercase"
+                  = f.text_field :name, required: true, class: "form-control"
+                  small.form-text.text-muted We'll use your organization's name when screening caregivers to give the screening process a personal touch.
+                .form-group
+                  strong = f.label :email, class: "col-form-label small-uppercase"
+                  = f.email_field :email, class: "form-control"
+                .form-group
+                  strong = f.label :description, class: "col-form-label small-uppercase"
+                  = f.text_field :description, class: "form-control"
+                .form-group
+                  strong = f.label :url, "URL", class: "col-form-label small-uppercase"
+                  = f.url_field :url, class: "form-control"
+                - if current_account.owner?
+                  .form-group
+                    strong = f.label :billing_email, "Billing email (Private)", class: "col-form-label small-uppercase"
+                    = f.email_field :billing_email, class: "form-control"
+                .form-group
+                  = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
+            hr
+            .photo
+              = form_for @organization, url: organization_path(@organization), html: { multipart: true, class: 'edit_profile_picture' } do |f|
+                .form-group
+                  h6 = f.label :avatar, "Logo", class: 'col-form-label small-uppercase'
+                  .profile-picture.text-center.d-flex
+                    - if @organization.avatar.url.present?
+                      = image_tag @organization.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
+                    - else
+                      div class=="d-flex profile-image thumb_48 default #{@organization.decorate.hero_pattern_classes}"
+                  a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new logo
+                  = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true

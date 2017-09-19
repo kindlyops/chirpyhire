@@ -1,5 +1,6 @@
 .ch--main {
   display: flex;
+  flex: 1;
   height: 100vh;
 
   .ch--main-menu {
@@ -31,9 +32,12 @@
     flex-direction: column;
     overflow-y: scroll;
     background-color: #eef6f2;
+    flex: 1;
 
     .ch--sub-main-content {
-      margin: 1.25rem;
+      padding: 1.25rem;
+      overflow-y: scroll;
+      height: 100vh;
     }
   }
 }

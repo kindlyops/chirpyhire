@@ -13,36 +13,37 @@
       .ch--main-menu
         .ch--main-menu--left
           h2 Your account
-      .card.ch--sub-main-content
-        .card-body
-          .basic-details
-            = form_for @account, url: account_path(@account) do |f|
-              = content_for :validation_errors do
-                = render partial: "common/validation_errors", locals: { model: @account }
-              .form-group
-                strong = f.label :name, class: "col-form-label small-uppercase"
-                = f.text_field :name, required: true, class: "form-control"
-              .form-group
-                strong = f.label :email, class: "col-form-label small-uppercase"
-                = f.email_field :email, class: "form-control"
-              .form-group
-                strong = f.label :phone_number, class: "col-form-label small-uppercase", 'aria-describedby' => 'phoneHelp'
-                = f.phone_field :phone_number, value: @account.phone_number&.phony_formatted, class: "form-control"
-                small#phoneHelp.form-text.text-muted Add your phone number and we'll send you SMS notifications when caregivers text in.
-              .form-group
-                strong = f.label :bio, "Short Bio / Quote", class: "col-form-label small-uppercase"
-                = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
-              .form-group
-                = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
-          hr
-          .photo
-            = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
-              .form-group
-                h6 = f.label :avatar, "Photo", class: "col-form-label small-uppercase"
-                .profile-picture.text-center.d-flex
-                  - if @account.avatar.url.present?
-                    = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
-                  - else
-                    div class=="d-flex profile-image thumb_48 default #{@account.decorate.hero_pattern_classes}"
-                a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new photo
-                = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true
+      .ch--sub-main-content
+        .card
+          .card-body
+            .basic-details
+              = form_for @account, url: account_path(@account) do |f|
+                = content_for :validation_errors do
+                  = render partial: "common/validation_errors", locals: { model: @account }
+                .form-group
+                  strong = f.label :name, class: "col-form-label small-uppercase"
+                  = f.text_field :name, required: true, class: "form-control"
+                .form-group
+                  strong = f.label :email, class: "col-form-label small-uppercase"
+                  = f.email_field :email, class: "form-control"
+                .form-group
+                  strong = f.label :phone_number, class: "col-form-label small-uppercase", 'aria-describedby' => 'phoneHelp'
+                  = f.phone_field :phone_number, value: @account.phone_number&.phony_formatted, class: "form-control"
+                  small#phoneHelp.form-text.text-muted Add your phone number and we'll send you SMS notifications when caregivers text in.
+                .form-group
+                  strong = f.label :bio, "Short Bio / Quote", class: "col-form-label small-uppercase"
+                  = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"
+                .form-group
+                  = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
+            hr
+            .photo
+              = form_for @account, url: account_path(@account), html: { multipart: true, class: 'edit_profile_picture' } do |f|
+                .form-group
+                  h6 = f.label :avatar, "Photo", class: "col-form-label small-uppercase"
+                  .profile-picture.text-center.d-flex
+                    - if @account.avatar.url.present?
+                      = image_tag @account.avatar.url(:medium), class: 'd-flex thumb_48 profile-image'
+                    - else
+                      div class=="d-flex profile-image thumb_48 default #{@account.decorate.hero_pattern_classes}"
+                  a.btn.btn-primary#upload.mt-4 role="button" href="#" Upload new photo
+                  = f.file_field :avatar, class: "form-control", id: "avatar", hidden: true

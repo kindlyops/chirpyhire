@@ -17,6 +17,7 @@ title= content_for?(:title) ? content_for(:title) : "Your Caregiver Recruiting A
 = csrf_meta_tags
 = action_cable_meta_tag
 = stylesheet_link_tag 'application', media: 'all'
+= stylesheet_link_tag 'print', media: 'print'
 link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"
 = javascript_include_tag 'application'
 script async==!Rails.env.test? defer=true type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_PLACES_KEY')}&libraries=places&callback=initAutocompletes"

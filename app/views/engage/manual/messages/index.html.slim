@@ -3,5 +3,6 @@
   = render partial: "engage/manual/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content.campaigns
-        = render partial: "engage/manual/messages/message", collection: @campaigns
+      .ch--sub-main-content
+        .campaigns
+          = render partial: "engage/manual/messages/message", collection: @campaigns

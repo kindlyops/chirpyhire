@@ -3,5 +3,6 @@
   = render partial: "engage/auto/secondary_header"
   .ch--main
     .ch--sub-main
-      .ch--sub-main-content.campaigns
-        = render partial: "engage/auto/campaigns/campaign", collection: @campaigns
+      .ch--sub-main-content
+        .campaigns
+          = render partial: "engage/auto/campaigns/campaign", collection: @campaigns

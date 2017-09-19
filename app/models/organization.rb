@@ -36,6 +36,10 @@ class Organization < ApplicationRecord
   delegate :canceled?, :internal_canceled_at, to: :subscription
   delegate :internal_status, to: :subscription, prefix: true, allow_nil: true
 
+  def silenced_invoices?
+    !invoice_notification?
+  end
+
   def recent_bot
     bots.recent.first
   end
@@ -69,7 +73,7 @@ class Organization < ApplicationRecord
   end
 
   def payment_card
-    payment_cards.first
+    payment_cards.order(:id).last
   end
 
   def next_contact_stage_rank

@@ -10,5 +10,5 @@ Rails.application.config.assets.version = '1.0'
 Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w[report.css email.css]
+Rails.application.config.assets.precompile += %w[report.css email.css print.css invoice.css]
 Rails.application.config.assets.precompile << /\.(?:svg|eot|woff|ttf|png)\z/

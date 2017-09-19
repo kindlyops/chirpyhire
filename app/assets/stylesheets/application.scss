@@ -53,6 +53,7 @@ body {
     .app-content-container {
       overflow-y: auto;
       width: 100%;
+      flex: 1;
       display: inline-block;
     }
   }

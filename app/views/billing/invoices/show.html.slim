@@ -1,0 +1,18 @@
+= title "Invoice ##{@invoice.id} · ChirpyHire"
+.ch--Page.settings.invoices
+  = render partial: "settings/header"
+  .ch--main
+    = render partial: "billing/navigation"
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Invoice history for
+            '
+            = @organization.name
+            '
+            ' /
+            | Invoice #
+            = @invoice.id
+      .ch--sub-main-content
+        = render partial: "billing/invoices/invoice", locals: { organization: @organization, invoice: @invoice }

@@ -68,6 +68,8 @@ Rails.application.routes.draw do
 
     namespace :billing do
       resource :company
+      resource :summary
+      resources :invoices
     end
 
     resource :customer

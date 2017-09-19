@@ -1,4 +1,4 @@
-class BillingEvent::Subscription
+class BillingEvent::SubscriptionEvents
   def call(event)
     subscription = Subscription.find_by(stripe_id: event.data.object.id)
 
@@ -8,8 +8,8 @@ class BillingEvent::Subscription
 
   def create(stripe_object)
     customer = Organization.find_by(stripe_id: stripe_object.customer)
-    subscription = customer.subscription || build(customer, stripe_object)
-
+    subscription = customer.subscription || customer.build_subscription
+    subscription.stripe_id = stripe_object.id
     update(subscription, stripe_object)
   end
 
@@ -23,9 +23,5 @@ class BillingEvent::Subscription
     end
 
     subscription.save
-  end
-
-  def build(customer, stripe_object)
-    customer.build_subscription(stripe_id: stripe_object.id)
   end
 end

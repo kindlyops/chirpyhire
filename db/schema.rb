@@ -488,6 +488,7 @@ ActiveRecord::Schema.define(version: 20170918211102) do
     t.string "stripe_id"
     t.string "size"
     t.string "forwarding_phone_number"
+    t.boolean "invoice_notification", default: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
   end
 

@@ -36,18 +36,14 @@ class Subscription::Price
       dynamic_price(0.375)
     end
   end
-
-  def dynamic_price(slope)
-    (price_count * slope).round
-  end
-
-  def price_count
+  
+  def price_tier
     ((engaged_contact_count / 200) * 200).floor
   end
 
-  def engaged_contact_count
-    @engaged_contact_count ||= organization.contacts.engaged.count
+  def dynamic_price(slope)
+    (price_tier * slope).round
   end
 
-  delegate :organization, to: :subscription
+  delegate :organization, :engaged_contact_count, to: :subscription
 end

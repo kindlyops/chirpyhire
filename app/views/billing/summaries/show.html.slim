@@ -1,0 +1,94 @@
+= title "Subscription · ChirpyHire"
+.ch--Page.settings.subscription
+  = render partial: "settings/header"
+  .ch--main
+    = render partial: "billing/navigation"
+    .ch--sub-main
+      .ch--main-menu
+        .ch--main-menu--left
+          h2 
+            | Subscription for
+            '
+            = @organization.name
+      .ch--sub-main-content
+        .card
+          .card-body
+            h6.card-title Current subscription
+            table.table.subscription-table.mt-4
+              thead.thead-default
+                tr
+                  th Product
+                  th Plan
+              tbody
+                tr
+                  td
+                    .d-flex
+                      span.fa-stack.fa-lg.mr-3
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-rocket.fa-stack-1x.fa-inverse
+                      .d-flex.flex-column
+                        h4.strong ChirpyHire
+                        p.text-muted for recruiting automation
+                  td
+                    h5
+                      span.badge.badge-secondary Standard
+            .mb-2
+              h3.small-uppercase Number of Engaged Candidates
+              strong
+                i.fa.fa-users.mr-2
+                span = pluralize(@organization.subscription.tier, 'candidate')
+            .mb-2
+              h3.small-uppercase Total Price
+              strong
+                i.fa.fa-credit-card-alt.mr-2
+                span 
+                  = number_to_currency(@organization.subscription.price)
+                  '
+                  ' / mo
+            .mb-2
+              span
+                i.fa.fa-calculator.mr-2
+                a aria-controls="price-calculator" aria-expanded="false" data-toggle="collapse" href="#price-calculator" 
+                  | See how your price may change
+                '
+                ' with more candidates.
+              #price-calculator.collapse.mt-2
+                .card
+                  .card-body
+                    h4.card-title Estimate your audience size
+                    p.card-text.text-muted 
+                      | Pricing is based on your audience size: the number of 
+                      strong engaged candidates 
+                      ' who have sent or received a message in the 
+                      strong past 30 days
+                      '
+                      ' in your ChirpyHire account. It automatically adjusts as your audience grows or shrinks.
+                    h4.card-text.mb-3
+                      ' Start with
+                      strong.candidates--number = @organization.contacts.engaged.count
+                      '
+                      strong engaged candidates
+                    input.active-candidates-slider role="button" type="range" min="100" max="4000" value==@organization.contacts.engaged.count step="10"
+                    hr
+                    p.card-text.d-flex.justify-content-between
+                      span Team members
+                      strong Unlimited
+                    hr
+                    p.card-text.d-flex.justify-content-between
+                      span Messaging
+                      strong Unlimited
+                    hr
+                    p.card-text.d-flex.justify-content-between
+                      span Candidates
+                      strong.candidates--number = @organization.contacts.engaged.count
+                    hr
+                    p.card-text.d-flex.justify-content-between
+                      span Price
+                      strong.candidates--price
+                        |$
+                        = @organization.subscription.price
+                        '
+                        |/ mo
+                    p.card-text.d-flex.justify-content-between
+                      span.spacer
+                      span.badge.badge-success.small-uppercase Free For 14 Days

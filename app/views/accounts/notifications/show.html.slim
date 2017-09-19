@@ -12,17 +12,18 @@
     .ch--sub-main
       .ch--main-menu
         .ch--main-menu--left
-          h2 Notification prefernces
-      .card.ch--sub-main-content
-        .card-body
-          .basic-details
-            = form_for @account, url: account_notifications_path(@account), method: :put do |f|
-              = content_for :validation_errors do
-                = render partial: "common/validation_errors", locals: { model: @account }
-              .form-group
-                strong = f.label :daily_email, class: "form-check-label small-uppercase" do
-                  = f.check_box :daily_email, class: "form-check-input"
-                  | Daily email
-                small.form-text.text-muted Get a daily email of candidate activity.
-              .form-group
-                = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
+          h2 Notification preferences
+      .ch--sub-main-content
+        .card
+          .card-body
+            .basic-details
+              = form_for @account, url: account_notifications_path(@account), method: :put do |f|
+                = content_for :validation_errors do
+                  = render partial: "common/validation_errors", locals: { model: @account }
+                .form-group
+                  strong = f.label :daily_email, class: "form-check-label small-uppercase" do
+                    = f.check_box :daily_email, class: "form-check-input"
+                    | Daily email
+                  small.form-text.text-muted Get a daily email of candidate activity.
+                .form-group
+                  = f.submit "Save changes", class: 'btn btn-primary', role: 'button'
