@@ -8,6 +8,4 @@ class ThanksController < ApplicationController
   def show
     @candidate = Contact.find(params[:candidate_id])
   end
-
-  private
 end
