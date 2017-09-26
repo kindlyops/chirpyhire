@@ -1,6 +1,6 @@
 class Subscription < ApplicationRecord
   belongs_to :organization
-  has_many :invoices
+  has_many :invoices, primary_key: :subscription, foreign_key: :stripe_id
 
   enum internal_status: {
     trialing: 0, active: 1, past_due: 2, canceled: 3, unpaid: 4
