@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919202001) do
+ActiveRecord::Schema.define(version: 20170926230241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(version: 20170919202001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer"], name: "index_invoices_on_customer"
-    t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true
+    t.index ["stripe_id"], name: "index_invoices_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
     t.index ["subscription"], name: "index_invoices_on_subscription"
   end
 
@@ -491,6 +491,7 @@ ActiveRecord::Schema.define(version: 20170919202001) do
     t.string "forwarding_phone_number"
     t.boolean "invoice_notification", default: true
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
+    t.index ["stripe_id"], name: "index_organizations_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end
 
   create_table "payment_cards", force: :cascade do |t|
@@ -503,6 +504,7 @@ ActiveRecord::Schema.define(version: 20170919202001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_payment_cards_on_organization_id"
+    t.index ["stripe_id"], name: "index_payment_cards_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end
 
   create_table "people", id: :serial, force: :cascade do |t|
@@ -548,7 +550,7 @@ ActiveRecord::Schema.define(version: 20170919202001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_plans_on_name", unique: true
-    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true
+    t.index ["stripe_id"], name: "index_plans_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -624,7 +626,7 @@ ActiveRecord::Schema.define(version: 20170919202001) do
     t.integer "trial_start"
     t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
-    t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true
+    t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end
 
   create_table "taggings", force: :cascade do |t|
