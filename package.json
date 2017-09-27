@@ -2,10 +2,9 @@
   "name": "congaree",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.0.1",
     "autoprefixer": "^7.1.0",
     "babel-core": "^6.24.1",
-    "babel-loader": "7.1.2",
+    "babel-loader": "7.x",
     "babel-plugin-es6-promise": "^1.1.1",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
@@ -14,7 +13,7 @@
     "compression-webpack-plugin": "^0.4.0",
     "css-loader": "^0.28.1",
     "es6-promise": "^4.1.1",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "glob": "^7.1.1",
     "immutability-helper": "^2.2.2",
@@ -29,11 +28,11 @@
     "postcss-loader": "^2.0.5",
     "postcss-smart-import": "^0.7.0",
     "precss": "^1.4.0",
-    "prop-types": "^15.6.0",
+    "prop-types": "^15.5.10",
     "query-string": "^4.3.4",
     "rails-erb-loader": "^5.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "react-js-pagination": "^2.1.0",
     "react-notification": "^6.7.1",
     "react-router-dom": "next",
@@ -43,14 +42,14 @@
     "react-transition-group": "^1.2.0",
     "react-virtualized": "^9.8.0",
     "reactstrap": "^4.6.2",
-    "sass-loader": "^6.0.6",
+    "sass-loader": "^6.0.5",
     "slate": "^0.19.30",
     "style-loader": "^0.17.0",
-    "webpack": "^3.6.0",
+    "webpack": "^2.5.1",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^2.8.2"
+    "webpack-dev-server": "^2.4.5"
   }
 }

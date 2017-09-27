@@ -1,27 +1,12 @@
 {
+  "plugins": ["es6-promise"],
   "presets": [
     [
       "env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": "> 1%",
-          "uglify": true
-        },
-        "useBuiltIns": true
+        "modules": false
       }
     ],
     "react"
-  ],
-  "plugins": [
-    "es6-promise",
-    "syntax-dynamic-import",
-    "transform-object-rest-spread",
-    [
-      "transform-class-properties",
-      {
-        "spec": true
-      }
-    ]
   ]
 }
