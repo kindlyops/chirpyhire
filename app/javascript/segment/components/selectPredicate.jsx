@@ -62,7 +62,7 @@ class SelectPredicate extends React.Component {
   }
 
   notEq() {
-    if(!this.props.noNotEqual) {
+    if(this.props.hasNotEqual) {
       return (
         <div>
           <label className='radio-label'>
