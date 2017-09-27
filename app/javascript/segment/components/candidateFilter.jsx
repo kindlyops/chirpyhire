@@ -63,6 +63,7 @@ class CandidateFilter extends React.Component {
                 <Predicate
                   index={index}
                   {...predicate} 
+                  noNotEqual={this.props.noNotEqual}
                   options={this.props.options} 
                   onPredicateChange={this.onPredicateChange}
                   removePredicate={this.removePredicate} />
@@ -78,6 +79,7 @@ class CandidateFilter extends React.Component {
               key={0} 
               index={0}
               type={this.props.type}
+              noNotEqual={this.props.noNotEqual}
               attribute={this.props.attribute}
               options={this.props.options}
               onPredicateChange={this.onPredicateChange}
@@ -109,7 +111,8 @@ class CandidateFilter extends React.Component {
 }
 
 CandidateFilter.defaultProps = {
-  options: []
+  options: [],
+  noNotEqual: false
 }
 
 export default CandidateFilter
