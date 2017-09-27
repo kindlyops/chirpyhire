@@ -94,6 +94,7 @@ class CandidateFilters extends React.Component {
             attribute="taggings_tag_id"
             name="Tag"
             type="select"
+            hasNotEqual={false}
             options={this.state.tag.options}
             predicates={this.predicates('taggings_tag_id')}
             {...this.props}

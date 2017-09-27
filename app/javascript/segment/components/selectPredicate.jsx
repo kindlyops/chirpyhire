@@ -61,6 +61,24 @@ class SelectPredicate extends React.Component {
     }
   }
 
+  notEq() {
+    if(this.props.hasNotEqual) {
+      return (
+        <div>
+          <label className='radio-label'>
+            <span className='radio-wrapper'>
+              <input type="radio" value="not_eq" name={this.name()} checked={this.isChecked('not_eq')} onChange={this.onComparisonChange}/>
+            </span>
+            <span className='radio-content filter-text'>is not</span>
+          </label>
+          {this.fieldBuilder('not_eq')}
+        </div>
+      )
+    } else {
+      return '';
+    }
+  }
+
   render() {
     return (
       <div>
@@ -71,13 +89,7 @@ class SelectPredicate extends React.Component {
           <span className='radio-content filter-text'>is</span>
         </label>
         {this.fieldBuilder('eq')}
-        <label className='radio-label'>
-          <span className='radio-wrapper'>
-            <input type="radio" value="not_eq" name={this.name()} checked={this.isChecked('not_eq')} onChange={this.onComparisonChange}/>
-          </span>
-          <span className='radio-content filter-text'>is not</span>
-        </label>
-        {this.fieldBuilder('not_eq')}
+        {this.notEq()}
       </div>
     )
   }
