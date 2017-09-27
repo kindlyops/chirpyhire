@@ -190,7 +190,20 @@ class ProfileNotes extends React.Component {
   }
 
   componentWillUnmount() {
-    this.disconnect()
+    this.disconnect();
+    this._deinit();
+  }
+
+  _deinit() {
+    let modal = $('.modal');
+    modal.off('click', '.modal-footer button.delete');
+    $(document).off('focus', '#reply_container textarea');
+    $(document).off('focusout', '#reply_container textarea');
+    $(document).off('click', '#note-show-container button.delete');
+    $(document).off('click', '#note-show-container button.edit');
+    $(document).off('click', '#note-edit-container #cancel_edit');
+    $(document).off('keydown', '#note-edit-container #note_body');
+    $(document).off('keydown', '#new_note #note_body');
   }
 
   _init() {
