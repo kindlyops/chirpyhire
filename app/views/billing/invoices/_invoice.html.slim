@@ -50,7 +50,7 @@
         | Amount
     - invoice.lines.each do |item|
       tr.item
-        td = item.name
+        td = item.plan_name
         td = number_to_currency(item.amount)
     tr.total
       td 
