@@ -7,6 +7,10 @@ class InvoiceItem
     item['description']
   end
 
+  def name
+    item['name']
+  end
+
   def amount
     item['amount'].fdiv(100).round(2)
   end
