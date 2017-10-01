@@ -7,8 +7,12 @@ class InvoiceItem
     item['description']
   end
 
-  def name
-    item['name']
+  def plan_name
+    plan['name']
+  end
+
+  def plan
+    item['plan'] || {}
   end
 
   def amount
