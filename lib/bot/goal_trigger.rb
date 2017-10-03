@@ -33,7 +33,7 @@ class Bot::GoalTrigger
 
   def notify_contact_ready_for_review(accounts, conversation)
     accounts.find_each do |account|
-      next unless account.contact_ready.present?
+      next if account.contact_ready.blank?
       Texter::Notification.new(account, conversation).contact_ready_for_review
       ready_for_review_mailer(account, conversation).deliver_later
     end
