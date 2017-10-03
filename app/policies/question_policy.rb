@@ -12,7 +12,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[body id active].push(follow_ups)
+    %i[body id active type].push(follow_ups)
   end
 
   def follow_ups
@@ -20,7 +20,7 @@ class QuestionPolicy < ApplicationPolicy
   end
 
   def follow_ups_attributes
-    %i[body response bot_action_id rank].push(taggings)
+    %i[body response bot_action_id rank type].push(taggings)
   end
 
   def taggings

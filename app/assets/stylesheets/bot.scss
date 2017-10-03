@@ -70,6 +70,10 @@
   justify-content: space-between;
   align-items: center;
   background-color: mix(theme-color('success'), theme-color('primary'));
+
+  .nav-item.nav-link:not(.active) {
+    background-color: #e9ecef;
+  }
 }
 
 .goal--header {
