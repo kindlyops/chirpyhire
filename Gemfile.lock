@@ -1,4 +1,16 @@
 GIT
+  remote: https://github.com/activerecord-hackery/ransack.git
+  revision: 8f7d6e9b9f24a7cf93f731b1d7b5bb4f7363d82d
+  ref: 8f7d6e9
+  specs:
+    ransack (1.8.3)
+      actionpack (>= 3.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      i18n
+      polyamorous (~> 1.3)
+
+GIT
   remote: https://github.com/elabs/pundit.git
   revision: 58eda659d44a2e9d5e022fd23cc0f65bad7f7d82
   ref: 58eda659d44a2
@@ -376,12 +388,6 @@ GEM
     rainbow (2.2.2)
       rake
     rake (12.1.0)
-    ransack (1.8.3)
-      actionpack (>= 3.0)
-      activerecord (>= 3.0)
-      activesupport (>= 3.0)
-      i18n
-      polyamorous (~> 1.3)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
@@ -569,7 +575,7 @@ DEPENDENCIES
   rails-controller-testing
   rails_12factor (~> 0.0.3)
   rails_admin!
-  ransack (~> 1.8.3)
+  ransack!
   rollbar (~> 2.15.0)
   rspec-rails (~> 3.6.0)
   rubocop (~> 0.49.1)

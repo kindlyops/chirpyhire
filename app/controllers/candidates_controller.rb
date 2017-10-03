@@ -53,7 +53,7 @@ class CandidatesController < ApplicationController
   end
 
   def fetch_predicates
-    permitted_params[:predicates] || []
+    permitted_params[:predicates].select { |p| p['value'].present? } || []
   end
 
   def prepare_predicates
