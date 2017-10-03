@@ -12,15 +12,15 @@
     .bot-card--actions
       - if g.object.bot.goals.count > 1
         .dropdown.mr-3
-          a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
+          a#actions.bot-card--settings aria-expanded="true" aria-haspopup="true" data-toggle="dropdown" role="button"
             |⋯
           .dropdown-menu.dropdown-menu-right aria-labelledby="actions"
             = link_to engage_auto_bot_goal_remove_path(g.object.bot, g.object), class: 'dropdown-item', role: 'button' do
               i.fa.fa-times.mr-2
               | Remove Goal
-      a.bot-card--toggle-body aria-controls="collapseGoal-#{g.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseGoal-#{g.object.object_id}" 
+      a.bot-card--toggle-body aria-controls="collapseGoal-#{g.object.object_id}" aria-expanded="true" data-toggle="collapse" href="#collapseGoal-#{g.object.object_id}" 
         i.fa.fa-angle-down
-  .collapse.bot-action id="collapseGoal-#{g.object.object_id}"
+  .collapse.show.bot-action id="collapseGoal-#{g.object.object_id}"
     .card-body
       .form-group
         h5.card-title Candidate stage:
@@ -30,5 +30,5 @@
         h5.card-title Send Message:
         h6.card-subtitle.mb-3.text-muted Create a meaningful message to end the bot conversation for candidates who reach this goal.
         .card-text
-          = g.text_area :body, required: true, class: 'form-control', placeholder: 'Write a meaningful message...', data: { autoresize: true }
+          = g.text_area :body, required: true, class: 'form-control', placeholder: 'Write a meaningful message...', data: { autosize: true }
 

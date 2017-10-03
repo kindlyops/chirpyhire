@@ -12,21 +12,21 @@
     .bot-card--actions
       - if f.object.bot.questions.count > 1
         .dropdown.mr-3
-          a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
+          a#actions.bot-card--settings aria-expanded="true" aria-haspopup="true" data-toggle="dropdown" role="button"
             |⋯
           .dropdown-menu.dropdown-menu-right aria-labelledby="actions"
             = link_to engage_auto_bot_question_remove_path(f.object.bot, f.object), class: 'dropdown-item', role: 'button' do
               i.fa.fa-times.mr-2
               | Remove Question
-      a.bot-card--toggle-body aria-controls="collapseQuestion-#{f.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseQuestion-#{f.object.object_id}" 
+      a.bot-card--toggle-body aria-controls="collapseQuestion-#{f.object.object_id}" aria-expanded="true" data-toggle="collapse" href="#collapseQuestion-#{f.object.object_id}" 
         i.fa.fa-angle-down
-  .collapse.bot-action id="collapseQuestion-#{f.object.object_id}"
+  .collapse.show.bot-action id="collapseQuestion-#{f.object.object_id}"
     .card-body
       .form-group
         h5.card-title What the bot asks:
         h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
         .card-text
-          = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autoresize: true }
+          = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autosize: true }
       - if f.object.type == 'ZipcodeQuestion'
         .form-group
           h5.card-title.mt-3 Response:

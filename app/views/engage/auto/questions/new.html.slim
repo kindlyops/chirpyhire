@@ -22,7 +22,7 @@
                 h5.card-title What the bot asks:
                 h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
                 .card-text
-                  = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autoresize: true }
+                  = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autosize: true }
               - if f.object.type == 'ZipcodeQuestion'
                 .form-group
                   h5.card-title.mt-3 Response:
