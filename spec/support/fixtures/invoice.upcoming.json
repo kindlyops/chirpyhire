@@ -9,7 +9,7 @@
   "api_version": "2017-08-15",
   "data": {
     "object": {
-      "id": null,
+      "id": "invoice.upcoming",
       "object": "invoice",
       "amount_due": 0,
       "application_fee": null,

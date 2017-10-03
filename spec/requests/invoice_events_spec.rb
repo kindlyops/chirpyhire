@@ -40,7 +40,7 @@ RSpec.describe 'Invoice Events' do
     end
   end
 
-  %w[invoice.created].each do |event|
+  %w[invoice.upcoming].each do |event|
     describe event do
       let(:body) { File.read("spec/support/fixtures/#{event}.json") }
       let(:event_invoice) { JSON.parse(body)['data']['object'] }
@@ -91,7 +91,8 @@ RSpec.describe 'Invoice Events' do
   %w[invoice.payment_failed
      invoice.sent
      invoice.updated
-     invoice.payment_succeeded].each do |event|
+     invoice.payment_succeeded
+     invoice.created].each do |event|
     describe event do
       let(:body) { File.read("spec/support/fixtures/#{event}.json") }
       let(:event_invoice) { JSON.parse(body)['data']['object'] }
