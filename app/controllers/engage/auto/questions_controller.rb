@@ -1,6 +1,7 @@
 class Engage::Auto::QuestionsController < ApplicationController
   def new
     @question = bot.questions.build
+    @question.follow_ups.build
   end
 
   def create

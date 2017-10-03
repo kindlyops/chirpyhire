@@ -6,42 +6,88 @@
       .Bot
         = render partial: "bots/active_alert", locals: { bot: @bot }
         .card
-          = form_for @question, as: :question, url: engage_auto_bot_questions_path(@bot) do |f|
-            = content_for :validation_errors do
-              = render partial: "common/validation_errors", locals: { model: @question }
-            = f.hidden_field :id
-            = f.hidden_field :type
-            div class="card-header question--header"
-              .bot-card--label-title
-                span.bot-card--label
-                  | New Question:
-                span.bot-card--title = f.object.body(formatted: false)
-              .bot-card--actions
-            .card-body
-              .form-group
-                h5.card-title What the bot asks:
-                h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
-                .card-text
-                  = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autosize: true }
-              - if f.object.type == 'ZipcodeQuestion'
-                .form-group
-                  h5.card-title.mt-3 Response:
-                  h6.card-subtitle.text-muted Candidates text a valid 5 digit zipcode to continue.
-              .form-group
-                h5.card-title Follow ups based on the candidate's answer:
-                h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
-                .card-text
-                  #follow-ups
-                    = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
-                      = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
-                    .links.mt-3
-                      = link_to_add_association f, :follow_ups, {  class: 'btn btn-default', role: 'button' } do
-                        i.fa.fa-plus.mr-2
-                        | New Follow Up
-              .form-group
-                = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
-                    i.fa.fa-arrow-left.mr-2
-                    | Cancel
-                = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
-                    i.fa.fa-check.mr-2
-                    | Create
+          .card-header.question--header
+            .bot-card--label-title
+              span.bot-card--label
+                | New Question:
+              span.bot-card--title
+            .bot-card--actions
+            nav#myTab.nav.nav-tabs.card-header-tabs role="tablist"
+              a#nav-choice-tab.nav-item.nav-link.active aria-controls="nav-choice" aria-expanded="true" data-toggle="tab" href="#nav-choice" role="tab"  Multiple Choice
+              a#nav-zipcode-tab.nav-item.nav-link aria-controls="nav-zipcode" data-toggle="tab" href="#nav-zipcode" role="tab"  Zip Code
+          .card-body
+            #nav-tabContent.tab-content
+              #nav-choice.tab-pane.fade.show.active aria-labelledby="nav-choice-tab" role="tabpanel"
+                = form_for @question, as: :question, url: engage_auto_bot_questions_path(@bot) do |f|
+                  = content_for :validation_errors do
+                    = render partial: "common/validation_errors", locals: { model: @question }
+                  = f.hidden_field :id
+                  = f.hidden_field :type, value: 'ChoiceQuestion'
+                  .form-group
+                    h5.card-title What the bot asks:
+                    h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
+                    .card-text
+                      = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autosize: true }
+                  .form-group
+                    h5.card-title Follow ups based on the candidate's answer:
+                    h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure potential follow ups below.
+                    .card-text
+                      #follow-ups
+                        = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
+                          = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
+                        .links.mt-3
+                          = link_to_add_association f, :follow_ups, {  class: 'btn btn-default', role: 'button' } do
+                            i.fa.fa-plus.mr-2
+                            | New Follow Up
+                  .form-group
+                    = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                        i.fa.fa-arrow-left.mr-2
+                        | Cancel
+                    = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                        i.fa.fa-check.mr-2
+                        | Create
+              #nav-zipcode.tab-pane.fade aria-labelledby="nav-zipcode-tab" role="tabpanel"
+                = form_for @question, as: :question, url: engage_auto_bot_questions_path(@bot) do |f|
+                  = content_for :validation_errors do
+                    = render partial: "common/validation_errors", locals: { model: @question }
+                  = f.hidden_field :id
+                  = f.hidden_field :type, value: 'ZipcodeQuestion'
+                  .form-group
+                    h5.card-title What the bot asks:
+                    h6.card-subtitle.mb-3.text-muted Ask a meaningful question to interview candidates.
+                    .card-text
+                      = f.text_area :body, value: f.object.body(formatted: false), class: 'form-control', required: true, placeholder: 'Ask a question...', data: { autosize: true }
+                  .form-group
+                    h5.card-title.mt-3 Response:
+                    h6.card-subtitle.text-muted Candidates text a valid 5 digit zipcode to continue.
+                  .form-group
+                    h5.card-title Follow up based on the candidate's answer:
+                    h6.card-subtitle.mb-3.text-muted Make your conversations sincere. Configure your zip code follow up below.
+                    .card-text
+                      #follow-ups
+                        = f.fields_for :follow_ups do |u|
+                          .nested-fields.card.mb-2
+                            .card-body
+                              = u.hidden_field :type, value: 'ZipcodeFollowUp'
+                              = u.hidden_field :rank, class: 'follow-up-rank'
+                              .d-flex.justify-content-between.align-items-center
+                                h4.card-title New Follow Up
+                              .form-group.mb-3
+                                = u.label :body, class: 'col-form-label'
+                                = u.text_field :body, required: true, class: 'form-control', id: 'body', placeholder: 'Add a follow up...'
+                                small.form-text.text-muted Enter what your bot will reply with if the candidate provides a valid zip code.
+                              .form-group.mb-3
+                                = u.label :bot_action_id, 'Next Step', class: 'col-form-label'
+                                = u.collection_select :bot_action_id, @bot.actions.order(:type, :id), :id, :select_label, { include_blank: false }, class: 'form-control'
+                                small.form-text.text-muted If a candidate matches this follow up, choose their next step. Can be either next question, a specific question, or a goal.
+                              .form-group.mb-3#tags
+                                = label_tag 'question[follow_ups_attributes][0][tags][]', 'Tags', class: 'col-form-label', id: 'tags-label'
+                                = select_tag 'question[follow_ups_attributes][0][tags][]', options_for_select(current_organization.tags.pluck(:name), []), class: 'form-control', multiple: 'multiple', style: 'width: 100%', id: 'tags-select'
+
+                  .form-group
+                    = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
+                        i.fa.fa-arrow-left.mr-2
+                        | Cancel
+                    = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                        i.fa.fa-check.mr-2
+                        | Create
