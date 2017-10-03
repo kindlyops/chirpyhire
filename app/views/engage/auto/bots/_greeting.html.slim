@@ -6,11 +6,11 @@
         span.bot-card--label Greeting:
         span.bot-card--title = greeting.body
       .bot-card--actions
-        a.bot-card--toggle-body aria-controls="collapseGreeting-#{g.object.object_id}" aria-expanded="false" data-toggle="collapse" href="#collapseGreeting-#{g.object.object_id}" 
+        a.bot-card--toggle-body aria-controls="collapseGreeting-#{g.object.object_id}" aria-expanded="true" data-toggle="collapse" href="#collapseGreeting-#{g.object.object_id}" 
           i.fa.fa-angle-down
-    .collapse.bot-action id="collapseGreeting-#{g.object.object_id}"
+    .collapse.show.bot-action id="collapseGreeting-#{g.object.object_id}"
       .card-body
         .card-text
           h5.card-title Create a friendly greeting:
           h6.card-subtitle.mb-3.text-muted Make a great first impression with every candidate.
-          = g.text_area :body, class: 'form-control', placeholder: 'Write a friendly greeting...', data: { autoresize: true }
+          = g.text_area :body, class: 'form-control', placeholder: 'Write a friendly greeting...', data: { autosize: true }
