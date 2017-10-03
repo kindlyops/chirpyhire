@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003185714) do
+ActiveRecord::Schema.define(version: 20171003200136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 20171003185714) do
     t.string "nickname"
     t.bigint "person_id"
     t.boolean "daily_email", default: true, null: false
+    t.boolean "contact_ready", default: true, null: false
+    t.boolean "contact_waiting", default: true, null: false
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"

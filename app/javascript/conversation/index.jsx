@@ -157,6 +157,7 @@ class Conversation extends React.Component {
   }
 
   _partsReceived(receivedPart) {
+    $.get(this.partsUrl(this.props.conversation.id));
     this.setState({
       parts: this.state.parts.concat([receivedPart])
     });

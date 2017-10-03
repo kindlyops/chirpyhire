@@ -21,6 +21,16 @@
                 = content_for :validation_errors do
                   = render partial: "common/validation_errors", locals: { model: @account }
                 .form-group
+                  strong = f.label :contact_ready, class: "form-check-label small-uppercase" do
+                    = f.check_box :contact_ready, class: "form-check-input"
+                    | Candidate Ready Alerts
+                  small.form-text.text-muted Get alerted when candidates are ready for review.
+                .form-group
+                  strong = f.label :contact_waiting, class: "form-check-label small-uppercase" do
+                    = f.check_box :contact_waiting, class: "form-check-input"
+                    | Candidate Waiting Alerts
+                  small.form-text.text-muted Get alerted when candidates are waiting for assistance.
+                .form-group
                   strong = f.label :daily_email, class: "form-check-label small-uppercase" do
                     = f.check_box :daily_email, class: "form-check-input"
                     | Daily email
