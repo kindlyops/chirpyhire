@@ -49,7 +49,7 @@ class BillingClerk
   end
 
   def next_plan_id
-    Plan.order(:stripe_id).last.stripe_id + 1
+    (Plan.all.sort_by { |p| p.stripe_id.to_i }.last.stripe_id.to_i + 1).to_s
   end
 
   def stripe_subscription
