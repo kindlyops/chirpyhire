@@ -23,7 +23,7 @@
                   i.fa.fa-check.mr-2
                   | Save
           = render partial: "engage/auto/bots/greeting", locals: { f: f, greeting: @bot.greeting }
-          #questions
+          #questions.sortable
             = f.fields_for :questions, @bot.ranked_questions do |q|
               = render partial: "engage/auto/bots/question", locals: { f: q }
           #goals

@@ -6,6 +6,10 @@
 @import "select2";
 @import "select2-bootstrap-theme";
 
+a[role='button'] {
+  cursor: pointer;
+}
+
 body {
   &.devise {
     #app {
