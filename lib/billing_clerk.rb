@@ -1,18 +1,16 @@
 class BillingClerk
-  def self.call(invoice)
-    new(invoice).call
+  def self.call(subscription)
+    new(subscription).call
   end
 
-  def initialize(invoice)
-    @invoice = invoice
+  def initialize(subscription)
+    @subscription = subscription
   end
 
-  attr_reader :invoice
-  delegate :subscription, :organization, to: :invoice
+  attr_reader :subscription
+  delegate :organization, to: :subscription
 
   def call
-    return if non_standard_invoice?
-
     item_id = stripe_subscription.items.data[0].id
     items = [{
       id: item_id,
@@ -20,10 +18,6 @@ class BillingClerk
     }]
     stripe_subscription.items = items
     stripe_subscription.save
-  end
-
-  def non_standard_invoice?
-    subscription.blank? || organization.invoices.one?
   end
 
   def plan
