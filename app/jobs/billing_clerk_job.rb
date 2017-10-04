@@ -1,5 +1,5 @@
 class BillingClerkJob < ApplicationJob
-  def perform(invoice)
-    BillingClerk.call(invoice)
+  def perform(subscription)
+    BillingClerk.call(subscription)
   end
 end
