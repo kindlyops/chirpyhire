@@ -22,4 +22,3 @@ link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="style
 = javascript_include_tag 'application'
 script async==!Rails.env.test? defer=true type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=#{ENV.fetch('GOOGLE_PLACES_KEY')}&libraries=places&callback=initAutocompletes"
 = favicon_link_tag 'favicon.ico'
-= render "layouts/heap/script"

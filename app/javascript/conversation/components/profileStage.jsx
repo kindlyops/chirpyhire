@@ -24,8 +24,6 @@ class ProfileStage extends React.Component {
       let properties = { 
         name: label, id: value, contact_id: this.props.contact.id 
       };
-      
-      heap.track('Set Candidate Stage', properties);
     });
   }
 
