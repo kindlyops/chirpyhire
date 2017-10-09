@@ -73,6 +73,18 @@ RSpec.describe Bot::GoalTrigger do
                expect(mailer_method).to eq('contact_ready_for_review')
              }.exactly(team.accounts.count).times
       end
+
+      context 'and alerts are off' do
+        before do
+          goal.update(alert: false)
+        end
+
+        it 'does not send an email to the account on the same team only' do
+          expect {
+            subject.call
+          }.not_to have_enqueued_job(ActionMailer::DeliveryJob)
+        end
+      end
     end
 
     it 'broadcasts the contact' do

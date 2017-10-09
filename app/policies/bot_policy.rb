@@ -43,7 +43,7 @@ class BotPolicy < ApplicationPolicy
   end
 
   def goals_attributes
-    %i[body contact_stage_id id _destroy rank]
+    %i[body contact_stage_id id _destroy rank alert]
   end
 
   def no_active_campaigns?
