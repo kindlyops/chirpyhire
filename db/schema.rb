@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009191153) do
+ActiveRecord::Schema.define(version: 20171016132909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -626,6 +626,7 @@ ActiveRecord::Schema.define(version: 20171009191153) do
     t.float "tax_percent"
     t.integer "trial_end"
     t.integer "trial_start"
+    t.boolean "custom", default: false, null: false
     t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
