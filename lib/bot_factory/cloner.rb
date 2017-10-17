@@ -68,7 +68,8 @@ class BotFactory::Cloner
       body: question.body(formatted: false),
       active: question.active,
       type: question.type,
-      rank: question.rank
+      rank: question.rank,
+      deleted_at: question.deleted_at
     ).tap do |cq|
       cloned_bot.actions.create(type: 'QuestionAction', question_id: cq.id)
     end
