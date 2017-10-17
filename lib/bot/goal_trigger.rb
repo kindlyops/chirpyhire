@@ -19,7 +19,6 @@ class Bot::GoalTrigger
     tag_and_broadcast
     notify_team if alert?
     campaign_contact.update(state: :exited)
-    close_conversation
 
     goal.body
   end
@@ -47,10 +46,5 @@ class Bot::GoalTrigger
   def tag_and_broadcast
     goal.tag(contact)
     Broadcaster::Contact.broadcast(contact)
-  end
-
-  def close_conversation
-    message.conversation.close
-    Broadcaster::Conversation.broadcast(message.conversation)
   end
 end
