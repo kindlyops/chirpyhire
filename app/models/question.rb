@@ -12,7 +12,6 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :follow_ups,
                                 reject_if: :all_blank, allow_destroy: true
 
-  validates :follow_ups, presence: true
   validate :unformatted_body
   before_validation :ensure_rank
 

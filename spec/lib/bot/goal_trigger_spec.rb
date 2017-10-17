@@ -29,7 +29,7 @@ RSpec.describe Bot::GoalTrigger do
         subject.call
       }.to change { campaign_contact.state }.from('active').to('exited')
     end
-    
+
     context 'with multiple accounts on the team' do
       let(:accounts) { create_list(:account, rand(1..3), :person, organization: organization) }
       let!(:account) { accounts.last }
