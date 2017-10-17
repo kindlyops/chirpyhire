@@ -68,7 +68,8 @@ class BotFactory::Cloner
       body: question.body(formatted: false),
       active: question.active,
       type: question.type,
-      rank: question.rank
+      rank: question.rank,
+      deleted_at: question.deleted_at
     ).tap do |cq|
       cloned_bot.actions.create(type: 'QuestionAction', question_id: cq.id)
     end
@@ -82,7 +83,7 @@ class BotFactory::Cloner
       cloned_goal = cloned_bot.goals.find_by(
         body: goal.body,
         rank: goal.rank,
-        outcome: goal.outcome,
+        alert: goal.alert,
         contact_stage: goal.contact_stage
       )
 
@@ -93,7 +94,8 @@ class BotFactory::Cloner
         body: question.body(formatted: false),
         active: question.active,
         type: question.type,
-        rank: question.rank
+        rank: question.rank,
+        deleted_at: question.deleted_at
       )
 
       cloned_action = cloned_question.action
