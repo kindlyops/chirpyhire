@@ -95,7 +95,7 @@ class BotFactory::Cloner
         active: question.active,
         type: question.type,
         rank: question.rank,
-        deleted_at: question.deleted_at 
+        deleted_at: question.deleted_at
       )
 
       cloned_action = cloned_question.action
