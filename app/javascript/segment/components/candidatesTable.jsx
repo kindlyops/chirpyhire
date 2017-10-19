@@ -47,11 +47,15 @@ class CandidatesTable extends React.Component {
   }
 
   messageCellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {
-    return (
-      <a href={`/inboxes/${rowData.inbox_id}/conversations/${cellData}`} className='btn btn-outline-primary'>
+    if (cellData) {
+      return (<a href={`/inboxes/${rowData.inbox_id}/conversations/${cellData}`} className='btn btn-outline-primary'>
         <i className='fa fa-comment'></i>
-      </a>
-    )
+      </a>);
+    } else {
+      return (<a href={`/contacts/${rowData.id}/conversations/new`} className='btn btn-outline-primary'>
+        <i className='fa fa-comment'></i>
+      </a>);
+    }
   }
 
   cellRenderer({ cellData, columnData, columnIndex, dataKey, isScrolling, rowData, rowIndex }) {

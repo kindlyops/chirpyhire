@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016132909) do
+ActiveRecord::Schema.define(version: 20171019191203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20171016132909) do
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
+    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true, where: "(state <> 2)"
     t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
     t.index ["contact_id", "phone_number_id"], name: "index_campaign_contacts_on_contact_id_and_phone_number_id", unique: true, where: "(state = 1)"
     t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
