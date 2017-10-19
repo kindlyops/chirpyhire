@@ -114,20 +114,24 @@ RSpec.describe Bot::Receiver do
           campaign_contact.update(state: :exited)
         end
 
-        it 'does not create a campaign contact' do
+        it 'does create a campaign contact' do
+          allow(subject).to receive(:reply)
+
           expect {
             subject.call
-          }.not_to change { contact.reload.campaigns.count }
+          }.to change { contact.reload.campaigns.count }.by(1)
         end
 
         it 'updates the conversation_part to be tied to the campaign' do
+          allow(subject).to receive(:reply)
+
           expect {
             subject.call
           }.to change { message.conversation_part.reload.campaign }.from(nil).to(campaign)
         end
 
-        it 'does not reply' do
-          expect(subject).not_to receive(:reply)
+        it 'does reply' do
+          expect(subject).to receive(:reply)
 
           subject.call
         end

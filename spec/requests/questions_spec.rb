@@ -135,28 +135,6 @@ RSpec.describe 'Questions' do
           }.to change { FollowUp.count }.by(2)
         end
       end
-
-      context 'without follow ups' do
-        let(:params) do
-          {
-            question: {
-              body: Faker::Lorem.sentence
-            }
-          }
-        end
-
-        it 'does not create a question' do
-          expect {
-            post engage_auto_bot_questions_path(bot), params: params
-          }.not_to change { bot.reload.questions.count }
-        end
-
-        it 'does not create a bot action' do
-          expect {
-            post engage_auto_bot_questions_path(bot), params: params
-          }.not_to change { bot.reload.actions.count }
-        end
-      end
     end
 
     context 'bot active' do
