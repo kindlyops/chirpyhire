@@ -12,7 +12,6 @@ class Bot::Receiver
 
   def call
     return if campaign.paused?
-
     conversation_part.update!(campaign: campaign_contact.campaign)
     return if campaign_contact.exited?
 
@@ -26,7 +25,7 @@ class Bot::Receiver
   end
 
   def existing_campaign_contact
-    campaign_contacts.find_by(campaign: campaign)
+    campaign_contacts.where.not(state: :exited).find_by(campaign: campaign)
   end
 
   def pending_campaign_contact

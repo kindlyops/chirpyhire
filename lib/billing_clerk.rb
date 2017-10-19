@@ -11,6 +11,8 @@ class BillingClerk
   delegate :organization, to: :subscription
 
   def call
+    return if subscription.custom?
+
     item_id = stripe_subscription.items.data[0].id
     items = [{
       id: item_id,

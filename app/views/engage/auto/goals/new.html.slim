@@ -26,6 +26,11 @@
                 h6.card-subtitle.mb-3.text-muted Create a meaningful message to end the bot conversation for candidates who reach this goal.
                 .card-text
                   = f.text_area :body, required: true, class: 'form-control', placeholder: 'Write a meaningful message...', data: { autosize: true }
+              .form-check.mb-3
+                = f.label :alert, class: 'form-check-label' do
+                  = f.check_box :alert, class: 'form-check-input'
+                  strong.d-inline.mr-1 Email Alert:
+                  span.text-muted Send an email to the team everytime a candidate reaches this goal.
               .form-group
                 = link_to engage_auto_bot_path(@bot), class: 'btn btn-secondary mr-2', role: 'button' do
                     i.fa.fa-arrow-left.mr-2

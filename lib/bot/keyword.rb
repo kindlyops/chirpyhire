@@ -11,11 +11,7 @@ class Bot::Keyword
   delegate :campaigns, to: :bot
 
   def activated?
-    no_prior_campaign? && match.present?
-  end
-
-  def no_prior_campaign?
-    campaigns.merge(contact.campaigns).empty?
+    match.present?
   end
 
   def match

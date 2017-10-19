@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003200136) do
+ActiveRecord::Schema.define(version: 20171019191203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20171003200136) do
     t.integer "state", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true
+    t.index ["campaign_id", "contact_id"], name: "index_campaign_contacts_on_campaign_id_and_contact_id", unique: true, where: "(state <> 2)"
     t.index ["campaign_id"], name: "index_campaign_contacts_on_campaign_id"
     t.index ["contact_id", "phone_number_id"], name: "index_campaign_contacts_on_contact_id_and_phone_number_id", unique: true, where: "(state = 1)"
     t.index ["contact_id"], name: "index_campaign_contacts_on_contact_id"
@@ -292,6 +292,7 @@ ActiveRecord::Schema.define(version: 20171003200136) do
     t.datetime "updated_at", null: false
     t.bigint "contact_stage_id"
     t.datetime "deleted_at"
+    t.boolean "alert", default: true, null: false
     t.index ["bot_id"], name: "index_goals_on_bot_id"
     t.index ["contact_stage_id"], name: "index_goals_on_contact_stage_id"
     t.index ["deleted_at"], name: "index_goals_on_deleted_at"
@@ -625,6 +626,7 @@ ActiveRecord::Schema.define(version: 20171003200136) do
     t.float "tax_percent"
     t.integer "trial_end"
     t.integer "trial_start"
+    t.boolean "custom", default: false, null: false
     t.index ["customer"], name: "index_subscriptions_on_customer"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
     t.index ["stripe_id"], name: "index_subscriptions_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"

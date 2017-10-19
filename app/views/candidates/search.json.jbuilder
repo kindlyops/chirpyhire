@@ -10,8 +10,8 @@ json.candidates candidates do |candidate|
   json.last_seen_at_ago candidate.last_active_at.time_ago_format
   json.first_seen_at candidate.joined_at.to_s
   json.first_seen_at_ago candidate.joined_at.time_ago_format
-  json.current_conversation_id candidate.current_conversation.id
-  json.inbox_id candidate.current_conversation.inbox_id
+  json.current_conversation_id candidate.current_conversation&.id
+  json.inbox_id candidate.current_conversation&.inbox_id
   json.hero_pattern_classes candidate.hero_pattern_classes
   json.stage candidate.stage_name
   json.source candidate.source

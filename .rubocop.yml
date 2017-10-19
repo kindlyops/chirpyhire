@@ -13,6 +13,7 @@ AllCops:
     - 'lib/middleware/sabayon.rb'
     - 'node_modules/**/*'
     - 'lib/subscription/price.rb'
+    - 'lib/bot_factory/cloner.rb'
 
 Lint/AmbiguousBlockAssociation:
   Exclude:

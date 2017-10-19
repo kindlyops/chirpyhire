@@ -14,7 +14,6 @@ class JobsController < ApplicationController
       @candidate.person = Person.create
       @candidate.subscribed = true
       @candidate.save
-      IceBreaker.call(@candidate, organization.phone_numbers.first)
       redirect_to candidate_thanks_path(@candidate)
     else
       render :show

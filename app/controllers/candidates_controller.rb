@@ -18,7 +18,6 @@ class CandidatesController < ApplicationController
       @candidate.person = Person.create
       @candidate.subscribed = true
       @candidate.save
-      IceBreaker.call(@candidate, current_organization.phone_numbers.first)
       redirect_to candidates_segment_path(id: 'all')
     else
       render :new

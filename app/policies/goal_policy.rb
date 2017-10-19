@@ -12,7 +12,7 @@ class GoalPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[body contact_stage_id id]
+    %i[body contact_stage_id id alert]
   end
 
   class Scope < ApplicationPolicy::Scope

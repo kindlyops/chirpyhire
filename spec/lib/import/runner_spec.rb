@@ -99,12 +99,6 @@ RSpec.describe Import::Runner do
                   }.to change { organization.reload.contacts.subscribed.count }.by(1)
                 end
 
-                it 'creates a conversation' do
-                  expect {
-                    subject.call
-                  }.to change { organization.reload.conversations.count }.by(1)
-                end
-
                 it 'creates a created contacts import' do
                   expect {
                     subject.call
@@ -145,12 +139,6 @@ RSpec.describe Import::Runner do
                   expect {
                     subject.call
                   }.to change { organization.reload.contacts.subscribed.count }.by(1)
-                end
-
-                it 'creates a conversation' do
-                  expect {
-                    subject.call
-                  }.to change { organization.reload.conversations.count }.by(1)
                 end
 
                 it 'creates a created contacts import' do
@@ -237,12 +225,6 @@ RSpec.describe Import::Runner do
                 end
               end
 
-              it 'creates a conversation' do
-                expect {
-                  subject.call
-                }.to change { organization.reload.conversations.count }.by(1)
-              end
-
               it 'creates a created contacts import' do
                 expect {
                   subject.call
@@ -289,12 +271,6 @@ RSpec.describe Import::Runner do
             expect {
               subject.call
             }.to change { organization.reload.contacts.subscribed.count }.by(2)
-          end
-
-          it 'creates two conversations' do
-            expect {
-              subject.call
-            }.to change { organization.reload.conversations.count }.by(2)
           end
 
           it 'creates two created contacts import' do

@@ -13,12 +13,12 @@ class Bot::GoalTrigger
   delegate :contact, :phone_number, to: :campaign_contact
   delegate :organization, to: :contact
   delegate :team, to: :assignment_rule
+  delegate :alert?, to: :goal
 
   def call
     tag_and_broadcast
-    notify_team
+    notify_team if alert?
     campaign_contact.update(state: :exited)
-    close_conversation
 
     goal.body
   end
@@ -46,10 +46,5 @@ class Bot::GoalTrigger
   def tag_and_broadcast
     goal.tag(contact)
     Broadcaster::Contact.broadcast(contact)
-  end
-
-  def close_conversation
-    message.conversation.close
-    Broadcaster::Conversation.broadcast(message.conversation)
   end
 end
