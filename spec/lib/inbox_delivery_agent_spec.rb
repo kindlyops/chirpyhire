@@ -5,11 +5,11 @@ RSpec.describe InboxDeliveryAgent do
     subject { InboxDeliveryAgent.new(inbox, message) }
 
     context 'with a bot tied to the inbox' do
-      let(:organization) { create(:organization) }
+      let(:organization) { create(:organization, :team_with_phone_number_and_recruiting_ad_and_inbox) }
       let(:bot) { create(:bot, organization: organization) }
-      let(:bot_campaign) { create(:bot_campaign, bot: bot) }
+      let!(:inbox) { organization.teams.first.inbox }
+      let(:bot_campaign) { inbox.bot_campaigns.first }
       let(:campaign) { bot_campaign.campaign }
-      let!(:inbox) { bot_campaign.inbox }
       let(:contact) { create(:contact, organization: organization) }
       let(:conversation) { create(:conversation, contact: contact, inbox: inbox) }
 
@@ -41,16 +41,21 @@ RSpec.describe InboxDeliveryAgent do
         end
 
         context 'and the message would trigger the bot' do
-          let!(:message) { create(:message, :conversation_part, body: 'start', organization: organization, conversation: conversation) }
+          let!(:message) {
+            create(:message, :conversation_part,
+                   to: organization.phone_numbers.first.phone_number,
+                   body: 'start', organization: organization,
+                   conversation: conversation)
+          }
 
-          it 'calls ReadReceiptsCreator' do
-            expect(ReadReceiptsCreator).to receive(:call)
+          it 'does not calls ReadReceiptsCreator' do
+            expect(ReadReceiptsCreator).not_to receive(:call)
 
             subject.call
           end
 
-          it 'does not call Bot::Receiver' do
-            expect(Bot::Receiver).not_to receive(:call)
+          it 'does call Bot::Receiver' do
+            expect(Bot::Receiver).to receive(:call)
 
             subject.call
           end
