@@ -20,14 +20,18 @@ class Import::Runner::ContactRunner
 
   def create_contact
     contacts.create(create_params).tap do |contact|
-      import.contacts_imports.create(contact: contact, updated: false)
+      create_import_contact(contact) if contact.persisted?
     end
   end
 
   def update_contact
-    existing_contact.update(update_params).tap do
-      import.contacts_imports.create(contact: existing_contact, updated: true)
+    existing_contact.update(update_params).tap do |saved|
+      create_import_contact(existing_contact, updated: true) if saved
     end
+  end
+
+  def create_import_contact(contact, updated: false)
+    import.contacts_imports.create(contact: contact, updated: updated)
   end
 
   def existing_contact
