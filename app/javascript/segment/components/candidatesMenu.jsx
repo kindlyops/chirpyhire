@@ -38,7 +38,7 @@ class CandidatesMenu extends React.Component {
   isMessageDisabled() {
     let isNone = this.props.total_count === 0;
     let isAll = this.props.total_count === this.props.contact_total_count;
-    return isNone || (isAll && !this.isSelected());
+    return isNone || (isAll && !this.isSelected()) || this.isDisabled();
   }
 
   inflect(count, word) {
