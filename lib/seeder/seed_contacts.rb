@@ -11,9 +11,9 @@ class Seeder::SeedContacts
     return if organization.contacts.exists?
 
     Seeder::SeedContact.call(account, demo_contact)
-    contacts.each do |contact|
-      Seeder::SeedContact.call(account, contact)
-    end
+    # contacts.each do |contact|
+    #   Seeder::SeedContact.call(account, contact)
+    # end
   end
 
   attr_reader :account
