@@ -6,7 +6,7 @@ RSpec.describe InboxDeliveryAgent do
 
     context 'with a bot tied to the inbox' do
       let(:organization) { create(:organization, :team_with_phone_number_and_recruiting_ad_and_inbox) }
-      let(:bot) { create(:bot, organization: organization) }
+      let(:bot) { organization.bots.first }
       let!(:inbox) { organization.teams.first.inbox }
       let(:bot_campaign) { inbox.bot_campaigns.first }
       let(:campaign) { bot_campaign.campaign }

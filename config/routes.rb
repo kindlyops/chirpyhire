@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     resources :notes, only: %i[index create update destroy]
   end
 
-  resources :inboxes, only: %i[index] do
+  resources :inboxes, only: %i[index], defaults: { format: :json } do
     resources :conversations, only: %i[index show update]
     resource :conversations_count, only: %i[show]
   end
