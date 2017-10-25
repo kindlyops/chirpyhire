@@ -30,7 +30,7 @@ module Congaree
     config.active_job.queue_adapter = :sidekiq
     config.nav_lynx.selected_class = 'active'
     config.assets.precompile += %w[email.css invoice.css]
-    config.middleware.use Rack::Affiliates, { ttl: 3.months, domain: '.chirpyhire.com' }
+    config.middleware.use Rack::Affiliates, ttl: 3.months, domain: '.chirpyhire.com'
 
     config.cache_store = :memory_store
   end

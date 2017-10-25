@@ -1,5 +1,5 @@
 class Registrar
-  def initialize(account, referrer=nil)
+  def initialize(account, referrer = nil)
     @account = account
     @referrer = referrer
   end
