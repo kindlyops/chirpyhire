@@ -8,6 +8,10 @@ FactoryGirl.define do
       role :owner
     end
 
+    trait :affiliate do
+      affiliate_tag { 'tag' }
+    end
+
     trait :person do
       after(:create) do |account|
         account.update(person: create(:person))

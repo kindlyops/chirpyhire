@@ -53,6 +53,15 @@ RSpec.describe 'Registration' do
         }
       }
 
+      context 'with an affiliate tag' do
+        let(:affiliate) { create(:account, :affiliate) }
+
+        it 'logs the affilate as the referrer to the org' do
+          post account_registration_path, params: params, headers: { 'affiliate.tag' => affiliate.affiliate_tag }
+          expect(Organization.last.referrer).to eq(affiliate)
+        end
+      end
+
       it 'progress to recruiting ad' do
         post account_registration_path, params: params
         expect(response).to redirect_to recruiting_ads_path

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171019191203) do
+ActiveRecord::Schema.define(version: 20171025152048) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20171019191203) do
     t.boolean "daily_email", default: true, null: false
     t.boolean "contact_ready", default: true, null: false
     t.boolean "contact_waiting", default: true, null: false
+    t.string "affiliate_tag"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["invitation_token"], name: "index_accounts_on_invitation_token", unique: true
     t.index ["invitations_count"], name: "index_accounts_on_invitations_count"
@@ -493,6 +494,7 @@ ActiveRecord::Schema.define(version: 20171019191203) do
     t.string "size"
     t.string "forwarding_phone_number"
     t.boolean "invoice_notification", default: true
+    t.integer "referrer_id"
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
     t.index ["stripe_id"], name: "index_organizations_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end
@@ -744,6 +746,7 @@ ActiveRecord::Schema.define(version: 20171019191203) do
   add_foreign_key "notes", "accounts"
   add_foreign_key "notes", "contacts"
   add_foreign_key "organizations", "accounts", column: "recruiter_id"
+  add_foreign_key "organizations", "accounts", column: "referrer_id"
   add_foreign_key "payment_cards", "organizations"
   add_foreign_key "people", "accounts"
   add_foreign_key "people", "zipcodes"

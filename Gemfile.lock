@@ -328,6 +328,8 @@ GEM
       pundit (~> 1.0, >= 1.0.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.3)
+    rack-affiliates (0.4.0)
+      rack
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
     rack-pjax (1.0.0)
@@ -554,6 +556,7 @@ DEPENDENCIES
   puma (~> 3.7)
   pundit!
   pundit-matchers (~> 1.0.2)
+  rack-affiliates
   rails (~> 5.1.4)
   rails-assets-clipboard (~> 1.6.1)!
   rails-assets-lodash (~> 4.17.4)!
