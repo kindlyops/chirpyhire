@@ -23,6 +23,7 @@ class Organization < ApplicationRecord
   has_one :subscription
 
   belongs_to :recruiter, class_name: 'Account'
+  belongs_to :referrer, class_name: 'Account', optional: true
   has_one :recruiting_ad
 
   accepts_nested_attributes_for :teams, reject_if: :all_blank

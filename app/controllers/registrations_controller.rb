@@ -7,10 +7,18 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    super { |account| Registrar.new(account).register }
+    super { |account| Registrar.new(account, referrer).register }
   end
 
   private
+
+  def referrer
+    Account.find_by(affiliate_tag: affiliate_tag) if affiliate_tag.present?
+  end
+
+  def affiliate_tag
+    request.env['affiliate.tag']
+  end
 
   def sign_up_params
     params.require(resource_name).permit(attributes)

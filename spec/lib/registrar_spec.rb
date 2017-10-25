@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Registrar do
   describe 'register' do
-    subject { Registrar.new(account) }
+    let!(:referrer) { nil }
+    subject { Registrar.new(account, referrer) }
     let(:organization) { create(:organization, :team_without_inbox) }
 
     before do
@@ -153,6 +154,16 @@ RSpec.describe Registrar do
         expect {
           subject.register
         }.not_to have_enqueued_job(NewTeamNotificationJob)
+      end
+
+      context 'with a referrer' do
+        let!(:referrer) { create(:account) }
+
+        it 'sets the referrer on the organization' do
+          subject.register
+
+          expect(organization.referrer).to eq(referrer)
+        end
       end
     end
   end

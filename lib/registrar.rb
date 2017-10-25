@@ -1,6 +1,7 @@
 class Registrar
-  def initialize(account)
+  def initialize(account, referrer=nil)
     @account = account
+    @referrer = referrer
   end
 
   def register
@@ -15,7 +16,7 @@ class Registrar
 
   private
 
-  attr_reader :account
+  attr_reader :account, :referrer
 
   delegate :location, :contact_stages, to: :organization
 
@@ -38,6 +39,7 @@ class Registrar
 
   def setup_organization
     organization.update(billing_email: account.email)
+    organization.update(referrer: referrer) if referrer.present?
     organization.create_subscription(trial_ends_at: trial_length)
   end
 
