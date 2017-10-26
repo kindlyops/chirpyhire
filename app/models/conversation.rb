@@ -28,7 +28,7 @@ class Conversation < ApplicationRecord
   end
 
   def self.by_recent_part
-    order(last_conversation_part_created_at: :desc)
+    order('conversations.last_conversation_part_created_at DESC NULLS LAST')
   end
 
   def open?
