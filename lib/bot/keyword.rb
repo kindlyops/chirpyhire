@@ -1,6 +1,7 @@
 class Bot::Keyword
   KEYWORD = %w[START].freeze
-
+  LENGTH = 8
+  
   def initialize(bot, message)
     @bot = bot
     @message = message
@@ -17,7 +18,7 @@ class Bot::Keyword
   def match
     @match ||= begin
       KEYWORD.detect do |opt_in|
-        clean(body).include?(opt_in)
+        clean(body).length <= LENGTH && clean(body).include?(opt_in)
       end
     end
   end
