@@ -44,10 +44,20 @@ RSpec.describe Bot::Keyword do
       end
 
       context 'with additional text' do
-        let(:body) { 'START to do the limbo?' }
+        context 'more than 8 characters' do
+          let(:body) { 'START to do the limbo?' }
 
-        it 'is true' do
-          expect(subject.activated?).to eq(true)
+          it 'is false' do
+            expect(subject.activated?).to eq(false)
+          end
+        end
+
+        context 'fewer than 8 characters' do
+          let(:body) { 'START t' }
+
+          it 'is true' do
+            expect(subject.activated?).to eq(true)
+          end
         end
       end
     end
