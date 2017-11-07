@@ -70,6 +70,6 @@
       .col
         .justify-content-center.d-flex
           - if @import.complete?
-            = link_to "Finish", candidates_segment_path(id: 'active'), class: 'btn btn-primary btn-lg mt-4'
+            = link_to "Finish", candidates_segment_path(id: 'all'), class: 'btn btn-primary btn-lg mt-4'
           - else
             = link_to "Refresh", import_csv_summary_path(@import), class: 'btn btn-default btn-lg mt-4'
