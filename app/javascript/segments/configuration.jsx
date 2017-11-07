@@ -22,7 +22,7 @@ const activeSegment = {
         icon: 'fa-bolt',
         form: {
           predicates: [
-            { type: 'date', attribute: 'last_reply_at', value: 7, comparison: 'lt' }
+            { type: 'date', attribute: 'last_reply_at', value: 30, comparison: 'lt' }
           ]
         }
       };

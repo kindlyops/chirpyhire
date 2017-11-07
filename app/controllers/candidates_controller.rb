@@ -18,7 +18,7 @@ class CandidatesController < ApplicationController
       @candidate.person = Person.create
       @candidate.subscribed = true
       @candidate.save
-      redirect_to candidates_segment_path(id: 'all')
+      redirect_to candidates_segment_path(id: 'active')
     else
       render :new
     end
@@ -34,7 +34,7 @@ class CandidatesController < ApplicationController
   end
 
   def index
-    redirect_to candidates_segment_path(id: 'all')
+    redirect_to candidates_segment_path(id: 'active')
   end
 
   private
