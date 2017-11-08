@@ -1,4 +1,5 @@
 class Subscription < ApplicationRecord
+  BILLING_UPCOMING_PERIOD = 3.days
   belongs_to :organization
   has_many :invoices, primary_key: :subscription, foreign_key: :stripe_id
 
@@ -8,6 +9,11 @@ class Subscription < ApplicationRecord
 
   def activate
     update(internal_status: :active)
+  end
+
+  def current_engaged_start
+    return 30.days.ago if current_period_start.blank?
+    DateTime.strptime(current_period_start.to_s, '%s') - BILLING_UPCOMING_PERIOD
   end
 
   def cancel
