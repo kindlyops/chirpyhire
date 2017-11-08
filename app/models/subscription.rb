@@ -29,6 +29,8 @@ class Subscription < ApplicationRecord
   end
 
   def engaged_contact_count
-    @engaged_contact_count ||= organization.contacts.engaged.count
+    @engaged_contact_count ||= begin
+      organization.contacts.engaged(current_engaged_start).count
+    end
   end
 end

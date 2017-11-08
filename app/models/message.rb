@@ -16,8 +16,8 @@ class Message < ApplicationRecord
   delegate :handle, to: :sender, prefix: true
   delegate :contact, :conversation, to: :conversation_part, allow_nil: true
 
-  def self.engaged
-    where('messages.created_at >= ?', subscription.current_engaged_start)
+  def self.engaged(since)
+    where('messages.created_at >= ?', since)
   end
 
   def self.by_recency

@@ -41,6 +41,10 @@ class Organization < ApplicationRecord
     !invoice_notification?
   end
 
+  def contacts_engaged
+    contacts.engaged(subscription.current_engaged_start)
+  end
+
   def recent_bot
     bots.recent.first
   end
