@@ -2,6 +2,7 @@ class Message < ApplicationRecord
   belongs_to :organization
   belongs_to :sender, class_name: 'Person', optional: true
   belongs_to :recipient, class_name: 'Person', optional: true
+  delegate :subscription, to: :organization
 
   has_many :read_receipts
   has_one :manual_message_participant
@@ -15,8 +16,8 @@ class Message < ApplicationRecord
   delegate :handle, to: :sender, prefix: true
   delegate :contact, :conversation, to: :conversation_part, allow_nil: true
 
-  def self.engaged
-    where('messages.created_at >= ?', 30.days.ago)
+  def self.engaged(since)
+    where('messages.created_at >= ?', since)
   end
 
   def self.by_recency

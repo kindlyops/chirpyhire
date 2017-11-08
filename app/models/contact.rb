@@ -53,8 +53,10 @@ class Contact < ApplicationRecord
     where('last_reply_at < ?', 30.days.ago)
   end
 
-  def self.engaged
-    joins(conversations: [parts: :message]).merge(Message.engaged).distinct
+  def self.engaged(since)
+    joins(conversations: [parts: :message])
+      .merge(Message.engaged(since))
+      .distinct
   end
 
   def self.recently_replied

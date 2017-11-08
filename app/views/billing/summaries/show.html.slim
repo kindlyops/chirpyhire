@@ -68,7 +68,7 @@
                       strong.candidates--number = @organization.subscription.tier
                       '
                       strong engaged candidates
-                    input.active-candidates-slider role="button" type="range" min="200" max="4000" value==@organization.contacts.engaged.count step="200"
+                    input.active-candidates-slider role="button" type="range" min="200" max="4000" value==@organization.contacts_engaged.count step="200"
                     hr
                     p.card-text.d-flex.justify-content-between
                       span Team members
