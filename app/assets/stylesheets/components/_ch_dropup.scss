@@ -40,12 +40,16 @@
     display: flex;
     width: 100%;
 
-    &:hover {
+    .cursor-help {
+      cursor: help;
+    }
+
+    a:hover {
       background: #effaff;
       cursor: pointer;
     }
 
-    &:not(:first-of-type) {
+    &.hover {
       &:hover {
         color: #000;
         background: #effaff;

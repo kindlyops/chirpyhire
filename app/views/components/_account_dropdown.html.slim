@@ -14,15 +14,24 @@
           .number = team.phone_number.phony_formatted
     .account-status-menu-divider
     .ch-dropup-item
+      span.d-flex.justify-content-between.w-100
+        span
+          | Engaged Candidates:
+          '
+          strong = current_organization.contacts_engaged.count
+        span.cursor-help href="#" data-toggle="tooltip" title="Candidates who have sent or received a message since #{current_organization.subscription.current_engaged_start.strftime("%b #{current_organization.subscription.current_engaged_start.day.ordinalize}, %Y")}." data-placement="top"
+          i.fa.fa-question-circle
+    .account-status-menu-divider
+    .ch-dropup-item.hover
       = link_to "Settings", account_path(current_account)
-    .ch-dropup-item
+    .ch-dropup-item.hover
       = link_to organization_jobs_path(current_organization), target: '_blank' do
         | Jobs Page
         i.fa.ml-2.fa-external-link
     - if impersonating?
-      .ch-dropup-item
+      .ch-dropup-item.hover
         = link_to "Stop Impersonating", stop_impersonating_accounts_path, method: :post, title: "Impersonating #{current_account.email}"
     - else
-      .ch-dropup-item
+      .ch-dropup-item.hover
         = link_to "Sign Out", destroy_account_session_path, method: :delete, id: 'sign-out'
 
