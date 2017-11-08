@@ -36,7 +36,7 @@
               h3.small-uppercase Number of Engaged Candidates
               strong
                 i.fa.fa-users.mr-2
-                span = pluralize(@organization.subscription.tier, 'candidate')
+                span = pluralize(@organization.contacts_engaged.count, 'candidate')
             .mb-2
               h3.small-uppercase Total Price
               strong
