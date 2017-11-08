@@ -1,7 +1,7 @@
 class Bot::Keyword
   KEYWORD = %w[START].freeze
   LENGTH = 8
-  
+
   def initialize(bot, message)
     @bot = bot
     @message = message
