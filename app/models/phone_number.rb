@@ -9,4 +9,8 @@ class PhoneNumber < ApplicationRecord
   def self.not_forwarding
     where(forwarding_phone_number: nil)
   end
+
+  def select_label
+    "#{assignment_rule.inbox.name} / #{phone_number.phony_formatted}"
+  end
 end

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :contact_stages
 
   resources :contacts, only: %i[show update] do
-    resources :conversations, only: :new, controller: 'contacts/conversations'
+    resources :conversations, only: %i[new create], controller: 'contacts/conversations'
     resources :notes, only: %i[index create update destroy]
   end
 

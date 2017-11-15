@@ -3,8 +3,13 @@ class ConversationPolicy < ApplicationPolicy
     show?
   end
 
+  def create?
+    record.new_record?
+  end
+
   def permitted_attributes
-    %i[state closed_at].push(contact_attributes: contact_attributes)
+    %i[phone_number_id state closed_at]
+      .push(contact_attributes: contact_attributes)
   end
 
   def contact_attributes

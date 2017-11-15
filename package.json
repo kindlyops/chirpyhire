@@ -1,6 +1,9 @@
 {
   "name": "congaree",
   "private": true,
+  "engines": {
+    "node": "8.9.1"
+  },
   "dependencies": {
     "autoprefixer": "^7.1.0",
     "babel-core": "^6.24.1",
@@ -35,7 +38,7 @@
     "react-dom": "^15.6.1",
     "react-js-pagination": "^2.1.0",
     "react-notification": "^6.7.1",
-    "react-router-dom": "next",
+    "react-router-dom": "4.1.1",
     "react-select": "1.0.0-rc.5",
     "react-textarea-autosize": "^5.1.0",
     "react-toggle": "^4.0.1",
