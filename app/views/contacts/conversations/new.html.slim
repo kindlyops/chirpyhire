@@ -1,0 +1,29 @@
+= title "New Conversation · ChirpyHire"
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 New Conversation
+  .ch--main
+    .ch--sub-main
+      .ch--sub-main-content
+        .row
+          .col-lg-3.col-md-2.col-sm-2.col-0
+          .col-lg-6.col-md-8.col-sm-8.col-12
+            .card
+              .card-body
+                h4.card-title
+                  | Quickly start a new conversation with 
+                  = @conversation.contact.handle
+                  '. 
+                = form_for @conversation, url: contact_conversations_path(@conversation.contact) do |f|
+                  = content_for :validation_errors do
+                    = render partial: "common/validation_errors", locals: { model: @conversation }
+                  .form-group
+                    = f.label :phone_number_id, 'Which team / phone number do you want to use?', class: 'col-form-label', 'aria-describedby' => 'phoneNumberHelp'
+                    = f.collection_select :phone_number_id, current_organization.phone_numbers, :id, :select_label, { include_blank: false }, class: 'form-control'
+                    small#phoneNumberHelp.form-text.text-muted Select the phone number and team you want the conversation to be tied to.
+
+                  .form-group
+                    = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
+                        i.fa.fa-check.mr-2
+                        | Create
