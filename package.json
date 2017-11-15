@@ -1,9 +1,6 @@
 {
   "name": "congaree",
   "private": true,
-  "engines": {
-    "node": "8.9.1"
-  },
   "dependencies": {
     "autoprefixer": "^7.1.0",
     "babel-core": "^6.24.1",
