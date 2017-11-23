@@ -148,7 +148,7 @@ class Segment extends React.Component {
 
   exportCSV() {
     $.ajax(this.ajaxConfig('/candidates/search.csv', 'text')).then(data => {
-      let filename = `caregivers-${Date.now()}.csv`;
+      let filename = `candidates-${Date.now()}.csv`;
       let csv = new Blob([data], { type: 'text/csv;charset=utf-8' });
 
       if (navigator.msSaveBlob) {

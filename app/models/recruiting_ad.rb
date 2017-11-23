@@ -10,7 +10,7 @@ class RecruitingAd < ApplicationRecord
 
   def self.body(team, phone_number)
     <<~BODY
-      #{team.organization_name} is hiring Caregivers! Our CNAs are as important to us as our clients. Openings PT/FT for M-F day shifts and weekends.
+      #{team.organization_name} is hiring! Our employees are as important to us as our clients. Openings PT/FT for M-F day shifts and weekends.
 
       *********************************
 
@@ -18,7 +18,7 @@ class RecruitingAd < ApplicationRecord
 
       *********************************
 
-      If you are passionate about helping the elderly remain safe and comfortable at home, enjoy working independently and are seeking a personal challenge, contact us to discuss our competitive wages, continuing education program and flexible scheduling opportunities.
+      Contact us to discuss our competitive wages, continuing education program and flexible scheduling opportunities.
     BODY
   end
 end

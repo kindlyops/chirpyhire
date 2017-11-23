@@ -11,7 +11,7 @@ table.body-wrap
           = @resource.invited_by&.first_name || "A member of #{@resource.organization.name}"
           '
           | has invited you to join them on ChirpyHire.
-        p ChirpyHire is the best way to prescreen caregivers.
+        p ChirpyHire is the best way to prescreen candidates.
 
         p.callout
           = link_to "Join the #{@resource.organization.name} Team", accept_invitation_url(@resource, :invitation_token => @token), class: 'btn', target: '_blank'
@@ -21,7 +21,7 @@ table.body-wrap
         p
           | P.S. -- 
         p 
-          .ps As you hire caregivers, don't hesitate to reach out to us with ChirpyHire caregiver stories. We love hearing from you!
+          .ps As you hire candidates, don't hesitate to reach out to us with ChirpyHire candidate stories. We love hearing from you!
 
 
 

@@ -29,7 +29,7 @@
                 .form-group
                   strong = f.label :phone_number, class: "col-form-label small-uppercase", 'aria-describedby' => 'phoneHelp'
                   = f.phone_field :phone_number, value: @account.phone_number&.phony_formatted, class: "form-control"
-                  small#phoneHelp.form-text.text-muted Add your phone number and we'll send you SMS notifications when caregivers text in.
+                  small#phoneHelp.form-text.text-muted Add your phone number and we'll send you SMS notifications when candidates text in.
                 .form-group
                   strong = f.label :bio, "Short Bio / Quote", class: "col-form-label small-uppercase"
                   = f.text_area :bio, placeholder: 'My awesome bio', class: "form-control"

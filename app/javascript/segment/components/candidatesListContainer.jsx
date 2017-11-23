@@ -8,7 +8,7 @@ class CandidatesListContainer extends React.Component {
   empty() {
     return (
       <div className='empty-candidates'>
-        <h3 className='text-muted'>No caregivers found...</h3>
+        <h3 className='text-muted'>No candidates found...</h3>
         <blockquote className='blockquote'>
           <p className='mb-0'>If you can dream it</p>
           <p className='mb-0'>you can do it</p>

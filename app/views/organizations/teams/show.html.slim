@@ -37,7 +37,7 @@
         h2.mb-4 Team profile
         .team-phone-number
           - if @team.phone_number.present?
-              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{@team.name}'s phone number." = @team.phone_number.phony_formatted
+              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage candidates to text START to #{@team.name}'s phone number." = @team.phone_number.phony_formatted
           - else
               span.badge.badge-dark.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
                 | Your phone number
@@ -57,7 +57,7 @@
             .form-group
               strong = f.label :recruiter_id, class: "col-form-label"
               = f.collection_select(:recruiter_id, @team.accounts, :id, :name, { required: true }, { class: "form-control" })
-              small.form-text.text-muted We'll include the recruiter's first name when welcoming caregivers in your team's screening process.
+              small.form-text.text-muted We'll include the recruiter's first name when welcoming candidates in your team's screening process.
             .form-group
               = f.submit "Update team", class: 'btn btn-block btn-lg btn-primary', role: 'button'
         .col-4

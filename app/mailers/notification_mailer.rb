@@ -4,7 +4,7 @@ class NotificationMailer < ApplicationMailer
     @account = account
 
     track user: @account
-    subject = 'Your new caregiver wants to chat 🌟'
+    subject = 'Your new candidate wants to chat 🌟'
     mail(to: @account.email, subject: subject)
   end
 
@@ -13,7 +13,7 @@ class NotificationMailer < ApplicationMailer
     @account = account
 
     track user: @account
-    subject = 'Hurry! Your caregiver is slipping away... ⏰'
+    subject = 'Hurry! Your candidate is slipping away... ⏰'
     mail(to: @account.email, subject: subject)
   end
 

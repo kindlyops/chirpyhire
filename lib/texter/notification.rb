@@ -20,9 +20,9 @@ class Texter::Notification
     <<~body
       Hi #{account.first_name},
 
-      A new caregiver is waiting for you to chat with them.
+      A new candidate is waiting for you to chat with them.
 
-      Chat with Caregiver: #{url}
+      Chat with Candidate: #{url}
     body
   end
 
@@ -30,9 +30,9 @@ class Texter::Notification
     <<~body
       Hi #{account.first_name},
 
-      A caregiver is waiting for your reply. Move quick!
+      A candidate is waiting for your reply. Move quick!
 
-      Chat with Caregiver: #{url}
+      Chat with Candidate: #{url}
     body
   end
 
