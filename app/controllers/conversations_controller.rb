@@ -71,7 +71,7 @@ class ConversationsController < ApplicationController
   end
 
   def billing_notice
-    'Your trial has ended. To chat caregivers please sign up for ChirpyHire.'
+    'Your trial has ended. To chat candidates please sign up for ChirpyHire.'
   end
 
   delegate :canceled?, to: :current_organization

@@ -14,7 +14,7 @@ li.list-group-item
       .team-subdetails
         .team-phone-number
           - if team.phone_number.present?
-              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage caregivers to text START to #{team.name}'s phone number." = team.phone_number.phony_formatted
+              span.badge.badge-primary.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="Encourage candidates to text START to #{team.name}'s phone number." = team.phone_number.phony_formatted
           - else
               span.badge.badge-dark.organization-phone-number data-toggle='tooltip' data-placement='bottom' title="ChirpyHire is hard at work getting a local phone number for you. View it here momentarily."
                 | Your phone number

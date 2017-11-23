@@ -8,7 +8,7 @@ class Candidates extends React.Component {
     return (
       <div className='Platform ch--Page'>
         <div className='ch--Header'>
-          <h1>Caregivers</h1>
+          <h1>Candidates</h1>
         </div>
         <Route path={this.props.match.url + '/segments'} component={Segments} />
       </div>

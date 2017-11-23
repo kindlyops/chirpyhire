@@ -22,7 +22,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-range": "^3.0.3",
-    "node-sass": "^4.5.3",
+    "node-sass": "^4.7.2",
     "path-complete-extname": "^0.1.0",
     "popper.js": "^1.9.9",
     "postcss-loader": "^2.0.5",

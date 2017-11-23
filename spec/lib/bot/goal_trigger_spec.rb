@@ -48,7 +48,7 @@ RSpec.describe Bot::GoalTrigger do
           }.to change { organization.reload.messages.count }.by(1)
 
           expect(Message.last.recipient).to eq(account.person)
-          expect(Message.last.body).to include('A new caregiver is waiting')
+          expect(Message.last.body).to include('A new candidate is waiting')
         end
       end
 
