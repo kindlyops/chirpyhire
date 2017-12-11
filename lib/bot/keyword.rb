@@ -28,6 +28,6 @@ class Bot::Keyword
   end
 
   def remove_non_alphanumerics(string)
-    string.gsub(/[^a-z0-9\s]/i, '')
+    string.lines.first.gsub(/[^a-z0-9\s]/i, '')
   end
 end

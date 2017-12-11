@@ -20,6 +20,13 @@ RSpec.describe Bot::Keyword do
       end
     end
 
+    context 'START newlines as body' do
+      let(:body) { "START.\n\nSignature" }
+      it 'is true' do
+        expect(subject.activated?).to eq(true)
+      end
+    end
+
     context 'YES as body' do
       let(:body) { 'YES' }
       it 'is false' do
