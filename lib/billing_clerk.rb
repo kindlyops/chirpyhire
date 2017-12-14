@@ -11,7 +11,7 @@ class BillingClerk
   delegate :organization, to: :subscription
 
   def call
-    return if subscription.custom?
+    return if subscription.custom? || canceled_or_to_be_canceled?
 
     item_id = stripe_subscription.items.data[0].id
     items = [{
@@ -20,6 +20,10 @@ class BillingClerk
     }]
     stripe_subscription.items = items
     stripe_subscription.save
+  end
+
+  def canceled_or_to_be_canceled?
+    subscription.canceled? || subscription.cancel_at_period_end?
   end
 
   def plan

@@ -7,6 +7,14 @@ class Subscription < ApplicationRecord
     trialing: 0, active: 1, past_due: 2, canceled: 3, unpaid: 4
   }
 
+  def canceled?
+    internal_status == 'canceled' || status == 'canceled'
+  end
+
+  def will_be_canceled?
+    cancel_at_period_end?
+  end
+
   def activate
     update(internal_status: :active)
   end
