@@ -207,6 +207,25 @@ RSpec.describe Import::Runner do
                   subject.call
                 }.to change { import.reload.contacts_imports.updated.count }.by(1)
               end
+
+              context 'tag' do
+                let(:tag) { create(:tag) }
+                before do
+                  import.tags << tag
+                end
+
+                context 'contact already has the tag' do
+                  before do
+                    contact.tags << tag
+                  end
+
+                  it 'is ok' do
+                    expect {
+                      subject.call
+                    }.not_to raise_error
+                  end
+                end
+              end
             end
 
             context 'not tied to existing organization contact' do
