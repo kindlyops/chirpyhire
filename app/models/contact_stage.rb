@@ -29,6 +29,10 @@ class ContactStage < ApplicationRecord
     where(name: 'Hired')
   end
 
+  def self.archived
+    where(name: 'Archived')
+  end
+
   def last_stage?
     organization.contact_stages.last == self
   end

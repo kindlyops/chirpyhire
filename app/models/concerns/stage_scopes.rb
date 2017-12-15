@@ -16,6 +16,10 @@ module StageScopes
       joins(:stage).merge(ContactStage.scheduled)
     end
 
+    def unarchived
+      joins(:stage).merge(ContactStage.archived)
+    end
+
     def not_now
       joins(:stage).merge(ContactStage.not_now)
     end

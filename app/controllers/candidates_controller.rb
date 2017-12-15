@@ -40,7 +40,7 @@ class CandidatesController < ApplicationController
   private
 
   def scope
-    policy_scope(Contact)
+    policy_scope(Contact.unarchived)
   end
 
   def permitted_params
