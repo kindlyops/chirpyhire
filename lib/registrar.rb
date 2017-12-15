@@ -26,6 +26,7 @@ class Registrar
     contact_stages.create(name: 'No Show', rank: 3, editable: false)
     contact_stages.create(name: 'Not Now', rank: 4, editable: false)
     contact_stages.create(name: 'Hired', rank: 5, editable: false)
+    contact_stages.create(name: 'Archived', rank: 6, editable: false)
   end
 
   def trial_length
