@@ -29,6 +29,6 @@ class Seeder::SeedOrganization
   end
 
   def stages
-    ['Potential', 'Scheduled', 'No Show', 'Not Now', 'Hired']
+    ['Potential', 'Scheduled', 'No Show', 'Not Now', 'Hired', 'Archived']
   end
 end

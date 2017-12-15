@@ -17,7 +17,7 @@ module StageScopes
     end
 
     def unarchived
-      joins(:stage).merge(ContactStage.archived)
+      joins(:stage).merge(ContactStage.unarchived)
     end
 
     def not_now
