@@ -9,8 +9,8 @@ class Import::TagsController < ApplicationController
 
   def create
     @import = fetch_import
-
-    @import.run! { @import.tags << tag }
+    @import.tags << tag
+    @import.run!
     redirect_to import_csv_summary_path(@import)
   rescue AASM::InvalidTransition
     @import.load_mapping_errors
