@@ -278,6 +278,19 @@ RSpec.describe Import::Runner do
               subject.call
             }.to change { import.reload.contacts_imports.created.count }.by(2)
           end
+
+          context 'tag' do
+            let(:tag) { create(:tag) }
+            before do
+              import.tags << tag
+            end
+
+            it 'tags each contact with the import tag' do
+              expect {
+                subject.call
+              }.to change { tag.reload.contacts.count }.by(2)
+            end
+          end
         end
       end
     end

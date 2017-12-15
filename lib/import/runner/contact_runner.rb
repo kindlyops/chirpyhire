@@ -32,6 +32,7 @@ class Import::Runner::ContactRunner
 
   def create_import_contact(contact, updated: false)
     import.contacts_imports.create(contact: contact, updated: updated)
+    contact.tags << import.tags
   end
 
   def existing_contact
