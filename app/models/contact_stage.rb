@@ -29,8 +29,8 @@ class ContactStage < ApplicationRecord
     where(name: 'Hired')
   end
 
-  def self.archived
-    where(name: 'Archived')
+  def self.unarchived
+    where.not(name: 'Archived')
   end
 
   def last_stage?
