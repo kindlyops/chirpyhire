@@ -65,6 +65,13 @@ RSpec.describe Registrar do
         expect(organization.reload.contact_stages.find_by(name: 'Hired').rank).to eq(5)
       end
 
+      it 'creates a Archived contact stage' do
+        expect {
+          subject.register
+        }.to change { organization.reload.contact_stages.where(name: 'Archived').exists? }.from(false).to(true)
+        expect(organization.reload.contact_stages.find_by(name: 'Archived').rank).to eq(6)
+      end
+
       it 'creates a Not Now contact stage' do
         expect {
           subject.register
