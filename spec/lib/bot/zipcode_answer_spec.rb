@@ -25,6 +25,18 @@ RSpec.describe Bot::ZipcodeAnswer do
           end
         end
 
+        context 'with signature' do
+          let(:body) do
+            "30342\nYour life is your story write well EDIT OFTEN!!!"
+          end
+
+          let(:message) { create(:message, :conversation_part, body: body) }
+
+          it 'is true' do
+            expect(subject.activated?(message)).to eq(true)
+          end
+        end
+
         context 'and follow up location flag is false' do
           before do
             follow_up.update(location: false)

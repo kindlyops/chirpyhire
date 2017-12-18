@@ -29,6 +29,6 @@ class Bot::ZipcodeAnswer
   end
 
   def clean_body(message)
-    message.body.strip.downcase
+    message.body.lines.first.strip.downcase
   end
 end
