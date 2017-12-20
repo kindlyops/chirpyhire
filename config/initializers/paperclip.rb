@@ -3,6 +3,7 @@ Paperclip.options[:content_type_mappings] = {
     'application/vnd.ms-excel',
     'application/octet-stream',
     'text/csv',
-    'text/plain'
+    'text/plain',
+    'text/x-fortran'
   ]
 }

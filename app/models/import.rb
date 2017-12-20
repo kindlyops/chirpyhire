@@ -29,7 +29,8 @@ class Import < ApplicationRecord
                                       'text/plain',
                                       'text/csv',
                                       'application/vnd.ms-excel',
-                                      'application/octet-stream'
+                                      'application/octet-stream',
+                                      'text/x-fortran'
                                     ]
                                   },
                                   file_name: { matches: /csv/ }
