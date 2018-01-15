@@ -25,6 +25,14 @@ RSpec.describe Bot::QuestionFollowUp do
       it 'still looks up the follow up' do
         expect(subject.follow_up.id).to eq(follow_up.id)
       end
+
+      context 'and a new follow up exists with same rank' do
+        let!(:new_follow_up) { create(:follow_up, question: question, rank: follow_up.rank) }
+
+        it 'finds the new follow up' do
+          expect(subject.follow_up.id).to eq(new_follow_up.id)
+        end
+      end
     end
   end
 
