@@ -35,7 +35,10 @@ class Bot::QuestionFollowUp
 
   def follow_up
     @follow_up ||= begin
-      follow_ups.with_deleted.find { |follow_up| follow_up.activated?(message) }
+      follow_ups
+        .with_deleted
+        .order('follow_ups.deleted_at NULLS FIRST')
+        .find { |follow_up| follow_up.activated?(message) }
     end
   end
 end
