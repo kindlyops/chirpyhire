@@ -30,9 +30,13 @@
                 = f.collection_select :contact_stage_id, current_organization.contact_stages, :id, :name, { include_blank: false }, class: 'form-control'
                 small#stageHelp.form-text.text-muted Set the appropriate candidate stage so that you can track where each candidate is in your hiring process.
               .form-group
-                = f.label :source, 'Source', class: 'col-form-label', 'aria-describedby' => 'source'
-                = f.text_field :source, value: @candidate.source&.phony_formatted, class: 'form-control'
-                small#source.form-text.text-muted Source tells you were the candidate came from. Facebook, ZipRecruiter, Craigslist, etc.
+                = f.label :email, 'Email', class: 'col-form-label', 'aria-describedby' => 'emailHelp'
+                = f.text_field :email, value: @candidate.email, class: 'form-control'
+                small#emailHelp.form-text.text-muted Add an email address if you have one on file to keep handy.
+              .form-group
+                = f.label :source, 'Source', class: 'col-form-label', 'aria-describedby' => 'sourceHelp'
+                = f.text_field :source, value: @candidate.source, class: 'form-control'
+                small#sourceHelp.form-text.text-muted Source tells you were the candidate came from. Facebook, ZipRecruiter, Craigslist, etc.
               .form-group
                 = f.button type: 'submit', class: 'btn btn-primary', role: 'button' do
                     i.fa.fa-check.mr-2
