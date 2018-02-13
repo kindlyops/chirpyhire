@@ -14,7 +14,7 @@ class Import::Runner::ContactRunner
     return phone_import_error(:invalid_phone_number) if implausible?
     return stage_import_error(:invalid_stage) if invalid_stage?
     return update_contact if existing_contact.present?
-    
+
     create_contact
   end
 
