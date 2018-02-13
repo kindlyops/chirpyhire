@@ -14,7 +14,7 @@ class Import::Runner::ContactRunner
     return phone_import_error(:invalid_phone_number) if implausible?
     return stage_import_error(:invalid_stage) if invalid_stage?
     return update_contact if existing_contact.present?
-
+    
     create_contact
   end
 
@@ -55,7 +55,7 @@ class Import::Runner::ContactRunner
   def create_params
     {
       person: person, phone_number: phone_number, name: name, source: source,
-      subscribed: true, stage: create_stage
+      subscribed: true, stage: create_stage, email: email
     }
   end
 
@@ -65,7 +65,7 @@ class Import::Runner::ContactRunner
 
   def update_params
     params = { phone_number: phone_number }
-    %i[name stage source].each_with_object(params) do |param, hash|
+    %i[name stage source email].each_with_object(params) do |param, hash|
       hash[param] = send(param) if send(param).present?
     end
   end
@@ -97,6 +97,10 @@ class Import::Runner::ContactRunner
     @stage_name ||= fetch_attribute(stage_mapping)
   end
 
+  def email
+    @email ||= fetch_attribute(email_mapping)
+  end
+
   def fetch_attribute(mapping)
     return if mapping.column_number.blank?
     row[mapping.column_number]
@@ -104,7 +108,7 @@ class Import::Runner::ContactRunner
 
   attr_reader :row, :runner, :row_number
 
-  delegate :organization, :phone_number_mapping, :name_mapping,
+  delegate :organization, :phone_number_mapping, :name_mapping, :email_mapping,
            :id_mapping, :stage_mapping, :source_mapping, :import, to: :runner
   delegate :import_errors, to: :import
   delegate :contacts, to: :organization

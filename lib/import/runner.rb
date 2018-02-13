@@ -31,6 +31,12 @@ class Import::Runner
     end
   end
 
+  def email_mapping
+    @email_mapping ||= begin
+      import.mappings.find_by(contact_attribute: 'email')
+    end
+  end
+
   def name_mapping
     @name_mapping ||= import.mappings.find_by(contact_attribute: 'name')
   end

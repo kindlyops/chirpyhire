@@ -226,6 +226,38 @@ RSpec.describe Import::Runner do
                   end
                 end
               end
+
+              context 'with email column' do
+                context 'valid email address' do
+                  let(:import) { create(:import, :no_id_column_valid_phone_number_valid_email, account: account) }
+
+                  it 'updates the existing contact email' do
+                    expect {
+                      subject.call
+                    }.to change { contact.reload.email }.from(nil)
+                  end
+                end
+
+                context 'invalid email address' do
+                  let(:import) { create(:import, :no_id_column_valid_phone_number_invalid_email, account: account) }
+
+                  it 'updates the existing contact email' do
+                    expect {
+                      subject.call
+                    }.to change { contact.reload.email }.from(nil)
+                  end
+                end
+
+                context 'blank email address' do
+                  let(:import) { create(:import, :no_id_column_valid_phone_number_blank_email, account: account) }
+
+                  it 'does not update the existing contact email' do
+                    expect {
+                      subject.call
+                    }.not_to change { contact.reload.email }
+                  end
+                end
+              end
             end
 
             context 'not tied to existing organization contact' do

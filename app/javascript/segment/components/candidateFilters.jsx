@@ -148,6 +148,14 @@ class CandidateFilters extends React.Component {
              predicates={this.predicates('source')}
              {...this.props}
             />
+           <CandidateFilter
+             icon="fa-envelope-o"
+             attribute="email"
+             type="string"
+             name="Email"
+             predicates={this.predicates('email')}
+             {...this.props}
+            />
         </form>
         <CandidateFiltersActions 
           add={this.props.add} 

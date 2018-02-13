@@ -33,7 +33,7 @@ class ProfileStage extends React.Component {
 
   render() {
     return (
-      <div className='form-group mt-3'>
+      <div className='form-group'>
         <label id='stage' className='col-form-label'><strong>Stage:</strong></label>
         <Select
           id='stage'
