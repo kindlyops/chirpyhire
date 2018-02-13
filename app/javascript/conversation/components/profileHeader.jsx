@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfileStage from './profileStage'
-import ProfileEmail from './ProfileEmail'
+import ProfileEmail from './profileEmail'
 import ProfileSource from './profileSource'
 import _ from 'lodash';
 
