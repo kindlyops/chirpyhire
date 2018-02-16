@@ -1,0 +1,8 @@
+Hi there,
+You have an appointment tomorrow! Woohoo!
+Be ready a few minutes before <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
+<% if @reminder.details.present? %>
+Details from <%= @reminder.contact.organization.name %>:
+<%= @reminder.details %>
+<% end %>
+If you cannot make it, text us back and let us know!

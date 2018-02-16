@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180213150857) do
+ActiveRecord::Schema.define(version: 20180216181004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -589,6 +589,23 @@ ActiveRecord::Schema.define(version: 20180213150857) do
     t.index ["team_id"], name: "index_recruiting_ads_on_team_id"
   end
 
+  create_table "reminders", force: :cascade do |t|
+    t.bigint "contact_id", null: false
+    t.string "details"
+    t.boolean "send_day_before_alert", default: true, null: false
+    t.boolean "send_hour_before_alert", default: true, null: false
+    t.datetime "day_before_alert_sent_at"
+    t.datetime "hour_before_alert_sent_at"
+    t.datetime "created_alert_sent_at"
+    t.datetime "last_updated_alert_sent_at"
+    t.datetime "destroyed_alert_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.datetime "event_at", null: false
+    t.index ["contact_id"], name: "index_reminders_on_contact_id"
+  end
+
   create_table "segments", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.string "name", null: false
@@ -754,6 +771,7 @@ ActiveRecord::Schema.define(version: 20180213150857) do
   add_foreign_key "read_receipts", "messages"
   add_foreign_key "recruiting_ads", "organizations"
   add_foreign_key "recruiting_ads", "teams"
+  add_foreign_key "reminders", "contacts"
   add_foreign_key "segments", "accounts"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "taggings", "contacts"

@@ -1,0 +1,8 @@
+Hi there,
+Your interview time has changed.
+Your interview with <%= @reminder.contact.organization.name %> is now <%= @reminder.formatted_day %> at <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
+<% if @reminder.details.present? %>
+Details from <%= @reminder.contact.organization.name %>:
+<%= @reminder.details %>
+<% end %>
+If you cannot make it, text us back and let us know!

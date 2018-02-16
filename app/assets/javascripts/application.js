@@ -22,6 +22,9 @@
 //= require cocoon
 //= require select2
 //= require lodash
+//= require air-datepicker.min.js
+//= require air-datepicker.en.js
+//= require timepicker
 //= require_tree .
 
 

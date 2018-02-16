@@ -118,4 +118,5 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-popper.js', '~> 1.12.5'
   gem 'rails-assets-ramda', '~> 0.23.0'
   gem 'rails-assets-select2', '~> 4.0.3'
+  gem 'rails-assets-timepicker', '~> 1.11.13'
 end

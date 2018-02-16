@@ -1,6 +1,7 @@
 import React from 'react'
 import ProfileStage from './profileStage'
 import ProfileEmail from './profileEmail'
+import ProfileReminders from './profileReminders'
 import ProfileSource from './profileSource'
 import _ from 'lodash';
 
@@ -12,7 +13,8 @@ class ProfileHeader extends React.Component {
     this.state = {
       handle: props.contact.handle,
       source: props.contact.source,
-      email: props.contact.email
+      email: props.contact.email,
+      reminders: props.contact.reminders
     }
 
     this.onNameChange = this.onNameChange.bind(this);
@@ -34,6 +36,10 @@ class ProfileHeader extends React.Component {
 
     if (nextProps.contact.email !== this.props.contact.email) {
       this.setState({ email: nextProps.contact.email });
+    }
+
+    if (nextProps.contact.reminders !== this.props.contact.reminders) {
+      this.setState({ reminders: nextProps.contact.reminders });
     }
   }
 
@@ -81,6 +87,7 @@ class ProfileHeader extends React.Component {
             <div className="profile-phone-number">{this.props.contact.phone_number}</div>
           </div>
         </div>
+        <ProfileReminders contact={this.props.contact} reminders={this.state.reminders} />
         <ProfileEmail onEmailChange={this.onEmailChange} email={this.state.email} />
         <ProfileStage contact={this.props.contact} />
         <ProfileSource onSourceChange={this.onSourceChange} source={this.state.source} />
