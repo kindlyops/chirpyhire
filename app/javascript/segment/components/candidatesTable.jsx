@@ -148,6 +148,13 @@ class CandidatesTable extends React.Component {
                   cellRenderer={this.cellRenderer}
                   headerRenderer={this.headerRenderer}
                 />
+                <Column
+                  width={200}
+                  label='Reminder'
+                  dataKey='reminder'
+                  cellRenderer={this.cellRenderer}
+                  headerRenderer={this.headerRenderer}
+                />
               </Table>
             )}
           </AutoSizer>

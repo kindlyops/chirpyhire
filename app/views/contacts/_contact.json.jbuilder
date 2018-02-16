@@ -9,7 +9,7 @@ json.contact_stages contact.organization.contact_stages do |stage|
   json.id stage.id
   json.name stage.name
 end
-json.reminders contact.reminders do |reminder|
+json.reminders contact.reminders.future do |reminder|
   json.id reminder.id
   json.formatted_day reminder.formatted_day
   json.formatted_time reminder.formatted_time

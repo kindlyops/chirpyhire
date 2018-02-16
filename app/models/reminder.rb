@@ -3,6 +3,20 @@ class Reminder < ApplicationRecord
   belongs_to :contact
   delegate :time_zone, to: :event_at
 
+  def self.future
+    where('reminders.event_at > ?', DateTime.current)
+  end
+
+  def self.next
+    return unless future.exists?
+
+    future.order(:event_at).first
+  end
+
+  def formatted
+    "#{formatted_day} #{formatted_time}"
+  end
+
   def week_day
     Date::DAYNAMES[event_at.wday]
   end

@@ -15,4 +15,5 @@ json.candidates candidates do |candidate|
   json.hero_pattern_classes candidate.hero_pattern_classes
   json.stage candidate.stage_name
   json.source candidate.source
+  json.reminder candidate.reminders.next&.formatted
 end
