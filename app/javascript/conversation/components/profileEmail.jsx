@@ -12,7 +12,7 @@ class ProfileEmail extends React.Component {
 
   render() {
     return (
-      <div className='form-group mt-3'>
+      <div className='form-group'>
         <label id='email' className='col-form-label'><strong>Email:</strong></label>
         <input id='email' className='form-control' placeholder='hello@example.com' type="email" name="contact[email]" value={this.props.email || ''} onChange={this.onChange} />
       </div>

@@ -1,0 +1,11 @@
+Hi <%= @reminder.seeker_name %>,
+
+Your interview with <%= @reminder.organizer_name %> for <%= @reminder.job_title %> at <%= @reminder.location_name %> has been canceled.
+
+The interview was scheduled for <%= @reminder.formatted_day %> at <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
+
+If you would like to re-schedule, tap the link and chat <%= @reminder.organizer_name %> to let them know.
+
+The ChirpyHire Team
+
+<%= application_url(@reminder.application, p: @reminder.seeker.phone, otp: @reminder.seeker.current_otp) %>

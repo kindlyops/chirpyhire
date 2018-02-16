@@ -1,0 +1,18 @@
+Hi <%= @reminder.seeker_name %>,
+
+Your interview time has changed.
+
+Your interview with <%= @reminder.organizer_name %> for <%= @reminder.job_title %> at <%= @reminder.location_name %> is now <%= @reminder.formatted_day %> at <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
+<% if @reminder.details.present? %>
+
+Details from <%= @reminder.location_name %>:
+
+<%= @reminder.details %>
+
+<% end %>
+
+If you cannot make it to the interview, tap the link and chat <%= @reminder.organizer_name %> to let them know.
+
+The ChirpyHire Team
+
+<%= application_url(@reminder.application, p: @reminder.seeker.phone, otp: @reminder.seeker.current_otp) %>

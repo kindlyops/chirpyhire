@@ -1,0 +1,40 @@
+= title 'Remove Reminder? · ChirpyHire'
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 Remove Reminder?
+  .ch--SecondaryHeader
+    .text-white
+      | Contact:
+      '
+      = @contact.name
+  .ch--main
+    .ch--sub-main
+      .ch--sub-main-content
+        .row.reminder
+          .col-lg-6.col-md-8.ml-auto.mr-auto.mb-5.mt-4.mt-md-2
+            .card.mb-4.mt-4
+              .card-body
+                p.card-text Are you sure you want to remove this reminder?
+                p.card-text
+                  small.form-text.text-muted We'll take care of notifying the candidate that the appointment is canceled.
+                = form_for([@contact, @reminder], url: contact_reminder_path(@contact, @reminder), method: :delete) do |f|
+                  .form-group.row
+                    .col-sm-3
+                      strong = label_tag :date, 'Date:', class: 'col-form-label'
+                    .col-sm-9
+                      = @reminder.formatted_day
+                  .form-group.row
+                    .col-sm-3
+                      strong = label_tag :time, 'Time:', class: 'col-form-label'
+                    .col-sm-9
+                      = text_field_tag :time, @reminder.event_at, required: true, class: 'form-control', id: 'timepicker', disabled: true
+                  .form-group.row
+                    .col-sm-3
+                      strong = f.label :details, 'Details:', class: 'col-form-label'
+                    .col-sm-9
+                      = f.text_area :details, class: 'form-control resize-none', placeholder: 'Add your office address, what to make sure to bring, or anything else you\'d like to pass on to the candidate.', rows: 3, disabled: true
+                  .form-group.row
+                    .col.mt-4
+                      = f.submit 'Remove', class: 'btn btn-lg btn-danger', role: 'button'
+                      = link_to 'Cancel', conversation_path, class: 'btn btn-lg btn-outline-secondary ml-2', role: 'button'

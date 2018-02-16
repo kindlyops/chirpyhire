@@ -15,6 +15,7 @@ class Contact < ApplicationRecord
   has_many :taggings
   has_many :tags, through: :taggings
   has_many :manual_message_participants
+  has_many :reminders
 
   has_many :contacts_imports
   has_many :imports, through: :contacts_imports
@@ -54,9 +55,8 @@ class Contact < ApplicationRecord
   end
 
   def self.engaged(since)
-    joins(conversations: [parts: :message])
-      .merge(Message.engaged(since))
-      .distinct
+    joins(conversations: [parts: :message]).merge(Message.engaged(since))
+                                           .distinct
   end
 
   def self.recently_replied
@@ -64,9 +64,8 @@ class Contact < ApplicationRecord
   end
 
   def self.max_notes_count
-    joins(:notes)
-      .group('notes.contact_id, contacts.last_reply_at')
-      .count.values.max
+    joins(:notes).group('notes.contact_id, contacts.last_reply_at')
+                 .count.values.max
   end
 
   def self.subscribed
@@ -82,8 +81,7 @@ class Contact < ApplicationRecord
   end
 
   def current_conversation
-    existing_open_conversation ||
-      conversations.by_recent_part.first
+    existing_open_conversation || conversations.by_recent_part.first
   end
 
   def subscribe
@@ -92,6 +90,12 @@ class Contact < ApplicationRecord
 
   def unsubscribe
     update(subscribed: false)
+  end
+
+  alias_attribute :text_subscribed?, :subscribed?
+
+  def text_unsubscribed?
+    !text_subscribed?
   end
 
   def handle

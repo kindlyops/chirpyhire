@@ -1,0 +1,40 @@
+= title 'Edit Reminder · ChirpyHire'
+.ch--Page
+  .ch--Header
+    .ch--Header-title
+      h1 Edit Reminder
+  .ch--SecondaryHeader
+    .text-white
+      | Contact:
+      '
+      = @contact.name
+  .ch--main
+    .ch--sub-main
+      .ch--sub-main-content
+        .row.reminder
+          .col-lg-6.col-md-8.ml-auto.mr-auto.mb-5.mt-4.mt-md-2
+            .card.mb-4.mt-4
+              .card-body
+                p.card-text Update your appointment reminder and we'll send the candidate a text reminding them the day before and the day of their appointment.
+                p.card-text
+                  small.form-text.text-muted Please make sure you've scheduled the appointment before setting up a reminder.
+                = form_for([@contact, @reminder], url: contact_reminder_path(@contact, @reminder)) do |f|
+                  .form-group.row
+                    .col-sm-3
+                      strong = label_tag :date, 'Date:', class: 'col-form-label'
+                    .col-sm-9
+                      = text_field_tag :date, @reminder.event_at&.strftime('%m/%d/%Y'), class: 'd-none', id: 'datepicker'
+                  .form-group.row
+                    .col-sm-3
+                      strong = label_tag :time, 'Time:', class: 'col-form-label'
+                    .col-sm-9
+                      = text_field_tag :time, @reminder.event_at, required: true, class: 'form-control', id: 'timepicker'
+                  .form-group.row
+                    .col-sm-3
+                      strong = f.label :details, 'Details:', class: 'col-form-label'
+                    .col-sm-9
+                      = f.text_area :details, class: 'form-control resize-none', placeholder: 'Add your office address, what to make sure to bring, or anything else you\'d like to pass on to the candidate.', rows: 3
+                  .form-group.row
+                    .col.mt-4
+                      = f.submit 'Save', class: 'btn btn-lg btn-primary', role: 'button'
+                      = link_to 'Cancel', conversation_path, class: 'btn btn-lg btn-outline-secondary ml-2', role: 'button'

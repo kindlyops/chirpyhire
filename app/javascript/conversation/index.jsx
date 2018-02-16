@@ -16,7 +16,8 @@ class Conversation extends React.Component {
         contact_stages: [],
         id: '',
         handle: '',
-        email: ''
+        email: '',
+        reminders: []
       },
       parts: []
     };
