@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe Reminder::CreatedAlert do
   let!(:reminder) { create(:reminder) }
 
+  before do
+    create(:bot, organization: reminder.contact.organization)
+  end
+
   subject { Reminder::CreatedAlert.new(reminder) }
 
   context 'not deleted' do

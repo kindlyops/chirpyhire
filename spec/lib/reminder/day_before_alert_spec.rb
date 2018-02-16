@@ -3,6 +3,10 @@ require 'rails_helper'
 RSpec.describe Reminder::DayBeforeAlert do
   let!(:reminder) { create(:reminder) }
 
+  before do
+    create(:bot, organization: reminder.contact.organization)
+  end
+
   subject { Reminder::DayBeforeAlert.new(reminder) }
 
   context 'should send day before alert' do
