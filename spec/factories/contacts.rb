@@ -25,6 +25,10 @@ FactoryGirl.define do
       end
     end
 
+    trait :subscribed do
+      subscribed { true }
+    end
+
     trait :complete do
       name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
       after(:create) do |contact|

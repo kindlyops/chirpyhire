@@ -9,7 +9,7 @@ class Reminder::Alert
 
   def call
     organization.message(
-      recipient: contact,
+      recipient: contact.person,
       phone_number: phone_number,
       body: alert
     )

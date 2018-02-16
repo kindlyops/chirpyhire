@@ -1,12 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe DayBeforeAlert::Create do
+RSpec.describe Reminder::HourBeforeAlert do
   let!(:reminder) { create(:reminder) }
 
-  subject { DayBeforeAlert::Create.new(reminder) }
+  subject { Reminder::HourBeforeAlert.new(reminder) }
 
-  context 'should send day before alert' do
-    context 'has not sent day before alert' do
+  context 'should send hour before alert' do
+    context 'has not sent hour before alert' do
+      before do
+        allow(reminder.contact.organization).to receive(:message) { create(:message) }
+      end
+
       it 'sends the alert' do
         expect {
           subject.call
@@ -16,12 +20,12 @@ RSpec.describe DayBeforeAlert::Create do
       it 'logs the alert as sent' do
         expect {
           subject.call
-        }.to change { reminder.reload.day_before_alert_sent_at }
+        }.to change { reminder.reload.hour_before_alert_sent_at }
       end
 
-      context 'seeker is unsubscribed' do
+      context 'contact is unsubscribed' do
         before do
-          reminder.application.seeker.update(text_subscribed: false)
+          reminder.contact.update(subscribed: false)
         end
 
         it 'does not send the alert' do
@@ -33,14 +37,14 @@ RSpec.describe DayBeforeAlert::Create do
         it 'does not log the alert as sent' do
           expect {
             subject.call
-          }.not_to change { reminder.reload.day_before_alert_sent_at }
+          }.not_to change { reminder.reload.hour_before_alert_sent_at }
         end
       end
     end
 
-    context 'has sent day before alert' do
+    context 'has sent hour before alert' do
       before do
-        reminder.update(day_before_alert_sent_at: DateTime.current)
+        reminder.update(hour_before_alert_sent_at: DateTime.current)
       end
 
       it 'does not send the alert' do
@@ -52,7 +56,7 @@ RSpec.describe DayBeforeAlert::Create do
       it 'does not log the alert as sent' do
         expect {
           subject.call
-        }.not_to change { reminder.reload.day_before_alert_sent_at }
+        }.not_to change { reminder.reload.hour_before_alert_sent_at }
       end
     end
   end

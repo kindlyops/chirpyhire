@@ -6,10 +6,10 @@ RSpec.describe Reminder::DestroyedAlert do
   subject { Reminder::DestroyedAlert.new(reminder) }
 
   context 'not deleted' do
-    it 'does not send a text to the Seeker' do
+    it 'does not send a text to the Contact' do
       expect {
         subject.call
-      }.not_to change { Textris::Base.deliveries.count }
+      }.not_to change { Message.count }
     end
 
     it 'does not update destroyed_alert_sent_at' do
@@ -29,10 +29,10 @@ RSpec.describe Reminder::DestroyedAlert do
         reminder.update(destroyed_alert_sent_at: DateTime.current)
       end
 
-      it 'does not send a text to the Seeker' do
+      it 'does not send a text to the Contact' do
         expect {
           subject.call
-        }.not_to change { Textris::Base.deliveries.count }
+        }.not_to change { Message.count }
       end
 
       it 'does not update destroyed_alert_sent_at' do
@@ -42,15 +42,15 @@ RSpec.describe Reminder::DestroyedAlert do
       end
     end
 
-    context 'seeker unsubscribed' do
+    context 'contact unsubscribed' do
       before do
-        reminder.application.seeker.update(text_subscribed: false)
+        reminder.contact.update(subscribed: false)
       end
 
-      it 'does not send a text to the Seeker' do
+      it 'does not send a text to the Contact' do
         expect {
           subject.call
-        }.not_to change { Textris::Base.deliveries.count }
+        }.not_to change { Message.count }
       end
 
       it 'does not update destroyed_alert_sent_at' do
@@ -61,10 +61,14 @@ RSpec.describe Reminder::DestroyedAlert do
     end
 
     context 'destroyed alert unsent' do
-      it 'sends a text to the Seeker' do
+      before do
+        allow(reminder.contact.organization).to receive(:message) { create(:message) }
+      end
+
+      it 'sends a text to the Contact' do
         expect {
           subject.call
-        }.to change { Textris::Base.deliveries.count }.by(1)
+        }.to change { Message.count }.by(1)
       end
 
       it 'updates destroyed_alert_sent_at' do
