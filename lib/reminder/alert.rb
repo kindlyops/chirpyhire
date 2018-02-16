@@ -19,7 +19,7 @@ class Reminder::Alert
       organization.message(
         recipient: contact.person,
         phone_number: phone_number,
-        sender: bot.person
+        sender: bot.person,
         body: alert
       )
     end
