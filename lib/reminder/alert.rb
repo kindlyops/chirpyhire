@@ -8,11 +8,29 @@ class Reminder::Alert
   end
 
   def call
-    organization.message(
-      recipient: contact.person,
-      phone_number: phone_number,
-      body: alert
-    )
+    current_conversation.parts.create(
+      message: message,
+      happened_at: message.external_created_at
+    ).tap(&:touch_conversation)
+  end
+
+  def message
+    @message ||= begin
+      organization.message(
+        recipient: contact.person,
+        phone_number: phone_number,
+        sender: bot.person
+        body: alert
+      )
+    end
+  end
+
+  def bot
+    contact_bot || organization.recent_bot
+  end
+
+  def contact_bot
+    contact.active_campaign_contacts.map(&:campaign).map(&:bot).first
   end
 
   attr_reader :reminder
