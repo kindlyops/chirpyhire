@@ -10,6 +10,12 @@ class Reminder::HourBeforeAlert < Reminder::Alert
   private
 
   def alert
-    'HourBeforeAlert'
+    ApplicationController.render(
+      template: 'reminder_texter/hour_before_alert',
+      layout: false,
+      assigns: {
+        reminder: reminder
+      }
+    )
   end
 end

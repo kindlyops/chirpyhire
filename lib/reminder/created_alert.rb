@@ -10,6 +10,12 @@ class Reminder::CreatedAlert < Reminder::Alert
   private
 
   def alert
-    'Create'
+    ApplicationController.render(
+      template: 'reminder_texter/created_alert',
+      layout: false,
+      assigns: {
+        reminder: reminder
+      }
+    )
   end
 end

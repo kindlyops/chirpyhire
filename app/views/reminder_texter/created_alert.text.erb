@@ -1,18 +1,7 @@
-Hi <%= @reminder.seeker_name %>,
-
-<%= @reminder.organizer_name %> has invited you to interview for <%= @reminder.job_title %> at <%= @reminder.location_name %>.
-
-Your interview is <%= @reminder.formatted_day %> at <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
+Hi there,
+You have an appointment with <%= @reminder.contact.organization.name %> on <%= @reminder.formatted_day %> at <%= @reminder.formatted_time %> <%= @reminder.formatted_time_zone %>.
 <% if @reminder.details.present? %>
-
-Details from <%= @reminder.location_name %>:
-
+Details from <%= @reminder.contact.organization.name %>:
 <%= @reminder.details %>
-
 <% end %>
-
-If you cannot make it to the interview, tap the link and chat <%= @reminder.organizer_name %> to let them know.
-
-The ChirpyHire Team
-
-<%= application_url(@reminder.application, p: @reminder.seeker.phone, otp: @reminder.seeker.current_otp) %>
+If you cannot make the appointment, text back and let us know!

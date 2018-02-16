@@ -10,6 +10,12 @@ class Reminder::DayBeforeAlert < Reminder::Alert
   private
 
   def alert
-    'DayBefore'
+    ApplicationController.render(
+      template: 'reminder_texter/day_before_alert',
+      layout: false,
+      assigns: {
+        reminder: reminder
+      }
+    )
   end
 end

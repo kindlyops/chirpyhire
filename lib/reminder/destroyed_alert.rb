@@ -10,6 +10,12 @@ class Reminder::DestroyedAlert < Reminder::Alert
   private
 
   def alert
-    'Destroy'
+    ApplicationController.render(
+      template: 'reminder_texter/destroyed_alert',
+      layout: false,
+      assigns: {
+        reminder: reminder
+      }
+    )
   end
 end

@@ -10,6 +10,12 @@ class Reminder::UpdatedAlert < Reminder::Alert
   private
 
   def alert
-    'Update'
+    ApplicationController.render(
+      template: 'reminder_texter/updated_alert',
+      layout: false,
+      assigns: {
+        reminder: reminder
+      }
+    )
   end
 end
