@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  around_action :in_time_zone
   helper_method :current_organization
   helper_method :current_inbox
   helper_method :impersonating?
@@ -7,7 +8,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 
   before_action :authenticate_account!
-
   def current_organization
     @current_organization ||= current_account.organization
   end
@@ -39,6 +39,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def in_time_zone(&block)
+    if current_account.present?
+      Time.use_zone(current_organization.time_zone, &block)
+    else
+      Time.use_zone(Time.zone, &block)
+    end
+  end
 
   def true_account
     if session[:impersonated_account_id].present?

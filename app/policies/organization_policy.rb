@@ -13,7 +13,7 @@ class OrganizationPolicy < ApplicationPolicy
 
   def basic_attributes
     %i[name avatar email description url forwarding_phone_number
-       billing_email invoice_notification]
+       billing_email invoice_notification time_zone]
   end
 
   def question_attributes

@@ -28,7 +28,7 @@
                     .col-sm-3
                       strong = label_tag :time, 'Time:', class: 'col-form-label'
                     .col-sm-9
-                      = text_field_tag :time, @reminder.event_at, required: true, class: 'form-control', id: 'timepicker'
+                      = text_field_tag :time, @reminder.event_at&.strftime('%m/%d/%Y %H:%M'), required: true, class: 'form-control', id: 'timepicker'
                   .form-group.row
                     .col-sm-3
                       strong = f.label :details, 'Details:', class: 'col-form-label'

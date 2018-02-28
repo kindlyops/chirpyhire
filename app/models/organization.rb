@@ -1,4 +1,11 @@
 class Organization < ApplicationRecord
+  TIME_ZONES = ['Eastern Time (US & Canada)',
+                'Central Time (US & Canada)',
+                'Mountain Time (US & Canada)',
+                'Pacific Time (US & Canada)',
+                'Hawaii',
+                'Alaska'].freeze
+
   phony_normalize :forwarding_phone_number, default_country_code: 'US'
   has_many :accounts, inverse_of: :organization
   has_many :owners, -> { owner }, class_name: 'Account'
