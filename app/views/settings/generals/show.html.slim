@@ -27,6 +27,10 @@
                   = f.text_field :name, required: true, class: "form-control"
                   small.form-text.text-muted We'll use your organization's name when screening candidates to give the screening process a personal touch.
                 .form-group
+                  strong = f.label :time_zone, 'Time Zone', class: "col-form-label small-uppercase"
+                  = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones.select { |tz| Organization::TIME_ZONES.include?(tz.name) }, { include_blank: false }, { class: "form-control" }
+                  small.form-text.text-muted Changing it will affect time-dependent features across ChirpyHire.
+                .form-group
                   strong = f.label :email, class: "col-form-label small-uppercase"
                   = f.email_field :email, class: "form-control"
                 .form-group

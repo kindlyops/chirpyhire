@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216181004) do
+ActiveRecord::Schema.define(version: 20180228140941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -495,6 +495,7 @@ ActiveRecord::Schema.define(version: 20180216181004) do
     t.string "forwarding_phone_number"
     t.boolean "invoice_notification", default: true
     t.integer "referrer_id"
+    t.string "time_zone", default: "Eastern Time (US & Canada)", null: false
     t.index ["recruiter_id"], name: "index_organizations_on_recruiter_id"
     t.index ["stripe_id"], name: "index_organizations_on_stripe_id", unique: true, where: "(stripe_id IS NOT NULL)"
   end

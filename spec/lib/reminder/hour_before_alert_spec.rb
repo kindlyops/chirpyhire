@@ -6,7 +6,7 @@ RSpec.describe Reminder::HourBeforeAlert do
   before do
     create(:bot, organization: reminder.contact.organization)
   end
-  
+
   subject { Reminder::HourBeforeAlert.new(reminder) }
 
   context 'should send hour before alert' do
