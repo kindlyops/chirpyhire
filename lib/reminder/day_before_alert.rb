@@ -1,10 +1,12 @@
 class Reminder::DayBeforeAlert < Reminder::Alert
   def call
-    return unless reminder.send_day_before_alert?
+    Time.use_zone(organization.time_zone) do
+      return unless reminder.send_day_before_alert?
 
-    super
+      super
 
-    reminder.update(day_before_alert_sent_at: DateTime.current)
+      reminder.update(day_before_alert_sent_at: DateTime.current)
+    end
   end
 
   private
