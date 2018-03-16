@@ -1,0 +1,14 @@
+.windows {
+  .Conversation {
+    form.new_message {
+      .footer {
+        .message-input {
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  .sidebar {
+    overflow: hidden;
+  }
+}
