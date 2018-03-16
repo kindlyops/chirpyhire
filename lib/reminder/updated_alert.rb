@@ -1,10 +1,12 @@
 class Reminder::UpdatedAlert < Reminder::Alert
   def call
-    return if reminder.update_unsendable?
+    Time.use_zone(organization.time_zone) do
+      return if reminder.update_unsendable?
 
-    super
+      super
 
-    reminder.update(last_updated_alert_sent_at: DateTime.current)
+      reminder.update(last_updated_alert_sent_at: DateTime.current)
+    end
   end
 
   private

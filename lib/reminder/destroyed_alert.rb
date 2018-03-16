@@ -1,10 +1,12 @@
 class Reminder::DestroyedAlert < Reminder::Alert
   def call
-    return if reminder.delete_unsendable?
+    Time.use_zone(organization.time_zone) do
+      return if reminder.delete_unsendable?
 
-    super
+      super
 
-    reminder.update(destroyed_alert_sent_at: DateTime.current)
+      reminder.update(destroyed_alert_sent_at: DateTime.current)
+    end
   end
 
   private
