@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Invoice Events' do
-  def stub_event(event, body, status = 200)
-    stub_request(:get, "https://api.stripe.com/v1/events/#{event}")
-      .to_return(status: status, body: body)
+  def bypass_event_signature(payload)
+    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
+    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
   %w[invoice.payment_succeeded].each do |event|
@@ -18,8 +18,7 @@ RSpec.describe 'Invoice Events' do
       end
 
       before do
-        prepare_signature StripeEvent.signing_secret, "id=#{event}"
-        stub_event event, body
+        bypass_event_signature body
       end
 
       context 'invoice does not exist' do
@@ -56,8 +55,7 @@ RSpec.describe 'Invoice Events' do
       end
 
       before do
-        prepare_signature StripeEvent.signing_secret, "id=#{event}"
-        stub_event event, body
+        bypass_event_signature body
       end
 
       context 'invoice does not exist' do
