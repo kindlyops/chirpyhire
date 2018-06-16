@@ -149,7 +149,7 @@ class CandidatesMenu extends React.Component {
               </div>
               <div className="form-group">
                 <label htmlFor="manual_message[body]">Message</label>
-                <textarea required={true} ref={(body) => this._body = body} rows={3} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="Write a personal message" />
+                <textarea required={true} maxLength={480} ref={(body) => this._body = body} rows={3} className="form-control" id="manual_message[body]" aria-describedby="manualMessageBodyHelp" placeholder="Write a personal message" />
                 <small id="manualMessageBodyHelp" className="form-text text-muted">Each message will be sent separately. Recipients will not see each other.</small>
               </div>
           </ModalBody>

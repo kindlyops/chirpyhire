@@ -55,13 +55,13 @@ class ConversationFooter extends React.Component {
       <div className="footer">
         <form onSubmit={this.onSubmit} className="new_message" id="new_message">
           <div className='d-flex align-items-center'>
-            <Textarea onChange={this.onChange} value={this.state.value} autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
+            <Textarea onChange={this.onChange} maxLength={480} value={this.state.value} autoFocus="autofocus" autoComplete="off" autoCorrect="off" spellCheck="true" placeholder={`Message ${this.props.contact.handle || 'Someone'}`} rows="1" className="message-input focus" name="message[body]" id="message_body">
             </Textarea>
             <button type="submit" role="button" className='btn btn-primary send-message'>
               Send
             </button>
-            <span className='ml-2 character-count'>
-              {this.state.value.length}
+            <span className='ml-2 small character-count'>
+              {this.state.value.length} / {480}
             </span>
           </div>
         </form>
