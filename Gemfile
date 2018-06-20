@@ -16,7 +16,7 @@ gem 'sass', github: 'hwhelchel/sass', branch: 'dynamic_includes'
 gem 'sass-rails', '~> 5.0.5'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
+gem 'sprockets', '~> 3.7.2'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
