@@ -1,7 +1,7 @@
 IntercomRails.config do |config|
   # == Intercom app_id
   #
-  config.app_id = ENV.fetch('INTERCOM_APP_ID')
+  config.app_id = ENV.fetch('INTERCOM_APP_ID', '')
 
   # == Intercom session_duration
   #
@@ -10,12 +10,12 @@ IntercomRails.config do |config|
   # This is required to enable secure mode, you can find it on your Setup
   # guide in the "Secure Mode" step.
   #
-  config.api_secret = ENV.fetch('INTERCOM_SECRET')
+  config.api_secret = ENV.fetch('INTERCOM_SECRET', '')
 
   # == Enabled Environments
   # Which environments is auto inclusion of the Javascript enabled for
   #
-  config.enabled_environments = %w[development production]
+  config.enabled_environments = %w[production]
 
   # == Current user method/variable
   # The method/variable that contains the logged in user in your controllers.

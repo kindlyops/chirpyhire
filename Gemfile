@@ -36,7 +36,7 @@ end
 
 group :test do
   gem 'capybara', '~> 2.14.0'
-  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
+  gem 'capybara-webkit', '~> 1.15.1'
   gem 'database_cleaner', '~> 1.6.1'
   gem 'launchy', '~> 2.4.3'
   gem 'poltergeist', '~> 1.15.0'
