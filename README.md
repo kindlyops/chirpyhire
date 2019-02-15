@@ -2,25 +2,17 @@
 
 ### Zero to Green
 
-0. Install [rbenv](https://github.com/rbenv/rbenv#homebrew-on-mac-os-x) and [ruby-build](https://github.com/rbenv/ruby-build#installing-with-homebrew-for-os-x-users) to manage ruby versions.
+1. Install docker and docker-compose.
 
-1. Get `.env` file from a developer. You can use dummy keys to help run tests.
-2. Install native dependencies if necessary.
+2. Get `.env` file from a developer. You can use dummy keys to help run tests.
+3. build containers, set up database
 ```bash
-brew install postgres
-brew install redis
-brew install phantomjs
-rbenv install 2.3.1
-```
-For more information on [Postgres](https://gorails.com/setup/osx/10.11-el-capitan), especially if "No such file found" when trying
-to create DB. You'll likely need to change the [template](https://gist.github.com/amolkhanorkar/8706915), too. For redis, you may need to ensure the server is running with `redis-server &`.
-3. Install [QT55 bindings](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit)
-4. Download libraries, migrate database, run tests.
-```ruby
-bundle install
-rails db:create
-rails db:migrate
-rspec
+docker-compose up -d
+docker-compose exec website rails db:create
+docker-compose exec website rails db:migrate
+docker-compose exec website rails db:seed
+docker-compose exec website rails assets:precompile
+open localhost:3000
 ```
 
 ### Twilio Development
@@ -38,6 +30,20 @@ Use test keys and test environment.
 Ensure you have a clean install:
 `rails db:drop && rails db:create && rails db:migrate`
 Start Local Server:
-`foreman s`
+`docker-compose up -d`
 Tunnel For Twilio Webhook:
 `ngrok http 3000`
+
+### Interactive database maintenance
+
+To get a local rails console:
+
+```bash
+docker-compose exec website rails console
+```
+
+Find a user
+
+```ruby
+a = Account.find_by_email 'demo@chirpyhire.com'
+```

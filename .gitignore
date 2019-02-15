@@ -19,4 +19,5 @@ spec/examples.txt
 /node_modules
 /yarn-error.log
 /public/packs
+/public/assets
 /node_modules
