@@ -16,7 +16,7 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock ./
 RUN gem install bundler
 ENV QMAKE=/usr/lib/qt5/bin/qmake
-RUN bundle install --binstubs
+RUN bundle install --binstubs --with test development
 
 COPY . .
 
