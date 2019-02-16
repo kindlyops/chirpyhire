@@ -32,6 +32,17 @@ class Account < ApplicationRecord
     member: 0, owner: 1, invited: 2
   }
 
+  rails_admin do 
+    list do 
+      field :id
+      field :email
+      field :phone_number
+      field :sign_in_count
+      field :last_sign_in_at
+      field :reset_password_sent_at
+    end
+  end
+
   def self.daily_email
     where(daily_email: true)
   end

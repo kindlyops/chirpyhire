@@ -37,7 +37,7 @@ end
 group :test do
   gem 'capybara', '~> 2.14.0'
   gem 'capybara-webkit', '~> 1.15.1'
-  gem 'database_cleaner', '~> 1.6.1'
+  gem 'database_cleaner', '~> 1.7.0'
   gem 'launchy', '~> 2.4.3'
   gem 'poltergeist', '~> 1.15.0'
   gem 'pundit-matchers', '~> 1.0.2'
