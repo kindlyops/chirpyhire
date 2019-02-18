@@ -18,11 +18,11 @@ class Reminder::Alert
     # setting this raven user context should provide some assistance with
     # tracking down users that have invalid phone numbers and we are
     # crashing while trying to send a reminder.
-    Raven.user_context(
+    Raven.extra_context(
       # a unique ID which represents this user
-      id: contact.id, # 1
+      contact_id: contact.id, # 1
       # name, if available
-      username: contact.name
+      contact_name: contact.name
     )
     @message ||= begin
       organization.message(
