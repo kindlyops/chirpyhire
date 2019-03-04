@@ -40,6 +40,12 @@ Tunnel For Twilio Webhook:
 docker-compose exec website  rspec spec/models/contact_spec.rb
 ```
 
+### to run the rspec test for the hour before reminders
+
+```bash
+docker-compose exec website rspec spec/lib/reminder/hour_before_alert_spec.rb
+```
+
 ### Interactive database maintenance
 
 To get a local rails console:
