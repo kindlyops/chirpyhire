@@ -88,8 +88,8 @@ class Account < ApplicationRecord
     return if name.present? || nickname.present?
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
-    Rollbar.debug(e)
     self.nickname = 'Anonymous'
+    Raven.captureException(e)
   end
 
   def nickname_present?

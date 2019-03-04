@@ -14,7 +14,7 @@ module Nickname
     end
 
     def nickname_count
-      ANIMALS.count * ADJECTIVES.count
+      ANIMALS.count * ADJECTIVES.count * NUMBER.count
     end
 
     attr_reader :tried_names
@@ -36,7 +36,7 @@ module Nickname
     end
 
     def random_nickname
-      "#{ADJECTIVES.sample} #{ANIMALS.sample}"
+      "#{ADJECTIVES.sample} #{ANIMALS.sample}#{NUMBER.sample}"
     end
 
     attr_reader :person
@@ -45,6 +45,7 @@ module Nickname
   CONFIG = YAML.load_file(Rails.root.join('config', 'nicknames.yml'))
   ANIMALS = CONFIG['Animals']
   ADJECTIVES = CONFIG['Adjectives']
+  NUMBER = [1, 2, 3, 4, 5]
 
-  private_constant :ANIMALS, :ADJECTIVES, :CONFIG
+  private_constant :ANIMALS, :ADJECTIVES, :NUMBER, :CONFIG
 end

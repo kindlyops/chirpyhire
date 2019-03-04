@@ -34,6 +34,12 @@ Start Local Server:
 Tunnel For Twilio Webhook:
 `ngrok http 3000`
 
+### To run a single rspec test
+
+```bash
+docker-compose exec website  rspec spec/models/contact_spec.rb
+```
+
 ### Interactive database maintenance
 
 To get a local rails console:

@@ -116,8 +116,8 @@ class Contact < ApplicationRecord
     return if name.present? || nickname.present?
     self.nickname = Nickname::Generator.new(self).generate
   rescue Nickname::OutOfNicknames => e
-    Rollbar.debug(e)
     self.nickname = 'Anonymous'
+    Raven.captureException(e)
   end
 
   def set_last_reply_at
