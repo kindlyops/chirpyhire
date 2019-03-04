@@ -18,12 +18,11 @@ class Reminder::Alert
     # setting this raven user context should provide some assistance with
     # tracking down users that have invalid phone numbers and we are
     # crashing while trying to send a reminder.
-    Raven.extra_context(
-      # a unique ID which represents this user
-      contact_id: contact.id, # 1
-      # name, if available
-      contact_name: contact.name
-    )
+    Raven.breadcrumbs.record do |crumb|
+      crumb.data = { contact_id: contact.id, contact_name: contact.name, number: phone_number.phone_number }
+      crumb.message = "Additional debugging data, phone number is #{phone_number.phone_number.length} chars long"
+    end
+
     @message ||= begin
       organization.message(
         recipient: contact.person,
