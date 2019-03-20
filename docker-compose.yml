@@ -47,7 +47,7 @@ services:
     build: .
     command: puma -p 28080 cable/config.ru
     ports:
-      - '28080:28080'
+      - '8080:28080'
     volumes:
       - '.:/app'
     env_file:

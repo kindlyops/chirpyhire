@@ -1,4 +1,4 @@
-if Rails.env.production?
+if ENV.has_key?('STRIPE_PUBLISHABLE_KEY')
 
   Rails.configuration.stripe = {
     publishable_key: ENV.fetch('STRIPE_PUBLISHABLE_KEY'),
