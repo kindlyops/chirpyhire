@@ -23,7 +23,7 @@ class Internal::Notification::Customer
 
   def notifier
     @notifier ||= Slack::Notifier.new(
-      ENV.fetch('SLACK_WEBHOOK'), channel: '#sales', username: 'freddy'
+      ENV.fetch('SLACK_WEBHOOK'), channel: '#chirpy', username: 'rails'
     )
   end
 
