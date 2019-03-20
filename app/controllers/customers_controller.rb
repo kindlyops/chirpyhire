@@ -59,7 +59,10 @@ class CustomersController < ApplicationController
 
   def new_payment_card
     @new_payment_card ||= begin
-      stripe_customer.sources.create(source: params[:stripeToken])
+      result = stripe_customer.sources.create(source: params[:stripeToken])
+      Stripe::Customer.update(stripe_customer.id, default_source: result.id)
+      Rails.logger.info("changed the default source for #{stripe_customer.id}")
+      result
     end
   end
 
