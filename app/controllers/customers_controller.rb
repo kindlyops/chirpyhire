@@ -53,8 +53,12 @@ class CustomersController < ApplicationController
 
   def update_payment_source(stripe_id)
     subscription = Stripe::Subscription.retrieve(stripe_id)
+    # TODO: I think this will error because a token can only be used once, and the token
+    # is already consumed in create_new_payment_card/new_payment_card
     subscription.source = params[:stripeToken]
     subscription.save
+  rescue Stripe::InvalidRequestError
+    Rails.logger.info('Error setting subscription payment source')
   end
 
   def new_payment_card
