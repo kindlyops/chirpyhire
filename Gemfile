@@ -21,6 +21,7 @@ gem 'jbuilder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'oj'
+gem 'lograge'
 
 group :development, :test, :demo do
   gem 'factory_girl_rails', '~> 4.0'
