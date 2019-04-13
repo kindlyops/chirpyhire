@@ -16,10 +16,13 @@ jobs:
           POSTGRES_PASSWORD: ""
 
     steps:
-        - checkout
+      - checkout
 
       # Setup the environment
       - run: cp .sample.env .env
+      - run: sudo apt-get update -y
+      - run: sudo apt-get install g++ qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+      - run: bundle install
 
       # Setup the database
       - run: bundle exec rake db:setup
