@@ -7,6 +7,10 @@ Capybara.register_driver :poltergeist_debug do |app|
   Capybara::Poltergeist::Driver.new(app, inspector: true)
 end
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, js_errors: false)
+end
+
 Capybara::Webkit.configure(&:allow_unknown_urls)
 
 Capybara.javascript_driver = :poltergeist
