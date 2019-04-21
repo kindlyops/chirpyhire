@@ -272,7 +272,7 @@ GEM
     mime-types-data (3.2019.0331)
     mimemagic (0.3.2)
     mini_mime (1.0.1)
-    mini_portile2 (2.1.0)
+    mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.12.1)
     multipart-post (2.0.0)
@@ -281,8 +281,8 @@ GEM
       rails (>= 3.1.0)
     nested_form (0.3.2)
     nio4r (2.3.1)
-    nokogiri (1.7.2)
-      mini_portile2 (~> 2.1.0)
+    nokogiri (1.8.5)
+      mini_portile2 (~> 2.3.0)
     oj (3.1.0)
     orm_adapter (0.5.0)
     paperclip (5.1.0)
@@ -550,7 +550,7 @@ DEPENDENCIES
   lograge
   meta_request (~> 0.4.2)
   nav_lynx (~> 1.1.1)
-  nokogiri (~> 1.7.1)
+  nokogiri (~> 1.8.5)
   oj
   paperclip (~> 5.1.0)
   paranoia (~> 2.3)
@@ -604,4 +604,4 @@ RUBY VERSION
    ruby 2.4.4p296
 
 BUNDLED WITH
-   1.17.3
+   2.0.1
