@@ -9,23 +9,44 @@ jobs:
           PGHOST: localhost
           PGUSER: chirpyhire
           RAILS_ENV: test
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
       - image: postgres:9.5
+        name: postgres
         environment:
           POSTGRES_USER: chirpyhire
           POSTGRES_DB: chirpyhire
           POSTGRES_PASSWORD: ""
+      - image: circleci/redis:5.0.4-alpine
+        name: redis
 
     steps:
       - checkout
-
+      # Which version of bundler?
+      - run:
+          name: Which bundler?
+          command: bundle -v
       # Setup the environment
       - run: cp .sample.env .env
       - run: sudo apt-get update -y
       - run: sudo apt-get install g++ qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
-      - run: bundle install
+      - restore_cache:
+          keys:
+            - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+            - rails-demo-bundle-v2-
+      - run: # Install Ruby dependencies
+          name: Bundle Install
+          command: bundle check || bundle install
+
+      # Store bundle cache for Ruby dependencies
+      - save_cache:
+          key: rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
 
       # Setup the database
-      - run: bundle exec rake db:setup
+      - run: bundle exec rake db:setup --trace
 
       # Run the tests
       - run: bundle exec rspec
