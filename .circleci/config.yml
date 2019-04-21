@@ -6,8 +6,6 @@ jobs:
     docker:
       - image: circleci/ruby:2.4.4-node-browsers
         environment:
-          PGHOST: localhost
-          PGUSER: chirpyhire
           RAILS_ENV: test
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -15,8 +13,8 @@ jobs:
       - image: postgres:9.5
         name: postgres
         environment:
-          POSTGRES_USER: chirpyhire
-          POSTGRES_DB: chirpyhire
+          POSTGRES_USER: postgres
+          POSTGRES_DB: chirpyhire_test
           POSTGRES_PASSWORD: ""
       - image: circleci/redis:5.0.4-alpine
         name: redis
