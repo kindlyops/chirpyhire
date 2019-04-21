@@ -69,7 +69,7 @@ end
 gem 'sentry-raven'
 
 # Authentication
-gem 'devise', '~> 4.3.0'
+gem 'devise', '~> 4.6.2'
 gem 'devise_invitable', '~> 1.7.2'
 
 # Authorization
