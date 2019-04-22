@@ -42,8 +42,8 @@ group :test do
   gem 'poltergeist', '~> 1.15.0'
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'rails-controller-testing'
-  gem 'rubocop', '~> 0.49.1'
-  gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'rubocop', '~> 0.67.2'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'vcr', '~> 3.0.0'
   gem 'webmock', '~> 3.5.1'
 end
