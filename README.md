@@ -65,7 +65,7 @@ a = Account.find_by_email 'demo@chirpyhire.com'
     $ brew install readline ruby-build
     $ RUBY_CONFIGURE_OPTS=--with-readline-dir=`brew --prefix readline` rbenv install 2.3.1
 
-Also you have to run `foreman start` before running rspec in order for the 2
+Also you have to run `foreman start -f Procfile.dev` before running rspec in order for the 2
 account management specs to pass, they seem to require maybe cable running?
 
 ### Notes on migrating away from capybara
