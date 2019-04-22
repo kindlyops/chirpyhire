@@ -11,7 +11,7 @@ gem 'rails', '~> 5.1.6.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use SCSS for stylesheets
-gem 'bootstrap', '~> 4.0.0.beta'
+gem 'bootstrap', '~> 4.3.1'
 gem 'sass', github: 'hwhelchel/sass', branch: 'dynamic_includes'
 gem 'sass-rails', '~> 5.0.5'
 # Use Uglifier as compressor for JavaScript assets
