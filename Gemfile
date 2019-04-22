@@ -5,15 +5,14 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.4.4'
+ruby '2.6.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6.2'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
 # Use SCSS for stylesheets
+gem 'sassc-rails', '~> 2.1.0'
 gem 'bootstrap', '~> 4.0.0.beta'
-gem 'sass', github: 'hwhelchel/sass', branch: 'dynamic_includes'
-gem 'sass-rails', '~> 5.0.5'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'sprockets', '~> 3.7.2'
@@ -43,10 +42,10 @@ group :test do
   gem 'poltergeist', '~> 1.15.0'
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'rails-controller-testing'
-  gem 'rubocop', '~> 0.49.1'
-  gem 'shoulda-matchers', '~> 2.8.0'
+  gem 'rubocop', '~> 0.67.2'
+  gem 'shoulda-matchers', '~> 4.0.1'
   gem 'vcr', '~> 3.0.0'
-  gem 'webmock', '~> 2.3.2'
+  gem 'webmock', '~> 3.5.1'
 end
 
 group :development do
@@ -80,7 +79,7 @@ gem 'aasm', '~> 4.12.1'
 gem 'ahoy_email', '~> 0.5.0'
 gem 'aws-sdk', '~> 2.8.5'
 gem 'browser', '~> 2.5.1'
-gem 'charlock_holmes', '~> 0.7.5'
+gem 'charlock_holmes', '~> 0.7.6'
 gem 'cocoon', '~> 1.2.10'
 gem 'counter_culture', '~> 1.5.1'
 gem 'csv_shaper', '~> 1.3.0'

@@ -1,5 +1,4 @@
-FROM ruby:2.4.1-alpine
-# TODO update ruby
+FROM ruby:2.6.2-alpine
 
 RUN apk update && apk add build-base git nodejs postgresql-dev libxml2-dev tzdata qt5-qtwebkit-dev
 
