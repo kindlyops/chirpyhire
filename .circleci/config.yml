@@ -45,7 +45,7 @@ jobs:
 
       - run:
           name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+          command: dockerize -wait tcp://postgres:5432 -timeout 1m
 
       # Setup the database
       - run: bundle exec rake db:setup --trace
