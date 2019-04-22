@@ -2,6 +2,21 @@
 
 ### Zero to Green
 
+1. Install xcode command line tools and homebrew
+1. `brew install rbenv ruby-build`
+1. Follow printed instructions on activating rbenv in your shell
+1. `rbenv install 2.6.2`
+1. `git clone git@github.com:kindlyops/chirpyhire.git`
+1. `cd chirpyhire`
+1. `ruby -v` should show version 2.6.2. `which ruby` should show an rbenv path similar to `/Users/emurphy/.rbenv/shims/ruby`
+1. `gem install foreman`
+1. `gem install bundler`
+1. `brew install phantomjs` TODO: other needed dependencies for nokogiri, etc
+1. install Qt for capybara gem (later we will need to migrate off of capybara). Instructions at https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#homebrew
+1. The main goal of all these dependencies is to be able to run `bundle install` and have it complete successfully. We will need to run this a few times to uncover additional dependencies that need to be installed and add them to the instructions.
+
+### Experimental docker alternatives
+
 1. Install docker and docker-compose.
 
 2. Get `.env` file from a developer. You can use dummy keys to help run tests.
