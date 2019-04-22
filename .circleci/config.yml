@@ -46,6 +46,10 @@ jobs:
             - vendor/bundle
 
       - run:
+          name: Install npm packages
+          command: npm install
+
+      - run:
           name: Wait for DB
           command: dockerize -wait tcp://postgres:5432 -timeout 1m
 
