@@ -23,6 +23,7 @@ jobs:
     steps:
       - checkout
       # Which version of bundler?
+      - run: gem install bundler:2.0.1
       - run:
           name: Which bundler?
           command: bundle -v
