@@ -4,12 +4,13 @@ jobs:
   build:
     working_directory: ~/chirpyhire
     docker:
-      - image: circleci/ruby:2.4.4-node-browsers
+      - image: circleci/ruby:2.6.3-node-browsers
         environment:
           RAILS_ENV: test
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
           BUNDLE_PATH: vendor/bundle
+          BUNDLER_VERSION: 2.0.1
       - image: postgres:9.5
         name: postgres
         environment:
