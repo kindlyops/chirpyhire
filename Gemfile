@@ -32,6 +32,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.6.0'
+  gem 'solargraph'
 end
 
 group :test do
@@ -58,6 +59,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '~> 3.1.0'
+  gem 'foreman'
 end
 
 group :production do
