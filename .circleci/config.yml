@@ -50,7 +50,7 @@ jobs:
           command: npm install
 
       - restore_cache:
-          key: v1-phantomjs-2.1.1
+          key: v2-phantomjs-2.1.1
             
       - run:
           name: Install phantomjs
@@ -61,7 +61,7 @@ jobs:
             sudo chmod ugo+x /usr/local/bin/phantomjs
 
       - save_cache:
-          key: v1-phantomjs-2.1.1
+          key: v2-phantomjs-2.1.1
           paths:
             - /usr/local/bin/phantomjs
 
