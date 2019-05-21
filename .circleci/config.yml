@@ -64,7 +64,7 @@ jobs:
       # Setup the database
       - run: bundle exec rake db:create
       - run: bundle exec rake db:migrate
-      - run: rails assets:precompile
+      - run: bundle exec rails assets:precompile
 
       # Run the tests
       - run: bundle exec rspec
