@@ -25,14 +25,13 @@
 
 1. `rails db:create && rails db:migrate && rails db:seed && rails assets:precompile`
 1. `rspec`
-2. `./start`
-3. `open localhost:3000`
+1. `./start`
+1. `open localhost:3000`
 
 
 ### Experimental docker alternatives
 
 1. Install docker and docker-compose.
-
 2. Get `.env` file from a developer. You can use dummy keys to help run tests.
 3. build containers, set up database
 ```bash

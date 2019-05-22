@@ -50,6 +50,12 @@
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
+    "remark-cli": "^6.0.1",
+    "remark-preset-lint-recommended": "^3.0.2",
     "webpack-dev-server": "^2.4.5"
+  },
+  "scripts": {
+    "lint-md": "remark ."
   }
 }
+
