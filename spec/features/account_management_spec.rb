@@ -22,8 +22,8 @@ RSpec.feature 'Account Management', type: :feature, js: true do
     scenario 'it progresses to the sign in page' do
       visit '/'
 
-      find('#account-status-container').trigger('click')
-      find('#sign-out').trigger('click')
+      find('#account-status-container').click
+      find('#sign-out').click
       expect(page).to have_text('sign in or sign up before continuing.')
     end
   end

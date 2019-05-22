@@ -61,7 +61,7 @@ RSpec.configure do |config|
     next if example.metadata[:js_error_expected]
   
     if errors.present?
-      aggregate_failures 'javascript errrors' do
+      aggregate_failures 'javascript errors' do
         errors.each do |error|
           # some specs test behavior for 4xx responses and other errors.
           # Don't fail on these.
