@@ -36,11 +36,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '~> 2.14.0'
-  gem 'capybara-webkit', '~> 1.15.1'
+  gem 'capybara', '~> 3.20.0'
+  gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 3.0'
   gem 'database_cleaner', '~> 1.7.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'poltergeist', '~> 1.15.0'
   gem 'pundit-matchers', '~> 1.0.2'
   gem 'rails-controller-testing'
   gem 'rubocop', '~> 0.67.2'

@@ -1,19 +1,21 @@
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
-require 'capybara/webkit'
+require 'webdrivers/chromedriver'
 
-Capybara.register_driver :poltergeist_debug do |app|
-  Capybara::Poltergeist::Driver.new(app, inspector: true)
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, js_errors: false)
+Capybara.register_driver :headless_chrome do |app|
+  caps = Selenium::WebDriver::Remote::Capabilities.chrome(loggingPrefs: { browser: 'ALL' })
+  opts = Selenium::WebDriver::Chrome::Options.new
+
+  chrome_args = %w[--headless --window-size=1920,1080 --no-sandbox]
+  chrome_args.each { |arg| opts.add_argument(arg) }
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts, desired_capabilities: caps)
 end
 
-Capybara::Webkit.configure(&:allow_unknown_urls)
-
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :headless_chrome # switch to :chrome to see the browser
 Capybara.server_port = 8080
 Capybara.app_host = 'http://localhost:8080'
 Capybara.save_path = Dir.pwd

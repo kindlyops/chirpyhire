@@ -29,8 +29,6 @@ jobs:
           command: bundle -v
       # Setup the environment
       - run: cp .sample.env .env
-      - run: sudo apt-get update -y
-      - run: sudo apt-get install g++ qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
       - restore_cache:
           keys:
             - rails-demo-bundle-v2-{{ checksum "Gemfile.lock" }}
@@ -45,17 +43,18 @@ jobs:
           paths:
             - vendor/bundle
 
+      - restore_cache:
+          keys:
+            - npm-cache-v1-{{ checksum "package-lock.json" }}
+            - npm-cache-v1-
       - run:
           name: Install npm packages
           command: npm install
-            
-      - run:
-          name: Install phantomjs
-          command: |
-            if ! [ $(which phantomjs) ]; then
-              sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
-            fi
-            sudo chmod ugo+x /usr/local/bin/phantomjs
+
+      - save_cache:
+          key: npm-cache-v1-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
 
       - run:
           name: Wait for DB

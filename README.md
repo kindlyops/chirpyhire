@@ -11,20 +11,27 @@
 1. `ruby -v` should show version 2.6.2. `which ruby` should show an rbenv path similar to `/Users/emurphy/.rbenv/shims/ruby`
 1. `gem install foreman`
 1. `gem install bundler`
-2. bundle config --local build.pg --with-opt-dir="/usr/local/opt/libpq"
-3. `bundle install --without=test`
-4. npm install
+1. `bundle config --local build.pg --with-opt-dir="/usr/local/opt/libpq"`
+1. `bundle install`
+1. `npm install`
+1. `rbenv rehash`
 
 ### Set up PostgreSQL and Redis
 
 1. brew install redis (remember to start redis)
 2. set up https://postgresapp.com with PostgreSQL 10
 
+### initialize the environment
+
+1. `rails db:create && rails db:migrate && rails db:seed && rails assets:precompile`
+1. `rspec`
+1. `./start`
+1. `open localhost:3000`
+
 
 ### Experimental docker alternatives
 
 1. Install docker and docker-compose.
-
 2. Get `.env` file from a developer. You can use dummy keys to help run tests.
 3. build containers, set up database
 ```bash
@@ -42,11 +49,7 @@ Ensure you have a clean install:
 Start Local Server:
 `foreman start -f Procfile.dev`
 
-
-### To get tests running
-1. `brew cask install phantomjs` TODO: other needed dependencies for nokogiri, etc
-2. install Qt for capybara gem (later we will need to migrate off of capybara). Instructions at https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#homebrew
-3. The main goal of all these dependencies is to be able to run `bundle install` and have it complete successfully. We will need to run this a few times to uncover additional dependencies that need to be installed and add them to the instructions.
+TODO: describe how to use the demo environment
 
 ### Twilio Development
 

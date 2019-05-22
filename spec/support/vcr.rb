@@ -61,6 +61,12 @@ RSpec.configure do |config|
       c.ignore_request do |request|
         URI(request.uri).port == Capybara.server_port
       end
+      c.ignore_request do |request|
+        URI(request.uri).host == 'chromedriver.storage.googleapis.com'
+      end
+      c.ignore_request do |request|
+        URI(request.uri).port == 9515 # headless chrome
+      end
     end
   end
 end
