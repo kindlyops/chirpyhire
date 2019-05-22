@@ -53,4 +53,26 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # fail on javascript errors in feature specs
+  config.after(:each, type: :feature, js: true) do |example|
+    errors = page.driver.browser.manage.logs.get(:browser)
+    # pass `js_error_expected: true` to skip JS error checking
+    next if example.metadata[:js_error_expected]
+  
+    if errors.present?
+      aggregate_failures 'javascript errrors' do
+        errors.each do |error|
+          # some specs test behavior for 4xx responses and other errors.
+          # Don't fail on these.
+          next if error.message =~ /Failed to load resource/
+  
+          expect(error.level).not_to eq('SEVERE'), error.message
+          next unless error.level == 'WARNING'
+          STDERR.puts 'WARN: javascript warning'
+          STDERR.puts error.message
+        end
+      end
+    end
+  end
 end
