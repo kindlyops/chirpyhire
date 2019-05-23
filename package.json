@@ -9,7 +9,7 @@
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
     "coffee-loader": "^0.7.3",
-    "coffee-script": "^1.12.6",
+    "coffee-script": "^1.12.7",
     "compression-webpack-plugin": "^0.4.0",
     "css-loader": "^0.28.1",
     "es6-promise": "^4.1.1",
