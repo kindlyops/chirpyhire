@@ -115,10 +115,10 @@ gem 'twilio-ruby', '~> 4.13.0'
 gem 'webpacker', '~> 1.2.0'
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-clipboard', '~> 1.6.1'
-  gem 'rails-assets-lodash', '~> 4.17.4'
-  gem 'rails-assets-popper.js', '~> 1.12.5'
-  gem 'rails-assets-ramda', '~> 0.23.0'
-  gem 'rails-assets-select2', '~> 4.0.3'
-  gem 'rails-assets-timepicker', '~> 1.11.13'
+  gem 'rails-assets-clipboard', '~> 2.0.4'
+  gem 'rails-assets-lodash', '~> 4.17.11'
+  gem 'rails-assets-popper.js', '~> 1.15.0'
+  gem 'rails-assets-ramda', '~> 0.26.0'
+  gem 'rails-assets-select2', '~> 4.0.7'
+  gem 'rails-assets-timepicker', '~> 1.11.15'
 end

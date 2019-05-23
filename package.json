@@ -10,7 +10,7 @@
     "babel-preset-react": "^6.24.1",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.6",
-    "compression-webpack-plugin": "^0.4.0",
+    "compression-webpack-plugin": "^1.1.12",
     "css-loader": "^0.28.1",
     "es6-promise": "^4.1.1",
     "extract-text-webpack-plugin": "^2.1.0",
@@ -56,6 +56,6 @@
   },
   "scripts": {
     "lint-md": "remark ."
-  }
+  },
+  "version": "1.16.0"
 }
-

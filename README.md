@@ -3,7 +3,7 @@
 ### Zero to Green
 
 1. Install xcode command line tools and homebrew
-1. `brew install rbenv ruby-build libpq readline`
+1. `brew install rbenv ruby-build libpq readline yarn`
 1. Follow printed instructions on activating rbenv in your shell
 1. `RUBY_CONFIGURE_OPTS=--with-readline-dir=`brew --prefix readline` rbenv install 2.6.2`
 1. `git clone git@github.com:kindlyops/chirpyhire.git`
@@ -13,7 +13,7 @@
 1. `gem install bundler`
 1. `bundle config --local build.pg --with-opt-dir="/usr/local/opt/libpq"`
 1. `bundle install`
-1. `npm install`
+1. `yarn install`
 1. `rbenv rehash`
 
 ### Set up PostgreSQL and Redis
