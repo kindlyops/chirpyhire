@@ -41,7 +41,7 @@ group :test do
   gem 'webdrivers', '~> 3.0'
   gem 'database_cleaner', '~> 1.7.0'
   gem 'launchy', '~> 2.4.3'
-  gem 'pundit-matchers', '~> 1.0.2'
+  gem 'pundit-matchers', '~> 1.6.0'
   gem 'rails-controller-testing'
   gem 'rubocop', '~> 0.67.2'
   gem 'shoulda-matchers', '~> 4.0.1'
