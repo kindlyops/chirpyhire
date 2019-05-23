@@ -41,7 +41,7 @@
     "react-toggle": "^4.0.1",
     "react-transition-group": "^1.2.0",
     "react-virtualized": "^9.8.0",
-    "reactstrap": "^4.6.2",
+    "reactstrap": "^4.8.0",
     "sass-loader": "^6.0.5",
     "slate": "^0.19.30",
     "style-loader": "^0.17.0",
