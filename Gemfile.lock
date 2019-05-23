@@ -320,8 +320,7 @@ GEM
     psych (3.1.0)
     public_suffix (3.0.3)
     puma (3.10.0)
-    pundit-matchers (1.0.2)
-      pundit (~> 1.0, >= 1.0.0)
+    pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.7)
     rack-affiliates (0.4.0)
@@ -589,7 +588,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 3.7)
   pundit!
-  pundit-matchers (~> 1.0.2)
+  pundit-matchers (~> 1.6.0)
   rack-affiliates
   rails (~> 5.1.6.2)
   rails-assets-clipboard (~> 1.6.1)!
