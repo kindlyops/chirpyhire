@@ -115,7 +115,7 @@ gem 'twilio-ruby', '~> 4.13.0'
 gem 'webpacker', '~> 1.2.0'
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-clipboard', '~> 1.6.1'
+  gem 'rails-assets-clipboard', '~> 2.0.4'
   gem 'rails-assets-lodash', '~> 4.17.4'
   gem 'rails-assets-popper.js', '~> 1.12.5'
   gem 'rails-assets-ramda', '~> 0.23.0'
