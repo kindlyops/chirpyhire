@@ -271,7 +271,7 @@ GEM
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
-    multi_json (1.12.1)
+    multi_json (1.13.1)
     multipart-post (2.0.0)
     mustermann (1.0.3)
     nav_lynx (1.1.1)
@@ -331,6 +331,8 @@ GEM
       nokogiri (~> 1.5)
       rack (>= 1.1)
     rack-protection (2.0.5)
+      rack
+    rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -525,9 +527,9 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
-    webpacker (1.2)
+    webpacker (4.0.2)
       activesupport (>= 4.2)
-      multi_json (~> 1.2)
+      rack-proxy (>= 0.6.1)
       railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
@@ -626,7 +628,7 @@ DEPENDENCIES
   web-console (~> 3.1.0)
   webdrivers (~> 3.0)
   webmock (~> 3.5.1)
-  webpacker (~> 1.2.0)
+  webpacker (~> 4.0.2)
 
 RUBY VERSION
    ruby 2.6.2p47
