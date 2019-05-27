@@ -21,7 +21,7 @@
     "js-yaml": "^3.8.4",
     "lodash": "^4.17.4",
     "moment": "^2.24.0",
-    "moment-range": "^3.0.3",
+    "moment-range": "^4.0.2",
     "node-sass": "^4.7.2",
     "path-complete-extname": "^0.1.0",
     "popper.js": "^1.9.9",
