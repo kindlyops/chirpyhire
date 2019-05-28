@@ -2,7 +2,7 @@
   "name": "congaree",
   "private": true,
   "dependencies": {
-    "autoprefixer": "^7.1.0",
+    "autoprefixer": "^9.5.1",
     "babel-core": "^6.24.1",
     "babel-loader": "7.x",
     "babel-plugin-es6-promise": "^1.1.1",
