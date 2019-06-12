@@ -78,7 +78,7 @@ gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'
 
 # Impersonation
 gem 'aasm', '~> 4.12.1'
-gem 'ahoy_email', '~> 0.5.0'
+gem 'ahoy_email', '~> 1.0.3'
 gem 'aws-sdk', '~> 2.8.5'
 gem 'browser', '~> 2.5.1'
 gem 'charlock_holmes', '~> 0.7.6'

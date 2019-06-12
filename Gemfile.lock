@@ -97,10 +97,10 @@ GEM
     after_commit_action (1.0.1)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
-    ahoy_email (0.5.0)
-      addressable
+    ahoy_email (1.0.3)
+      actionmailer (>= 4.2)
+      addressable (>= 2.3.2)
       nokogiri
-      rails
       safely_block (>= 0.1.1)
     arel (8.0.0)
     ast (2.4.0)
@@ -192,7 +192,7 @@ GEM
       activemodel-serializers-xml (~> 1.0)
       activesupport (~> 5.0)
       request_store (~> 1.0)
-    errbase (0.0.3)
+    errbase (0.1.1)
     erubi (1.8.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -318,7 +318,7 @@ GEM
     pry-rails (0.3.6)
       pry (>= 0.10.4)
     psych (3.1.0)
-    public_suffix (3.0.3)
+    public_suffix (3.1.0)
     puma (3.10.0)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
@@ -416,7 +416,7 @@ GEM
     ruby-progressbar (1.10.0)
     rubyzip (1.2.2)
     safe_yaml (1.0.5)
-    safely_block (0.2.0)
+    safely_block (0.2.1)
       errbase
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -541,7 +541,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (~> 4.12.1)
-  ahoy_email (~> 0.5.0)
+  ahoy_email (~> 1.0.3)
   aws-sdk (~> 2.8.5)
   better_errors
   binding_of_caller
