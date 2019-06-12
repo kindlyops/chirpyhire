@@ -27,22 +27,22 @@ GIT
 
 GIT
   remote: https://github.com/sferik/rails_admin.git
-  revision: 2ec766e804870503f96cddac15fca603e3dd76c9
+  revision: 742cae0a59579c869b668684a14b1fb2b022bee2
   branch: master
   specs:
-    rails_admin (1.1.1)
+    rails_admin (2.0.0.beta)
+      activemodel-serializers-xml (>= 1.0)
       builder (~> 3.1)
-      coffee-rails (~> 4.0)
-      font-awesome-rails (>= 3.0, < 5)
+      coffee-rails (>= 4.0, < 6)
       haml (>= 4.0, < 6)
       jquery-rails (>= 3.0, < 5)
-      jquery-ui-rails (~> 5.0)
+      jquery-ui-rails (>= 5.0, < 7)
       kaminari (>= 0.14, < 2.0)
       nested_form (~> 0.3)
       rack-pjax (>= 0.7)
-      rails (>= 4.0, < 6)
+      rails (>= 5.0, < 7)
       remotipart (~> 1.3)
-      sass-rails (>= 4.0, < 6)
+      sass-rails (>= 4.0, < 7)
 
 GEM
   remote: https://rubygems.org/
@@ -150,9 +150,9 @@ GEM
       climate_control (>= 0.0.3, < 1.0)
     cocoon (1.2.12)
     coderay (1.1.2)
-    coffee-rails (4.2.1)
+    coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
-      railties (>= 4.0.0, < 5.2.x)
+      railties (>= 4.0.0)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -325,7 +325,7 @@ GEM
       rack
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
-    rack-pjax (1.0.0)
+    rack-pjax (1.1.0)
       nokogiri (~> 1.5)
       rack (>= 1.1)
     rack-protection (2.0.5)
@@ -379,7 +379,7 @@ GEM
       ffi (~> 1.0)
     redis (3.3.3)
     regexp_parser (1.5.0)
-    remotipart (1.3.1)
+    remotipart (1.4.3)
     request_store (1.3.2)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
@@ -421,7 +421,7 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    sass-rails (5.0.6)
+    sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -529,7 +529,7 @@ GEM
       railties (>= 4.2)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.3)
+    websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.19)
