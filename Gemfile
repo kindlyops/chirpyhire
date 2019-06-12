@@ -45,7 +45,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'rubocop', '~> 0.67.2'
   gem 'shoulda-matchers', '~> 4.0.1'
-  gem 'vcr', '~> 3.0.0'
+  gem 'vcr', '~> 5.0.0'
   gem 'webmock', '~> 3.5.1'
 end
 
