@@ -13,5 +13,26 @@ RailsAdmin.config do |config|
     impersonate
   end
 
+  config.model 'Subscription' do
+    list do
+      field :id
+      field :internal_status
+      field :internal_canceled_at
+      field :trial_ends_at
+    end
+
+    show do
+      include_all_fields
+    end
+
+    edit do
+      field :id
+      field :internal_status
+      field :internal_canceled_at
+      field :trial_ends_at
+    end
+
+  end
+
   config.default_items_per_page = 100
 end
