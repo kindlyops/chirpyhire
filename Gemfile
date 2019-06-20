@@ -79,7 +79,7 @@ gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'
 # Impersonation
 gem 'aasm', '~> 4.12.1'
 gem 'ahoy_email', '~> 1.0.3'
-gem 'aws-sdk', '~> 2.8.5'
+gem 'aws-sdk', '~> 3.0.1'
 gem 'browser', '~> 2.5.1'
 gem 'charlock_holmes', '~> 0.7.6'
 gem 'cocoon', '~> 1.2.12'
