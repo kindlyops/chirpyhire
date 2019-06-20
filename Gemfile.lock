@@ -1011,7 +1011,7 @@ GEM
       activerecord (>= 4.0, < 6.1)
     parser (2.6.2.1)
       ast (~> 2.4.0)
-    pg (0.20.0)
+    pg (1.1.4)
     phony (2.15.43)
     phony_rails (0.14.5)
       activesupport (>= 3.0)
@@ -1302,7 +1302,7 @@ DEPENDENCIES
   oj
   paperclip (~> 5.2.1)
   paranoia (~> 2.4)
-  pg (~> 0.18)
+  pg (~> 1.1)
   phony_rails (~> 0.14.0)
   premailer-rails (~> 1.9.6)
   pry-byebug
