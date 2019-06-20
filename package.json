@@ -23,7 +23,7 @@
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "node-sass": "^4.7.2",
-    "path-complete-extname": "^0.1.0",
+    "path-complete-extname": "^1.0.0",
     "popper.js": "^1.9.9",
     "postcss-loader": "^3.0.0",
     "postcss-smart-import": "^0.7.0",
