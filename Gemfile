@@ -38,7 +38,7 @@ end
 group :test do
   gem 'capybara', '~> 3.20.0'
   gem 'selenium-webdriver'
-  gem 'webdrivers', '~> 3.0'
+  gem 'webdrivers', '~> 4.0'
   gem 'database_cleaner', '~> 1.7.0'
   gem 'launchy', '~> 2.4.3'
   gem 'pundit-matchers', '~> 1.6.0'
