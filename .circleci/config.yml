@@ -45,14 +45,14 @@ jobs:
 
       - restore_cache:
           keys:
-            - npm-cache-v1-{{ checksum "package-lock.json" }}
+            - npm-cache-v1-{{ checksum "yarn.lock" }}
             - npm-cache-v1-
       - run:
           name: Install npm packages
           command: npm install
 
       - save_cache:
-          key: npm-cache-v1-{{ checksum "package-lock.json" }}
+          key: npm-cache-v1-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
 
