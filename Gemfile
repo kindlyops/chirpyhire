@@ -53,7 +53,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'brakeman', '~> 3.3.0'
-  gem 'bullet', '~> 5.5.1'
+  gem 'bullet', '~> 6.0.1'
   gem 'listen', '~> 3.0.5'
   gem 'meta_request', '~> 0.4.2'
   gem 'spring'
