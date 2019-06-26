@@ -64,7 +64,7 @@ end
 
 group :production do
   gem 'rails_12factor', '~> 0.0.3'
-  gem 'skylight', '~> 1.0'
+  gem 'skylight', '~> 4.1'
 end
 
 gem 'sentry-raven'
