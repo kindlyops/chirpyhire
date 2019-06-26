@@ -54,7 +54,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'brakeman', '~> 3.3.0'
   gem 'bullet', '~> 6.0.1'
-  gem 'listen', '~> 3.0.5'
+  gem 'listen', '~> 3.1.5'
   gem 'meta_request', '~> 0.4.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
