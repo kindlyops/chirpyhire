@@ -2,9 +2,10 @@
   "name": "congaree",
   "private": true,
   "dependencies": {
+    "@rails/webpacker": "3.4",
     "autoprefixer": "^7.1.0",
     "babel-core": "^6.24.1",
-    "babel-loader": "7.x",
+    "babel-loader": "7.1.2",
     "babel-plugin-es6-promise": "^1.1.1",
     "babel-preset-env": "^1.4.0",
     "babel-preset-react": "^6.24.1",
@@ -28,11 +29,11 @@
     "postcss-loader": "^3.0.0",
     "postcss-smart-import": "^0.7.0",
     "precss": "^1.4.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "^15.7.2",
     "query-string": "^4.3.4",
     "rails-erb-loader": "^5.0.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-js-pagination": "^2.1.0",
     "react-notification": "^6.7.1",
     "react-router-dom": "^4.3.1",
@@ -42,17 +43,18 @@
     "react-transition-group": "^1.2.0",
     "react-virtualized": "^9.8.0",
     "reactstrap": "^4.6.2",
-    "sass-loader": "^6.0.5",
+    "sass-loader": "^6.0.6",
     "slate": "^0.19.30",
     "style-loader": "^0.23.1",
-    "webpack": "^2.5.1",
+    "webpack": "^3.6.0",
     "webpack-manifest-plugin": "^1.1.0",
     "webpack-merge": "^4.1.0"
   },
   "devDependencies": {
     "remark-cli": "^6.0.1",
     "remark-preset-lint-recommended": "^3.0.3",
-    "webpack-dev-server": "^3.1.11"
+    "webpack-dev-server": "2.11.2",
+    "wepack-cli": "^0.0.1-security"
   },
   "scripts": {
     "lint-md": "remark ."

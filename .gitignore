@@ -21,3 +21,8 @@ spec/examples.txt
 /public/packs
 /public/assets
 /node_modules
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
