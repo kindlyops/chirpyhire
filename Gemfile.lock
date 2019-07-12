@@ -1065,7 +1065,7 @@ GEM
     rails-assets-lodash (4.17.11)
     rails-assets-popper.js (1.15.0)
     rails-assets-ramda (0.26.0)
-    rails-assets-select2 (4.0.7)
+    rails-assets-select2 (4.0.5)
     rails-assets-timepicker (1.11.15)
       rails-assets-jquery (>= 1.7)
     rails-controller-testing (1.0.1)
@@ -1315,7 +1315,7 @@ DEPENDENCIES
   rails-assets-lodash (~> 4.17.11)!
   rails-assets-popper.js (~> 1.15.0)!
   rails-assets-ramda (~> 0.26.0)!
-  rails-assets-select2 (~> 4.0.7)!
+  rails-assets-select2 (= 4.0.5)!
   rails-assets-timepicker (~> 1.11.15)!
   rails-controller-testing
   rails_12factor (~> 0.0.3)
