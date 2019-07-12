@@ -118,6 +118,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-lodash', '~> 4.17.11'
   gem 'rails-assets-popper.js', '~> 1.15.0'
   gem 'rails-assets-ramda', '~> 0.26.0'
-  gem 'rails-assets-select2', '~> 4.0.7'
+  # don't use 4.0.6 or 4.0.7 due to tags focus bug
+  # https://github.com/select2/select2/pull/5558
+  # https://kindlyops.atlassian.net/browse/CH-83
+  gem 'rails-assets-select2', '4.0.5'
   gem 'rails-assets-timepicker', '~> 1.11.15'
 end
