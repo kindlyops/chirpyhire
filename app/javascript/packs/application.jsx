@@ -6,7 +6,6 @@
 //
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
-import 'react-select/dist/react-select.css'
 import 'react-virtualized/styles.css'
 
 import React from 'react'
@@ -33,7 +32,7 @@ class App extends React.Component {
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
-  ReactDOM.render(<App/>, node)
+  ReactDOM.render(<App />, node)
 })
 
 
