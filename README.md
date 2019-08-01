@@ -86,7 +86,3 @@ Find a user
 ```ruby
 a = Account.find_by_email 'demo@chirpyhire.com'
 ```
-
-### Notes on migrating away from capybara
-
-https://artsy.github.io/blog/2018/11/27/switch-from-capybara-webkit-to-chrome/

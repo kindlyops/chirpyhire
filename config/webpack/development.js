@@ -1,16 +1,5 @@
-// Note: You must restart bin/webpack-dev-server for changes to take effect
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
-const merge = require('webpack-merge')
-const sharedConfig = require('./shared.js')
+const environment = require('./environment')
 
-module.exports = merge(sharedConfig, {
-  devtool: 'sourcemap',
-
-  stats: {
-    errorDetails: true
-  },
-
-  output: {
-    pathinfo: true
-  }
-})
+module.exports = environment.toWebpackConfig()

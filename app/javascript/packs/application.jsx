@@ -33,7 +33,7 @@ class App extends React.Component {
 
 document.addEventListener('DOMContentLoaded', () => {
   const node = document.getElementById('app-container')
-  ReactDOM.render(<App/>, node)
+  ReactDOM.render(<App />, node)
 })
 
 
