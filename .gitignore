@@ -19,10 +19,7 @@ spec/examples.txt
 /node_modules
 /yarn-error.log
 /public/packs
-/public/assets
-/node_modules
-/public/packs
 /public/packs-test
-/node_modules
+/public/assets
 yarn-debug.log*
 .yarn-integrity
