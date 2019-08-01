@@ -54,7 +54,7 @@
   "devDependencies": {
     "remark-cli": "^6.0.1",
     "remark-preset-lint-recommended": "^3.0.3",
-    "webpack-dev-server": "2.11.2",
+    "webpack-dev-server": "2.11.5",
     "wepack-cli": "^0.0.1-security"
   },
   "scripts": {
