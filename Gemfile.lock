@@ -36,7 +36,7 @@ GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
-    aasm (4.12.1)
+    aasm (5.0.6)
       concurrent-ruby (~> 1.0)
     actioncable (5.1.6.2)
       actionpack (= 5.1.6.2)
@@ -1262,7 +1262,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aasm (~> 4.12.1)
+  aasm (~> 5.0.6)
   ahoy_email (~> 1.0.3)
   aws-sdk (~> 3.0.1)
   better_errors
