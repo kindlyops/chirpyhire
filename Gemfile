@@ -31,7 +31,7 @@ group :development, :test do
   gem 'dotenv-rails', '~> 2.2.1'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.6.0'
+  gem 'rspec-rails', '~> 3.9.0'
   gem 'solargraph'
 end
 
