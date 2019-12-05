@@ -1033,7 +1033,7 @@ GEM
       pry (>= 0.10.4)
     psych (3.1.0)
     public_suffix (3.1.0)
-    puma (3.12.1)
+    puma (3.12.2)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
     rack (2.0.7)
