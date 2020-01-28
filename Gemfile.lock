@@ -1036,7 +1036,7 @@ GEM
     puma (3.12.1)
     pundit-matchers (1.6.0)
       rspec-rails (>= 3.0.0)
-    rack (2.0.7)
+    rack (2.1.2)
     rack-affiliates (0.4.0)
       rack
     rack-contrib (2.1.0)
