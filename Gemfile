@@ -76,7 +76,7 @@ gem 'devise_invitable', '~> 1.7.2'
 gem 'pundit', git: 'https://github.com/elabs/pundit.git', ref: '58eda659d44a2'
 
 # Impersonation
-gem 'aasm', '~> 4.12.1'
+gem 'aasm', '~> 5.0.8'
 gem 'ahoy_email', '~> 1.0.3'
 gem 'aws-sdk', '~> 3.0.1'
 gem 'browser', '~> 2.5.1'
