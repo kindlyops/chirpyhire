@@ -7,6 +7,10 @@ class BotPolicy < ApplicationPolicy
     show?
   end
 
+  def create?
+    record.new_record?
+  end
+
   def permitted_attributes
     %i[name]
       .push(greeting)

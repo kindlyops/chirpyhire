@@ -18,6 +18,14 @@ class Engage::Auto::BotsController < ApplicationController
     end
   end
 
+  def new
+    @bot = authorize(current_organization.bots.build(account: current_account))
+    @bot.build_greeting
+    question = @bot.questions.build
+    question.follow_ups.build
+    @bot.goals.build
+  end
+
   def clone
     @bot = authorize(bots.find(params[:bot_id]))
 

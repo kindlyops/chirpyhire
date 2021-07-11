@@ -13,7 +13,7 @@
     .bot-card--actions
       .question-handle.mr-3
         i.fa.fa-bars
-      - if f.object.bot.questions.count > 1
+      - if f.object.bot.questions.count > 1 && f.object.id
         .dropdown.mr-3
           a#actions.bot-card--settings aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" role="button"
             |⋯
@@ -41,7 +41,7 @@
           div id="question-#{f.object.id}-follow-ups"
             = f.fields_for :follow_ups, f.object.ranked_follow_ups do |u|
               = render partial: "engage/auto/bots/follow_up_fields", locals: { f: u }
-          - if f.object.type != 'ZipcodeQuestion'
+          - if f.object.type != 'ZipcodeQuestion' && f.object.id
             = link_to new_engage_auto_bot_question_follow_up_path(f.object.bot, f.object), class: 'btn btn-default', role: 'button' do
                 i.fa.fa-plus.mr-2
                 | New Follow Up
